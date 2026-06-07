@@ -45,6 +45,14 @@ combinations occur in the language:
 `AGREEMENT_META` already has copy and a badge style for `nori` — only the verb
 data is missing to exercise it.
 
+**Important wrinkle:** NOR-NORI and NOR-NORI-NORK agreement is mostly *not*
+carried by independently-synthetic lexical verbs — it's carried by `izan`'s
+and `ukan`'s synthetic auxiliary paradigms (`zait`/`zaio`/`natzaio`... for
+NOR-NORI; `dio`/`diot`/`diet`... for NOR-NORI-NORK), which periphrastic verbs
+lean on. `gustatu` and `iruditu` (both regular `-tu` participles, periphrastic)
+are the canonical NOR-NORI teaching examples for exactly this reason: their
+"conjugation table" *is* `izan`'s NOR-NORI auxiliary paradigm — see §4b.
+
 ## 3. Tenses / moods (denborak eta moduak)
 
 The app's two tenses are the indicative core. Roughly in the order a learner
@@ -84,8 +92,11 @@ and is presumably what the `type: 'periphrastic'` plumbing is there for.
 ## 4. Verbs to cover
 
 ### 4a. Synthetic verbs (aditz trinkoak)
-The ~12 verbs Batua still conjugates directly, ranked roughly by how often
-they come up in everyday speech:
+The ~10 lexical verbs Batua still conjugates directly (i.e. *they themselves*
+take person/agreement endings, with no participle+auxiliary needed), ranked
+roughly by how often they come up in everyday speech. All of these are `nor`
+or `nor-nork` — see the wrinkle in §2 for why `nor-nori`(`-nork`) isn't on this
+list:
 
 | Verb | Meaning | Agreement | Status |
 |---|---|---|---|
@@ -99,20 +110,24 @@ they come up in everyday speech:
 | eraman | to carry / take | nor-nork | 🔲 |
 | ekarri | to bring | nor-nork | 🔲 |
 | erabili | to use | nor-nork | 🔲 |
-| jakin | to know (a fact) | nor-nork (nor-nori-nork in literary register) | 🔲 |
-| esan | to say | nor-nork / nor-nori-nork | 🔲 good ditransitive candidate |
+| jakin | to know (a fact) | nor-nork | 🔲 |
 | egin | to do / make | nor-nork | 🔲 |
-| iruditu | to seem | nor-nori | 🔲 clean, canonical nor-nori teaching example ("...iruditzen zait") |
-| gustatu | to like / please | nor-nori | 🔲 the other canonical nor-nori example |
 
 ### 4b. Representative periphrastic verbs (aditz perifrastikoak)
 None yet — `TYPE_META.periphrastic` exists but no verb actually conjugates as
 participle + auxiliary. Good first picks, chosen to cover distinct participle
-endings and both auxiliaries:
-- **`-tu` verbs** (the largest class): erosi (to buy), ikusi (to see)
+endings, both auxiliaries, *and* the agreement patterns §4a structurally can't
+reach:
+- **`gustatu`/`iruditu`** ("to like"/"to seem", `-tu` participles) — the
+  natural way to land `nor + nori` at all: their conjugation table is just
+  `izan`'s NOR-NORI auxiliary forms (`gustatzen zait/zaio/zaigu...`), so
+  picking either one buys both new agreement *and* a first periphrastic verb
+  in a single addition
+- **`eman`/`esan`** ("to give"/"to say", `-n` participles) — likewise the way
+  to land `nor + nori + nork`, via `ukan`'s ditransitive auxiliary forms
+  (`ematen dio/diot/diet...`)
+- **other `-tu` verbs**: erosi (to buy), ikusi (to see)
 - **`-i` verbs**: jan (to eat), edan (to drink)
-- **`-n` verbs**: eman (to give — doubles as a nor-nori-nork ditransitive),
-  egin (to do/make)
 - **`etorri`** is a natural bridge case: synthetic in present/past, but
   periphrastic in the other tenses
 
@@ -123,10 +138,10 @@ Not a commitment — just a way to see how much runway sits past the current
 
 - [x] `nor` agreement, present + past — `izan`
 - [x] `nor-nork` agreement, present + past — `ukan`
-- [ ] `nor-nori` agreement, any tense — e.g. `gustatu` or `iruditu`
+- [ ] `nor-nori` agreement *and* a first periphrastic verb in one move —
+      `gustatu` or `iruditu` (both, per §4b)
 - [ ] future tense, any verb/agreement — reuses existing auxiliary forms
-- [ ] `nor-nori-nork` agreement, any tense — e.g. `eman` or `esan`
-- [ ] a periphrastic verb (participle + auxiliary), any tense
+- [ ] `nor-nori-nork` agreement — `eman` or `esan` (also periphrastic, per §4b)
 - [ ] `zu` modeled as a person, alongside or instead of `hi`
 - [ ] conditional / potential / subjunctive / imperative — stretch goals;
       imperative in particular needs its own lesson shape (no `ni`/`hura`/etc.)
