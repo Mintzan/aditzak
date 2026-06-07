@@ -44,6 +44,20 @@ export function getEncouragement(correctCount, total) {
   }
 }
 
+// Mid-lesson momentum nudges: shown in the feedback bar exactly when a streak
+// of consecutive correct answers *lands* on one of these milestones — not on
+// every answer past it — so the message appears once per streak rather than
+// repeating itself each turn.
+const STREAK_MILESTONES = [
+  { streak: 5, icon: '🔥', headline: 'Zoragarria!', message: 'Five in a row — you’re finding your rhythm.' },
+  { streak: 10, icon: '⚡', headline: 'Itzela!', message: 'Ten in a row — you’re really on fire.' },
+  { streak: 20, icon: '🚀', headline: 'Ikaragarria!', message: 'Twenty in a row — pure mastery.' },
+]
+
+export function getStreakEncouragement(streak) {
+  return STREAK_MILESTONES.find((milestone) => milestone.streak === streak) ?? null
+}
+
 export function recordResult(progress, lessonId, result) {
   const previous = progress[lessonId]
   const stars = computeStars(result.correctCount, result.total)
@@ -115,6 +129,7 @@ export function exerciseReducer(state, action) {
         selected: action.option,
         status: isCorrect ? 'correct' : 'incorrect',
         correctCount: state.correctCount + (countsTowardScore ? 1 : 0),
+        streak: isCorrect ? state.streak + 1 : 0,
       }
     }
     case 'next': {

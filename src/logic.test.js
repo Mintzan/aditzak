@@ -4,6 +4,7 @@ import {
   exerciseReducer,
   generateQuestions,
   getEncouragement,
+  getStreakEncouragement,
   getUnlockedLessonIds,
   recordResult,
   shuffle,
@@ -46,6 +47,23 @@ describe('getEncouragement', () => {
       [5, 5],
     ].forEach(([correctCount, total]) => {
       const { icon, headline, message } = getEncouragement(correctCount, total)
+      expect(icon).toBeTruthy()
+      expect(headline).toBeTruthy()
+      expect(message).toBeTruthy()
+    })
+  })
+})
+
+describe('getStreakEncouragement', () => {
+  it('returns nothing for streaks that are not a milestone', () => {
+    ;[0, 1, 4, 6, 9, 11, 19, 21].forEach((streak) => {
+      expect(getStreakEncouragement(streak)).toBeNull()
+    })
+  })
+
+  it('returns a non-empty icon, headline and message exactly on milestone streaks', () => {
+    ;[5, 10, 20].forEach((streak) => {
+      const { icon, headline, message } = getStreakEncouragement(streak)
       expect(icon).toBeTruthy()
       expect(headline).toBeTruthy()
       expect(message).toBeTruthy()
@@ -154,18 +172,20 @@ describe('exerciseReducer', () => {
     selected: null,
     status: 'active',
     correctCount: 0,
+    streak: 0,
   }
 
-  it('marks a correct answer and increments the score', () => {
+  it('marks a correct answer, increments the score, and extends the streak', () => {
     const next = exerciseReducer(baseState, { type: 'answer', option: 'naiz' })
 
-    expect(next).toMatchObject({ status: 'correct', selected: 'naiz', correctCount: 1 })
+    expect(next).toMatchObject({ status: 'correct', selected: 'naiz', correctCount: 1, streak: 1 })
   })
 
-  it('marks an incorrect answer without incrementing the score', () => {
-    const next = exerciseReducer(baseState, { type: 'answer', option: 'haiz' })
+  it('marks an incorrect answer, awards no score, and resets the streak', () => {
+    const onAStreak = { ...baseState, streak: 3 }
+    const next = exerciseReducer(onAStreak, { type: 'answer', option: 'haiz' })
 
-    expect(next).toMatchObject({ status: 'incorrect', selected: 'haiz', correctCount: 0 })
+    expect(next).toMatchObject({ status: 'incorrect', selected: 'haiz', correctCount: 0, streak: 0 })
   })
 
   it('ignores further answers once the question has already been answered', () => {

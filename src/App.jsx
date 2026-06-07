@@ -4,6 +4,7 @@ import {
   exerciseReducer,
   generateQuestions,
   getEncouragement,
+  getStreakEncouragement,
   getUnlockedLessonIds,
   recordResult,
 } from './lessonLogic'
@@ -399,6 +400,7 @@ function createExerciseState(verb, tense) {
     selected: null,
     status: 'active', // 'active' | 'correct' | 'incorrect'
     correctCount: 0,
+    streak: 0,
   }
 }
 
@@ -433,16 +435,28 @@ function AnswerOption({ option, status, disabled, onSelect }) {
   )
 }
 
-function FeedbackBar({ status, isLast, onContinue }) {
+function FeedbackBar({ status, isLast, streak, onContinue }) {
   if (status === 'active') return null
   const isCorrect = status === 'correct'
+  // A streak milestone takes over the feedback line entirely (rather than
+  // stacking alongside it) — both are "you got it right" affirmations, and
+  // showing two at once would just be noise.
+  const streakEncouragement = isCorrect ? getStreakEncouragement(streak) : null
   return (
     <div className={`px-5 pt-4 pb-6 ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
       <p className={`mb-3 flex items-center gap-2 text-lg font-extrabold ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
         <span className="text-2xl" aria-hidden="true">
-          {isCorrect ? '✓' : '✕'}
+          {streakEncouragement ? streakEncouragement.icon : isCorrect ? '✓' : '✕'}
         </span>
-        {isCorrect ? <span>Bikain! Great job!</span> : <span>Not quite — you'll see this one again.</span>}
+        {streakEncouragement ? (
+          <span>
+            {streakEncouragement.headline} {streakEncouragement.message}
+          </span>
+        ) : isCorrect ? (
+          <span>Bikain! Great job!</span>
+        ) : (
+          <span>Not quite — you'll see this one again.</span>
+        )}
       </p>
       <button
         type="button"
@@ -567,7 +581,7 @@ function MultipleChoiceScreen({ verb, tense, onExit, onComplete }) {
         </div>
       </div>
 
-      <FeedbackBar status={state.status} isLast={isLast} onContinue={handleContinue} />
+      <FeedbackBar status={state.status} isLast={isLast} streak={state.streak} onContinue={handleContinue} />
     </div>
   )
 }
