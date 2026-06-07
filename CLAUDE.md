@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Aditzak** — a Duolingo-style web app for practicing Basque (Euskara) verb conjugation. Built with React 19, Vite, and Tailwind CSS 4.
 
+## Decisions log
+
+`DECISIONS.md` records notable decisions made during development along with the reasoning behind them (e.g. why logic was split into `lessonLogic.js`, why we have unit tests but not e2e yet). **Read it before making related changes** — it exists so settled questions don't get relitigated without context. **When you make a notable decision** (a non-obvious architectural choice, a tradeoff, something that could plausibly be questioned or reversed later), **add an entry to it** — keep entries short: what was decided and why, dated, newest on top.
+
 ## Commands
 
 - `npm run dev` — start the Vite dev server with HMR
