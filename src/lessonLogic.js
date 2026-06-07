@@ -155,11 +155,22 @@ function buildOptions(table, persons, person) {
 // a verb that already supports one framing automatically supports its typed
 // sibling. Persons missing that supporting data always fall back to the bare
 // `form` question, so verbs can adopt any of the framings incrementally.
-export function generateQuestions(verb, tense) {
+//
+// `onlyBareForm` (set for a learner's first run through a lesson — see
+// `createExerciseState`) skips the sentence/pronoun/typed framings entirely,
+// so a brand-new conjugation is first met in its simplest, most recognisable
+// shape; once the learner's been through the lesson at least once, later runs
+// open up the full mix. Every question also carries the `verbId`/`tense` it
+// was generated from — irrelevant within a single-verb-and-tense lesson, but
+// what lets a "review" lesson (see `LESSONS`) interleave questions from
+// several lessons' worth of conjugation tables and still show each one in its
+// correct verb/tense context.
+export function generateQuestions(verb, tense, { onlyBareForm = false } = {}) {
   const table = verb.conjugations[tense]
-  const sentences = verb.sentences?.[tense] ?? {}
-  const pronounSentences = verb.pronounSentences?.[tense] ?? {}
+  const sentences = onlyBareForm ? {} : (verb.sentences?.[tense] ?? {})
+  const pronounSentences = onlyBareForm ? {} : (verb.pronounSentences?.[tense] ?? {})
   const persons = Object.keys(table)
+  const source = { verbId: verb.id, tense }
   return shuffle(persons).map((person) => {
     const sentence = sentences[person]
     const pronounSentence = verb.pronouns && pronounSentences[person]
@@ -173,19 +184,19 @@ export function generateQuestions(verb, tense) {
     switch (rollQuestionKind(availableKinds)) {
       case 'sentence': {
         const { correct, options } = buildOptions(table, persons, person)
-        return { kind: 'sentence', person, sentence, correct, options }
+        return { ...source, kind: 'sentence', person, sentence, correct, options }
       }
       case 'type-verb':
-        return { kind: 'type-verb', person, sentence, correct: table[person] }
+        return { ...source, kind: 'type-verb', person, sentence, correct: table[person] }
       case 'pronoun': {
         const { correct, options } = buildOptions(verb.pronouns, persons, person)
-        return { kind: 'pronoun', person, sentence: pronounSentence, correct, options }
+        return { ...source, kind: 'pronoun', person, sentence: pronounSentence, correct, options }
       }
       case 'type-pronoun':
-        return { kind: 'type-pronoun', person, sentence: pronounSentence, correct: verb.pronouns[person] }
+        return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence, correct: verb.pronouns[person] }
       default: {
         const { correct, options } = buildOptions(table, persons, person)
-        return { kind: 'form', person, correct, options }
+        return { ...source, kind: 'form', person, correct, options }
       }
     }
   })

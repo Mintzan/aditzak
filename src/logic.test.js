@@ -143,11 +143,43 @@ describe('getUnlockedLessonIds', () => {
 
 describe('generateQuestions', () => {
   const verb = {
+    id: 'verb',
     conjugations: {
       present: { ni: 'naiz', hi: 'haiz', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
     },
   }
   const persons = Object.keys(verb.conjugations.present)
+
+  // Both `sentences` and `pronouns`/`pronounSentences` present, for every
+  // person, so `availableKinds` always has all four special framings —
+  // `['sentence', 'type-verb', 'pronoun', 'type-pronoun']` — and a fixed roll
+  // deterministically lands on whichever index it maps to. Shared by the
+  // typed-framing and `onlyBareForm` specs below, which both need a verb where
+  // every special framing is available to roll into.
+  const verbWithBoth = {
+    ...verb,
+    sentences: {
+      present: {
+        ni: 'Ni irakaslea ___.',
+        hi: 'Hi ikaslea ___.',
+        hura: 'Hura medikua ___.',
+        gu: 'Gu lagunak ___.',
+        zuek: 'Zuek azkarrak ___.',
+        haiek: 'Haiek euskaldunak ___.',
+      },
+    },
+    pronouns: { ni: 'Nik', hi: 'Hik', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    pronounSentences: {
+      present: {
+        ni: '___ liburu bat dut.',
+        hi: '___ auto bat duk.',
+        hura: '___ etxe bat du.',
+        gu: '___ denbora dugu.',
+        zuek: '___ arazo bat duzue.',
+        haiek: '___ aukera bat dute.',
+      },
+    },
+  }
 
   afterEach(() => {
     vi.restoreAllMocks()
@@ -158,6 +190,12 @@ describe('generateQuestions', () => {
 
     expect(questions).toHaveLength(persons.length)
     expect(questions.map((q) => q.person).sort()).toEqual([...persons].sort())
+  })
+
+  it('tags every question with the verb and tense it was generated from', () => {
+    generateQuestions(verb, 'present').forEach((question) => {
+      expect(question).toMatchObject({ verbId: verb.id, tense: 'present' })
+    })
   })
 
   it('always includes the correct answer among unique options', () => {
@@ -276,34 +314,6 @@ describe('generateQuestions', () => {
   })
 
   describe('with typed-answer framings', () => {
-    // Both `sentences` and `pronouns`/`pronounSentences` present, for every
-    // person, so `availableKinds` always has all four special framings —
-    // `['sentence', 'type-verb', 'pronoun', 'type-pronoun']` — and a fixed
-    // roll deterministically lands on whichever index it maps to.
-    const verbWithBoth = {
-      ...verb,
-      sentences: {
-        present: {
-          ni: 'Ni irakaslea ___.',
-          hi: 'Hi ikaslea ___.',
-          hura: 'Hura medikua ___.',
-          gu: 'Gu lagunak ___.',
-          zuek: 'Zuek azkarrak ___.',
-          haiek: 'Haiek euskaldunak ___.',
-        },
-      },
-      pronouns: { ni: 'Nik', hi: 'Hik', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
-      pronounSentences: {
-        present: {
-          ni: '___ liburu bat dut.',
-          hi: '___ auto bat duk.',
-          hura: '___ etxe bat du.',
-          gu: '___ denbora dugu.',
-          zuek: '___ arazo bat duzue.',
-          haiek: '___ aukera bat dute.',
-        },
-      },
-    }
     const sentenced = verbWithBoth.sentences.present
     const pronounSentenced = verbWithBoth.pronounSentences.present
 
@@ -346,6 +356,26 @@ describe('generateQuestions', () => {
         expect(question).not.toHaveProperty('sentence')
         expect(question.options).toContain(question.correct)
       })
+    })
+  })
+
+  describe('with onlyBareForm', () => {
+    it('forces every question to the bare form, even on a roll that would otherwise favour a special framing', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      generateQuestions(verbWithBoth, 'present', { onlyBareForm: true }).forEach((question) => {
+        expect(question.kind).toBe('form')
+        expect(question).not.toHaveProperty('sentence')
+        expect(question.options).toContain(question.correct)
+      })
+    })
+
+    it('still produces the full mix of framings when left at its default', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const kinds = generateQuestions(verbWithBoth, 'present').map((q) => q.kind)
+
+      expect(kinds).toContain('sentence')
     })
   })
 })

@@ -4,6 +4,60 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-07 — The itinerary now ramps up in three stages: bare forms → richer framings → cross-lesson reviews
+
+**Decision:** Restructured the lesson progression so it starts simple and
+single, then layers in complexity and combination, in three stages:
+
+1. **Bare forms first.** `generateQuestions` gained an `onlyBareForm` option
+   that suppresses the sentence/pronoun/typed framings entirely, so a brand-new
+   conjugation is first met in its simplest, most recognisable shape — pick the
+   right form for "hura", nothing else going on. `createExerciseState` sets it
+   whenever `attempts === 0` for a (non-review) lesson; from the second run on,
+   the lesson opens up to the full mix that already existed.
+2. **Richer framings on repeat.** No new mechanism here — this *is* the
+   existing sentence/pronoun/typed mix from prior decisions below, now
+   deliberately held back until the learner has met the bare paradigm once.
+3. **Cross-lesson review checkpoints.** `LESSONS` now appends *review* lessons
+   alongside the existing (verb × tense) *practice* ones: once a verb has more
+   than one tense, a `{ id: '${verbId}-review', review: true, sources: [...] }`
+   lesson combining all of them slots in right after (e.g. izan's present +
+   past, interleaved in one session); once there's more than one verb, a final
+   cross-verb "mixed review" caps the whole sequence. Review lessons carry
+   `sources` (the conjugation tables they draw from) instead of a single
+   `verbId`/`tense`; `createExerciseState` runs `generateQuestions` once per
+   source and shuffles the results together, and every generated question now
+   carries the `verbId`/`tense` it came from so `ExerciseScreen` can derive the
+   right verb/badges/prompt context *per question* rather than once for the
+   whole lesson — which is what makes a session that jumps between `izan`
+   present and `izan` past (or `izan` and `ukan` altogether) render correctly
+   and, as a bonus, gives the learner a live "which paradigm am I in right now"
+   cue as it changes question to question. `describeLesson` centralises the
+   practice-vs-review display copy (icon/title/subtitle/heading) so
+   `LessonNode`/`ProgressTab`/`LessonResultsScreen` don't each special-case the
+   two shapes, and `groupLessonsByVerb` now splits lessons into per-verb groups
+   plus a trailing `mixedLessons` bucket — a "verb review" (all sources share
+   one verb) still slots into that verb's section in `LearnTab`, while a
+   cross-verb "mixed review" gets its own trailing `ReviewSection`, keeping
+   visual order matched to unlock order (no lesson appears somewhere other than
+   "right after the one that unlocked it").
+
+**Why:** Asked to plan a learning itinerary that starts with simple,
+single-conjugation exercises and works up to complex, combined ones. Gating
+question framings on `attempts` (rather than e.g. a global "skill level")
+keeps the existing per-lesson progress model as the single source of truth —
+no new state to track or persist. Making reviews *lessons* (not, say,
+occasional bonus questions mixed into existing lessons) keeps every lesson's
+identity and score meaning what it always has — "how well do you know `ukan`
+past" stays a question about `ukan` past alone, never diluted by surprise
+`izan` questions — which matches the project's running preference (see
+"Complete the sentence" below) for folding new ideas in without disturbing
+lesson identity, unlocking, or progress storage. Tagging every question with
+its `verbId`/`tense` at generation time, rather than threading "current verb"
+state through the exercise screen some other way, means `ExerciseScreen` and
+`generateQuestions` stay decoupled from whether they're in a single-source or
+multi-source lesson — the same code path serves both.
+
 ## 2026-06-07 — `izan`'s example sentences must stick to identity/characteristic predicates, not location/state ones (that's `egon`'s job)
 
 **Decision:** Reworded the `hi`/`hura`/`gu`/`zuek`/`haiek` entries of `izan`'s
