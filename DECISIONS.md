@@ -4,6 +4,21 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-07 — Deploy to GitHub Pages via Actions, with hardcoded `base`
+
+**Decision:** Set `base: '/testapp005/'` in `vite.config.js` and added
+`.github/workflows/deploy.yml`, which builds on push to `main` and publishes
+`dist/` using the official `actions/upload-pages-artifact` +
+`actions/deploy-pages` flow (requires the repo's Pages source to be set to
+"GitHub Actions" once in Settings → Pages).
+
+**Why:** GitHub Pages serves project sites from `https://<owner>.github.io/<repo>/`,
+so asset URLs need the repo-name prefix — Vite's `base` handles rewriting both
+the build output and dev-time references. Hardcoded the repo name rather than
+deriving it (e.g. from `process.env.GITHUB_REPOSITORY`) since this app isn't
+expected to be renamed or forked under a different name; if that changes,
+update `base` to match.
+
 ## 2026-06-07 — Extracted pure lesson logic into `src/lessonLogic.js`
 
 **Decision:** Moved `computeStars`, `recordResult`, `getUnlockedLessonIds`,
