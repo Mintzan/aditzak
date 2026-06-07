@@ -52,19 +52,29 @@ than by an independently-synthetic lexical verb — that's the route `gustatu`
 and `iruditu` (both regular `-tu` participles, periphrastic) take; their
 "conjugation table" *is* `izan`'s NOR-NORI auxiliary paradigm — see §4b.
 
-But there *are* native synthetic exceptions, and they're a better first target
-for `nor-nori` specifically: **`jario`** ("to flow/ooze" — "malkoak dario" =
-"tears flow from him", "hitzak dario" = "words pour out of him") conjugates
-directly (`dario`, `dariot`, `darizkio`...), no auxiliary needed. It's
-defective — almost always used with an inanimate `nor` (tears, sweat, blood,
-words) — so a lesson would naturally fix `nor` (mirroring `ukan`'s
-`object: 'hura'`) and vary the table by **`nori` person** instead, which the
-existing `conjugations` shape already supports. That makes `jario` a way to
-land `nor-nori` *without* also having to stand up periphrastic-verb plumbing —
-a cleaner, smaller first step than `gustatu`/`iruditu`. (`iritzi` → `deritzo`
-is the parallel native-synthetic case for `nor-nori-nork`, "to deem/consider
-[something] to be [something], to [someone]" — rarer and more literary, so a
-weaker first pick than `eman`/`esan`.)
+But there *is* a small family of native synthetic exceptions — verbs that
+mark `nori` (or `nori`+`nork`) themselves, no auxiliary needed — and two of
+them are a better first target than reaching for a periphrastic verb at all:
+
+- **`jario`** ("to flow/ooze" — "malkoak dario" = "tears flow from him")
+  conjugates directly (`dario`, `dariot`, `darizkio`...) and is defective —
+  almost always used with an inanimate `nor` (tears, sweat, blood, words) —
+  so a lesson would naturally fix `nor` (mirroring `ukan`'s `object: 'hura'`)
+  and vary the table by **`nori` person** instead, which the existing
+  `conjugations` shape already supports. (Its Bizkaian past stem `erion` —
+  "darie/erion" — isn't a separate verb, just `jario`'s own past paradigm: an
+  unusually exact fit for the app's present/past shape.) See §4a.
+- **`esan`** ("to say") is the everyday, central case for `nor-nori-nork`:
+  its `dio`/`diot`/`diozu`... forms run on the same defective `*-io-` root
+  that `ukan` itself borrows when *it's* used ditransitively as an auxiliary.
+  See §4a — it's a markedly better first pick than `eman` (periphrastic) or
+  `iritzi`/`irudi` (the rarer, more literary native-synthetic NOR-NORI(-NORK)
+  cousins — "to deem/consider" and "to seem" respectively, whose modern
+  everyday counterparts `iritzi`-the-periphrastic-verb and `iruditu` are the
+  ones worth teaching first).
+
+Both routes land their agreement pattern *and* stay fully synthetic — no
+periphrastic plumbing required, unlike `gustatu`/`iruditu`/`eman` in §4b.
 
 ## 3. Tenses / moods (denborak eta moduak)
 
@@ -107,9 +117,9 @@ and is presumably what the `type: 'periphrastic'` plumbing is there for.
 ### 4a. Synthetic verbs (aditz trinkoak)
 The lexical verbs Batua still conjugates directly (i.e. *they themselves*
 take person/agreement endings, with no participle+auxiliary needed). The first
-dozen are common, everyday `nor`/`nor-nork` verbs; `jario` is the odd one out —
-rarer in conversation, but the cleanest native route to `nor-nori` (see the
-wrinkle in §2):
+dozen are common, everyday `nor`/`nor-nork` verbs; the last few are rarer but
+each unlocks something the first dozen structurally can't — `jario` is the
+cleanest route to `nor-nori`, `esan` to `nor-nori-nork`:
 
 | Verb | Meaning | Agreement | Status |
 |---|---|---|---|
@@ -120,30 +130,63 @@ wrinkle in §2):
 | etorri | to come | nor | 🔲 |
 | ibili | to walk around / be doing | nor | 🔲 |
 | eduki | to hold / keep / have | nor-nork | 🔲 |
-| eraman | to carry / take | nor-nork | 🔲 |
+| eraman | to carry / take | nor-nork | 🔲 — `eroan`/`eruan` is the western/Bizkaian dialectal variant; a `dialectVariants` candidate (see §4c) |
 | ekarri | to bring | nor-nork | 🔲 |
 | erabili | to use | nor-nork | 🔲 |
-| jakin | to know (a fact) | nor-nork | 🔲 |
+| jakin | to know (a fact) | nor-nork | 🔲 — pairs naturally with periphrastic `ezagutu` ("to know/recognise *people*, places") for the classic savoir/connaître-style contrast, see §4b |
 | egin | to do / make | nor-nork | 🔲 |
-| jario | to flow / ooze / stream ("malkoak dario" = tears flow from him) | nor-nori | 🔲 defective (effectively fixed `nor`, varies by `nori` person) — the lowest-friction way to land `nor-nori`: native synthetic, no auxiliary, fits the existing `object`-fixed `conjugations` shape |
+| iraun | to last / endure | nor | 🔲 defective — almost always 3rd person (`dirau` = "it lasts"); like `etorri`, overlaps with periphrastic use (`iraun du`) |
+| jario | to flow / ooze / stream ("malkoak dario" = tears flow from him) | nor-nori | 🔲 defective (effectively fixed `nor`, varies by `nori` person) — **and** it already has its own present/past synthetic pair: `dario`/`darie` (present) ↔ `erion`/`erien` (past, Bizkaian) — `erion` isn't a separate verb, it's `jario`'s own past stem. That's a remarkably exact match for the app's present+past shape, on top of being the lowest-friction `nor-nori` route (native synthetic, no auxiliary, fits `object`-fixed `conjugations`) |
+| esan | to say | nor-nork / nor-nori-nork | 🔲 the everyday, central `nor-nori-nork` verb — its ditransitive forms (`dio`/`diot`/`diozu`...) run on the same defective `*-io-` root that `ukan` borrows for *its* ditransitive auxiliary use; `erran` is the northern (Lapurdian/Zuberoan) dialectal variant, again a `dialectVariants` candidate. A much better first `nor-nori-nork` pick than `eman` or `iritzi` |
+| jardun | to be engaged in / at it ("zertan dihardu?" = "what's he up to?") | nor-nork | 🔲 a curiosity worth knowing about rather than prioritising: it expresses the *same* "ongoing action" meaning as `ari`/`ibili` (§5), but — unlike them — conjugates in the transitive `du`-pattern (`dihardut` "I'm at it" ~ `dut`) despite being semantically intransitive. One more data point for "the form doesn't follow the lexical verb's transitivity," alongside `nahi`/`behar`/`ari` |
+
+Three more genuinely-synthetic verbs (`atxeki` "to adhere/cling [to]", `iharduki`
+"to converse, hold forth" — a relative of `jardun` — and `etzan` "to lie down")
+turned up while researching this list, but they're rare/literary/dialectal
+enough that I couldn't pin down their argument structure or how alive their
+synthetic paradigms are in modern Batua from the sources at hand. Worth a
+revisit with a proper grammar reference if any of them seem promising, rather
+than guessing at their forms here.
 
 ### 4b. Representative periphrastic verbs (aditz perifrastikoak)
 None yet — `TYPE_META.periphrastic` exists but no verb actually conjugates as
 participle + auxiliary. Good first picks, chosen to cover distinct participle
-endings, both auxiliaries, *and* the agreement patterns §4a structurally can't
-reach:
-- **`gustatu`/`iruditu`** ("to like"/"to seem", `-tu` participles) — the
-  natural way to land `nor + nori` at all: their conjugation table is just
-  `izan`'s NOR-NORI auxiliary forms (`gustatzen zait/zaio/zaigu...`), so
-  picking either one buys both new agreement *and* a first periphrastic verb
-  in a single addition
-- **`eman`/`esan`** ("to give"/"to say", `-n` participles) — likewise the way
-  to land `nor + nori + nork`, via `ukan`'s ditransitive auxiliary forms
-  (`ematen dio/diot/diet...`)
-- **other `-tu` verbs**: erosi (to buy), ikusi (to see)
-- **`-i` verbs**: jan (to eat), edan (to drink)
+endings, both auxiliaries, *and* (for `nor-nori`/`nor-nori-nork`) as a second,
+auxiliary-driven route alongside the native-synthetic one in §4a:
+- **`gustatu`/`iruditu`** ("to like"/"to seem", `-tu` participles) — `izan`'s
+  NOR-NORI auxiliary paradigm wearing a participle (`gustatzen zait/zaio/
+  zaigu...`); picking either buys new agreement *and* a first periphrastic
+  verb in one addition
+- **`jarraitu`** ("to follow", `-tu` participle, `jarraiki` in the
+  East/Lapurdian-Zuberoan tradition — another `dialectVariants` candidate) —
+  a more concrete `nor-nori` example than `gustatu`/`iruditu` ("jarraitzen
+  zaio" = "follows him/her"), though it can also pattern as `nor-nork`
+  ("jarraitzen dio" = "continues it") depending on sense/register, so it's a
+  noisier first pick than the two above
+- **`eman`/`esan`** ("to give"/"to say", `-n` participles) — the auxiliary-
+  driven route to `nor + nori + nork`, via `ukan`'s ditransitive forms
+  (`ematen dio/diot/diet...`); §4a's native-synthetic `esan` is the cleaner
+  pick if the goal is *just* landing the agreement pattern
+- **other `-tu` verbs**: erosi (to buy), **ezagutu** (to know/recognise
+  *people, places* — pairs with synthetic `jakin`, "to know *facts*", for the
+  classic savoir/connaître-style contrast that's a great teaching moment in
+  its own right)
+- **`-i` verbs**: jan (to eat), edan (to drink), **ikusi** (to see)
+- **`-n` verbs**: **entzun** (to hear/listen)
 - **`etorri`** is a natural bridge case: synthetic in present/past, but
   periphrastic in the other tenses
+
+### 4c. A natural cluster for `dialectVariants`
+Three East/West dialectal pairs turned up while surveying §4a/§4b — exactly
+the shape `dialectVariants: { bizkaiera: { conjugations: {...} } }` in
+`CLAUDE.md` anticipates, and a tidy little batch to tackle together once that
+field gets its first real use:
+
+| Batua | Variant | Region | Verb |
+|---|---|---|---|
+| eraman | eroan / eruan | western (Bizkaian) | "to carry/take" |
+| esan | erran | northern (Lapurdian/Zuberoan) | "to say" |
+| jarraitu | jarraiki | eastern (Lapurdian/Zuberoan) | "to follow" |
 
 ## 5. Modal & aspectual constructions — `nahi` / `behar` / `ari`
 
@@ -200,12 +243,15 @@ Not a commitment — just a way to see how much runway sits past the current
       conversational payoff, zero new conjugation data, reuses `izan`/`ukan`
       verbatim (per §5)
 - [ ] `nor-nori` agreement, the low-friction way — `jario` (native synthetic,
-      no new plumbing; per §4a)
+      no new plumbing, *and* its `erion` past stem is an unusually exact fit
+      for the present/past shape already in place; per §4a)
 - [ ] future tense, any verb/agreement — reuses existing auxiliary forms
 - [ ] a first periphrastic verb (participle + auxiliary) — `gustatu`/`iruditu`
       double as *another*, auxiliary-driven route into `nor-nori` (per §4b)
-- [ ] `nor-nori-nork` agreement — `eman`/`esan` (also periphrastic, per §4b),
-      or the rarer native-synthetic `iritzi` → `deritzo`
+- [ ] `nor-nori-nork` agreement — `esan` is the standout pick: native
+      synthetic, everyday, and its `dio`-paradigm *is* the same root `ukan`
+      borrows for ditransitive auxiliary use (per §4a; `eman` remains the
+      periphrastic/auxiliary-driven alternative, per §4b)
 - [ ] `zu` modeled as a person, alongside or instead of `hi`
 - [ ] conditional / potential / subjunctive / imperative — stretch goals;
       imperative in particular needs its own lesson shape (no `ni`/`hura`/etc.)
