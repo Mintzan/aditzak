@@ -39,8 +39,9 @@ templates ended up doing real generative work of their own: re-mined twice
 over, they grew §5 from a `NOR ∈ {hura, haiek}` citation slice into the full
 seven-by-seven `NORI`×`NOR` grid (present and past), mechanically applying
 the same `-zki-`/`K-N`↔`A-NA` regularities already trusted elsewhere in this
-document — see §5's own notes for the formula and its one remaining gap
-(`NOR = zuek`). §9's new source instead grows verbs that were previously
+document — see §5's own notes for the formula (and a `zu`/`zuek` derivation
+this document briefly got backwards before correcting it). §9's new source
+instead grows verbs that were previously
 fragmentary, sample-only, or barely sourced at all — see each section's own
 notes for exactly what each contributed.
 
@@ -282,9 +283,14 @@ all three are corroborated by patterns this document already relies on
 elsewhere:
 
 - **`-zki-` marks a plural `NOR`** — not just for `haiek` (the only plural
-  option visible in the old 2-column framing) but for `gu`/`zu`/`zuek` too
+  option visible in the old 2-column framing) but for `gu`/`zuek` too
   (`gatzaizkio`, `zatzaizkio`, …) — the same infix §4's grid and §9 already
-  use for plural absolutive arguments generally.
+  use for plural absolutive arguments generally. `zu`, despite being the
+  person that triggers a *different* kind of plural-marking elsewhere (the
+  `ukan` system's "etiquette plural" `-it-` in `zaitut`, §4), sits this one
+  out entirely — it keeps the bare `za-tzai-` shape (`zatzait` = za- +
+  -tzai- + -t, no `-zki-`), in contrast with genuinely-plural `zuek`'s
+  `zatzaizkit`.
 - **The `K/N` ↔ `A/NA` mirroring** — the masc./fem. split tied to a `hi`
   argument — surfaces in the `NORI = hiri` row in exactly the present ↔ past
   pairing already named for §4: `zaik`/`zain` (present) ↔ `zitzaian`/
@@ -298,40 +304,45 @@ elsewhere:
   open referential slots that can differ from their dative counterpart, hence
   `zaio`/`zaizkie` are perfectly ordinary attested forms.)
 
-**One honest gap remains: `NOR = zuek`.** `izan`'s own paradigm marks `zuek`
-with a final `-te` that `zu` lacks (`zara` → `zarete`), and §14's linearized
-template shows a stray `te` in that row too — but *where it slots* relative
-to the `NORI` suffix (`za-tzai-zki-`**`X`**`-te` ? `za-tzai-zki-te-`**`X`** ?
-something else?) isn't recoverable with any confidence from flattened PDF
-text — exactly the kind of column-linearization noise §14's own intro warns
-makes this source "error-prone to transcribe wholesale." Rather than guess
-and risk teaching a wrong form in a *learning app's* reference doc, that
-whole column is left blank: a sourcing gap, not a claim the forms don't
-exist — same convention as §4's empty `hi`-as-object column.
+**A correction worth flagging explicitly: `zu` ≠ `zuek` here.** An earlier
+pass through this grid assumed `zu` patterned after the plural-triggering
+`zu` familiar from the `ukan` system's "etiquette plural" (`zaitut`, §4) —
+i.e. that it took the `-zki-` infix — and left `zuek` blank as an unsourced
+gap, reasoning (wrongly) that `izan`'s own `-te` plural marker (`zara` →
+`zarete`) made `zuek`'s shape unrecoverable from §14's linearized template.
+That was backwards on both counts. In *this* NOR-NORI paradigm `zu` keeps
+the bare `za-tzai-` shape with no `-zki-` (`zatzait` = za- + -tzai- + -t),
+while `zuek` — genuinely plural — takes `-zki-` exactly like `gu`/`haiek`
+(`zatzaizkit`); no `-te` ever enters the picture. The reflexive diagonal
+follows suit: `zu`-to-`zuri` is `*(refl.)*` over the bare shape (`zatzaizu`),
+`zuek`-to-`zuei` is `*(refl.)*` over the `-zki-` shape (`zatzaizkizue`). Once
+corrected, `zuek` needs no separate sourcing at all — it's exactly as
+mechanically derivable as every other plural `NOR` slot, so the "honest gap"
+this section once flagged here turns out not to exist.
 
 ### Present
 
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
-| niri | *(refl.)* | hatzait | zait | gatzaizkit | zatzaizkit |  | zaizkit |
-| hiri | natzaik *(masc.)* / natzain *(fem.)* | *(refl.)* | zaik *(masc.)* / zain *(fem.)* | gatzaizkik *(masc.)* / gatzaizkin *(fem.)* | zatzaizkik *(masc.)* / zatzaizkin *(fem.)* |  | zaizkik *(masc.)* / zaizkin *(fem.)* |
-| hari | natzaio | hatzaio | zaio | gatzaizkio | zatzaizkio |  | zaizkio |
-| guri | natzaigu | hatzaigu | zaigu | *(refl.)* | zatzaizkigu |  | zaizkigu |
-| zuri | natzaizu | hatzaizu | zaizu | gatzaizkizu | *(refl.)* |  | zaizkizu |
-| zuei | natzaizue | hatzaizue | zaizue | gatzaizkizue | zatzaizkizue |  | zaizkizue |
-| haiei | natzaie | hatzaie | zaie | gatzaizkie | zatzaizkie |  | zaizkie |
+| niri | *(refl.)* | hatzait | zait | gatzaizkit | zatzait | zatzaizkit | zaizkit |
+| hiri | natzaik *(masc.)* / natzain *(fem.)* | *(refl.)* | zaik *(masc.)* / zain *(fem.)* | gatzaizkik *(masc.)* / gatzaizkin *(fem.)* | zatzaik *(masc.)* / zatzain *(fem.)* | zatzaizkik *(masc.)* / zatzaizkin *(fem.)* | zaizkik *(masc.)* / zaizkin *(fem.)* |
+| hari | natzaio | hatzaio | zaio | gatzaizkio | zatzaio | zatzaizkio | zaizkio |
+| guri | natzaigu | hatzaigu | zaigu | *(refl.)* | zatzaigu | zatzaizkigu | zaizkigu |
+| zuri | natzaizu | hatzaizu | zaizu | gatzaizkizu | *(refl.)* | zatzaizkizu | zaizkizu |
+| zuei | natzaizue | hatzaizue | zaizue | gatzaizkizue | zatzaizue | *(refl.)* | zaizkizue |
+| haiei | natzaie | hatzaie | zaie | gatzaizkie | zatzaie | zatzaizkie | zaizkie |
 
 ### Past
 
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
-| niri | *(refl.)* | hintzaidan | zitzaidan | gintzaizkidan | zintzaizkidan |  | zitzaizkidan |
-| hiri | nintzaian *(masc.)* / nintzainan *(fem.)* | *(refl.)* | zitzaian *(masc.)* / zitzainan *(fem.)* | gintzaizkian *(masc.)* / gintzaizkinan *(fem.)* | zintzaizkian *(masc.)* / zintzaizkinan *(fem.)* |  | zitzaizkian *(masc.)* / zitzaizkinan *(fem.)* |
-| hari | nintzaion | hintzaion | zitzaion | gintzaizkion | zintzaizkion |  | zitzaizkion |
-| guri | nintzaigun | hintzaigun | zitzaigun | *(refl.)* | zintzaizkigun |  | zitzaizkigun |
-| zuri | nintzaizun | hintzaizun | zitzaizun | gintzaizkizun | *(refl.)* |  | zitzaizkizun |
-| zuei | nintzaizuen | hintzaizuen | zitzaizuen | gintzaizkizuen | zintzaizkizuen |  | zitzaizkizuen |
-| haiei | nintzaien | hintzaien | zitzaien | gintzaizkien | zintzaizkien |  | zitzaizkien |
+| niri | *(refl.)* | hintzaidan | zitzaidan | gintzaizkidan | zintzaidan | zintzaizkidan | zitzaizkidan |
+| hiri | nintzaian *(masc.)* / nintzainan *(fem.)* | *(refl.)* | zitzaian *(masc.)* / zitzainan *(fem.)* | gintzaizkian *(masc.)* / gintzaizkinan *(fem.)* | zintzaian *(masc.)* / zintzainan *(fem.)* | zintzaizkian *(masc.)* / zintzaizkinan *(fem.)* | zitzaizkian *(masc.)* / zitzaizkinan *(fem.)* |
+| hari | nintzaion | hintzaion | zitzaion | gintzaizkion | zintzaion | zintzaizkion | zitzaizkion |
+| guri | nintzaigun | hintzaigun | zitzaigun | *(refl.)* | zintzaigun | zintzaizkigun | zitzaizkigun |
+| zuri | nintzaizun | hintzaizun | zitzaizun | gintzaizkizun | *(refl.)* | zintzaizkizun | zitzaizkizun |
+| zuei | nintzaizuen | hintzaizuen | zitzaizuen | gintzaizkizuen | zintzaizuen | *(refl.)* | zitzaizkizuen |
+| haiei | nintzaien | hintzaien | zitzaien | gintzaizkien | zintzaien | zintzaizkien | zitzaizkien |
 
 ### Baldintza — "if I were to him…" (protasis)
 
@@ -343,24 +354,24 @@ closing with the *same* `NORI` suffixes as the present grid (no past `-n`):
 
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
-| niri | *(refl.)* | bahintzait | balitzait | bagintzaizkit | bazintzaizkit |  | balitzaizkit |
-| hiri | banintzaik *(masc.)* / banintzain *(fem.)* | *(refl.)* | balitzaik *(masc.)* / balitzain *(fem.)* | bagintzaizkik *(masc.)* / bagintzaizkin *(fem.)* | bazintzaizkik *(masc.)* / bazintzaizkin *(fem.)* |  | balitzaizkik *(masc.)* / balitzaizkin *(fem.)* |
-| hari | banintzaio | bahintzaio | balitzaio | bagintzaizkio | bazintzaizkio |  | balitzaizkio |
-| guri | banintzaigu | bahintzaigu | balitzaigu | *(refl.)* | bazintzaizkigu |  | balitzaizkigu |
-| zuri | banintzaizu | bahintzaizu | balitzaizu | bagintzaizkizu | *(refl.)* |  | balitzaizkizu |
-| zuei | banintzaizue | bahintzaizue | balitzaizue | bagintzaizkizue | bazintzaizkizue |  | balitzaizkizue |
-| haiei | banintzaie | bahintzaie | balitzaie | bagintzaizkie | bazintzaizkie |  | balitzaizkie |
+| niri | *(refl.)* | bahintzait | balitzait | bagintzaizkit | bazintzait | bazintzaizkit | balitzaizkit |
+| hiri | banintzaik *(masc.)* / banintzain *(fem.)* | *(refl.)* | balitzaik *(masc.)* / balitzain *(fem.)* | bagintzaizkik *(masc.)* / bagintzaizkin *(fem.)* | bazintzaik *(masc.)* / bazintzain *(fem.)* | bazintzaizkik *(masc.)* / bazintzaizkin *(fem.)* | balitzaizkik *(masc.)* / balitzaizkin *(fem.)* |
+| hari | banintzaio | bahintzaio | balitzaio | bagintzaizkio | bazintzaio | bazintzaizkio | balitzaizkio |
+| guri | banintzaigu | bahintzaigu | balitzaigu | *(refl.)* | bazintzaigu | bazintzaizkigu | balitzaizkigu |
+| zuri | banintzaizu | bahintzaizu | balitzaizu | bagintzaizkizu | *(refl.)* | bazintzaizkizu | balitzaizkizu |
+| zuei | banintzaizue | bahintzaizue | balitzaizue | bagintzaizkizue | bazintzaizue | *(refl.)* | balitzaizkizue |
+| haiei | banintzaie | bahintzaie | balitzaie | bagintzaizkie | bazintzaie | bazintzaizkie | balitzaizkie |
 
-Same formula, same `*(refl.)*` and `NOR = zuek` gap as the indicative grids
-above — this section's `NOR` template just swaps in the `Ba-…` prefix series
-and drops the past tense's trailing `-n`. Worth noting this fills a kind of
+Same formula and same `*(refl.)*` diagonal as the indicative grids above —
+this section's `NOR` template just swaps in the `Ba-…` prefix series and
+drops the past tense's trailing `-n`. Worth noting this fills a kind of
 gap §13 and `VERB_COVERAGE.md` §3b both leave open in their own way — they
 sketch `izan`'s baldintza with bare example forms (`banintz`, `banu`, …)
 rather than full paradigms; this grid is the dative-marked half of exactly
 that picture, laid out in full — for whatever a mechanically-generated table
 is worth standing next to genuinely-cited ones.
 
- every cell outside the original `hura`/`haiek` columns
+**On confidence:** every cell outside the original `hura`/`haiek` columns
 (plus the `hiri`-row masc./fem. split, already covered above) is *generated*
 by the formula at the top of this section rather than individually attested
 — treat it as 📖-via-systematic-derivation from §14's template, not
