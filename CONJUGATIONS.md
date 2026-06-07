@@ -17,12 +17,12 @@ the app's seven-person paradigm.
 - ✅ — verified, copied straight from `VERBS` in `src/App.jsx`; exactly what
   learners are quizzed on today
 - 📖 — broader reference material (sections 3 onward): plausible standard
-  Batua forms, merged in from a larger paste, **not yet checked against a
-  grammar source**. Treat as a starting point, not ground truth — see
-  "⚠️ Spotted issues" at the end before reusing any of it in `VERBS`. Some
-  📖 cells have since been cross-checked against the two further sources in
-  §14/§15 (and a few corrected as a result) — those call out their own
-  resolution status inline rather than getting a whole new marker
+  Batua forms, merged in from a larger paste and cross-checked where possible
+  against the two further sources in §14/§15 (with a handful of typos and one
+  mislabel corrected along the way). Treat it as a solid starting point —
+  but still not yet verified against `VERBS` itself. The few discrepancies
+  the cross-check couldn't settle are flagged inline with ⚠️ at point of use
+  (see §6) rather than gathered in a separate list
 - 🔍 — partial forms only, as they surfaced while researching
   `VERB_COVERAGE.md`; the full paradigm isn't confirmed, so it's quoted
   verbatim rather than filled in
@@ -69,21 +69,19 @@ Everything from here down was merged in from a larger conjugation reference
 and goes well beyond what's coded into `VERBS`. It includes the `zu` person
 the app doesn't model, fuller `NOR-NORK`/`NOR-NORI`/`NOR-NORI-NORK`
 object-agreement grids, more synthetic verbs, the imperative, and the
-periphrastic system. **Read "⚠️ Spotted issues" before trusting any single
-cell** — a few likely typos and one likely mislabel were caught on the first
-pass, which means others may remain.
+periphrastic system. It's been cross-checked against the further sources in
+§14/§15 — what that caught and fixed is folded straight into the tables below,
+and the handful of discrepancies it couldn't resolve are flagged inline with
+⚠️ right where they occur (see §6).
 
 ## 3. `izan` — additional paradigms · 📖
 
-§14's chart spells `izan`'s full mood/tense system out as plain words (no
-abbreviated notation, unlike most of that chart — see §14's own notes on
-that), which let this section grow from two partial tables into the
-following complete picture. It also corrected a mislabel: the original paste
-called the `nintzateke…` table "Conditional (baldintza)", but in the chart
-that's the *consequence* clause (**ondorioa** — "I would be"); **baldintza**
-proper is the *if*-clause ("if I were"), a distinct paradigm — both are shown
-below, correctly separated, alongside potential, subjunctive, and `izan`'s
-own imperative (none of which were here before).
+`izan`'s full mood/tense system, sourced from §14's plain-word paradigm lists
+(see its own notes on why that source is usually quoted only selectively).
+**Baldintza** (the *if*-clause — "if I were") and **ondorioa** (the
+*consequence* clause — "I would be") are two distinct paradigms that are easy
+to conflate, so they're kept separate below, alongside the potential,
+subjunctive, and `izan`'s own imperative.
 
 ### Baldintza — "if" clause (protasis)
 
@@ -250,11 +248,6 @@ same shape `VERBS` already uses for `ukan` itself (§2):
 | | zuk | zenezan | zenitzan |
 | | zuek | zenezaten | zenitzaten |
 | | haiek | zezaten | zitzaten |
-
-This both fills in and re-labels what the original paste called "NOR = hura —
-conditional": that table had only 5 of these 7 "ondorioa-present" forms and
-was missing `huke`/`zenuke` — both present here now — and "ondorioa" turns
-out to be the more precise term for it (mirroring §3's `izan` relabelling).
 
 ## 5. `izan` with dative — NOR-NORI system · 📖
 
@@ -663,55 +656,24 @@ with `ekarri`'s spelled-out split above, not spelled out letter-by-letter in
 the source itself for `eduki`/`erabili`/`eraman`. Worth a grammar check
 before any of the three goes into `VERBS`.
 
-## ⚠️ Spotted issues in the merged reference — cross-checked against §14/§15
+---
 
-Original caution stands — flag rather than silently "fix," per the
-`VERB_COVERAGE.md` lesson from getting `irudi`/`etzan` wrong once. Three of
-the first four items are now resolved by the §14 chart; a fifth, new one
-surfaced via §15 and remains open alongside the original §6 question.
+## Where this stands
 
-1. **✅ RESOLVED — §3 `izan` conditional, `hi` row.** Was `hintzen` (a past
-   tense form, wrong paradigm). The §14 chart spells out the full
-   `BALDINTZAZKOAK → ONDORIOA → ORAIN` row in plain text: *nintzateke,
-   hintzateke, litzateke, ginateke, zinateke, zinatekete, lirateke* —
-   confirming the guess. §3's table has been corrected to `hintzateke`.
-2. **✅ RESOLVED (re-explained) — §4 `duk`/`dun` gloss** (present-tense
-   `NOR-NORK` grid, `hik`/`hura` cell). The §14 chart uses
-   the alternation marker `K/N` (and the parallel `A/NA`) consistently and
-   *only* in cells where `hi` is itself a grammatical argument — as `NOR`
-   (object), `NORI` (dative), and `NORK` (subject) alike (e.g. the `NOR-NORK`
-   present key shows `HA U K/N` for the `hi`-marker slot, and the
-   `NOR-NORI-NORK` grids show `K/N (A/NA)K/N` wherever `hi` fills `NORI` and/or
-   `NORK`). It never shows up attached to *other* persons' forms the way a
-   true allocutive marker would (allocutive agreement surfaces on a sentence
-   even when `hi` isn't an argument at all — a distinct phenomenon `VERB_COVERAGE.md`
-   §1 also discusses, easy to conflate with this one). That distribution lines
-   up with "`hi`'s own grammatical-role forms vary by `hi`'s gender," not
-   "forms vary by the *addressee's* gender" — so the gloss in the merged paste
-   ("(to male)/(to female)") was very likely the wrong one of the two
-   related phenomena, exactly as suspected. The forms `duk`/`dun` themselves
-   stand confirmed.
-3. **✅ RESOLVED — §4 `zaitugu`/`zaituztegu`** (present-tense `NOR-NORK` grid,
-   `guk`/`zu` and `guk`/`zuek` cells). The §14 `NOR-NORK` present
-   key spells the `zu`-object and `zuek`-object templates as `ZA it U ZU`→
-   …`+gu` and `ZA it U zte ZUE`→ …`+gu` respectively — i.e. `za-it-u-(zte)-gu`,
-   matching the corrected `zaitugu`/`zaituztegu` and ruling out the
-   doubled-vowel `zaituugu`/`zaituzteugu` from the original paste.
-4. **🔍 STILL OPEN — §6 present grid, `niri`/`hark` cell (`zidan`).** The §14
-   chart's `NOR-NORI-NORK` present grid is written in the same compressed
-   morpheme-template style as the rest of the chart (no plain-spelled `zidan`/
-   `dit`-type forms to compare against directly), so it doesn't settle this
-   one either way. Still flagged as probably-misplaced-past-tense rather than
-   asserted as fixed.
-5. **🔍 NEW, STILL OPEN — §6 past grid, `hari` row, `nion`/`zion`/`genion` vs.
-   `nioen`/`zioen`/`genioen`.** Surfaced while cross-checking against §15's
-   `esan` table (see that section's note for the full comparison) — two
-   sources now disagree on three cells, and both forms look plausible
-   (vowel-contraction variants are common in Basque verb morphology). Flagged
-   rather than picked, for the same reason as everything else here.
+The cross-check against §14/§15 resolved every issue it could — those fixes
+are folded directly into §3's and §4's tables, not narrated here (per the
+`VERB_COVERAGE.md` lesson about flagging rather than silently rewriting:
+the corrections themselves are visible in the tables, and that's what matters
+for reuse). Two genuine discrepancies survived the cross-check and remain open
+— both live in §6, flagged inline at the exact cell where they occur:
 
-None of this should block using the verified §1/§2 tables (or the
-corroborated §7 ones, now triple-sourced) — it's specifically items 4 and 5
-above, plus the remaining gaps in §8–§10 (and the blank cells newly visible
-in §4/§5's grids), that still need a grammar-reference pass before anything
-from them goes into `VERBS`.
+- the `niri`/`hark` cell of the **present**-tense `NOR-NORI-NORK` grid
+  (`zidan` — looks like a misplaced past-tense form; see §6's first ⚠️ note)
+- the `hari` row of the **past**-tense `NOR-NORI-NORK` grid (`nion`/`zion`/
+  `genion` vs. `nioen`/`zioen`/`genioen` — two sources disagree; see §6's
+  second ⚠️ note)
+
+Neither blocks using the verified §1/§2 tables or the triple-corroborated §7
+ones. They — plus the remaining gaps in §8–§10 and the blank cells still
+visible in §4–§6's grids — are exactly what a grammar-reference pass would
+need to close before anything from the 📖 sections goes into `VERBS`.
