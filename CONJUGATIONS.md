@@ -30,9 +30,12 @@ the app's seven-person paradigm.
 **Sources merged in, in arrival order:** an initial larger paste (§3 onward);
 a professionally-typeset paradigm-chart PDF covering Batua/Bizkaiera/Zuberera
 (§14, "Euskal aditz laguntzailea"); a 2011 classroom handout covering ten
-synthetic verbs (§15, "Aditz trinkoak"). §14 and §15 mostly serve as
-*cross-checks* on material already here — see each section's own notes for
-exactly what they confirmed, corrected, or couldn't settle.
+synthetic verbs (§15, "Aditz trinkoak"); a PDF on rarer/non-standard synthetic
+verbs (§9, "trinko-ezohiko-batzuk", euskarians.wordpress.com, 2012) that
+supplied `etzan`'s full paradigm. §14/§15 mostly serve as *cross-checks* on
+material already here; the `etzan` source instead fills in a verb that
+previously had only a single confirmed form — see each section's own notes
+for exactly what each contributed.
 
 ---
 
@@ -434,13 +437,19 @@ is the *plural-object* haiek-past form — `zekarten` is its singular-object
 counterpart, and both exist side by side rather than one superseding the
 other.)
 
-## 9. `iraun`, `jario`, `esan`, `irudi` · 🔍 / 📖
+## 9. `iraun`, `jario`, `esan`, `irudi`, `etzan` · 🔍 / 📖
 
 `iraun`/`jario`/`irudi` are unchanged from the original research pass — see
 `VERB_COVERAGE.md` for full context and sourcing, still partial/🔍. `esan` no
 longer belongs in that company: §15 filled it in completely (📖, full table
 below) — kept here rather than relocated, since it's still the same verb
-this section was already tracking.
+this section was already tracking. `etzan` is the newest addition: until now
+the only form on record was its bare 3sg `datza` (`VERB_COVERAGE.md` flags it
+as a rare, limited-use verb that native teaching materials actively steer
+learners away from — "recognise it when you see it" rather than a lesson
+candidate). A PDF dedicated to rarer/non-standard synthetic verbs
+("trinko-ezohiko-batzuk", euskarians.wordpress.com, 2012) supplies its full
+`nor` paradigm below.
 
 ### `iraun` — "to last / endure" (present only)
 
@@ -485,6 +494,28 @@ NORK varying — the same "citation paradigm" shape `VERBS` already uses for
   subjective opinion, nor-nori) vs. `irudi` ("dirudizu" = "you give the
   impression", external appearance, nor-nork) — cognates that drifted apart in
   both meaning *and* agreement.
+
+### `etzan` — "to lie (in) / consist of" (nor — rare, limited use)
+
+Confirms `datza` (the one form `VERB_COVERAGE.md` had pinned down so far) and
+fills out the rest of the paradigm around it — present and past, all seven
+persons:
+
+| Person | Present (oraina) | Past (lehena) |
+|---|---|---|
+| ni | natza | nentzan |
+| hi | hatza | hentzan |
+| hura | datza | zetzan |
+| gu | gautza | geuntzan |
+| zu | zautza | zeuntzan |
+| zuek | zautzate | zeuntzaten |
+| haiek | dautza | zeutzan |
+
+📖 — single-sourced and not yet checked against a grammar reference, like the
+rest of the broader reference. `datza` lining up exactly with the form
+already confirmed independently is a reasonable sign for the rest of the
+table, though — same kind of corroboration §7's `egon`/`joan`/`etorri`/`ibili`
+got, just from one source instead of three so far.
 
 ## 10. Imperative (agintera) · 📖
 
