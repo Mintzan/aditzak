@@ -333,7 +333,34 @@ exist — same convention as §4's empty `hi`-as-object column.
 | zuei | nintzaizuen | hintzaizuen | zitzaizuen | gintzaizkizuen | zintzaizkizuen |  | zitzaizkizuen |
 | haiei | nintzaien | hintzaien | zitzaien | gintzaizkien | zintzaizkien |  | zitzaizkien |
 
-**On confidence:** every cell outside the original `hura`/`haiek` columns
+### Baldintza — "if I were to him…" (protasis)
+
+§14 spells this mood out as a *third* NOR-NORI row-template, prefixed `Ba-`
+on top of a `nin-`/`hin-`/`li-`/`gin-`/`zin-`/`zin-`/`li-` series (compare
+`banintz`/`bahintz`/`balitz`/… in §1/§3 — the familiar conditional prefix,
+just riding the dative-marked `tzai` stem instead of `izan`'s own one) and
+closing with the *same* `NORI` suffixes as the present grid (no past `-n`):
+
+| NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | bahintzait | balitzait | bagintzaizkit | bazintzaizkit |  | balitzaizkit |
+| hiri | banintzaik *(masc.)* / banintzain *(fem.)* | *(refl.)* | balitzaik *(masc.)* / balitzain *(fem.)* | bagintzaizkik *(masc.)* / bagintzaizkin *(fem.)* | bazintzaizkik *(masc.)* / bazintzaizkin *(fem.)* |  | balitzaizkik *(masc.)* / balitzaizkin *(fem.)* |
+| hari | banintzaio | bahintzaio | balitzaio | bagintzaizkio | bazintzaizkio |  | balitzaizkio |
+| guri | banintzaigu | bahintzaigu | balitzaigu | *(refl.)* | bazintzaizkigu |  | balitzaizkigu |
+| zuri | banintzaizu | bahintzaizu | balitzaizu | bagintzaizkizu | *(refl.)* |  | balitzaizkizu |
+| zuei | banintzaizue | bahintzaizue | balitzaizue | bagintzaizkizue | bazintzaizkizue |  | balitzaizkizue |
+| haiei | banintzaie | bahintzaie | balitzaie | bagintzaizkie | bazintzaizkie |  | balitzaizkie |
+
+Same formula, same `*(refl.)*` and `NOR = zuek` gap as the indicative grids
+above — this section's `NOR` template just swaps in the `Ba-…` prefix series
+and drops the past tense's trailing `-n`. Worth noting this fills a kind of
+gap §13 and `VERB_COVERAGE.md` §3b both leave open in their own way — they
+sketch `izan`'s baldintza with bare example forms (`banintz`, `banu`, …)
+rather than full paradigms; this grid is the dative-marked half of exactly
+that picture, laid out in full — for whatever a mechanically-generated table
+is worth standing next to genuinely-cited ones.
+
+ every cell outside the original `hura`/`haiek` columns
 (plus the `hiri`-row masc./fem. split, already covered above) is *generated*
 by the formula at the top of this section rather than individually attested
 — treat it as 📖-via-systematic-derivation from §14's template, not
