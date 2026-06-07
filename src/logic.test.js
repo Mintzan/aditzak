@@ -146,9 +146,11 @@ describe('shuffle', () => {
 })
 
 describe('exerciseReducer', () => {
+  const questionA = { person: 'ni', correct: 'naiz', options: ['naiz', 'haiz', 'da', 'gara'] }
+  const questionB = { person: 'hi', correct: 'haiz', options: ['naiz', 'haiz', 'da', 'gara'] }
   const baseState = {
-    questions: [{ person: 'ni', correct: 'naiz', options: ['naiz', 'haiz', 'da', 'gara'] }],
-    index: 0,
+    queue: [questionA, questionB],
+    total: 2,
     selected: null,
     status: 'active',
     correctCount: 0,
@@ -173,10 +175,28 @@ describe('exerciseReducer', () => {
     expect(ignored).toBe(answered)
   })
 
-  it('advances to the next question and resets selection and status', () => {
+  it('drops a correctly-answered question from the queue and resets selection and status', () => {
     const answered = exerciseReducer(baseState, { type: 'answer', option: 'naiz' })
     const next = exerciseReducer(answered, { type: 'next' })
 
-    expect(next).toMatchObject({ index: 1, selected: null, status: 'active', correctCount: 1 })
+    expect(next.queue).toEqual([questionB])
+    expect(next).toMatchObject({ selected: null, status: 'active', correctCount: 1 })
+  })
+
+  it('requeues an incorrectly-answered question at the back, marked for retry', () => {
+    const answered = exerciseReducer(baseState, { type: 'answer', option: 'haiz' })
+    const next = exerciseReducer(answered, { type: 'next' })
+
+    expect(next.queue).toHaveLength(2)
+    expect(next.queue[0]).toBe(questionB)
+    expect(next.queue[1]).toMatchObject({ person: 'ni', correct: 'naiz', retry: true })
+    expect(next).toMatchObject({ selected: null, status: 'active', correctCount: 0 })
+  })
+
+  it('does not award score for getting a requeued question right on retry', () => {
+    const retryState = { ...baseState, queue: [{ ...questionA, retry: true }], total: 1 }
+    const next = exerciseReducer(retryState, { type: 'answer', option: 'naiz' })
+
+    expect(next).toMatchObject({ status: 'correct', correctCount: 0 })
   })
 })

@@ -392,20 +392,23 @@ function HomeScreen({ progress, tab, onChangeTab, onSelectLesson, onResetProgres
 // =============================================================================
 
 function createExerciseState(verb, tense) {
+  const questions = generateQuestions(verb, tense)
   return {
-    questions: generateQuestions(verb, tense),
-    index: 0,
+    queue: questions,
+    total: questions.length,
     selected: null,
     status: 'active', // 'active' | 'correct' | 'incorrect'
     correctCount: 0,
   }
 }
 
+// On a correct answer we reveal which option it was; on an incorrect one we
+// only flag the wrong pick — the correct form stays hidden so the learner has
+// to actually recall it when this question comes back around.
 function getOptionStatus(option, question, state) {
   if (state.status === 'active') return 'idle'
-  if (option === question.correct) return 'correct'
-  if (option === state.selected) return 'incorrect'
-  return 'idle'
+  if (state.status === 'correct') return option === question.correct ? 'correct' : 'idle'
+  return option === state.selected ? 'incorrect' : 'idle'
 }
 
 const OPTION_STYLES = {
@@ -430,7 +433,7 @@ function AnswerOption({ option, status, disabled, onSelect }) {
   )
 }
 
-function FeedbackBar({ status, correctAnswer, isLast, onContinue }) {
+function FeedbackBar({ status, isLast, onContinue }) {
   if (status === 'active') return null
   const isCorrect = status === 'correct'
   return (
@@ -439,13 +442,7 @@ function FeedbackBar({ status, correctAnswer, isLast, onContinue }) {
         <span className="text-2xl" aria-hidden="true">
           {isCorrect ? '✓' : '✕'}
         </span>
-        {isCorrect ? (
-          <span>Bikain! Great job!</span>
-        ) : (
-          <span>
-            Not quite — the answer is <span className="underline">{correctAnswer}</span>
-          </span>
-        )}
+        {isCorrect ? <span>Bikain! Great job!</span> : <span>Not quite — you'll see this one again.</span>}
       </p>
       <button
         type="button"
@@ -495,12 +492,15 @@ function MultipleChoiceScreen({ verb, tense, onExit, onComplete }) {
   const [state, dispatch] = useReducer(exerciseReducer, undefined, () => createExerciseState(verb, tense))
   const [finished, setFinished] = useState(false)
 
-  const total = state.questions.length
-  const question = state.questions[state.index]
+  const total = state.total
+  const question = state.queue[0]
   const isAnswered = state.status !== 'active'
-  const isLast = state.index === total - 1
+  // Finishing means the queue is about to empty — only true once the *last*
+  // remaining question has been answered correctly; an incorrect answer to it
+  // sends it back to the queue and the lesson carries on.
+  const isLast = state.queue.length === 1 && state.status === 'correct'
   const tenseMeta = TENSE_META[tense]
-  const progressValue = (state.index + (isAnswered ? 1 : 0)) / total
+  const progressValue = (state.total - state.queue.length + (state.status === 'correct' ? 1 : 0)) / total
 
   function handleSelect(option) {
     if (isAnswered) return
@@ -567,7 +567,7 @@ function MultipleChoiceScreen({ verb, tense, onExit, onComplete }) {
         </div>
       </div>
 
-      <FeedbackBar status={state.status} correctAnswer={question.correct} isLast={isLast} onContinue={handleContinue} />
+      <FeedbackBar status={state.status} isLast={isLast} onContinue={handleContinue} />
     </div>
   )
 }

@@ -4,6 +4,29 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-07 — Failed questions are requeued and hidden, not revealed and skipped
+
+**Decision:** Reworked `exerciseReducer`/`createExerciseState` to drive the
+exercise off a `queue` (plus a fixed `total`) instead of a linear
+`questions`/`index` pair. A correct answer drops the question from the queue;
+an incorrect one pushes it to the *back* of the queue marked `retry: true`, so
+it resurfaces later in the same session — the lesson only ends once the queue
+is empty, i.e. every question has eventually been answered correctly.
+`correctCount` (and therefore the score/star rating shown on
+`LessonResultsScreen`) only credits *first*-attempt correct answers, so it
+keeps measuring actual recall rather than collapsing to 100% once retries
+guarantee everything gets answered right eventually. Also changed
+`getOptionStatus`/`FeedbackBar` so a wrong answer only flags the learner's
+(incorrect) pick — the correct option/form is no longer revealed — while a
+right answer still highlights the chosen option in green as before.
+
+**Why:** Asked for explicitly: don't show the right answer on a miss, let the
+learner move on, and bring the missed item back until they get it right
+unaided. Hiding the answer only matters if the question can come back, so the
+two changes are coupled. Pushing to the back of the queue (rather than e.g.
+reinserting a few slots ahead) is the simplest "queue" semantics that still
+guarantees some spacing before a retry in lessons with more than one question.
+
 ## 2026-06-07 — End-of-lesson encouragement screen keyed off `computeStars` bands
 
 **Decision:** Added `LessonResultsScreen`, shown when `MultipleChoiceScreen`

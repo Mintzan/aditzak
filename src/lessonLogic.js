@@ -96,21 +96,32 @@ export function generateQuestions(verb, tense) {
   })
 }
 
+// The exercise works through a queue rather than a fixed list: a question
+// answered correctly is dropped, one answered incorrectly is pushed to the
+// back (marked `retry`) so it resurfaces later in the same session — the
+// lesson isn't done until the queue is empty, i.e. every question has
+// eventually been answered correctly. `correctCount` only credits *first*
+// attempts, so the final score (and star rating) reflects how many forms the
+// learner actually knew rather than how many they eventually got via retries.
 export function exerciseReducer(state, action) {
   switch (action.type) {
     case 'answer': {
       if (state.status !== 'active') return state
-      const question = state.questions[state.index]
+      const question = state.queue[0]
       const isCorrect = action.option === question.correct
+      const countsTowardScore = isCorrect && !question.retry
       return {
         ...state,
         selected: action.option,
         status: isCorrect ? 'correct' : 'incorrect',
-        correctCount: state.correctCount + (isCorrect ? 1 : 0),
+        correctCount: state.correctCount + (countsTowardScore ? 1 : 0),
       }
     }
-    case 'next':
-      return { ...state, index: state.index + 1, selected: null, status: 'active' }
+    case 'next': {
+      const [current, ...rest] = state.queue
+      const queue = state.status === 'correct' ? rest : [...rest, { ...current, retry: true }]
+      return { ...state, queue, selected: null, status: 'active' }
+    }
     default:
       return state
   }
