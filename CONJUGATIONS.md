@@ -32,10 +32,10 @@ a professionally-typeset paradigm-chart PDF covering Batua/Bizkaiera/Zuberera
 (§14, "Euskal aditz laguntzailea"); a 2011 classroom handout covering ten
 synthetic verbs (§15, "Aditz trinkoak"); a PDF on rarer/non-standard synthetic
 verbs (§9, "trinko-ezohiko-batzuk", euskarians.wordpress.com, 2012) that
-supplied `etzan`'s full paradigm. §14/§15 mostly serve as *cross-checks* on
-material already here; the `etzan` source instead fills in a verb that
-previously had only a single confirmed form — see each section's own notes
-for exactly what each contributed.
+filled out `jario`'s paradigm and supplied `etzan`'s from scratch. §14/§15
+mostly serve as *cross-checks* on material already here; §9's new source
+instead grows verbs that were previously fragmentary or single-form-only —
+see each section's own notes for exactly what each contributed.
 
 ---
 
@@ -439,17 +439,18 @@ other.)
 
 ## 9. `iraun`, `jario`, `esan`, `irudi`, `etzan` · 🔍 / 📖
 
-`iraun`/`jario`/`irudi` are unchanged from the original research pass — see
+`iraun`/`irudi` are unchanged from the original research pass — see
 `VERB_COVERAGE.md` for full context and sourcing, still partial/🔍. `esan` no
 longer belongs in that company: §15 filled it in completely (📖, full table
 below) — kept here rather than relocated, since it's still the same verb
-this section was already tracking. `etzan` is the newest addition: until now
-the only form on record was its bare 3sg `datza` (`VERB_COVERAGE.md` flags it
-as a rare, limited-use verb that native teaching materials actively steer
-learners away from — "recognise it when you see it" rather than a lesson
-candidate). A PDF dedicated to rarer/non-standard synthetic verbs
-("trinko-ezohiko-batzuk", euskarians.wordpress.com, 2012) supplies its full
-`nor` paradigm below.
+this section was already tracking. `jario` and `etzan` have grown the same
+way, courtesy of a new PDF dedicated to rarer/non-standard synthetic verbs
+("trinko-ezohiko-batzuk", euskarians.wordpress.com, 2012): it spells out
+`jario`'s full present/past `NOR-NORI` paradigm (templated, below — far more
+than the fragment that was here before) and supplies `etzan`'s complete `nor`
+paradigm from scratch (it previously had only its bare 3sg `datza` confirmed —
+`VERB_COVERAGE.md` flags it as a rare, "recognise it when you see it" verb
+that native teaching materials steer learners away from).
 
 ### `iraun` — "to last / endure" (present only)
 
@@ -463,13 +464,39 @@ candidate). A PDF dedicated to rarer/non-standard synthetic verbs
 | zuek | dirauzue |
 | haiek | diraute |
 
-### `jario` — "to flow / ooze" (nor-nori; defective, effectively fixed `nor`)
+### `jario` — "to flow / ooze / pour" (nor-nori; defective, effectively fixed `nor`)
 
-- Present, by `nori` person: `dari(zki)t/k/o/gu/zu/zue/e` → **dariot** (to me),
-  **dario** (to him/her), **darizkio** (to him/her, plural object)…
-- Past (standard Batua): **zeridan / zerion / zerigun**…
-- Past (Bizkaian variant — `jario`'s own past stem, not a separate verb):
-  **darie** / **erion**
+The same PDF that supplies `etzan`'s paradigm (below, this section) also spells out
+`jario`'s full present/past `NOR-NORI` picture as templates — `(zki)` marks
+the plural-`NOR` alternant, the same `(z)`/`(zki)` convention `VERBS` and
+`VERB_COVERAGE.md` use elsewhere, so e.g. `niri` reads as **dariot**
+(singular `nor`) / **darizkit** (plural `nor`):
+
+| NORI | Present (oraina) | Past (lehenaldia) |
+|---|---|---|
+| niri | dari(zki)t | zeri(zki)dan |
+| hiri | dari(zki)k/n *(masc./fem. — `hi` as `nori`; see allocutive note in `VERB_COVERAGE.md` §1)* | zeri(zki)(n)an *(masc./fem.)* |
+| hari | dari(zki)o | zeri(zki)on |
+| guri | dari(zki)gu | zeri(zki)gun |
+| zuri | dari(zki)zu | zeri(zki)zun |
+| zuei | dari(zki)zue | zeri(zki)zuen |
+| haiei | dari(zki)e | zeri(zki)en |
+
+Past (Bizkaian variant — `jario`'s own past stem, not a separate verb):
+**darie** / **erion**.
+
+The source's own example sentences underline how narrow `jario`'s everyday
+use is — almost always a body fluid or liquid as the (singular) `nor`, and
+often paired with `egon` rather than standing on its own (rough working
+glosses, not grammar-checked):
+
+- *Malkoak zerizkiola azaldu zen* — "He/she appeared/showed up with tears
+  streaming [from him/her]"
+- *Odola dariola dago* (= *Odoletan dago*) — "He/she is bleeding"
+- *Negarra dariola dago* — "He/she is crying"
+- *Izerdia dario* — "He/she is sweating"
+- *Adurra dariola dago* — "He/she is drooling"
+- *Iturriari ura dario* — "Water flows from the fountain"
 
 ### `esan` — "to say" (ditransitive forms, on the `*-io-` root `ukan` also borrows)
 
