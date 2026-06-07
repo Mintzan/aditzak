@@ -19,10 +19,20 @@ the app's seven-person paradigm.
 - 📖 — broader reference material (sections 3 onward): plausible standard
   Batua forms, merged in from a larger paste, **not yet checked against a
   grammar source**. Treat as a starting point, not ground truth — see
-  "⚠️ Spotted issues" at the end before reusing any of it in `VERBS`
+  "⚠️ Spotted issues" at the end before reusing any of it in `VERBS`. Some
+  📖 cells have since been cross-checked against the two further sources in
+  §14/§15 (and a few corrected as a result) — those call out their own
+  resolution status inline rather than getting a whole new marker
 - 🔍 — partial forms only, as they surfaced while researching
   `VERB_COVERAGE.md`; the full paradigm isn't confirmed, so it's quoted
   verbatim rather than filled in
+
+**Sources merged in, in arrival order:** an initial larger paste (§3 onward);
+a professionally-typeset paradigm-chart PDF covering Batua/Bizkaiera/Zuberera
+(§14, "Euskal aditz laguntzailea"); a 2011 classroom handout covering ten
+synthetic verbs (§15, "Aditz trinkoak"). §14 and §15 mostly serve as
+*cross-checks* on material already here — see each section's own notes for
+exactly what they confirmed, corrected, or couldn't settle.
 
 ---
 
@@ -70,7 +80,7 @@ pass, which means others may remain.
 | Person | Form |
 |---|---|
 | ni | nintzateke |
-| hi | *(see ⚠️ — pasted source repeated `hintzen`, the past-tense form, here; the pattern of this table suggests it should be `hintzateke`)* |
+| hi | hintzateke *(corrected — the merged paste had repeated `hintzen`, the past-tense form, here; `hintzateke` is now confirmed directly against the "Euskal aditz laguntzailea" chart, see §14)* |
 | hura | litzateke |
 | gu | ginateke |
 | zu | zinateke |
@@ -252,6 +262,15 @@ file started with — now folded in below with the `zu` row added). Every
 overlapping cell **matched**, which is reassuring corroboration for both
 sources; the `zu` row is new information from the merged paste.
 
+A *third*, independent source corroborates the same four verbs again — a
+classroom reference table covered in §15 (`eduki/egon/ekarri/erabili/eraman/
+esan/etorri/ibili/jakin/joan`, from euskarians.wordpress.com, 2011). Every
+`egon`/`joan`/`etorri`/`ibili` form it gives matches the table below exactly
+— **triple** corroboration now. (That source's own table omits the `hi` row
+for these verbs entirely, presumably to dodge the masculine/feminine
+alternation rather than out of disagreement — so it neither confirms nor
+disputes `hago`/`hoa`/`hator`/`habil`.)
+
 ### `egon` — "to be (located / in a state)"
 
 | Person | Present | Past |
@@ -314,14 +333,26 @@ sources; the `zu` row is new information from the merged paste.
 | zuek | dakizue | — |
 | haiek | dakite | zekiten |
 
-### `ekarri` — "to bring" — nor-nork (synthetic forms are past-only/literary)
+### `ekarri` — "to bring" — nor-nork
 
-| Person | Past |
-|---|---|
-| nik | nekarren |
-| hark | zekarren |
-| guk | genekarren |
-| haiek | zekartzaten |
+Originally quoted here as "past-only/literary" from a partial source — §15's
+classroom table gives a fuller paradigm with **both tenses** and an explicit
+singular-vs-plural-object split (`(tza)` = plural-object infix, exactly the
+`(z)`/`(zki)` notation `VERBS`/`VERB_COVERAGE.md` already use elsewhere):
+
+| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
+|---|---|---|
+| nik | dakart / dakartzat | nekarren / nekartzan |
+| hark | dakar / dakartza | zekarren / zekartzan |
+| guk | dakargu / dakartzagu | genekarren / genekartzan |
+| zuk | dakarzu / dakartzazu | zenekarren / zenekartzan |
+| zuek | dakarzue / dakartzazue | zenekarten / zenekartzaten |
+| haiek | dakarte / dakartzate | zekarten / zekartzaten |
+
+(Note this resolves an ambiguity in the original partial quote: `zekartzaten`
+is the *plural-object* haiek-past form — `zekarten` is its singular-object
+counterpart, and both exist side by side rather than one superseding the
+other.)
 
 ## 9. `iraun`, `jario`, `esan`, `irudi` — partial forms · 🔍
 
@@ -350,7 +381,19 @@ context and sourcing.)
 
 ### `esan` — "to say" (ditransitive forms, on the `*-io-` root `ukan` also borrows)
 
-- **dio / diot / diozu**…
+§15's classroom table fills this in completely — for `esan`, "complete" means
+NOR fixed at 3sg (`hura`/"it"), NORI fixed at 3sg (`hari`/"to him-her"), and
+NORK varying — the same "citation paradigm" shape `VERBS` already uses for
+`ukan` itself (§2):
+
+| Person (nork) | Present | Past |
+|---|---|---|
+| nik | diot | nioen |
+| hark | dio | zioen |
+| guk | diogu | genioen |
+| zuk | diozu | zenioen |
+| zuek | diozue | zenioten |
+| haiek | diote | zioten |
 
 ### `irudi` — "to seem / give the impression" (nor-nork — *not* `iruditu`'s nor-nori)
 
@@ -449,37 +492,122 @@ naiz"* (present perfect), *"ibiliko naiz"* (future).
 
 ---
 
-## ⚠️ Spotted issues in the merged reference (§3 onward)
+## 14. Cross-check source: "Euskal aditz laguntzailea" chart · 📖
 
-Flagging these explicitly rather than silently "fixing" them, since I'm not
-certain enough of the correct forms to assert them as fact — exactly the
-caution `VERB_COVERAGE.md` urges after getting `irudi`/`etzan` wrong once:
+A dense, professionally-compiled auxiliary-verb paradigm chart (uploaded
+2026-06-07) — three pages covering Batua (Lorenzo Zugazaga Martikorena),
+Bizkaiera, and Zuberera (Jean Louis Davant), laid out as
+mood × tense × `NOR`/`NOR-NORI`/`NOR-NORK`/`NOR-NORI-NORK` grids. It uses
+heavily abbreviated morpheme-template notation rather than fully-spelled-out
+words in most cells (e.g. `NA U T`, `Di (zki) GU GU`), which makes it
+excellent for *checking specific forms someone already wrote down* but
+error-prone to transcribe wholesale into prose tables — so it's used here as
+a **cross-check against §3–§6's flagged issues**, not copied in full.
 
-1. **§3 `izan` conditional, `hi` row** — gives `hintzen`, which is `izan`'s
-   *past*-tense `hi` form (see §1), not a conditional. Every other person in
-   that same table follows an `-ateke`/`-atekete` pattern, which would predict
-   something like `hintzateke`. Left as a flagged blank rather than guessed.
-2. **§4a `duk`/`dun` gloss** — the source labels these "(to male)" / "(to
-   female)", implying *allocutive* agreement (verb shape depends on the
-   listener). But `hi` here **is** the grammatical subject (`hik... du`), and
-   `VERB_COVERAGE.md` §1 describes a *different*, non-allocutive phenomenon —
-   `hi`'s own grammatical-subject forms varying by `hi`'s gender (its `iraun`
-   quote shows exactly this: "Hik dirauk/n" as alternatives for the same
-   slot). The *forms* `duk`/`dun` are plausibly right; the *explanation*
-   attached to them in the source looks like it's reaching for the wrong one
-   of two related-but-distinct phenomena.
-3. **§4g/§4h `zaituugu`/`zaituzteugu`** — corrected here to `zaitugu`/
-   `zaituztegu`; doubled vowels like this don't occur in these endings
-   elsewhere in the paradigm, and the corrected forms match the regular
-   `-gu`/`-tegu` 1st-person-plural-subject pattern seen throughout §4.
-4. **§6 present grid, `niri`/`hark` cell** — shows `zidan`, a past-tense `-an`
-   form (compare the present-tense `dio`/`diot` elsewhere in the same row/
-   table), sitting in a table labelled "present." Likely belongs in the past
-   grid below it instead, leaving the present cell blank — but left as a
-   verbatim flag rather than moved, since I can't independently confirm what
-   *should* fill the present slot.
+This source is also the first one seen so far with full **Bizkaiera and
+Zuberera** paradigms side by side with Batua — directly relevant to the
+`dialectVariants` extension point `CLAUDE.md` describes (e.g.
+`dialectVariants: { bizkaiera: { conjugations: {...} } }`), should the app
+ever grow dialect support beyond the current `dialect: 'batua'` placeholder.
+Worth keeping in mind as a source for that, once decoded more rigorously.
+
+## 15. Classroom reference table — three new synthetic verbs · 📖
+
+Source: *"Aditz trinkoak: eduki, egon, ekarri, erabili, eraman, esan, etorri,
+ibili, jakin, joan"* (uploaded 2026-06-07; dated 2011, `santutxu` /
+euskarians.wordpress.com). A one-page classroom handout giving present + past
+for ten synthetic verbs side by side, in a **six-person layout that omits
+`hi`** (`ni / hura / gu / zu / zuek / haiek` — same shape as `ukan`'s
+citation paradigm in §2, just spread across more verbs). It overlaps with
+material already in this file for `egon`/`joan`/`etorri`/`ibili` (§7, now
+triple-corroborated) and `ekarri`/`esan` (§8/§9, now filled in above) — and
+adds **three verbs not seen in any source so far**: `eduki`, `erabili`,
+`eraman`. None of these three are in `VERBS` yet.
+
+### `eduki` — "to have / hold (physically)" — nor-nork
+
+A near-synonym of `ukan` used for physical possession/holding — distinct
+enough in register/meaning that it's worth keeping separate from `ukan`
+rather than treating as a variant. Like `ekarri` above, the source's
+`(Z)`/`(z)` notation marks the plural-object alternant:
+
+| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
+|---|---|---|
+| nik | daukat / dauzkat | neukan / neuzkan |
+| hark | dauka / dauzka | zeukan / zeuzkan |
+| guk | daukagu / dauzkagu | geneukan / geneuzkan |
+| zuk | daukazu / dauzkazu | zeneukan / zeneuzkan |
+| zuek | daukazue / dauzkazue | zeneukaten / zeneuzkaten |
+| haiek | daukate / dauzkate | zeukaten / zeuzkaten |
+
+### `erabili` — "to use" — nor-nork
+
+| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
+|---|---|---|
+| nik | darabilt / darabiltzat | nerabilen / nerabiltzan |
+| hark | darabil / darabiltza | zerabilen / zerabiltzan |
+| guk | darabilgu / darabiltzagu | generabilen / generabiltzan |
+| zuk | darabilzu / darabiltzazu | zenerabilen / zenerabiltzan |
+| zuek | darabilzue / darabiltzazue | zenerabilten / zenerabiltzaten |
+| haiek | darabilte / darabiltzate | zerabilten / zerabiltzaten |
+
+### `eraman` — "to carry / take (something somewhere)" — nor-nork
+
+| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
+|---|---|---|
+| nik | daramat / daramatzat | neraman / neramatzan |
+| hark | darama / daramatza | zeraman / zeramatzan |
+| guk | daramagu / daramatzagu | generaman / generamatzan |
+| zuk | daramazu / daramatzazu | zeneraman / zeneramatzan |
+| zuek | daramazue / daramatzazue | zeneramaten / zeneramatzaten |
+| haiek | daramate / daramatzate | zeramaten / zeramatzaten |
+
+⚠️ As with everything past §2, these are merged in as **unverified leads**,
+not facts — the `(sg./pl. obj.)` split is *inferred* from the source's
+`X(Y)` shorthand by analogy with `VERBS`' own `(z)`/`(zki)` convention and
+with `ekarri`'s spelled-out split above, not spelled out letter-by-letter in
+the source itself for `eduki`/`erabili`/`eraman`. Worth a grammar check
+before any of the three goes into `VERBS`.
+
+## ⚠️ Spotted issues in the merged reference (§3–§6) — now cross-checked against §14
+
+Original caution stands — flag rather than silently "fix," per the
+`VERB_COVERAGE.md` lesson from getting `irudi`/`etzan` wrong once. Three of
+the four items below are now resolved by the §14 chart; one remains open.
+
+1. **✅ RESOLVED — §3 `izan` conditional, `hi` row.** Was `hintzen` (a past
+   tense form, wrong paradigm). The §14 chart spells out the full
+   `BALDINTZAZKOAK → ONDORIOA → ORAIN` row in plain text: *nintzateke,
+   hintzateke, litzateke, ginateke, zinateke, zinatekete, lirateke* —
+   confirming the guess. §3's table has been corrected to `hintzateke`.
+2. **✅ RESOLVED (re-explained) — §4a `duk`/`dun` gloss.** The §14 chart uses
+   the alternation marker `K/N` (and the parallel `A/NA`) consistently and
+   *only* in cells where `hi` is itself a grammatical argument — as `NOR`
+   (object), `NORI` (dative), and `NORK` (subject) alike (e.g. the `NOR-NORK`
+   present key shows `HA U K/N` for the `hi`-marker slot, and the
+   `NOR-NORI-NORK` grids show `K/N (A/NA)K/N` wherever `hi` fills `NORI` and/or
+   `NORK`). It never shows up attached to *other* persons' forms the way a
+   true allocutive marker would (allocutive agreement surfaces on a sentence
+   even when `hi` isn't an argument at all — a distinct phenomenon `VERB_COVERAGE.md`
+   §1 also discusses, easy to conflate with this one). That distribution lines
+   up with "`hi`'s own grammatical-role forms vary by `hi`'s gender," not
+   "forms vary by the *addressee's* gender" — so the gloss in the merged paste
+   ("(to male)/(to female)") was very likely the wrong one of the two
+   related phenomena, exactly as suspected. The forms `duk`/`dun` themselves
+   stand confirmed.
+3. **✅ RESOLVED — §4g/§4h `zaitugu`/`zaituztegu`.** The §14 `NOR-NORK` present
+   key spells the `zu`-object and `zuek`-object templates as `ZA it U ZU`→
+   …`+gu` and `ZA it U zte ZUE`→ …`+gu` respectively — i.e. `za-it-u-(zte)-gu`,
+   matching the corrected `zaitugu`/`zaituztegu` and ruling out the
+   doubled-vowel `zaituugu`/`zaituzteugu` from the original paste.
+4. **🔍 STILL OPEN — §6 present grid, `niri`/`hark` cell (`zidan`).** The §14
+   chart's `NOR-NORI-NORK` present grid is written in the same compressed
+   morpheme-template style as the rest of the chart (no plain-spelled `zidan`/
+   `dit`-type forms to compare against directly), so it doesn't settle this
+   one either way. Still flagged as probably-misplaced-past-tense rather than
+   asserted as fixed.
 
 None of this should block using the verified §1/§2 tables (or the
-corroborated §7 ones) — it's specifically the parts newly merged in via §3–§6
-and the gaps in §8–§10 that need a grammar-reference pass before anything from
-them goes into `VERBS`.
+corroborated §7 ones) — it's specifically item 4 above, plus the gaps in
+§8–§10, that still need a grammar-reference pass before anything from them
+goes into `VERBS`.
