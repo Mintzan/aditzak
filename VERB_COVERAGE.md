@@ -120,6 +120,12 @@ would meet them next:
 ### 3c. Potential (ahalera) — 🔲
 - Present: naiteke, dezaket, nagoke
 - Past: nintekeen, nezakeen, nengokeen
+- This synthetic `-ke` paradigm is historically `ahal` ("ability/possibility")
+  grammaticalized into a suffix — and it's a *closed set*, available only to
+  verbs that already carry full synthetic conjugations (`izan`, `ukan`/`eduki`,
+  `egon`, `ibili`, `joan`, `etorri`, `jakin`...). For every other — i.e. most
+  — verb in the language, "can" is expressed the *other* way `ahal` shows up:
+  periphrastically, see §5
 
 ### 3d. Subjunctive (subjuntiboa) — 🔲
 - nadin, dezadan, nengoen — mostly appears embedded in subordinate clauses
@@ -212,12 +218,13 @@ field gets its first real use:
 | esan | erran | northern (Lapurdian/Zuberoan) | "to say" |
 | jarraitu | jarraiki | eastern (Lapurdian/Zuberoan) | "to follow" |
 
-## 5. Modal & aspectual constructions — `nahi` / `behar` / `ari`
+## 5. Modal & aspectual constructions — `nahi` / `behar` / `ari` / `ahal` (+ `ezin`)
 
-These three don't sit anywhere on the verb/tense/agreement grid above — they're
-not lexical verbs at all, but invariant nouns/particles that combine with a
-main verb's non-finite form plus an existing auxiliary to express **want**,
-**need/must**, and **ongoing action**:
+These don't sit anywhere on the verb/tense/agreement grid above — they're not
+lexical verbs at all, but invariant nouns/particles that combine with a main
+verb's non-finite form plus an existing auxiliary to express **want**,
+**need/must**, **ongoing action**, and — the newest addition here —
+**ability/possibility** (plus its mirror image, **inability**):
 
 - **`nahi`** ("want/wish") + radical/participle + `ukan` — "Etorri nahi dut" =
   "I want to come"; "Liburu bat nahi dut" = "I want a book"
@@ -226,13 +233,18 @@ main verb's non-finite form plus an existing auxiliary to express **want**,
 - **`ari`** ("in the process of") + imperfective participle (`-tzen`/`-ten`)
   + `izan` — "Lan egiten ari naiz" = "I'm working (right now)"; "Zer ari
   zara?" = "What are you doing?"
+- **`ahal`** ("ability/possibility") + radical/participle + auxiliary —
+  "Etorri ahal naiz" = "I can come"; "Hori esan ahal dut" = "I can say that."
+  Its negation **`ezin`** — a fused contraction of `ez` + `ahal` — is, if
+  anything, even more common in everyday speech: "Ezin dut etorri" = "I
+  can't come"
 
-Three things make these unusually attractive — possibly *more* so than
+Four things make these unusually attractive — possibly *more* so than
 anything in §4:
 
 1. **They're likely what a beginner most wants to say.** "I want to…", "I
-   need to…", "I'm doing…" outrank most lexical verbs in conversational
-   payoff per form learned.
+   need to…", "I'm doing…", "I can/can't…" outrank most lexical verbs in
+   conversational payoff per form learned.
 2. **The auxiliary is chosen by the construction's head, not the lexical
    verb — a genuinely teachable "aha" moment.** `nahi`/`behar` *always* take
    `ukan` ("Joan behar **dut**", not "joan behar naiz", even though `joan`
@@ -240,11 +252,26 @@ anything in §4:
    irakurtzen **ari naiz**", not "ari dut", even though `irakurri` alone is
    `dut`/transitive). A learner who's internalised "the auxiliary matches the
    verb" needs precisely this counter-example to get the real rule.
-3. **They cost nothing in new conjugation data.** `nahi`/`behar` conjugate
+3. **`ahal`/`ezin` are the perfect counter-counter-example — and the *pair*
+   with point 2 is the actual lesson.** Unlike `nahi`/`behar` (fix the
+   auxiliary to `ukan`) and `ari` (fixes it to `izan`), `ahal`/`ezin` fix
+   *nothing*: they're semantically transparent, so the auxiliary just falls
+   through to whatever the lexical verb underneath would pick on its own —
+   intransitive `etorri` → `naiz` ("etorri ahal naiz"), transitive
+   `esan`/`egin` → `dut` ("esan/egin ahal dut"). Teaching `nahi`/`behar`/`ari`
+   in isolation risks leaving a learner with the overgeneralised rule "the
+   construction's head always decides"; `ahal` is what completes the real
+   rule — *some* heads override, others are transparent pass-throughs, and
+   you can't tell which from the gloss alone.
+4. **They cost nothing in new conjugation data.** `nahi`/`behar` conjugate
    *exactly* like `ukan` (`nahi dut/duk/du/dugu/duzue/dute`) and `ari`
    *exactly* like `izan` (`ari naiz/haiz/da/gara/zarete/dira`) — because
    that's literally what they are: `ukan`/`izan` with an invariant word in
-   front. No new paradigm to source, verify, or maintain.
+   front. `ahal`/`ezin` cost even less to *model* (no fixed auxiliary to
+   pick at all — they piggyback on whichever `izan`/`ukan` table the lexical
+   verb already uses) but cost a bit more to *teach*, since "which auxiliary"
+   becomes a live question again rather than a fixed fact about the
+   construction. No new paradigm to source, verify, or maintain either way.
 
 That last point doubles as the open design question: do they become **new
 `sentences`/`pronounSentences` content layered onto the existing `izan`/`ukan`
@@ -263,9 +290,10 @@ Not a commitment — just a way to see how much runway sits past the current
 
 - [x] `nor` agreement, present + past — `izan`
 - [x] `nor-nork` agreement, present + past — `ukan`
-- [ ] **`nahi`/`behar`/`ari`** — arguably do this *first*: highest
-      conversational payoff, zero new conjugation data, reuses `izan`/`ukan`
-      verbatim (per §5)
+- [ ] **`nahi`/`behar`/`ari`/`ahal`/`ezin`** — arguably do this *first*:
+      highest conversational payoff, zero new conjugation data, reuses
+      `izan`/`ukan` verbatim — and `ahal`/`ezin` are the necessary second
+      half of the "which auxiliary?" lesson the other three set up (per §5)
 - [ ] `nor-nori` agreement, the low-friction way — `jario` (native synthetic,
       no new plumbing, *and* its `erion` past stem is an unusually exact fit
       for the present/past shape already in place; per §4a)
