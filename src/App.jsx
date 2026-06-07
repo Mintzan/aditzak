@@ -65,11 +65,11 @@ const VERBS = [
       },
       past: {
         ni: 'Ni gaztea ___.',
-        hi: 'Hi etxean ___.',
-        hura: 'Hura hemen ___.',
-        gu: 'Gu eskolan ___.',
-        zuek: 'Zuek pozik ___.',
-        haiek: 'Haiek kanpoan ___.',
+        hi: 'Hi nire laguna ___.',
+        hura: 'Hura irakasle ona ___.',
+        gu: 'Gu ikasle onak ___.',
+        zuek: 'Zuek oso azkarrak ___.',
+        haiek: 'Haiek nire lagunak ___.',
       },
     },
     pronouns: { ni: 'Ni', hi: 'Hi', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
@@ -84,11 +84,11 @@ const VERBS = [
       },
       past: {
         ni: '___ gaztea nintzen.',
-        hi: '___ etxean hintzen.',
-        hura: '___ hemen zen.',
-        gu: '___ eskolan ginen.',
-        zuek: '___ pozik zineten.',
-        haiek: '___ kanpoan ziren.',
+        hi: '___ nire laguna hintzen.',
+        hura: '___ irakasle ona zen.',
+        gu: '___ ikasle onak ginen.',
+        zuek: '___ oso azkarrak zineten.',
+        haiek: '___ nire lagunak ziren.',
       },
     },
   },
@@ -611,7 +611,9 @@ function QuestionPrompt({ verb, tenseMeta, question }) {
         <SentenceWithBlank sentence={question.sentence} />
       ) : (
         <>
-          <h2 className="mt-2 text-4xl font-extrabold text-gray-900">{question.person}</h2>
+          <h2 className="mt-2 text-4xl font-extrabold text-gray-900">
+            {(verb.pronouns?.[question.person] ?? question.person).toLowerCase()}
+          </h2>
           <p className="mt-1 text-gray-500">{PERSON_LABELS[question.person]}</p>
         </>
       )}

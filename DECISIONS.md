@@ -4,6 +4,32 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-07 — `izan`'s example sentences must stick to identity/characteristic predicates, not location/state ones (that's `egon`'s job)
+
+**Decision:** Reworded the `hi`/`hura`/`gu`/`zuek`/`haiek` entries of `izan`'s
+`sentences.past` and `pronounSentences.past` (e.g. swapped "Hi etxean ___."
+→ "Hi nire laguna ___.", "Hura hemen ___." → "Hura irakasle ona ___.",
+"Zuek pozik ___." → "Zuek oso azkarrak ___."). The originals predicated
+location ("etxean", "hemen", "eskolan", "kanpoan") or a temporary
+state/feeling ("pozik") of the subject — in Basque those call for `egon`
+("Hura hemen zegoen", not "zen"), a distinct verb from `izan` that the app
+doesn't model yet. Pairing `izan`'s conjugated forms with sentences that a
+native speaker would only complete with `egon` taught a wrong/non-existent
+paradigm. The new sentences all predicate identity, role, or an inherent
+characteristic of the subject ("nire laguna", "irakasle ona", "oso
+azkarrak"), which is squarely `izan` territory and mirrors the kind of
+predicates already used in `sentences.present`/`pronounSentences.present`.
+
+**Why:** A learner flagged that the displayed pronoun for a `nork`-agreement
+question (`ukan`) showed the absolutive "ni" instead of the ergative "nik"
+(fixed in `QuestionPrompt` by reading the case-correct form from
+`verb.pronouns` instead of the bare grammatical-person key), and in the same
+pass noticed `izan`'s past-tense sentences leaned on `egon`-flavoured
+predicates. Both are the same class of bug — content that *looks* like
+correct Basque but tests the wrong paradigm — so worth recording together:
+when adding example sentences for a verb, the predicate has to be one that
+verb actually governs, not just one that's grammatical with some "to be".
+
 ## 2026-06-07 — Typing exercises are two more question kinds, not a separate mode, and reuse the sentence data
 
 **Decision:** Added `kind: 'type-verb'` and `kind: 'type-pronoun'` —
