@@ -24,6 +24,12 @@ import {
 // `dialect` is a placeholder for future variants: a verb could later carry
 // e.g. `dialectVariants: { bizkaiera: { conjugations: {...} } }` overrides
 // without changing this shape.
+//
+// `sentences` (optional, by tense → person) gives an example sentence with
+// `___` marking where the conjugated form belongs. It powers the
+// "complete the sentence" question style — `generateQuestions` mixes those
+// in alongside bare-form questions wherever a sentence is available, falling
+// back to bare-form-only for verbs/persons that don't have one yet.
 // =============================================================================
 
 const VERBS = [
@@ -38,6 +44,24 @@ const VERBS = [
       present: { ni: 'naiz', hi: 'haiz', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
       past: { ni: 'nintzen', hi: 'hintzen', hura: 'zen', gu: 'ginen', zuek: 'zineten', haiek: 'ziren' },
     },
+    sentences: {
+      present: {
+        ni: 'Ni irakaslea ___.',
+        hi: 'Hi ikaslea ___.',
+        hura: 'Hura medikua ___.',
+        gu: 'Gu lagunak ___.',
+        zuek: 'Zuek azkarrak ___.',
+        haiek: 'Haiek euskaldunak ___.',
+      },
+      past: {
+        ni: 'Ni gaztea ___.',
+        hi: 'Hi etxean ___.',
+        hura: 'Hura hemen ___.',
+        gu: 'Gu eskolan ___.',
+        zuek: 'Zuek pozik ___.',
+        haiek: 'Haiek kanpoan ___.',
+      },
+    },
   },
   {
     id: 'ukan',
@@ -50,6 +74,24 @@ const VERBS = [
     conjugations: {
       present: { ni: 'dut', hi: 'duk', hura: 'du', gu: 'dugu', zuek: 'duzue', haiek: 'dute' },
       past: { ni: 'nuen', hi: 'huen', hura: 'zuen', gu: 'genuen', zuek: 'zenuten', haiek: 'zuten' },
+    },
+    sentences: {
+      present: {
+        ni: 'Nik liburu bat ___.',
+        hi: 'Hik auto bat ___.',
+        hura: 'Berak etxe bat ___.',
+        gu: 'Guk denbora ___.',
+        zuek: 'Zuek arazo bat ___.',
+        haiek: 'Haiek aukera bat ___.',
+      },
+      past: {
+        ni: 'Nik diru asko ___.',
+        hi: 'Hik liburu bat ___.',
+        hura: 'Hark ideia on bat ___.',
+        gu: 'Guk arrazoi ___.',
+        zuek: 'Zuek galdera bat ___.',
+        haiek: 'Haiek denbora gutxi ___.',
+      },
     },
   },
 ]
@@ -435,6 +477,47 @@ function AnswerOption({ option, status, disabled, onSelect }) {
   )
 }
 
+// Renders an example sentence with the conjugated verb redacted — the `___`
+// placeholder in the data becomes a visual blank the learner fills in by
+// picking an option below, rather than a literal "___" in running text.
+function SentenceWithBlank({ sentence }) {
+  const [before, after] = sentence.split('___')
+  return (
+    <p className="mt-3 text-2xl leading-snug font-extrabold text-gray-900">
+      {before}
+      <span className="mx-1 inline-block w-16 border-b-4 border-dashed border-gray-300 align-middle" aria-hidden="true" />
+      {after}
+    </p>
+  )
+}
+
+// `generateQuestions` mixes two question styles: bare-form recognition
+// ("hura → ?") and, where the verb has an example sentence for that
+// person/tense, sentence completion ("Hura medikua ___." → ?). Both test the
+// same recall — which conjugated form fits — just framed differently.
+function QuestionPrompt({ verb, tenseMeta, question }) {
+  return (
+    <>
+      <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">
+        {verb.verb} — {verb.meaning} · {tenseMeta.label}
+      </p>
+      {question.kind === 'sentence' ? (
+        <SentenceWithBlank sentence={question.sentence} />
+      ) : (
+        <>
+          <h2 className="mt-2 text-4xl font-extrabold text-gray-900">{question.person}</h2>
+          <p className="mt-1 text-gray-500">{PERSON_LABELS[question.person]}</p>
+        </>
+      )}
+    </>
+  )
+}
+
+const QUESTION_PROMPTS = {
+  form: 'Which form is correct?',
+  sentence: 'Which word completes the sentence?',
+}
+
 function FeedbackBar({ status, isLast, streakEncouragement, onContinue }) {
   if (status === 'active') return null
   const isCorrect = status === 'correct'
@@ -590,13 +673,9 @@ function MultipleChoiceScreen({ verb, tense, onExit, onComplete, canShowStreakNu
           <VerbBadgeRow verb={verb} />
         </div>
 
-        <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">
-          {verb.verb} — {verb.meaning} · {tenseMeta.label}
-        </p>
-        <h2 className="mt-2 text-4xl font-extrabold text-gray-900">{question.person}</h2>
-        <p className="mt-1 text-gray-500">{PERSON_LABELS[question.person]}</p>
+        <QuestionPrompt verb={verb} tenseMeta={tenseMeta} question={question} />
 
-        <p className="mt-8 mb-3 text-base font-semibold text-gray-700">Which form is correct?</p>
+        <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{QUESTION_PROMPTS[question.kind]}</p>
         <div className="flex flex-col gap-3">
           {question.options.map((option) => (
             <AnswerOption

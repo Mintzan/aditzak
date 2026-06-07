@@ -4,6 +4,36 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-07 — "Complete the sentence" questions are mixed into existing lessons, not a separate lesson type
+
+**Decision:** Added an optional `sentences` field to `VERBS` (mirroring
+`conjugations`: tense → person → an example sentence with `___` marking where
+the conjugated form goes). `generateQuestions` now rolls, once per question
+and only where a sentence exists for that person/tense
+(`SENTENCE_QUESTION_CHANCE = 0.5`), whether to ask the learner to recognise
+the bare form (`kind: 'form'`, the original behaviour) or to fill the blank in
+that sentence (`kind: 'sentence'`). `MultipleChoiceScreen` picks its prompt
+copy and layout from `question.kind` via `QUESTION_PROMPTS`/`QuestionPrompt`,
+rendering the sentence with a dashed visual blank (`SentenceWithBlank`)
+instead of the bare person/label pair. Everything downstream — distractors,
+`exerciseReducer`, scoring, the retry queue, progress persistence, lesson
+unlocking — is untouched, since both kinds still resolve to "pick the right
+conjugated form from four options".
+
+**Why:** Asked for a new exercise type where the learner sees a full sentence
+and picks the verb. Folding it into the existing (verb × tense) lessons as a
+second *question style* — rather than adding a third axis to `LESSONS` or a
+parallel lesson type — means no changes to lesson identity, unlocking,
+progress storage, or the exercise state machine, and learners get organic
+variety within a lesson rather than a whole separate mode to discover and
+unlock. Rolling the kind per-question (not per-lesson) keeps lessons feeling
+mixed; gating on `Boolean(sentence)` means verbs/persons without an example
+sentence yet fall back to the original bare-form question with no special
+casing elsewhere. `Math.random` here is fine where `shuffle` already used it
+— `react-hooks/purity` only objects to *direct* calls inside component render
+bodies, not to impure pure-logic helpers invoked from a `useReducer` lazy
+initializer.
+
 ## 2026-06-07 — Streak nudges are throttled: a session-level cooldown plus a chance check
 
 **Decision:** Showing the streak nudge (see below) on every milestone got

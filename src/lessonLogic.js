@@ -94,19 +94,37 @@ export function shuffle(items) {
   return copy
 }
 
-// One question per grammatical person; the three distractors are the other
-// conjugated forms from the very same table, so every option is plausible.
+// Chance that a person with an example sentence gets framed as a
+// "complete the sentence" question rather than a bare-form one — rolled once
+// per question so a lesson ends up with a mix of both styles rather than
+// being uniformly one or the other.
+const SENTENCE_QUESTION_CHANCE = 0.5
+
+function rollQuestionKind(hasSentence) {
+  return hasSentence && Math.random() < SENTENCE_QUESTION_CHANCE ? 'sentence' : 'form'
+}
+
+// One question per grammatical person; the three distractors are always the
+// other conjugated forms from that same table, so every option is a plausible
+// Basque verb form regardless of question style.
+//
+// Where the verb carries an example sentence for that person/tense
+// (`verb.sentences`), the question is sometimes framed as filling in the `___`
+// blank in that sentence (`kind: 'sentence'`) instead of recognising the bare
+// form (`kind: 'form'`) — purely for variety in how the same recall is
+// exercised; persons without a sentence always fall back to the bare form.
 export function generateQuestions(verb, tense) {
   const table = verb.conjugations[tense]
+  const sentences = verb.sentences?.[tense] ?? {}
   const persons = Object.keys(table)
   return shuffle(persons).map((person) => {
     const correct = table[person]
     const distractors = shuffle(persons.filter((candidate) => candidate !== person).map((candidate) => table[candidate])).slice(0, 3)
-    return {
-      person,
-      correct,
-      options: shuffle([correct, ...distractors]),
-    }
+    const options = shuffle([correct, ...distractors])
+    const sentence = sentences[person]
+    return rollQuestionKind(Boolean(sentence)) === 'sentence'
+      ? { kind: 'sentence', person, sentence, correct, options }
+      : { kind: 'form', person, correct, options }
   })
 }
 

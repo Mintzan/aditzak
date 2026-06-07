@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   computeStars,
   exerciseReducer,
@@ -133,6 +133,10 @@ describe('generateQuestions', () => {
   }
   const persons = Object.keys(verb.conjugations.present)
 
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it('produces exactly one question per grammatical person', () => {
     const questions = generateQuestions(verb, 'present')
 
@@ -148,6 +152,54 @@ describe('generateQuestions', () => {
       expect(question.options).toContain(question.correct)
       expect(new Set(question.options).size).toBe(question.options.length)
       expect(question.options.length).toBeLessThanOrEqual(4)
+    })
+  })
+
+  it('falls back to bare-form questions when the verb has no example sentences', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0)
+
+    generateQuestions(verb, 'present').forEach((question) => {
+      expect(question.kind).toBe('form')
+      expect(question).not.toHaveProperty('sentence')
+    })
+  })
+
+  describe('with example sentences', () => {
+    const verbWithSentences = {
+      ...verb,
+      sentences: {
+        present: {
+          ni: 'Ni irakaslea ___.',
+          hi: 'Hi ikaslea ___.',
+          hura: 'Hura medikua ___.',
+        },
+      },
+    }
+    const sentenced = verbWithSentences.sentences.present
+
+    it('frames a question as completing the sentence when the roll favours it', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(verbWithSentences, 'present')
+
+      questions.forEach((question) => {
+        if (sentenced[question.person]) {
+          expect(question).toMatchObject({ kind: 'sentence', sentence: sentenced[question.person] })
+          expect(question.sentence).toContain('___')
+          expect(question.options).toContain(question.correct)
+        } else {
+          expect(question.kind).toBe('form')
+        }
+      })
+    })
+
+    it('falls back to the bare form when the roll does not favour a sentence, even with sentences available', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+
+      generateQuestions(verbWithSentences, 'present').forEach((question) => {
+        expect(question.kind).toBe('form')
+        expect(question).not.toHaveProperty('sentence')
+      })
     })
   })
 })
