@@ -4,6 +4,39 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-07 — Pronoun-fill questions reuse the sentence-completion machinery as a third question kind
+
+**Decision:** Added a second "fill the blank" flavour alongside the existing
+verb-completion one: `kind: 'pronoun'`, where the sentence's verb is already
+spelled out and the learner picks the correctly-declined personal pronoun
+("___ etxe bat du." → "Hark"). Each verb can now carry `pronouns` (the
+declined form per grammatical person — e.g. absolutive `Ni/Hi/Hura/...` for
+`izan`'s `nor` subject, ergative `Nik/Hik/Hark/...` for `ukan`'s `nork`
+subject) and `pronounSentences` (by tense → person, mirroring `sentences` but
+blanking the pronoun instead of the verb). `generateQuestions` now rolls a
+single "framing" per question from whichever of `sentence`/`pronoun` have
+supporting data for that person/tense (`SPECIAL_QUESTION_CHANCE = 0.5`,
+split evenly across the available special kinds, else `form`), and a small
+`buildOptions` helper builds the four-way multiple choice from whichever
+lookup table matches the question's kind — conjugations for `form`/`sentence`,
+declined pronouns for `pronoun` — so distractors are always same-kind, plausible
+forms. `QuestionPrompt`/`SentenceWithBlank`/`QUESTION_PROMPTS` needed only a
+one-line extension since the blanked-sentence layout is identical for both
+flavours.
+
+**Why:** Asked for a second sentence-exercise style that drills declined
+pronouns instead of verb forms — folding it into the same (verb × tense)
+lessons as a third question kind keeps it consistent with the existing
+"complete the sentence" decision below (no new lesson type, no changes to
+unlocking/progress/the exercise reducer). Storing `pronouns` per-verb rather
+than as a single global declension table sidesteps having to encode "which
+case does this verb's subject take" as a separate lookup — each verb just
+states the forms its own example sentences need, the same way `conjugations`
+already does for verb forms. Splitting the roll evenly across whichever
+special kinds happen to be available (rather than e.g. a fixed per-kind
+chance) means adding a third blank-filling flavour later won't silently
+shrink how often any existing one appears.
+
 ## 2026-06-07 — "Complete the sentence" questions are mixed into existing lessons, not a separate lesson type
 
 **Decision:** Added an optional `sentences` field to `VERBS` (mirroring

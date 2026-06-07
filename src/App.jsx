@@ -30,6 +30,15 @@ import {
 // "complete the sentence" question style — `generateQuestions` mixes those
 // in alongside bare-form questions wherever a sentence is available, falling
 // back to bare-form-only for verbs/persons that don't have one yet.
+//
+// `pronouns` + `pronounSentences` are the equivalent pair for a second
+// "complete the sentence" flavour: filling in the correctly-declined personal
+// pronoun (e.g. "Nik" for the ergative subject of `ukan`) rather than the verb
+// form. `pronouns` gives the declined form for each grammatical person — the
+// case depends on which argument that pronoun fills for this verb (absolutive
+// for `izan`'s `nor` subject, ergative for `ukan`'s `nork` subject) — and
+// `pronounSentences` gives a sentence with `___` marking where it goes, with
+// the verb already spelled out.
 // =============================================================================
 
 const VERBS = [
@@ -62,6 +71,25 @@ const VERBS = [
         haiek: 'Haiek kanpoan ___.',
       },
     },
+    pronouns: { ni: 'Ni', hi: 'Hi', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+    pronounSentences: {
+      present: {
+        ni: '___ irakaslea naiz.',
+        hi: '___ ikaslea haiz.',
+        hura: '___ medikua da.',
+        gu: '___ lagunak gara.',
+        zuek: '___ azkarrak zarete.',
+        haiek: '___ euskaldunak dira.',
+      },
+      past: {
+        ni: '___ gaztea nintzen.',
+        hi: '___ etxean hintzen.',
+        hura: '___ hemen zen.',
+        gu: '___ eskolan ginen.',
+        zuek: '___ pozik zineten.',
+        haiek: '___ kanpoan ziren.',
+      },
+    },
   },
   {
     id: 'ukan',
@@ -91,6 +119,25 @@ const VERBS = [
         gu: 'Guk arrazoi ___.',
         zuek: 'Zuek galdera bat ___.',
         haiek: 'Haiek denbora gutxi ___.',
+      },
+    },
+    pronouns: { ni: 'Nik', hi: 'Hik', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    pronounSentences: {
+      present: {
+        ni: '___ liburu bat dut.',
+        hi: '___ auto bat duk.',
+        hura: '___ etxe bat du.',
+        gu: '___ denbora dugu.',
+        zuek: '___ arazo bat duzue.',
+        haiek: '___ aukera bat dute.',
+      },
+      past: {
+        ni: '___ diru asko nuen.',
+        hi: '___ liburu bat huen.',
+        hura: '___ ideia on bat zuen.',
+        gu: '___ arrazoi genuen.',
+        zuek: '___ galdera bat zenuten.',
+        haiek: '___ denbora gutxi zuten.',
       },
     },
   },
@@ -491,17 +538,20 @@ function SentenceWithBlank({ sentence }) {
   )
 }
 
-// `generateQuestions` mixes two question styles: bare-form recognition
-// ("hura → ?") and, where the verb has an example sentence for that
-// person/tense, sentence completion ("Hura medikua ___." → ?). Both test the
-// same recall — which conjugated form fits — just framed differently.
+// `generateQuestions` mixes three question styles: bare-form recognition
+// ("hura → ?"), and — where the verb has the supporting data for that
+// person/tense — two sentence-completion variants sharing the same blanked
+// layout: filling in the conjugated verb ("Hura medikua ___." → ?, `kind:
+// 'sentence'`) or the correctly-declined pronoun ("___ etxe bat du." → ?,
+// `kind: 'pronoun'`). All three test recognising the right Basque form, just
+// framed differently.
 function QuestionPrompt({ verb, tenseMeta, question }) {
   return (
     <>
       <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">
         {verb.verb} — {verb.meaning} · {tenseMeta.label}
       </p>
-      {question.kind === 'sentence' ? (
+      {question.kind === 'sentence' || question.kind === 'pronoun' ? (
         <SentenceWithBlank sentence={question.sentence} />
       ) : (
         <>
@@ -516,6 +566,7 @@ function QuestionPrompt({ verb, tenseMeta, question }) {
 const QUESTION_PROMPTS = {
   form: 'Which form is correct?',
   sentence: 'Which word completes the sentence?',
+  pronoun: 'Which pronoun completes the sentence?',
 }
 
 function FeedbackBar({ status, isLast, streakEncouragement, onContinue }) {

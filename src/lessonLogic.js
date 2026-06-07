@@ -94,37 +94,63 @@ export function shuffle(items) {
   return copy
 }
 
-// Chance that a person with an example sentence gets framed as a
-// "complete the sentence" question rather than a bare-form one — rolled once
-// per question so a lesson ends up with a mix of both styles rather than
-// being uniformly one or the other.
-const SENTENCE_QUESTION_CHANCE = 0.5
+// Chance that a person with supporting data for a "fill the blank" framing
+// (an example sentence, a declined pronoun) gets asked that way rather than as
+// a bare-form question — rolled once per question, and split evenly between
+// whichever framings are available, so a lesson ends up with an organic mix of
+// styles rather than being uniformly one or the other.
+const SPECIAL_QUESTION_CHANCE = 0.5
 
-function rollQuestionKind(hasSentence) {
-  return hasSentence && Math.random() < SENTENCE_QUESTION_CHANCE ? 'sentence' : 'form'
+function rollQuestionKind(availableKinds) {
+  if (availableKinds.length === 0 || Math.random() >= SPECIAL_QUESTION_CHANCE) return 'form'
+  return availableKinds[Math.floor(Math.random() * availableKinds.length)]
 }
 
-// One question per grammatical person; the three distractors are always the
-// other conjugated forms from that same table, so every option is a plausible
-// Basque verb form regardless of question style.
-//
-// Where the verb carries an example sentence for that person/tense
-// (`verb.sentences`), the question is sometimes framed as filling in the `___`
-// blank in that sentence (`kind: 'sentence'`) instead of recognising the bare
-// form (`kind: 'form'`) — purely for variety in how the same recall is
-// exercised; persons without a sentence always fall back to the bare form.
+// Builds the options for a multiple-choice question from a person → form
+// lookup table: the correct form for `person` plus three other forms from the
+// same table as distractors, all shuffled together. Used both for bare/
+// sentence verb-form questions (table = conjugations) and pronoun questions
+// (table = declined pronouns), so every option is always a plausible answer of
+// the same kind as the correct one.
+function buildOptions(table, persons, person) {
+  const correct = table[person]
+  const distractors = shuffle(persons.filter((candidate) => candidate !== person).map((candidate) => table[candidate])).slice(0, 3)
+  return { correct, options: shuffle([correct, ...distractors]) }
+}
+
+// One question per grammatical person, framed one of three ways:
+//   - `form`: recognise the bare conjugated form ("hura → ?")
+//   - `sentence`: fill the verb into an example sentence ("Hura medikua ___.")
+//   - `pronoun`: fill the correctly-declined pronoun into a sentence whose verb
+//     is already given ("___ etxe bat du." → "Hark")
+// `sentence` needs `verb.sentences[tense][person]`; `pronoun` needs both
+// `verb.pronouns` and `verb.pronounSentences[tense][person]`. Persons missing
+// that supporting data always fall back to the bare form, so verbs can adopt
+// either (or both) extra framings incrementally.
 export function generateQuestions(verb, tense) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
+  const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const persons = Object.keys(table)
   return shuffle(persons).map((person) => {
-    const correct = table[person]
-    const distractors = shuffle(persons.filter((candidate) => candidate !== person).map((candidate) => table[candidate])).slice(0, 3)
-    const options = shuffle([correct, ...distractors])
     const sentence = sentences[person]
-    return rollQuestionKind(Boolean(sentence)) === 'sentence'
-      ? { kind: 'sentence', person, sentence, correct, options }
-      : { kind: 'form', person, correct, options }
+    const pronounSentence = verb.pronouns && pronounSentences[person]
+    const availableKinds = [sentence && 'sentence', pronounSentence && 'pronoun'].filter(Boolean)
+
+    switch (rollQuestionKind(availableKinds)) {
+      case 'sentence': {
+        const { correct, options } = buildOptions(table, persons, person)
+        return { kind: 'sentence', person, sentence, correct, options }
+      }
+      case 'pronoun': {
+        const { correct, options } = buildOptions(verb.pronouns, persons, person)
+        return { kind: 'pronoun', person, sentence: pronounSentence, correct, options }
+      }
+      default: {
+        const { correct, options } = buildOptions(table, persons, person)
+        return { kind: 'form', person, correct, options }
+      }
+    }
   })
 }
 

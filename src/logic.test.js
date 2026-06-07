@@ -202,6 +202,62 @@ describe('generateQuestions', () => {
       })
     })
   })
+
+  describe('with declined pronouns', () => {
+    const verbWithPronouns = {
+      ...verb,
+      pronouns: { ni: 'Nik', hi: 'Hik', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+      pronounSentences: {
+        present: {
+          ni: '___ liburu bat dut.',
+          hi: '___ auto bat duk.',
+          hura: '___ etxe bat du.',
+        },
+      },
+    }
+    const pronounSentenced = verbWithPronouns.pronounSentences.present
+
+    it('frames a question as filling in the declined pronoun when the roll favours it', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(verbWithPronouns, 'present')
+
+      questions.forEach((question) => {
+        if (pronounSentenced[question.person]) {
+          expect(question).toMatchObject({
+            kind: 'pronoun',
+            sentence: pronounSentenced[question.person],
+            correct: verbWithPronouns.pronouns[question.person],
+          })
+          expect(question.sentence).toContain('___')
+          expect(question.options).toContain(question.correct)
+        } else {
+          expect(question.kind).toBe('form')
+        }
+      })
+    })
+
+    it('only offers other declined pronouns as distractors, never conjugated verb forms', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      generateQuestions(verbWithPronouns, 'present')
+        .filter((question) => question.kind === 'pronoun')
+        .forEach((question) => {
+          question.options.forEach((option) => {
+            expect(Object.values(verbWithPronouns.pronouns)).toContain(option)
+          })
+        })
+    })
+
+    it('falls back to the bare form when the roll does not favour a pronoun, even with pronoun data available', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+
+      generateQuestions(verbWithPronouns, 'present').forEach((question) => {
+        expect(question.kind).toBe('form')
+        expect(question).not.toHaveProperty('sentence')
+      })
+    })
+  })
 })
 
 describe('shuffle', () => {
