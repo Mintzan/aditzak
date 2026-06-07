@@ -359,7 +359,7 @@ function HomeScreen({ progress, tab, onChangeTab, onSelectLesson, onResetProgres
   const maxStars = LESSONS.length * 3
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-md flex-col bg-gray-50">
+    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-gray-50">
       <header className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white/90 px-5 py-4 backdrop-blur">
         <div>
           <h1 className="text-xl font-extrabold tracking-tight text-gray-900">Aditzak</h1>
@@ -483,7 +483,7 @@ function MultipleChoiceScreen({ verb, tense, onExit, onComplete }) {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-md flex-col bg-white">
+    <div className="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-white">
       <div className="flex items-center gap-3 px-4 pt-4">
         <button
           type="button"
@@ -497,7 +497,7 @@ function MultipleChoiceScreen({ verb, tense, onExit, onComplete }) {
         <ProgressBar value={progressValue} />
       </div>
 
-      <div className="flex flex-1 flex-col px-6 pt-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 pt-8">
         <div className="mb-6">
           <VerbBadgeRow verb={verb} />
         </div>
