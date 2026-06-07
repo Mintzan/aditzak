@@ -56,25 +56,49 @@ But there *is* a small family of native synthetic exceptions — verbs that
 mark `nori` (or `nori`+`nork`) themselves, no auxiliary needed — and two of
 them are a better first target than reaching for a periphrastic verb at all:
 
-- **`jario`** ("to flow/ooze" — "malkoak dario" = "tears flow from him")
-  conjugates directly (`dario`, `dariot`, `darizkio`...) and is defective —
-  almost always used with an inanimate `nor` (tears, sweat, blood, words) —
-  so a lesson would naturally fix `nor` (mirroring `ukan`'s `object: 'hura'`)
-  and vary the table by **`nori` person** instead, which the existing
-  `conjugations` shape already supports. (Its Bizkaian past stem `erion` —
-  "darie/erion" — isn't a separate verb, just `jario`'s own past paradigm: an
-  unusually exact fit for the app's present/past shape.) See §4a.
-- **`esan`** ("to say") is the everyday, central case for `nor-nori-nork`:
-  its `dio`/`diot`/`diozu`... forms run on the same defective `*-io-` root
-  that `ukan` itself borrows when *it's* used ditransitively as an auxiliary.
-  See §4a — it's a markedly better first pick than `eman` (periphrastic) or
-  `iritzi`/`irudi` (the rarer, more literary native-synthetic NOR-NORI(-NORK)
-  cousins — "to deem/consider" and "to seem" respectively, whose modern
-  everyday counterparts `iritzi`-the-periphrastic-verb and `iruditu` are the
-  ones worth teaching first).
+- **`jario`** ("to flow/ooze" — "Iturriari ura dario" = "Water flows from
+  the fountain"; "Izerdia dario" = "He's sweating") conjugates directly
+  (present `dari(zki)t/k/o/gu/zu/zue/e`, i.e. `dariot`/`dario`/`darizkio`...)
+  and is defective — almost always used with an inanimate `nor` (water,
+  tears, sweat, blood, words) — so a lesson would naturally fix `nor`
+  (mirroring `ukan`'s `object: 'hura'`) and vary the table by **`nori`
+  person** instead, which the existing `conjugations` shape already
+  supports. Its standard-Batua past paradigm (`zeridan`/`zerion`/`zerigun`...)
+  and Bizkaian variant (`darie`/`erion`) are both just `jario`'s own past
+  forms, not separate verbs — an unusually exact fit for the app's
+  present+past shape. (One honest caveat, straight from the source above:
+  it explicitly calls `jario` itself "oso erabilpen mugatua" — of very
+  limited everyday use. It remains the *grammatically* cleanest synthetic
+  `nor-nori` route; "commonly reached for in conversation" is a separate
+  question §4b's `gustatu`/`iruditu` answer better.) See §4a.
+- **`esan`** ("to say") is the everyday, central case for `nor-nori-nork` —
+  and a source surfaced while researching this says so explicitly: "Aditz
+  honek NOR-NORI-NORK erabilera ere badu, batez ere Bizkaia aldean" ("This
+  verb also has NOR-NORI-NORK use, especially in the Bizkaia area"). Its
+  `dio`/`diot`/`diozu`... forms run on the same defective `*-io-` root that
+  `ukan` itself borrows when *it's* used ditransitively as an auxiliary —
+  see §4a. A markedly better first pick than `eman` (periphrastic, §4b) or
+  `iritzi`/`deritzo` ("to deem/consider" — rarer, more literary).
 
 Both routes land their agreement pattern *and* stay fully synthetic — no
 periphrastic plumbing required, unlike `gustatu`/`iruditu`/`eman` in §4b.
+
+**A correction worth flagging in public:** an earlier draft of this document
+filed `irudi` here as "the rarer literary cousin of `iruditu`, in NOR-NORI
+territory." That was wrong on both counts. A teaching source's conjugation
+table labels `irudi` (`dirudi`, `dirudizu`...) explicitly **NOR-NORK** — same
+`-t`/`-k`-`n`/∅/`-gu`/`-zu`/`-zue`/`-te` suffix shape as `esan`/`jardun`/
+`iraun` — *and* spells out that it is **not** a synthetic stand-in for
+`iruditu` at all: "Ez nahastu: iruditzen zait = uste dut / dirudizu = ematen
+duzu" ("Don't confuse: 'it seems to me' [`iruditu`] = 'I think' (subjective
+opinion, NOR-NORI) vs. 'you seem/look' [`irudi`] = 'you give the impression'
+(external appearance, NOR-NORK)"). They're cognates that have drifted apart in
+both meaning *and* agreement — exactly the kind of false-friend pairing that's
+easy to bake into bad lesson content by analogy. `iruditu` remains the right
+`nor-nori` teaching example; `irudi`/`dirudi` is, if anything, one more
+perfectly regular `nor-nork` option in the same family as `esan`/`jardun`/
+`iraun` (and another instance of "synthetic morphology doesn't telegraph the
+verb's semantic transitivity" — see `jardun` and §5).
 
 ## 3. Tenses / moods (denborak eta moduak)
 
