@@ -27,23 +27,14 @@ the app's seven-person paradigm.
   `VERB_COVERAGE.md`; the full paradigm isn't confirmed, so it's quoted
   verbatim rather than filled in
 
-**Sources merged in, in arrival order:** an initial larger paste (§3 onward);
-a professionally-typeset paradigm-chart PDF covering Batua/Bizkaiera/Zuberera
-(§14, "Euskal aditz laguntzailea"); a 2011 classroom handout covering ten
-synthetic verbs (§15, "Aditz trinkoak"); a PDF on rarer/non-standard synthetic
-verbs (§9, "trinko-ezohiko-batzuk", euskarians.wordpress.com, 2012) that
-rounded out full present/past paradigms for `iraun`, `jario`, `irudi`, and
-`etzan` — the entire former 🔍-partial roster of §9. §14/§15 mostly serve as
-*cross-checks* on material already here — though §14's compact NOR-NORI row
-templates ended up doing real generative work of their own: re-mined twice
-over, they grew §5 from a `NOR ∈ {hura, haiek}` citation slice into the full
-seven-by-seven `NORI`×`NOR` grid (present and past), mechanically applying
-the same `-zki-`/`K-N`↔`A-NA` regularities already trusted elsewhere in this
-document — see §5's own notes for the formula (and a `zu`/`zuek` derivation
-this document briefly got backwards before correcting it). §9's new source
-instead grows verbs that were previously
-fragmentary, sample-only, or barely sourced at all — see each section's own
-notes for exactly what each contributed.
+**Sources, beyond `VERBS` itself:** an initial large paste (the basis of §3
+onward); a paradigm-chart PDF covering Batua/Bizkaiera/Zuberera (§14, "Euskal
+aditz laguntzailea"); a 2011 classroom handout covering ten synthetic verbs
+(§15, "Aditz trinkoak"); and a PDF on rarer/non-standard synthetic verbs
+(behind §9, "trinko-ezohiko-batzuk", euskarians.wordpress.com, 2012). What
+each one settled, corroborated, or generated lives in the relevant section's
+own notes (start with §5, §7, §9, §14, §15 for the most substantial finds)
+rather than recapped here.
 
 ---
 
@@ -292,32 +283,25 @@ the existing `haiek`→`gu` cell), not `†ginduten`. That single rule is enough
 to derive every `…-te(n)` cell correctly; nothing else in the recipe needed
 adjusting once it was applied. Cells below newly derived this way (rather than
 copied from an already-sourced cell) are marked 🔍 — plausible, recipe-built,
-but not independently attested the way the rest of this file's ✅/📖 forms are;
-*(refl.)* marks the same impossible-combination diagonal as the grids above —
-and *only* that diagonal. An earlier draft of this paragraph also extended it
-to `guk`→`hi` and `zuk`/`zuek`→`hi`, on the assumption they'd turn out exactly
-as reflexive-shaped as the already-marked `nik`→`gu`/`zu`/`zuek` cells — that
-was a pattern-matching error, not a grammatical fact: "we have you-familiar"
-(`haugu`) isn't reflexive at all, it's simply two different people, and a
-native speaker confirmed `haut`/`hau`/`haugu`/`haute` directly. Those four go
-into the grid below as plain confirmed forms, no 🔍.
+but not independently attested the way the rest of this file's ✅/📖 forms are.
 
-A genuinely different impossibility runs through this same corner, though,
-and it gets its own marker, `*(hika/zuka)*`: `hi` ("you", familiar register —
-*hika*) and `zu`/`zuek` ("you", formal/plural register — *zuka*) are mutually
-exclusive ways of addressing someone. A speaker picks one register for a given
-relationship and stays in it — there's no form that means "I have you-familiar
-*and* you-formal" any more than a single English sentence can address someone
-as both "thou" and "you". So `hik`-as-subject can never take `zu`/`zuek` as
-object, and `zuk`/`zuek`-as-subject can never take `hi` as object — including
-the 🔍 `hauzu`/`hauzue` guesses that prompted this, which a native speaker
-confirmed simply "don't make sense". `*(hika/zuka)*` marks all of those cells,
-across every grid below, as impossible for this reason — not unsourced, not
-reflexive, just two registers that can't share a verb form. Plain blanks keep
-meaning "gap, not a claim the form doesn't exist" — what's left of those is
-mostly the `zu`↔`zuek` cross-register cells (e.g. "you-singular have you-all"),
-a genuinely open sourcing question rather than a grammatical impossibility the
-way `hika`/`zuka` is.
+Two markers cover the impossible cells, and they mean *different* things.
+`*(refl.)*` is the reflexive diagonal ("I have me") — and only that diagonal;
+`haut`/`hau`/`haugu`/`haute` ("I/he-she/we/they have you-familiar") are
+*not* reflexive (two different people are involved) and are confirmed,
+ordinary forms below, no 🔍 (an earlier draft wrongly marked `guk`→`hi` as
+`(refl.)` by pattern-matching its shape rather than checking the grammar —
+see `DECISIONS.md` 2026-06-08 for the correction). `*(hika/zuka)*` is a
+different kind of impossibility entirely: `hi` (familiar address — *hika*)
+and `zu`/`zuek` (formal/plural address — *zuka*) are mutually exclusive
+registers for addressing someone, so no verb form can take one as subject and
+the other as object — `hik`↔`zu`/`zuek` cells (including the `hauzu`/`hauzue`
+guesses a native speaker confirmed "don't make sense") are marked this way
+throughout the five grids below: impossible by grammar, not by sourcing gap.
+Plain blanks keep meaning "gap, not a claim the form doesn't exist" — what's
+left of those is mostly the `zu`↔`zuek` cross-register cells ("you-singular
+have you-all"), a genuinely open sourcing question rather than a grammatical
+impossibility the way `hika`/`zuka` is.
 
 #### Present — `NOR` = 1st/2nd person
 
@@ -407,11 +391,9 @@ impossible `hi`↔`zu`/`zuek` register-clash cells, and the already-sourced
 | zuek | 🔍 nindukezuen | *(hika/zuka)* | zenuketen | 🔍 gintukezuen | *(refl.)* | *(refl.)* | zenituzketen |
 | haiek | 🔍 ninduketen | 🔍 hinduketen | zuketen | 🔍 gintukezten | 🔍 zintukezten | | zituzketen |
 
-### Ahalera, Subjuntiboa — where the recipe stops being trustworthy
+### Ahalera, Subjuntiboa — an unresolved contradiction, left untouched
 
-These two don't get the same treatment, and it's worth spelling out why
-rather than silently producing a thinner table. §14's `NOR` = 1st/2nd-person
-templates for them are:
+§14's `NOR` = 1st/2nd-person templates for these two moods:
 
 | Mood / tense | Prefix series (`ni/hi/hura/gu/zu/zuek/haiek`) | Stem + markers | Suffix series (`nik/hik/hark/guk/zuk/zuek/haiek`) |
 |---|---|---|---|
@@ -419,34 +401,19 @@ templates for them are:
 | Ahalera, past | `nint-/hint-/(—)/gint-/zint-/zint-…-te-/(—)` | `-zake-` | `-da-n/-a(/na)-n/-en/-gu-n/-zu-n/-zue-n/-te-n` |
 | Subjuntiboa, present | `na-/ha-/De-/gait-/zait-/zait-…-te-/dit-` | `-za-` | `-da-n/-a(/na)-n/-∅-n/-gu-n/-zu-n/-zue-n/-te-n` |
 
-Running the recipe on the **Ahalera-present** row gives, e.g., `De-` (object
-= `hura`) + `-zake-` + `-t` (subject = `nik`) → `dezaket`. But the *already-
-sourced* "Further moods" citation row for the very same cell — `NORK = nik`,
-`NOR = hura`, ahalera present — is `nezake` (§4 above, cross-checked against
-§14's own plain-word list). `dezaket` and `nezake` aren't variants of the same
-form; they're built on different person-marking entirely (`d-` = 3rd-person-
-style absolutive marking vs. `ne-` = 1st-singular-style). One of these
-templates is marking `NOR`, the other `NORK` — and they can't both be right
-about which one the citation row already shown is doing. Rather than pick a
-side and risk teaching a contradiction as fact, this is flagged as an open
-discrepancy: **the Ahalera/Subjuntiboa citation paradigm and §14's own
-"`NOR` = 1st/2nd person" template for the same mood don't reconcile**, and
-nothing else in this file resolves it (§14 is the *only* source seen so far
-that spells out either side of this particular pair). Likely culprits — a
-linearization error in how this densely-laid-out chart's cells got read back
-out as text (the same kind of thing this section already corrected once, see
-the `dituzte` wrinkle above, just bigger), or a real but unfamiliar syncretism
-this file's other sources don't independently corroborate either way. Either
-way: better an honest "open question" than a table that's confidently wrong
-about which argument it's agreeing with — exactly the failure mode `DECISIONS`
-already named for `irudi`/`etzan`. Left as bare templates above, not expanded.
+Applying the recipe to **ahalera-present** `nik`/`hura` gives `De-` + `-zake-`
++ `-t` → `dezaket` — but the already-sourced "Further moods" citation cell for
+that exact combination (§4 above) is `nezake`. These aren't spelling variants:
+`d-` is 3rd-person-style absolutive marking, `ne-` is 1st-singular-style — the
+two forms disagree about *which argument the verb is agreeing with*, and §14
+is the only source that spells out either side of this pair. Left as an open,
+flagged contradiction and the templates unexpanded — a confidently-wrong table
+would be harder to catch later than an honest "these two don't reconcile".
 
-The **imperative**'s `NOR-NORK` cells, by contrast, are barely populated in
-§14 at all — mostly `()` placeholders (`NA za ( )`, `Be za -`, `( ) ZU`…),
-which squares with the independently-known fact that Basque imperatives are
-largely restricted to absolutive-marking commands (`zaitez`, `bitez`, …); a
-transitive "have it!" type imperative is at best marginal. No table to
-complete there — there's barely a recipe to transcribe, let alone expand.
+The **imperative**'s `NOR-NORK` cells are, by contrast, barely populated in
+§14 at all (mostly `()` placeholders) — consistent with Basque imperatives
+being largely restricted to absolutive-marking commands (`zaitez`, `bitez`,
+…). Nothing substantial to expand there.
 
 ## 5. `izan` with dative — NOR-NORI system · 📖
 
@@ -492,21 +459,15 @@ elsewhere:
   open referential slots that can differ from their dative counterpart, hence
   `zaio`/`zaizkie` are perfectly ordinary attested forms.)
 
-**A correction worth flagging explicitly: `zu` ≠ `zuek` here.** An earlier
-pass through this grid assumed `zu` patterned after the plural-triggering
-`zu` familiar from the `ukan` system's "etiquette plural" (`zaitut`, §4) —
-i.e. that it took the `-zki-` infix — and left `zuek` blank as an unsourced
-gap, reasoning (wrongly) that `izan`'s own `-te` plural marker (`zara` →
-`zarete`) made `zuek`'s shape unrecoverable from §14's linearized template.
-That was backwards on both counts. In *this* NOR-NORI paradigm `zu` keeps
-the bare `za-tzai-` shape with no `-zki-` (`zatzait` = za- + -tzai- + -t),
-while `zuek` — genuinely plural — takes `-zki-` exactly like `gu`/`haiek`
-(`zatzaizkit`); no `-te` ever enters the picture. The reflexive diagonal
-follows suit: `zu`-to-`zuri` is `*(refl.)*` over the bare shape (`zatzaizu`),
-`zuek`-to-`zuei` is `*(refl.)*` over the `-zki-` shape (`zatzaizkizue`). Once
-corrected, `zuek` needs no separate sourcing at all — it's exactly as
-mechanically derivable as every other plural `NOR` slot, so the "honest gap"
-this section once flagged here turns out not to exist.
+**Note: `zu` ≠ `zuek` here**, unlike in `ukan`'s "etiquette plural" (§4's
+`zaitut`-type forms, where `zu` itself triggers `-it-`). In *this* NOR-NORI
+paradigm `zu` keeps the bare `za-tzai-` shape with no `-zki-` (`zatzait` =
+za- + -tzai- + -t), while `zuek` — genuinely plural — takes `-zki-` exactly
+like `gu`/`haiek` (`zatzaizkit`); no `-te` enters the picture. The reflexive
+diagonal follows suit: `zu`-to-`zuri` is `*(refl.)*` over the bare shape
+(`zatzaizu`), `zuek`-to-`zuei` over the `-zki-` shape (`zatzaizkizue`) — so
+`zuek` needs no separate sourcing, it's as mechanically derivable as any
+other plural `NOR` slot.
 
 ### Present
 
@@ -1124,18 +1085,14 @@ Worth keeping in mind as a source for that, once decoded more rigorously.
 ## 15. Classroom reference table — three new synthetic verbs · 📖
 
 Source: *"Aditz trinkoak: eduki, egon, ekarri, erabili, eraman, esan, etorri,
-ibili, jakin, joan"* (uploaded 2026-06-07; dated 2011, `santutxu` /
-euskarians.wordpress.com). A one-page classroom handout giving present + past
-for ten synthetic verbs side by side, in a **six-person layout that omits
-`hi`** (`ni / hura / gu / zu / zuek / haiek` — same shape as `ukan`'s
-citation paradigm in §2, just spread across more verbs). It overlaps with
-material already in this file for `egon`/`joan`/`etorri`/`ibili` (§7, now
-triple-corroborated, and its `ibili` past-tense gaps for `zu`/`zuek` filled
-in from here too) and `ekarri`/`esan` (§8/§9, now filled in above, with
-`esan`'s full paradigm doubling as new data for §6's NOR-NORI-NORK grid —
-including a discrepancy worth a flag, see §6's notes) — and adds **three
-verbs not seen in any source so far**: `eduki`, `erabili`, `eraman`. None of
-these three are in `VERBS` yet.
+ibili, jakin, joan"* (`santutxu` / euskarians.wordpress.com, 2011). A one-page
+classroom handout giving present + past for ten synthetic verbs side by side,
+in a **six-person layout that omits `hi`** (`ni / hura / gu / zu / zuek /
+haiek` — the same shape as `ukan`'s citation paradigm in §2). It corroborates
+or fills gaps in material already covered elsewhere — see §7's notes for
+`egon`/`joan`/`etorri`/`ibili`, §8/§9's for `ekarri`/`esan` — and contributes
+**three verbs not seen in any other source**: `eduki`, `erabili`, `eraman`,
+none yet in `VERBS`.
 
 ### `eduki` — "to have / hold (physically)" — nor-nork
 
@@ -1181,25 +1138,3 @@ not facts — the `(sg./pl. obj.)` split is *inferred* from the source's
 with `ekarri`'s spelled-out split above, not spelled out letter-by-letter in
 the source itself for `eduki`/`erabili`/`eraman`. Worth a grammar check
 before any of the three goes into `VERBS`.
-
----
-
-## Where this stands
-
-The cross-check against §14/§15 resolved every issue it could — those fixes
-are folded directly into §3's and §4's tables, not narrated here (per the
-`VERB_COVERAGE.md` lesson about flagging rather than silently rewriting:
-the corrections themselves are visible in the tables, and that's what matters
-for reuse). Two genuine discrepancies survived the cross-check and remain open
-— both live in §6, flagged inline at the exact cell where they occur:
-
-- the `niri`/`hark` cell of the **present**-tense `NOR-NORI-NORK` grid
-  (`zidan` — looks like a misplaced past-tense form; see §6's first ⚠️ note)
-- the `hari` row of the **past**-tense `NOR-NORI-NORK` grid (`nion`/`zion`/
-  `genion` vs. `nioen`/`zioen`/`genioen` — two sources disagree; see §6's
-  second ⚠️ note)
-
-Neither blocks using the verified §1/§2 tables or the triple-corroborated §7
-ones. They — plus the remaining gaps in §8–§10 and the blank cells still
-visible in §4–§6's grids — are exactly what a grammar-reference pass would
-need to close before anything from the 📖 sections goes into `VERBS`.

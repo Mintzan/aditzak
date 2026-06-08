@@ -4,6 +4,35 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-08 — `CONJUGATIONS.md` keeps the *current* picture; the story of how it got there belongs here
+
+**Decision:** Trimmed `CONJUGATIONS.md` of in-place retrospectives — passages
+like "an earlier pass assumed X, that was backwards, here's why" sitting
+inside table sections (the §4 `hika`/`zuka` writeup, §5's `zu`-vs-`zuek`
+correction, the §4 ahalera/subjuntiboa contradiction writeup) — down to short
+notes that state the *current* fact plus a pointer to the dated `DECISIONS.md`
+entry that records the correction and its reasoning. Also: compressed the
+intro's "sources merged in, in arrival order" paragraph (a changelog dressed
+as reference prose — accurate today, guaranteed to rot the moment a new
+source lands or arrival order stops mattering) into a flat source list with
+no ordering claims; trimmed §15's source-description preamble similarly; and
+deleted the closing "Where this stands" section, which restated — and had
+already drifted slightly out of sync with — the same ⚠️-flagged discrepancies
+already documented inline at point of use (the doc's own stated policy).
+
+**Why:** Asked to review the file as a *reference for further decisions* and
+flag what wasn't pulling its weight. The throughline: a reference document's
+job is to answer "what's true, and how sure are we?" as fast as possible —
+every paragraph a reader has to get through to reach that answer is friction,
+and a paragraph that *narrates a now-fixed mistake* is friction that actively
+points backwards. `DECISIONS.md` already exists to carry exactly that kind of
+story (the "why," the false starts, the methodology) — duplicating it inline
+in the reference just gives the same content two homes, one of which (the
+inline copy) has no mechanism keeping it in sync as understanding evolves
+further. Corrections now live in the table itself (the thing that's actually
+looked up) plus a one-line pointer to the dated entry that explains them —
+shorter to read, and only one place can go stale.
+
 ## 2026-06-08 — Filling NOR-NORK's "`NOR` = 1st/2nd person" gap: derive-and-flag where the recipe checks out, stop cold where it contradicts a sourced form
 
 **Decision:** Extended `CONJUGATIONS.md` §4 (`ukan`'s NOR-NORK system) with
