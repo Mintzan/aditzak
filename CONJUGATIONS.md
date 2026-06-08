@@ -167,12 +167,13 @@ object (`NOR`, columns) — laid out as a grid, the natural shape for a
 transitive paradigm, rather than the one-`NOR`-at-a-time tables this section
 started as. *Blank cells are sourcing gaps, not claims that a form doesn't
 exist* — except where marked `(refl.)`, meaning the combination is reflexive
-and just doesn't occur ("I have me"). The entirely-empty `hi`-as-object
-column is itself worth noting: **no source has been found yet that spells out
-any "(someone) has you, familiar" form outright** — a gap of exactly the kind
-`VERB_COVERAGE.md` §1 already flags for `hi`/`zu`. (The "Completing the grid"
-subsection below has a first attempt at it — 🔍-marked, recipe-derived rather
-than found spelled out, so still not a source in the sense meant here.)
+and just doesn't occur ("I have me"), or `(hika/zuka)`, meaning the combination
+crosses Basque's two mutually exclusive familiar/formal address registers and
+so cannot occur in *any* verb form, full stop (see "Completing the grid" below
+for what that means in practice). The `hi`-as-object column — long the kind of
+gap `VERB_COVERAGE.md` §1 flags for `hi`/`zu` — is no longer a blank wall
+either: `haut`, `hau`, `haugu`, and `haute` ("I/he-she/we/they have you,
+familiar") are confirmed directly rather than recipe-derived guesses.
 
 ### Present
 
@@ -292,27 +293,43 @@ to derive every `…-te(n)` cell correctly; nothing else in the recipe needed
 adjusting once it was applied. Cells below newly derived this way (rather than
 copied from an already-sourced cell) are marked 🔍 — plausible, recipe-built,
 but not independently attested the way the rest of this file's ✅/📖 forms are;
-*(refl.)* marks the same impossible-combination diagonal as the grids above
-(extended on the same logic to `guk`→`ni`/`hi` and `zuk`/`zuek`→`hi`, which no
-source spells out either but which are exactly as reflexive-shaped as the
-already-marked `nik`→`gu`/`zu`/`zuek` cells); blank still means "gap, not a
-claim the form doesn't exist" — most of the remaining blanks are the same
-"`hi` as object" gap §4 already named (the 🔍 forms below are this file's
-first attempt at it, built from the recipe rather than found in a source) plus
-the `zu`↔`zuek` cross-register cells (e.g. "you-singular have you-all") that
-no source addresses either.
+*(refl.)* marks the same impossible-combination diagonal as the grids above —
+and *only* that diagonal. An earlier draft of this paragraph also extended it
+to `guk`→`hi` and `zuk`/`zuek`→`hi`, on the assumption they'd turn out exactly
+as reflexive-shaped as the already-marked `nik`→`gu`/`zu`/`zuek` cells — that
+was a pattern-matching error, not a grammatical fact: "we have you-familiar"
+(`haugu`) isn't reflexive at all, it's simply two different people, and a
+native speaker confirmed `haut`/`hau`/`haugu`/`haute` directly. Those four go
+into the grid below as plain confirmed forms, no 🔍.
+
+A genuinely different impossibility runs through this same corner, though,
+and it gets its own marker, `*(hika/zuka)*`: `hi` ("you", familiar register —
+*hika*) and `zu`/`zuek` ("you", formal/plural register — *zuka*) are mutually
+exclusive ways of addressing someone. A speaker picks one register for a given
+relationship and stays in it — there's no form that means "I have you-familiar
+*and* you-formal" any more than a single English sentence can address someone
+as both "thou" and "you". So `hik`-as-subject can never take `zu`/`zuek` as
+object, and `zuk`/`zuek`-as-subject can never take `hi` as object — including
+the 🔍 `hauzu`/`hauzue` guesses that prompted this, which a native speaker
+confirmed simply "don't make sense". `*(hika/zuka)*` marks all of those cells,
+across every grid below, as impossible for this reason — not unsourced, not
+reflexive, just two registers that can't share a verb form. Plain blanks keep
+meaning "gap, not a claim the form doesn't exist" — what's left of those is
+mostly the `zu`↔`zuek` cross-register cells (e.g. "you-singular have you-all"),
+a genuinely open sourcing question rather than a grammatical impossibility the
+way `hika`/`zuka` is.
 
 #### Present — `NOR` = 1st/2nd person
 
 | NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
-| nik | *(refl.)* | 🔍 haut | dut | *(refl.)* | zaitut | zaituztet | ditut |
-| hik *(`-k`/`-n`)* | nauk / naun | *(refl.)* | duk / dun | 🔍 gaituk / gaitun | 🔍 zaituk / zaitun | 🔍 zaituztek / zaituzten | dituk / ditun |
-| hark | nau | 🔍 hau | du | gaitu | zaitu | zaituzte | ditu |
-| guk | *(refl.)* | *(refl.)* | dugu | *(refl.)* | zaitugu | zaituztegu | ditugu |
-| zuk | nauzu | 🔍 hauzu | duzu | gaituzu | *(refl.)* | *(refl.)* | dituzu |
-| zuek | nauzue | 🔍 hauzue | duzue | gaituzue | *(refl.)* | *(refl.)* | dituzue |
-| haiek | naute | 🔍 haute | dute | gaituzte | zaituzte | zaituzte | dituzte |
+| nik | *(refl.)* | haut | dut | *(refl.)* | zaitut | zaituztet | ditut |
+| hik *(`-k`/`-n`)* | nauk / naun | *(refl.)* | duk / dun | 🔍 gaituk / gaitun | *(hika/zuka)* | *(hika/zuka)* | dituk / ditun |
+| hark | nau | hau | du | gaitu | zaitu | zaituzte | ditu |
+| guk | *(refl.)* | haugu | dugu | *(refl.)* | zaitugu | zaituztegu | ditugu |
+| zuk | nauzu | *(hika/zuka)* | duzu | gaituzu | *(refl.)* | *(refl.)* | dituzu |
+| zuek | nauzue | *(hika/zuka)* | duzue | gaituzue | *(refl.)* | *(refl.)* | dituzue |
+| haiek | naute | haute | dute | gaituzte | zaituzte | zaituzte | dituzte |
 
 #### Past — `NOR` = 1st/2nd person
 
@@ -322,16 +339,19 @@ suffix (`zait-u-zte-t` → `zaituztet`), but every past-tense suffix here is
 itself vowel-initial too (`-en`, `-ugu-n`…), and stacking `-zte-` against
 *another* vowel risks exactly the kind of contraction/epenthesis surprise the
 `dituzte`-vs-`†ditute` wrinkle above already showed this recipe can hide —
-better an honest gap than a guess two layers deep.
+better an honest gap than a guess two layers deep. (`hik`→`zuek` is the one
+exception: it doesn't need that contraction question answered at all, because
+it's `*(hika/zuka)*`-impossible regardless of how the form would otherwise
+come out.)
 
 | NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | nik | *(refl.)* | 🔍 hindudan | nuen | *(refl.)* | zintudan | | nituen |
-| hik | 🔍 ninduan / nindunan | *(refl.)* | huen | 🔍 gintuan / gintunan | 🔍 zintuan / zintunan | | hituen |
+| hik | 🔍 ninduan / nindunan | *(refl.)* | huen | 🔍 gintuan / gintunan | *(hika/zuka)* | *(hika/zuka)* | hituen |
 | hark | ninduen | 🔍 hinduen | zuen | gintuen | zintuen | | zituen |
 | guk | *(refl.)* | *(refl.)* | genuen | *(refl.)* | 🔍 zintugun | | genituen |
-| zuk | ninduzun | 🔍 hinduzun | zenuen | 🔍 gintuzun | *(refl.)* | *(refl.)* | zenituen |
-| zuek | 🔍 ninduzuen | 🔍 hinduzuen | zenuten | 🔍 gintuzuen | *(refl.)* | *(refl.)* | zenituzten |
+| zuk | ninduzun | *(hika/zuka)* | zenuen | 🔍 gintuzun | *(refl.)* | *(refl.)* | zenituen |
+| zuek | 🔍 ninduzuen | *(hika/zuka)* | zenuten | 🔍 gintuzuen | *(refl.)* | *(refl.)* | zenituzten |
 | haiek | ninduten | 🔍 hinduten | zuten | gintuzten | zintuzten | | zituzten |
 
 ### Baldintza, Ondorioa — completing the grid the same way
@@ -344,20 +364,23 @@ inserts `-ke-` before the same suffix families as present/past respectively.
 Same cross-checking discipline as above — 🔍 for recipe-derived cells, blank
 for `zuek`-as-object (same `-zte-`-meets-a-vowel concern as the past grid; here
 it additionally has to clear an inserted `-ke-` first, one more place for a
-silent contraction to hide), `*(refl.)*` for the impossible diagonal, and the
-already-sourced `hura`/`haiek` columns copied straight from the "Further
-moods" table above (no 🔍 — those *are* the cross-check anchors):
+silent contraction to hide — except `hik`→`zuek`, which is `*(hika/zuka)*`-
+impossible regardless of how that contraction question would resolve),
+`*(refl.)*` for the impossible-reflexive diagonal, `*(hika/zuka)*` for the
+impossible `hi`↔`zu`/`zuek` register-clash cells, and the already-sourced
+`hura`/`haiek` columns copied straight from the "Further moods" table above
+(no 🔍 — those *are* the cross-check anchors):
 
 #### Baldintza — `NOR` = 1st/2nd person
 
 | NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | nik | *(refl.)* | 🔍 bahindut | banu | *(refl.)* | 🔍 bazintut | | banitu |
-| hik | 🔍 baninduk / banindun | *(refl.)* | bahu | 🔍 bagintuk / bagintun | 🔍 bazintuk / bazintun | | bahitu |
+| hik | 🔍 baninduk / banindun | *(refl.)* | bahu | 🔍 bagintuk / bagintun | *(hika/zuka)* | *(hika/zuka)* | bahitu |
 | hark | 🔍 banindu | 🔍 bahindu | balu | 🔍 bagintu | 🔍 bazintu | | balitu |
 | guk | *(refl.)* | *(refl.)* | bagenu | *(refl.)* | 🔍 bazintugu | | bagenitu |
-| zuk | 🔍 baninduzu | 🔍 bahinduzu | bazenu | 🔍 bagintuzu | *(refl.)* | *(refl.)* | bazenitu |
-| zuek | 🔍 baninduzue | 🔍 bahinduzue | bazenute | 🔍 bagintuzue | *(refl.)* | *(refl.)* | bazenituzte |
+| zuk | 🔍 baninduzu | *(hika/zuka)* | bazenu | 🔍 bagintuzu | *(refl.)* | *(refl.)* | bazenitu |
+| zuek | 🔍 baninduzue | *(hika/zuka)* | bazenute | 🔍 bagintuzue | *(refl.)* | *(refl.)* | bazenituzte |
 | haiek | 🔍 banindute | 🔍 bahindute | balute | 🔍 bagintuzte | 🔍 bazintuzte | | balituzte |
 
 #### Ondorioa, present — `NOR` = 1st/2nd person
@@ -365,11 +388,11 @@ moods" table above (no 🔍 — those *are* the cross-check anchors):
 | NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | nik | *(refl.)* | 🔍 hinduket | nuke | *(refl.)* | 🔍 zintuket | | nituzke |
-| hik | 🔍 nindukek / ninduken | *(refl.)* | huke | 🔍 gintukek / gintuken | 🔍 zintukek / zintuken | | hituzke |
+| hik | 🔍 nindukek / ninduken | *(refl.)* | huke | 🔍 gintukek / gintuken | *(hika/zuka)* | *(hika/zuka)* | hituzke |
 | hark | 🔍 ninduke | 🔍 hinduke | luke | 🔍 gintuke | 🔍 zintuke | | lituzke |
 | guk | *(refl.)* | *(refl.)* | genuke | *(refl.)* | 🔍 zintukegu | | genituzke |
-| zuk | 🔍 nindukezu | 🔍 hindukezu | zenuke | 🔍 gintukezu | *(refl.)* | *(refl.)* | zenituzke |
-| zuek | 🔍 nindukezue | 🔍 hindukezue | zenukete | 🔍 gintukezue | *(refl.)* | *(refl.)* | zenituzkete |
+| zuk | 🔍 nindukezu | *(hika/zuka)* | zenuke | 🔍 gintukezu | *(refl.)* | *(refl.)* | zenituzke |
+| zuek | 🔍 nindukezue | *(hika/zuka)* | zenukete | 🔍 gintukezue | *(refl.)* | *(refl.)* | zenituzkete |
 | haiek | 🔍 nindukete | 🔍 hindukete | lukete | 🔍 gintukezte | 🔍 zintukezte | | lituzkete |
 
 #### Ondorioa, past — `NOR` = 1st/2nd person
@@ -377,11 +400,11 @@ moods" table above (no 🔍 — those *are* the cross-check anchors):
 | NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | nik | *(refl.)* | 🔍 hindukedan | nukeen | *(refl.)* | 🔍 zintukedan | | nituzkeen |
-| hik | 🔍 nindukean / nindukenan | *(refl.)* | hukeen | 🔍 gintukean / gintukenan | 🔍 zintukean / zintukenan | | hituzkeen |
+| hik | 🔍 nindukean / nindukenan | *(refl.)* | hukeen | 🔍 gintukean / gintukenan | *(hika/zuka)* | *(hika/zuka)* | hituzkeen |
 | hark | 🔍 nindukeen | 🔍 hindukeen | zukeen | 🔍 gintukeen | 🔍 zintukeen | | zituzkeen |
 | guk | *(refl.)* | *(refl.)* | genukeen | *(refl.)* | 🔍 zintukezun | | genituzkeen |
-| zuk | 🔍 nindukezun | 🔍 hindukezun | zenukeen | 🔍 gintukezun | *(refl.)* | *(refl.)* | zenituzkeen |
-| zuek | 🔍 nindukezuen | 🔍 hindukezuen | zenuketen | 🔍 gintukezuen | *(refl.)* | *(refl.)* | zenituzketen |
+| zuk | 🔍 nindukezun | *(hika/zuka)* | zenukeen | 🔍 gintukezun | *(refl.)* | *(refl.)* | zenituzkeen |
+| zuek | 🔍 nindukezuen | *(hika/zuka)* | zenuketen | 🔍 gintukezuen | *(refl.)* | *(refl.)* | zenituzketen |
 | haiek | 🔍 ninduketen | 🔍 hinduketen | zuketen | 🔍 gintukezten | 🔍 zintukezten | | zituzketen |
 
 ### Ahalera, Subjuntiboa — where the recipe stops being trustworthy

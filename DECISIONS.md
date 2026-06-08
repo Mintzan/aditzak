@@ -64,6 +64,28 @@ as sourced material) keeps the file's existing confidence-key promise intact —
 "📖 means cross-checked where possible", and these specific cells, by
 construction, couldn't be.
 
+**Correction (same day):** A native speaker reviewed the freshly-filled `hi`
+column and flagged two things. First, `haut`/`hau`/`haugu`/`haute` ("I/he-she/
+we/they have you-familiar") are real — confirmed directly, no longer 🔍. That
+also exposed a misclassification: `guk`→`hi` (and, by the same bad reasoning,
+`zuk`/`zuek`→`hi`) had been marked `*(refl.)*` on the assumption they'd be
+"exactly as reflexive-shaped" as the already-marked `nik`→`gu`/`zu`/`zuek`
+diagonal — but "we have you" involves two *different* people, so it was never
+reflexive; that was pattern-matching on shape, not checking the actual
+grammar, and the file now says so plainly rather than quietly fixing it.
+Second — and this is the bigger find — `hauzu`/`hauzue` ("don't make sense",
+the speaker said) aren't unsourced gaps either: `hi` (familiar address, *hika*)
+and `zu`/`zuek` (formal address, *zuka*) are mutually exclusive registers that
+can never both be arguments of one verb form, so `hik`↔`zu`/`zuek` combinations
+are *impossible*, not merely unattested. That's a third category distinct from
+both "(refl.)" and "🔍 unsourced", so it gets its own marker, `*(hika/zuka)*`,
+applied to every such cell across all five expanded grids (replacing what had
+been a mix of wrong `(refl.)`, wrong 🔍 guesses, and honest blanks). **Lesson
+for future passes on this file:** "shaped like an already-known impossible
+diagonal" is not evidence of *being* impossible — each blank cell's
+impossibility (or lack of it) needs its own justification, not an inherited
+one from a cell that merely looks similar.
+
 ## 2026-06-07 — The itinerary now ramps up in three stages: bare forms → richer framings → cross-lesson reviews
 
 **Decision:** Restructured the lesson progression so it starts simple and
