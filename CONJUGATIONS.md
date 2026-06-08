@@ -458,6 +458,16 @@ elsewhere:
   to-`hari` and `haiek`-to-`haiei` *aren't* reflexive gaps — "it"/"they" are
   open referential slots that can differ from their dative counterpart, hence
   `zaio`/`zaizkie` are perfectly ordinary attested forms.)
+- **`hi`↔`zu`/`zuek` cells are `*(hika/zuka)*`** — the *same* register-clash
+  §4 already flags (a single verb form can't take one of *hika*'s `hi` and
+  *zuka*'s `zu`/`zuek` as one argument and the other as its second), just
+  showing up here in the dative slot instead of the absolutive/ergative one:
+  `hiri`'s `zu`/`zuek` columns ("you/you-all are to him-familiar") and the
+  mirror-image `zuri`/`zuei` rows' `hi` column ("he-familiar is to you/
+  you-all") are impossible by grammar for that reason, not left blank for
+  lack of a source — the kind of nonsensical combination
+  (`zuek`-to-`hiri` would land on a `zatzaizkik`/`zatzaizkin`-type form) a
+  native speaker flagged when reviewing this grid.
 
 **Note: `zu` ≠ `zuek` here**, unlike in `ukan`'s "etiquette plural" (§4's
 `zaitut`-type forms, where `zu` itself triggers `-it-`). In *this* NOR-NORI
@@ -474,11 +484,11 @@ other plural `NOR` slot.
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hatzait | zait | gatzaizkit | zatzait | zatzaizkit | zaizkit |
-| hiri | natzaik *(masc.)* / natzain *(fem.)* | *(refl.)* | zaik *(masc.)* / zain *(fem.)* | gatzaizkik *(masc.)* / gatzaizkin *(fem.)* | zatzaik *(masc.)* / zatzain *(fem.)* | zatzaizkik *(masc.)* / zatzaizkin *(fem.)* | zaizkik *(masc.)* / zaizkin *(fem.)* |
+| hiri | natzaik *(masc.)* / natzain *(fem.)* | *(refl.)* | zaik *(masc.)* / zain *(fem.)* | gatzaizkik *(masc.)* / gatzaizkin *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | zaizkik *(masc.)* / zaizkin *(fem.)* |
 | hari | natzaio | hatzaio | zaio | gatzaizkio | zatzaio | zatzaizkio | zaizkio |
 | guri | natzaigu | hatzaigu | zaigu | *(refl.)* | zatzaigu | zatzaizkigu | zaizkigu |
-| zuri | natzaizu | hatzaizu | zaizu | gatzaizkizu | *(refl.)* | zatzaizkizu | zaizkizu |
-| zuei | natzaizue | hatzaizue | zaizue | gatzaizkizue | zatzaizue | *(refl.)* | zaizkizue |
+| zuri | natzaizu | *(hika/zuka)* | zaizu | gatzaizkizu | *(refl.)* | zatzaizkizu | zaizkizu |
+| zuei | natzaizue | *(hika/zuka)* | zaizue | gatzaizkizue | zatzaizue | *(refl.)* | zaizkizue |
 | haiei | natzaie | hatzaie | zaie | gatzaizkie | zatzaie | zatzaizkie | zaizkie |
 
 ### Past
@@ -486,11 +496,11 @@ other plural `NOR` slot.
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hintzaidan | zitzaidan | gintzaizkidan | zintzaidan | zintzaizkidan | zitzaizkidan |
-| hiri | nintzaian *(masc.)* / nintzainan *(fem.)* | *(refl.)* | zitzaian *(masc.)* / zitzainan *(fem.)* | gintzaizkian *(masc.)* / gintzaizkinan *(fem.)* | zintzaian *(masc.)* / zintzainan *(fem.)* | zintzaizkian *(masc.)* / zintzaizkinan *(fem.)* | zitzaizkian *(masc.)* / zitzaizkinan *(fem.)* |
+| hiri | nintzaian *(masc.)* / nintzainan *(fem.)* | *(refl.)* | zitzaian *(masc.)* / zitzainan *(fem.)* | gintzaizkian *(masc.)* / gintzaizkinan *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | zitzaizkian *(masc.)* / zitzaizkinan *(fem.)* |
 | hari | nintzaion | hintzaion | zitzaion | gintzaizkion | zintzaion | zintzaizkion | zitzaizkion |
 | guri | nintzaigun | hintzaigun | zitzaigun | *(refl.)* | zintzaigun | zintzaizkigun | zitzaizkigun |
-| zuri | nintzaizun | hintzaizun | zitzaizun | gintzaizkizun | *(refl.)* | zintzaizkizun | zitzaizkizun |
-| zuei | nintzaizuen | hintzaizuen | zitzaizuen | gintzaizkizuen | zintzaizuen | *(refl.)* | zitzaizkizuen |
+| zuri | nintzaizun | *(hika/zuka)* | zitzaizun | gintzaizkizun | *(refl.)* | zintzaizkizun | zitzaizkizun |
+| zuei | nintzaizuen | *(hika/zuka)* | zitzaizuen | gintzaizkizuen | zintzaizuen | *(refl.)* | zitzaizkizuen |
 | haiei | nintzaien | hintzaien | zitzaien | gintzaizkien | zintzaien | zintzaizkien | zitzaizkien |
 
 ### Baldintza — "if I were to him…" (protasis)
@@ -504,11 +514,11 @@ closing with the *same* `NORI` suffixes as the present grid (no past `-n`):
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | bahintzait | balitzait | bagintzaizkit | bazintzait | bazintzaizkit | balitzaizkit |
-| hiri | banintzaik *(masc.)* / banintzain *(fem.)* | *(refl.)* | balitzaik *(masc.)* / balitzain *(fem.)* | bagintzaizkik *(masc.)* / bagintzaizkin *(fem.)* | bazintzaik *(masc.)* / bazintzain *(fem.)* | bazintzaizkik *(masc.)* / bazintzaizkin *(fem.)* | balitzaizkik *(masc.)* / balitzaizkin *(fem.)* |
+| hiri | banintzaik *(masc.)* / banintzain *(fem.)* | *(refl.)* | balitzaik *(masc.)* / balitzain *(fem.)* | bagintzaizkik *(masc.)* / bagintzaizkin *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | balitzaizkik *(masc.)* / balitzaizkin *(fem.)* |
 | hari | banintzaio | bahintzaio | balitzaio | bagintzaizkio | bazintzaio | bazintzaizkio | balitzaizkio |
 | guri | banintzaigu | bahintzaigu | balitzaigu | *(refl.)* | bazintzaigu | bazintzaizkigu | balitzaizkigu |
-| zuri | banintzaizu | bahintzaizu | balitzaizu | bagintzaizkizu | *(refl.)* | bazintzaizkizu | balitzaizkizu |
-| zuei | banintzaizue | bahintzaizue | balitzaizue | bagintzaizkizue | bazintzaizue | *(refl.)* | balitzaizkizue |
+| zuri | banintzaizu | *(hika/zuka)* | balitzaizu | bagintzaizkizu | *(refl.)* | bazintzaizkizu | balitzaizkizu |
+| zuei | banintzaizue | *(hika/zuka)* | balitzaizue | bagintzaizkizue | bazintzaizue | *(refl.)* | balitzaizkizue |
 | haiei | banintzaie | bahintzaie | balitzaie | bagintzaizkie | bazintzaie | bazintzaizkie | balitzaizkie |
 
 Same formula and same `*(refl.)*` diagonal as the indicative grids above —
@@ -541,11 +551,11 @@ closed off with a `-ke`-suffixed NORI series (`-dake`/`-ake`/`-nake`/`-oke`/
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hintzaidake | litzaidake | gintzaizkidake | zintzaidake | zintzaizkidake | litzaizkidake |
-| hiri | nintzaiake *(masc.)* / nintzainake *(fem.)* | *(refl.)* | litzaiake *(masc.)* / litzainake *(fem.)* | gintzaizkiake *(masc.)* / gintzaizkinake *(fem.)* | zintzaiake *(masc.)* / zintzainake *(fem.)* | zintzaizkiake *(masc.)* / zintzaizkinake *(fem.)* | litzaizkiake *(masc.)* / litzaizkinake *(fem.)* |
+| hiri | nintzaiake *(masc.)* / nintzainake *(fem.)* | *(refl.)* | litzaiake *(masc.)* / litzainake *(fem.)* | gintzaizkiake *(masc.)* / gintzaizkinake *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | litzaizkiake *(masc.)* / litzaizkinake *(fem.)* |
 | hari | nintzaioke | hintzaioke | litzaioke | gintzaizkioke | zintzaioke | zintzaizkioke | litzaizkioke |
 | guri | nintzaiguke | hintzaiguke | litzaiguke | *(refl.)* | zintzaiguke | zintzaizkiguke | litzaizkiguke |
-| zuri | nintzaizuke | hintzaizuke | litzaizuke | gintzaizkizuke | *(refl.)* | zintzaizkizuke | litzaizkizuke |
-| zuei | nintzaizuekete | hintzaizuekete | litzaizuekete | gintzaizkizuekete | zintzaizuekete | *(refl.)* | litzaizkizuekete |
+| zuri | nintzaizuke | *(hika/zuka)* | litzaizuke | gintzaizkizuke | *(refl.)* | zintzaizkizuke | litzaizkizuke |
+| zuei | nintzaizuekete | *(hika/zuka)* | litzaizuekete | gintzaizkizuekete | zintzaizuekete | *(refl.)* | litzaizkizuekete |
 | haiei | nintzaieke | hintzaieke | litzaieke | gintzaizkieke | zintzaieke | zintzaizkieke | litzaizkieke |
 
 ### Ondorioa — Past
@@ -559,11 +569,11 @@ that marks past throughout this mood, `zuei` taking `-eketen` — but a
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hintzaidakeen | zitzaidakeen | gintzaizkidakeen | zintzaidakeen | zintzaizkidakeen | zitzaizkidakeen |
-| hiri | nintzaiakeen *(masc.)* / nintzainakeen *(fem.)* | *(refl.)* | zitzaiakeen *(masc.)* / zitzainakeen *(fem.)* | gintzaizkiakeen *(masc.)* / gintzaizkinakeen *(fem.)* | zintzaiakeen *(masc.)* / zintzainakeen *(fem.)* | zintzaizkiakeen *(masc.)* / zintzaizkinakeen *(fem.)* | zitzaizkiakeen *(masc.)* / zitzaizkinakeen *(fem.)* |
+| hiri | nintzaiakeen *(masc.)* / nintzainakeen *(fem.)* | *(refl.)* | zitzaiakeen *(masc.)* / zitzainakeen *(fem.)* | gintzaizkiakeen *(masc.)* / gintzaizkinakeen *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | zitzaizkiakeen *(masc.)* / zitzaizkinakeen *(fem.)* |
 | hari | nintzaiokeen | hintzaiokeen | zitzaiokeen | gintzaizkiokeen | zintzaiokeen | zintzaizkiokeen | zitzaizkiokeen |
 | guri | nintzaigukeen | hintzaigukeen | zitzaigukeen | *(refl.)* | zintzaigukeen | zintzaizkigukeen | zitzaizkigukeen |
-| zuri | nintzaizukeen | hintzaizukeen | zitzaizukeen | gintzaizkizukeen | *(refl.)* | zintzaizkizukeen | zitzaizkizukeen |
-| zuei | nintzaizueketen | hintzaizueketen | zitzaizueketen | gintzaizkizueketen | zintzaizueketen | *(refl.)* | zitzaizkizueketen |
+| zuri | nintzaizukeen | *(hika/zuka)* | zitzaizukeen | gintzaizkizukeen | *(refl.)* | zintzaizkizukeen | zitzaizkizukeen |
+| zuei | nintzaizueketen | *(hika/zuka)* | zitzaizueketen | gintzaizkizueketen | zintzaizueketen | *(refl.)* | zitzaizkizueketen |
 | haiei | nintzaiekeen | hintzaiekeen | zitzaiekeen | gintzaizkiekeen | zintzaiekeen | zintzaizkiekeen | zitzaizkiekeen |
 
 ### Potentziala — Present (ahalera)
@@ -576,11 +586,11 @@ uses — closed with the same `-ke` NORI-suffix family as Ondorioa-Present:
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hakidake | dakidake | gakizkidake | zakidake | zakizkidake | dakizkidake |
-| hiri | nakiake *(masc.)* / nakinake *(fem.)* | *(refl.)* | dakiake *(masc.)* / dakinake *(fem.)* | gakizkiake *(masc.)* / gakizkinake *(fem.)* | zakiake *(masc.)* / zakinake *(fem.)* | zakizkiake *(masc.)* / zakizkinake *(fem.)* | dakizkiake *(masc.)* / dakizkinake *(fem.)* |
+| hiri | nakiake *(masc.)* / nakinake *(fem.)* | *(refl.)* | dakiake *(masc.)* / dakinake *(fem.)* | gakizkiake *(masc.)* / gakizkinake *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | dakizkiake *(masc.)* / dakizkinake *(fem.)* |
 | hari | nakioke | hakioke | dakioke | gakizkioke | zakioke | zakizkioke | dakizkioke |
 | guri | nakiguke | hakiguke | dakiguke | *(refl.)* | zakiguke | zakizkiguke | dakizkiguke |
-| zuri | nakizuke | hakizuke | dakizuke | gakizkizuke | *(refl.)* | zakizkizuke | dakizkizuke |
-| zuei | nakizuekete | hakizuekete | dakizuekete | gakizkizuekete | zakizuekete | *(refl.)* | dakizkizuekete |
+| zuri | nakizuke | *(hika/zuka)* | dakizuke | gakizkizuke | *(refl.)* | zakizkizuke | dakizkizuke |
+| zuei | nakizuekete | *(hika/zuka)* | dakizuekete | gakizkizuekete | zakizuekete | *(refl.)* | dakizkizuekete |
 | haiei | nakieke | hakieke | dakieke | gakizkieke | zakieke | zakizkieke | dakizkieke |
 
 ### Potentziala — Past
@@ -593,11 +603,11 @@ family:
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | henkidakeen | zekidakeen | genkizkidakeen | zenkidakeen | zenkizkidakeen | zekizkidakeen |
-| hiri | nenkiakeen *(masc.)* / nenkinakeen *(fem.)* | *(refl.)* | zekiakeen *(masc.)* / zekinakeen *(fem.)* | genkizkiakeen *(masc.)* / genkizkinakeen *(fem.)* | zenkiakeen *(masc.)* / zenkinakeen *(fem.)* | zenkizkiakeen *(masc.)* / zenkizkinakeen *(fem.)* | zekizkiakeen *(masc.)* / zekizkinakeen *(fem.)* |
+| hiri | nenkiakeen *(masc.)* / nenkinakeen *(fem.)* | *(refl.)* | zekiakeen *(masc.)* / zekinakeen *(fem.)* | genkizkiakeen *(masc.)* / genkizkinakeen *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | zekizkiakeen *(masc.)* / zekizkinakeen *(fem.)* |
 | hari | nenkiokeen | henkiokeen | zekiokeen | genkizkiokeen | zenkiokeen | zenkizkiokeen | zekizkiokeen |
 | guri | nenkigukeen | henkigukeen | zekigukeen | *(refl.)* | zenkigukeen | zenkizkigukeen | zekizkigukeen |
-| zuri | nenkizukeen | henkizukeen | zekizukeen | genkizkizukeen | *(refl.)* | zenkizkizukeen | zekizkizukeen |
-| zuei | nenkizueketen | henkizueketen | zekizueketen | genkizkizueketen | zenkizueketen | *(refl.)* | zekizkizueketen |
+| zuri | nenkizukeen | *(hika/zuka)* | zekizukeen | genkizkizukeen | *(refl.)* | zenkizkizukeen | zekizkizukeen |
+| zuei | nenkizueketen | *(hika/zuka)* | zekizueketen | genkizkizueketen | zenkizueketen | *(refl.)* | zekizkizueketen |
 | haiei | nenkiekeen | henkiekeen | zekiekeen | genkizkiekeen | zenkiekeen | zenkizkiekeen | zekizkiekeen |
 
 ### Potentziala — Hypothetical
@@ -609,11 +619,11 @@ landing back on the bare `-ke` suffix family:
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | henkidake | lekidake | genkizkidake | zenkidake | zenkizkidake | lekizkidake |
-| hiri | nenkiake *(masc.)* / nenkinake *(fem.)* | *(refl.)* | lekiake *(masc.)* / lekinake *(fem.)* | genkizkiake *(masc.)* / genkizkinake *(fem.)* | zenkiake *(masc.)* / zenkinake *(fem.)* | zenkizkiake *(masc.)* / zenkizkinake *(fem.)* | lekizkiake *(masc.)* / lekizkinake *(fem.)* |
+| hiri | nenkiake *(masc.)* / nenkinake *(fem.)* | *(refl.)* | lekiake *(masc.)* / lekinake *(fem.)* | genkizkiake *(masc.)* / genkizkinake *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | lekizkiake *(masc.)* / lekizkinake *(fem.)* |
 | hari | nenkioke | henkioke | lekioke | genkizkioke | zenkioke | zenkizkioke | lekizkioke |
 | guri | nenkiguke | henkiguke | lekiguke | *(refl.)* | zenkiguke | zenkizkiguke | lekizkiguke |
-| zuri | nenkizuke | henkizuke | lekizuke | genkizkizuke | *(refl.)* | zenkizkizuke | lekizkizuke |
-| zuei | nenkizuekete | henkizuekete | lekizuekete | genkizkizuekete | zenkizuekete | *(refl.)* | lekizkizuekete |
+| zuri | nenkizuke | *(hika/zuka)* | lekizuke | genkizkizuke | *(refl.)* | zenkizkizuke | lekizkizuke |
+| zuei | nenkizuekete | *(hika/zuka)* | lekizuekete | genkizkizuekete | zenkizuekete | *(refl.)* | lekizkizuekete |
 | haiei | nenkieke | henkieke | lekieke | genkizkieke | zenkieke | zenkizkieke | lekizkieke |
 
 ### Subjuntiboa — Present
@@ -627,11 +637,11 @@ closes with a bare `-n` NORI-suffix family instead of `-ke` (`-dan`/`-an`/
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hakidan | dakidan | gakizkidan | zakidan | zakizkidan | dakizkidan |
-| hiri | nakian *(masc.)* / nakinan *(fem.)* | *(refl.)* | dakian *(masc.)* / dakinan *(fem.)* | gakizkian *(masc.)* / gakizkinan *(fem.)* | zakian *(masc.)* / zakinan *(fem.)* | zakizkian *(masc.)* / zakizkinan *(fem.)* | dakizkian *(masc.)* / dakizkinan *(fem.)* |
+| hiri | nakian *(masc.)* / nakinan *(fem.)* | *(refl.)* | dakian *(masc.)* / dakinan *(fem.)* | gakizkian *(masc.)* / gakizkinan *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | dakizkian *(masc.)* / dakizkinan *(fem.)* |
 | hari | nakion | hakion | dakion | gakizkion | zakion | zakizkion | dakizkion |
 | guri | nakigun | hakigun | dakigun | *(refl.)* | zakigun | zakizkigun | dakizkigun |
-| zuri | nakizun | hakizun | dakizun | gakizkizun | *(refl.)* | zakizkizun | dakizkizun |
-| zuei | nakizueten | hakizueten | dakizueten | gakizkizueten | zakizueten | *(refl.)* | dakizkizueten |
+| zuri | nakizun | *(hika/zuka)* | dakizun | gakizkizun | *(refl.)* | zakizkizun | dakizkizun |
+| zuei | nakizueten | *(hika/zuka)* | dakizueten | gakizkizueten | zakizueten | *(refl.)* | dakizkizueten |
 | haiei | nakien | hakien | dakien | gakizkien | zakien | zakizkien | dakizkien |
 
 ### Subjuntiboa — Past
@@ -643,11 +653,11 @@ over the *exact same* `-n` suffix family as the present:
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | henkidan | zekidan | genkizkidan | zenkidan | zenkizkidan | zekizkidan |
-| hiri | nenkian *(masc.)* / nenkinan *(fem.)* | *(refl.)* | zekian *(masc.)* / zekinan *(fem.)* | genkizkian *(masc.)* / genkizkinan *(fem.)* | zenkian *(masc.)* / zenkinan *(fem.)* | zenkizkian *(masc.)* / zenkizkinan *(fem.)* | zekizkian *(masc.)* / zekizkinan *(fem.)* |
+| hiri | nenkian *(masc.)* / nenkinan *(fem.)* | *(refl.)* | zekian *(masc.)* / zekinan *(fem.)* | genkizkian *(masc.)* / genkizkinan *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | zekizkian *(masc.)* / zekizkinan *(fem.)* |
 | hari | nenkion | henkion | zekion | genkizkion | zenkion | zenkizkion | zekizkion |
 | guri | nenkigun | henkigun | zekigun | *(refl.)* | zenkigun | zenkizkigun | zekizkigun |
-| zuri | nenkizun | henkizun | zekizun | genkizkizun | *(refl.)* | zenkizkizun | zekizkizun |
-| zuei | nenkizueten | henkizueten | zekizueten | genkizkizueten | zenkizueten | *(refl.)* | zekizkizueten |
+| zuri | nenkizun | *(hika/zuka)* | zekizun | genkizkizun | *(refl.)* | zenkizkizun | zekizkizun |
+| zuei | nenkizueten | *(hika/zuka)* | zekizueten | genkizkizueten | zenkizueten | *(refl.)* | zekizkizueten |
 | haiei | nenkien | henkien | zekien | genkizkien | zenkien | zenkizkien | zekizkien |
 
 ### Inperatiboa (imperative)
@@ -663,11 +673,11 @@ family, no trailing `-n`) is the same formula run one more time:
 | NORI ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | — | hakit | bekit | — | zakit | zakizkit | bekizkit |
-| hiri | — | *(refl.)* | bekik *(masc.)* / bekin *(fem.)* | — | zakik *(masc.)* / zakin *(fem.)* | zakizkik *(masc.)* / zakizkin *(fem.)* | bekizkik *(masc.)* / bekizkin *(fem.)* |
+| hiri | — | *(refl.)* | bekik *(masc.)* / bekin *(fem.)* | — | *(hika/zuka)* | *(hika/zuka)* | bekizkik *(masc.)* / bekizkin *(fem.)* |
 | hari | — | hakio | bekio | — | zakio | zakizkio | bekizkio |
 | guri | — | hakigu | bekigu | — | zakigu | zakizkigu | bekizkigu |
-| zuri | — | hakizu | bekizu | — | *(refl.)* | zakizkizu | bekizkizu |
-| zuei | — | hakizue | bekizue | — | zakizue | *(refl.)* | bekizkizue |
+| zuri | — | *(hika/zuka)* | bekizu | — | *(refl.)* | zakizkizu | bekizkizu |
+| zuei | — | *(hika/zuka)* | bekizue | — | zakizue | *(refl.)* | bekizkizue |
 | haiei | — | hakie | bekie | — | zakie | zakizkie | bekizkie |
 
 **On confidence:** every cell outside the original `hura`/`haiek` columns

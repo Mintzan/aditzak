@@ -118,6 +118,17 @@ diagonal" is not evidence of *being* impossible — each blank cell's
 impossibility (or lack of it) needs its own justification, not an inherited
 one from a cell that merely looks similar.
 
+**Follow-up (same day):** That lesson applied immediately — the same speaker
+spotted `zuek`-to-`hiri`-type cells ("you-all are to him-familiar") still
+sitting unflagged in §5's NOR-NORI dative grids, the same `hika`/`zuka`
+register clash just showing up in a different grid's argument slot (dative
+rather than absolutive/ergative). Marked all four affected cells
+(`hiri`×`zu`/`zuek`, `zuri`/`zuei`×`hi`) `*(hika/zuka)*` across all eleven of
+§5's expanded grids, and added a bullet to that section's prose explaining it
+— so the marker now covers every grid where `hi` and `zu`/`zuek` could
+otherwise collide as a verb form's two arguments, not just the one where it
+was first noticed.
+
 ## 2026-06-07 — The itinerary now ramps up in three stages: bare forms → richer framings → cross-lesson reviews
 
 **Decision:** Restructured the lesson progression so it starts simple and
