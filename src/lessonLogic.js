@@ -138,11 +138,43 @@ function buildOptions(table, persons, person) {
   return { correct, options: shuffle([correct, ...distractors]) }
 }
 
-// One question per grammatical person, framed one of five ways — the first
-// three are multiple-choice (an `options` array to pick from), the last two
+// Builds a "spot the error" question: four fully filled-in example sentences —
+// the slot's own person plus three random companions sampled from whichever
+// persons have sentence data for this tense — with exactly one sentence's
+// blank filled by a *different* person's conjugated form, so it reads as a
+// subject/verb mismatch ("Hura medikua naiz." — `naiz` is `ni`'s form, not
+// `hura`'s). The learner picks the one sentence that's wrong; `correct` holds
+// that sentence's text so the existing options/grading machinery (string
+// equality via `isAnswerCorrect`, `getOptionStatus`) needs no changes to
+// support it. Reuses exactly the same `sentences` data as `sentence`/
+// `type-verb` — just filling the blank itself instead of leaving it open —
+// so any verb that supports those automatically supports this too, once it
+// has at least four sentenced persons to draw four *distinct* sentences from.
+function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) {
+  const companions = shuffle(personsWithSentences.filter((candidate) => candidate !== person)).slice(0, 3)
+  const candidates = shuffle([person, ...companions])
+  const wrongIndex = Math.floor(Math.random() * candidates.length)
+  const items = candidates.map((candidate, index) => {
+    const isWrong = index === wrongIndex
+    const form = isWrong ? table[shuffle(personsWithSentences.filter((other) => other !== candidate))[0]] : table[candidate]
+    return { person: candidate, sentence: sentences[candidate].replace('___', form) }
+  })
+  return {
+    kind: 'spot-error',
+    person,
+    items,
+    options: items.map((item) => item.sentence),
+    correct: items[wrongIndex].sentence,
+  }
+}
+
+// One question per grammatical person, framed one of six ways — the first
+// four are multiple-choice (an `options` array to pick from), the last two
 // ask the learner to type the answer instead (`correct` only, no `options`):
 //   - `form`: recognise the bare conjugated form ("hura → ?")
 //   - `sentence`: fill the verb into an example sentence ("Hura medikua ___.")
+//   - `spot-error`: pick the one sentence, of four already filled in, whose
+//     verb form doesn't match its subject (see `buildSpotErrorQuestion`)
 //   - `pronoun`: fill the correctly-declined pronoun into a sentence whose verb
 //     is already given ("___ etxe bat du." → "Hark")
 //   - `type-verb`: type the verb into the same blanked sentence as `sentence`
@@ -160,12 +192,14 @@ export function generateQuestions(verb, tense) {
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const persons = Object.keys(table)
+  const personsWithSentences = persons.filter((candidate) => sentences[candidate])
   return shuffle(persons).map((person) => {
     const sentence = sentences[person]
     const pronounSentence = verb.pronouns && pronounSentences[person]
     const availableKinds = [
       sentence && 'sentence',
       sentence && 'type-verb',
+      sentence && personsWithSentences.length >= 4 && 'spot-error',
       pronounSentence && 'pronoun',
       pronounSentence && 'type-pronoun',
     ].filter(Boolean)
@@ -177,6 +211,8 @@ export function generateQuestions(verb, tense) {
       }
       case 'type-verb':
         return { kind: 'type-verb', person, sentence, correct: table[person] }
+      case 'spot-error':
+        return buildSpotErrorQuestion(table, sentences, personsWithSentences, person)
       case 'pronoun': {
         const { correct, options } = buildOptions(verb.pronouns, persons, person)
         return { kind: 'pronoun', person, sentence: pronounSentence, correct, options }

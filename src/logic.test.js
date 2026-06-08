@@ -217,6 +217,65 @@ describe('generateQuestions', () => {
         expect(question).not.toHaveProperty('sentence')
       })
     })
+
+    it('never offers spot-error when fewer than four persons have example sentences', () => {
+      // Roll low enough to favour a special framing whenever one is on offer —
+      // with only `ni`/`hi`/`hura` sentenced, `spot-error` never qualifies
+      // (it needs at least four), so this should only ever yield `sentence`,
+      // `type-verb`, or — for the unsentenced persons — the bare-form fallback.
+      vi.spyOn(Math, 'random').mockReturnValue(0.1)
+
+      generateQuestions(verbWithSentences, 'present').forEach((question) => {
+        expect(question.kind).not.toBe('spot-error')
+      })
+    })
+  })
+
+  describe('spot-error questions', () => {
+    const verbWithManySentences = {
+      ...verb,
+      sentences: {
+        present: {
+          ni: 'Ni irakaslea ___.',
+          hi: 'Hi ikaslea ___.',
+          hura: 'Hura medikua ___.',
+          gu: 'Gu lagunak ___.',
+          zuek: 'Zuek azkarrak ___.',
+          haiek: 'Haiek euskaldunak ___.',
+        },
+      },
+    }
+    const sentenced = verbWithManySentences.sentences.present
+    const table = verbWithManySentences.conjugations.present
+
+    it('picks exactly one of four distinct, fully-filled sentences as the wrong one when the roll favours it', () => {
+      // No `pronouns`, so with all six persons sentenced `availableKinds` is
+      // `['sentence', 'type-verb', 'spot-error']` — [0, 0.5) splits into three
+      // slices of ~0.167, and 0.4 lands in the last one: 'spot-error'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.4)
+
+      generateQuestions(verbWithManySentences, 'present').forEach((question) => {
+        expect(question.kind).toBe('spot-error')
+        expect(question.items).toHaveLength(4)
+
+        const persons = question.items.map((item) => item.person)
+        expect(new Set(persons).size).toBe(persons.length)
+        question.items.forEach((item) => {
+          expect(sentenced).toHaveProperty(item.person)
+          expect(item.sentence).not.toContain('___')
+        })
+
+        // Exactly one item's filled-in form doesn't match its own person's
+        // correct conjugation — that's the one `correct`/`options` point to.
+        const correctlyFilled = (item) => sentenced[item.person].replace('___', table[item.person])
+        const mismatched = question.items.filter((item) => item.sentence !== correctlyFilled(item))
+        expect(mismatched).toHaveLength(1)
+        expect(question.correct).toBe(mismatched[0].sentence)
+        expect(question.options).toEqual(question.items.map((item) => item.sentence))
+        expect(question.options).toContain(question.correct)
+        expect(new Set(question.options).size).toBe(question.options.length)
+      })
+    })
   })
 
   describe('with declined pronouns', () => {
@@ -276,10 +335,11 @@ describe('generateQuestions', () => {
   })
 
   describe('with typed-answer framings', () => {
-    // Both `sentences` and `pronouns`/`pronounSentences` present, for every
-    // person, so `availableKinds` always has all four special framings —
-    // `['sentence', 'type-verb', 'pronoun', 'type-pronoun']` — and a fixed
-    // roll deterministically lands on whichever index it maps to.
+    // Both `sentences` (for all six persons — enough to also offer
+    // `spot-error`) and `pronouns`/`pronounSentences` present, so
+    // `availableKinds` always has all five special framings —
+    // `['sentence', 'type-verb', 'spot-error', 'pronoun', 'type-pronoun']` —
+    // and a fixed roll deterministically lands on whichever index it maps to.
     const verbWithBoth = {
       ...verb,
       sentences: {
@@ -308,9 +368,9 @@ describe('generateQuestions', () => {
     const pronounSentenced = verbWithBoth.pronounSentences.present
 
     it('frames a question as typing the verb form into the sentence blank when the roll favours it', () => {
-      // [0, 0.5) split into four equal slices of 0.125 — 0.2 lands in the
+      // [0, 0.5) split into five equal slices of 0.1 — 0.15 lands in the
       // second one, i.e. index 1 of the available-kinds list: 'type-verb'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.2)
+      vi.spyOn(Math, 'random').mockReturnValue(0.15)
 
       generateQuestions(verbWithBoth, 'present').forEach((question) => {
         expect(question).toMatchObject({
@@ -324,7 +384,8 @@ describe('generateQuestions', () => {
     })
 
     it('frames a question as typing the declined pronoun into the sentence blank when the roll favours it', () => {
-      // 0.4 lands in the fourth slice ([0.375, 0.5)), index 3: 'type-pronoun'.
+      // [0, 0.5) split into five equal slices of 0.1 — 0.4 lands in the last
+      // one, i.e. index 4 of the available-kinds list: 'type-pronoun'.
       vi.spyOn(Math, 'random').mockReturnValue(0.4)
 
       generateQuestions(verbWithBoth, 'present').forEach((question) => {

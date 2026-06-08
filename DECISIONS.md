@@ -4,6 +4,46 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-08 — "Spot the error" is a sixth question kind that bundles four sentences instead of testing one person
+
+**Decision:** Added `kind: 'spot-error'`: the learner is shown four already
+filled-in example sentences — one person's own, plus three random companions
+sampled from whichever persons have `sentences` data for the tense — and has
+to pick the one whose verb form has been swapped for a different person's
+("Hura medikua zarete." — `zarete` is `zuek`'s form, not `hura`'s `da`). It
+reuses the exact same `verb.sentences[tense][person]` data as `sentence`/
+`type-verb` (just filling the blank itself rather than leaving it for the
+learner), and stores the wrong sentence's full text as `correct` and all four
+texts as `options`, so the existing string-equality grading
+(`isAnswerCorrect`/`getOptionStatus`) and `AnswerOption` rendering work
+unchanged — `QuestionPrompt` only needed one new branch (render nothing extra
+when `question.items` is present, since the four sentences *are* the prompt).
+It's gated on `personsWithSentences.length >= 4` so it only appears for verbs
+with enough sentenced persons to build four distinct ones, alongside the
+per-person `sentence`/`type-verb` check.
+
+This is the one kind that doesn't fit "one question tests one person" —
+generating it still consumes one slot in the per-person loop (keeping `total`
+and the queue mechanics untouched), but the question it produces samples from
+across the table. That's an intentional, narrow exception: restructuring
+`generateQuestions` to support variable-width questions in general would have
+been a much bigger change for one kind that naturally wants to span several
+forms at once.
+
+**Why:** Asked for an exercise that builds error-*detection* rather than
+recall/recognition — a skill the other five kinds don't touch, since they only
+ever show the learner correct forms to choose from or type. A bare true/false
+"is this sentence correct?" judgment was the first idea, but it's only a
+50/50 guess; framing it as "find the one wrong sentence among four" gives it
+the same ~25% guess rate as the other multiple-choice kinds, so it sits at a
+consistent difficulty rather than reading as the easy one. Distractor forms
+are picked uniformly at random from other persons (matching `buildOptions`'s
+existing approach) rather than biased toward "near-miss" persons (e.g.
+singular↔singular) — that would make for a harder, more discriminating
+question, but it's an extra layer of complexity/data-shape (defining person
+adjacency) that nothing else in the file needs yet; worth revisiting if this
+kind turns out to be too easy to spot via subject/verb number mismatches alone.
+
 ## 2026-06-07 — Typing exercises are two more question kinds, not a separate mode, and reuse the sentence data
 
 **Decision:** Added `kind: 'type-verb'` and `kind: 'type-pronoun'` —

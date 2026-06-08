@@ -593,14 +593,16 @@ function SentenceWithBlank({ sentence }) {
   )
 }
 
-// `generateQuestions` mixes five question styles, but they only differ in two
-// independent ways: how the prompt is framed (bare person/label pair, or a
-// sentence with a blank — keyed off `question.sentence` rather than listing
-// every blanked `kind`, so this stays correct as new blanked framings are
-// added) and how the answer is given (multiple choice when `question.options`
-// is present, typed in otherwise — see `ExerciseScreen`). Every combination
-// still tests recognising/recalling the right Basque form, just packaged
-// differently.
+// `generateQuestions` mixes six question styles, but they differ along just a
+// couple of independent axes: how the prompt is framed — a bare person/label
+// pair, a single sentence with a blank (keyed off `question.sentence` rather
+// than listing every blanked `kind`, so this stays correct as new framings are
+// added), or — uniquely for `spot-error` — nothing extra at all, since its
+// four already-filled-in sentences (`question.items`) double as both the
+// prompt and the answer options rendered below — and how the answer is given:
+// multiple choice when `question.options` is present, typed in otherwise (see
+// `ExerciseScreen`). Every combination still tests recognising/recalling the
+// right Basque form, just packaged differently.
 function QuestionPrompt({ verb, tenseMeta, question }) {
   return (
     <>
@@ -609,7 +611,7 @@ function QuestionPrompt({ verb, tenseMeta, question }) {
       </p>
       {question.sentence ? (
         <SentenceWithBlank sentence={question.sentence} />
-      ) : (
+      ) : question.items ? null : (
         <>
           <h2 className="mt-2 text-4xl font-extrabold text-gray-900">{question.person}</h2>
           <p className="mt-1 text-gray-500">{PERSON_LABELS[question.person]}</p>
@@ -622,6 +624,7 @@ function QuestionPrompt({ verb, tenseMeta, question }) {
 const QUESTION_PROMPTS = {
   form: 'Which form is correct?',
   sentence: 'Which word completes the sentence?',
+  'spot-error': 'Which sentence has the wrong form?',
   pronoun: 'Which pronoun completes the sentence?',
   'type-verb': 'Type the word that completes the sentence.',
   'type-pronoun': 'Type the pronoun that completes the sentence.',
