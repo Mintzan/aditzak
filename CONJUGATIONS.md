@@ -334,43 +334,96 @@ better an honest gap than a guess two layers deep.
 | zuek | 🔍 ninduzuen | 🔍 hinduzuen | zenuten | 🔍 gintuzuen | *(refl.)* | *(refl.)* | zenituzten |
 | haiek | ninduten | 🔍 hinduten | zuten | gintuzten | zintuzten | | zituzten |
 
-### The same recipe, for the remaining six moods
+### Baldintza, Ondorioa — completing the grid the same way
 
-§14 spells out an equivalent `NOR` = 1st/2nd-person row-template for each of
-the moods the "Further moods" table above covers in citation form — same
-`[prefix] + [stem(+mood/tense markers)] + [suffix]` shape, just with
-mood-specific stems/markers riding the same `nind-/hind-/gint-/zint-` (or, in
-the conditional, `Ba-nind-/Ba-hind-/…`) prefix series and `-da-n`/`-a(/na)-n`/
-`-gu-n`/`-zu-n`/`-zue-n`/`-te-n`-family suffixes already decoded above.
-Transcribed as-is (not expanded into words — the `dituzte`-vs-`†ditute`
-wrinkle is exactly the kind of detail a mechanical expansion six moods deep,
-each with its own tense/mood markers stacked on top, would be likely to get
-subtly wrong without a source spelling the results out):
+Baldintza and both Ondorioa tenses run on the *exact same* `nind-/hind-/
+gint-/zint-` prefix series and `-u(-ke)-` stem as the indicative grids just
+decoded — Baldintza just adds a `Ba-` protasis prefix and drops the past `-n`
+(mirroring `banintz`/`banu` in §1/§3/§4's own citation row), Ondorioa just
+inserts `-ke-` before the same suffix families as present/past respectively.
+Same cross-checking discipline as above — 🔍 for recipe-derived cells, blank
+for `zuek`-as-object (same `-zte-`-meets-a-vowel concern as the past grid; here
+it additionally has to clear an inserted `-ke-` first, one more place for a
+silent contraction to hide), `*(refl.)*` for the impossible diagonal, and the
+already-sourced `hura`/`haiek` columns copied straight from the "Further
+moods" table above (no 🔍 — those *are* the cross-check anchors):
 
-| Mood / tense | Prefix series (`ni/hi/—/gu/zu/zuek/—`) | Stem + markers | Suffix series (`nik/hik/hark/guk/zuk/zuek/haiek`) |
+#### Baldintza — `NOR` = 1st/2nd person
+
+| NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| nik | *(refl.)* | 🔍 bahindut | banu | *(refl.)* | 🔍 bazintut | | banitu |
+| hik | 🔍 baninduk / banindun | *(refl.)* | bahu | 🔍 bagintuk / bagintun | 🔍 bazintuk / bazintun | | bahitu |
+| hark | 🔍 banindu | 🔍 bahindu | balu | 🔍 bagintu | 🔍 bazintu | | balitu |
+| guk | *(refl.)* | *(refl.)* | bagenu | *(refl.)* | 🔍 bazintugu | | bagenitu |
+| zuk | 🔍 baninduzu | 🔍 bahinduzu | bazenu | 🔍 bagintuzu | *(refl.)* | *(refl.)* | bazenitu |
+| zuek | 🔍 baninduzue | 🔍 bahinduzue | bazenute | 🔍 bagintuzue | *(refl.)* | *(refl.)* | bazenituzte |
+| haiek | 🔍 banindute | 🔍 bahindute | balute | 🔍 bagintuzte | 🔍 bazintuzte | | balituzte |
+
+#### Ondorioa, present — `NOR` = 1st/2nd person
+
+| NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| nik | *(refl.)* | 🔍 hinduket | nuke | *(refl.)* | 🔍 zintuket | | nituzke |
+| hik | 🔍 nindukek / ninduken | *(refl.)* | huke | 🔍 gintukek / gintuken | 🔍 zintukek / zintuken | | hituzke |
+| hark | 🔍 ninduke | 🔍 hinduke | luke | 🔍 gintuke | 🔍 zintuke | | lituzke |
+| guk | *(refl.)* | *(refl.)* | genuke | *(refl.)* | 🔍 zintukegu | | genituzke |
+| zuk | 🔍 nindukezu | 🔍 hindukezu | zenuke | 🔍 gintukezu | *(refl.)* | *(refl.)* | zenituzke |
+| zuek | 🔍 nindukezue | 🔍 hindukezue | zenukete | 🔍 gintukezue | *(refl.)* | *(refl.)* | zenituzkete |
+| haiek | 🔍 nindukete | 🔍 hindukete | lukete | 🔍 gintukezte | 🔍 zintukezte | | lituzkete |
+
+#### Ondorioa, past — `NOR` = 1st/2nd person
+
+| NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| nik | *(refl.)* | 🔍 hindukedan | nukeen | *(refl.)* | 🔍 zintukedan | | nituzkeen |
+| hik | 🔍 nindukean / nindukenan | *(refl.)* | hukeen | 🔍 gintukean / gintukenan | 🔍 zintukean / zintukenan | | hituzkeen |
+| hark | 🔍 nindukeen | 🔍 hindukeen | zukeen | 🔍 gintukeen | 🔍 zintukeen | | zituzkeen |
+| guk | *(refl.)* | *(refl.)* | genukeen | *(refl.)* | 🔍 zintukezun | | genituzkeen |
+| zuk | 🔍 nindukezun | 🔍 hindukezun | zenukeen | 🔍 gintukezun | *(refl.)* | *(refl.)* | zenituzkeen |
+| zuek | 🔍 nindukezuen | 🔍 hindukezuen | zenuketen | 🔍 gintukezuen | *(refl.)* | *(refl.)* | zenituzketen |
+| haiek | 🔍 ninduketen | 🔍 hinduketen | zuketen | 🔍 gintukezten | 🔍 zintukezten | | zituzketen |
+
+### Ahalera, Subjuntiboa — where the recipe stops being trustworthy
+
+These two don't get the same treatment, and it's worth spelling out why
+rather than silently producing a thinner table. §14's `NOR` = 1st/2nd-person
+templates for them are:
+
+| Mood / tense | Prefix series (`ni/hi/hura/gu/zu/zuek/haiek`) | Stem + markers | Suffix series (`nik/hik/hark/guk/zuk/zuek/haiek`) |
 |---|---|---|---|
-| Baldintza | `Ba-nind-/Ba-hind-/(—)/Ba-gint-/Ba-zint-/Ba-zint-…-zte-/(—)` | `-u-` | `-t/-k(/-n)/-∅/-gu/-zu/-zue/-te` (no `-n`) |
-| Ondorioa, present | `nind-/hind-/(—)/gint-/zint-/zint-…-zte-/(—)` | `-u-ke-` | `-t/-k(/-n)/-∅/-gu/-zu/-zue/-te` |
-| Ondorioa, past | `nind-/hind-/(—)/gint-/zint-/zint-…-zte-/(—)` | `-u-ke-` | `-da-n/-a(/na)-n/-en/-gu-n/-zu-n/-zue-n/-te-n` |
 | Ahalera, present | `na-/ha-/De-/gait-/zait-/zait-…-te-/dit-` | `-zake-` | `-t/-k(/-n)/-∅/-gu/-zu/-zue/-te` |
 | Ahalera, past | `nint-/hint-/(—)/gint-/zint-/zint-…-te-/(—)` | `-zake-` | `-da-n/-a(/na)-n/-en/-gu-n/-zu-n/-zue-n/-te-n` |
-| Subjuntiboa, past | `na-/ha-/De-/gait-/zait-/zait-…-te-/dit-` | `-za-` | `-da-n/-a(/na)-n/-∅-n/-gu-n/-zu-n/-zue-n/-te-n` |
+| Subjuntiboa, present | `na-/ha-/De-/gait-/zait-/zait-…-te-/dit-` | `-za-` | `-da-n/-a(/na)-n/-∅-n/-gu-n/-zu-n/-zue-n/-te-n` |
 
-Two things stand out even at this unexpanded level:
+Running the recipe on the **Ahalera-present** row gives, e.g., `De-` (object
+= `hura`) + `-zake-` + `-t` (subject = `nik`) → `dezaket`. But the *already-
+sourced* "Further moods" citation row for the very same cell — `NORK = nik`,
+`NOR = hura`, ahalera present — is `nezake` (§4 above, cross-checked against
+§14's own plain-word list). `dezaket` and `nezake` aren't variants of the same
+form; they're built on different person-marking entirely (`d-` = 3rd-person-
+style absolutive marking vs. `ne-` = 1st-singular-style). One of these
+templates is marking `NOR`, the other `NORK` — and they can't both be right
+about which one the citation row already shown is doing. Rather than pick a
+side and risk teaching a contradiction as fact, this is flagged as an open
+discrepancy: **the Ahalera/Subjuntiboa citation paradigm and §14's own
+"`NOR` = 1st/2nd person" template for the same mood don't reconcile**, and
+nothing else in this file resolves it (§14 is the *only* source seen so far
+that spells out either side of this particular pair). Likely culprits — a
+linearization error in how this densely-laid-out chart's cells got read back
+out as text (the same kind of thing this section already corrected once, see
+the `dituzte` wrinkle above, just bigger), or a real but unfamiliar syncretism
+this file's other sources don't independently corroborate either way. Either
+way: better an honest "open question" than a table that's confidently wrong
+about which argument it's agreeing with — exactly the failure mode `DECISIONS`
+already named for `irudi`/`etzan`. Left as bare templates above, not expanded.
 
-- **Ahalera and Subjuntiboa run on `na-/ha-/d-`-type prefixes** (the `izan`
-  potential/subjunctive stems `naiteke`/`nadin` ride, per §3) **rather than
-  the `nind-/hind-`-type series** the indicative/baldintza/ondorioa moods use
-  — i.e. the choice of "which `izan`-flavoured stem carries the non-3rd-person
-  `NOR` marking" is itself mood-dependent, not a single fixed shape across the
-  whole `NOR-NORK` paradigm. (Ahalera-past further narrows this to
-  `nint-/hint-`, a third variant.)
-- **The imperative's `NOR-NORK` cells are barely populated at all** — §14
-  shows mostly `()` placeholders (`NA za ( )`, `Be za -`, `( ) ZU`…), which
-  squares with the independently-known fact that Basque imperatives are
-  largely restricted to absolutive-marking commands (`zaitez`, `bitez`, …);
-  a transitive "have it!" type imperative is at best marginal. Left out of the
-  table above for that reason — there's barely a recipe to transcribe.
+The **imperative**'s `NOR-NORK` cells, by contrast, are barely populated in
+§14 at all — mostly `()` placeholders (`NA za ( )`, `Be za -`, `( ) ZU`…),
+which squares with the independently-known fact that Basque imperatives are
+largely restricted to absolutive-marking commands (`zaitez`, `bitez`, …); a
+transitive "have it!" type imperative is at best marginal. No table to
+complete there — there's barely a recipe to transcribe, let alone expand.
 
 ## 5. `izan` with dative — NOR-NORI system · 📖
 

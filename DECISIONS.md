@@ -4,45 +4,57 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
-## 2026-06-08 — Filling NOR-NORK's "`NOR` = 1st/2nd person" gap: derive-and-flag, not transcribe-wholesale, and stop at six moods deep
+## 2026-06-08 — Filling NOR-NORK's "`NOR` = 1st/2nd person" gap: derive-and-flag where the recipe checks out, stop cold where it contradicts a sourced form
 
-**Decision:** Extended `CONJUGATIONS.md` §4 (`ukan`'s NOR-NORK system) with a
-"Completing the grid" subsection that fills in the present/past grids' other
+**Decision:** Extended `CONJUGATIONS.md` §4 (`ukan`'s NOR-NORK system) with
+grids that fill in the present/past/baldintza/ondorioa(×2) tables' other
 half — the `ni`/`hi`/`gu`/`zu`/`zuek`-as-object columns the citation-paradigm
 framing had left mostly blank ("you have *me*", "they had *us*", as opposed to
 the already-covered "I have *it/them*"). §14's chart (the "Euskal aditz
 laguntzailea" PDF) gives this half as compact `[prefix]+[stem]+[suffix]`
 row-templates rather than spelled-out words; rather than transcribing those
 templates wholesale (§14's own write-up already calls that "error-prone") or
-mechanically expanding every cell into a word, the new subsection (a) decodes
-the recipe and *cross-checks it* against cells already sourced elsewhere in
-§4 — which surfaced one real wrinkle, a `-z-` that appears between a
-plural-object stem and the `haiek`-subject suffix (`dituzte`, not `†ditute`;
-`gintuzten`, matching the existing sourced cell, not `†ginduten`) — then (b)
-fills cells with that corrected recipe, marking everything *not* already
-cross-checked as 🔍 (recipe-derived, not independently attested), and (c)
-stops short of expanding the *other* six moods (baldintza, both ondorioas,
-both ahaleras, subjuntiboa) into words at all — transcribing their templates
-as a table of prefix/stem/suffix series instead, with a note on why (each
-mood stacks its own tense/mood markers on top of the same recipe, multiplying
-the chances of another `dituzte`-shaped surprise hiding in a form no source
-spells out to check against).
+mechanically expanding every cell into a word on faith, each mood got the same
+treatment: (a) decode the recipe, (b) *cross-check it* against cells already
+sourced elsewhere in §4 before trusting it on cells that aren't, (c) only then
+fill — marking everything not already cross-checked 🔍 (recipe-derived, not
+independently attested) — or, if the cross-check itself fails, *stop* and
+flag the contradiction rather than paper over it. Both outcomes happened:
 
-**Why:** Asked to use the PDF to build out the NOR-NORK tables. The natural
-temptation with a chart this information-dense is to mechanically expand every
-template into every cell — but the `dituzte`-vs-`†ditute` wrinkle (found by
+- **Present/past/baldintza/ondorioa(×2)**: the recipe cross-checks cleanly —
+  e.g. `nind-` + `-u-` + `-en` → `ninduen`, matching the existing `hark`→`ni`
+  cell — modulo one real wrinkle worth calling out by name: a `-z-` that
+  appears between a plural-object stem and the `haiek`-subject suffix
+  (`dituzte`, not `†ditute`; `gintuzten`, matching the existing sourced cell,
+  not `†ginduten`). With that rule folded in, all five grids are now filled
+  (`zuek`-as-object still left blank — see below).
+- **Ahalera/Subjuntiboa**: the recipe *doesn't* cross-check. Running §14's own
+  "`NOR` = 1st/2nd person" template for ahalera-present on the `nik`/`hura`
+  cell yields `dezaket` (3rd-person-style `d-` marking) — but the
+  already-sourced citation-paradigm cell for that exact combination is
+  `nezake` (1st-singular-style `ne-` marking). These aren't spelling variants;
+  they disagree about *which argument the verb is agreeing with*. Rather than
+  silently pick a side (or, worse, expand a whole grid on top of an
+  unreconciled foundation), this is written up as an open discrepancy and the
+  templates are left untouched, unexpanded — the section explicitly says so,
+  with the specific contradicting forms named, so a future pass with a better
+  source can resolve it instead of having to rediscover it.
+
+**Why:** Asked to use the PDF to build out the NOR-NORK tables, then asked
+again to *complete* what was left as bare templates. The natural temptation
+with a chart this information-dense is to mechanically expand every template
+into every cell — but the `dituzte`-vs-`†ditute` wrinkle (found by
 cross-checking the recipe against forms §4 *already* had, before trusting it
-on cells it didn't) is exactly the kind of thing that looks like correct
-Basque while teaching a paradigm that doesn't exist, the failure mode
+on cells it didn't) and, more sharply, the ahalera `dezaket`-vs-`nezake`
+contradiction, are exactly the kind of thing that looks like correct Basque
+while teaching a paradigm that doesn't exist — the failure mode
 `DECISIONS.md`'s very first entries on `izan`/`ukan` content already named.
-Stopping at "present + past, fully decoded and flagged" rather than pushing
-through all eight mood/tense combinations isn't laziness so much as matching
-effort to verifiability: present/past had enough already-sourced cells to
-cross-check the recipe *against*, so filling their gaps means "applying a
-checked rule to fill blanks" — for the other six moods, expanding would mean
-"trusting an unchecked rule all the way down", six layers of compounding
-mood-specific markers deep, with no independently-sourced cells to catch a
-mistake. Leaving `zuek`-as-object blank in the past grid for the same reason
+The two moods where expansion stopped aren't a "ran out of effort" gap; they're
+a place where the *cross-check itself* returned "these two facts can't both be
+true," and inventing a resolution would be strictly worse than naming the
+contradiction — a wrong-but-confident table is harder to fix later than an
+honest unresolved flag, because nothing signals it needs a second look.
+Leaving `zuek`-as-object blank throughout for a related reason
 (its `-zte-` infix would, for the first time in this paradigm, collide with a
 *vowel-initial* suffix — `-zte-` + `-en`/`-uzun`/… — exactly the kind of
 juncture that produced the `-z-` surprise above) is the same call made
