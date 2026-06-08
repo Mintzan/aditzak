@@ -8,6 +8,7 @@ import {
   getUnlockedLessonIds,
   isAnswerCorrect,
   recordResult,
+  shuffle,
 } from './lessonLogic'
 
 // =============================================================================
@@ -65,11 +66,11 @@ const VERBS = [
       },
       past: {
         ni: 'Ni gaztea ___.',
-        hi: 'Hi etxean ___.',
-        hura: 'Hura hemen ___.',
-        gu: 'Gu eskolan ___.',
-        zuek: 'Zuek pozik ___.',
-        haiek: 'Haiek kanpoan ___.',
+        hi: 'Hi nire laguna ___.',
+        hura: 'Hura irakasle ona ___.',
+        gu: 'Gu ikasle onak ___.',
+        zuek: 'Zuek oso azkarrak ___.',
+        haiek: 'Haiek nire lagunak ___.',
       },
     },
     pronouns: { ni: 'Ni', hi: 'Hi', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
@@ -84,11 +85,11 @@ const VERBS = [
       },
       past: {
         ni: '___ gaztea nintzen.',
-        hi: '___ etxean hintzen.',
-        hura: '___ hemen zen.',
-        gu: '___ eskolan ginen.',
-        zuek: '___ pozik zineten.',
-        haiek: '___ kanpoan ziren.',
+        hi: '___ nire laguna hintzen.',
+        hura: '___ irakasle ona zen.',
+        gu: '___ ikasle onak ginen.',
+        zuek: '___ oso azkarrak zineten.',
+        haiek: '___ nire lagunak ziren.',
       },
     },
   },
@@ -173,15 +174,52 @@ const DIALECT_LABELS = {
   batua: 'Batua',
 }
 
-// Lessons are simply (verb × tense) pairs, in data order: izan/present,
-// izan/past, ukan/present, ukan/past.
-const LESSONS = VERBS.flatMap((verb) =>
-  Object.keys(verb.conjugations).map((tense) => ({
-    id: `${verb.id}-${tense}`,
-    verbId: verb.id,
-    tense,
-  })),
-)
+// The itinerary runs simple-and-singular → richer-and-combined:
+//
+//  1. Practice lessons are (verb × tense) pairs, in data order — one
+//     conjugation at a time, e.g. izan/present, izan/past, ukan/present,
+//     ukan/past. `id: '${verbId}-${tense}'`, shape `{ id, verbId, tense }`.
+//  2. Once a verb has more than one tense, a "verb review" lesson combining
+//     all of them is appended right after its practice lessons — e.g.
+//     izan/present + izan/past in one session, so the learner has to tell the
+//     two paradigms apart rather than coast on "it's all izan-present-shaped".
+//  3. Once there's more than one verb, a final "mixed review" caps the whole
+//     sequence, drawing from every (verb × tense) pair across the app — the
+//     most demanding checkpoint, mixing both verbs and both tenses.
+// Review lessons carry `review: true` and `sources: [{ verbId, tense }, …]`
+// (the conjugation tables they draw from) instead of a single `verbId`/
+// `tense` — `generateQuestions` is called once per source and the results
+// interleaved (see `createExerciseState`), and every generated question keeps
+// its own `verbId`/`tense` so the exercise screen can show each one in its
+// correct context even as it changes question to question.
+function tensesOf(verb) {
+  return Object.keys(verb.conjugations)
+}
+
+function verbReviewLesson(verb) {
+  const tenses = tensesOf(verb)
+  if (tenses.length < 2) return null
+  return {
+    id: `${verb.id}-review`,
+    review: true,
+    sources: tenses.map((tense) => ({ verbId: verb.id, tense })),
+  }
+}
+
+const LESSONS = [
+  ...VERBS.flatMap((verb) =>
+    [...tensesOf(verb).map((tense) => ({ id: `${verb.id}-${tense}`, verbId: verb.id, tense })), verbReviewLesson(verb)].filter(Boolean),
+  ),
+  ...(VERBS.length > 1
+    ? [
+        {
+          id: 'mixed-review',
+          review: true,
+          sources: VERBS.flatMap((verb) => tensesOf(verb).map((tense) => ({ verbId: verb.id, tense }))),
+        },
+      ]
+    : []),
+]
 
 // =============================================================================
 // Progress persistence (localStorage)
@@ -206,20 +244,69 @@ function saveProgress(progress) {
   }
 }
 
+// A lesson "belongs" to a single verb's section if every conjugation table it
+// draws from is that verb's — true for every practice lesson (one source) and
+// for a "verb review" (several sources, but all the same verb). A "mixed
+// review" spans more than one verb and so doesn't fit any single section;
+// `groupLessonsByVerb` collects those separately so `LearnTab` can show them
+// in their own trailing group instead.
+function singleVerbId(lesson) {
+  const sources = lesson.sources ?? [{ verbId: lesson.verbId }]
+  const [first, ...rest] = sources
+  return rest.every((source) => source.verbId === first.verbId) ? first.verbId : null
+}
+
 function groupLessonsByVerb(lessons) {
   const order = []
   const byVerb = new Map()
+  const mixedLessons = []
   lessons.forEach((lesson) => {
-    if (!byVerb.has(lesson.verbId)) {
-      byVerb.set(lesson.verbId, [])
-      order.push(lesson.verbId)
+    const verbId = singleVerbId(lesson)
+    if (verbId === null) {
+      mixedLessons.push(lesson)
+      return
     }
-    byVerb.get(lesson.verbId).push(lesson)
+    if (!byVerb.has(verbId)) {
+      byVerb.set(verbId, [])
+      order.push(verbId)
+    }
+    byVerb.get(verbId).push(lesson)
   })
-  return order.map((verbId) => ({
-    verb: VERBS.find((verb) => verb.id === verbId),
-    lessons: byVerb.get(verbId),
-  }))
+  return {
+    verbGroups: order.map((verbId) => ({
+      verb: VERBS.find((verb) => verb.id === verbId),
+      lessons: byVerb.get(verbId),
+    })),
+    mixedLessons,
+  }
+}
+
+// Display copy for a lesson card/row, covering both practice and review
+// shapes so `LessonNode`/`ProgressTab`/`LessonResultsScreen` don't each need
+// their own branching. `title`/`subtitle` are `{ main, secondary }` pairs —
+// mirroring the two-tone "label · detail" layout `LessonNode` already used
+// for practice lessons (e.g. "Present · oraina" / "izan — to be") — and
+// `heading` is the single-line form `ProgressTab` shows in its flat list.
+function describeLesson(lesson) {
+  if (!lesson.review) {
+    const verb = VERBS.find((v) => v.id === lesson.verbId)
+    const meta = TENSE_META[lesson.tense]
+    return {
+      icon: meta.label[0],
+      title: { main: meta.label, secondary: meta.basque },
+      subtitle: { main: verb.verb, secondary: verb.meaning },
+      heading: `${verb.verb} · ${meta.label}`,
+    }
+  }
+  const verbNames = [...new Set(lesson.sources.map(({ verbId }) => VERBS.find((v) => v.id === verbId).verb))]
+  const tenseLabels = [...new Set(lesson.sources.map(({ tense }) => TENSE_META[tense].label))]
+  const reviewName = verbNames.length > 1 ? 'Mixed review' : `${verbNames[0]} review`
+  return {
+    icon: '🔁',
+    title: { main: 'Review', secondary: tenseLabels.join(' + ') },
+    subtitle: { main: verbNames.join(' & '), secondary: 'mixed practice' },
+    heading: `${reviewName} · ${tenseLabels.join(' + ')}`,
+  }
 }
 
 // =============================================================================
@@ -285,8 +372,8 @@ function ProgressBar({ value }) {
 // Home screen — lesson selection
 // =============================================================================
 
-function LessonNode({ lesson, verb, locked, stars, onSelect }) {
-  const meta = TENSE_META[lesson.tense]
+function LessonNode({ lesson, locked, stars, onSelect }) {
+  const { icon, title, subtitle } = describeLesson(lesson)
   return (
     <button
       type="button"
@@ -305,18 +392,34 @@ function LessonNode({ lesson, verb, locked, stars, onSelect }) {
         }`}
         aria-hidden="true"
       >
-        {locked ? '🔒' : meta.label[0]}
+        {locked ? '🔒' : icon}
       </div>
       <div className="min-w-0 flex-1">
         <p className="font-semibold text-gray-900">
-          {meta.label} <span className="font-normal text-gray-400">· {meta.basque}</span>
+          {title.main} <span className="font-normal text-gray-400">· {title.secondary}</span>
         </p>
         <p className="truncate text-sm text-gray-500">
-          {verb.verb} — {verb.meaning}
+          {subtitle.main} — {subtitle.secondary}
         </p>
       </div>
       <Stars count={stars} />
     </button>
+  )
+}
+
+function LessonList({ lessons, progress, unlockedIds, onSelect }) {
+  return (
+    <div className="flex flex-col gap-3">
+      {lessons.map((lesson) => (
+        <LessonNode
+          key={lesson.id}
+          lesson={lesson}
+          locked={!unlockedIds.has(lesson.id)}
+          stars={progress[lesson.id]?.bestStars ?? 0}
+          onSelect={onSelect}
+        />
+      ))}
+    </div>
   )
 }
 
@@ -331,30 +434,35 @@ function VerbSection({ verb, lessons, progress, unlockedIds, onSelect }) {
           <VerbBadgeRow verb={verb} />
         </div>
       </div>
-      <div className="flex flex-col gap-3">
-        {lessons.map((lesson) => (
-          <LessonNode
-            key={lesson.id}
-            lesson={lesson}
-            verb={verb}
-            locked={!unlockedIds.has(lesson.id)}
-            stars={progress[lesson.id]?.bestStars ?? 0}
-            onSelect={onSelect}
-          />
-        ))}
+      <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
+    </section>
+  )
+}
+
+// Mixed reviews span more than one verb, so they don't have a single verb's
+// badges/title to anchor a `VerbSection` on — they get their own trailing
+// section instead, with copy that frames what makes them different (combining
+// verbs/tenses already met) rather than introducing a single paradigm.
+function ReviewSection({ lessons, progress, unlockedIds, onSelect }) {
+  return (
+    <section className="mb-7">
+      <div className="mb-3">
+        <h2 className="text-lg font-bold text-gray-900">Review</h2>
+        <p className="mt-1 text-sm text-gray-500">Checkpoints that mix verbs and tenses you've already practiced.</p>
       </div>
+      <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
     </section>
   )
 }
 
 function LearnTab({ progress, onSelectLesson }) {
   const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress), [progress])
-  const groups = useMemo(() => groupLessonsByVerb(LESSONS), [])
+  const { verbGroups, mixedLessons } = useMemo(() => groupLessonsByVerb(LESSONS), [])
 
   return (
     <div>
       <p className="mb-4 text-sm text-gray-500">Pick a lesson to practice. Finish one to unlock the next.</p>
-      {groups.map(({ verb, lessons }) => (
+      {verbGroups.map(({ verb, lessons }) => (
         <VerbSection
           key={verb.id}
           verb={verb}
@@ -364,6 +472,9 @@ function LearnTab({ progress, onSelectLesson }) {
           onSelect={onSelectLesson}
         />
       ))}
+      {mixedLessons.length > 0 && (
+        <ReviewSection lessons={mixedLessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelectLesson} />
+      )}
     </div>
   )
 }
@@ -374,15 +485,12 @@ function ProgressTab({ progress }) {
       <h2 className="mb-4 text-lg font-bold text-gray-900">Your progress</h2>
       <div className="flex flex-col gap-3">
         {LESSONS.map((lesson) => {
-          const verb = VERBS.find((v) => v.id === lesson.verbId)
-          const meta = TENSE_META[lesson.tense]
+          const { heading } = describeLesson(lesson)
           const entry = progress[lesson.id]
           return (
             <div key={lesson.id} className="flex items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4">
               <div className="min-w-0">
-                <p className="truncate font-semibold text-gray-900">
-                  {verb.verb} · {meta.label}
-                </p>
+                <p className="truncate font-semibold text-gray-900">{heading}</p>
                 <p className="truncate text-sm text-gray-500">
                   {entry
                     ? `Best ${entry.bestScore}/${entry.totalQuestions} · ${entry.attempts} attempt${entry.attempts === 1 ? '' : 's'}`
@@ -482,8 +590,20 @@ function HomeScreen({ progress, tab, onChangeTab, onSelectLesson, onResetProgres
 // Exercise screen — multiple choice and typed-answer questions
 // =============================================================================
 
-function createExerciseState(verb, tense) {
-  const questions = generateQuestions(verb, tense)
+// A practice lesson has a single source (itself); a review lesson draws from
+// several. Either way, `generateQuestions` runs once per source and the
+// results are interleaved into one shuffled queue — so a review session mixes
+// its conjugation tables together rather than working through them block by
+// block. `onlyBareForm` (see `generateQuestions`) is set only for a learner's
+// very first run through a *practice* lesson — review lessons always show the
+// full mix of framings, and a lesson being repeated has already had its
+// "simple recognition" introduction.
+function createExerciseState(lesson, attempts) {
+  const sources = lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]
+  const onlyBareForm = !lesson.review && attempts === 0
+  const questions = shuffle(
+    sources.flatMap(({ verbId, tense }) => generateQuestions(VERBS.find((verb) => verb.id === verbId), tense, { onlyBareForm })),
+  )
   return {
     queue: questions,
     total: questions.length,
@@ -613,7 +733,9 @@ function QuestionPrompt({ verb, tenseMeta, question }) {
         <SentenceWithBlank sentence={question.sentence} />
       ) : question.items ? null : (
         <>
-          <h2 className="mt-2 text-4xl font-extrabold text-gray-900">{question.person}</h2>
+          <h2 className="mt-2 text-4xl font-extrabold text-gray-900">
+            {(verb.pronouns?.[question.person] ?? question.person).toLowerCase()}
+          </h2>
           <p className="mt-1 text-gray-500">{PERSON_LABELS[question.person]}</p>
         </>
       )}
@@ -663,10 +785,10 @@ function FeedbackBar({ status, isLast, streakEncouragement, onContinue }) {
   )
 }
 
-function LessonResultsScreen({ verb, tense, correctCount, total, onDone }) {
+function LessonResultsScreen({ lesson, correctCount, total, onDone }) {
   const stars = computeStars(correctCount, total)
   const { icon, headline, message } = getEncouragement(correctCount, total)
-  const tenseMeta = TENSE_META[tense]
+  const { heading } = describeLesson(lesson)
 
   return (
     <div className="mx-auto flex h-dvh w-full max-w-md flex-col items-center justify-center gap-5 bg-white px-8 text-center">
@@ -676,7 +798,7 @@ function LessonResultsScreen({ verb, tense, correctCount, total, onDone }) {
       <div>
         <h2 className="text-2xl font-extrabold text-gray-900">{headline}</h2>
         <p className="mt-1 text-sm text-gray-500">
-          {verb.verb} · {tenseMeta.label} — {correctCount}/{total} correct
+          {heading} — {correctCount}/{total} correct
         </p>
       </div>
       <Stars count={stars} />
@@ -715,8 +837,8 @@ function rollStreakNudgeChance() {
   return Math.random() < STREAK_NUDGE_CHANCE
 }
 
-function ExerciseScreen({ verb, tense, onExit, onComplete, canShowStreakNudge, onStreakNudgeShown }) {
-  const [state, dispatch] = useReducer(exerciseReducer, undefined, () => createExerciseState(verb, tense))
+function ExerciseScreen({ lesson, attempts, onExit, onComplete, canShowStreakNudge, onStreakNudgeShown }) {
+  const [state, dispatch] = useReducer(exerciseReducer, undefined, () => createExerciseState(lesson, attempts))
   const [finished, setFinished] = useState(false)
   const [streakEncouragement, setStreakEncouragement] = useState(null)
   // Only used by typed-answer questions (`question.options` absent) — reset
@@ -731,7 +853,13 @@ function ExerciseScreen({ verb, tense, onExit, onComplete, canShowStreakNudge, o
   // remaining question has been answered correctly; an incorrect answer to it
   // sends it back to the queue and the lesson carries on.
   const isLast = state.queue.length === 1 && state.status === 'correct'
-  const tenseMeta = TENSE_META[tense]
+  // Looked up per *question* rather than once for the whole lesson: a practice
+  // lesson's questions all share one verb/tense, but a review lesson's don't —
+  // each carries the `verbId`/`tense` it was generated from (see
+  // `generateQuestions`), so the prompt and badges always match what's
+  // actually being asked, even as that changes question to question.
+  const verb = VERBS.find((v) => v.id === question.verbId)
+  const tenseMeta = TENSE_META[question.tense]
   const progressValue = (state.total - state.queue.length + (state.status === 'correct' ? 1 : 0)) / total
 
   // Shared by both interaction styles — a clicked multiple-choice option and a
@@ -768,8 +896,7 @@ function ExerciseScreen({ verb, tense, onExit, onComplete, canShowStreakNudge, o
   if (finished) {
     return (
       <LessonResultsScreen
-        verb={verb}
-        tense={tense}
+        lesson={lesson}
         correctCount={state.correctCount}
         total={total}
         onDone={() => onComplete({ correctCount: state.correctCount, total })}
@@ -852,12 +979,11 @@ export default function App() {
 
   if (activeLessonId) {
     const lesson = LESSONS.find((l) => l.id === activeLessonId)
-    const verb = VERBS.find((v) => v.id === lesson.verbId)
     return (
       <ExerciseScreen
         key={lesson.id}
-        verb={verb}
-        tense={lesson.tense}
+        lesson={lesson}
+        attempts={progress[lesson.id]?.attempts ?? 0}
         onExit={() => setActiveLessonId(null)}
         canShowStreakNudge={streakNudgeCooldown === 0}
         onStreakNudgeShown={handleStreakNudgeShown}
