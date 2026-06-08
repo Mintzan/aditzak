@@ -94,8 +94,11 @@ as sourced material) keeps the file's existing confidence-key promise intact —
 construction, couldn't be.
 
 **Correction (same day):** A native speaker reviewed the freshly-filled `hi`
-column and flagged two things. First, `haut`/`hau`/`haugu`/`haute` ("I/he-she/
-we/they have you-familiar") are real — confirmed directly, no longer 🔍. That
+column (and, separately, confirmed the recipe-derived `hik`→`gu` present-tense
+cell `gaituk`/`gaitun` as correct, promoting it from 🔍 too) and flagged two
+things about the `hi` column itself. First, `haut`/`hau`/`haugu`/`haute`
+("I/he-she/we/they have you-familiar") are real — confirmed directly, no
+longer 🔍. That
 also exposed a misclassification: `guk`→`hi` (and, by the same bad reasoning,
 `zuk`/`zuek`→`hi`) had been marked `*(refl.)*` on the assumption they'd be
 "exactly as reflexive-shaped" as the already-marked `nik`→`gu`/`zu`/`zuek`

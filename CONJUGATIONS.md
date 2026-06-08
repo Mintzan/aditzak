@@ -308,7 +308,7 @@ impossibility the way `hika`/`zuka` is.
 | NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | nik | *(refl.)* | haut | dut | *(refl.)* | zaitut | zaituztet | ditut |
-| hik *(`-k`/`-n`)* | nauk / naun | *(refl.)* | duk / dun | 🔍 gaituk / gaitun | *(hika/zuka)* | *(hika/zuka)* | dituk / ditun |
+| hik *(`-k`/`-n`)* | nauk / naun | *(refl.)* | duk / dun | gaituk / gaitun | *(hika/zuka)* | *(hika/zuka)* | dituk / ditun |
 | hark | nau | hau | du | gaitu | zaitu | zaituzte | ditu |
 | guk | *(refl.)* | haugu | dugu | *(refl.)* | zaitugu | zaituztegu | ditugu |
 | zuk | nauzu | *(hika/zuka)* | duzu | gaituzu | *(refl.)* | *(refl.)* | dituzu |
