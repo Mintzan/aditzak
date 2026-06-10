@@ -732,7 +732,7 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 | zuek | zabiltzate | zenbiltzaten |
 | haiek | dabiltza | zebiltzan |
 
-## 7. `jakin` and `ekarri`
+## 7. More synthetic nor-nork verbs
 
 ### `jakin` — "to know (a fact)" — nor-nork
 
@@ -762,6 +762,43 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 
 `zekartzaten` is the plural-object `haiek`-past form; `zekarten` is its
 singular-object counterpart — both exist side by side.
+
+### `eduki` — "to have / hold (physically)" — nor-nork
+
+A near-synonym of `ukan` used for physical possession/holding — distinct
+enough in register/meaning to keep separate from `ukan` rather than treating
+as a variant.
+
+| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
+|---|---|---|
+| nik | daukat / dauzkat | neukan / neuzkan |
+| hark | dauka / dauzka | zeukan / zeuzkan |
+| guk | daukagu / dauzkagu | geneukan / geneuzkan |
+| zuk | daukazu / dauzkazu | zeneukan / zeneuzkan |
+| zuek | daukazue / dauzkazue | zeneukaten / zeneuzkaten |
+| haiek | daukate / dauzkate | zeukaten / zeuzkaten |
+
+### `erabili` — "to use" — nor-nork
+
+| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
+|---|---|---|
+| nik | darabilt / darabiltzat | nerabilen / nerabiltzan |
+| hark | darabil / darabiltza | zerabilen / zerabiltzan |
+| guk | darabilgu / darabiltzagu | generabilen / generabiltzan |
+| zuk | darabilzu / darabiltzazu | zenerabilen / zenerabiltzan |
+| zuek | darabilzue / darabiltzazue | zenerabilten / zenerabiltzaten |
+| haiek | darabilte / darabiltzate | zerabilten / zerabiltzaten |
+
+### `eraman` — "to carry / take (something somewhere)" — nor-nork
+
+| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
+|---|---|---|
+| nik | daramat / daramatzat | neraman / neramatzan |
+| hark | darama / daramatza | zeraman / zeramatzan |
+| guk | daramagu / daramatzagu | generaman / generamatzan |
+| zuk | daramazu / daramatzazu | zeneraman / zeneramatzan |
+| zuek | daramazue / daramatzazue | zeneramaten / zeneramatzaten |
+| haiek | daramate / daramatzate | zeramaten / zeramatzaten |
 
 ## 8. `iraun`, `jario`, `esan`, `irudi`, `etzan`
 
@@ -935,45 +972,3 @@ field (declined for whichever case that verb's subject takes).
 For periphrastic verbs, each of the above is actually a (non-finite verb form
 × auxiliary tense) pair — e.g. *"ibiltzen naiz"* (present habitual), *"ibili
 naiz"* (present perfect), *"ibiliko naiz"* (future).
-
-## 13. `eduki`, `erabili`, `eraman`
-
-Three more synthetic `nor-nork` verbs. `(Z)`/`(z)` marks the plural-object
-alternant, as in §7's `ekarri`.
-
-### `eduki` — "to have / hold (physically)" — nor-nork
-
-A near-synonym of `ukan` used for physical possession/holding — distinct
-enough in register/meaning to keep separate from `ukan` rather than treating
-as a variant.
-
-| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
-|---|---|---|
-| nik | daukat / dauzkat | neukan / neuzkan |
-| hark | dauka / dauzka | zeukan / zeuzkan |
-| guk | daukagu / dauzkagu | geneukan / geneuzkan |
-| zuk | daukazu / dauzkazu | zeneukan / zeneuzkan |
-| zuek | daukazue / dauzkazue | zeneukaten / zeneuzkaten |
-| haiek | daukate / dauzkate | zeukaten / zeuzkaten |
-
-### `erabili` — "to use" — nor-nork
-
-| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
-|---|---|---|
-| nik | darabilt / darabiltzat | nerabilen / nerabiltzan |
-| hark | darabil / darabiltza | zerabilen / zerabiltzan |
-| guk | darabilgu / darabiltzagu | generabilen / generabiltzan |
-| zuk | darabilzu / darabiltzazu | zenerabilen / zenerabiltzan |
-| zuek | darabilzue / darabiltzazue | zenerabilten / zenerabiltzaten |
-| haiek | darabilte / darabiltzate | zerabilten / zerabiltzaten |
-
-### `eraman` — "to carry / take (something somewhere)" — nor-nork
-
-| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
-|---|---|---|
-| nik | daramat / daramatzat | neraman / neramatzan |
-| hark | darama / daramatza | zeraman / zeramatzan |
-| guk | daramagu / daramatzagu | generaman / generamatzan |
-| zuk | daramazu / daramatzazu | zeneraman / zeneramatzan |
-| zuek | daramazue / daramatzazue | zeneramaten / zeneramatzaten |
-| haiek | daramate / daramatzate | zeramaten / zeramatzaten |
