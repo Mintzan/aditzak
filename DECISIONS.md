@@ -4,6 +4,140 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Added §14 (Non-finite forms) and §15 (Passive/"Nor-shift"), appended at end of document
+
+**Decision:** Added two new closing sections rather than interleaving this
+material into existing sections. §14 catalogues the non-finite jobs the
+existing perfective/imperfective stems already do outside a finite clause —
+verbal nouns (`-tea`/`-teari`/`-teagatik`/`-teko`/`-tean`), participles as
+attributive adjectives (`-tako`) vs. resultative predicates (`-a` + `izan`,
+e.g. `etorria da` vs. `etorri da`), and modal/instrumental adverbials (`-z`).
+§15 explains Basque's lack of dedicated passive morphology and the "nor-shift"
+that substitutes for it: drop `NORK`, swap `ukan`→`izan` on the same
+participle (`Nik atea ireki dut` → `Atea ireki da`).
+
+**On accuracy for §15:** rather than presenting `ireki da`-type forms as a
+clean passive, the section explicitly splits the reading in two —
+**anticausative** for change-of-state verbs (`ireki`/`hautsi`/`itzali`, "the
+door opened (by itself)") vs. **impersonal/generic** for verbs without that
+alternation (`hitz egiten da` = "Basque is spoken (here)"), since collapsing
+these would overstate how passive-like `ireki da` actually feels to a native
+speaker. The genuinely agentive analytic passive (`-a`/`-ak` + conjugated
+`izan`, e.g. `irekia izan da`) is included for completeness but flagged as the
+least idiomatic of the three options — included because the task asked for
+it, not because it's the recommended form for the app.
+
+**Numbering note:** §13's text already had a forward reference to "`(§14)`"
+for `ukan`/`izan` participles (written during an earlier pass), which lines
+up with this placement — no renumbering needed for these two new sections.
+
+## 2026-06-10 — Filled §5's missing "Ahalera, Alegiazkoa (ditransitive)" hypothetical-potential grid; confirmed §4's NOR-NORI side already covered
+
+**Decision:** §4 (`izan` + dative, NOR-NORI) already had a "Potentziala —
+Hypothetical" subsection (`le-`/`lekioke`-type forms) — that half of the
+"hypothetical potential for dative systems" request was already satisfied
+and needed no new content. The genuine gap was §5 (`ukan` + dative,
+NOR-NORI-NORK ditransitive), which had Orainaldia ("can give") and Lehenaldia
+("could have given") grids but no Alegiazkoa ("would be able to give, if…")
+grid.
+
+**Derivation:** mirrored §3's own Alegiazkoa-vs-Lehenaldia relationship
+(`zezakeen`→`lezake`, `zitzakeen`→`litzake`) applied to every cell of the
+already-verified §5 Lehenaldia ditransitive grids (both `NOR`=`hura` and
+`NOR`=`haiek`, 24 real cells each): drop the trailing `-en` (or just `-n`
+where the form already ends `-ten`), and additionally swap a leading
+`zi-`→`li-` for the `hark`/`haiek`-as-`NORK` columns only (the same columns
+that carry the `z-`/`zi-` past-tense `NORK` prefix in §5's indicative past
+grid). `nik`/`hik`/`guk`/`zuk`/`zuek`-as-`NORK` columns keep their prefixes
+unchanged. Pure position-independent string transformation from
+already-verified forms, consistent with the methodology used for the rest of
+this document — no new round-trip verification needed.
+
+## 2026-06-10 — Added new verb tables (Task 3) as appended subsections of §6/§7 rather than a new numbered section
+
+**Decision:** `ihardun`, `mintzatu`/`hitz egin`, `ikusi`, and `entzun` were
+added as new `###` subsections at the end of §6 ("More synthetic `nor`
+verbs") and §7 ("More synthetic nor-nork verbs") respectively, rather than as
+a new `##`-numbered section. This avoids cascading renumbering of §8–§13
+(and their many `§N` cross-references) for what is, structurally, just more
+entries in the same kind of list those sections already are.
+
+- **`ihardun`** (nor): conjugated by mechanically applying §8's `iraun`
+  di-root pattern (`di-` present prefix on bare stem, `n/h/z/gen/zen/zen/z`
+  + stem + `-en` past) to the stem `-hardu-`. Noted that `jardun` is the more
+  common Batua spelling with identical conjugation.
+- **`mintzatu`/`hitz egin`** (nor / nor-nork, "Literary/Northern"): used the
+  Iparraldeko `mintzo` + `izan` construction (reuses §1's `izan` paradigm
+  verbatim, prefixed with the invariant participle `mintzo`) for the
+  "Literary/Northern" `nor` paradigm the task asked for, plus a fully regular
+  periphrastic `hitz egin` table (built from §3's `du`/`zuen` auxiliary) for
+  completeness.
+- **`ikusi`/`entzun`** (nor-nork): **decided not to fabricate synthetic
+  paradigms.** Neither verb has a productive synthetic conjugation in modern
+  Batua (an archaic literary `-kus-` root for `ikusi` exists in old texts —
+  e.g. Etxepare's *dakusquet* — but isn't reliable enough to present as
+  current Batua). Presented both as periphrastic tables
+  (`ikusten/ikusi` + `ukan`, `entzuten/entzun` + `ukan`) instead, explicitly
+  noting why no synthetic table is given — prioritizing "absolute technical
+  accuracy" over matching the letter of "synthetic verbs" in the request.
+
+## 2026-06-10 — Filled the last `hik`-as-`NOR`/`NORK` gaps in §3 and §5's Ahalera Alegiazkoa/Lehenaldia grids
+
+**Decision:** Closed the remaining `hik` gaps left by the prior session's
+`-zki-`-insertion pass:
+
+- §3's Ahalera Alegiazkoa and Lehenaldia grids (`NOR`-NORK, `NOR`=1st/2nd
+  person) had blank `hik` rows/cells. Derived `hik`-as-`NOR` forms via the
+  `nin-/hin-/gin-/zin-` + `-tza-ke(-en)` series already used elsewhere in
+  these grids, and `hik`-as-`NORK` forms via the `-k`/`-n` gender split for
+  Alegiazkoa and `-a-`/`-na-` insertion for Lehenaldia — mirroring the
+  already-verified `ninduen`→`ninduan`/`nindunan` pattern from §3's plain
+  past grid. Replaced the prose note that previously said these forms
+  "aren't attested... and are left blank" with an explanation of the
+  derivation instead.
+- §5's Ahalera Lehenaldia ditransitive grids (`NOR`=`hura` and `NOR`=`haiek`)
+  were missing their `hik`-as-`NORK` column entirely (flagged "remains open
+  for a future pass" in both places). Derived via `diezaioke` →
+  `iezaioke` → `hiezaioke` → `hiezaiokeen` (drop `d-`, prepend past-tense
+  `h-` prefix from §5's own `hion`/`hidan`/etc., append `-en`) — **not**
+  gender-split, matching §5's existing past `hik` column precedent
+  (`hidan`/`hion`/`higun`/`hien`, single form per cell).
+
+Both removed "remains open for a future pass" notes are now resolved — no
+outstanding `hik` gaps remain in the Ahalera/Subjuntiboa systems.
+
+## 2026-06-10 — New §10 "Allocutive register (hitanoa/alokutiboa)" inserted before Periphrastic; §10–12 renumbered to §11–13
+
+**Decision:** Added a new section covering the allocutive/hitano register
+(tokano `-k`/nokano `-n` addressee agreement, independent of the verb's own
+`NOR`/`NORI`/`NORK` arguments — `dator`→`datork`/`datorn`, `du`→`dik`/`din`,
+etc.), placed it as the new §10, and renumbered the three sections after it
+(old §10 Periphrastic → §11, old §11 Pronoun & case → §12, old §12 Beyond
+present/past → §13). Verified via grep that no other `§1[0-9]` cross-reference
+in the document needed updating as a result (none of the pre-existing
+cross-references pointed at the old §10–12).
+
+**Placement rationale:** allocutive sits conceptually between the core
+finite-mood sections (§1–9, all of which the allocutive forms are *layered
+on top of*) and the periphrastic/reference material (old §10–12), so it reads
+as "one more register to be aware of before moving on to periphrastics" —
+naturally between the two — rather than tacked on at the very end where it'd
+read as an afterthought.
+
+## 2026-06-10 — Added "The full periphrastic tense matrix" to §11 (Periphrastic)
+
+**Decision:** Expanded §11 with an 8-row tense matrix (Oraina, Lehenaldiko
+Burutua, Geroa, Ondorioa, Ondorio Orokorra, Lehenaldi Mugatua, Lehenaldi
+Ez-mugatua, Ez-ohiko Baldintza) crossing the three aspect suffixes from §11's
+existing "Aspect suffixes" table with `izan`/`ukan`'s present/past/ondorioa
+paradigms (§2/§3). The four "compound" rows (Ondorio Orokorra, Lehenaldi
+Mugatua, Lehenaldi Ez-mugatua, Ez-ohiko Baldintza) get their own explanatory
+paragraphs distinguishing, in particular, the event-vs-state nuance between
+`Lehenaldi Mugatua` (`ikusi nuen`, simple past) and `Lehenaldi Ez-mugatua`
+(`ikusi izan nuen`, pluperfect, using an invariant `izan` participle — the
+same invariant-`izan` mechanism §14 picks up later for the resultative/passive
+constructions).
+
 ## 2026-06-10 — Completed §5's Ahalera Lehenaldia ditransitive `NOR`=`haiek` grid via mechanical `-zki-` insertion
 
 **Decision:** Asked Gemini to confirm whether the `-zki-` infix slots into the
