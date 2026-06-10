@@ -4,6 +4,37 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Filled out §5's Ahalera Orainaldia ditransitive grid to `nik`/`guk`/`zuk`/`zuek`/`haiek` (full grid minus `hik`)
+
+**Decision:** Asked Gemini to verify just the `nik` column (6 cells:
+`hari`/`zuri`/`haiei` × `NOR`=`hura`/`haiek`, predicted by appending the `-t`
+suffix to the already-verified `hark` column). The predicted forms
+(`diezaioket`, `diezazuket`, `diezaieket` and their `diezazki-` siblings) came
+back unchanged — but with **no examples this time**, despite the explicit
+ask, and Gemini additionally supplied full `guk`/`zuk`/`zuek`/`haiek` columns
+(34 more cells) unprompted, backed only by hand-wavy assurances ("fully
+backed by standard syntax models", "now locked in").
+
+Rather than accept that on faith or discard it, cross-checked it against parts
+of *this document* that are already settled:
+
+- **`NORK`-suffix-after-`-ke-`**: §3's Ahalera grid already has
+  `dezaket`/`dezakegu`/`dezakezu`/`dezakezue`/`dezakete` (the `-t`/`-gu`/`-zu`/
+  `-zue`/`-te` suffixes Gemini's new cells apply to `diezaXXke`/
+  `diezazkiXXke`) — exact match.
+- **`*(refl.)*`/`*(zu↔zuek)*` placement**: every blocked cell in Gemini's grids
+  sits in the same `NORI`/`NORK` position as the corresponding block in this
+  section's own already-applied indicative present grid (`niri`/`nik`,
+  `guri`/`nik`+`guk`, `zuri`/`zuk`+`zuek`) — exact match, row by row.
+
+Both checks passed with no contradictions, so applied the `nik`/`guk`/`zuk`/
+`zuek`/`haiek` columns for both `NOR`=`hura`/`haiek` (replacing the previous
+`hark`-only citation table with the full grid). `hik` stays `—` (open gap),
+except `zuri`/`hik` = `*(hika/zuka)*` (matches the existing register-clash
+marker, independent of the new cells) — Gemini itself flagged `hik` as "on
+ice", and it deserves its own verification pass rather than being swept in on
+the back of a no-examples response.
+
 ## 2026-06-10 — Added Ahalera Orainaldia ditransitive `hark` column to §5 (citation table)
 
 **Decision:** Followed up on the previous entry's "not yet applied" Ahalera

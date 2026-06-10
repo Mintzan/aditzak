@@ -691,33 +691,57 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 | zuri | nizkizun | *(hika/zuka)* | zizkizun | genizkizun | *(refl.)* | *(zu↔zuek)* | zizkizuten |
 | haiei | nizkien | hizkien | zizkien | genizkien | zenizkien | zenizkieten | zizkieten |
 
-### Ahalera, Orainaldia (Present potential), ditransitive — `NORK` = `hark`
+### Ahalera, Orainaldia (Present potential), ditransitive
 
-The ditransitive potential ("[hark] can give X to Y") follows a `dieza-`
+The ditransitive potential ("[NORK] can give X to Y") follows a `dieza-`
 (`NOR`=`hura`, singular object) / `diezazki-` (`NOR`=`haiek`, plural object,
 same `-zki-` infix as the indicative grids above) root, plus a `NORI` suffix,
-plus `-ke`:
-
-| NORI ↓ | NOR = hura | NOR = haiek |
-|---|---|---|
-| niri | diezadake | diezazkidake |
-| hari | diezaioke | diezazkioke |
-| guri | diezaguke | diezazkiguke |
-| zuri | diezazuke | diezazkizuke |
-| haiei | diezaieke | diezazkieke |
+plus `-ke`, plus a `NORK` suffix.
 
 `NORI`-suffixes are the familiar `-da-/-o-/-gu-/-zu-/-e-` set, with a glide
 `-i-` inserted before `-o-`/`-e-` to break up the vowel hiatus that `-za-` +
 `-o-`/`-e-` would otherwise create (`zaio`, `zaie`) — `-da-/-gu-/-zu-` need no
-glide. *Adibideak:* `Lagun horrek mesede handia egin diezaguke egoera
-honetan` ("That friend can do us a great favor in this situation" —
-guri/hura); `Gidariak guri koadernoak ekar diezazkiguke bulegotik` ("The
-driver can bring us the notebooks from the office" — guri/haiek);
-`Irakasleak azalpena eman diezaieke ikasleei` ("The teacher can give the
-explanation to the students" — haiei/hura).
+glide. `NORK`-suffixes attach directly after `-ke-`: `-t`/`-k(/-n)`/`∅`/`-gu`/
+`-zu`/`-zue`/`-te` for `nik`/`hik`/`hark`/`guk`/`zuk`/`zuek`/`haiek` — the same
+suffix set as §3's Ahalera grid (`dezaket`/`dezakek`/`dezaken`/`dezake`/
+`dezakegu`/`dezakezu`/`dezakezue`/`dezakete`).
 
-Only the `hark` column is verified so far; `nik`/`hik`/`guk`/`zuk`/`zuek`/
-`haiek` as `NORK` remain open for a future pass.
+`*(refl.)*`/`*(zu↔zuek)*`/`*(hika/zuka)*` cells sit in exactly the same
+positions as in this section's indicative present/past grids above:
+`niri`/`nik`, `guri`/`nik`, `guri`/`guk`, and `zuri`/`zuk` are `*(refl.)*`;
+`zuri`/`zuek` is `*(zu↔zuek)*`; `zuri`/`hik` is `*(hika/zuka)*`. The remaining
+`hik` cells (`niri`/`hari`/`guri`/`haiei`) would follow the same `-k`/`-n`
+gender split as §3's `hik` row (`dezakek`/`dezaken`) but aren't independently
+confirmed yet — left as `—`.
+
+#### `NOR` = hura (singular object)
+
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | — | diezadake | diezadakegu | diezadakezu | diezadakezue | diezadakete |
+| hari | diezaioket | — | diezaioke | diezaiokegu | diezaiokezu | diezaiokezue | diezaiokete |
+| guri | *(refl.)* | — | diezaguke | *(refl.)* | diezagukezu | diezagukezue | diezagukete |
+| zuri | diezazuket | *(hika/zuka)* | diezazuke | diezazukegu | *(refl.)* | *(zu↔zuek)* | diezazukete |
+| haiei | diezaieket | — | diezaieke | diezaiekegu | diezaiekezu | diezaiekezue | diezaiekete |
+
+#### `NOR` = haiek (plural object)
+
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | — | diezazkidake | diezazkidakegu | diezazkidakezu | diezazkidakezue | diezazkidakete |
+| hari | diezazkioket | — | diezazkioke | diezazkiokegu | diezazkiokezu | diezazkiokezue | diezazkiokete |
+| guri | *(refl.)* | — | diezazkiguke | *(refl.)* | diezazkigukezu | diezazkigukezue | diezazkigukete |
+| zuri | diezazkizuket | *(hika/zuka)* | diezazkizuke | diezazkizukegu | *(refl.)* | *(zu↔zuek)* | diezazkizukete |
+| haiei | diezazkieket | — | diezazkieke | diezazkiekegu | diezazkiekezu | diezazkiekezue | diezazkiekete |
+
+*Adibideak:* `Lagun horrek mesede handia egin diezaguke egoera honetan` ("That
+friend can do us a great favor in this situation" — guri/hark/hura);
+`Gidariak guri koadernoak ekar diezazkiguke bulegotik` ("The driver can bring
+us the notebooks from the office" — guri/hark/haiek); `Irakasleak azalpena
+eman diezaieke ikasleei` ("The teacher can give the explanation to the
+students" — haiei/hark/hura).
+
+`hik` as `NORK` remains open for a future pass.
 
 ### `NOR` = 1st/2nd person
 
