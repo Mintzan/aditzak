@@ -192,7 +192,7 @@ A plural-object stem (`-it-/-int-`) takes an epenthetic `-z-` right before the
 | guk | *(refl.)* | haugu | dugu | *(refl.)* | zaitugu | zaituztegu | ditugu |
 | zuk | nauzu | *(hika/zuka)* | duzu | gaituzu | *(refl.)* | *(refl.)* | dituzu |
 | zuek | nauzue | *(hika/zuka)* | duzue | gaituzue | *(refl.)* | *(refl.)* | dituzue |
-| haiek | naute | haute | dute | gaituzte | zaituzte | zaituzte | dituzte |
+| haiek | naute | haute | dute | gaituzte | zaituzte | zaituztete | dituzte |
 
 #### Past — `NOR` = 1st/2nd person
 

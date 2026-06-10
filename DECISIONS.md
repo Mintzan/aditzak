@@ -4,6 +4,35 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Fixed §3's `haiek`→`zuek` present cell (`zaituzte` → `zaituztete`); declined Gemini's 10 NOR=1st/2nd grids again
+
+**Decision:** Asked Gemini to resolve the contradictions flagged in the
+previous round (`naukazu`/`naukazue`, `ninduzuten`, `zuk`→`zu` marker) and
+regenerate the 10 `NOR` = 1st/2nd-person grids self-checked against §3.
+Gemini agreed all three flagged values were its own errors (confirms `nauzu`/
+`nauzue`/`ninduzuen`/`*(refl.)*` as already in §3 — no §3 change needed for
+those).
+
+While re-deriving the `haiek`→`zuek` present cell for one of the new grids,
+Gemini produced `zaituztete`, which **conflicts with §3's existing
+`zaituzte`** for that cell (line ~195, "Present — `NOR` = 1st/2nd person").
+Checked this independently against §3's own past-tense and Baldintza grids,
+both of which *do* distinguish `haiek`→`zu` from `haiek`→`zuek`
+(`zintuzten`/`zintuzteten`, `bazintuzte`/`bazintuztete`) — present tense
+having both columns read `zaituzte` was the odd one out and looks like a
+copy-paste error. Corrected to `zaituztete`, matching the established
+`-te-` infix pattern visible in the other two tenses.
+
+**Still declined** to add the 10 full `NOR` = 1st/2nd grids: beyond the
+`hari`/`haiei` rows (pure §3 clones, already covered by §5's "NOR = 1st/2nd
+person" subsection via cross-reference, and now correct after the fix
+above), the other five `NORI` rows had internally inconsistent markers (e.g.
+the `hiri` row for `NOR`=`ni` marked `hark`/`haiek` columns `*(refl.)*` for
+no apparent reason while marking `nik`/`guk`/`zuk`/`zuek` `*(hika/zuka)*`),
+plus an open `?` cell (`guk`→`hi` past) and a grammatically garbled example
+sentence used to justify the `zuk`→`zu` marker. Not reliable enough to
+tabulate; §5's existing concise explanation stands.
+
 ## 2026-06-10 — Filled §5's `*(refl.)*` gaps, fixed `zenion`/`zenizkion`, and added a "NOR = 1st/2nd person" subsection instead of full new grids
 
 **Decision:** Asked Gemini to fill in §5's remaining `—` cells and produce the
