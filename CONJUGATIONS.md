@@ -1579,3 +1579,247 @@ translation, but native speakers strongly prefer the nor-shift (`ireki da`)
 or impersonal `-t(z)en da` patterns above for the same meanings — the
 analytic passive is the *least* idiomatic of the three, included here for
 completeness rather than as the recommended form.
+
+## 16. Subjunctive & Imperative (Konjuntiboa eta Agintera)
+
+A consolidated module gathering this document's subjunctive and imperative
+material — much of which already lives inside §§2–5 and §9 — into one place,
+organised by argument structure (`NOR` / `NOR-NORI` / `NOR-NORK` /
+`NOR-NORI-NORK`). The one genuinely new piece is the `NOR-NORI-NORK`
+subjunctive and imperative grids, derived from §5's already-verified
+ditransitive `Ahalera` forms via the same root-plus-suffix-family recipe §3
+uses to relate its own `Ahalera`/`Subjuntiboa` pairs (`dezaket` ↔ `dezadan`).
+
+### 16.1 Subjuntiboa (Subjunctive) — Orainaldia (Present) and Lehenaldia (Past)
+
+#### NOR
+
+`izan`'s own paradigm — see §2:
+
+| Person | Present | Past |
+|---|---|---|
+| ni | na**din** | nen**din** |
+| hi | ha**din** | hen**din** |
+| hura | da**din** | ze**din** |
+| gu | gaite**zen** | ginte**zen** |
+| zu | zaite**zen** | zinte**zen** |
+| zuek | zaitez**ten** | zintez**ten** |
+| haiek | daite**zen** | zite**zen** |
+
+Every cell ends in the subjunctive's defining **-n** — the surface form of
+the same `-(e)n` subordinator that closes Basque subordinate clauses
+generally (relative clauses, `-(e)la` complement clauses, etc.), here doing
+double duty as the subjunctive mood marker itself.
+
+#### NOR-NORI
+
+Citation slice of §4's Subjuntiboa Present/Past grids — `NORI` rows × `NOR` =
+`hura`/`haiek` columns (the **-zki-** infix marks the plural-`NOR` alternant,
+e.g. `dakidan` → `dakizkidan`):
+
+| NORI | Present (NOR=hura) | Present (NOR=haiek, -zki-) | Past (NOR=hura) | Past (NOR=haiek, -zki-) |
+|---|---|---|---|---|
+| niri | daki**dan** | dakizki**dan** | zeki**dan** | zekizki**dan** |
+| hiri | dak**ian** / dak**inan** *(masc./fem.)* | dakizk**ian** / dakizk**inan** | zek**ian** / zek**inan** | zekizk**ian** / zekizk**inan** |
+| hari | dak**ion** | dakizk**ion** | zek**ion** | zekizk**ion** |
+| guri | daki**gun** | dakizki**gun** | zeki**gun** | zekizki**gun** |
+| zuri | daki**zun** | dakizki**zun** | zeki**zun** | zekizki**zun** |
+| zuei | dakizue**ten** | dakizkizue**ten** | zekizue**ten** | zekizkizue**ten** |
+| haiei | daki**en** | dakizki**en** | zeki**en** | zekizki**en** |
+
+The full 7×7 grids (`NOR` ranging across all seven persons, not just
+`hura`/`haiek`) are in §4.
+
+#### NOR-NORK
+
+§3's Subjuntiboa Present/Past grids already cover the full 7×7 `NORK`×`NOR`
+paradigm, including the plural-object **-it-**/**-tza-** infix (e.g. `dezan`
+→ d**itz**an for `hark`→`haiek`). Citation slice (`NOR` = `hura`/`haiek`):
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -it-) | Past (NOR=hura) | Past (NOR=haiek, -it-) |
+|---|---|---|---|---|
+| nik | deza**dan** | ditza**dan** | ne**zan** | ni**tzan** |
+| hik | dez**aan** / dez**anan** *(masc./fem.)* | ditz**aan** / ditz**anan** | hezan | hi**tzan** |
+| hark | deza**n** | ditza**n** | ze**zan** | zi**tzan** |
+| guk | deza**gun** | ditza**gun** | gene**zan** | geni**tzan** |
+| zuk | deza**zun** | ditza**zun** | zene**zan** | zeni**tzan** |
+| zuek | deza**zuen** | ditza**zuen** | zene**zaten** | zeni**tzaten** |
+| haiek | deza**ten** | ditza**ten** | ze**zaten** | zi**tzaten** |
+
+#### NOR-NORI-NORK
+
+Not previously tabulated. Derived from §5's `Ahalera, Orainaldia` ditransitive
+grid (`dieza-`/`diezazki-` root) by the same transformation §3 uses to relate
+`Ahalera` to `Subjuntiboa`: drop the conditional **-ke-**, then close with the
+`Subjuntiboa`-`NORK` suffix family from the NOR-NORK table above
+(**-dan**/**-aan**/**-anan**/**-n**/**-gun**/**-zun**/**-zuen**/**-ten**)
+instead of `-ke` + the `Ahalera`-`NORK` suffix. E.g. `diezaioket` (Ahalera,
+"I can give it to him") → drop `-ke-` → `diezaiot` → swap the bare `-t` for
+`-dan` → `diezaiodan` ("...so that I may give it to him").
+
+Two `NORI` rows — `hari` and `haiei` — cover this section's own citation
+forms (`diezaion`, `diezaiegun`, `diezazkion`):
+
+##### NORI = hari ("...so that [NORK] may give [NOR] to him/her")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | diezaio**dan** | diezazkio**dan** |
+| hik | diezaio**an** / diezaio**nan** *(masc./fem.)* | diezazkio**an** / diezazkio**nan** |
+| hark | diezaio**n** | diezazkio**n** |
+| guk | diezaio**gun** | diezazkio**gun** |
+| zuk | diezaio**zun** | diezazkio**zun** |
+| zuek | diezaio**zuen** | diezazkio**zuen** |
+| haiek | diezaio**ten** | diezazkio**ten** |
+
+##### NORI = haiei ("...so that [NORK] may give [NOR] to them")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | diezaie**dan** | diezazkie**dan** |
+| hik | diezaie**an** / diezaie**nan** *(masc./fem.)* | diezazkie**an** / diezazkie**nan** |
+| hark | diezaie**n** | diezazkie**n** |
+| guk | diezaie**gun** | diezazkie**gun** |
+| zuk | diezaie**zun** | diezazkie**zun** |
+| zuek | diezaie**zuen** | diezazkie**zuen** |
+| haiek | diezaie**ten** | diezazkie**ten** |
+
+*Adibideak:* `Irakasleak eskatu zidan liburua ikasleari eman diezaiodan`
+("The teacher asked me to give the book to the student" — hari/nik);
+`Gurasoek nahi dute opariak haurrei eman diezazkien` ("The parents want the
+gifts to be given to the children" — haiei/haiek).
+
+`niri`/`guri`/`zuri`/`zuei` as `NORI` follow the identical recipe (root
+`diezada-`/`diezagu-`/`diezazu-`/`diezazue-`, from §5's already-verified
+`Ahalera` columns, plus the same `-n`-family suffixes) but aren't tabulated
+here — left as a future pass, the same posture as other not-yet-expanded
+grids in this document (see `DECISIONS.md`).
+
+**Past (Lehenaldia) note:** a synthetic `NOR-NORI-NORK` subjunctive past
+(mirroring `niezaiokeen` → `niezaioen`) is morphologically derivable by the
+same drop-`-ke-` transformation, but forms this far down the ditransitive
+paradigm are vanishingly rare even in formal/literary registers — real usage
+reaches for a periphrastic alternative (`eman ahal izan banio...`) well
+before this point. Not tabulated, per this document's standing policy of an
+honest gap over an unverifiable form (cf. `etzan`, `ikusi`/`entzun` in §§7–8).
+
+### 16.2 Agintera (Imperative)
+
+#### Synthetic imperatives
+
+For verbs whose present tense is itself synthetic, the second-person
+imperative is often **identical to the present-tense form** — a real feature
+of Basque, not a simplification:
+
+| Verb | hi | zu | zuek |
+|---|---|---|---|
+| izan | hadi | zaitez | zaitezte |
+| egon | hago | zaude | zaudete |
+| etorri | hator | zatoz | zatozte |
+| joan | hoa | zoaz | zoazte |
+
+`izan` additionally has dedicated 3rd-person **jussive** forms (§2): `bedi`
+("let it/him/her be"), `bitez` ("let them be"). `egon` has the parallel
+`bego`/`begoz` ("let it stay/be [as is]" — *Bego horrela* = "leave it at
+that"). `etorri`/`joan` have no synthetic 3rd-person jussive in Batua; the
+periphrastic **bare-radical + `bedi`/`bitez`** construction fills the gap
+instead — see the Radical/Bare-Stem rule below (`etor bedi`, `joan bedi`).
+
+#### NOR-NORK imperative (`ukan`-based — "do it!")
+
+| Addressee | Singular object | Plural object (**-itz-**) |
+|---|---|---|
+| (hik) | ez**ak** *(masc.)* / ez**an** *(fem.)* | itz**ak** *(masc.)* / itz**an** *(fem.)* |
+| (zuk) | ez**azu** | itz**azu** |
+| (zuek) | ez**azue** | itz**azue** |
+| (hark, jussive) | be**za** | bi**tza** |
+| (guk, hortative) | deza**gun** | ditza**gun** |
+| (haiek, jussive) | be**zate** | bi**tzate** |
+
+*Adibideak:* `Ekarri ezazu liburua` ("Bring the book"); `Irakur itzazu
+gutunak` ("Read the letters" — plural object); `Has dezagun lana` ("Let's
+start the work" — hortative).
+
+#### NOR-NORI-NORK imperative (ditransitive — "give it to...!")
+
+The ditransitive imperative root is the `NOR-NORI-NORK` subjunctive root
+(§16.1) with the leading `d-` dropped — `diezaiozu` → `iezaiozu` — the same
+`d-`-dropping relationship as `dezazu` → `ezazu` in the plain `NOR-NORK` grid
+above.
+
+| Addressee | → niri ("to me") | → hari ("to him/her") | → guri ("to us") | → haiei ("to them") |
+|---|---|---|---|---|
+| (zuk) | iezada**zu** | iezaio**zu** | iezagu**zu** | iezaie**zu** |
+| (zuek) | iezada**zue** | iezaio**zue** | iezagu**zue** | iezaie**zue** |
+| (hik) | iezada**k** / iezada**n** | iezaio**k** / iezaio**n** | iezagu**k** / iezagu**n** | iezaie**k** / iezaie**n** |
+
+Plural object (**-zki-**, "give them to...!"):
+
+| Addressee | → niri | → hari | → guri | → haiei |
+|---|---|---|---|---|
+| (zuk) | iezazkida**zu** | iezazkio**zu** | iezazkigu**zu** | iezazkie**zu** |
+| (zuek) | iezazkida**zue** | iezazkio**zue** | iezazkigu**zue** | iezazkie**zue** |
+| (hik) | iezazkida**k** / iezazkida**n** | iezazkio**k** / iezazkio**n** | iezazkigu**k** / iezazkigu**n** | iezazkie**k** / iezazkie**n** |
+
+*Adibideak:* `Eman iezadazu liburua` ("Give me the book") — one of the most
+common imperative constructions in everyday Basque; `Eska iezaiozu
+barkamena` ("Ask him/her for forgiveness").
+
+### 16.3 Syntax, Usage, and Constraints
+
+#### Subjunctive triggers
+
+- **Final/purpose clauses** — a subordinate clause whose verb is in the
+  subjunctive, marking *purpose* ("so that..."): `Leihoa ireki dut, airea sar
+  dadin` ("I opened the window so that air would come in"). The
+  subjunctive's own **-n** ending *is* the subordinator here — no separate
+  complementizer is layered on top.
+- **Volitional/desire clauses** — `nahi izan` ("to want") governing a
+  subjunctive complement: `Nahi dut etor dadin` ("I want him/her to come");
+  `Nahi dute liburua irakur dezadan` ("They want me to read the book").
+- **Indirect commands** — verbs of telling/ordering (`esan`, `agindu`,
+  `eskatu`) governing a subjunctive complement, optionally with the
+  reported-speech complementizer **-(e)la**: `Esan diot etor dadila` ("I told
+  him/her to come" — lit. "...that he/she come").
+
+#### The Radical/Bare-Stem Rule
+
+Periphrastic verbs **drop their aspectual suffix** (`-tu`/`-i`/`-tzen`/`-ko`,
+§11) and revert to the **bare radical** when paired with a subjunctive or
+jussive auxiliary:
+
+| Periphrastic form | Radical | + Subjunctive/jussive auxiliary |
+|---|---|---|
+| idatzi (`-tu` participle) | idatz- | idatz **dezan** ("so that he/she may write it") |
+| etorri (`-i` participle) | etor- | etor **dadin** ("so that he/she may come"), etor **bedi** ("may he/she come" — jussive) |
+| joan (`-i` participle) | joan- *(unchanged — already ends in `-n`)* | joan **bedi** ("may he/she go") |
+| irakurri (`-i` participle) | irakur- | irakur **dezala** ("let him/her read it" — with `-la`) |
+
+The radical is, structurally, the verb's citation form stripped of every
+aspectual ending — `idatzi` → `idatz`, `etorri` → `etor`, `egin` → `egin`
+(already bare). It's the same stem the `nahi`/`behar`/`ahal`/`ezin`
+constructions surveyed in `VERB_COVERAGE.md` §5 build on.
+
+#### Person-Case Constraint (PCC) — re-verified
+
+§5's "`NOR` = 1st/2nd person" subsection already establishes the rule for
+indicative ditransitives; it carries over unchanged to subjunctive and
+imperative `NOR-NORI-NORK` forms, since the constraint is about which
+*arguments* can be cross-referenced together, independent of mood:
+
+- **`NORI` = 3rd person** (`hari`/`haiei`, as in §16.1/§16.2's tables above):
+  `NOR` can be 1st/2nd person, but the form **collapses to the plain
+  `NOR-NORK` subjunctive/imperative** (§16.1/§16.2's `NOR-NORK` tables) — the
+  dative simply isn't cross-referenced. "So that he may show *me* to him"
+  reduces to `NOR-NORK`'s `nazan` ("...so that he may show me"), with "to
+  him" left to context — exactly as `Hark ni hari aurkeztu nau` does in the
+  indicative (§5).
+- **`NORI` = 1st/2nd person** *and* `NOR` = 1st/2nd person: blocked, same as
+  the indicative — two non-3rd-person core arguments can't both be
+  cross-referenced on one auxiliary. The `buru` ("self") periphrasis (*nire
+  buruari erakuts diezaiodan* — "so that I may show it to myself") is the
+  workaround, same as §5.
+
+No new exceptions or relaxations apply in these moods — the PCC is a property
+of the auxiliary's agreement morphology, not of any one mood/tense built on
+top of it.

@@ -4,6 +4,38 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Added §16 (Subjunctive & Imperative consolidated module)
+
+**Decision:** Added §16, gathering the subjunctive material already scattered
+across §§2–5 (NOR/NOR-NORI/NOR-NORK Subjuntiboa grids) into one
+cross-referenced module, plus two genuinely new pieces: a `NOR-NORI-NORK`
+Subjunctive Present grid (`NORI`=`hari`/`haiei` rows, derived from §5's
+verified `Ahalera Orainaldia` ditransitive root by dropping `-ke-` and
+applying §3's Subjuntiboa `-n`-family suffixes — cross-checked against the
+recognizable forms `diezaiodan`/`diezaion`/`diezaiegun`/`diezazkion`), and a
+`NOR-NORI-NORK` Imperative grid (root = the subjunctive root minus `d-`,
+mirroring `dezazu`→`ezazu`), plus a synthetic-imperative table, a full
+`NOR-NORK` imperative grid, and a syntax/usage section (final clauses,
+volitional clauses, indirect commands, the Radical/Bare-Stem Rule, and a PCC
+re-verification for these moods).
+
+**Scope decisions:**
+- `NOR-NORI-NORK` subjunctive **past** is explicitly *not* tabulated —
+  derivable by the same recipe (`niezaiokeen` → `niezaioen`), but forms this
+  deep in the ditransitive paradigm are unattested/vanishingly rare even in
+  formal registers; real usage reaches for a periphrastic alternative first.
+  Same "honest gap" posture as `etzan`/`ikusi`/`entzun`.
+- `NOR-NORI-NORK` subjunctive `niri`/`guri`/`zuri`/`zuei` rows follow the
+  identical recipe but aren't tabulated — left for a future pass.
+- A literal reading of the source request's example forms included `badi` for
+  `izan`'s 3rd-person imperative — that form doesn't exist in standard Batua,
+  so used `bedi` (already established in §2) instead of introducing a second,
+  incorrect form.
+- `etorri`/`joan` 3rd-person jussives are given periphrastically (`etor
+  bedi`, `joan bedi`) rather than guessing at synthetic `betor`/`bihoa`-type
+  forms with no source — this also doubles as the Radical/Bare-Stem Rule's
+  clearest example.
+
 ## 2026-06-10 — Added §14 (Non-finite forms) and §15 (Passive/"Nor-shift"), appended at end of document
 
 **Decision:** Added two new closing sections rather than interleaving this
