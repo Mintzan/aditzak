@@ -4,6 +4,35 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Filled §5's `*(refl.)*` gaps, fixed `zenion`/`zenizkion`, and added a "NOR = 1st/2nd person" subsection instead of full new grids
+
+**Decision:** Asked Gemini to fill in §5's remaining `—` cells and produce the
+full NOR-NORI-NORK paradigm for `NOR` = 1st/2nd person. Applied only the parts
+that checked out:
+
+- **Gap fills**: `niri`/`nik` and `guri`/`nik` (previously `—`) are
+  `*(refl.)*` in all four `NOR` = `hura`/`haiek` × Present/Past grids — they
+  fall under §3's same-person-category extension (1st category = `ni`/`gu`)
+  just like the already-marked `guri`/`guk` and `zuri`/`zuk`. Rewrote the
+  prose under the `hura`/Present grid to explain all four cells together plus
+  the `buru`-periphrasis fallback (*nire buruari eman diot*).
+- **Form corrections**: `hari`/`zuk` past was `zenioen` → corrected to
+  `zenion` (`NOR` = `hura`), and `zenizkioen` → `zenizkion` (`NOR` = `haiek`),
+  for consistency with the parallel `-zki-`-infixed forms and the standard
+  attested forms ("...esan zenion").
+- **Did not** paste Gemini's ten full `NOR` = 1st/2nd-person grids — they
+  contained internal inconsistencies (e.g. `naukazu`/`naukazue` borrowing
+  `eduki`'s stem instead of `ukan`'s `nau-`; `ninduzuten` vs. §3's
+  `ninduzuen`; `zuk`→`zu` marked `*(hika/zuka)*` when §3 marks it
+  `*(refl.)*`) and would have duplicated ~90% of §3's existing grid. Instead
+  added a concise new "`NOR` = 1st/2nd person" subsection explaining the
+  Person-Case Constraint: `NORI` = `hari`/`haiei` forms reduce exactly to
+  §3's plain NOR-NORK forms (cross-referenced rather than duplicated), while
+  `NORI` = 1st/2nd person cells are `*(refl.)*`/`*(hika/zuka)*`/
+  `*(zu↔zuek)*`/PCC-blocked — covered by the `buru` periphrasis in practice.
+  A careful per-cell verification pass for the full grids could be done later
+  if ever needed.
+
 ## 2026-06-10 — Restructured CONJUGATIONS.md as a pure reference, stripping process narrative
 
 **Decision:** Rewrote `CONJUGATIONS.md` to remove everything about *how* it

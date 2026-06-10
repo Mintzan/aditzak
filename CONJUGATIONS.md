@@ -613,18 +613,18 @@ The full picture has three dimensions (`NOR`/`NORI`/`NORK`); flattened here
 into a `NORI` (indirect object, rows) × `NORK` (subject, columns) grid per
 `NOR` value. Two `NOR` values are covered: `hura` (singular object — "give
 *it*…") and `haiek` (plural object — "give *them*…", via the `-zki-` infix).
-`NOR` = 1st/2nd person ("he gives *me* to him") exists in principle — it
-would follow §3's NOR-NORK shape (`NOR` marked by a prefix/stem-internal
-change, e.g. the `nau-`/`gaitu-`-type stems) with a `NORI` suffix layered on
-top — but is vanishingly rare in practice and not covered here.
+`NOR` = 1st/2nd person ("he gives *me* to him") is covered separately, in
+["`NOR` = 1st/2nd person" below](#nor--1st2nd-person), since most of those
+forms collapse back onto §3's plain NOR-NORK grid rather than needing a new
+table.
 
 ### `NOR` = hura — Present
 
 | NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|
-| niri | — | dit | didagu | didazu | didazue | didate |
+| niri | *(refl.)* | dit | didagu | didazu | didazue | didate |
 | hari | diot | dio | diogu | diozu | diozue | diote |
-| guri | — | zigun | *(refl.)* | diguzu | diguzue | ziguten |
+| guri | *(refl.)* | zigun | *(refl.)* | diguzu | diguzue | ziguten |
 | zuri | dizut | dizu | dizugu | *(refl.)* | *(zu↔zuek)* | dizute |
 | haiei | diet | die | diegu | diezu | diezue | diete |
 
@@ -633,17 +633,21 @@ Each form follows **`di-` + `NORI`-suffix + `NORK`-suffix**: `NORI`-suffixes
 `NORK`-suffixes `-t`/`∅`/`-gu`/`-zu`/`-zue`/`-te` for
 `nik`/`hark`/`guk`/`zuk`/`zuek`/`haiek`.
 
-`guri`/`guk` and `zuri`/`zuk` are `*(refl.)*` ("we give it to ourselves",
-"you give it to yourself") — distinct from the `—` cells (`niri`/`nik`,
-`guri`/`nik`), which are gaps rather than reflexive impossibilities.
+`niri`/`nik`, `guri`/`nik`, `guri`/`guk`, and `zuri`/`zuk` are all
+`*(refl.)*` under §3's same-person-category extension (1st person category =
+`ni`/`gu`, 2nd = `zu`/`zuek`): in each of these cells `NORI` and `NORK`
+belong to the same person category, so "I give it to myself/us" or "we/you
+give it to yourself/ourselves" can't be expressed with a distinct ditransitive
+form. In practice these meanings are expressed periphrastically with `buru`
+("head/self"), e.g. *nire buruari eman diot* ("I gave it to my own self").
 
 ### `NOR` = hura — Past
 
 | NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|
-| niri | — | zidan | genidan | zenidan | zenidaten | zidaten |
-| hari | nion | zion | genion | zenioen | zenioten | zioten |
-| guri | — | zigun | *(refl.)* | zenigun | zeniguten | ziguten |
+| niri | *(refl.)* | zidan | genidan | zenidan | zenidaten | zidaten |
+| hari | nion | zion | genion | zenion | zenioten | zioten |
+| guri | *(refl.)* | zigun | *(refl.)* | zenigun | zeniguten | ziguten |
 | zuri | nizun | zizun | genizun | *(refl.)* | *(zu↔zuek)* | zizuten |
 | haiei | nien | zien | genien | zenien | zenieten | zieten |
 
@@ -662,9 +666,9 @@ to him").
 
 | NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|
-| niri | — | dizkida | dizkidagu | dizkidazu | dizkidazue | dizkidate |
+| niri | *(refl.)* | dizkida | dizkidagu | dizkidazu | dizkidazue | dizkidate |
 | hari | dizkiot | dizkio | dizkiogu | dizkiozu | dizkiozue | dizkiote |
-| guri | — | dizkigu | *(refl.)* | dizkiguzu | dizkiguzue | dizkigute |
+| guri | *(refl.)* | dizkigu | *(refl.)* | dizkiguzu | dizkiguzue | dizkigute |
 | zuri | dizkizut | dizkizu | dizkizugu | *(refl.)* | *(zu↔zuek)* | dizkizute |
 | haiei | dizkiet | dizkie | dizkiegu | dizkiezu | dizkiezue | dizkiete |
 
@@ -676,11 +680,38 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 
 | NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|
-| niri | — | zizkidan | genizkidan | zenizkidan | zenizkidaten | zizkidaten |
-| hari | nizkion | zizkion | genizkion | zenizkioen | zenizkioten | zizkioten |
-| guri | — | zizkigun | *(refl.)* | zenizkigun | zenizkiguten | zizkiguten |
+| niri | *(refl.)* | zizkidan | genizkidan | zenizkidan | zenizkidaten | zizkidaten |
+| hari | nizkion | zizkion | genizkion | zenizkion | zenizkioten | zizkioten |
+| guri | *(refl.)* | zizkigun | *(refl.)* | zenizkigun | zenizkiguten | zizkiguten |
 | zuri | nizkizun | zizkizun | genizkizun | *(refl.)* | *(zu↔zuek)* | zizkizuten |
 | haiei | nizkien | zizkien | genizkien | zenizkien | zenizkieten | zizkieten |
+
+### `NOR` = 1st/2nd person
+
+A `NOR` = 1st/2nd person ditransitive ("he gives *me* to him", "you say *me*
+to them") is governed by the **Person-Case Constraint (PCC)**: the auxiliary
+can cross-reference at most one non-3rd-person core argument alongside a
+dative.
+
+- **`NORI` = `hari`/`haiei`** (3rd person dative): the dative simply isn't
+  cross-referenced on the verb — the form collapses to exactly §3's plain
+  NOR-NORK form for that `NOR`/`NORK` pair, with the dative left to context.
+  E.g. "Hark ni hari aurkeztu **nau**" ("He introduced me to him") uses §3's
+  `hark`→`ni` present form `nau` unchanged — see [§3's "Completing the
+  grid"](#completing-the-grid--nor--1st2nd-person) for the full set of
+  `NOR`/`NORK` forms these reduce to.
+- **`NORI` = 1st/2nd person**: cross-referencing two non-3rd-person arguments
+  (`NOR` and `NORI`) on the same auxiliary is exactly what the PCC rules out.
+  Where `NOR` and `NORI` are the *same* person (or share a person category —
+  the same extension used throughout §3 and above), this is also reflexive.
+  So a full `NOR` = 1st/2nd grid would be filled almost entirely with
+  `*(refl.)*`, `*(hika/zuka)*`, `*(zu↔zuek)*`, and PCC-blocked cells — it adds
+  little beyond §3's grid plus the reduction rule above, so it isn't
+  tabulated separately here.
+
+For the genuinely reflexive/blocked meanings ("I gave you to myself", "we
+said ourselves to you"), Basque again falls back to the `buru` periphrasis,
+e.g. *zu nire buruari aurkeztu zintudan* ("I introduced you to myself").
 
 ## 6. More synthetic `nor` verbs
 
