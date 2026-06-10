@@ -4,6 +4,37 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Added `hik` NORK column to §5's `NOR`=hura/haiek Present/Past grids
+
+**Decision:** §5's four grids only had 6 `NORK` columns
+(`nik`/`hark`/`guk`/`zuk`/`zuek`/`haiek`), unlike §3 which includes `hik`.
+Asked Gemini to derive a `hik` column anchored on §3's `duk`/`huen`/`hituen`.
+Result was a clean mechanical pattern with no internal contradictions (unlike
+earlier rounds):
+
+- **Present**: `di-`/`di-zki-` + `NORI`-suffix + `-k`/`-n` (gender split,
+  same as §3's `duk`/`dun`) — `diok`/`dion`, `didak`/`didan`,
+  `dizkiok`/`dizkion`, etc. Self-check passed: `hari`/`hik` = `diok`/`dion`,
+  exactly `di-` + `∅` + `-k`/`-n`.
+- **Past**: same `h-` prefix as the existing `hark`→`z-` etc. (`hidan` =
+  `h-i-da-n`, `hizkion` = `h-izki-o-n`), **not** gender-split — matches §3's
+  note that `hik`'s `hura`/`haiek`-object past forms (`huen`/`hituen`) aren't
+  gender-split either.
+- `zuri`/`zuei` × `hik` are `*(hika/zuka)*`, same register clash as
+  `zuk`/`zuek` × `NOR`=`hi` in §3.
+
+Applied directly — every cell follows an established formula/anchor with no
+loose ends.
+
+**Not yet applied**: a follow-up request for Ahalera Orainaldia
+(`NOR`=hura/haiek, ditransitive "can give X to Y") came back with a `dieza-`/
+`diezazki-` root family (`diezaioke` etc.). The `hari`/`haiei` rows look
+plausible (`diezaioke`/`diezaieke` match recallable real forms), but the
+`niri`/`guri`/`zuri` rows are derived purely by analogy and the "self-check"
+Gemini provided doesn't actually reduce algebraically to the cited citation
+forms (`diezaioket` minus `-io-` ≠ `dezaket`) — needs another verification
+pass before going in.
+
 ## 2026-06-10 — Fixed §3's `guk`→`hi` past cell (`*(refl.)*` → `hindugun`); declined a new `*(PCC-blocked)*` marker
 
 **Decision:** Followed up on two doubts from the previous round.

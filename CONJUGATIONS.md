@@ -620,18 +620,21 @@ table.
 
 ### `NOR` = hura — Present
 
-| NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
-|---|---|---|---|---|---|---|
-| niri | *(refl.)* | dit | didagu | didazu | didazue | didate |
-| hari | diot | dio | diogu | diozu | diozue | diote |
-| guri | *(refl.)* | zigun | *(refl.)* | diguzu | diguzue | ziguten |
-| zuri | dizut | dizu | dizugu | *(refl.)* | *(zu↔zuek)* | dizute |
-| haiei | diet | die | diegu | diezu | diezue | diete |
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | didak / didan | dit | didagu | didazu | didazue | didate |
+| hari | diot | diok / dion | dio | diogu | diozu | diozue | diote |
+| guri | *(refl.)* | diguk / digun | zigun | *(refl.)* | diguzu | diguzue | ziguten |
+| zuri | dizut | *(hika/zuka)* | dizu | dizugu | *(refl.)* | *(zu↔zuek)* | dizute |
+| haiei | diet | diek / dien | die | diegu | diezu | diezue | diete |
 
 Each form follows **`di-` + `NORI`-suffix + `NORK`-suffix**: `NORI`-suffixes
 `-da-`/`-o-`/`-gu-`/`-zu-`/`-e-` for `niri`/`hari`/`guri`/`zuri`/`haiei`;
-`NORK`-suffixes `-t`/`∅`/`-gu`/`-zu`/`-zue`/`-te` for
-`nik`/`hark`/`guk`/`zuk`/`zuek`/`haiek`.
+`NORK`-suffixes `-t`/`-k(/-n)`/`∅`/`-gu`/`-zu`/`-zue`/`-te` for
+`nik`/`hik`/`hark`/`guk`/`zuk`/`zuek`/`haiek` — `hik`'s suffix gender-splits
+like §3's `-k`/`-n` (`diok`/`dion`, `didak`/`didan`, …). `zuri`/`zuei` with
+`NORK`=`hik` are `*(hika/zuka)*`, same register clash as `NORK`=`zuk`/`zuek`
+with `NOR`=`hi` in §3.
 
 `niri`/`nik`, `guri`/`nik`, `guri`/`guk`, and `zuri`/`zuk` are all
 `*(refl.)*` under §3's same-person-category extension (1st person category =
@@ -643,19 +646,21 @@ form. In practice these meanings are expressed periphrastically with `buru`
 
 ### `NOR` = hura — Past
 
-| NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
-|---|---|---|---|---|---|---|
-| niri | *(refl.)* | zidan | genidan | zenidan | zenidaten | zidaten |
-| hari | nion | zion | genion | zenion | zenioten | zioten |
-| guri | *(refl.)* | zigun | *(refl.)* | zenigun | zeniguten | ziguten |
-| zuri | nizun | zizun | genizun | *(refl.)* | *(zu↔zuek)* | zizuten |
-| haiei | nien | zien | genien | zenien | zenieten | zieten |
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | hidan | zidan | genidan | zenidan | zenidaten | zidaten |
+| hari | nion | hion | zion | genion | zenion | zenioten | zioten |
+| guri | *(refl.)* | higun | zigun | *(refl.)* | zenigun | zeniguten | ziguten |
+| zuri | nizun | *(hika/zuka)* | zizun | genizun | *(refl.)* | *(zu↔zuek)* | zizuten |
+| haiei | nien | hien | zien | genien | zenien | zenieten | zieten |
 
 The prefix-encodes-`NORK` pattern from §3's past-tense `ukan` grid
-(`n-`/`z-`/`gen-`/`zen-`/`zen-…te`/`z-…te` for
-`nik`/`hark`/`guk`/`zuk`/`zuek`/`haiek`) accounts for every cell here too —
-e.g. `genidan` = `gen-i-da-n` (guk→niri), `zenigun` = `zen-i-gu-n` (zuk→guri),
-`zenieten` = `zen-i-e-te-n` (zuek→haiei).
+(`n-`/`h-`/`z-`/`gen-`/`zen-`/`zen-…te`/`z-…te` for
+`nik`/`hik`/`hark`/`guk`/`zuk`/`zuek`/`haiek`) accounts for every cell here
+too — e.g. `genidan` = `gen-i-da-n` (guk→niri), `zenigun` = `zen-i-gu-n`
+(zuk→guri), `zenieten` = `zen-i-e-te-n` (zuek→haiei). `hik`'s `h-` prefix
+isn't gender-split here, mirroring §3's `huen`/`hituen` — `hidan` =
+`h-i-da-n` (hik→niri), `hion` = `h-i-o-n` (hik→hari).
 
 ### `NOR` = haiek — Present
 
@@ -664,13 +669,13 @@ Same grid shape, with the `-zki-` infix marking the plural object (`di-` →
 `di-zki-da-zu` ("you give them to me"), `dizkio` = `di-zki-o` ("he gives them
 to him").
 
-| NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
-|---|---|---|---|---|---|---|
-| niri | *(refl.)* | dizkida | dizkidagu | dizkidazu | dizkidazue | dizkidate |
-| hari | dizkiot | dizkio | dizkiogu | dizkiozu | dizkiozue | dizkiote |
-| guri | *(refl.)* | dizkigu | *(refl.)* | dizkiguzu | dizkiguzue | dizkigute |
-| zuri | dizkizut | dizkizu | dizkizugu | *(refl.)* | *(zu↔zuek)* | dizkizute |
-| haiei | dizkiet | dizkie | dizkiegu | dizkiezu | dizkiezue | dizkiete |
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | dizkidak / dizkidan | dizkida | dizkidagu | dizkidazu | dizkidazue | dizkidate |
+| hari | dizkiot | dizkiok / dizkion | dizkio | dizkiogu | dizkiozu | dizkiozue | dizkiote |
+| guri | *(refl.)* | dizkiguk / dizkigun | dizkigu | *(refl.)* | dizkiguzu | dizkiguzue | dizkigute |
+| zuri | dizkizut | *(hika/zuka)* | dizkizu | dizkizugu | *(refl.)* | *(zu↔zuek)* | dizkizute |
+| haiei | dizkiet | dizkiek / dizkien | dizkie | dizkiegu | dizkiezu | dizkiezue | dizkiete |
 
 ### `NOR` = haiek — Past
 
@@ -678,13 +683,13 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 `zizkidan` = `z-i-zki-da-n` ("he had given them to me"), `nizkion` =
 `n-i-zki-o-n` ("I had given them to him").
 
-| NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
-|---|---|---|---|---|---|---|
-| niri | *(refl.)* | zizkidan | genizkidan | zenizkidan | zenizkidaten | zizkidaten |
-| hari | nizkion | zizkion | genizkion | zenizkion | zenizkioten | zizkioten |
-| guri | *(refl.)* | zizkigun | *(refl.)* | zenizkigun | zenizkiguten | zizkiguten |
-| zuri | nizkizun | zizkizun | genizkizun | *(refl.)* | *(zu↔zuek)* | zizkizuten |
-| haiei | nizkien | zizkien | genizkien | zenizkien | zenizkieten | zizkieten |
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | hizkidan | zizkidan | genizkidan | zenizkidan | zenizkidaten | zizkidaten |
+| hari | nizkion | hizkion | zizkion | genizkion | zenizkion | zenizkioten | zizkioten |
+| guri | *(refl.)* | hizkigun | zizkigun | *(refl.)* | zenizkigun | zenizkiguten | zizkiguten |
+| zuri | nizkizun | *(hika/zuka)* | zizkizun | genizkizun | *(refl.)* | *(zu↔zuek)* | zizkizuten |
+| haiei | nizkien | hizkien | zizkien | genizkien | zenizkien | zenizkieten | zizkieten |
 
 ### `NOR` = 1st/2nd person
 
