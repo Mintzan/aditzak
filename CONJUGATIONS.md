@@ -490,22 +490,70 @@ pre-existing citations exactly (`nezake`/`nitzake`, `lezake`/`litzake`,
 derivation and the earlier derivation corroborates the new source, in the
 same pass.
 
-#### Subjuntiboa, past — `NOR` = 1st/2nd person
+#### Subjuntiboa, Orainaldia (Present) — "...so that [NORK] may [verb] [NOR]"
+
+*Adibidez:* `Ez dut nahi hark ni ikus nazan` ("I don't want him to see me");
+`Ateak ireki ditut nik haiek ikus ditzadan` ("I opened the doors so that I
+may see them").
+
+A new user-supplied table gives the *full* `hi` picture for Subjuntiboa,
+including the `hika` masc./fem. split that's been a gap everywhere else in
+this document. Two things fall out immediately: (1) `hi`-as-`NOR` (the
+`hi (M)`/`hi (F)` rows in the source) is **gender-invariant** — both rows
+give identical forms, so the `hi` *column* below needs no masc./fem. split;
+(2) `hi`-as-`NORK` (the `hik (M)`/`hik (F)` columns) *does* split, via an
+`-a-`/`-na-` insertion — `dezaan`/`dezanan`, `nazaan`/`nazanan`, etc. — so the
+`hik` *row* below carries both forms per cell, same `*(masc.)* / *(fem.)*`
+notation §4 uses.
 
 | NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
 |---|---|---|---|---|---|---|---|
-| nik | *(refl.)* | ❓ | nezan | ❓ | ❓ | ❓ | nitzan |
-| hik | ❓ | *(refl.)* | hezan | ❓ | *(hika/zuka)* | *(hika/zuka)* | hitzan |
-| hark | ❓ | ❓ | zezan | ❓ | ❓ | ❓ | zitzan |
-| guk | ❓ | ❓ | genezan | *(refl.)* | ❓ | ❓ | genitzan |
-| zuk | ❓ | *(hika/zuka)* | zenezan | ❓ | *(refl.)* | *(refl.)* | zenitzan |
-| zuek | ❓ | *(hika/zuka)* | zenezaten | ❓ | *(refl.)* | *(refl.)* | zenitzaten |
-| haiek | ❓ | ❓ | zezaten | ❓ | ❓ | ❓ | zitzaten |
+| nik | *(refl.)* | hazadan | dezadan | *(refl.)* | zaitzadan | zaitzatedan | ditzadan |
+| hik | nazaan *(masc.)* / nazanan *(fem.)* | *(refl.)* | dezaan *(masc.)* / dezanan *(fem.)* | gaitzaan *(masc.)* / gaitzanan *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | ditzaan *(masc.)* / ditzanan *(fem.)* |
+| hark | nazan | hazan | dezan | gaitzan | zaitzan | zaitzaten | ditzan |
+| guk | *(refl.)* | hazagun | dezagun | *(refl.)* | zaitzagun | zaitzategun | ditzagun |
+| zuk | nazazun | *(hika/zuka)* | dezazun | gaitzazun | *(refl.)* | *(refl.)* | ditzazun |
+| zuek | nazazuen | *(hika/zuka)* | dezazuen | gaitzazuen | *(refl.)* | *(refl.)* | ditzazuen |
+| haiek | nazaten | hazaten | dezaten | gaitzaten | zaitzaten | zaitzate(te)n | ditzaten |
 
-The new source above doesn't cover Subjuntiboa, so this grid's `❓` cells
-stay open — though the same same-person-category `*(refl.)*` pattern and
-`hi`-shaped gap from the Ahalera grids would plausibly extend here too, if a
-comparable table for Subjuntiboa ever turns up.
+Fully populated, no `❓` left — the `de-/dit-`-stem `hura`/`haiek` columns
+match the `-za-` + `-da-n/-∅-n/-gu-n/-zu-n/-zue-n/-te-n` suffix series §13
+already predicted (`dezadan`, `dezan`, `dezagun`, …), and the same
+same-person-category `*(refl.)*` block and `*(hika/zuka)*` cells from the
+Ahalera grids reappear here unchanged.
+
+#### Subjuntiboa, Lehenaldia (Past) — "...so that [NORK] could/might have [verb]ed [NOR]"
+
+*Adibidez:* `Gurasoek dirua eman zidaten nik gozokiak eros nitzan` ("My
+parents gave me money so that I could buy candies").
+
+| NORK ↓ ╲ NOR → | ni | hi | hura | gu | zu | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| nik | *(refl.)* | hintzadan | nezan | *(refl.)* | zintzadan | zintzatedan | nitzan |
+| hik | nintzaan *(masc.)* / nintzanan *(fem.)* | *(refl.)* | hezan | gintzaan *(masc.)* / gintzanan *(fem.)* | *(hika/zuka)* | *(hika/zuka)* | hitzan |
+| hark | nintzan | hintzan | zezan | gintzan | zintzan | zintzaten | zitzan |
+| guk | *(refl.)* | hintzagun | genezan | *(refl.)* | zintzagun | zintzategun | genitzan |
+| zuk | nintzazun | *(hika/zuka)* | zenezan | gintzazun | *(refl.)* | *(refl.)* | zenitzan |
+| zuek | nintzazuen | *(hika/zuka)* | zenezaten | gintzazuen | *(refl.)* | *(refl.)* | zenitzaten |
+| haiek | nintzaten | hintzaten | zezaten | gintzaten | zintzaten | zintzate(te)n | zitzaten |
+
+Also fully populated. The `hura`/`haiek` columns (`nezan`/`nitzan`,
+`zezan`/`zitzan`, `genezan`/`genitzan`, `zenezan`/`zenitzan`,
+`zenezaten`/`zenitzaten`, `zezaten`/`zitzaten`) match this document's
+pre-existing citations exactly — the new source corroborates them, and they
+corroborate the new source. One detail worth flagging: `hik`/`hura`
+(`hezan`) is the *same form for both masc. and fem.* — unlike every other
+`hik`-row cell in either grid, which all split via `-a-`/`-na-`. Reproduced
+as given rather than "corrected" to a guessed `*hezaan`/`*hezanan`, since
+nothing here confirms which (if either) is right.
+
+With this, both Subjuntiboa grids and all three Ahalera grids (Orainaldia/
+Alegiazkoa/Lehenaldia) are now fully populated for every `NOR`/`NORK`
+combination *except* Ahalera's `hi`-column gaps (`nik/hi`, `hark/hi`,
+`guk/hi`, `haiek/hi`, plus `hik`'s `ni`/`gu` columns) — those remain `❓`
+since the Ahalera source omitted `hi` outright and this Subjuntiboa data,
+while suggestive, belongs to a different stem/suffix system and isn't a
+safe basis for cross-paradigm extrapolation.
 
 The **imperative**'s `NOR-NORK` cells are, by contrast, barely populated in
 §13 at all (mostly `()` placeholders) — consistent with Basque imperatives

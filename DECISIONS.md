@@ -4,6 +4,30 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Filled both Subjuntiboa NOR-NORK grids (Present + Past) from a user-supplied table, including the `hi` masc./fem. split
+
+**Decision:** A user-supplied table gave full Subjuntiboa Orainaldia
+(Present) and Lehenaldia (Past) NOR-NORK grids, including `hi` as both `NOR`
+and `NORK` — the first source in this document to cover `hi` for any
+NOR-NORK grid. Added a brand-new Present grid (previously didn't exist) and
+completed the Past grid's remaining `❓` cells (it previously only had
+`hura`/`haiek` columns). Both grids are now fully populated with no `❓`
+left. The `hura`/`haiek` columns of the Past grid match this document's
+pre-existing citations exactly, corroborating both sources.
+
+**Findings:** `hi`-as-`NOR` is gender-invariant (the source's `hi (M)`/
+`hi (F)` rows are identical) — only `hi`-as-`NORK` (the `hik` row) splits,
+via `-a-`/`-na-` insertion (`dezaan`/`dezanan`, `nintzaan`/`nintzanan`, …),
+*(masc.)*/*(fem.)* notation as used in §4. One exception: `hik`/`hura` in
+the Past grid (`hezan`) is given as the *same* form for both genders —
+reproduced as-is rather than guessed at.
+
+**Scope boundary:** Did *not* use this data to fill Ahalera's remaining `hi`
+gaps — Subjuntiboa's `-a-`/`-na-` insertion is a different mechanism from
+the suffix-based `-k`/`-n` pattern Ahalera-Orainaldia would need (mirroring
+indicative `ukan`'s `duk`/`dun`), so cross-paradigm extrapolation isn't
+safe without its own source.
+
 ## 2026-06-10 — Ahalera "contradiction" was a tense split, not an error; filled the `❓` `NOR`=1st/2nd-person cells from a user-supplied table
 
 **Decision:** A previous session concluded `dezaket` (NOR-prefix/NORK-suffix
