@@ -710,29 +710,36 @@ suffix set as §3's Ahalera grid (`dezaket`/`dezakek`/`dezaken`/`dezake`/
 positions as in this section's indicative present/past grids above:
 `niri`/`nik`, `guri`/`nik`, `guri`/`guk`, and `zuri`/`zuk` are `*(refl.)*`;
 `zuri`/`zuek` is `*(zu↔zuek)*`; `zuri`/`hik` is `*(hika/zuka)*`. The remaining
-`hik` cells (`niri`/`hari`/`guri`/`haiei`) would follow the same `-k`/`-n`
-gender split as §3's `hik` row (`dezakek`/`dezaken`) but aren't independently
-confirmed yet — left as `—`.
+`hik` cells (`niri`/`hari`/`guri`/`haiei`) follow the same `-k`/`-n` gender
+split as §3's `hik` row (`dezakek`/`dezaken`).
+
+Like §3's Subjuntiboa `hi`-cells, these `hik`-as-`NORK` ditransitive forms are
+grammatically regular but rarely heard in spontaneous speech — *hika* speakers
+asking about ability typically reach for the indicative (`Emango didak?`,
+lit. "will you give it to me?") or a periphrastic `ahal izan` construction
+instead of the dense `-zki-`-laden synthetic potential. Still genuinely
+attested in formal/literary Basque, so kept here rather than marked
+impossible.
 
 #### `NOR` = hura (singular object)
 
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
-| niri | *(refl.)* | — | diezadake | diezadakegu | diezadakezu | diezadakezue | diezadakete |
-| hari | diezaioket | — | diezaioke | diezaiokegu | diezaiokezu | diezaiokezue | diezaiokete |
-| guri | *(refl.)* | — | diezaguke | *(refl.)* | diezagukezu | diezagukezue | diezagukete |
+| niri | *(refl.)* | diezadakek / diezadaken | diezadake | diezadakegu | diezadakezu | diezadakezue | diezadakete |
+| hari | diezaioket | diezaiokek / diezaioken | diezaioke | diezaiokegu | diezaiokezu | diezaiokezue | diezaiokete |
+| guri | *(refl.)* | diezagukek / diezaguken | diezaguke | *(refl.)* | diezagukezu | diezagukezue | diezagukete |
 | zuri | diezazuket | *(hika/zuka)* | diezazuke | diezazukegu | *(refl.)* | *(zu↔zuek)* | diezazukete |
-| haiei | diezaieket | — | diezaieke | diezaiekegu | diezaiekezu | diezaiekezue | diezaiekete |
+| haiei | diezaieket | diezaiekek / diezaieken | diezaieke | diezaiekegu | diezaiekezu | diezaiekezue | diezaiekete |
 
 #### `NOR` = haiek (plural object)
 
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
-| niri | *(refl.)* | — | diezazkidake | diezazkidakegu | diezazkidakezu | diezazkidakezue | diezazkidakete |
-| hari | diezazkioket | — | diezazkioke | diezazkiokegu | diezazkiokezu | diezazkiokezue | diezazkiokete |
-| guri | *(refl.)* | — | diezazkiguke | *(refl.)* | diezazkigukezu | diezazkigukezue | diezazkigukete |
+| niri | *(refl.)* | diezazkidakek / diezazkidaken | diezazkidake | diezazkidakegu | diezazkidakezu | diezazkidakezue | diezazkidakete |
+| hari | diezazkioket | diezazkiokek / diezazkioken | diezazkioke | diezazkiokegu | diezazkiokezu | diezazkiokezue | diezazkiokete |
+| guri | *(refl.)* | diezazkigukek / diezazkiguken | diezazkiguke | *(refl.)* | diezazkigukezu | diezazkigukezue | diezazkigukete |
 | zuri | diezazkizuket | *(hika/zuka)* | diezazkizuke | diezazkizukegu | *(refl.)* | *(zu↔zuek)* | diezazkizukete |
-| haiei | diezazkieket | — | diezazkieke | diezazkiekegu | diezazkiekezu | diezazkiekezue | diezazkiekete |
+| haiei | diezazkieket | diezazkiekek / diezazkieken | diezazkieke | diezazkiekegu | diezazkiekezu | diezazkiekezue | diezazkiekete |
 
 *Adibideak:* `Lagun horrek mesede handia egin diezaguke egoera honetan` ("That
 friend can do us a great favor in this situation" — guri/hark/hura);

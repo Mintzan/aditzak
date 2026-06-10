@@ -4,6 +4,34 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Completed §5's Ahalera Orainaldia ditransitive grid with the `hik` column
+
+**Decision:** Asked Gemini to verify the last open piece of this grid: the
+`hik` column (8 masc./fem. pairs = 16 forms across `niri`/`hari`/`guri`/
+`haiei` × `NOR`=`hura`/`haiek`), predicted via the `-k`/`-n` suffix already
+cross-checked against §3's `hik` row. All 8 pairs confirmed exactly as
+predicted, each with a fresh example sentence whose object number agrees with
+the predicted form (plural `liburuak`/`argazkiak` for the `diezazki-` cells,
+singular `egia`/`mezu bat` for the `dieza-` cells) — a marked improvement over
+the previous no-examples round. Applied all 16 forms; `zuri`/`hik` stays
+`*(hika/zuka)*` as before. Also kept Gemini's "sociolinguistic reality" note
+(these forms are grammatically regular but rare outside formal/literary
+register — *hika* speakers favour the indicative or `ahal izan`
+periphrastically) since it matches how the doc already treats §3's rare
+Subjuntiboa `hi`-cells.
+
+**Aside, not chased**: example 4's surrounding context used `zeudeat` for "the
+parents were worried" (3rd-plural past of `egon`), which doesn't match any
+*hika* past form expected (`zeudean`/`zeudenan`). Doesn't affect the verified
+target form (`diezazkiekek`/`diezazkieken`, whose own number agreement is
+correct), so not pursued — flagged here in case a future `egon` *hika*
+past-tense pass runs into the same thing.
+
+**Status:** §5's Ahalera Orainaldia ditransitive grid is now complete (no `—`
+cells; all gaps are principled `*(refl.)*`/`*(zu↔zuek)*`/`*(hika/zuka)*`
+markers). Ahalera Lehenaldia (past potential) ditransitive is the natural next
+tense.
+
 ## 2026-06-10 — Filled out §5's Ahalera Orainaldia ditransitive grid to `nik`/`guk`/`zuk`/`zuek`/`haiek` (full grid minus `hik`)
 
 **Decision:** Asked Gemini to verify just the `nik` column (6 cells:
