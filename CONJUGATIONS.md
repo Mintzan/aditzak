@@ -750,6 +750,36 @@ students" — haiei/hark/hura).
 
 `hik` as `NORK` remains open for a future pass.
 
+### Ahalera, Lehenaldia (Past potential), ditransitive
+
+The ditransitive past potential ("[NORK] could have given X to Y") does
+**not** reuse the `dieza-`/`diezazki-` root from Orainaldia directly. Instead,
+take the Orainaldia `hark`-column form (e.g. `diezaioke`), drop the initial
+`d-`, prepend the same past-tense `NORK` prefix already used in §5's
+indicative past grid (`n-`/`h-`/`z-`/`gen-`/`zen-`/`zen-…-te-`/`z-…-te-`, from
+`nion`/`hion`/`zion`/`genion`/`zenion`/`zenioten`/`zioten`), and append `-en`
+(`-ten` where the prefix's `-te-` is shared with the suffix). The resulting
+extra `i-` (`n-i-eza-io-ke-en` = `niezaiokeen`) mirrors the same `nion`-vs-
+`nuen` linking vowel that distinguishes ditransitive from plain past forms
+throughout §5.
+
+So far only the `nik` row (`NOR`=`hura`) is verified:
+
+| NORI ↓ | nik (Lehenaldia) |
+|---|---|
+| niri | *(refl.)* |
+| hari | niezaiokeen |
+| guri | niezagukeen |
+| zuri | niezazukeen |
+| haiei | niezaiekeen |
+
+*Adibidea:* `Dirua beraiekin utzi izan banu, nik lagunari liburua eros
+niezaiokeen` ("If I had left the money with them, I could have bought the
+book for my friend" — hari/nik).
+
+The rest of the grid (`hark`/`guk`/`zuk`/`zuek`/`haiek` as `NORK`, `NOR`=
+`haiek` via `-zki-`, and `hik`) remains open for future passes.
+
 ### `NOR` = 1st/2nd person
 
 A `NOR` = 1st/2nd person ditransitive ("he gives *me* to him", "you say *me*

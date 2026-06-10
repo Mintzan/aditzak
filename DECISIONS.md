@@ -4,6 +4,35 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Started §5's Ahalera Lehenaldia (past potential) ditransitive grid: `nik` row resolved, root confirmed different from Orainaldia
+
+**Decision:** Asked Gemini for the citation form `nik`→`hari`/`NOR`=`hura`
+("I could have given it to him") for this new tense, plus a self-check across
+`guri`/`zuri`/`haiei`. Gemini confirmed the `dieza-`/`diezazki-` root does
+*not* carry over from Orainaldia, giving `niezaiokeen` plus
+`niezagukeen`/`niezazukeen`/`niezaiekeen` for the sanity-check rows.
+
+Cross-checked these two ways, both clean:
+
+- **Against §3's Lehenaldia**: `nezake` (Alegiazkoa) → `nezakeen` (Lehenaldia)
+  is `nezake`+`-en`. Applying the same "`d`→`n`, then `+en`" transform to the
+  *already-verified Orainaldia `hark`-column forms* (`diezaioke` →
+  `niezaioke` → `niezaiokeen`, etc.) reproduces all four of Gemini's cells
+  exactly.
+- **Against §5's own indicative grids**: the resulting extra `-i-`
+  (`n-i-eza-io-ke-en`) is the same linking vowel that distinguishes `nion`
+  (ditransitive past) from `nuen` (plain past) — not an ad-hoc addition.
+
+Applied the `nik` row (`NOR`=`hura`; `niri`=`*(refl.)*` as elsewhere). Wrote up
+the general derivation rule (Orainaldia `hark`-column form, minus `d-`, plus
+§5's already-applied indicative-past `NORK` prefix, plus `-en`/`-ten`) as a
+hypothesis for the rest of the grid — `hark`'s prefix in particular needs its
+own check, since §3 shows `hark` can use *different* prefixes for Alegiazkoa
+(`le-`) vs. Lehenaldia (`ze-`), so the "same prefix as indicative past" guess
+isn't guaranteed to hold beyond `nik` (where Alegiazkoa and Lehenaldia
+prefixes happen to coincide). `NOR`=`haiek`, `hark`/`guk`/`zuk`/`zuek`/`haiek`
+as `NORK`, and `hik` all left open.
+
 ## 2026-06-10 — Completed §5's Ahalera Orainaldia ditransitive grid with the `hik` column
 
 **Decision:** Asked Gemini to verify the last open piece of this grid: the
