@@ -763,22 +763,26 @@ extra `i-` (`n-i-eza-io-ke-en` = `niezaiokeen`) mirrors the same `nion`-vs-
 `nuen` linking vowel that distinguishes ditransitive from plain past forms
 throughout §5.
 
-So far only the `nik` row (`NOR`=`hura`) is verified:
+#### `NOR` = hura (singular object)
 
-| NORI ↓ | nik (Lehenaldia) |
-|---|---|
-| niri | *(refl.)* |
-| hari | niezaiokeen |
-| guri | niezagukeen |
-| zuri | niezazukeen |
-| haiei | niezaiekeen |
+| NORI ↓ ╲ NORK → | nik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|
+| niri | *(refl.)* | ziezadakeen | geniezadakeen | zeniezadakeen | zeniezadaketen | ziezadaketen |
+| hari | niezaiokeen | ziezaiokeen | geniezaiokeen | zeniezaiokeen | zeniezaioketen | ziezaioketen |
+| guri | niezagukeen | ziezagukeen | *(refl.)* | zeniezagukeen | zeniezaguketen | ziezaguketen |
+| zuri | niezazukeen | ziezazukeen | geniezazukeen | *(refl.)* | *(zu↔zuek)* | ziezazuketen |
+| haiei | niezaiekeen | ziezaiekeen | geniezaiekeen | zeniezaiekeen | zeniezaieketen | ziezaieketen |
 
-*Adibidea:* `Dirua beraiekin utzi izan banu, nik lagunari liburua eros
+*Adibideak:* `Dirua beraiekin utzi izan banu, nik lagunari liburua eros
 niezaiokeen` ("If I had left the money with them, I could have bought the
-book for my friend" — hari/nik).
+book for my friend" — hari/nik); `Atzo amak umeari zopa beroa eman
+ziezaiokeen, baina ahaztu egin zitzaion` ("Yesterday mother could have given
+the hot soup to the child, but she forgot" — hari/hark); `Poliziek gidariari
+isuna jar ziezaioketen, baina abisua soilik eman zioten` ("The police could
+have given the driver a fine, but they only gave a warning" —
+hari/haiek).
 
-The rest of the grid (`hark`/`guk`/`zuk`/`zuek`/`haiek` as `NORK`, `NOR`=
-`haiek` via `-zki-`, and `hik`) remains open for future passes.
+`NOR`=`haiek` (via `-zki-`) and `hik` as `NORK` remain open for future passes.
 
 ### `NOR` = 1st/2nd person
 

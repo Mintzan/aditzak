@@ -4,6 +4,33 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Filled §5's Ahalera Lehenaldia ditransitive `NOR`=`hura` grid via cross-pattern composition
+
+**Decision:** Asked Gemini to confirm the predicted `hari` row (`hark`/`guk`/
+`zuk`/`zuek`/`haiek` as `NORK`, `NOR`=`hura`) — specifically flagging `hark`
+as the riskiest cell, since §3 shows `hark` can take *different* prefixes for
+Alegiazkoa (`le-`) vs. Lehenaldia (`ze-`). All 5 confirmed exactly as
+predicted (`ziezaiokeen`/`geniezaiokeen`/`zeniezaiokeen`/`zeniezaioketen`/
+`ziezaioketen`), each with a fresh example whose object (`zopa beroa`,
+`gure iritzia`, `opari polit bat`, `albiste txarra`, `isuna` — all singular,
+matching `NOR`=`hura`) and `NORI`/`NORK` roles line up correctly. Gemini also
+explained *why* `hark` uses `z-`/`zie-` here: it's the past counterpart of
+present `die-`, distinct from the hypothetical's `lie-` — resolving the
+caveat rather than hand-waving past it.
+
+This gives a confirmed `nik` column **and** a confirmed `hari` row (sharing
+the cell `niezaiokeen`) — together they pin down both halves of the formula
+(`NORK`-prefix/suffix wrapper `n-/z-/gen-/zen-/zen-…ten/z-…ten` + `-en`/`-ten`,
+and `NORI`-suffix `-da-/-io-/-gu-/-zu-/-ie-`) *for this tense specifically*,
+with fresh examples for each half. Composed the two to fill the rest of the
+`NOR`=`hura` grid (17 new cells), with `*(refl.)*`/`*(zu↔zuek)*` in the same
+positions as Orainaldia's grid.
+
+**Not done**: `NOR`=`haiek` (the `-zki-` infix is confirmed for Orainaldia but
+not yet for *this* tense — composing three confirmed-but-never-jointly-tested
+pieces felt like one step too far without a fresh check) and `hik` as `NORK`.
+Both left open for future passes.
+
 ## 2026-06-10 — Started §5's Ahalera Lehenaldia (past potential) ditransitive grid: `nik` row resolved, root confirmed different from Orainaldia
 
 **Decision:** Asked Gemini for the citation form `nik`→`hari`/`NOR`=`hura`
