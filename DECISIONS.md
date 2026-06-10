@@ -4,6 +4,53 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Incorporated Gemini's verification pass: corrected the Ondorioa `-zke-` rule, resolved the `-io-`/`-ioe-` and `zidan`/`dit` discrepancies, added a `zu↔zuek` impossibility marker, filled Ahalera-Orainaldia's `hi` cells
+
+**Decision:** Asked Gemini to check the remaining `🔍`/`❓`/`⚠️` cells across
+§3 and §5. Applied its corrections wholesale:
+
+- **Baldintza** (§3): every remaining `🔍` cell confirmed correct as written
+  — flags dropped, no value changes. Noted `bagintuk`/`bagintun`
+  (`hik`→`gu`) is grammatical but pragmatically rare.
+- **Ondorioa present/past** (§3): **supersedes** the two 2026-06-08 entries
+  below. The `zintukezte` cell those entries treated as a confirmed anchor
+  for a "`-zte-` after `-ke-`" rule was itself wrong — Gemini corrects it to
+  `zintuzkete` and gives the real rule: a plural object (`zuek`/`haiek`) or
+  `haiek`-subject-on-`zint-`/`gint-`-stem makes `-ke-` merge with the
+  pluralizer `-z-` into **`-zke-`**, *before* the tense/person suffixes
+  (`zint-u-zke-te`, not `zint-u-ke-zte`). This matches the `-zke-` shape
+  this grid's pre-existing `haiek`-as-`NOR` anchors (`lituzke`,
+  `genituzke`, `lituzkete`, `zituzkeen`, …) already used, unflagged. Recast
+  ~12 `🔍`-derived cells from `-tuke(z)te-` to `-tuzke-` shapes and dropped
+  `🔍` from the rest; fixed one outright typo, `zintukezun` (`guk`→`zu`,
+  Ondorioa-past) → `zintukegun`.
+- **Indicative past, `nik`→`zuek`** (§3): confirmed `zintuztedan`;
+  `zaituztet` (this grid's own present-tense `nik`→`zuek` cell) was a print
+  error in the source that suggested it here. `🔍` dropped.
+- **§5 `hari`-past `-io-` vs `-ioe-`**: Gemini confirms `nion`/`zion`/
+  `genion` (not `nioen`/`zioen`/`genioen`) are standard *Batua* for
+  `nik`/`hark`/`guk` — the `-ioe-` shape is a Bizkaian/Western dialect
+  variant. `zenioen`/`zenioten`/`zioten` (`zuk`/`zuek`/`haiek`) were never in
+  dispute. Same fix applied to the parallel `-zki-` (`NOR`=`haiek`) past row
+  (`nizkion`/`zizkion`/`genizkion`).
+- **§5 `hura`-present `niri`/`hark`**: `zidan` is a *past*-tense form and
+  doesn't belong in a present table; Gemini confirms the present cell is
+  `dit`. By the same `di-`+suffix formula, `niri`/`haiek` (`zidaten`, also
+  past-shaped) becomes `didate` (🔍 — formula-derived, not independently
+  checked by Gemini).
+- **New marker `*(zu↔zuek)*`**: per Gemini, `dizuzue`/`dizkizuzue`/
+  `zenizuten`/`zenizkizuten` (all four `zuri`/`zuek` cells across §5's
+  `hura`/`haiek` present/past grids) **don't exist** — `zu` and `zuek` share
+  one morpheme block and can't fill both the NORI and NORK slots of one
+  auxiliary at once (Basque uses `Zuen buruari ematen diozue` instead).
+  Replaces the `🔍` previously on those four cells.
+- **Ahalera Orainaldia `hi`-cells** (§3): Gemini filled the `hi`-as-`NOR`
+  column (`hazake`/`hazaket`/`hazakegu`/`hazakete`, gender-invariant,
+  `h-` + `-zake-`) and `hik`-as-`NORK` → `ni`/`gu` (`nazakek`/`nazaken`,
+  `gaitzakek`/`gaitzaken`, masc./fem. via `-k`/`-n` like the other columns).
+  Alegiazkoa/Lehenaldia's matching `hi`-cells remain `❓` — Gemini's answer
+  was scoped to Orainaldia only.
+
 ## 2026-06-10 — Filled both Subjuntiboa NOR-NORK grids (Present + Past) from a user-supplied table, including the `hi` masc./fem. split
 
 **Decision:** A user-supplied table gave full Subjuntiboa Orainaldia
@@ -84,6 +131,10 @@ the same posture as the Ahalera/Subjuntiboa `❓` cells in §3.
 
 ## 2026-06-08 — Filled Ondorioa `zuek`-as-object blanks using `-zte-after-ke` rule
 
+**⚠️ Superseded** by the 2026-06-10 entry above — the `zintukezte` anchor
+this entry relies on was itself wrong; the real rule merges `-ke-` + `-z-`
+into `-zke-` instead. Kept for history.
+
 **Decision:** The `zintukezte` cell (NORK=haiek, NOR=zu, Ondorioa-present)
 already in the grid showed `-zte-` sitting *after* `-ke-` — the ordering
 question I'd previously flagged as unresolved was already answered by the
@@ -94,6 +145,10 @@ cells specifically, the `NORK`=haiek marker falls back to the shorter `-te`
 as the user-confirmed Baldintza `bazintuztete`. All 8 cells marked 🔍.
 
 ## 2026-06-08 — Cross-checked `ukan`'s NOR-NORK 🔍-cells against the paradigm-chart PDF; recovered the `-zte-`-insertion rule for `zuek`-as-object cells
+
+**Note:** The Past/Baldintza findings here (no `-ke-` involved) still stand.
+Only the Ondorioa extension of this rule (see the entry two above) was
+superseded on 2026-06-10.
 
 **Decision:** The user supplied a batch of forms read off the paradigm-chart
 PDF (§13) that either matched existing 🔍-derived guesses outright (letting
