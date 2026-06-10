@@ -4,6 +4,25 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Restructured CONJUGATIONS.md as a pure reference, stripping process narrative
+
+**Decision:** Rewrote `CONJUGATIONS.md` to remove everything about *how* it
+was compiled — the ✅/📖/🔍 confidence-marker system, the sources list, the
+"Resolved"/"Superseded"/per-Gemini discrepancy-resolution stories, the §13
+source-description section, and cross-references to `DECISIONS.md`/
+`VERB_COVERAGE.md`. Kept every conjugation table, example sentence, and
+grammatical/morphological explanation (recipe formulas, the `-zki-` and
+`K/N`↔`A/NA` rules, the `-zke-` merger rule, and the `*(refl.)*`/
+`*(hika/zuka)*`/`*(zu↔zuek)*`/`*(masc.)*`/`*(fem.)*` markers, now defined once
+in a "Notation" section up top). Cells previously marked `🔍` now read as
+plain forms (no longer flagged as less-confident); cells previously marked
+`❓` (genuine gaps, e.g. `hi`-forms in Ahalera Alegiazkoa/Lehenaldia) now
+render as `—` like other gaps. §13 (a description of an external cross-check
+source) was removed entirely; §14 (`eduki`/`erabili`/`eraman`) became §13.
+1398 lines → 979. Reasoning: the doc's purpose is now lookup, not an audit
+trail of the research process — that history lives in this file and in git
+history if ever needed.
+
 ## 2026-06-10 — Incorporated Gemini's verification pass: corrected the Ondorioa `-zke-` rule, resolved the `-io-`/`-ioe-` and `zidan`/`dit` discrepancies, added a `zu↔zuek` impossibility marker, filled Ahalera-Orainaldia's `hi` cells
 
 **Decision:** Asked Gemini to check the remaining `🔍`/`❓`/`⚠️` cells across
