@@ -4,6 +4,35 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Added Ahalera Orainaldia ditransitive `hark` column to §5 (citation table)
+
+**Decision:** Followed up on the previous entry's "not yet applied" Ahalera
+Orainaldia ditransitive (`dieza-`/`diezazki-`) forms with two more focused
+Gemini verification rounds:
+
+1. **`niri`/`hari`/`haiei` rows**: the previous round's example for
+   `diezaieke` paired a plural object (`kezka horiek`) with a form that has no
+   `-zki-`, a number mismatch. Asked for a corrected example with a singular
+   object (got one), plus fresh plural-object examples for
+   `diezazkidake`/`diezazkioke`/`diezazkieke` to confirm the plural-object
+   root is `diezazki-`, not `diezaizki-` — all three came back with genuinely
+   plural objects and the same `dieza-` + `-zki-` + `NORI`-suffix + `-ke`
+   shape.
+2. **`guri`/`zuri` rows**: these were the two remaining `hark`-column cells —
+   ordinary, non-reflexive meanings ("he can give it to us/you"), not covered
+   by any previous round. Predicted `diezaguke`/`diezazuke`/
+   `diezazkiguke`/`diezazkizuke` by analogy (no hiatus glide needed for
+   `-da-/-gu-/-zu-`, vs. the `-i-`-glide `-io-/-ie-` forms for `hari`/`haiei`)
+   and asked Gemini to confirm or correct each with a real example — all four
+   confirmed with object-number-appropriate examples.
+
+Added a new §5 citation table for the `hark` column across both `NOR`=`hura`/
+`haiek` (10 cells, all either example-backed this round or pattern-identical
+to a cell that is), with the `NORI`-suffix + hiatus-glide rule written up —
+same posture as §3's citation-paradigm tables before their grids were filled
+out. `nik`/`hik`/`guk`/`zuk`/`zuek`/`haiek` as `NORK` remain open for a future
+pass.
+
 ## 2026-06-10 — Added `hik` NORK column to §5's `NOR`=hura/haiek Present/Past grids
 
 **Decision:** §5's four grids only had 6 `NORK` columns

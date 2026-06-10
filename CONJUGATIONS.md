@@ -691,6 +691,34 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 | zuri | nizkizun | *(hika/zuka)* | zizkizun | genizkizun | *(refl.)* | *(zu↔zuek)* | zizkizuten |
 | haiei | nizkien | hizkien | zizkien | genizkien | zenizkien | zenizkieten | zizkieten |
 
+### Ahalera, Orainaldia (Present potential), ditransitive — `NORK` = `hark`
+
+The ditransitive potential ("[hark] can give X to Y") follows a `dieza-`
+(`NOR`=`hura`, singular object) / `diezazki-` (`NOR`=`haiek`, plural object,
+same `-zki-` infix as the indicative grids above) root, plus a `NORI` suffix,
+plus `-ke`:
+
+| NORI ↓ | NOR = hura | NOR = haiek |
+|---|---|---|
+| niri | diezadake | diezazkidake |
+| hari | diezaioke | diezazkioke |
+| guri | diezaguke | diezazkiguke |
+| zuri | diezazuke | diezazkizuke |
+| haiei | diezaieke | diezazkieke |
+
+`NORI`-suffixes are the familiar `-da-/-o-/-gu-/-zu-/-e-` set, with a glide
+`-i-` inserted before `-o-`/`-e-` to break up the vowel hiatus that `-za-` +
+`-o-`/`-e-` would otherwise create (`zaio`, `zaie`) — `-da-/-gu-/-zu-` need no
+glide. *Adibideak:* `Lagun horrek mesede handia egin diezaguke egoera
+honetan` ("That friend can do us a great favor in this situation" —
+guri/hura); `Gidariak guri koadernoak ekar diezazkiguke bulegotik` ("The
+driver can bring us the notebooks from the office" — guri/haiek);
+`Irakasleak azalpena eman diezaieke ikasleei` ("The teacher can give the
+explanation to the students" — haiei/hura).
+
+Only the `hark` column is verified so far; `nik`/`hik`/`guk`/`zuk`/`zuek`/
+`haiek` as `NORK` remain open for a future pass.
+
 ### `NOR` = 1st/2nd person
 
 A `NOR` = 1st/2nd person ditransitive ("he gives *me* to him", "you say *me*
