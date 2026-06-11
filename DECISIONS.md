@@ -4,6 +4,36 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Confirmed: `hiri` truly doesn't exist in §5's `-ke-` conditional/potential grids — upgraded the `—` placeholders with an explanation
+
+**Decision:** the previous entry left `hiri` as an unexplained `—` in
+Baldintza/Ondorioa/Ahalera ("can't derive with confidence"). Got a second
+opinion (consulted Gemini with the full derivation rules + `zuri` rows as
+reference) on whether attested forms exist. Answer: no — and not just
+"undocumented", genuinely ungrammatical. Replaced the placeholder explanation
+with the actual reasoning.
+
+**Why they don't exist:** the indicative `hiri` forms (`diat`, `dik`, …) work
+*only* because they're identical to allocutive (hitanoa) marking on an
+otherwise-3rd-person sentence — disambiguated solely by context (`Liburua
+eman diat` = true dative `hiri`, vs. `Autoa erosi diat` = pure allocutive,
+same surface form). A `-ke-`-marked form would need to encode a true
+2nd-person dative *and* the allocutive addressee simultaneously, which the
+verbal complex can't do. Compounding this: allocutive marking is independently
+banned in subordinate clauses (Baldintza's protasis is one), and *hitanoa* is
+an intimate spoken register while `-ke-` potential/conditional forms
+(especially Lehenaldia/Alegiazkoa) are formal/literary — the combination was
+never grammaticalized.
+
+**What to say instead:** added the periphrastic alternatives speakers actually
+use — `emango nian`/`ninan` (future participle + plain allocutive past, no
+synthetic `hiri`-marked `-ke-` form) for "would give it to you[hi]", and
+`eman ahal diat`/`dizkiat` for "can give it to you[hi]".
+
+`*(refl.)*`/`*(hika/zuka)*` cells (hi→hiri reflexivity, hiri-vs-zuk/zuek
+register clash) are unaffected — those reflect a different, independent kind
+of blocking and were already correct.
+
 ## 2026-06-11 — Filled §5's missing `zuei` rows (and marked `hiri` as an honest gap) in the remaining NOR-NORI-NORK conditional/potential grids
 
 **Decision:** the same 5-row gap (missing `hiri`/`zuei`) also affected

@@ -750,14 +750,33 @@ gave it to him") → `lio` → `balio` ("if he were to give it to him"); `nion` 
 From here through the end of §5's conditional/potential grids (Baldintza,
 Ondorioa, Ahalera), `zuei` is filled in the same way as the indicative grids
 above — mirroring `zuri` with `-zu-` → `-zue-`. `hiri`, however, is left as
-an honest gap (`—`): the indicative Present/Past `hiri` rows worked because
-those forms coincide with §10's documented allocutive `-k`/`-n`/`-a-`/`-na-`
-forms, but these `-ke-` conditional/potential forms have no allocutive
-counterpart documented anywhere in this document, so a synthetic `hiri` form
-here can't be derived with confidence — per this document's standing policy
-of an honest gap over an unverifiable form (cf. §16.1's subjunctive past).
-`*(refl.)*`/`*(hika/zuka)*` cells are still filled in as usual, since those
-reflect grammatical blocking rather than missing forms.
+`—` throughout, and this time it's not just "undocumented" — these forms are
+genuinely **ungrammatical**, for reasons that follow directly from how `hiri`
+worked in the indicative grids:
+
+- The indicative `hiri` forms (`diat`, `dik`, `diagu`, `ditek`, …) are only
+  interpretable *because* they're identical to **allocutive** (hitanoa)
+  marking on an otherwise-3rd-person sentence — `Liburua eman diat` ("I gave
+  it to you[masc]", `hiri` as true dative) and `Autoa erosi diat` ("I bought
+  the car — [telling you, dude]", `hiri` not an argument at all, pure
+  allocutive) are the *same form*, disambiguated only by context. Layering a
+  `-ke-` mood marker on top would require the verb to mark a true 2nd-person
+  dative argument *and* the allocutive addressee at once — the verbal complex
+  can't carry both, so the form simply doesn't exist.
+- Allocutive marking is independently **banned in subordinate clauses**
+  (Baldintza's protasis is exactly such a clause) — reinforcing why `hiri`
+  can't piggyback on the allocutive route there either.
+- More generally, *hitanoa* is an intimate spoken register, while the `-ke-`
+  potential/conditional paradigms (especially Lehenaldia/Alegiazkoa) are
+  formal/literary — the combination was never grammaticalized.
+
+Speakers express these meanings periphrastically instead: "I would give it to
+you[masc]" → `emango nian` (future participle `emango` + the plain allocutive
+past `nian`, **not** a `nizuke`-family form with `hiri` marked); "I can give
+it to you[masc]" → `eman ahal diat` (NOR=hura) / `eman ahal dizkiat`
+(NOR=haiek). `*(refl.)*`/`*(hika/zuka)*` cells are still filled in as usual,
+since those reflect grammatical blocking independent of this `-ke-`-specific
+gap.
 
 #### `NOR` = hura
 
