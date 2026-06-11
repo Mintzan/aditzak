@@ -105,20 +105,14 @@ synthetic forms.*
 #### Present Tense (Oraina)
 - **Zuberoako dantzariak gure herrira etortzen dira.**
   - *Translation:* The dancers from Soule come to our town.
-  - *Cultural touch:* Highlights *Zuberoa* (Soule), famous for its complex,
-    athletic traditional dances.
 - **Gaur goizean mendizaleak azkar igotzen ari dira Gorbeiako gurutzeraino.**
   - *Translation:* This morning, the mountaineers are quickly climbing up to
     the Gorbeia cross.
-  - *Cultural touch:* Mountaineering (*mendizaletasuna*) is almost a religion
-    in the Basque Country; Mount Gorbeia is an iconic peak.
 
 #### Past Tense (Lehena)
 - **Iaz, nire lagunak Donostiako Danborradan ibili ziren gau osoan.**
   - *Translation:* Last year, my friends wandered through San Sebastian's
     Drum Festival all night long.
-  - *Cultural touch:* Mentions the *Danborrada*, a massive, loud festival held
-    every January 20th.
 
 #### Synthetic Present (Trinko Oraina — no auxiliary)
 - **Gaur gurasoak Bilboko Guggenheim museora doaz.**
@@ -134,21 +128,14 @@ object (**Nor**). Uses the auxiliary **edun** (to have).*
 - **Sustraiak eta Uxuek bertso politak abesten dituzte plazan.**
   - *Translation:* Sustrai and Uxue sing beautiful improvised verses in the
     square.
-  - *Cultural touch:* *Bertsolaritza* is the Basque art of singing
-    improvised, rhyming verses. Note the plural-object auxiliary **dituzte**
-    (they have them).
 - **Amonak marmitako epela prestatu du gaurko bazkarirako.**
   - *Translation:* Grandmother has prepared warm tuna stew for today's lunch.
-  - *Cultural touch:* *Marmitako* is a classic Basque fishermen's potato and
-    tuna stew.
 
 #### Past Tense (Lehena)
 - **Atzo arratsaldean, pilotariek partida zirraragarria jokatu zuten
   pilotalekuan.**
   - *Translation:* Yesterday afternoon, the pelota players played an exciting
     match in the fronton court.
-  - *Cultural touch:* *Pilota* (Basque pelota) played in a *pilotaleku*
-    (fronton) is the traditional national sport.
 
 #### Future Tense (Geroaldia)
 - **Zuk udan Euskal Herriko Kostaldea bisitatuko duzu.**
@@ -164,20 +151,13 @@ object (**Nor**). Uses the auxiliary **edun** (to have).*
 - **Niri asko gustatzen zaizkit Tolosako babarrun gorriak.**
   - *Translation:* I like Tolosa's red beans a lot. (Literally: Tolosa's red
     beans are pleasing to me.)
-  - *Cultural touch:* Tolosa is famous throughout Spain for its high-quality
-    black/red beans. Note that **zaizkit** is plural because *babarrunak* is
-    plural.
 - **Umeei beldurra zaie basoan dabilen Basajaun mitologikoa.**
   - *Translation:* The children are afraid of the mythological Basajaun
     walking in the woods.
-  - *Cultural touch:* *Basajaun* (The Lord of the Woods) is a popular hairy
-    giant from Basque mythology.
 
 #### Past Tense (Lehena)
 - **Zuri ahaztu zitzaizkizun etxeko giltzak San Fermin jaietan.**
   - *Translation:* You forgot the house keys during the San Fermin festivals.
-  - *Cultural touch:* *San Fermin* is the world-famous Running of the Bulls
-    festival in Pamplona (*Iruñea*).
 
 ### 4. NOR-NORI-NORK (Three-argument transitive)
 *Tracks the subject (**Nork**), direct object (**Nor**), and indirect object
@@ -190,20 +170,14 @@ object (**Nor**). Uses the auxiliary **edun** (to have).*
 - **Goizaneik lagunei opari politak ekarri dizkie Baionako dendatik.**
   - *Translation:* Goizane has brought nice gifts to her friends from the shop
     in Bayonne.
-  - *Cultural touch:* Features *Baiona* (Bayonne), the cultural capital of the
-    Northern Basque Country in France.
 
 #### Past Tense (Lehena)
 - **Gurasoek niri txikitan Olentzeroren ipuinak kontatzen zizkidaten.**
   - *Translation:* When I was little, my parents used to tell me stories about
     Olentzero.
-  - *Cultural touch:* *Olentzero* is the mythical, coal-mining Basque
-    gift-giver who comes down from the mountains on Christmas Eve.
 - **Arrantzaleek jatetxeari goizeko legatz freskoa saldu zioten.**
   - *Translation:* The fishermen sold the fresh morning hake to the
     restaurant.
-  - *Cultural touch:* *Arrantzaleak* (fishermen) and *legatza* (hake)
-    represent the deep maritime roots of Basque gastronomy.
 
 ### Mapping to `VERBS`'s shape
 
@@ -242,8 +216,6 @@ folklore approach as above; same "full sentence, adapt later" status.
 #### Future Tense (Geroaldia)
 - **Datorren astean, baserritarrak Gernikako azokara joango dira.**
   - *Translation:* Next week, the farmers will go to the Gernika market.
-  - *Cultural touch:* *Baserritarra* (the traditional Basque farmer) and the
-    historic *Gernika* Monday market are foundational to Basque rural culture.
 
 #### Conditional Mood (Baldintza)
 - **Dirurik banu, igandean kirolariak ikustera joango nintzateke.**
@@ -251,8 +223,6 @@ folklore approach as above; same "full sentence, adapt later" status.
     athletes on Sunday.
   - *Verb focus:* Uses the past-continuous hypothetical **nintzateke** (I
     would be).
-  - *Cultural touch:* *Herri Kirolak* (Basque rural sports) include
-    wood-chopping, stone-lifting, and anvil-tossing.
 
 #### Present Potential (Ahalera Oraina)
 - **Zuek gaur gauean Donostiako Parte Zaharrean afal zaitezkete.**
@@ -260,8 +230,6 @@ folklore approach as above; same "full sentence, adapt later" status.
     tonight.
   - *Verb focus:* **zaitezkete** = you all can be (expressing
     capability/permission).
-  - *Cultural touch:* The *Parte Zaharra* is world-famous for having the
-    highest concentration of pintxo bars.
 
 ### 2. NOR-NORK (Transitive) — advanced tenses
 
@@ -271,8 +239,6 @@ folklore approach as above; same "full sentence, adapt later" status.
     into the oven.
   - *Grammar tip:* Created using the locative nominalization **ari dira**
     (they are engaged in).
-  - *Cultural touch:* *Euskal pastela* (Gâteau Basque) is a traditional
-    dessert filled with black cherry jam or pastry cream.
 
 #### Past Conditional (Lehengo Baldintza)
 - **Guk denbora gehiago izan bagenu, sagardotegiko txuleta jango genuen.**
@@ -280,9 +246,6 @@ folklore approach as above; same "full sentence, adapt later" status.
     the cider house.
   - *Verb focus:* **genuen** is used here as the apodosis (the "would have"
     part) of a past conditional.
-  - *Cultural touch:* *Sagardotegia* (cider house season) involves drinking
-    cider straight from the barrel (*txotx*) and eating massive
-    charcoal-grilled steaks (*txuleta*).
 
 #### Imperative Mood (Agintera)
 - **Ekar ezazu gazta eta Idiazabalgo ardoa mahaira, mesedez!**
@@ -290,8 +253,6 @@ folklore approach as above; same "full sentence, adapt later" status.
     please!
   - *Verb focus:* **Ekar ezazu** is the direct command form (radical verb +
     subjunctive auxiliary).
-  - *Cultural touch:* *Idiazabal* is a famous smoked sheep's milk cheese from
-    the Basque highlands.
 
 ### 3. NOR-NORI (Intransitive + indirect object) — advanced tenses
 
@@ -300,16 +261,12 @@ folklore approach as above; same "full sentence, adapt later" status.
   - *Translation:* This summer, the travelers will really like Mundaka's
     left-hand wave.
   - *Verb focus:* **gustatuko zaie** (it will be pleasing to them).
-  - *Cultural touch:* Mundaka is a world-renowned surf spot famous for its
-    perfect, hollow rivermouth wave.
 
 #### Past Potential (Ahalera Lehena)
 - **Guri txikitan beldurra dakiokeen Mari jainkosa ager zekiokeen basoan.**
   - *Translation:* To us as kids, the goddess Mari, who can be scary, could
     have appeared in the forest.
   - *Verb focus:* **zekiokeen** (it could have happened to us).
-  - *Cultural touch:* *Mari* is the supreme goddess of Basque mythology,
-    representing Mother Earth and living in mountain caves (like Anboto).
 
 ### 4. NOR-NORI-NORK (Three-argument transitive) — advanced tenses
 
@@ -319,8 +276,6 @@ folklore approach as above; same "full sentence, adapt later" status.
     dinner.
   - *Verb focus:* **didate** turns into a future helper when paired with
     *irekiko*.
-  - *Cultural touch:* *Txakoli* is a slightly sparkling, very dry white wine
-    local to the Basque coast.
 
 #### Conditional Mood (Baldintza)
 - **Nik zuei istorio hau kontatuko nizueke, baina sekretua da.**
@@ -335,8 +290,6 @@ folklore approach as above; same "full sentence, adapt later" status.
     church while they were joking around.
   - *Verb focus:* **zizkioten** (they [Nork] used to do them [plural Nor] to
     it [Nori] in the past).
-  - *Cultural touch:* *Zizurkil* is a traditional town in Gipuzkoa known for
-    its rural charm.
 
 ### Tagging by aspect/mood/tense
 
