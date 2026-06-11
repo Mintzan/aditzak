@@ -219,7 +219,7 @@ describe('generateQuestions', () => {
   // `availableKinds` always has all five special framings —
   // `['sentence', 'type-verb', 'spot-error', 'pronoun', 'type-pronoun']` —
   // and a fixed roll deterministically lands on whichever index it maps to.
-  // Shared by the typed-framing and `onlyBareForm` specs below, which both
+  // Shared by the typed-framing and `noTyping` specs below, which both
   // need a verb where every special framing is available to roll into.
   const verbWithBoth = {
     ...verb,
@@ -353,9 +353,9 @@ describe('generateQuestions', () => {
 
     it('picks exactly one of four distinct, fully-filled sentences as the wrong one when the roll favours it', () => {
       // No `pronouns`, so with all six persons sentenced `availableKinds` is
-      // `['sentence', 'type-verb', 'spot-error']` — [0, 0.5) splits into three
-      // slices of ~0.167, and 0.4 lands in the last one: 'spot-error'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.4)
+      // `['sentence', 'type-verb', 'spot-error']` — [0, 0.75) splits into
+      // three slices of 0.25, and 0.6 lands in the last one: 'spot-error'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
 
       generateQuestions(verbWithManySentences, 'present').forEach((question) => {
         expect(question).toMatchObject({ kind: 'spot-error', verbId: verbWithManySentences.id, tense: 'present' })
@@ -442,9 +442,9 @@ describe('generateQuestions', () => {
     const pronounSentenced = verbWithBoth.pronounSentences.present
 
     it('frames a question as typing the verb form into the sentence blank when the roll favours it', () => {
-      // [0, 0.5) split into five equal slices of 0.1 — 0.15 lands in the
+      // [0, 0.75) split into five equal slices of 0.15 — 0.2 lands in the
       // second one, i.e. index 1 of the available-kinds list: 'type-verb'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.15)
+      vi.spyOn(Math, 'random').mockReturnValue(0.2)
 
       generateQuestions(verbWithBoth, 'present').forEach((question) => {
         expect(question).toMatchObject({
@@ -458,9 +458,9 @@ describe('generateQuestions', () => {
     })
 
     it('frames a question as typing the declined pronoun into the sentence blank when the roll favours it', () => {
-      // [0, 0.5) split into five equal slices of 0.1 — 0.4 lands in the last
-      // one, i.e. index 4 of the available-kinds list: 'type-pronoun'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.4)
+      // [0, 0.75) split into five equal slices of 0.15 — 0.65 lands in the
+      // last one, i.e. index 4 of the available-kinds list: 'type-pronoun'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.65)
 
       generateQuestions(verbWithBoth, 'present').forEach((question) => {
         expect(question).toMatchObject({
@@ -484,14 +484,31 @@ describe('generateQuestions', () => {
     })
   })
 
-  describe('with onlyBareForm', () => {
-    it('forces every question to the bare form, even on a roll that would otherwise favour a special framing', () => {
+  describe('with noTyping', () => {
+    it('still produces sentence/pronoun multiple-choice framings, not just the bare form', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0)
 
-      generateQuestions(verbWithBoth, 'present', { onlyBareForm: true }).forEach((question) => {
-        expect(question.kind).toBe('form')
-        expect(question).not.toHaveProperty('sentence')
-        expect(question.options).toContain(question.correct)
+      const questions = generateQuestions(verbWithBoth, 'present', { noTyping: true })
+
+      expect(questions.map((q) => q.kind)).toContain('sentence')
+      questions.forEach((question) => {
+        expect(['form', 'sentence', 'pronoun']).toContain(question.kind)
+        if (question.kind !== 'form') expect(question).toHaveProperty('options')
+      })
+    })
+
+    it('excludes typed and spot-error framings even on rolls that would otherwise favour them', () => {
+      // 0.2, 0.4, and 0.65 each select 'type-verb', 'spot-error', and
+      // 'type-pronoun' respectively in the full five-kind mix (see the typed-
+      // framing specs above) — with `noTyping`, only `['sentence', 'pronoun']`
+      // are on offer, so every roll below SPECIAL_QUESTION_CHANCE lands on one
+      // of those two instead.
+      ;[0, 0.2, 0.4, 0.65, 0.74].forEach((roll) => {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+
+        generateQuestions(verbWithBoth, 'present', { noTyping: true }).forEach((question) => {
+          expect(['sentence', 'pronoun']).toContain(question.kind)
+        })
       })
     })
 
