@@ -197,14 +197,21 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // what lets a "review" lesson (see `LESSONS`) interleave questions from
 // several lessons' worth of conjugation tables and still show each one in its
 // correct verb/tense context.
-export function generateQuestions(verb, tense, { onlyBareForm = false } = {}) {
+// `rounds` repeats the one-question-per-person pass this many times, each
+// pass independently shuffled (order) and re-rolled (question kind/options) —
+// this is how a lesson reaches a pedagogically reasonable length from a small
+// (3-6 person) conjugation table: see `TARGET_EXERCISE_COUNT` in `App.jsx`,
+// which derives `rounds` from the table size. Defaults to 1 (one question per
+// person, the original behaviour) so existing callers/tests are unaffected.
+export function generateQuestions(verb, tense, { onlyBareForm = false, rounds = 1 } = {}) {
   const table = verb.conjugations[tense]
   const sentences = onlyBareForm ? {} : (verb.sentences?.[tense] ?? {})
   const pronounSentences = onlyBareForm ? {} : (verb.pronounSentences?.[tense] ?? {})
   const persons = Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
   const source = { verbId: verb.id, tense }
-  return shuffle(persons).map((person) => {
+
+  function buildQuestion(person) {
     const sentence = sentences[person]
     const pronounSentence = verb.pronouns && pronounSentences[person]
     const availableKinds = [
@@ -235,7 +242,9 @@ export function generateQuestions(verb, tense, { onlyBareForm = false } = {}) {
         return { ...source, kind: 'form', person, correct, options }
       }
     }
-  })
+  }
+
+  return Array.from({ length: rounds }, () => shuffle(persons).map(buildQuestion)).flat()
 }
 
 // The exercise works through a queue rather than a fixed list: a question

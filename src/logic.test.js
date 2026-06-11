@@ -439,6 +439,21 @@ describe('generateQuestions', () => {
       expect(kinds).toContain('sentence')
     })
   })
+
+  describe('rounds', () => {
+    it('repeats one question per person for each round', () => {
+      const questions = generateQuestions(verb, 'present', { rounds: 3 })
+
+      expect(questions).toHaveLength(persons.length * 3)
+      persons.forEach((person) => {
+        expect(questions.filter((q) => q.person === person)).toHaveLength(3)
+      })
+    })
+
+    it('defaults to a single round', () => {
+      expect(generateQuestions(verb, 'present')).toHaveLength(persons.length)
+    })
+  })
 })
 
 describe('shuffle', () => {

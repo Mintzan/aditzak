@@ -4,6 +4,32 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Lessons now repeat each person to reach ~12 exercises (`TARGET_EXERCISE_COUNT`), instead of one question per person
+
+**Decision:** `generateQuestions` previously produced exactly one question per
+grammatical person — 3 for Phase I's `ni`/`zu`/`hura` lessons, 6 for full
+6-person tables — making a session over in well under a minute, often a single
+retrieval attempt per form. Added a `rounds` option (default `1`, so existing
+callers/tests are unchanged): it repeats the shuffle-and-roll pass `rounds`
+times, each pass independently shuffled and re-rolled, so repeats vary in
+order and framing rather than showing the identical question twice in a row.
+
+`createExerciseState` (`App.jsx`) now picks `rounds` per source from a new
+`TARGET_EXERCISE_COUNT = 12`: each source's share of the target
+(`12 / sources.length`) divided by that source's person count, rounded and
+floored at 1. A single 3-person source → 4 rounds → 12 questions; a review
+with two 3-person sources → 2 rounds each → 12 total; a 6-person source → 2
+rounds → 12.
+
+**Why 12:** pedagogically, 3-4 repetitions per form within a session is enough
+for the testing/spaced-repetition effect to kick in without the session
+dragging — Duolingo-style lessons land in the same 10-15 range. 12 divides
+evenly by both 3 and 6 (the table sizes currently in play), keeping session
+length roughly consistent across lessons regardless of how many persons a
+verb's table covers. Rounding (not flooring) `targetPerSource / personCount`
+means a source slightly over/under an even split still gets a sensible round
+count instead of collapsing to the floor.
+
 ## 2026-06-11 — Extended the bare-form ramp to two attempts, added a one-time conjugation preview, and flagged high-difficulty units for extra practice lessons
 
 **Decision:** Three related changes, prompted by feedback that the journey

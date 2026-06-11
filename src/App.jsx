@@ -597,11 +597,29 @@ function HomeScreen({ progress, tab, onChangeTab, onSelectLesson, onResetProgres
 // introduction.
 const BARE_FORM_ATTEMPTS = 2
 
+// A lesson's conjugation table only has 3-6 grammatical persons, which at one
+// question per person (the old behaviour) made for a session over in under a
+// minute — too short to give a form more than a single retrieval attempt.
+// `TARGET_EXERCISE_COUNT` is the rough total a session should reach; for each
+// source, `generateQuestions`'s `rounds` is set so that source's
+// (persons × rounds) lands close to its even share of the target — e.g. a
+// single 3-person source gets 4 rounds (12 questions), while a review with two
+// 3-person sources gets 2 rounds each (6 + 6 = 12). Each round is
+// independently shuffled and re-rolled, so repeats vary in order and framing
+// rather than presenting the exact same question twice in a row.
+const TARGET_EXERCISE_COUNT = 12
+
 function createExerciseState(lesson, attempts) {
   const sources = lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]
   const onlyBareForm = !lesson.review && attempts < BARE_FORM_ATTEMPTS
+  const targetPerSource = TARGET_EXERCISE_COUNT / sources.length
   const questions = shuffle(
-    sources.flatMap(({ verbId, tense }) => generateQuestions(VERBS.find((verb) => verb.id === verbId), tense, { onlyBareForm })),
+    sources.flatMap(({ verbId, tense }) => {
+      const verb = VERBS.find((v) => v.id === verbId)
+      const personCount = Object.keys(verb.conjugations[tense]).length
+      const rounds = Math.max(1, Math.round(targetPerSource / personCount))
+      return generateQuestions(verb, tense, { onlyBareForm, rounds })
+    }),
   )
   return {
     queue: questions,
