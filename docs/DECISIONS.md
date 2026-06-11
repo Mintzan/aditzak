@@ -4,6 +4,36 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Added `EXERCISE_ENGINE.md`: a unit-by-unit audit of engine gaps, superseding `LEARNING_JOURNEY.md`'s scattered implementation notes
+
+**Decision:** Added `docs/EXERCISE_ENGINE.md`, which walks all 22 units of
+`LEARNING_JOURNEY.md` against the current `generateQuestions`/
+`exerciseReducer`/`LESSONS` engine and sorts the gaps into four tiers: data-only
+(fits the existing `conjugations[tense][person]` shape — most of Phase I–III
+and the dative/Geroa/Ahalera units), small localized code changes
+(`buildOptions`'s 4-person distractor floor, the Phase I person-restriction
+question, score-gating for Refresh Gates), new data shapes/question kinds
+(negation drills, ditransitive NOR-NORI-NORK, allocutive/hitanoa, non-finite/
+passive reading), and structural engine work already flagged as out-of-band
+(flash drills, ergative-drift error categorization). This is audit-only — no
+decisions were made, just consolidated so each can be made deliberately when
+its unit comes up.
+
+**Why a new doc instead of expanding `LEARNING_JOURNEY.md` further:** the
+journey doc's "Data & architecture implications" section only covered gaps
+spotted up through ~Unit 17 and was already getting long; a dedicated engine
+doc keeps the journey doc focused on curriculum content while giving the
+engine-side analysis room to go deeper (e.g. confirming against
+`CONJUGATIONS.md` §4/§5 that Unit 15's NOR-NORI grids are single-axis but
+Unit 16's NOR-NORI-NORK grids are genuinely 2D — a distinction the journey doc
+didn't make).
+
+**Two decisions flagged as highest-priority** (because they shape how data
+gets authored from the start, not just how it's later consumed): the Phase I
+3-person-horizon mechanism (per-verb partial tables vs. a `persons` filter)
+and the ditransitive table shape (fixed-recipient vs. genuine 2D grid) for
+Unit 16. Both left open in the new doc.
+
 ## 2026-06-11 — Filled `izan`/`ukan`'s missing `zu` rows in §1/§3 — the v2 journey's one concrete prerequisite
 
 **Decision:** Added `zu` (`zara`/`zinen`) to §1's `izan` table and `zu`
