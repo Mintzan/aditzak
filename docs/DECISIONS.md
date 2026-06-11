@@ -8,6 +8,21 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-11 — Fixed `nahi`'s `zu` example sentence to include an explicit subject
+
+**Decision:** Changed `nahi`'s `sentences.present.zu` from `'Etorri ___?'` to
+`'Zuk etorri ___?'`. Without "Zuk", the blank was ambiguous between
+`nahi dut`/`nahi duzu`/`nahi du` — Basque verb agreement alone (`dut`/`duzu`/`du`)
+disambiguates person, but with no subject and no prior context, all three
+options completed the sentence into an equally valid (just differently-meant)
+Basque sentence, so the multiple-choice question had no uniquely correct
+answer. Every other person/verb in this table (`ni`'s "Nik kafe bat ___.",
+`hura`'s "Hark/Mikelek/Anek/Katuak ... ___.", and `ukan`'s `zu` row "Zuk auto
+bat ___.") already includes an explicit ergative subject for exactly this
+reason — `nahi`'s `zu` row was the one outlier. Also matches
+`pronounSentences.present.zu` (`'___ etorri nahi duzu?'`), which already
+implies "Zuk etorri nahi duzu?" as the full sentence.
+
 ## 2026-06-11 — Diversified Units 1–2's `hura` example sentences with names/animals/objects as subjects
 
 **Decision:** Added extra `hura`-slot variants to `izan`, `egon`, `ukan`,

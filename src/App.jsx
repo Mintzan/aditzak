@@ -200,7 +200,7 @@ const VERBS = [
     sentences: {
       present: {
         ni: 'Nik kafe bat ___.',
-        zu: 'Etorri ___?',
+        zu: 'Zuk etorri ___?',
         hura: ['Hark opari bat ___.', 'Mikelek kafe bat ___.', 'Anek liburu bat ___.', 'Katuak esne pixka bat ___.'],
       },
     },
