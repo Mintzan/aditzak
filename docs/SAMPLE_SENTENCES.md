@@ -362,6 +362,113 @@ same `___`-blanked pattern as `present`/`past` above.
 
 ---
 
+## Cultural sentence bank — extended set (future units)
+
+More sentences across the same four argument structures and advanced
+tenses/moods, doubling the pool to draw from for each combination — same
+"full sentence, adapt later" status as the two banks above.
+
+### 1. NOR (Intransitive)
+
+#### Future Tense (Geroaldia)
+- **Bihar goizean korrikalariak Behobia-Donostia lasterketan lehiatuko dira.**
+  - *Translation:* Tomorrow morning, the runners will compete in the
+    Behobia-San Sebastian race.
+- **Haurrak Korrika festan euskararen alde pozez jantziko dira.**
+  - *Translation:* The children will dress up with joy for Basque language
+    support during the Korrika festival.
+
+#### Present Potential (Ahalera Oraina)
+- **Gazteak gaur gauean Baionako festetan berandu arte egon daitezke.**
+  - *Translation:* The youths can stay out until late tonight at the Bayonne
+    festivals.
+- **Turistak San Juan de Gaztelugatxeko eskaileretatik erraz igo daitezke.**
+  - *Translation:* Tourists can easily climb up the stairs of San Juan de
+    Gaztelugatxe.
+
+#### Conditional Mood (Baldintza)
+- **Atera argituko balitz, gu Urkiolako parkera joango ginateke.**
+  - *Translation:* If the weather cleared up, we would go to Urkiola Park.
+- **Zuek pilotari profesionalak bazinete, txapelketan arituko zinatekete.**
+  - *Translation:* If you all were professional pelota players, you would
+    compete in the tournament.
+
+### 2. NOR-NORK (Transitive)
+
+#### Present Continuous (Aridun Oraina)
+- **Sukaldariak sasoiko perretxikoak eta zizak garbitzen ari dira.**
+  - *Translation:* The chefs are cleaning seasonal wild mushrooms.
+- **Neska-mutilak herriko plazan dantzari dantza ikasten ari dira.**
+  - *Translation:* The boys and girls are learning the traditional dantzari
+    dance in the town square.
+
+#### Past Conditional (Lehengo Baldintza)
+- **Guk sarrerak lortu bagenitu, atzo Bilboko Aste Nagusian kontzertua ikusiko
+  genuen.**
+  - *Translation:* If we had gotten tickets, we would have seen the concert
+    at Bilbao's Aste Nagusia yesterday.
+- **Zuk ardi latxen esnea erosi bazenu, gazta gozoa egingo zenuen.**
+  - *Translation:* If you had bought Latxa sheep's milk, you would have made
+    delicious cheese.
+
+#### Imperative Mood (Agintera)
+- **Eman iezaiozu buelta tortillari sutatik kendu baino lehen!**
+  - *Translation:* Flip the tortilla before taking it off the fire!
+- **Idatzi ezazue euskal abesti honen letra zuon koadernoetan!**
+  - *Translation:* Write the lyrics of this Basque song in your notebooks!
+
+### 3. NOR-NORI (Intransitive + indirect object)
+
+#### Future Tense (Geroaldia)
+- **Atzerriko ikasleei asko irudituko zaie euskal kultura zaharra.**
+  - *Translation:* The ancient Basque culture will seem like a lot to the
+    foreign students.
+- **Zuri bihar goizean itsasontzia Zumaia Flysch-eko uretan hurbilduko
+  zaizu.**
+  - *Translation:* Tomorrow morning, the boat will approach you in the waters
+    of the Zumaia Flysch.
+
+#### Present Potential (Ahalera Oraina)
+- **Niri pintxo merkeak eta gozoak Gasteizko tabernetan okurru dakizkit.**
+  - *Translation:* Cheap and tasty pintxos can occur to me (be found by me)
+    in the bars of Vitoria-Gasteiz.
+- **Gurasoei umeak gauez basoan galtzen bazaizkie Olentzero ager dakioke.**
+  - *Translation:* If the children get lost in the forest at night, Olentzero
+    can appear to the parents.
+
+#### Conditional Mood (Baldintza)
+- **Zuei katu beltzak bidera aterako balitzaizkizue, zorte txarra irudituko
+  litzazaizkizue.**
+  - *Translation:* If black cats came out onto your path, it would seem like
+    bad luck to you all.
+
+### 4. NOR-NORI-NORK (Three-argument transitive)
+
+#### Present Tense (Oraina)
+- **Etxekoandreak bisitariei sagardo gozoa katiluan zerbitzatzen die.**
+  - *Translation:* The hostess serves delicious cider in a bowl to the
+    visitors.
+- **Lagunek niri Getariako txakolina oparitzen didate urtebetetzean.**
+  - *Translation:* My friends gift me Txakoli from Getaria on my birthday.
+
+#### Future Tense (Geroaldia)
+- **Nik zuri nire aitonaren baserriko sekretuak kontatuko dizkizut.**
+  - *Translation:* I will tell you the secrets of my grandfather's
+    farmhouse.
+- **Arrantzaleek herritarrei hegaluze freskoa ekarriko diote portura.**
+  - *Translation:* The fishermen will bring fresh albacore tuna to the port
+    for the townspeople.
+
+#### Conditional Mood (Baldintza)
+- **Guk zuei egia esango bagenizue, zuek guri laguntza emango zenigukete.**
+  - *Translation:* If we told you the truth, you would give us help.
+- **Sustraiek epaimaimahaiari bertso hobeak kantatu balizkio, txapela
+  jantziko luke.**
+  - *Translation:* If Sustrai had sung better verses to the jury, he would
+    wear the championship beret.
+
+---
+
 ## Next steps (not yet done)
 
 1. Review/edit these for naturalness and any missing vocabulary gaps.
