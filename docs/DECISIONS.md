@@ -4,6 +4,31 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Resolved the last 4 doubtful sentences in `docs/SAMPLE_SENTENCES.md` via native-speaker review
+
+**Decision:** The 4 items left open by the entry below were checked with a
+native speaker and fixed:
+
+- `zeramatzazten` → `zeneramatzaten` (`eraman` past, `zuek` — confirmed
+  correct, follows the same `zen-...-ten` pattern as `ibili`'s
+  `zenbiltzaten`).
+- `Ekar ezazu gazta eta Idiazabalgo ardoa` → `Ekar itzazu gazta eta
+  Idiazabalgo ardoa` (two singular nouns coordinated with `eta` do count as a
+  plural object for verb agreement).
+- `saski beteta perretxiko zekarzkigun` → `perretxikoz betetako saski bat
+  zenekarkigun` — three issues at once: wrong subject-agreement prefix
+  (`zen-` for `zuk`, not `ze-`), `saski beteta perretxiko` isn't valid ("a
+  basket full of X" needs the instrumental `perretxikoz betetako saski bat`),
+  and with `saski bat` as the head noun the object is singular, not plural
+  (`-zki-` was wrong).
+- `Okinak ... laberaraziko du` → `Okinaren labe berriak ... erraraziko du` —
+  `-arazi` only attaches to verb radicals; `laberazi` (from the noun `labe`)
+  would mean "make get put in the oven", not "make bake". `erre` (to
+  bake/roast) → `errarazi` is the right base verb.
+
+The one-off `docs/SAMPLE_SENTENCES_REVIEW_PROMPT.md` used to gather this
+feedback has been deleted now that it's resolved.
+
 ## 2026-06-11 — Fixed 13 grammar/spelling errors in `docs/SAMPLE_SENTENCES.md`'s cultural sentence banks
 
 **Decision:** Corrected the following in the "future units" cultural sentence
@@ -37,23 +62,8 @@ needed):
   correct `ardi latxak` elsewhere in the doc — Latxa is the sheep breed named
   in the English translations).
 
-**Left for native-speaker review** (re-checked but not changed — see
-`docs/SAMPLE_SENTENCES.md`'s "Next steps" item 1 for the general "review for
-naturalness" catch-all):
-- `zeramatzazten` (`eraman` past, `zuek`) — the synthetic past of `eraman` for
-  `zuek` is rare/archaic; possibly `zeneramatzaten`, but the exact form
-  couldn't be confirmed.
-- `Ekar ezazu gazta eta Idiazabalgo ardoa` — whether two coordinated singular
-  objects joined by `eta` should trigger plural-object imperative (`Ekar
-  itzazu`).
-- `saski beteta perretxiko zekarzkigun` — whether a bare/mass-noun object
-  (`perretxiko`, no plural marker) justifies the plural `-zki-` verb form, or
-  needs `perretxikoz` (instrumental) instead.
-- `Okinak ... labe berriak ... laberaraziko du` — `Laberazi`, coined directly
-  from the noun `labe` rather than a verb radical (`erre`/`sartu`), is
-  non-standard; resolving it is part of the broader `-arazi`/`-erazi`
-  conditioning-rule work `docs/VERB_COVERAGE.md` §6 already flags as
-  unsourced.
+The 4 items originally left for native-speaker review here were resolved —
+see the entry above.
 
 ## 2026-06-11 — `sentences[tense][person]` can hold multiple phrasing variants, picked at random per question
 

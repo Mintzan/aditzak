@@ -248,11 +248,13 @@ folklore approach as above; same "full sentence, adapt later" status.
     part) of a past conditional.
 
 #### Imperative Mood (Agintera)
-- **Ekar ezazu gazta eta Idiazabalgo ardoa mahaira, mesedez!**
+- **Ekar itzazu gazta eta Idiazabalgo ardoa mahaira, mesedez!**
   - *Translation:* Bring the cheese and the Idiazabal wine to the table,
     please!
-  - *Verb focus:* **Ekar ezazu** is the direct command form (radical verb +
-    subjunctive auxiliary).
+  - *Verb focus:* **Ekar itzazu** is the direct command form (radical verb +
+    subjunctive auxiliary), with the plural-object form **itzazu** since the
+    two coordinated objects (`gazta eta Idiazabalgo ardoa`) count as a plural
+    `haiek`.
 
 ### 3. NOR-NORI (Intransitive + indirect object) — advanced tenses
 
@@ -302,7 +304,7 @@ the tense/mood key it would live under in `conjugations`):
 | *...afal zaitezkete.* | nor | Potential (Ahalera) | `potential` |
 | *...jango genuen.* | nor-nork | Conditional (Baldintza) | `conditional` |
 | *...kontatuko nizueke.* | nor-nori-nork | Conditional (Baldintza) | `conditional` |
-| *Ekar ezazu...* | nor-nork | Imperative (Agintera) | `imperative` |
+| *Ekar itzazu...* | nor-nork | Imperative (Agintera) | `imperative` |
 
 These map onto new tense *keys* (Tier 1 in `docs/EXERCISE_ENGINE.md`), not new
 shapes — once a verb's `conjugations.potential`/`conditional`/`imperative`
@@ -655,10 +657,12 @@ conditional, and imperative.*
   - *Translation:* The parents will make the children gather seasonal wild
     mushrooms on the mountain tomorrow.
   - *Base verb:* *Bildu* (to gather) → *Bilduarazi* (to make gather).
-- **Okinaren labe berriak euskal pastela azkarrago laberaraziko du.**
+- **Okinaren labe berriak euskal pastela azkarrago erraraziko du.**
   - *Translation:* The baker's new oven will make the Basque cake bake
     faster.
-  - *Base verb:* *Labean sartu/erre* (to bake) → *Laberazi* (to make bake).
+  - *Base verb:* *Erre* (to bake/roast) → *Errarazi* (to make bake). (`-arazi`
+    attaches to verb radicals, not nouns — `labe` (oven) + `-arazi` would mean
+    "make get put into the oven", not "make bake".)
 - **Euskal abesti herrikoiek dantzariak gautik goizera dantzariaraziko
   dituzte.**
   - *Translation:* Traditional Basque songs will make the dancers dance from
@@ -1018,7 +1022,7 @@ Past (Lehena):
 - **Nik nire txakurra neraman mendira ardi latxak ikustera.**
   - *Translation:* I was taking my dog to the mountain to see the Latxa
     sheep.
-- **Zuek autoan zeramatzazten dantzariak herriko jaietara joateko.**
+- **Zuek autoan zeneramatzaten dantzariak herriko jaietara joateko.**
   - *Translation:* You all were carrying the dancers in the car to go to the
     town festivals.
 
@@ -1046,7 +1050,7 @@ Past (Lehena):
 - **Okinak goizero ogi laberatu berriak zekartzan gurdi gainean.**
   - *Translation:* The baker brought freshly baked bread on top of the cart
     every morning.
-- **Zuk saski beteta perretxiko zekarzkigun atzo basotik bueltan.**
+- **Zuk perretxikoz betetako saski bat zenekarkigun atzo basotik bueltan.**
   - *Translation:* You brought us a basket full of mushrooms yesterday
     returning from the forest.
 - **Guk opari politak zekarzkizun Baionako denda txikitik.**
@@ -1057,8 +1061,6 @@ Past (Lehena):
 ## Next steps (not yet done)
 
 1. Review/edit these for naturalness and any missing vocabulary gaps.
-   `docs/SAMPLE_SENTENCES_REVIEW_PROMPT.md` has a ready-to-send prompt for the
-   four items still flagged as doubtful in `docs/DECISIONS.md`.
 2. ~~Turn each `sentences[tense][person]` cell into an array of these
    variants in `src/App.jsx`'s `VERBS`, and update `generateQuestions`/
    `buildSpotErrorQuestion` (`src/lessonLogic.js`) to pick one variant at
