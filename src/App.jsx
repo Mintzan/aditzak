@@ -105,10 +105,12 @@ const VERBS = [
       },
     },
   },
-  // Not yet wired into `LESSONS` — staged for Unit 2 ("Having and Wanting"),
-  // which is still `pending` in `journey.js`. Per Phase I's 3-person horizon
-  // this table will need trimming to `ni`/`zu`/`hura` (plus a `zu` row, per
-  // `docs/CONJUGATIONS.md` §3) when that unit is implemented.
+  // Unit 2 ("Having, Wanting, and Knowing") — `ukan` present, trimmed to
+  // Phase I's `ni`/`zu`/`hura` horizon (with `zu` per `docs/CONJUGATIONS.md`
+  // §3). The old 6-person, no-`zu`, `hi`-based `past` table was removed —
+  // unused by any implemented unit, shaped for the pre-journey model, and
+  // will be re-added correctly, with `zu`, when Unit 12 ("I Was, I Had") is
+  // implemented (same precedent as `izan`'s past table).
   {
     id: 'ukan',
     verb: 'ukan',
@@ -118,44 +120,86 @@ const VERBS = [
     object: 'hura',
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'dut', hi: 'duk', hura: 'du', gu: 'dugu', zuek: 'duzue', haiek: 'dute' },
-      past: { ni: 'nuen', hi: 'huen', hura: 'zuen', gu: 'genuen', zuek: 'zenuten', haiek: 'zuten' },
+      present: { ni: 'dut', zu: 'duzu', hura: 'du' },
     },
     sentences: {
       present: {
         ni: 'Nik liburu bat ___.',
-        hi: 'Hik auto bat ___.',
+        zu: 'Zuk auto bat ___.',
         hura: 'Berak etxe bat ___.',
-        gu: 'Guk denbora ___.',
-        zuek: 'Zuek arazo bat ___.',
-        haiek: 'Haiek aukera bat ___.',
-      },
-      past: {
-        ni: 'Nik diru asko ___.',
-        hi: 'Hik liburu bat ___.',
-        hura: 'Hark ideia on bat ___.',
-        gu: 'Guk arrazoi ___.',
-        zuek: 'Zuek galdera bat ___.',
-        haiek: 'Haiek denbora gutxi ___.',
       },
     },
-    pronouns: { ni: 'Nik', hi: 'Hik', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark' },
     pronounSentences: {
       present: {
         ni: '___ liburu bat dut.',
-        hi: '___ auto bat duk.',
+        zu: '___ auto bat duzu.',
         hura: '___ etxe bat du.',
-        gu: '___ denbora dugu.',
-        zuek: '___ arazo bat duzue.',
-        haiek: '___ aukera bat dute.',
       },
-      past: {
-        ni: '___ diru asko nuen.',
-        hi: '___ liburu bat huen.',
-        hura: '___ ideia on bat zuen.',
-        gu: '___ arrazoi genuen.',
-        zuek: '___ galdera bat zenuten.',
-        haiek: '___ denbora gutxi zuten.',
+    },
+  },
+  // `nahi` ("want") — an invariant particle + radical/infinitive + `ukan`,
+  // not a lexical verb of its own (see `docs/VERB_COVERAGE.md` §5). Modeled
+  // as its own `VERBS` entry — `type: 'periphrastic'` is the closest existing
+  // badge for "auxiliary carries the conjugation alongside an invariant
+  // element", even though `nahi` isn't a participle in the strict sense.
+  // Rides `ukan`'s exact `dut`/`duzu`/`du` suffixes, so it costs nothing in
+  // new suffix patterns.
+  {
+    id: 'nahi',
+    verb: 'nahi izan',
+    meaning: 'to want',
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du' },
+    },
+    sentences: {
+      present: {
+        ni: 'Nik kafe bat ___.',
+        zu: 'Etorri ___?',
+        hura: 'Hark opari bat ___.',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark' },
+    pronounSentences: {
+      present: {
+        ni: '___ kafe bat nahi dut.',
+        zu: '___ etorri nahi duzu?',
+        hura: '___ opari bat nahi du.',
+      },
+    },
+  },
+  // `jakin` ("to know a fact") — fully synthetic, sharing `ukan`'s
+  // `-t`/`-zu`/∅ present suffix family (`dakit`/`dakizu`/`daki`), per
+  // `docs/CONJUGATIONS.md` §7. Past has `hik`/`zuk`/`zuek` gaps, irrelevant
+  // here (present-only, `ni`/`zu`/`hura`).
+  {
+    id: 'jakin',
+    verb: 'jakin',
+    meaning: 'to know (a fact)',
+    type: 'synthetic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'dakit', zu: 'dakizu', hura: 'daki' },
+    },
+    sentences: {
+      present: {
+        ni: 'Nik erantzuna ___.',
+        zu: 'Zuk egia ___.',
+        hura: 'Hark sekretua ___.',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark' },
+    pronounSentences: {
+      present: {
+        ni: '___ erantzuna dakit.',
+        zu: '___ egia dakizu.',
+        hura: '___ sekretua daki.',
       },
     },
   },
@@ -214,6 +258,9 @@ const DIALECT_LABELS = {
 const LESSONS = [
   { id: 'izan-present', verbId: 'izan', tense: 'present' },
   { id: 'egon-present', verbId: 'egon', tense: 'present' },
+  { id: 'ukan-present', verbId: 'ukan', tense: 'present' },
+  { id: 'nahi-present', verbId: 'nahi', tense: 'present' },
+  { id: 'jakin-present', verbId: 'jakin', tense: 'present' },
 ]
 
 // =============================================================================

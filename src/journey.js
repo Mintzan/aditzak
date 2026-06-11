@@ -40,7 +40,8 @@ export const JOURNEY = [
             focus: 'ukan present (object fixed to hura) + nahi + jakin',
             payload:
               '"I have a car." · "I want coffee." · "Do you want to come?" · "I don\'t know."',
-            status: 'pending',
+            status: 'available',
+            lessonIds: ['ukan-present', 'nahi-present', 'jakin-present'],
           },
         ],
       },

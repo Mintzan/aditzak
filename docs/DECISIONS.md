@@ -4,6 +4,49 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Implemented Unit 2 ("Having, Wanting, and Knowing"): `ukan` present trimmed to the 3-person horizon, plus new `nahi`/`jakin` verbs
+
+**Decision:** Per `EXERCISE_ENGINE.md`'s Tier 1 (data-only) classification,
+added three new playable lessons — `ukan-present`, `nahi-present`,
+`jakin-present` — and flipped Unit 2 to `available` in `journey.js` with
+those `lessonIds`, in `LESSONS` order right after Unit 1.
+
+- **`ukan`**: trimmed `conjugations.present` to `ni`/`zu`/`hura`
+  (`dut`/`duzu`/`du`), adding the `zu` row per `CONJUGATIONS.md` §3. The old
+  6-person, no-`zu`, `hi`-based `present`/`past` tables were removed —
+  unused by any implemented unit and shaped for the pre-journey model. `past`
+  will be re-added correctly (with `zu`) when Unit 12 ("I Was, I Had") is
+  implemented, same precedent as `izan`'s past table (2026-06-11, "Restructured
+  the home screen..." entry below).
+- **`nahi`** (new `VERBS` entry, id `nahi`, `verb: 'nahi izan'`): `nahi` is an
+  invariant particle + radical + `ukan`, not a lexical verb of its own
+  (`VERB_COVERAGE.md` §5) — it rides `ukan`'s exact `dut`/`duzu`/`du` suffixes
+  (`nahi dut`/`nahi duzu`/`nahi du`), so no new suffix patterns. Tagged
+  `type: 'periphrastic'` — the closest existing badge for "auxiliary carries
+  the conjugation alongside an invariant element", even though `nahi` isn't a
+  participle in the strict sense; this is the first `VERBS` entry to actually
+  use the `periphrastic` badge. `agreement: ['nor', 'nork']` and
+  `object: 'hura'`, matching `ukan`. The `zu`-person sentence
+  (`'Etorri ___?'` → `nahi duzu`) doubles as the unit's "Do you want to come?"
+  payload example and exercises the `type-pronoun` framing
+  (`'___ etorri nahi duzu?'` → `Zuk`) — verified end-to-end in a manual
+  browser run.
+- **`jakin`** (new `VERBS` entry): fully synthetic, `ni`/`zu`/`hura` present
+  = `dakit`/`dakizu`/`daki`, sharing `ukan`'s `-t`/`-zu`/∅ suffix family per
+  `CONJUGATIONS.md` §7. `jakin`'s past (`hik`/`zuk`/`zuek` gaps) is irrelevant
+  here (present-only).
+- All three new entries have full `sentences`/`pronouns`/`pronounSentences`
+  for `ni`/`zu`/`hura`, so they get the same question-kind variety
+  (`form`/`sentence`/`pronoun`/`type-verb`/`type-pronoun`) as `izan`/`egon`,
+  plus `spot-error` once Unit 6 expands these tables to 6 persons (needs
+  ≥4 sentenced persons).
+
+**Why no `STORAGE_KEY` bump:** `ukan-present`'s question pool changes (3
+persons instead of 6, `zu` instead of `hi`) for anyone with existing
+`progress['ukan-present']` — but per the `izan-present` precedent
+(2026-06-11 below), the *shape* of stored progress is unchanged, so no bump.
+`nahi`/`jakin` are brand-new lesson ids with no prior progress to migrate.
+
 ## 2026-06-11 — Three journey-content fixes: added `jakin` to Unit 2, fixed Unit 4's forward-referencing payload, rewrote Unit 10's payload to land `behar`'s "aha" moment
 
 **Decision:** A review pass over `LEARNING_JOURNEY.md`'s still-`pending` Units
