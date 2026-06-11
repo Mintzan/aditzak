@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-11 — Diversified Units 1–2's `hura` example sentences with names/animals/objects as subjects
+
+**Decision:** Added extra `hura`-slot variants to `izan`, `egon`, `ukan`,
+`nahi`, and `jakin`'s present-tense `sentences` (and converted `nahi`'s and
+`jakin`'s single-string `hura` entries to arrays) so a lesson doesn't always
+phrase the third-person question as "Hura ___"/"Hark ___" — sometimes the
+subject is a name (Mikel, Ane), an animal (txakurra, katua), or an object/role
+noun (autoa, etxea, irakaslea). This is purely additive to `pickVariant`'s
+existing random-variant pool — no conjugation-table or engine changes needed,
+since Basque's 3rd-person-singular verb form (`da`/`dago`/`du`/`daki`) is the
+same whether the subject is `hura`, a name, or any singular common noun.
+`pronounSentences` (which test producing `Hura`/`Hark` itself) were left
+untouched, since those questions are specifically about the pronoun.
+
+Did **not** extend this to plurals (`haiek`) — Units 1–2's conjugation tables
+only have `ni`/`zu`/`hura` (per Phase I's 3-person horizon, see Unit 6 in
+`journey.js`), and a plural subject would need the `haiek` verb form
+(`dira`/`daude`/`dute`/`dakite`), which doesn't exist yet for these verbs.
+
 ## 2026-06-11 — Resolved the last 4 doubtful sentences in `docs/SAMPLE_SENTENCES.md` via native-speaker review
 
 **Decision:** The 4 items left open by the entry below were checked with a
