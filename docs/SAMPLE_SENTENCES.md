@@ -506,6 +506,11 @@ auxiliary is whichever finite form sits at the end.
     the front row of the square.
 - **Guk gure aplikazioan euskal aditz guztiak sartu nahi ditugu.**
   - *Translation:* We want to include all Basque verbs in our application.
+- **Zuek Korrika festan euskararen alde korrika egin nahi duzue.**
+  - *Translation:* You all want to run for the Basque language in the Korrika
+    festival.
+- **Nik Baionako dendan jantzi tradizionalak erosi nahi nituen.**
+  - *Translation:* I wanted to buy traditional clothing in the Bayonne shop.
 
 ### 2. BEHAR (to need / must)
 *Takes a **NOR-NORK** auxiliary (matching the person who needs).*
@@ -539,6 +544,13 @@ auxiliary is whichever finite form sits at the end.
 - **Guk euskal mitologiaren istorioak gazteei kontatu behar dizkiegu.**
   - *Translation:* We must tell the stories of Basque mythology to the
     youth.
+- **Sukaldariek txuleta handia txosnan erre behar dute gaur gauean.**
+  - *Translation:* The cooks must roast the massive steak in the festival
+    stall tonight.
+- **Guk gure telefonoetan euskal aditzak ikasteko aplikazioa instalatu behar
+  dugu.**
+  - *Translation:* We need to install the application to learn Basque verbs
+    on our phones.
 
 ### 3. AHAL (to be able to)
 *Can take a **NOR** or **NOR-NORK** auxiliary, depending on whether the main
@@ -570,6 +582,12 @@ action itself is transitive or intransitive.*
 - **Zuek pilotari txapeldunari eskua eman ahal zenioten pilotalekuan.**
   - *Translation:* You all were able to shake the champion pelota player's
     hand in the fronton court.
+- **Surflariak Mundakako uretan hiru orduz egon ahal izan dira.**
+  - *Translation:* The surfers have been able to stay in Mundaka's waters for
+    three hours. *(Past potential, intransitive → uses **izan dira**)*
+- **Umeek gauean Basajaunen ipuin beldurgarriak entzun ahal dituzte.**
+  - *Translation:* The children can listen to scary stories of Basajaun at
+    night. *(Transitive with plural object → uses **dituzte**)*
 
 ---
 
@@ -622,6 +640,16 @@ periphrastic verb.
   - *Translation:* My friend's Txakoli made sleepiness enter me (made me
     sleepy).
   - *Base verb:* *Sartu* (to enter) → *Sarrarazi* (to make enter).
+- **Entrenatzaileak pilotari gazteak frontonean gogor entrenarazten ditu.**
+  - *Translation:* The coach makes the young pelota players train hard in the
+    fronton court.
+  - *Base verb:* *Entrenatu* (to train) → *Entrenarazi* (to make train).
+- **Amonaren errezetak marmitakoari usain bikaina jorazi dio.**
+  - *Translation:* Grandmother's recipe made an excellent aroma arise from
+    the tuna stew.
+  - *Base verb:* *Jario* (to ooze/emanate, a `nor-nori` verb) → *Jorazi* (to
+    make emanate) — a candidate example for `docs/VERB_COVERAGE.md` §6's open
+    question about causativizing `nor-nori` verbs.
 
 ### 2. Transforming transitive verbs (`nor-nork` → `nor-nori-nork`)
 *When the original verb already has a direct object (like "to eat meat" or
@@ -659,6 +687,10 @@ periphrastic verb.
   - *Translation:* The jury made the pelota player remove the championship
     beret in the fronton court.
   - *Base verb:* *Kendu* (to remove) → *Kenduarazi* (to make remove).
+- **Etxeko jabeak bisitariei upel berritik txakolina edanarazi die.**
+  - *Translation:* The house owner made the visitors drink Txakoli from the
+    new barrel.
+  - *Base verb:* *Edan* (to drink) → *Edanarazi* (to make drink).
 
 ### 3. Advanced tenses & moods with `-arazi`
 *Pairs with Refresh Gate D (Unit 25)'s recombination of `-arazi` with future,
@@ -679,6 +711,12 @@ conditional, and imperative.*
   - *Translation:* The baker's new oven will make the Basque cake bake
     faster.
   - *Base verb:* *Labean sartu/erre* (to bake) → *Laberazi* (to make bake).
+- **Euskal abesti herrikoiek dantzariak gautik goizera dantzariaraziko
+  dituzte.**
+  - *Translation:* Traditional Basque songs will make the dancers dance from
+    night until morning.
+  - *Base verb:* *Dantzatu* (to dance) → *Dantzariarazi* (to make dance) — the
+    future-tense companion to section 1's present-tense example.
 
 #### Conditional Mood (Baldintza)
 - **Gurasoek umeei gelako argia itzalariaraziko baliete, haurrak berehala
