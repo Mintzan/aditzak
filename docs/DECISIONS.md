@@ -4,6 +4,41 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Increased real-sentence usage in exercises: raised `SPECIAL_QUESTION_CHANCE` to 0.75 and let the no-typing ramp keep sentence/pronoun framings
+
+**Decision:** Two changes to `lessonLogic.js`'s `generateQuestions`, prompted
+by feedback that a learner doing Unit 2's exercises saw no example-sentence
+questions at all:
+
+1. **`SPECIAL_QUESTION_CHANCE` raised from `0.5` to `0.75`.** Previously, even
+   once sentence/pronoun framings were available, only half of questions used
+   them — the other half were bare `form` questions ("hura → ?", no context).
+   Now real Basque sentences (`sentence`/`type-verb`/`spot-error`/`pronoun`/
+   `type-pronoun`) are the common case (75%) and the bare form is the
+   occasional variation (25%).
+2. **Replaced `onlyBareForm` with `noTyping`** (and renamed
+   `BARE_FORM_ATTEMPTS` to `NO_TYPING_ATTEMPTS` in `App.jsx`, still `2`). The
+   old `onlyBareForm` zeroed out `sentences`/`pronounSentences` entirely for a
+   learner's first two attempts at a lesson — so *no* sentence-based question
+   could appear for two full ~12-question sessions, which is what the learner
+   ran into in Unit 2. `noTyping` instead only excludes the framings that
+   demand recalling/cross-checking a brand-new form from scratch
+   (`type-verb`, `type-pronoun`, `spot-error`); the multiple-choice
+   `sentence`/`pronoun` fill-in-the-blank framings remain available from the
+   very first question. The "don't make a learner type a form they've never
+   seen" rationale behind the original ramp (2026-06-11, "Extended the
+   bare-form ramp..." entry below) is preserved — only typing/spot-error are
+   gated — while sentence exposure starts immediately.
+
+**Why not just raise the chance and leave the ramp as-is:** raising
+`SPECIAL_QUESTION_CHANCE` alone wouldn't have fixed the reported symptom —
+`onlyBareForm` set `sentences`/`pronounSentences` to `{}`, so `availableKinds`
+was always empty and `rollQuestionKind` always returned `'form'` regardless of
+the chance, for a learner's first two attempts at every non-review lesson.
+
+**No `STORAGE_KEY` bump:** purely a question-generation change, no change to
+stored progress shape.
+
 ## 2026-06-11 — Added interface-language i18n (English/Spanish/Basque), keeping the Basque content being taught untranslated
 
 **Decision:** Added `src/i18n/` with `translations.js` (a flat per-language

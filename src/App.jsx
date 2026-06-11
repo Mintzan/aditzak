@@ -763,14 +763,15 @@ function HomeScreen({ progress, tab, onChangeTab, onSelectLesson, onResetProgres
 // its conjugation tables together rather than working through them block by
 // block.
 //
-// `onlyBareForm` (see `generateQuestions`) keeps a learner's first
-// `BARE_FORM_ATTEMPTS` runs through a *practice* lesson restricted to bare
-// recognition questions — no sentences, pronouns, or typing — so a brand-new
-// paradigm gets a couple of full passes in its simplest shape before the
-// richer framings open up. Review lessons always show the full mix: by the
-// time a review exists, every form in it has already had its own bare-form
-// introduction.
-const BARE_FORM_ATTEMPTS = 2
+// `noTyping` (see `generateQuestions`) keeps a learner's first
+// `NO_TYPING_ATTEMPTS` runs through a *practice* lesson restricted to
+// recognition questions — bare forms plus multiple-choice sentence/pronoun
+// fill-ins, but no typing or spot-the-error — so a brand-new paradigm is met
+// with real example sentences right away, just without being asked to recall
+// or cross-check a form from scratch yet. Review lessons always show the full
+// mix: by the time a review exists, every form in it has already had its own
+// recognition-only introduction.
+const NO_TYPING_ATTEMPTS = 2
 
 // A lesson's conjugation table only has 3-6 grammatical persons, which at one
 // question per person (the old behaviour) made for a session over in under a
@@ -786,14 +787,14 @@ const TARGET_EXERCISE_COUNT = 12
 
 function createExerciseState(lesson, attempts) {
   const sources = lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]
-  const onlyBareForm = !lesson.review && attempts < BARE_FORM_ATTEMPTS
+  const noTyping = !lesson.review && attempts < NO_TYPING_ATTEMPTS
   const targetPerSource = TARGET_EXERCISE_COUNT / sources.length
   const questions = shuffle(
     sources.flatMap(({ verbId, tense }) => {
       const verb = VERBS.find((v) => v.id === verbId)
       const personCount = Object.keys(verb.conjugations[tense]).length
       const rounds = Math.max(1, Math.round(targetPerSource / personCount))
-      return generateQuestions(verb, tense, { onlyBareForm, rounds })
+      return generateQuestions(verb, tense, { noTyping, rounds })
     }),
   )
   return {
@@ -809,9 +810,10 @@ function createExerciseState(lesson, attempts) {
 // Shown once, before a learner's very first attempt at a (non-review)
 // lesson: every person's conjugated form for this lesson's verb/tense, laid
 // out as a plain list, so the whole paradigm is visible before any question
-// is asked. Pairs with `BARE_FORM_ATTEMPTS` — the learner sees the full table
-// here, then spends their first attempts recognising those same forms in
-// isolation before sentences and typed answers are introduced.
+// is asked. Pairs with `NO_TYPING_ATTEMPTS` — the learner sees the full table
+// here, then spends their first attempts recognising those same forms, in
+// isolation and in example sentences, before typed answers and
+// spot-the-error are introduced.
 function ConjugationTable({ verb, tense }) {
   const { t } = useLanguage()
   const table = verb.conjugations[tense]
