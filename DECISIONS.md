@@ -4,6 +4,26 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Filled §5's missing `hiri`/`zuei` rows for the NOR-NORI-NORK Past grids (`NOR`=hura and `NOR`=haiek)
+
+**Decision:** same gap as the Present grids (see entry immediately below),
+same fix, applied to the Past grids.
+
+**`zuei`:** mirrors `zuri` with `-zu-` → `-zue-` (`nizun`→`nizuen`,
+`genizun`→`genizuen`, `zizuten`→`zizueten`), same as the Present `zuei` row.
+
+**`hiri`:** again the §10 allocutive forms, this time the past
+`-a-`/`-na-`+`-n` shapes: `nian`/`ninan` (nik→hiri, = `nuen`→`nian`/`ninan`),
+`zian`/`zinan` (hark→hiri, = `zuen`→`zian`/`zinan`), `genian`/`geninan`
+(guk→hiri, by the same `gen-i-`+`-a-`/`-na-`+`-n` pattern as `genidan`'s
+`gen-i-da-n`), `zitean`/`zitenan` (haiek→hiri, = `zuten`→`zitean`/`zitenan`).
+
+**`NOR`=haiek grid:** same rows with `-zki-` inserted right after the
+linking `-i-`, matching where `-zki-` lands in every other cell of that grid
+(`nizun`→`nizkizun`, `zigun`→`zizkigun`, …): `nizkian`/`nizkinan`,
+`zizkian`/`zizkinan`, `genizkian`/`genizkinan`, `zizkitean`/`zizkitenan`,
+`nizkizuen`, `zizkizuen`, `genizkizuen`, `zizkizueten`.
+
 ## 2026-06-11 — Filled §5's missing `hiri`/`zuei` rows for the NOR-NORI-NORK Present grids (`NOR`=hura and `NOR`=haiek)
 
 **Decision:** §5's `NOR`=hura and `NOR`=haiek Present grids tabulated only

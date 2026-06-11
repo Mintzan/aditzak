@@ -677,9 +677,11 @@ practice these meanings are expressed periphrastically with `buru`
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hidan | zidan | genidan | zenidan | zenidaten | zidaten |
+| hiri | nian / ninan | *(refl.)* | zian / zinan | genian / geninan | *(hika/zuka)* | *(hika/zuka)* | zitean / zitenan |
 | hari | nion | hion | zion | genion | zenion | zenioten | zioten |
 | guri | *(refl.)* | higun | zigun | *(refl.)* | zenigun | zeniguten | ziguten |
 | zuri | nizun | *(hika/zuka)* | zizun | genizun | *(refl.)* | *(zu↔zuek)* | zizuten |
+| zuei | nizuen | *(hika/zuka)* | zizuen | genizuen | *(zu↔zuek)* | *(refl.)* | zizueten |
 | haiei | nien | hien | zien | genien | zenien | zenieten | zieten |
 
 The prefix-encodes-`NORK` pattern from §3's past-tense `ukan` grid
@@ -688,7 +690,16 @@ The prefix-encodes-`NORK` pattern from §3's past-tense `ukan` grid
 too — e.g. `genidan` = `gen-i-da-n` (guk→niri), `zenigun` = `zen-i-gu-n`
 (zuk→guri), `zenieten` = `zen-i-e-te-n` (zuek→haiei). `hik`'s `h-` prefix
 isn't gender-split here, mirroring §3's `huen`/`hituen` — `hidan` =
-`h-i-da-n` (hik→niri), `hion` = `h-i-o-n` (hik→hari).
+`h-i-da-n` (hik→niri), `hion` = `h-i-o-n` (hik→hari). `zuei` mirrors `zuri`
+the same way as in the Present grid (`-zu-` → `-zue-`: `nizun` → `nizuen`,
+`genizun` → `genizuen`, `zizuten` → `zizueten`).
+
+`hiri`'s forms are again, as in the Present grid, §10's allocutive
+`-a-`/`-na-`+`-n` past forms rather than a `NORI`-suffix+`-n`: `nian`/`ninan`
+(nik→hiri, mirroring `nuen`→`nian`/`ninan`), `zian`/`zinan` (hark→hiri,
+mirroring `zuen`→`zian`/`zinan`), `genian`/`geninan` (guk→hiri, by the same
+`gen-i-`+`-a-`/`-na-`+`-n` pattern), and `zitean`/`zitenan` (haiek→hiri,
+mirroring `zuten`→`zitean`/`zitenan`).
 
 ### `NOR` = haiek — Present
 
@@ -716,9 +727,11 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hizkidan | zizkidan | genizkidan | zenizkidan | zenizkidaten | zizkidaten |
+| hiri | nizkian / nizkinan | *(refl.)* | zizkian / zizkinan | genizkian / genizkinan | *(hika/zuka)* | *(hika/zuka)* | zizkitean / zizkitenan |
 | hari | nizkion | hizkion | zizkion | genizkion | zenizkion | zenizkioten | zizkioten |
 | guri | *(refl.)* | hizkigun | zizkigun | *(refl.)* | zenizkigun | zenizkiguten | zizkiguten |
 | zuri | nizkizun | *(hika/zuka)* | zizkizun | genizkizun | *(refl.)* | *(zu↔zuek)* | zizkizuten |
+| zuei | nizkizuen | *(hika/zuka)* | zizkizuen | genizkizuen | *(zu↔zuek)* | *(refl.)* | zizkizueten |
 | haiei | nizkien | hizkien | zizkien | genizkien | zenizkien | zenizkieten | zizkieten |
 
 ### Baldintza
