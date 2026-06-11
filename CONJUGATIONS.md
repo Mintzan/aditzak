@@ -1142,19 +1142,20 @@ e.g. *zu nire buruari aurkeztu zintudan* ("I introduced you to myself").
 | zuek | zabiltzate | zenbiltzaten |
 | haiek | dabiltza | zebiltzan |
 
-### `ihardun` — "to occupy oneself / be engaged (in something)" (nor)
+### `ihardun` — "to occupy oneself / be engaged (in something)" (unergative — nork-only)
 
 `ihardun` follows §8's `iraun` di-root pattern exactly: `di-` present prefix
 on the bare stem `-hardu-`, `-en` past suffix on the `n/h/z/g/z/z`-prefixed
-stem (same mechanical derivation used throughout this document):
+stem. Because it is an unergative verb, it conjugates with Ergative (`NORK`)
+subject suffixes while the object slot remains empty/unexpressed:
 
 | Person | Present | Past |
 |---|---|---|
-| ni | dihardut | niharduen |
-| hi | diharduk / dihardun *(masc./fem.)* | hiharduen |
-| hura | dihardu | ziharduen |
-| gu | dihardugu | geniharduen |
-| zu | diharduzu | zeniharduen |
+| nik | dihardut | niharduen |
+| hik | diharduk / dihardun *(masc./fem.)* | hiharduen |
+| hark | dihardu | ziharduen |
+| guk | dihardugu | geniharduen |
+| zuk | diharduzu | zeniharduen |
 | zuek | diharduzue | zeniharduten |
 | haiek | dihardute | ziharduten |
 
@@ -1290,15 +1291,18 @@ periphrastic, built on `entzuten`/`entzun` + `ukan`'s NOR-NORK auxiliary
 
 ## 8. `iraun`, `jario`, `esan`, `irudi`, `etzan`
 
-### `iraun` — "to last / endure" (nor-nork)
+### `iraun` — "to last / endure" (unergative — nork-only)
+
+Like `ihardun`/`jardun` (§6), `iraun` conjugates with Ergative (`NORK`)
+subject suffixes while the object slot remains empty/unexpressed:
 
 | Person | Present (oraina) | Past (lehena) |
 |---|---|---|
-| ni | diraut | nirauen |
-| hi | dirauk / diraun *(masc./fem.)* | hirauen |
-| hura | dirau | zirauen |
-| gu | diraugu | genirauen |
-| zu | dirauzu | zenirauen |
+| nik | diraut | nirauen |
+| hik | dirauk / diraun *(masc./fem.)* | hirauen |
+| hark | dirau | zirauen |
+| guk | diraugu | genirauen |
+| zuk | dirauzu | zenirauen |
 | zuek | dirauzue | zenirauten |
 | haiek | diraute | zirauten |
 
@@ -1335,11 +1339,11 @@ its own (rough working glosses):
 - *Adurra dariola dago* — "He/she is drooling"
 - *Iturriari ura dario* — "Water flows from the fountain"
 
-### `esan` — "to say" (ditransitive forms, on the `*-io-` root `ukan` also borrows)
+### `esan` — "to say" (ditransitive forms — same shape as §5's `NOR`=hura/`NORI`=hari grid)
 
 `NOR` fixed at 3sg (`hura`/"it"), `NORI` fixed at 3sg (`hari`/"to him-her"),
-`NORK` varying — the same "citation paradigm" shape `VERBS` already uses for
-`ukan` itself (§3):
+`NORK` varying. These forms are identical to the `hari` row of §5's `NOR` =
+hura grids — `di-` + `-o-` (the `NORI`=hari suffix) + `NORK`-suffix:
 
 | Person (nork) | Present | Past |
 |---|---|---|
@@ -1350,20 +1354,20 @@ its own (rough working glosses):
 | zuek | diozue | zenioten |
 | haiek | diote | zioten |
 
-### `irudi` — "to seem / give the impression" (nor-nork — *not* `iruditu`'s nor-nori)
+### `irudi` — "to seem / give the impression" (unergative — nork-only — *not* `iruditu`'s nor-nori)
 
 A false-friend pairing: `iruditu` ("iruditzen zait" = "it seems to me",
 subjective opinion, nor-nori) vs. `irudi` ("dirudizu" = "you give the
-impression", external appearance, nor-nork) — cognates that drifted apart in
-both meaning *and* agreement.
+impression", external appearance, unergative nork-only) — cognates that
+drifted apart in both meaning *and* agreement.
 
 | Person | Present (oraina) | Past (lehena) |
 |---|---|---|
-| ni | dirudit | nirudien |
-| hi | dirudik / dirudin *(masc./fem.)* | hirudien |
-| hura | dirudi | zirudien |
-| gu | dirudigu | genirudien |
-| zu | dirudizu | zenirudien |
+| nik | dirudit | nirudien |
+| hik | dirudik / dirudin *(masc./fem.)* | hirudien |
+| hark | dirudi | zirudien |
+| guk | dirudigu | genirudien |
+| zuk | dirudizu | zenirudien |
 | zuek | dirudizue | zeniruditen |
 | haiek | dirudite | ziruditen |
 
