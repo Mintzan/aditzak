@@ -1795,11 +1795,67 @@ forms (`diezaion`, `diezaiegun`, `diezazkion`):
 `Gurasoek nahi dute opariak haurrei eman diezazkien` ("The parents want the
 gifts to be given to the children" — haiei/haiek).
 
-`niri`/`guri`/`zuri`/`zuei` as `NORI` follow the identical recipe (root
-`diezada-`/`diezagu-`/`diezazu-`/`diezazue-`, from §5's already-verified
-`Ahalera` columns, plus the same `-n`-family suffixes) but aren't tabulated
-here — left as a future pass, the same posture as other not-yet-expanded
-grids in this document (see `DECISIONS.md`).
+`niri`/`guri`/`zuri`/`zuei` as `NORI` follow the identical recipe — roots
+`diezada-`/`diezagu-`/`diezazu-`/`diezazue-` (from §5's already-verified
+`Ahalera` columns, the same roots that underlie that section's
+`niri`/`guri`/`zuri` rows before `-ke-`; `diezazue-` mirrors §4's `zuei` row,
+which §5's own grids don't tabulate separately), plus the same `-n`-family
+suffixes. `*(refl.)*`/`*(hika/zuka)*`/`*(zu↔zuek)*` cells follow §5's
+person-category rule, mirrored onto `zuei` the same way `zuri`'s `zuk`=`*(refl.)*`/
+`zuek`=`*(zu↔zuek)*` split mirrors to `zuei`'s `zuek`=`*(refl.)*`/`zuk`=`*(zu↔zuek)*`:
+
+##### NORI = niri ("...so that [NORK] may give [NOR] to me")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | *(refl.)* | *(refl.)* |
+| hik | diezada**an** / diezada**nan** *(masc./fem.)* | diezazkida**an** / diezazkida**nan** |
+| hark | diezada**n** | diezazkida**n** |
+| guk | diezada**gun** | diezazkida**gun** |
+| zuk | diezada**zun** | diezazkida**zun** |
+| zuek | diezada**zuen** | diezazkida**zuen** |
+| haiek | diezada**ten** | diezazkida**ten** |
+
+##### NORI = guri ("...so that [NORK] may give [NOR] to us")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | *(refl.)* | *(refl.)* |
+| hik | diezagu**an** / diezagu**nan** *(masc./fem.)* | diezazkigu**an** / diezazkigu**nan** |
+| hark | diezagu**n** | diezazkigu**n** |
+| guk | *(refl.)* | *(refl.)* |
+| zuk | diezagu**zun** | diezazkigu**zun** |
+| zuek | diezagu**zuen** | diezazkigu**zuen** |
+| haiek | diezagu**ten** | diezazkigu**ten** |
+
+##### NORI = zuri ("...so that [NORK] may give [NOR] to you")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | diezazu**dan** | diezazkizu**dan** |
+| hik | *(hika/zuka)* | *(hika/zuka)* |
+| hark | diezazu**n** | diezazkizu**n** |
+| guk | diezazu**gun** | diezazkizu**gun** |
+| zuk | *(refl.)* | *(refl.)* |
+| zuek | *(zu↔zuek)* | *(zu↔zuek)* |
+| haiek | diezazu**ten** | diezazkizu**ten** |
+
+##### NORI = zuei ("...so that [NORK] may give [NOR] to you all")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | diezazue**dan** | diezazkizue**dan** |
+| hik | *(hika/zuka)* | *(hika/zuka)* |
+| hark | diezazue**n** | diezazkizue**n** |
+| guk | diezazue**gun** | diezazkizue**gun** |
+| zuk | *(zu↔zuek)* | *(zu↔zuek)* |
+| zuek | *(refl.)* | *(refl.)* |
+| haiek | diezazue**ten** | diezazkizue**ten** |
+
+*Adibideak:* `Eskertuko nuke norbaitek dirua itzul diezadan` ("I'd be grateful
+if someone gave the money back to me" — niri/haiek-as-generic-someone, `hark`
+row); `Nahi dut zuk argazkiak erakuts diezazkidazun` ("I want you to show me
+the photos" — niri/zuk, `NOR`=haiek).
 
 **Past (Lehenaldia) note:** a synthetic `NOR-NORI-NORK` subjunctive past
 (mirroring `niezaiokeen` → `niezaioen`) is morphologically derivable by the

@@ -4,6 +4,37 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-10 — Filled §16.1's missing `niri`/`guri`/`zuri`/`zuei` rows for the NOR-NORI-NORK Subjunctive Present
+
+**Decision:** §16.1's `NOR-NORI-NORK` Subjunctive Present previously tabulated
+only the `hari`/`haiei` rows, with `niri`/`guri`/`zuri`/`zuei` explicitly
+flagged "left for a future pass". Added all four as new `#####` subsections,
+each with `NOR`=hura and `NOR`=haiek (`-izki-`) columns, following the same
+"drop `-ke-`, append the Subjuntiboa-`NORK` suffix family" recipe already used
+for `hari`/`haiei`.
+
+**Roots:** `diezada-` (niri), `diezagu-` (guri), `diezazu-` (zuri),
+`diezazue-` (zuei) — the first three are the same pre-`-ke-` roots that
+underlie §5's Ahalera Orainaldia `niri`/`guri`/`zuri` rows (`diezadake` →
+`diezada-`, etc.). `diezazue-` has no §5 antecedent (§5's grids only have
+`niri`/`hari`/`guri`/`zuri`/`haiei` rows, not `zuei`) — derived instead by
+analogy with §4's NOR-NORI `zuei` row, which uses the same `-zue-` `NORI`
+suffix as `zuri`'s `-zu-`.
+
+**Gap placement:** mirrored `zuri`'s `*(refl.)*`/`*(zu↔zuek)*`/`*(hika/zuka)*`
+pattern onto `zuei`, but with `zuk`/`zuek` swapped — `zuri`'s `zuk`=refl
+("you give it to yourself") becomes `zuei`'s `zuek`=refl ("you-all give it to
+yourselves"), and `zuri`'s `zuek`=`*(zu↔zuek)*` becomes `zuei`'s `zuk`=
+`*(zu↔zuek)*`. For `niri`/`guri`, followed §5's existing asymmetry: `niri`
+only blocks `nik` (not `guk` — "we give it to me" is a real form, `didagu`),
+while `guri` blocks both `nik` and `guk` (both collapse to "we/I give it to
+us").
+
+This closes the last "left for a future pass" item from §16.1; the
+NOR-NORI-NORK Subjunctive **Past** remains an intentional honest gap (per the
+existing note immediately below these tables — vanishingly rare, periphrastic
+alternative preferred).
+
 ## 2026-06-10 — Filled §5's missing Baldintza/Ondorioa (conditional) grids for the NOR-NORI-NORK ditransitive system
 
 **Decision:** §3 (NOR-NORK) and §4 (NOR-NORI dative) both have a
