@@ -36,9 +36,10 @@ export const JOURNEY = [
           },
           {
             number: 2,
-            title: 'Having and Wanting',
-            focus: 'ukan present (object fixed to hura) + nahi',
-            payload: '"I have a car." · "I want coffee." · "Do you want to come?"',
+            title: 'Having, Wanting, and Knowing',
+            focus: 'ukan present (object fixed to hura) + nahi + jakin',
+            payload:
+              '"I have a car." · "I want coffee." · "Do you want to come?" · "I don\'t know."',
             status: 'pending',
           },
         ],
@@ -58,7 +59,7 @@ export const JOURNEY = [
             number: 4,
             title: 'The Immediate Continuous',
             focus: 'ari + izan',
-            payload: '"I am eating." · "What are you doing?"',
+            payload: '"What are you doing?" (Zer ari zara?) · "I\'m eating." (Jaten ari naiz)',
             status: 'pending',
           },
         ],
@@ -125,7 +126,8 @@ export const JOURNEY = [
             number: 10,
             title: 'Requirements & Obligations',
             focus: 'behar + ukan, present and future',
-            payload: '"I need to study." · "You will have to pay."',
+            payload:
+              '"I have to go." (Joan behar dut) · "You\'ll have to come." (Etorri beharko duzu)',
             status: 'pending',
           },
         ],

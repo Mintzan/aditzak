@@ -48,7 +48,9 @@
    lessons** (beyond the standard verb-review), drilling that new relation in
    isolation, before the unit's own review caps it off. Flagged units, to be
    reflected in their `lessonIds` once implemented:
-   - **Unit 2** — first `nor-nork`/ergative subject (`ukan`)
+   - **Unit 2** — first `nor-nork`/ergative subject (`ukan`); `jakin`
+     reinforces this immediately afterward by showing the *same* `-t`/`-zu`/∅
+     suffixes on a fully synthetic verb, not a periphrastic one
    - **Unit 8** — first full 6-person transitive grid
    - **Unit 15** — first NOR-NORI / dative-subject forms (`zait`/`zaizu`/`zaio`)
    - **Unit 16** — first NOR-NORI-NORK / ditransitive — the steepest jump in
@@ -112,6 +114,15 @@ here so they're decided once, deliberately, rather than discovered mid-build.
   `docs/SAMPLE_SENTENCES.md`'s causative bank is the starting material. The
   `-arazi`/`-erazi` conditioning rule (which form, when) needs sourcing
   before those `VERBS` entries are written.
+- **`jakin`'s past tense (`CONJUGATIONS.md` §7) has gaps** (`hik`/`zuk`/`zuek`
+  are `—`) — irrelevant to Unit 2 (present-only, `ni`/`zu`/`hura`, all three
+  present forms already documented), but flag before any later unit
+  (e.g. Unit 12, "I Was, I Had") considers extending to `jakin`'s past.
+- **Unit 4's `ari` examples need at least one verb's imperfective participle
+  as vocabulary** before any concrete "I am doing X" sentence can be written —
+  `jaten` (`jan`'s participle, Unit 7's verb) is the natural choice, since
+  Unit 7 will teach `jan`'s full table anyway, so introducing its participle
+  here costs nothing extra later and gives Unit 7 a head start.
 - **Refresh Gate units** (5, 11, 17, 25, and the implicit Phase-V wrap-up) are
   structurally `review: true` lessons with `sources` drawn from *everything
   taught so far in that phase* — the existing review-lesson mechanism already
@@ -134,14 +145,14 @@ Persons in scope throughout Phase I: **`ni` / `zu` / `hura`** only.
 | Unit | Focus | Payload | Persons | Ref | Data status |
 |---|---|---|---|---|---|
 | 1 | **Who and Where** — `izan` + `egon` present | "I am a student." / "Where are you?" / "He is at home." | ni/zu/hura: `naiz`/`zara`/`da`, `nago`/`zaude`/`dago` | §1 (izan), §6 (egon) | ✅ both have `zu` rows in `CONJUGATIONS.md` |
-| 2 | **Having and Wanting** — `ukan` present (object fixed `hura`) + `nahi` | "I have a car." / "I want coffee." / "Do you want to come?" | ni/zu/hura: `dut`/`duzu`/`du`, `nahi dut`/`nahi duzu`/`nahi du` | §3 (ukan), VERB_COVERAGE §5 (`nahi`) | ✅ `ukan` has its `zu` row in `CONJUGATIONS.md` |
+| 2 | **Having, Wanting, and Knowing** — `ukan` present (object fixed `hura`) + `nahi` + `jakin` | "I have a car." / "I want coffee." / "Do you want to come?" / "I don't know." | ni/zu/hura: `dut`/`duzu`/`du`, `nahi dut`/`nahi duzu`/`nahi du`, `dakit`/`dakizu`/`daki` | §3 (ukan), VERB_COVERAGE §5 (`nahi`), §7 (`jakin`) | ✅ `ukan` has its `zu` row; `jakin`'s `dakit`/`dakizu`/`daki` are all documented in `CONJUGATIONS.md` §7 |
 
 #### Stage 2: Basic Operations & Movement
 
 | Unit | Focus | Payload | Persons | Ref | Data status |
 |---|---|---|---|---|---|
 | 3 | **Moving Around** — `joan` + `etorri` present | "I'm going to the beach." / "She's coming tomorrow." | ni/zu/hura: `noa`/`zoaz`/`doa`, `nator`/`zatoz`/`dator` | §6 | ✅ already has `zu` |
-| 4 | **The Immediate Continuous** — `ari` + `izan` | "I am eating." / "What are you doing?" | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ reuses Unit 1's table |
+| 4 | **The Immediate Continuous** — `ari` + `izan` | "What are you doing?" (`Zer ari zara?`) / "I'm eating." (`Jaten ari naiz`) | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ reuses Unit 1's table; `jaten` (`jan`'s imperfective participle, Unit 7's verb) introduced here as a single fixed vocabulary item — no new conjugation, and primes Unit 7's `jan` table |
 
 ### 🛡️ Refresh Gate A — The "Ez" Trap & Person Expansion
 
@@ -169,7 +180,7 @@ grid, every verb, from each verb's first lesson (Person-Expansion Rule).
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
 | 9 | **Intentions & Future Actions** — `-ko`/`-go` + present auxiliaries, applied to every verb so far | "I will go tomorrow" (`joango naiz`) / "We will buy a house" (`erosiko dugu`) | §11 (periphrastic tense matrix) | reuses Unit 1–8 auxiliary tables; only the participle-formation rule is new |
-| 10 | **Requirements & Obligations** — `behar` + `ukan` present and future | "I need to study." / "You will have to pay." | VERB_COVERAGE §5 | reuses `ukan` tables exactly like Unit 2's `nahi` |
+| 10 | **Requirements & Obligations** — `behar` + `ukan`, present and future | "I have to go." (`Joan behar dut`) / "You'll have to come." (`Etorri beharko duzu`) | VERB_COVERAGE §5 (point 2 — the construction's head, not the lexical verb, picks the auxiliary) | reuses `ukan` tables exactly like Unit 2's `nahi`; payload deliberately reuses Unit 3's intransitive `joan`/`etorri` (`naiz`-pattern alone) to surface the `behar`-always-takes-`ukan` "aha" moment |
 
 ### 🛡️ Refresh Gate B — The Core Present Checkpoint
 

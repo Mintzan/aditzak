@@ -4,6 +4,59 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Three journey-content fixes: added `jakin` to Unit 2, fixed Unit 4's forward-referencing payload, rewrote Unit 10's payload to land `behar`'s "aha" moment
+
+**Decision:** A review pass over `LEARNING_JOURNEY.md`'s still-`pending` Units
+2, 4, and 10 surfaced three real content gaps, fixed in the doc and mirrored
+in `journey.js`'s `focus`/`payload` strings (no `VERBS`/`LESSONS` data exists
+for these units yet, so this is a pure content/sequencing fix):
+
+1. **`jakin` ("to know a fact") had no home anywhere in the 25-unit journey**,
+   despite being fully documented in `CONJUGATIONS.md` §7 (`dakit`/`dakizu`/
+   `daki`/...) and listed in `VERB_COVERAGE.md` §4a as one of the dozen common
+   everyday synthetic verbs. Added it to **Unit 2**, now "Having, Wanting, and
+   Knowing", alongside `ukan`/`nahi`. `jakin`'s present uses the *exact same*
+   `-t`/`-zu`/∅ suffix family as `ukan`'s `dut`/`duzu`/`du`, so it costs
+   nothing in new suffix patterns and doubles as the journey's first "same
+   suffixes, but this verb is fully synthetic, not periphrastic" moment —
+   reinforcing Unit 2's existing nor-nork/ergative-subject flag (§1.6) rather
+   than competing with it. Only `ni`/`zu`/`hura` present forms are needed for
+   Unit 2, and all three (`dakit`/`dakizu`/`daki`) are already in
+   `CONJUGATIONS.md` §7. `jakin`'s past has `hik`/`zuk`/`zuek` gaps — flagged
+   in the implications section for whenever a later unit (e.g. Unit 12) might
+   want it.
+
+2. **Unit 4's payload ("I am eating.") referenced `jan`, a verb not
+   introduced until Unit 7** — a forward reference the learner couldn't yet
+   decode. None of Units 1-3's verbs (`izan`/`egon`/`ukan`/`nahi`/`jakin`/
+   `joan`/`etorri`) combine naturally with `ari`, so rather than force an
+   awkward example from known vocabulary, kept `jaten` (`jan`'s imperfective
+   participle) but reframed it explicitly as a single fixed vocabulary item
+   introduced for Unit 4's `ari` examples specifically — not a claim that
+   `jan` is "taught" yet. This actually *primes* Unit 7: the learner will
+   already recognize `jaten` when `jan`'s full table arrives. Documented in
+   the implications section so whoever builds Unit 4's `sentences`/
+   `pronounSentences` data treats this as intentional.
+
+3. **Unit 10's payload ("I need to study." / "You will have to pay.") missed
+   the entire point of teaching `behar` separately from `nahi`.**
+   `VERB_COVERAGE.md` §5 point 2 calls `behar`'s auxiliary-mismatch "a
+   genuinely teachable 'aha' moment" — `behar` *always* takes `ukan`, even for
+   an intransitive verb like `joan` that on its own takes `naiz` (`noa`/`joan
+   naiz`, never `*joan dut*`). The old payload's verbs (`ikasi`, `ordaindu`)
+   are already transitive, so the auxiliary never visibly changes — the
+   lesson's central insight was invisible in its own examples. Replaced with
+   `Joan behar dut` ("I have to go") and `Etorri beharko duzu` ("you'll have
+   to come"), reusing Unit 3's `joan`/`etorri` — the journey's only
+   intransitive verbs at this point — so the `naiz`→`dut` shift is front and
+   center, with `beharko` reusing Unit 9's future `-ko` immediately after it's
+   taught.
+
+**Why now:** all three units are still `pending` (no `VERBS`/`LESSONS` data
+built yet) — the cheapest possible point to fix framing before any
+conjugation tables or exercise content get authored around the old, flawed
+examples.
+
 ## 2026-06-11 — Added Phase VI (causative `-arazi`/`-erazi`, Units 23-25) to `LEARNING_JOURNEY.md`
 
 **Decision:** The causative suffix `-arazi`/`-erazi` (`docs/SAMPLE_SENTENCES.md`'s
