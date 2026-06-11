@@ -283,7 +283,60 @@ that has to stay in sync with `izan`/`ukan`")? Either is far cheaper than
 standing up a periphrastic verb from scratch — worth resolving *before*
 reaching for §4b, not after.
 
-## 6. Suggested coverage checklist
+## 6. Valency-changing morphology — the causative (`-arazi`/`-erazi`)
+
+🔲 Not represented anywhere in `VERBS` yet — flagged here, and given a home in
+`LEARNING_JOURNEY.md`'s new Phase VI (Units 23-25), so it isn't lost.
+
+The causative suffix **`-arazi`** (an **`-erazi`** alternant also occurs; 🔲
+the exact conditioning environment — stem-final segment, dialect, or both —
+needs a grammar-reference pass before writing `VERBS` entries) attaches to a
+verb's radical and adds a **causer** argument: "X does Y" → "Z makes/lets X
+do Y." This *increases the verb's valency by one slot*, which shifts its
+agreement pattern (§2) one of two ways — both attested in
+`docs/SAMPLE_SENTENCES.md`'s causative bank:
+
+- **`nor` → `nor-nork`**: the original `nor` subject becomes the new `nor`
+  (now an object), and the causer fills a new `nork` slot. "Mendizaleak
+  itzuli ziren" (the climbers returned, `nor`) → "Ekaitzak mendizaleak
+  itzularazi zituen" (the storm made the climbers turn back, `nor-nork`).
+- **`nor-nork` → `nor-nori-nork`**: the original `nork` subject becomes the
+  new `nori` (the one made to act), the original `nor` object stays `nor`,
+  and the causer fills the new `nork` slot. "Umeek babarrunak jan zituzten"
+  (the kids ate the beans, `nor-nork`) → "Amonak umeei babarrunak janarazi
+  zizkien" (Grandma made the kids eat the beans, `nor-nori-nork`).
+
+🔲 Whether `nor-nori` verbs (`gustatu`-class, §2) can also be causativized,
+and what agreement pattern results, isn't covered by the sentences gathered
+so far — worth checking once Unit 15's verbs exist.
+
+**Fits the existing data model with zero new shapes.** A causativized verb
+behaves exactly like any other `type: 'periphrastic'` entry (`CLAUDE.md`):
+`[radical]+(a/e)razi` is the fixed "participle," and the `izan`/`ukan`
+auxiliary at the end — chosen by the *new* (post-causativization) agreement
+pattern above — is the conjugated, drilled form. So
+`conjugations`/`sentences`/`pronounSentences` follow the same `___`-blanked-
+auxiliary pattern as `present`/`past` elsewhere in this doc, and Tier 1 of
+`EXERCISE_ENGINE.md` applies unchanged.
+
+**Compounds with every tense/mood already in the curriculum** — the
+auxiliary just inflects normally, so "make X do Y" (present), "made" (past),
+"will make" (future, Unit 9), "would make" (conditional, Unit 19), and "make
+him do it!" (imperative, Unit 20) are all the *same* causativized verb with a
+different auxiliary form. `docs/SAMPLE_SENTENCES.md`'s causative bank has
+worked examples of all of these — `LEARNING_JOURNEY.md`'s Phase VI (Units
+23-25) recombines `-arazi` with those tenses/moods explicitly rather than
+introducing them as "new" again.
+
+**Candidate verbs** (drawn from the sample-sentence bank, all already
+candidates elsewhere in this doc): `itzuli`→`itzularazi` (§4a, "to return"),
+`joan`→`joanarazi` (§4a), `jan`→`janarazi`/`edan`→`edanarazi` (§4b, both Unit
+7 candidates), `idatzi`→`idatzarazi`, `jokatu`→`jokarazi`,
+`itzali`→`itzalarazi`, `dastatu`→`dastarazi` — picking 2-3 of these for Units
+23-24 means Phase VI introduces no vocabulary a learner hasn't already met by
+then.
+
+## 7. Suggested coverage checklist
 
 Not a commitment — just a way to see how much runway sits past the current
 `izan`/`ukan` × present/past × nor/nor-nork slice, roughly in priority order:
@@ -307,3 +360,8 @@ Not a commitment — just a way to see how much runway sits past the current
 - [ ] `zu` modeled as a person, alongside or instead of `hi`
 - [ ] conditional / potential / subjunctive / imperative — stretch goals;
       imperative in particular needs its own lesson shape (no `ni`/`hura`/etc.)
+- [ ] **causative (`-arazi`/`-erazi`)** — valency-increasing derivation
+      (`nor`→`nor-nork`, `nor-nork`→`nor-nori-nork`, per §6); needs zero new
+      data shapes (just another `periphrastic` entry) but does need the
+      `-arazi`/`-erazi` conditioning rule sourced before writing `VERBS`
+      entries

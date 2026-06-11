@@ -55,6 +55,11 @@
      the whole sequence, gets **two** extra practice lessons, not one
    - **Unit 20** — imperative (a new register)
    - **Unit 21** — `hi` + hitanoa (a new register)
+   - **Unit 23** — first valency-*increasing* derivation (`-arazi` turning
+     `nor` into `nor-nork`) — a new morphological operation, not just new
+     vocabulary in a known pattern
+   - **Unit 24** — extends `-arazi` to `nor-nori-nork` — same "steepest jump"
+     character as Unit 16, gets two extra practice lessons like it did
 
    These extra lessons compound with the engine's per-lesson ramp (a lesson's
    first `BARE_FORM_ATTEMPTS` attempts stay multiple-choice/recognition-only,
@@ -98,7 +103,16 @@ here so they're decided once, deliberately, rather than discovered mid-build.
   table mirroring `pronounSentences`'s shape) and possibly its own question
   `kind` (cf. `DECISIONS.md`'s `spot-error` precedent for "a new kind when the
   existing shapes don't fit").
-- **Refresh Gate units** (5, 11, 17, and the implicit Phase-V wrap-up) are
+- **Causative (`-arazi`/`-erazi`, Phase VI) needs no new data shape** — per
+  VERB_COVERAGE §6, a causativized verb is just another `type: 'periphrastic'`
+  entry (`[radical]+(a/e)razi` participle + `izan`/`ukan` auxiliary), so its
+  `conjugations`/`sentences`/`pronounSentences` tables follow the Tier 1
+  pattern in `EXERCISE_ENGINE.md`. The only new work is content: picking
+  representative verbs for Units 23-24 and writing their causativized forms —
+  `docs/SAMPLE_SENTENCES.md`'s causative bank is the starting material. The
+  `-arazi`/`-erazi` conditioning rule (which form, when) needs sourcing
+  before those `VERBS` entries are written.
+- **Refresh Gate units** (5, 11, 17, 25, and the implicit Phase-V wrap-up) are
   structurally `review: true` lessons with `sources` drawn from *everything
   taught so far in that phase* — the existing review-lesson mechanism already
   supports this. The only new idea is that some gates (Unit 11 specifically)
@@ -210,6 +224,37 @@ grid, every verb, from each verb's first lesson (Person-Expansion Rule).
 | 20 | **Command & Subjunctives (Agintera, Subjuntiboa)** | direct commands; "so that..." purpose clauses | §9, §16 |
 | 21 | **The Intimate Social Register (`hi` + Hitanoa/Hiketa)** | `hi` introduced **for the first time**, immediately paired with toka/noka allocutive marking — taught as one register, not two separate facts | §10 |
 | 22 | **Passive Transformation & Reading Real Text** — non-finite forms, nor-shift (`ireki dut` → `ireki da`) | recognition-oriented: reading real sentences | §14, §15 |
+
+---
+
+### Phase VI — Making Things Happen (Causatives)
+
+Persons in scope: full **`ni`/`zu`/`hura`/`gu`/`zuek`/`haiek`** grid (Person-
+Expansion Rule), plus `hi` (available since Unit 21).
+
+This phase sits last because it isn't "one more verb" — it's a *morphological
+operation* (`-arazi`/`-erazi`, VERB_COVERAGE §6) that recombines everything
+taught so far: it turns a `nor` verb into `nor-nork` (Units 1-8's territory)
+or a `nor-nork` verb into `nor-nori-nork` (Unit 16's), and the result still
+inflects for future (Unit 9), conditional (Unit 19), and imperative (Unit 20)
+exactly like any other periphrastic verb — the auxiliary at the end carries
+tense/mood (`type: 'periphrastic'`, `CLAUDE.md`). Placing it last means a
+learner already has every piece this phase recombines, and it needs no new
+`VERBS` shape (VERB_COVERAGE §6) — just new vocabulary in the existing
+`periphrastic` pattern.
+
+#### Stage 9: The Causative Suffix (-arazi/-erazi)
+
+| Unit | Focus | Payload | Ref |
+|---|---|---|---|
+| 23 | **Making Someone Do It** — `-arazi` on intransitive verbs (`nor` → `nor-nork`) | "The storm made the climbers turn back." (`itzularazi zituen`) / "The music made the kids dance." (`dantzarazi ditu`) | VERB_COVERAGE §6 |
+| 24 | **Making Someone Do Something To Someone** — `-arazi` on transitive verbs (`nor-nork` → `nor-nori-nork`) | "Grandma made the kids eat the beans." (`janarazi dizkie`) / "The teacher made the students write it." (`idatzarazi die`) | VERB_COVERAGE §6 |
+
+#### 🛡️ Refresh Gate D — The Causative Recombination
+
+| Unit | Focus | Constraint | Notes |
+|---|---|---|---|
+| 25 | **REFRESH — Causatives Across Tenses & Moods** | zero new verbs | Recombines Units 23-24's `-arazi` forms with future (Unit 9), conditional (Unit 19), and imperative (Unit 20) — "makes/made/will make/would make/make (someone do X)" — same cross-paradigm-sorting character as the other Refresh Gates. |
 
 ---
 

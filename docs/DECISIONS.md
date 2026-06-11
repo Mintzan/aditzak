@@ -4,6 +4,38 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Added Phase VI (causative `-arazi`/`-erazi`, Units 23-25) to `LEARNING_JOURNEY.md`
+
+**Decision:** The causative suffix `-arazi`/`-erazi` (`docs/SAMPLE_SENTENCES.md`'s
+causative bank) wasn't covered anywhere in the 22-unit journey or
+`VERB_COVERAGE.md`. Rather than squeeze it into an existing phase, added a new
+**Phase VI — Making Things Happen (Causatives)** after Phase V, with **Stage
+9** (Units 23-24: `-arazi` turning `nor`→`nor-nork`, then `nor-nork`→
+`nor-nori-nork`) and **Refresh Gate D** (Unit 25: recombining `-arazi` with
+future/conditional/imperative from Units 9/19/20). Also added
+`VERB_COVERAGE.md` §6 documenting the morphology and argument-shift rules,
+renumbering the old §6 ("Suggested coverage checklist") to §7 with a new
+checklist item for the causative.
+
+**Why last, as a new phase rather than folded into Phase V:** causatives
+aren't "one more verb" — they're a morphological *operation* that recombines
+everything taught earlier (every agreement pattern from Units 1-16, every
+tense/mood from Units 9/19/20). Placing it last means a learner has every
+piece it recombines, mirroring how Unit 22 (passive/nor-shift) is also a
+late-game *transformation* of structure rather than new vocabulary. No
+existing unit numbers changed (only Unit 1 is `available` in `journey.js`
+today, so renumbering risk was low regardless, but appending avoided it
+entirely).
+
+**Why no new engine/data shape:** per the new VERB_COVERAGE §6, a
+causativized verb is just another `type: 'periphrastic'` entry — `[radical]+
+(a/e)razi` participle + `izan`/`ukan` auxiliary, agreement pattern shifted per
+the two argument-shift rules. `conjugations`/`sentences`/`pronounSentences`
+follow the same `___`-blanked-auxiliary pattern as every other tense, so Tier
+1 of `EXERCISE_ENGINE.md` applies unchanged — flagged as **content** work
+(picking verbs, sourcing the `-arazi`/`-erazi` conditioning rule), not engine
+work.
+
 ## 2026-06-11 — Lessons now repeat each person to reach ~12 exercises (`TARGET_EXERCISE_COUNT`), instead of one question per person
 
 **Decision:** `generateQuestions` previously produced exactly one question per
