@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import {
+  addPoints,
+  canRepairStreak,
+  computeLessonPoints,
   computeStars,
   exerciseReducer,
   generateQuestions,
@@ -11,7 +14,9 @@ import {
   isAnswerCorrect,
   recordDailyStreak,
   recordResult,
+  repairStreak,
   shuffle,
+  STREAK_REPAIR_COST,
 } from './lessonLogic'
 import { JOURNEY } from './journey'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
@@ -379,6 +384,29 @@ function saveStreak(streak) {
   }
 }
 
+// Points ("gems") earned from lesson results, spendable on streak repair.
+// Kept in its own key for the same reasons as the daily streak: it tracks
+// something orthogonal to any single lesson's progress, and "Reset progress"
+// can clear it without a version bump to `progress`/`STORAGE_KEY`.
+const POINTS_STORAGE_KEY = 'aditzak:points:v1'
+
+function loadPoints() {
+  try {
+    const raw = localStorage.getItem(POINTS_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : {}
+  } catch {
+    return {}
+  }
+}
+
+function savePoints(points) {
+  try {
+    localStorage.setItem(POINTS_STORAGE_KEY, JSON.stringify(points))
+  } catch {
+    // localStorage may be unavailable (private browsing, quota) — ignore.
+  }
+}
+
 // Looks up a verb's English/Spanish/Basque gloss, falling back to English if
 // the active interface language has no translation for this verb.
 function verbMeaning(verb, language) {
@@ -676,10 +704,13 @@ function ProgressTab({ progress }) {
   )
 }
 
-function ProfileTab({ streak, onResetProgress }) {
+function ProfileTab({ streak, points, onResetProgress, onRepairStreak }) {
   const { t, tCount, language, setLanguage, languages } = useLanguage()
-  const currentStreak = getActiveStreak(streak, getLocalDateString())
+  const today = getLocalDateString()
+  const currentStreak = getActiveStreak(streak, today)
   const longestStreak = streak?.longestStreak ?? 0
+  const balance = points?.balance ?? 0
+  const canRepair = canRepairStreak(streak, points, today)
   return (
     <div className="flex flex-col items-center gap-4 py-12 text-center">
       <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl">🧑‍🎓</div>
@@ -702,7 +733,28 @@ function ProfileTab({ streak, onResetProgress }) {
           <span className="text-lg font-bold text-gray-900">{tCount('streakDays', longestStreak)}</span>
           <span className="text-xs text-gray-500">{t('streakLongest')}</span>
         </div>
+        <div className="flex flex-1 flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white p-4">
+          <span className="text-2xl" aria-hidden="true">
+            💎
+          </span>
+          <span className="text-lg font-bold text-gray-900">{balance}</span>
+          <span className="text-xs text-gray-500">{t('pointsBalance')}</span>
+        </div>
       </div>
+      {canRepair && (
+        <div className="w-full rounded-2xl border-2 border-dashed border-orange-200 bg-orange-50 p-4">
+          <p className="text-sm font-bold text-orange-700">{t('streakRepairTitle')}</p>
+          <p className="mt-1 text-xs text-orange-600">{t('streakRepairDescription', { cost: STREAK_REPAIR_COST })}</p>
+          <button
+            type="button"
+            onClick={onRepairStreak}
+            style={{ minHeight: 48 }}
+            className="mt-3 w-full rounded-2xl bg-orange-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-orange-600 active:scale-[0.98]"
+          >
+            {t('streakRepairButton', { cost: STREAK_REPAIR_COST })}
+          </button>
+        </div>
+      )}
       <div className="w-full">
         <p className="mb-1 text-sm font-semibold text-gray-700">{t('profileLanguage')}</p>
         <p className="mb-2 text-xs text-gray-400">{t('profileLanguageHint')}</p>
@@ -766,11 +818,12 @@ function BottomNav({ active, onSelect }) {
   )
 }
 
-function HomeScreen({ progress, streak, tab, onChangeTab, onSelectLesson, onResetProgress }) {
+function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson, onResetProgress, onRepairStreak }) {
   const { t } = useLanguage()
   const totalStars = LESSONS.reduce((sum, lesson) => sum + (progress[lesson.id]?.bestStars ?? 0), 0)
   const maxStars = LESSONS.length * 3
   const currentStreak = getActiveStreak(streak, getLocalDateString())
+  const balance = points?.balance ?? 0
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-gray-50">
@@ -794,13 +847,22 @@ function HomeScreen({ progress, streak, tab, onChangeTab, onSelectLesson, onRese
               <span className="font-normal text-amber-500">/{maxStars}</span>
             </span>
           </div>
+          <div
+            className="flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1.5 text-sm font-bold text-sky-700"
+            aria-label={t('pointsLabel', { count: balance })}
+          >
+            <span aria-hidden="true">💎</span>
+            <span>{balance}</span>
+          </div>
         </div>
       </header>
 
       <main className="flex-1 px-5 pt-5 pb-28">
         {tab === 'home' && <JourneyTab progress={progress} onSelectLesson={onSelectLesson} />}
         {tab === 'progress' && <ProgressTab progress={progress} />}
-        {tab === 'profile' && <ProfileTab streak={streak} onResetProgress={onResetProgress} />}
+        {tab === 'profile' && (
+          <ProfileTab streak={streak} points={points} onResetProgress={onResetProgress} onRepairStreak={onRepairStreak} />
+        )}
       </main>
 
       <BottomNav active={tab} onSelect={onChangeTab} />
@@ -1107,8 +1169,8 @@ function FeedbackBar({ status, isLast, streakEncouragement, onContinue }) {
   )
 }
 
-function LessonResultsScreen({ lesson, correctCount, total, onDone }) {
-  const { t, language } = useLanguage()
+function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone }) {
+  const { t, tCount, language } = useLanguage()
   const stars = computeStars(correctCount, total)
   const { icon, headline, messageKey } = getEncouragement(correctCount, total)
   const { heading } = describeLesson(lesson, t, language)
@@ -1125,6 +1187,12 @@ function LessonResultsScreen({ lesson, correctCount, total, onDone }) {
         </p>
       </div>
       <Stars count={stars} />
+      {pointsEarned > 0 && (
+        <p className="flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1.5 text-sm font-bold text-sky-700">
+          <span aria-hidden="true">💎</span>
+          {tCount('pointsEarned', pointsEarned)}
+        </p>
+      )}
       <p className="text-base text-gray-600">{t(messageKey)}</p>
       <button
         type="button"
@@ -1240,6 +1308,7 @@ function ExerciseScreen({ lesson, attempts, onExit, onComplete, canShowStreakNud
         lesson={lesson}
         correctCount={state.correctCount}
         total={total}
+        pointsEarned={computeLessonPoints(state.correctCount, total, attempts > 0)}
         onDone={() => onComplete({ correctCount: state.correctCount, total })}
       />
     )
@@ -1341,6 +1410,7 @@ function AppShell() {
   const { t, hasChosenLanguage } = useLanguage()
   const [progress, setProgress] = useState(loadProgress)
   const [dailyStreak, setDailyStreak] = useState(loadStreak)
+  const [points, setPoints] = useState(loadPoints)
   const [tab, setTab] = useState('home')
   const [activeLessonId, setActiveLessonId] = useState(null)
   // Session-level gate for the mid-lesson streak nudge: counts down once a
@@ -1356,6 +1426,10 @@ function AppShell() {
     saveStreak(dailyStreak)
   }, [dailyStreak])
 
+  useEffect(() => {
+    savePoints(points)
+  }, [points])
+
   const handleStreakNudgeShown = useCallback(() => {
     setStreakNudgeCooldown(randomStreakNudgeCooldown())
   }, [])
@@ -1366,6 +1440,16 @@ function AppShell() {
     }
     setProgress({})
     setDailyStreak({})
+    setPoints({})
+  }
+
+  function handleRepairStreak() {
+    if (typeof window !== 'undefined' && !window.confirm(t('streakRepairConfirm', { cost: STREAK_REPAIR_COST }))) {
+      return
+    }
+    const { streak, points: nextPoints } = repairStreak(dailyStreak, points, getLocalDateString())
+    setDailyStreak(streak)
+    setPoints(nextPoints)
   }
 
   if (!hasChosenLanguage) {
@@ -1383,8 +1467,10 @@ function AppShell() {
         canShowStreakNudge={streakNudgeCooldown === 0}
         onStreakNudgeShown={handleStreakNudgeShown}
         onComplete={(result) => {
+          const isRepeat = (progress[lesson.id]?.attempts ?? 0) > 0
           setProgress((previous) => recordResult(previous, lesson.id, result))
           setDailyStreak((previous) => recordDailyStreak(previous, getLocalDateString()))
+          setPoints((previous) => addPoints(previous, computeLessonPoints(result.correctCount, result.total, isRepeat)))
           setStreakNudgeCooldown((cooldown) => Math.max(0, cooldown - 1))
           setActiveLessonId(null)
         }}
@@ -1396,10 +1482,12 @@ function AppShell() {
     <HomeScreen
       progress={progress}
       streak={dailyStreak}
+      points={points}
       tab={tab}
       onChangeTab={setTab}
       onSelectLesson={setActiveLessonId}
       onResetProgress={handleResetProgress}
+      onRepairStreak={handleRepairStreak}
     />
   )
 }

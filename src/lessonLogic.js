@@ -105,6 +105,66 @@ export function getActiveStreak(streak, today) {
   return gap > ONE_DAY_MS ? 0 : currentStreak
 }
 
+// =============================================================================
+// Points (Duolingo-style "gems"), spendable to repair a broken streak
+// =============================================================================
+
+// A first-time pass through a lesson is worth more than a repeat — repeating
+// a lesson you've already completed (any later attempt) earns half as much.
+// Either way the award scales with accuracy, so a so-so run earns less than a
+// perfect one.
+const LESSON_POINTS_FIRST_ATTEMPT = 10
+const LESSON_POINTS_REPEAT = 5
+
+// Cost, in points, to repair a broken daily streak (see `repairStreak`).
+export const STREAK_REPAIR_COST = 100
+
+// Points earned for finishing a lesson with `correctCount`/`total`. `isRepeat`
+// is whether this lesson already had at least one attempt recorded *before*
+// this one (i.e. `(progress[lessonId]?.attempts ?? 0) > 0`).
+export function computeLessonPoints(correctCount, total, isRepeat) {
+  if (total === 0) return 0
+  const base = isRepeat ? LESSON_POINTS_REPEAT : LESSON_POINTS_FIRST_ATTEMPT
+  return Math.round(base * (correctCount / total))
+}
+
+export function addPoints(points, amount) {
+  return { balance: (points?.balance ?? 0) + amount }
+}
+
+// Shifts a 'YYYY-MM-DD' string by `days` (negative allowed). Operates purely
+// on the UTC-midnight timestamps `Date.parse('YYYY-MM-DD')` produces, mirroring
+// the date arithmetic `recordDailyStreak`/`getActiveStreak` already do, so the
+// result stays a plain calendar-date string regardless of the caller's
+// timezone.
+function shiftDateString(dateString, days) {
+  const shifted = new Date(Date.parse(dateString) + days * ONE_DAY_MS)
+  const year = shifted.getUTCFullYear()
+  const month = String(shifted.getUTCMonth() + 1).padStart(2, '0')
+  const day = String(shifted.getUTCDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+// A broken streak (currentStreak > 0 but `getActiveStreak` reads 0 — see
+// above) can be repaired if the learner has enough points.
+export function canRepairStreak(streak, points, today) {
+  const currentStreak = streak?.currentStreak ?? 0
+  const balance = points?.balance ?? 0
+  return currentStreak > 0 && getActiveStreak(streak, today) === 0 && balance >= STREAK_REPAIR_COST
+}
+
+// Spends `STREAK_REPAIR_COST` points to revive a broken streak: backdating
+// `lastActiveDate` to "yesterday" makes `getActiveStreak` read `currentStreak`
+// as alive again (gap back down to exactly one day) without touching
+// `currentStreak`/`longestStreak` themselves — the streak resumes exactly
+// where it left off, with today still open to extend it further.
+export function repairStreak(streak, points, today) {
+  return {
+    streak: { ...streak, lastActiveDate: shiftDateString(today, -1) },
+    points: { balance: (points?.balance ?? 0) - STREAK_REPAIR_COST },
+  }
+}
+
 // A lesson unlocks once the lesson before it has been attempted at least once.
 export function getUnlockedLessonIds(lessons, progress) {
   const unlocked = new Set()

@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
+  addPoints,
+  canRepairStreak,
+  computeLessonPoints,
   computeStars,
   exerciseReducer,
   generateQuestions,
@@ -11,7 +14,9 @@ import {
   isAnswerCorrect,
   recordDailyStreak,
   recordResult,
+  repairStreak,
   shuffle,
+  STREAK_REPAIR_COST,
 } from './lessonLogic'
 
 describe('computeStars', () => {
@@ -182,6 +187,75 @@ describe('getActiveStreak', () => {
     const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
 
     expect(getActiveStreak(streak, '2026-06-12')).toBe(0)
+  })
+})
+
+describe('computeLessonPoints', () => {
+  it('awards up to 10 points on a first attempt, scaled by accuracy', () => {
+    expect(computeLessonPoints(6, 6, false)).toBe(10)
+    expect(computeLessonPoints(3, 6, false)).toBe(5)
+    expect(computeLessonPoints(0, 6, false)).toBe(0)
+  })
+
+  it('awards half as many points on a repeat attempt', () => {
+    expect(computeLessonPoints(6, 6, true)).toBe(5)
+    expect(computeLessonPoints(3, 6, true)).toBe(3)
+  })
+
+  it('returns 0 when there are no questions', () => {
+    expect(computeLessonPoints(0, 0, false)).toBe(0)
+  })
+})
+
+describe('addPoints', () => {
+  it('adds to an empty balance', () => {
+    expect(addPoints({}, 10)).toEqual({ balance: 10 })
+  })
+
+  it('accumulates onto an existing balance without mutating it', () => {
+    const points = { balance: 20 }
+
+    expect(addPoints(points, 5)).toEqual({ balance: 25 })
+    expect(points).toEqual({ balance: 20 })
+  })
+})
+
+describe('canRepairStreak', () => {
+  const points = { balance: STREAK_REPAIR_COST }
+
+  it('is false when the streak is still alive', () => {
+    const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
+
+    expect(canRepairStreak(streak, points, '2026-06-11')).toBe(false)
+  })
+
+  it('is false when the streak is broken but there are no points to repair it', () => {
+    const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
+
+    expect(canRepairStreak(streak, { balance: STREAK_REPAIR_COST - 1 }, '2026-06-12')).toBe(false)
+  })
+
+  it('is false when there is no streak to repair', () => {
+    expect(canRepairStreak({}, points, '2026-06-12')).toBe(false)
+  })
+
+  it('is true when the streak is broken and there are enough points', () => {
+    const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
+
+    expect(canRepairStreak(streak, points, '2026-06-12')).toBe(true)
+  })
+})
+
+describe('repairStreak', () => {
+  it('backdates lastActiveDate to yesterday and deducts the cost, preserving the streak counts', () => {
+    const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
+    const points = { balance: STREAK_REPAIR_COST + 50 }
+
+    const result = repairStreak(streak, points, '2026-06-12')
+
+    expect(result.streak).toEqual({ currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-11' })
+    expect(result.points).toEqual({ balance: 50 })
+    expect(getActiveStreak(result.streak, '2026-06-12')).toBe(4)
   })
 })
 

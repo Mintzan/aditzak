@@ -92,6 +92,43 @@ follow the same pattern). Other verbs (`nahi`, `jakin`, `joan`, `etorri`) keep
 single-string sentences for now. `pronounSentences` variants are deferred, per
 the doc's "Next steps" item 3.
 
+## 2026-06-11 — Added a Duolingo-gems-style points system, spendable to repair a broken streak
+
+**Decision:** Added `aditzak:points:v1` (`{ balance }`), a third standalone
+storage key alongside `progress`/`aditzak:streak:v1`, for the same reason as
+the streak: it's orthogonal to any single lesson's progress and "Reset
+progress" can clear it without a version bump elsewhere.
+
+Points are earned per lesson completion, scaled by accuracy
+(`computeLessonPoints` in `lessonLogic.js`):
+- **First attempt** at a lesson: `round(10 × correctCount/total)` (0-10).
+- **Repeat attempt** (the lesson already had `attempts > 0` *before* this
+  completion): `round(5 × correctCount/total)` (0-5) — half rate, since
+  repeats are review rather than new material.
+
+`AppShell`'s `onComplete` checks `progress[lesson.id]?.attempts` *before*
+calling `recordResult` to decide first-vs-repeat, then awards via
+`addPoints`. `ExerciseScreen` independently computes the same value (it
+already receives `attempts` as a prop) purely for display on
+`LessonResultsScreen` ("+N 💎") — both call the same pure function so the
+displayed and stored amounts can't drift apart.
+
+**Streak repair:** `STREAK_REPAIR_COST = 100`. When a streak reads as broken
+(`getActiveStreak` returns 0 but `currentStreak > 0`) and the balance covers
+the cost, `ProfileTab` shows a "Repair streak" card. `repairStreak`
+backdates `lastActiveDate` to "yesterday" (via a new `shiftDateString` helper
+that does the date-string arithmetic in UTC, matching how
+`recordDailyStreak`/`getActiveStreak` already compare dates) — this makes
+`getActiveStreak` read `currentStreak` as alive again without resetting or
+incrementing it, so the learner resumes exactly where they left off with
+today still open to extend it. Costs `STREAK_REPAIR_COST` points,
+confirmed via `window.confirm` like the existing reset-progress flow.
+
+**Rejected:** a separate one-time bonus for "finishing a unit" (as initially
+proposed) — folded into the per-lesson first-attempt rate instead, since a
+unit is just its lessons and tracking unit-level completion state separately
+would duplicate what `progress`/`getUnlockedLessonIds` already derive.
+
 ## 2026-06-11 — `generateQuestions` cycles through a person's framings before repeating one, to fix near-duplicate questions in small lessons
 
 **Decision:** For Phase I's 3-person (`ni`/`zu`/`hura`) lessons, a kind's
