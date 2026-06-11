@@ -241,6 +241,19 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // (3-6 person) conjugation table: see `TARGET_EXERCISE_COUNT` in `App.jsx`,
 // which derives `rounds` from the table size. Defaults to 1 (one question per
 // person, the original behaviour) so existing callers/tests are unaffected.
+//
+// For a person with few available framings (e.g. a 3-person table during
+// `noTyping`, where only `sentence`/`pronoun`/`form` are on offer), an
+// independent roll per round can easily land on the same kind twice — and
+// since a kind's content is otherwise fully determined by `person` (same
+// sentence, same option set), that reads as the exact same question
+// reappearing. `usedKinds` tracks, per person, which kinds have already been
+// rolled across rounds; a repeat roll is swapped for an unused kind (`form`
+// plus whatever's in `availableKinds`) when one remains, so a person cycles
+// through its distinct framings before any repeats — only once every framing
+// has appeared does a person start repeating. With `rounds = 1` (the
+// default) `used` is always empty before the first roll, so this is a no-op
+// and existing single-round behaviour/tests are unaffected.
 export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
@@ -248,6 +261,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } 
   const persons = Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
   const source = { verbId: verb.id, tense }
+  const usedKinds = new Map()
 
   function buildQuestion(person) {
     const sentence = sentences[person]
@@ -260,7 +274,16 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } 
       pronounSentence && !noTyping && 'type-pronoun',
     ].filter(Boolean)
 
-    switch (rollQuestionKind(availableKinds)) {
+    let kind = rollQuestionKind(availableKinds)
+    const used = usedKinds.get(person) ?? new Set()
+    if (used.has(kind)) {
+      const unused = ['form', ...availableKinds].filter((candidate) => !used.has(candidate))
+      if (unused.length > 0) kind = unused[Math.floor(Math.random() * unused.length)]
+    }
+    used.add(kind)
+    usedKinds.set(person, used)
+
+    switch (kind) {
       case 'sentence': {
         const { correct, options } = buildOptions(table, persons, person)
         return { ...source, kind: 'sentence', person, sentence, correct, options }

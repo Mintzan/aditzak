@@ -4,6 +4,29 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — `generateQuestions` cycles through a person's framings before repeating one, to fix near-duplicate questions in small lessons
+
+**Decision:** For Phase I's 3-person (`ni`/`zu`/`hura`) lessons, a kind's
+content is otherwise fully determined by `person` — e.g. the `sentence`
+question for `ni` is always "Ni etxean ___." with options `{nago, zaude,
+dago}`. During `noTyping` (a learner's first `NO_TYPING_ATTEMPTS`), only
+`['form', 'sentence', 'pronoun']` are available per person, but
+`TARGET_EXERCISE_COUNT` gives such lessons `rounds: 4` — four independent
+per-person rolls into a 3-outcome distribution, which by the pigeonhole
+principle guarantees at least one repeat, and often more. The result (e.g. on
+Unit 1's `egon-present` lesson) was the same question appearing multiple times
+in a single ~12-question session.
+
+`generateQuestions` now tracks, per person, which kinds have already been
+rolled across rounds (`usedKinds`). If a roll repeats a kind that's already
+been used and an unused one remains (`form` plus `availableKinds`), it's
+swapped for one of the unused kinds instead. With `rounds <= ` the number of
+available kinds, this guarantees zero repeats for that person; beyond that,
+repeats only start once every framing has appeared once. `rounds: 1` (the
+default, used by all existing single-round tests) leaves `used` empty before
+the first roll, so this is a no-op there — existing weighted-roll behaviour
+and tests for the first occurrence per person are unchanged.
+
 ## 2026-06-11 — Daily streak tracked in its own storage key, computed via a "live vs. broken" split
 
 **Decision:** Added a Duolingo-style daily streak: completing any lesson

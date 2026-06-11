@@ -534,6 +534,41 @@ describe('generateQuestions', () => {
     it('defaults to a single round', () => {
       expect(generateQuestions(verb, 'present')).toHaveLength(persons.length)
     })
+
+    it('cycles through every available framing for a person before repeating one', () => {
+      const verbWithFramings = {
+        ...verb,
+        conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da' } },
+        sentences: {
+          present: {
+            ni: 'Ni irakaslea ___.',
+            zu: 'Zu ikaslea ___.',
+            hura: 'Hura medikua ___.',
+          },
+        },
+        pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+        pronounSentences: {
+          present: {
+            ni: '___ irakaslea naiz.',
+            zu: '___ ikaslea zara.',
+            hura: '___ medikua da.',
+          },
+        },
+      }
+      const personsHere = Object.keys(verbWithFramings.conjugations.present)
+
+      // With `noTyping`, each person has exactly three framings on offer —
+      // `form`, `sentence`, `pronoun` — matching `rounds: 3`, so every person
+      // should see one of each with no repeats, regardless of how the
+      // underlying rolls land.
+      const questions = generateQuestions(verbWithFramings, 'present', { noTyping: true, rounds: 3 })
+
+      personsHere.forEach((person) => {
+        const kinds = questions.filter((q) => q.person === person).map((q) => q.kind)
+        expect(kinds).toHaveLength(3)
+        expect(new Set(kinds)).toEqual(new Set(['form', 'sentence', 'pronoun']))
+      })
+    })
   })
 })
 
