@@ -1058,10 +1058,11 @@ Past (Lehena):
 ## Next steps (not yet done)
 
 1. Review/edit these for naturalness and any missing vocabulary gaps.
-2. Turn each `sentences[tense][person]` cell into an array of these variants
-   in `src/App.jsx`'s `VERBS`, and update `generateQuestions`/
+2. ~~Turn each `sentences[tense][person]` cell into an array of these
+   variants in `src/App.jsx`'s `VERBS`, and update `generateQuestions`/
    `buildSpotErrorQuestion` (`src/lessonLogic.js`) to pick one variant at
-   random per question.
+   random per question.~~ Done for `izan`/`egon`/`ukan` present — see
+   `docs/DECISIONS.md`.
 3. `pronounSentences` (verb filled in, pronoun blanked) can reuse the same
    sentences with the blank repositioned — a follow-up pass once the
    `sentences` variants above are settled.

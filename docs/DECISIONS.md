@@ -4,6 +4,29 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — `sentences[tense][person]` can hold multiple phrasing variants, picked at random per question
+
+**Decision:** `verb.sentences[tense][person]` (and, by extension, anything
+read through it — `sentence`/`type-verb`/`spot-error` questions) now accepts
+either a single string (unchanged) or an array of strings. `lessonLogic.js`
+gained a small `pickVariant(value)` helper — returns the value as-is for a
+plain string, or a randomly-picked element for an array — used in
+`generateQuestions`'s `buildQuestion` and in `buildSpotErrorQuestion`.
+`personsWithSentences`'s truthiness check on `sentences[candidate]` already
+works unchanged for non-empty arrays, so no other logic needed to change.
+
+**Data:** `izan`, `egon`, and `ukan` present-tense `sentences.ni/zu/hura` are
+now arrays of 4-5 variants each, drawn from the categorized "Aplikazioa /
+Eskola / Familia eta etxea / Bidaiak / Eguneroko bizitza" tables in
+`docs/SAMPLE_SENTENCES.md` (its "Next steps" item 2), with duplicate cells
+across categories deduplicated. `ukan`'s table has no `zu`/`Zuk` row, only
+`hi`/`Hik` — its variants were adapted by substituting `Zuk` for `Hik` (the
+table's `Hik auto bat ___.` cell already matched the existing single-string
+`zu` sentence under that substitution, so the rest of the row's variants
+follow the same pattern). Other verbs (`nahi`, `jakin`, `joan`, `etorri`) keep
+single-string sentences for now. `pronounSentences` variants are deferred, per
+the doc's "Next steps" item 3.
+
 ## 2026-06-11 — "Source language" is the existing interface language, picked via a one-time onboarding screen, with Euskara prioritised
 
 **Decision:** Rather than introduce a second, parallel language preference,

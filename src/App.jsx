@@ -67,9 +67,9 @@ const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Ni irakaslea ___.',
-        zu: 'Zu ikaslea ___.',
-        hura: 'Hura medikua ___.',
+        ni: ['Ni irakaslea ___.', 'Ni ikaslea ___.', 'Ni aita ___.', 'Ni turista ___.', 'Ni langilea ___.'],
+        zu: ['Zu ikaslea ___.', 'Zu irakaslea ___.', 'Zu ama ___.', 'Zu gidaria ___.', 'Zu auzokidea ___.'],
+        hura: ['Hura medikua ___.', 'Hura zuzendaria ___.', 'Hura aitona ___.', 'Hura bidaiaria ___.', 'Hura saltzailea ___.'],
       },
     },
     pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
@@ -93,9 +93,9 @@ const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Ni etxean ___.',
-        zu: 'Zu kalean ___.',
-        hura: 'Hura eskolan ___.',
+        ni: ['Ni etxean ___.', 'Ni ikasgelan ___.', 'Ni Bilbon ___.', 'Ni lanean ___.'],
+        zu: ['Zu kalean ___.', 'Zu liburutegian ___.', 'Zu sukaldean ___.', 'Zu Donostian ___.', 'Zu dendan ___.'],
+        hura: ['Hura eskolan ___.', 'Hura patioan ___.', 'Hura logelan ___.', 'Hura Gasteizen ___.', 'Hura kalean ___.'],
       },
     },
     pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
@@ -126,9 +126,9 @@ const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Nik liburu bat ___.',
-        zu: 'Zuk auto bat ___.',
-        hura: 'Berak etxe bat ___.',
+        ni: ['Nik liburu bat ___.', 'Nik arreba bat ___.', 'Nik txartel bat ___.', 'Nik bilera bat ___.'],
+        zu: ['Zuk auto bat ___.', 'Zuk koaderno bat ___.', 'Zuk anaia bat ___.', 'Zuk mapa bat ___.'],
+        hura: ['Berak etxe bat ___.', 'Hark arkatz bat ___.', 'Berak seme bat ___.', 'Hark pasaporte bat ___.'],
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark' },
