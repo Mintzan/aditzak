@@ -9,6 +9,7 @@ import {
   getActiveStreak,
   getEncouragement,
   getLocalDateString,
+  pickEncouragementVariantIndex,
   getStreakEncouragement,
   getUnlockedLessonIds,
   isAnswerCorrect,
@@ -1200,14 +1201,94 @@ function FeedbackBar({ status, isLast, streakEncouragement, onContinue }) {
   )
 }
 
+// Celebration confetti/fireworks shown for a perfect (3-star) result. Picked
+// once per results screen — via the lazy `useState` initializer below, the
+// same pattern `createExerciseState` uses for `shuffle` — so a perfect score
+// doesn't always trigger the identical animation, but it also doesn't
+// re-roll (and re-trigger) on every re-render.
+const CELEBRATION_COLORS = ['#f87171', '#fb923c', '#facc15', '#4ade80', '#38bdf8', '#a78bfa', '#f472b6']
+const CONFETTI_PIECE_COUNT = 50
+const FIREWORK_BURST_COUNT = 3
+const FIREWORK_PARTICLES_PER_BURST = 12
+
+function createCelebration() {
+  if (Math.random() < 0.5) {
+    const pieces = Array.from({ length: CONFETTI_PIECE_COUNT }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      color: CELEBRATION_COLORS[Math.floor(Math.random() * CELEBRATION_COLORS.length)],
+      delay: Math.random() * 0.6,
+      duration: 2.4 + Math.random() * 1.6,
+      rotation: Math.round(Math.random() * 360),
+      drift: Math.round((Math.random() - 0.5) * 160),
+    }))
+    return { effect: 'confetti', pieces }
+  }
+
+  const bursts = Array.from({ length: FIREWORK_BURST_COUNT }, (_, i) => ({
+    id: i,
+    left: 20 + Math.random() * 60,
+    top: 15 + Math.random() * 45,
+    color: CELEBRATION_COLORS[Math.floor(Math.random() * CELEBRATION_COLORS.length)],
+    delay: i * 0.3 + Math.random() * 0.2,
+  }))
+  return { effect: 'fireworks', bursts }
+}
+
+function Celebration({ celebration }) {
+  if (celebration.effect === 'confetti') {
+    return (
+      <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden" aria-hidden="true">
+        {celebration.pieces.map((piece) => (
+          <span
+            key={piece.id}
+            className="animate-confetti-fall absolute -top-4 block h-2.5 w-1.5 rounded-sm"
+            style={{
+              left: `${piece.left}%`,
+              backgroundColor: piece.color,
+              animationDelay: `${piece.delay}s`,
+              animationDuration: `${piece.duration}s`,
+              '--confetti-rotation': `${piece.rotation}deg`,
+              '--confetti-drift': `${piece.drift}px`,
+            }}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  return (
+    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden" aria-hidden="true">
+      {celebration.bursts.map((burst) => (
+        <div key={burst.id} className="absolute" style={{ left: `${burst.left}%`, top: `${burst.top}%` }}>
+          {Array.from({ length: FIREWORK_PARTICLES_PER_BURST }).map((_, i) => (
+            <span
+              key={i}
+              className="animate-firework absolute h-1.5 w-1.5 rounded-full"
+              style={{
+                backgroundColor: burst.color,
+                animationDelay: `${burst.delay}s`,
+                '--firework-angle': `${(360 / FIREWORK_PARTICLES_PER_BURST) * i}deg`,
+              }}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone }) {
   const { t, tCount, language } = useLanguage()
   const stars = computeStars(correctCount, total)
-  const { icon, headline, messageKey } = getEncouragement(correctCount, total)
+  const [variantIndex] = useState(() => pickEncouragementVariantIndex(correctCount, total))
+  const [celebration] = useState(() => (stars === 3 ? createCelebration() : null))
+  const { icon, headline, messageKey } = getEncouragement(correctCount, total, variantIndex)
   const { heading } = describeLesson(lesson, t, language)
 
   return (
     <div className="mx-auto flex h-dvh w-full max-w-md flex-col items-center justify-center gap-5 bg-white px-8 text-center">
+      {celebration && <Celebration celebration={celebration} />}
       <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl" aria-hidden="true">
         {icon}
       </div>

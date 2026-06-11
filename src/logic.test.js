@@ -12,6 +12,7 @@ import {
   getStreakEncouragement,
   getUnlockedLessonIds,
   isAnswerCorrect,
+  pickEncouragementVariantIndex,
   recordDailyStreak,
   recordResult,
   repairStreak,
@@ -59,6 +60,33 @@ describe('getEncouragement', () => {
       expect(icon).toBeTruthy()
       expect(headline).toBeTruthy()
       expect(messageKey).toBeTruthy()
+    })
+  })
+
+  it('cycles through alternate variants for the same star band', () => {
+    const variants = [0, 1, 2].map((variantIndex) => getEncouragement(5, 5, variantIndex))
+    const headlines = new Set(variants.map((v) => v.headline))
+    const messageKeys = new Set(variants.map((v) => v.messageKey))
+    expect(headlines.size).toBe(3)
+    expect(messageKeys.size).toBe(3)
+  })
+
+  it('wraps out-of-range variant indexes', () => {
+    expect(getEncouragement(5, 5, 3)).toEqual(getEncouragement(5, 5, 0))
+  })
+})
+
+describe('pickEncouragementVariantIndex', () => {
+  it('returns a valid variant index for every star band', () => {
+    ;[
+      [0, 0],
+      [2, 6],
+      [4, 5],
+      [5, 5],
+    ].forEach(([correctCount, total]) => {
+      const index = pickEncouragementVariantIndex(correctCount, total)
+      expect(index).toBeGreaterThanOrEqual(0)
+      expect(() => getEncouragement(correctCount, total, index)).not.toThrow()
     })
   })
 })

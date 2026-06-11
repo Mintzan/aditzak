@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-11 — Added variant encouragement copy and a confetti/fireworks celebration to `LessonResultsScreen`
+
+**Decision:** `getEncouragement` (`lessonLogic.js`) now holds 3 icon/headline/
+messageKey variants per star band instead of 1, picked via a new
+`pickEncouragementVariantIndex(correctCount, total)`. `getEncouragement`
+itself stays pure — it takes a `variantIndex` (wrapped with modulo) rather
+than calling `Math.random` — and `variantIndex` defaults to `0`, so the
+existing variant-0 copy/headlines are unchanged for any caller that doesn't
+pass one. `LessonResultsScreen` picks the index once via a lazy `useState`
+initializer, the same pattern `createExerciseState` already uses for
+`shuffle`, so the choice is stable across re-renders but varies between
+lessons. A perfect (3-star) result also gets a one-shot confetti or fireworks
+animation (`createCelebration`/`Celebration`, also lazy-`useState`-picked,
+CSS-keyframe driven in `index.css`) — picked randomly between the two effects
+so finishing perfectly doesn't always look identical. No new dependency: both
+effects are plain absolutely-positioned `<span>`s animated with CSS custom
+properties (`--confetti-rotation`/`--confetti-drift`/`--firework-angle`), not
+canvas or a confetti library.
+
 ## 2026-06-11 — Fixed `nahi`'s `zu` example sentence to include an explicit subject
 
 **Decision:** Changed `nahi`'s `sentences.present.zu` from `'Etorri ___?'` to

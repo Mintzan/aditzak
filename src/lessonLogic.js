@@ -18,18 +18,44 @@ export function computeStars(score, total) {
 // `messageKey` is looked up in the active interface language by the caller
 // (via `useLanguage`'s `t`), since this module has no UI-language context of
 // its own.
-export function getEncouragement(correctCount, total) {
+//
+// Each star band has a few interchangeable variants so finishing a lesson
+// with the same score twice in a row doesn't always show the exact same
+// headline/message — `getEncouragement` takes a `variantIndex` (wrapped with
+// modulo so any integer is safe) rather than rolling its own randomness, so
+// it stays pure; callers pick the index via `pickEncouragementVariantIndex`.
+const ENCOURAGEMENT_VARIANTS = {
+  3: [
+    { icon: '🎉', headline: 'Bikain!', messageKey: 'encouragementPerfect' },
+    { icon: '🌟', headline: 'Ezin hobeto!', messageKey: 'encouragementPerfectAlt1' },
+    { icon: '🏆', headline: 'Txapelduna!', messageKey: 'encouragementPerfectAlt2' },
+  ],
+  2: [
+    { icon: '👏', headline: 'Oso ondo!', messageKey: 'encouragementGreat' },
+    { icon: '😄', headline: 'Primeran!', messageKey: 'encouragementGreatAlt1' },
+    { icon: '✨', headline: 'Aurrera!', messageKey: 'encouragementGreatAlt2' },
+  ],
+  1: [
+    { icon: '💪', headline: 'Ondo!', messageKey: 'encouragementGood' },
+    { icon: '👍', headline: 'Hor goaz!', messageKey: 'encouragementGoodAlt1' },
+    { icon: '📈', headline: 'Gora!', messageKey: 'encouragementGoodAlt2' },
+  ],
+  0: [
+    { icon: '🌱', headline: 'Ez etsi!', messageKey: 'encouragementKeepGoing' },
+    { icon: '🔄', headline: 'Berriz ere!', messageKey: 'encouragementKeepGoingAlt1' },
+    { icon: '🧭', headline: 'Aurrera segi!', messageKey: 'encouragementKeepGoingAlt2' },
+  ],
+}
+
+export function getEncouragement(correctCount, total, variantIndex = 0) {
   const stars = computeStars(correctCount, total)
-  switch (stars) {
-    case 3:
-      return { icon: '🎉', headline: 'Bikain!', messageKey: 'encouragementPerfect' }
-    case 2:
-      return { icon: '👏', headline: 'Oso ondo!', messageKey: 'encouragementGreat' }
-    case 1:
-      return { icon: '💪', headline: 'Ondo!', messageKey: 'encouragementGood' }
-    default:
-      return { icon: '🌱', headline: 'Ez etsi!', messageKey: 'encouragementKeepGoing' }
-  }
+  const variants = ENCOURAGEMENT_VARIANTS[stars]
+  return variants[variantIndex % variants.length]
+}
+
+export function pickEncouragementVariantIndex(correctCount, total) {
+  const stars = computeStars(correctCount, total)
+  return Math.floor(Math.random() * ENCOURAGEMENT_VARIANTS[stars].length)
 }
 
 // Mid-lesson momentum nudges: shown in the feedback bar exactly when a streak
