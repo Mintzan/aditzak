@@ -10,6 +10,7 @@ import {
   recordResult,
   shuffle,
 } from './lessonLogic'
+import { JOURNEY } from './journey'
 
 // =============================================================================
 // Verb data
@@ -41,6 +42,14 @@ import {
 // for `izan`'s `nor` subject, ergative for `ukan`'s `nork` subject) — and
 // `pronounSentences` gives a sentence with `___` marking where it goes, with
 // the verb already spelled out.
+//
+// Per `docs/LEARNING_JOURNEY.md`'s Phase I ("Survival Present"), every verb's
+// first lesson is restricted to `ni`/`zu`/`hura` — `gu`/`zuek`/`haiek` (and,
+// much later, `hi`) are added once Unit 6 ("Expansion") is implemented. Until
+// then, a Phase I verb's `present` table simply *contains only* those three
+// person keys — `generateQuestions` already builds one question per key in
+// the table, so a smaller table is all a 3-person lesson needs (see
+// `docs/EXERCISE_ENGINE.md`, "Phase I's 3-person horizon", option (a)).
 // =============================================================================
 
 const VERBS = [
@@ -52,47 +61,54 @@ const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'naiz', hi: 'haiz', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
-      past: { ni: 'nintzen', hi: 'hintzen', hura: 'zen', gu: 'ginen', zuek: 'zineten', haiek: 'ziren' },
+      present: { ni: 'naiz', zu: 'zara', hura: 'da' },
     },
     sentences: {
       present: {
         ni: 'Ni irakaslea ___.',
-        hi: 'Hi ikaslea ___.',
+        zu: 'Zu ikaslea ___.',
         hura: 'Hura medikua ___.',
-        gu: 'Gu lagunak ___.',
-        zuek: 'Zuek azkarrak ___.',
-        haiek: 'Haiek euskaldunak ___.',
-      },
-      past: {
-        ni: 'Ni gaztea ___.',
-        hi: 'Hi nire laguna ___.',
-        hura: 'Hura irakasle ona ___.',
-        gu: 'Gu ikasle onak ___.',
-        zuek: 'Zuek oso azkarrak ___.',
-        haiek: 'Haiek nire lagunak ___.',
       },
     },
-    pronouns: { ni: 'Ni', hi: 'Hi', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
     pronounSentences: {
       present: {
         ni: '___ irakaslea naiz.',
-        hi: '___ ikaslea haiz.',
+        zu: '___ ikaslea zara.',
         hura: '___ medikua da.',
-        gu: '___ lagunak gara.',
-        zuek: '___ azkarrak zarete.',
-        haiek: '___ euskaldunak dira.',
-      },
-      past: {
-        ni: '___ gaztea nintzen.',
-        hi: '___ nire laguna hintzen.',
-        hura: '___ irakasle ona zen.',
-        gu: '___ ikasle onak ginen.',
-        zuek: '___ oso azkarrak zineten.',
-        haiek: '___ nire lagunak ziren.',
       },
     },
   },
+  {
+    id: 'egon',
+    verb: 'egon',
+    meaning: 'to be (located / in a state)',
+    type: 'synthetic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'nago', zu: 'zaude', hura: 'dago' },
+    },
+    sentences: {
+      present: {
+        ni: 'Ni etxean ___.',
+        zu: 'Zu kalean ___.',
+        hura: 'Hura eskolan ___.',
+      },
+    },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+    pronounSentences: {
+      present: {
+        ni: '___ etxean nago.',
+        zu: '___ kalean zaude.',
+        hura: '___ eskolan dago.',
+      },
+    },
+  },
+  // Not yet wired into `LESSONS` — staged for Unit 2 ("Having and Wanting"),
+  // which is still `pending` in `journey.js`. Per Phase I's 3-person horizon
+  // this table will need trimming to `ni`/`zu`/`hura` (plus a `zu` row, per
+  // `docs/CONJUGATIONS.md` §3) when that unit is implemented.
   {
     id: 'ukan',
     verb: 'ukan',
@@ -148,6 +164,7 @@ const VERBS = [
 const PERSON_LABELS = {
   ni: 'I',
   hi: 'you (familiar)',
+  zu: 'you',
   hura: 'he / she / it',
   gu: 'we',
   zuek: 'you all',
@@ -174,51 +191,29 @@ const DIALECT_LABELS = {
   batua: 'Batua',
 }
 
-// The itinerary runs simple-and-singular → richer-and-combined:
+// `LESSONS` is the flat, ordered list of currently-playable lessons —
+// `getUnlockedLessonIds` unlocks them strictly in this order, one practice
+// lesson at a time, `{ id, verbId, tense }`.
 //
-//  1. Practice lessons are (verb × tense) pairs, in data order — one
-//     conjugation at a time, e.g. izan/present, izan/past, ukan/present,
-//     ukan/past. `id: '${verbId}-${tense}'`, shape `{ id, verbId, tense }`.
-//  2. Once a verb has more than one tense, a "verb review" lesson combining
-//     all of them is appended right after its practice lessons — e.g.
-//     izan/present + izan/past in one session, so the learner has to tell the
-//     two paradigms apart rather than coast on "it's all izan-present-shaped".
-//  3. Once there's more than one verb, a final "mixed review" caps the whole
-//     sequence, drawing from every (verb × tense) pair across the app — the
-//     most demanding checkpoint, mixing both verbs and both tenses.
-// Review lessons carry `review: true` and `sources: [{ verbId, tense }, …]`
-// (the conjugation tables they draw from) instead of a single `verbId`/
-// `tense` — `generateQuestions` is called once per source and the results
-// interleaved (see `createExerciseState`), and every generated question keeps
-// its own `verbId`/`tense` so the exercise screen can show each one in its
-// correct context even as it changes question to question.
-function tensesOf(verb) {
-  return Object.keys(verb.conjugations)
-}
-
-function verbReviewLesson(verb) {
-  const tenses = tensesOf(verb)
-  if (tenses.length < 2) return null
-  return {
-    id: `${verb.id}-review`,
-    review: true,
-    sources: tenses.map((tense) => ({ verbId: verb.id, tense })),
-  }
-}
-
+// Unlike the previous (verb × tense)-derived list, this is now hand-written
+// to follow `docs/LEARNING_JOURNEY.md`'s unit sequence — units don't map
+// cleanly onto "every tense of every verb" (e.g. a unit can introduce two
+// verbs at once, or reuse an earlier verb's table under a different gloss),
+// so `journey.js`'s `JOURNEY` is the source of truth for *order and grouping*
+// and references these ids via each available unit's `lessonIds`. Currently
+// just Unit 1 ("Who and Where"); append the next unit's lessons here as it's
+// implemented, and flip its `status` to `'available'` in `journey.js`.
+//
+// Review lessons (not used yet, but supported by `describeLesson`/
+// `createExerciseState`/`ProgressTab`) would carry `review: true` and
+// `sources: [{ verbId, tense }, …]` instead of a single `verbId`/`tense` —
+// `generateQuestions` is called once per source and the results interleaved,
+// with every generated question keeping its own `verbId`/`tense` so the
+// exercise screen can show each one in its correct context. The journey's
+// Refresh Gate units (5, 6, 11, 17, ...) will use this shape once implemented.
 const LESSONS = [
-  ...VERBS.flatMap((verb) =>
-    [...tensesOf(verb).map((tense) => ({ id: `${verb.id}-${tense}`, verbId: verb.id, tense })), verbReviewLesson(verb)].filter(Boolean),
-  ),
-  ...(VERBS.length > 1
-    ? [
-        {
-          id: 'mixed-review',
-          review: true,
-          sources: VERBS.flatMap((verb) => tensesOf(verb).map((tense) => ({ verbId: verb.id, tense }))),
-        },
-      ]
-    : []),
+  { id: 'izan-present', verbId: 'izan', tense: 'present' },
+  { id: 'egon-present', verbId: 'egon', tense: 'present' },
 ]
 
 // =============================================================================
@@ -241,43 +236,6 @@ function saveProgress(progress) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
   } catch {
     // localStorage may be unavailable (private browsing, quota) — ignore.
-  }
-}
-
-// A lesson "belongs" to a single verb's section if every conjugation table it
-// draws from is that verb's — true for every practice lesson (one source) and
-// for a "verb review" (several sources, but all the same verb). A "mixed
-// review" spans more than one verb and so doesn't fit any single section;
-// `groupLessonsByVerb` collects those separately so `LearnTab` can show them
-// in their own trailing group instead.
-function singleVerbId(lesson) {
-  const sources = lesson.sources ?? [{ verbId: lesson.verbId }]
-  const [first, ...rest] = sources
-  return rest.every((source) => source.verbId === first.verbId) ? first.verbId : null
-}
-
-function groupLessonsByVerb(lessons) {
-  const order = []
-  const byVerb = new Map()
-  const mixedLessons = []
-  lessons.forEach((lesson) => {
-    const verbId = singleVerbId(lesson)
-    if (verbId === null) {
-      mixedLessons.push(lesson)
-      return
-    }
-    if (!byVerb.has(verbId)) {
-      byVerb.set(verbId, [])
-      order.push(verbId)
-    }
-    byVerb.get(verbId).push(lesson)
-  })
-  return {
-    verbGroups: order.map((verbId) => ({
-      verb: VERBS.find((verb) => verb.id === verbId),
-      lessons: byVerb.get(verbId),
-    })),
-    mixedLessons,
   }
 }
 
@@ -423,58 +381,92 @@ function LessonList({ lessons, progress, unlockedIds, onSelect }) {
   )
 }
 
-function VerbSection({ verb, lessons, progress, unlockedIds, onSelect }) {
+// A pending unit isn't playable yet, so it renders as a locked roadmap card
+// instead of a `LessonNode` — title/focus/payload from `journey.js` give a
+// preview of what's coming, with a "Coming soon" badge in place of stars.
+// Refresh Gate units (`unit.gate`) get a shield icon instead of a lock to set
+// them apart as checkpoints rather than ordinary lessons.
+function PendingUnitCard({ unit }) {
   return (
-    <section className="mb-7">
-      <div className="mb-3">
-        <h2 className="text-lg font-bold text-gray-900">
-          {verb.verb} <span className="font-normal text-gray-400">· {verb.meaning}</span>
-        </h2>
-        <div className="mt-1.5">
-          <VerbBadgeRow verb={verb} />
-        </div>
+    <div className="flex items-start gap-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 opacity-70">
+      <div
+        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gray-200 text-xl text-gray-400"
+        aria-hidden="true"
+      >
+        {unit.gate ? '🛡️' : '🔒'}
       </div>
+      <div className="min-w-0 flex-1">
+        <p className="font-semibold text-gray-700">
+          Unit {unit.number} <span className="font-normal text-gray-400">· {unit.title}</span>
+        </p>
+        <p className="mt-0.5 text-sm text-gray-500">{unit.focus}</p>
+        {unit.payload && <p className="mt-1 text-sm text-gray-400 italic">{unit.payload}</p>}
+        <span className="mt-2 inline-block rounded-full bg-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-500">Coming soon</span>
+      </div>
+    </div>
+  )
+}
+
+// An available unit's `lessonIds` point at entries in `LESSONS` — render each
+// as a `LessonNode`, with the unit's title/focus from `journey.js` as a label
+// above them.
+function UnitLessons({ unit, progress, unlockedIds, onSelect }) {
+  const lessons = unit.lessonIds.map((id) => LESSONS.find((lesson) => lesson.id === id))
+  return (
+    <div>
+      <p className="font-semibold text-gray-900">
+        Unit {unit.number} <span className="font-normal text-gray-400">· {unit.title}</span>
+      </p>
+      <p className="mt-0.5 mb-2 text-sm text-gray-500">{unit.focus}</p>
       <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
+    </div>
+  )
+}
+
+function StageSection({ stage, progress, unlockedIds, onSelect }) {
+  return (
+    <section className="mb-6">
+      <h3 className="mb-3 text-sm font-bold tracking-wide text-gray-400 uppercase">{stage.title}</h3>
+      <div className="flex flex-col gap-4">
+        {stage.units.map((unit) =>
+          unit.status === 'available' ? (
+            <UnitLessons key={unit.number} unit={unit} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
+          ) : (
+            <PendingUnitCard key={unit.number} unit={unit} />
+          ),
+        )}
+      </div>
     </section>
   )
 }
 
-// Mixed reviews span more than one verb, so they don't have a single verb's
-// badges/title to anchor a `VerbSection` on — they get their own trailing
-// section instead, with copy that frames what makes them different (combining
-// verbs/tenses already met) rather than introducing a single paradigm.
-function ReviewSection({ lessons, progress, unlockedIds, onSelect }) {
+function PhaseSection({ phase, progress, unlockedIds, onSelect }) {
   return (
-    <section className="mb-7">
-      <div className="mb-3">
-        <h2 className="text-lg font-bold text-gray-900">Review</h2>
-        <p className="mt-1 text-sm text-gray-500">Checkpoints that mix verbs and tenses you've already practiced.</p>
+    <section className="mb-8">
+      <div className="mb-4">
+        <h2 className="text-lg font-bold text-gray-900">{phase.title}</h2>
+        <p className="text-sm text-gray-500">{phase.subtitle}</p>
       </div>
-      <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
+      {phase.stages.map((stage) => (
+        <StageSection key={stage.id} stage={stage} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
+      ))}
     </section>
   )
 }
 
-function LearnTab({ progress, onSelectLesson }) {
+// The home tab's lesson list is now driven by `JOURNEY` (`journey.js`) rather
+// than `LESSONS` directly: it walks phases → stages → units so the full
+// curriculum roadmap is visible, with available units rendering their
+// `LessonNode`s and pending units rendering locked `PendingUnitCard`s.
+function JourneyTab({ progress, onSelectLesson }) {
   const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress), [progress])
-  const { verbGroups, mixedLessons } = useMemo(() => groupLessonsByVerb(LESSONS), [])
 
   return (
     <div>
       <p className="mb-4 text-sm text-gray-500">Pick a lesson to practice. Finish one to unlock the next.</p>
-      {verbGroups.map(({ verb, lessons }) => (
-        <VerbSection
-          key={verb.id}
-          verb={verb}
-          lessons={lessons}
-          progress={progress}
-          unlockedIds={unlockedIds}
-          onSelect={onSelectLesson}
-        />
+      {JOURNEY.map((phase) => (
+        <PhaseSection key={phase.id} phase={phase} progress={progress} unlockedIds={unlockedIds} onSelect={onSelectLesson} />
       ))}
-      {mixedLessons.length > 0 && (
-        <ReviewSection lessons={mixedLessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelectLesson} />
-      )}
     </div>
   )
 }
@@ -576,7 +568,7 @@ function HomeScreen({ progress, tab, onChangeTab, onSelectLesson, onResetProgres
       </header>
 
       <main className="flex-1 px-5 pt-5 pb-28">
-        {tab === 'home' && <LearnTab progress={progress} onSelectLesson={onSelectLesson} />}
+        {tab === 'home' && <JourneyTab progress={progress} onSelectLesson={onSelectLesson} />}
         {tab === 'progress' && <ProgressTab progress={progress} />}
         {tab === 'profile' && <ProfileTab onResetProgress={onResetProgress} />}
       </main>

@@ -4,6 +4,45 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Restructured the home screen around `LEARNING_JOURNEY.md` and implemented Unit 1 ("Who and Where")
+
+**Decision:** Added `src/journey.js`, exporting `JOURNEY` — a data-only mirror
+of `docs/LEARNING_JOURNEY.md`'s phases → stages → units, each unit carrying a
+`status` of `'available'` (with `lessonIds` into `LESSONS`) or `'pending'`
+(roadmap preview only: title/focus/payload, plus `gate: true` for Refresh
+Gates). The home screen (`JourneyTab`/`PhaseSection`/`StageSection`) now walks
+this structure end-to-end, rendering available units' lessons via the existing
+`LessonNode`/`LessonList` and pending units as locked `PendingUnitCard`s with a
+"Coming soon" badge — so the full 22-unit curriculum is visible from day one
+even as units are filled in one at a time. The old auto-derived
+`LESSONS = (verb × tense) cross product` plus verb-grouped
+`VerbSection`/`ReviewSection`/`LearnTab` (and their `groupLessonsByVerb`/
+`singleVerbId` helpers) are gone; `LESSONS` is now a small hand-written list
+that journey units reference by id, since units don't map cleanly onto "every
+tense of every verb" (a unit can introduce two verbs at once, or reuse an
+earlier table under a different gloss).
+
+**Unit 1 ("Who and Where" — izan + egon present, ni/zu/hura) is now
+implemented and playable**, adopting `EXERCISE_ENGINE.md`'s "option (a)" for
+Phase I's 3-person horizon: `izan`'s and the new `egon` verb's `present`
+tables (plus `sentences`/`pronouns`/`pronounSentences`) literally contain only
+`ni`/`zu`/`hura` keys, rather than adding a `persons` filter to
+`generateQuestions`. Verified `buildOptions`/`buildSpotErrorQuestion`/
+`generateQuestions` already degrade gracefully with fewer than 4/6 persons (3
+persons just means `spot-error` never triggers, since it needs
+`personsWithSentences.length >= 4`), so this required zero `lessonLogic.js`
+changes. `izan`'s old 6-person, no-`zu`, `hi`-based `past` table was removed
+entirely (unused by any implemented unit and shaped for the pre-journey model)
+— it'll be re-added correctly, with `zu`, when Unit 12 ("I Was, I Had") is
+implemented. `ukan` is left as-is, unused, with a comment staging it for
+Unit 2.
+
+**Note for existing learners:** `izan-present`'s conjugation table shrank from
+6 persons to 3, so its question pool changes for anyone with existing
+`progress['izan-present']` — same precedent as the `zu`-row addition below: the
+*shape* of stored progress (`{ attempts, bestScore, totalQuestions, bestStars,
+lastPlayed }`) is unchanged, so `STORAGE_KEY` was not bumped.
+
 ## 2026-06-11 — Added `EXERCISE_ENGINE.md`: a unit-by-unit audit of engine gaps, superseding `LEARNING_JOURNEY.md`'s scattered implementation notes
 
 **Decision:** Added `docs/EXERCISE_ENGINE.md`, which walks all 22 units of
