@@ -595,6 +595,55 @@ describe('generateQuestions', () => {
     })
   })
 
+  describe('with sentence variants', () => {
+    const verbWithVariants = {
+      ...verb,
+      sentences: {
+        present: {
+          ni: ['Ni irakaslea ___.', 'Ni ikaslea ___.', 'Ni aita ___.'],
+          hi: 'Hi ikaslea ___.',
+          hura: 'Hura medikua ___.',
+          gu: 'Gu lagunak ___.',
+          zuek: 'Zuek azkarrak ___.',
+          haiek: 'Haiek euskaldunak ___.',
+        },
+      },
+    }
+    const variants = verbWithVariants.sentences.present.ni
+
+    it('picks one of the variants for a sentence-framed question', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const question = generateQuestions(verbWithVariants, 'present').find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('sentence')
+      expect(variants).toContain(question.sentence)
+    })
+
+    it('can land on different variants across separate generations', () => {
+      const seen = new Set()
+      for (let i = 0; i < 50; i += 1) {
+        const question = generateQuestions(verbWithVariants, 'present').find((q) => q.person === 'ni')
+        if (question.kind === 'sentence' || question.kind === 'type-verb') {
+          seen.add(question.sentence)
+        }
+      }
+
+      expect(seen.size).toBeGreaterThan(1)
+    })
+
+    it('fills the blank with one of the variants in a spot-error question too', () => {
+      // As above: with all six persons sentenced, 0.6 lands on 'spot-error'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+
+      const question = generateQuestions(verbWithVariants, 'present').find((q) => q.kind === 'spot-error' && q.person === 'ni')
+      const niItem = question.items.find((item) => item.person === 'ni')
+
+      const prefixes = variants.map((variant) => variant.split('___')[0])
+      expect(prefixes.some((prefix) => niItem.sentence.startsWith(prefix))).toBe(true)
+    })
+  })
+
   describe('rounds', () => {
     it('repeats one question per person for each round', () => {
       const questions = generateQuestions(verb, 'present', { rounds: 3 })

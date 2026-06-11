@@ -8,6 +8,90 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-11 — Resolved the last 4 doubtful sentences in `docs/SAMPLE_SENTENCES.md` via native-speaker review
+
+**Decision:** The 4 items left open by the entry below were checked with a
+native speaker and fixed:
+
+- `zeramatzazten` → `zeneramatzaten` (`eraman` past, `zuek` — confirmed
+  correct, follows the same `zen-...-ten` pattern as `ibili`'s
+  `zenbiltzaten`).
+- `Ekar ezazu gazta eta Idiazabalgo ardoa` → `Ekar itzazu gazta eta
+  Idiazabalgo ardoa` (two singular nouns coordinated with `eta` do count as a
+  plural object for verb agreement).
+- `saski beteta perretxiko zekarzkigun` → `perretxikoz betetako saski bat
+  zenekarkigun` — three issues at once: wrong subject-agreement prefix
+  (`zen-` for `zuk`, not `ze-`), `saski beteta perretxiko` isn't valid ("a
+  basket full of X" needs the instrumental `perretxikoz betetako saski bat`),
+  and with `saski bat` as the head noun the object is singular, not plural
+  (`-zki-` was wrong).
+- `Okinak ... laberaraziko du` → `Okinaren labe berriak ... erraraziko du` —
+  `-arazi` only attaches to verb radicals; `laberazi` (from the noun `labe`)
+  would mean "make get put in the oven", not "make bake". `erre` (to
+  bake/roast) → `errarazi` is the right base verb.
+
+The one-off `docs/SAMPLE_SENTENCES_REVIEW_PROMPT.md` used to gather this
+feedback has been deleted now that it's resolved.
+
+## 2026-06-11 — Fixed 13 grammar/spelling errors in `docs/SAMPLE_SENTENCES.md`'s cultural sentence banks
+
+**Decision:** Corrected the following in the "future units" cultural sentence
+banks (none of these are wired into `VERBS` yet, so no code/data changes were
+needed):
+
+- Ergative case on vowel-final names: `Sustraiak`/`Sustraiek` → `Sustraik`,
+  `Goizaneik` → `Goizanek` (vowel-final names take bare `-k`, not `-ek`/`-ak`).
+- `epaimaimahaiari` → `epaimahaiari` (duplicated syllable typo).
+- `okurru dakizkit` → `bururatu dakizkit` (`okurru` is a non-standard
+  Spanish-derived coinage; `bururatu` is the standard "occur to someone" verb,
+  and `dakizkit` is already the correct plural potential NOR-NORI form).
+- `litzazaizkizue` → `litzaizkizue` (duplicated syllable typo; parallels
+  `balitzaizkizue` earlier in the same sentence).
+- `barre arazi digute` → `barre arazi gaituzte` (causative of an `egin`-type
+  intransitive follows this section's `nor`→`nor-nork` pattern — the original
+  subject becomes the absolutive object — consistent with the section's other
+  examples like `korrikarazi zituen`/`itzularazi zituen`).
+- `jandakarazi` → `janarazi` (non-standard double-marked causative; matches
+  `docs/VERB_COVERAGE.md` §6's own `janarazi` example for the same
+  `nor-nork`→`nor-nori-nork` shift).
+- `Okinak labe berriak ... du` → `Okinaren labe berriak ... du` (the
+  translation says "the baker's new oven" — possessive needs the genitive
+  `-aren`, not the ergative `-ak`).
+- `zenetozten` → `zentozten` (×2 — `etorri` past, `zuek`).
+- `daramagu` → `daramatzagu` (a numeral like `bi` ("two") triggers plural
+  object agreement even though the noun itself stays unmarked).
+- `dakarte` → `dakartzate` (×2 — plural object `botila hotzak`/`pastel
+  gozoak` needs the `-tza-` plural marker).
+- `ardi latzak` → `ardi latxak` (×2, for consistency with the existing
+  correct `ardi latxak` elsewhere in the doc — Latxa is the sheep breed named
+  in the English translations).
+
+The 4 items originally left for native-speaker review here were resolved —
+see the entry above.
+
+## 2026-06-11 — `sentences[tense][person]` can hold multiple phrasing variants, picked at random per question
+
+**Decision:** `verb.sentences[tense][person]` (and, by extension, anything
+read through it — `sentence`/`type-verb`/`spot-error` questions) now accepts
+either a single string (unchanged) or an array of strings. `lessonLogic.js`
+gained a small `pickVariant(value)` helper — returns the value as-is for a
+plain string, or a randomly-picked element for an array — used in
+`generateQuestions`'s `buildQuestion` and in `buildSpotErrorQuestion`.
+`personsWithSentences`'s truthiness check on `sentences[candidate]` already
+works unchanged for non-empty arrays, so no other logic needed to change.
+
+**Data:** `izan`, `egon`, and `ukan` present-tense `sentences.ni/zu/hura` are
+now arrays of 4-5 variants each, drawn from the categorized "Aplikazioa /
+Eskola / Familia eta etxea / Bidaiak / Eguneroko bizitza" tables in
+`docs/SAMPLE_SENTENCES.md` (its "Next steps" item 2), with duplicate cells
+across categories deduplicated. `ukan`'s table has no `zu`/`Zuk` row, only
+`hi`/`Hik` — its variants were adapted by substituting `Zuk` for `Hik` (the
+table's `Hik auto bat ___.` cell already matched the existing single-string
+`zu` sentence under that substitution, so the rest of the row's variants
+follow the same pattern). Other verbs (`nahi`, `jakin`, `joan`, `etorri`) keep
+single-string sentences for now. `pronounSentences` variants are deferred, per
+the doc's "Next steps" item 3.
+
 ## 2026-06-11 — Added a Duolingo-gems-style points system, spendable to repair a broken streak
 
 **Decision:** Added `aditzak:points:v1` (`{ balance }`), a third standalone

@@ -232,6 +232,16 @@ function buildOptions(table, persons, person) {
   return { correct, options: shuffle([correct, ...distractors]) }
 }
 
+// `sentences[tense][person]` may be a single string or an array of phrasing
+// variants (different contexts for the same person/blank, e.g. "Ni irakaslea
+// ___." vs "Ni turista ___."); picking one at random per question keeps a
+// lesson from showing the exact same sentence every time it cycles back to a
+// given person, while a plain string (still used by verbs without variants)
+// is returned as-is.
+function pickVariant(value) {
+  return Array.isArray(value) ? value[Math.floor(Math.random() * value.length)] : value
+}
+
 // Builds a "spot the error" question: four fully filled-in example sentences —
 // the slot's own person plus three random companions sampled from whichever
 // persons have sentence data for this tense — with exactly one sentence's
@@ -251,7 +261,7 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
   const items = candidates.map((candidate, index) => {
     const isWrong = index === wrongIndex
     const form = isWrong ? table[shuffle(personsWithSentences.filter((other) => other !== candidate))[0]] : table[candidate]
-    return { person: candidate, sentence: sentences[candidate].replace('___', form) }
+    return { person: candidate, sentence: pickVariant(sentences[candidate]).replace('___', form) }
   })
   return {
     kind: 'spot-error',
@@ -324,7 +334,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } 
   const usedKinds = new Map()
 
   function buildQuestion(person) {
-    const sentence = sentences[person]
+    const sentence = pickVariant(sentences[person])
     const pronounSentence = verb.pronouns && pronounSentences[person]
     const availableKinds = [
       sentence && 'sentence',
