@@ -832,6 +832,280 @@ seen contracted as `arituko`/`ariko` + Present NOR Auxiliary)*
 
 ---
 
+## Cultural sentence bank — synthetic verbs (`aditz trinkoak`) (future units)
+
+Most Basque verbs are **periphrastic**: a participle plus an auxiliary
+(`izan`/`ukan`) that carries tense/person/number, the only pattern `VERBS`
+currently models. A small set of high-frequency verbs are instead
+**synthetic** (`aditz trinkoak`): tense, person, and number are packed
+directly into the verb itself, with no separate auxiliary — and the root
+often changes drastically between forms (`joan` → `doa`, `zihoan`,
+`gindoazen`...). These are present in everyday speech from day one, so
+covering them (even just in `nor` present/past) fills a real gap.
+
+The eight verbs below — `egon`, `joan`, `etorri`, `ibili` (NOR/intransitive)
+and `ukan`/`edun`, `jakin`, `eraman`, `ekarri` (NOR-NORK/transitive) — cover
+the common synthetic set alongside `izan` (already in `VERBS`). Because the
+root itself changes per person/tense rather than just an ending, these don't
+fit `VERBS`'s `conjugations[tense][person]` shape any differently than
+`izan` already does — same Tier 1 data-only addition per
+`docs/EXERCISE_ENGINE.md` — but a future "Trinkoak" focus mode that drills
+*only* these eight verbs' root changes side-by-side could be a worthwhile
+Tier 3/4 idea once enough of them are in `VERBS` (not yet classified or
+scheduled — flagged here for later).
+
+### 1. NOR Synthetic Verbs (Intransitive)
+
+#### EGON (to be / to stay)
+
+Present (Oraina):
+- **Gaur gure amona baserrian dago.**
+  - *Translation:* Today our grandmother is at the farmhouse.
+- **Gure osaba arrantzalea Getariako portuko tabernan dago.**
+  - *Translation:* Our uncle the fisherman is at the bar in Getaria's port.
+- **Gu Bilboko Zazpi Kaleetan gaude lagunen zain.**
+  - *Translation:* We are in Bilbao's Seven Streets waiting for friends.
+- **Zuek gaur oso nekatuta zaudete Gorbeia mendira igon ondoren.**
+  - *Translation:* You all are very tired today after climbing Mount Gorbeia.
+- **Ni upategian nago txakolin botilak etiketatzen.**
+  - *Translation:* I am in the winery labeling Txakoli bottles.
+
+Past (Lehena):
+- **Atzo mendizaleak Gorbeiako gailurrean zeuden ekaitza hasi zenean.**
+  - *Translation:* Yesterday the mountaineers were at the summit of Gorbeia
+    when the storm started.
+- **Gu atzo Bilboko Guggenheim museoaren aurrean geunden zain.**
+  - *Translation:* Yesterday we were waiting in front of the Bilbao
+    Guggenheim Museum.
+- **Arrantzaleak itsasontzian zeuden ekaitza hasi zenean.**
+  - *Translation:* The fishermen were on the boat when the storm started.
+- **Amona sukaldean zegoen marmitakoa sutan prestatzen.**
+  - *Translation:* Grandmother was in the kitchen preparing the tuna stew on
+    the fire.
+- **Gu atzo arratsaldean Donostiako hondartzan geunden jendea begiratzen.**
+  - *Translation:* Yesterday afternoon we were on San Sebastian's beach
+    watching the people.
+
+#### JOAN (to go)
+
+Present (Oraina):
+- **Goizero haurrak oinez doaz herriko eskolara.**
+  - *Translation:* Every morning the children go on foot to the village
+    school.
+- **Mendizaleak azkar doaz Anbotoko jatorrizko kobazulorantz.**
+  - *Translation:* The mountaineers are going quickly toward the original
+    cave of Anboto.
+- **Gu asteburu honetan Baionako festetara goaz lagunekin.**
+  - *Translation:* This weekend we are going to the Bayonne festivals with
+    friends.
+- **Zu gaur goizean Gernikako azokara zoaz barazki freskoen bila.**
+  - *Translation:* This morning you are going to the Gernika market looking
+    for fresh vegetables.
+
+Past (Lehena):
+- **Iaz gu Baionako jaietara gindoazen autoan bidea galdu genuenean.**
+  - *Translation:* Last year we were going to the Bayonne festivals in the
+    car when we got lost.
+- **Zu iaz Donostiako Parte Zaharreko pintxo taberna guztietara zindoazen.**
+  - *Translation:* Last year you were going to all the pintxo bars in San
+    Sebastian's Old Town.
+- **Haurrak korrika zihoazen Olentzero ikustera plazara.**
+  - *Translation:* The children were going running to the square to see
+    Olentzero.
+- **Zuek iaz oinez zindoazten Donostiatik Behobiara bide zaharretik.**
+  - *Translation:* Last year you all were going on foot from San Sebastian to
+    Behobia via the old path.
+- **Ni bakarrik nindoan basoan Basajaun ikusi nuenean.**
+  - *Translation:* I was going alone in the forest when I saw Basajaun.
+
+#### ETORRI (to come)
+
+Present (Oraina):
+- **Begira! Dantzariek Zuberoako jantzi politak jantzita datoz.**
+  - *Translation:* Look! The dancers are coming wearing beautiful outfits
+    from Soule.
+- **Begira, Zuberoako maskaradako dantzariak kantuan datoz herriko
+  plazara!**
+  - *Translation:* Look, the dancers of the Soule masquerade are coming
+    singing to the town square!
+- **Gu pozik gatoz frontonetik gure herriko pilotariek irabazi
+  dutelako.**
+  - *Translation:* We are coming happily from the fronton because our town's
+    pelota players won.
+- **Zu itsasotik datorren haize hotzarekin zatoz etxera.**
+  - *Translation:* You are coming home with the cold wind that comes from the
+    sea.
+
+Past (Lehena):
+- **Zuzendaria Bilboko Guggenheim museotik zetorren nirekin topo egin
+  duenean.**
+  - *Translation:* The director was coming from the Bilbao Guggenheim Museum
+    when he ran into me.
+- **Gurasoak goizeko lehen orduan zetozen baserritik esnearekin.**
+  - *Translation:* The parents were coming from the farmhouse with the milk
+    at the first hour of the morning.
+- **Zuek korrika zenetozten Korrika festan lekukoa eskuz esku
+    pasatzen.**
+  - *Translation:* You all were coming running in the Korrika festival
+    passing the witness baton from hand to hand.
+- **Zuek pilotarien partidatik zenetozten pozik irabazi zutelako.**
+  - *Translation:* You all were coming from the pelota players' match happy
+    because they won.
+- **Ni oso nekatuta nentorren Tolosako babarrun janketatik.**
+  - *Translation:* I was coming back very tired from the Tolosa bean feast.
+
+#### IBILI (to walk / to roam / to be busy with)
+
+Present (Oraina):
+- **Surflariak egun osoan Mundakako olatuetan dabiltza.**
+  - *Translation:* The surfers are hanging around the Mundaka waves all day.
+- **Basurdeak gauez herriko baso sakonetan dabiltza janari bila.**
+  - *Translation:* The wild boars are roaming the deep forests of the town at
+    night looking for food.
+- **Gazteak Donostiako Parte Zaharrean dabiltza pintxorik onenaren
+  bila.**
+  - *Translation:* The youths are roaming around San Sebastian's Old Town
+    looking for the best pintxo.
+- **Gu egun osoan aplikazioaren kodea idazten gabiltza gure sotorik
+  ilunenean.**
+  - *Translation:* We are busy writing the application's code all day in our
+    darkest cellar.
+- **Zuek basoan zabiltzate sasoiko perretxikoak eta zizak biltzen.**
+  - *Translation:* You all are walking in the forest gathering seasonal wild
+    mushrooms.
+
+Past (Lehena):
+- **Zuek atzo arratsaldean Donostiako Parte Zaharrean zenbiltzaten
+  pintxoak jaten.**
+  - *Translation:* You all were walking around San Sebastian's Old Town
+    yesterday afternoon eating pintxos.
+- **Ni goiz osoan sukaldean nenbilen Tolosako babarrunak egosten.**
+  - *Translation:* I was busy in the kitchen all morning boiling Tolosa
+    beans.
+- **Basurdeak gauez herriko soroetan zebiltzan janari bila.**
+  - *Translation:* The wild boars were roaming the village fields at night
+    looking for food.
+- **Ni goiz osoan nenbilen sukaldean euskal pastela labean sartu
+  nahian.**
+  - *Translation:* I was busy all morning in the kitchen trying to get the
+    Basque cake into the oven.
+- **Zu atzo Aste Nagusian zenbiltzan lagun zaharrak agurtzen.**
+  - *Translation:* Yesterday you were walking around the Aste Nagusia
+    greeting old friends.
+
+### 2. NOR-NORK Synthetic Verbs (Transitive)
+
+#### UKAN / EDUN (to have)
+
+Present (Oraina):
+- **Baserritarrek ardi latxak dituzte mendian.**
+  - *Translation:* The farmers have Latxa sheep on the mountain.
+
+Past (Lehena):
+- **Guk Getariako txakolin botila bat genuen hozkailuan.**
+  - *Translation:* We had a bottle of Txakoli from Getaria in the fridge.
+
+#### JAKIN (to know information)
+
+Present (Oraina):
+- **Nik ondo dakit Tolosako babarrunak nola prestatu.**
+  - *Translation:* I know well how to prepare Tolosa's beans.
+- **Nik oso ondo dakit zein den euskal pastelik onena.**
+  - *Translation:* I know very well which is the best Basque cake.
+- **Nik oso ondo dakit Idiazabal gazta nola egiten den baserrietan.**
+  - *Translation:* I know very well how Idiazabal cheese is made in
+    farmhouses.
+- **Guk badakigu bertsolariak nola rimatu behar dituen bertsoak plazan.**
+  - *Translation:* We know how the bertsolari must rhyme the verses in the
+    square.
+- **Zuek al dakizue nor den Mundakako ezker olatua hobekien hartzen duen
+  surflaria?**
+  - *Translation:* Do you all know who is the surfer that catches Mundaka's
+    left wave best?
+
+Past (Lehena):
+- **Zuk bertsotan abesten bazenekien, zergatik ez zenuen parte hartu?**
+  - *Translation:* If you knew how to sing improvised verses, why didn't you
+    participate?
+- **Gure gurasoek ez zekiten bertsolarien saioa gaur arratsaldean
+  zenik.**
+  - *Translation:* Our parents did not know that the bertsolaris' session
+    was this afternoon.
+- **Aitonak ez zekien gaur gauean sagardotegira joateko plana genuenik.**
+  - *Translation:* Grandfather did not know that we had a plan to go to the
+    cider house tonight.
+- **Guk bagenekien Zumaia Flysch-eko itsaslabarrak arriskutsuak zirela.**
+  - *Translation:* We knew that the cliffs of the Zumaia Flysch were
+    dangerous.
+- **Zuk bazenekien euskal aditz trinkoak ikastea zaila izango zela.**
+  - *Translation:* You knew that learning Basque synthetic verbs was going to
+    be difficult.
+
+#### ERAMAN (to carry / to take along)
+
+Present (Oraina):
+- **Arrantzaleek hegaluze freskoa daramate Getariako portura.**
+  - *Translation:* The fishermen are carrying fresh albacore tuna to the port
+    of Getaria.
+- **Guk motxilan Idiazabal gazta eta ogia daramagu mendirako.**
+  - *Translation:* We are carrying Idiazabal cheese and bread in our
+    backpacks for the mountain.
+- **Arrantzaleek hegaluze fresko ugari daramate gaurko kaxetan.**
+  - *Translation:* The fishermen are carrying a lot of fresh albacore tuna in
+    today's boxes.
+- **Zuk daramazun zurezko soka oso gogorra da herri kiroletarako.**
+  - *Translation:* The wooden rope you are carrying is very tough for rural
+    sports.
+- **Zuk motxilan Idiazabal gazta zaharra daramazu afaltzeko.**
+  - *Translation:* You are carrying old Idiazabal cheese in your backpack for
+    dinner.
+- **Guk motxilan Getariako txakolin botila hotz bi daramagu.**
+  - *Translation:* We are carrying two cold bottles of Getaria Txakoli in our
+    backpack.
+
+Past (Lehena):
+- **Sukaldariek txuleta handiak zeramatzaten txosnatik mahaira.**
+  - *Translation:* The cooks were carrying large steaks from the festival
+    stall to the table.
+- **Nik nire txakurra neraman mendira ardi latzak ikustera.**
+  - *Translation:* I was taking my dog to the mountain to see the Latxa
+    sheep.
+- **Zuek autoan zeramatzazten dantzariak herriko jaietara joateko.**
+  - *Translation:* You all were carrying the dancers in the car to go to the
+    town festivals.
+
+#### EKARRI (to bring)
+
+Present (Oraina):
+- **Lagunek Donostiako Danborradako danbor txiki bat dakarte
+  oparitzeko.**
+  - *Translation:* The friends are bringing a small drum from San Sebastian's
+    Drum Festival to gift.
+- **Nire lagunek Getariako txakolin botila hotzak dakarte.**
+  - *Translation:* My friends bring cold bottles of Txakoli from Getaria.
+- **Nire lagunek goizero euskal pastel gozoak dakarte gozotegitik.**
+  - *Translation:* My friends bring delicious Basque cakes from the pastry
+    shop every morning.
+- **Nik zuri Tolosako babarrun gorri zaku bat dakart oparitzeko.**
+  - *Translation:* I bring you a sack of Tolosa red beans as a gift.
+- **Guk baserriko ur berria dakargu mendiko iturritik.**
+  - *Translation:* We bring fresh farmhouse water from the mountain spring.
+
+Past (Lehena):
+- **Okinak euskal pastel gozo-gozoak zekartzan labetik atera berritan.**
+  - *Translation:* The baker was bringing delicious Basque cakes fresh out of
+    the oven.
+- **Okinak goizero ogi laberatu berriak zekartzan gurdi gainean.**
+  - *Translation:* The baker brought freshly baked bread on top of the cart
+    every morning.
+- **Zuk saski beteta perretxiko zekarzkigun atzo basotik bueltan.**
+  - *Translation:* You brought us a basket full of mushrooms yesterday
+    returning from the forest.
+- **Guk opari politak zekarzkizun Baionako denda txikitik.**
+  - *Translation:* We brought you nice gifts from the small shop in Bayonne.
+
+---
+
 ## Next steps (not yet done)
 
 1. Review/edit these for naturalness and any missing vocabulary gaps.
@@ -857,3 +1131,12 @@ seen contracted as `arituko`/`ariko` + Present NOR Auxiliary)*
    `LEARNING_JOURNEY.md`) — `docs/VERB_COVERAGE.md` §6 still needs the
    `-arazi`/`-erazi` conditioning rule sourced before any of these become
    `VERBS` entries.
+8. The `ari izan` continuous-aspect bank isn't yet placed in
+   `LEARNING_JOURNEY.md` — find or add a unit for it (likely paired with
+   present/past tense units, since it reuses their NOR auxiliaries) before
+   pulling sentences from it.
+9. The synthetic-verb (`aditz trinkoak`) bank covers `egon`, `joan`, `etorri`,
+   `ibili`, `ukan`/`edun`, `jakin`, `eraman`, `ekarri` — none of these are yet
+   in `VERBS` or `LEARNING_JOURNEY.md`. `docs/VERB_COVERAGE.md` should gain a
+   section noting these as a distinct "synthetic verbs" coverage area once
+   units are planned for them.
