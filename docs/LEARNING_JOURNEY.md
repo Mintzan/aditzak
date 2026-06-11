@@ -1,11 +1,8 @@
-# Aditzak — Learning Journey (v2: acquisition order)
+# Aditzak — Learning Journey (acquisition order)
 
-> **Revision note:** this replaces the original (v1) 17-stage, grammar-ordered
-> sequence with an **acquisition-ordered** one — see `DECISIONS.md` for why.
-> v1's "usefulness over implementation-ease" tiebreaker carries over unchanged;
-> what changed is the *unit of organization* (communicative goal, not
-> grammatical category) and the *person scope* (3 persons first, not 6/7).
-> Content design only — no exercises, no `VERBS` data yet.
+> Content design only — no exercises, no `VERBS` data yet. Units are ordered
+> by communicative goal rather than grammatical category, and prioritize
+> usefulness over implementation-ease where the two trade off.
 
 ## Core pedagogical realignment
 
@@ -15,16 +12,13 @@
    in one **Expansion** unit (Refresh Gate A) once enough verbs exist to make
    the expansion feel like "more of what you know" rather than "six new
    words."
-2. **`zu` is the default "you," from lesson one — not a retrofit.** v1 put
-   `zu` in a late "Stage 11 retrofit." This version makes `zu` foundational
-   and **defers `hi` entirely** to a single late unit that teaches it
-   *together with* the allocutive register (hitanoa) — `hi` was always going
-   to need that register context to make sense, so folding the two into one
-   "intimate register" unit (Phase V, Unit 21) is both more natural *and*
-   simpler than maintaining `hi` as a 7th person throughout the core
-   curriculum. **Net effect: the "core" person grid shrinks from
-   `ni/hi/hura/gu/zuek/haiek` to `ni/zu/hura/gu/zuek/haiek`** — same size,
-   one swap.
+2. **`zu` is the default "you," from lesson one.** `zu` is foundational from
+   the start, and `hi` is **deferred entirely** to a single late unit that
+   teaches it *together with* the allocutive register (hitanoa) — `hi` was
+   always going to need that register context to make sense, so folding the
+   two into one "intimate register" unit (Phase V, Unit 21) is both more
+   natural *and* simpler than maintaining `hi` as a 7th person throughout the
+   core curriculum. The "core" person grid is `ni/zu/hura/gu/zuek/haiek`.
 3. **Functional grouping over grammatical grouping.** A learner doesn't care
    that `ikusi` is periphrastic and `eduki` is synthetic — both just say
    "I see / I have." Units are named for what they let you *say*
@@ -36,8 +30,8 @@
    negation drills, person-grid expansion, or cross-paradigm "which suffix
    goes where" sorting. Gates are the device that gives the otherwise-linear
    `getUnlockedLessonIds` progression its spaced-repetition character.
-5. **Person-Expansion Rule** (resolves an ambiguity in the source proposal):
-   the 3-persons-first restriction applies only to **Phase I** (Units 1–4).
+5. **Person-Expansion Rule**: the 3-persons-first restriction applies only to
+   **Phase I** (Units 1–4).
    Refresh Gate A's "Expansion" unit (Unit 6) completes the `gu`/`zuek`/
    `haiek` columns for *every* verb introduced so far (`izan`, `egon`,
    `ukan`, `joan`, `etorri` — `ari`/`nahi` ride `izan`/`ukan`'s tables and
@@ -50,25 +44,15 @@
 These are the things this journey *requires* that don't exist yet — flagged
 here so they're decided once, deliberately, rather than discovered mid-build.
 
-- ~~**`zu` is missing from `izan` §1 and `ukan` §3 in `CONJUGATIONS.md`.**~~
-  **Done** — `zu` rows (`zara`/`zinen` for `izan`, `duzu`/`zenuen` for `ukan`)
-  have been added to both citation tables, cross-checked against `mintzatu`'s
-  `mintzo zara`/`mintzo zinen` (§6) and the `NOR`=1st/2nd person grids'
-  `zuk`→`hura` cells respectively. `VERBS` itself still models six persons (no
-  `zu`); this was the documentation prerequisite, not the data-model change
-  itself.
-- **`egon`/`joan`/`etorri`/`ibili` (§6) already have `zu` rows** — one of the
-  reasons this redesign is *less* work than it first looks. §6's data was
-  written with 7 persons (`ni`/`hi`/`hura`/`gu`/`zu`/`zuek`/`haiek`) from the
-  start; this journey just stops asking for `hi`'s row until Unit 21.
+- **`egon`/`joan`/`etorri`/`ibili` (§6) already have `zu` rows** — §6's data
+  was written with 7 persons (`ni`/`hi`/`hura`/`gu`/`zu`/`zuek`/`haiek`) from
+  the start, so this journey just stops asking for `hi`'s row until Unit 21.
 - **§6's "Past" column for `joan`/`etorri`/`ibili` is imperfective
   ("I was going" — `nindoan`, `zetorren`), not simple past ("I went" —
-  periphrastic `joan nintzen`).** Unit 14 ("Completed Motion in the Past" in
-  the source proposal) is **mislabeled** if it means `nindoan`/`zetorren` —
-  those forms express ongoing/habitual past motion, the opposite of
-  "completed." Renamed below to **"Motion in Progress (Past)"**, with
-  "completed motion" (`joan nintzen`, `etorri nintzen`) folded into Unit 13's
-  periphrastic past instead, where it actually belongs.
+  periphrastic `joan nintzen`).** Those forms express ongoing/habitual past
+  motion, the opposite of "completed," so Unit 14 ("Motion in Progress
+  (Past)") covers them, while "completed motion" (`joan nintzen`,
+  `etorri nintzen`) belongs in Unit 13's periphrastic past instead.
 - **Restricting a lesson to `ni`/`zu`/`hura`** isn't something the current
   `generateQuestions`/`conjugations` shape distinguishes — it builds one
   question per key in a tense's conjugation object, i.e. however many persons
@@ -92,13 +76,13 @@ here so they're decided once, deliberately, rather than discovered mid-build.
 - **Refresh Gate units** (5, 11, 17, and the implicit Phase-V wrap-up) are
   structurally `review: true` lessons with `sources` drawn from *everything
   taught so far in that phase* — the existing review-lesson mechanism already
-  supports this. The only new idea is that some gates (per the source
-  proposal, Unit 11 specifically) are framed as **must-pass-with-high-
-  accuracy** before the next lesson unlocks — `getUnlockedLessonIds`
-  currently only checks "has at least one attempt," not score. Gating on
-  score is a small but real change to that function, and a product decision
-  (what threshold? what happens on failure — replay, or just a warning?)
-  worth making explicitly rather than inferring from "high accuracy rating."
+  supports this. The only new idea is that some gates (Unit 11 specifically)
+  are framed as **must-pass-with-high-accuracy** before the next lesson
+  unlocks — `getUnlockedLessonIds` currently only checks "has at least one
+  attempt," not score. Gating on score is a small but real change to that
+  function, and a product decision (what threshold? what happens on failure
+  — replay, or just a warning?) worth making explicitly rather than
+  inferring from "high accuracy rating."
 
 ## The journey
 
@@ -152,7 +136,7 @@ grid, every verb, from each verb's first lesson (Person-Expansion Rule).
 
 | Unit | Focus | Constraint | Notes |
 |---|---|---|---|
-| 11 | **REFRESH — Cumulative Present Mixer** | zero new verbs; comprehensive | Mixes synthetic + periphrastic, positive + negative (reuses Gate A's negation pattern across the whole verb set), and present + future. **Gate-by-score**: per the source proposal this should require a high-accuracy pass before Phase III unlocks — see "score-gating" in the implications section above for what that requires. |
+| 11 | **REFRESH — Cumulative Present Mixer** | zero new verbs; comprehensive | Mixes synthetic + periphrastic, positive + negative (reuses Gate A's negation pattern across the whole verb set), and present + future. **Gate-by-score**: should require a high-accuracy pass before Phase III unlocks — see "score-gating" in the implications section above for what that requires. |
 
 ---
 
@@ -162,9 +146,9 @@ grid, every verb, from each verb's first lesson (Person-Expansion Rule).
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 12 | **"I Was, I Had"** — `izan`/`ukan` past, full grid | "I was young." / "She had a dog." | §1, §3 | ✅ `zu`'s `zinen`/`zenuen` now in `CONJUGATIONS.md` |
-| 13 | **Past Narrative Flow** — periphrastic past (`ikusi nuen`), imperfective/habitual past (`etortzen nintzen`), **and completed motion** (`joan nintzen`, `etorri nintzen`) | "I saw it." / "I used to come (often)." / "I went." / "She came." | §11 (periphrastic tense matrix), §13 | `joan`/`etorri` simple-past (`joan nintzen`) belongs *here*, not Unit 14 — see relabeling note above |
-| 14 | **Motion in Progress (Past)** *(renamed from "Completed Motion")* — `joan`/`etorri`/`ibili`'s native past forms (`nindoan` "I was going", `zetorren` "he was coming") | "I was on my way (when...)." / "He was coming (and then...)." | §6 | ✅ already in §6's tables; framed explicitly as imperfective/progressive, contrasted with Unit 13's `joan nintzen` |
+| 12 | **"I Was, I Had"** — `izan`/`ukan` past, full grid | "I was young." / "She had a dog." | §1, §3 | ✅ `zu`'s `zinen`/`zenuen` are in `CONJUGATIONS.md` |
+| 13 | **Past Narrative Flow** — periphrastic past (`ikusi nuen`), imperfective/habitual past (`etortzen nintzen`), **and completed motion** (`joan nintzen`, `etorri nintzen`) | "I saw it." / "I used to come (often)." / "I went." / "She came." | §11 (periphrastic tense matrix), §13 | `joan`/`etorri` simple-past (`joan nintzen`) belongs *here*, not Unit 14 |
+| 14 | **Motion in Progress (Past)** — `joan`/`etorri`/`ibili`'s native past forms (`nindoan` "I was going", `zetorren` "he was coming") | "I was on my way (when...)." / "He was coming (and then...)." | §6 | ✅ already in §6's tables; framed explicitly as imperfective/progressive, contrasted with Unit 13's `joan nintzen` |
 
 ---
 
@@ -206,8 +190,8 @@ grid, every verb, from each verb's first lesson (Person-Expansion Rule).
 
 ## App engine logic — design notes (not part of the content sequence)
 
-Two engine-level proposals came with this redesign. Both are genuinely good
-ideas but are **feature/architecture work**, not curriculum content — noted
+Two engine-level proposals are genuinely good ideas but are
+**feature/architecture work**, not curriculum content — noted
 here so they're not lost, but deliberately *not* folded into the unit
 sequence above.
 
@@ -233,15 +217,3 @@ information to do without new metadata on distractor options (e.g. tagging
 *why* each wrong option is wrong). Also worth its own design pass, likely
 after Phase IV (Stage 6/Refresh Gate C) makes NOR/NORK/NORI confusion a live
 issue worth detecting.
-
-## Relationship to v1
-
-v1's per-stage grammar groundwork (§ references, what's documented vs. not,
-the `egin`/dialect-variant/etzan material in v1's Stages 6–7 and 14–17) isn't
-*wrong* — it's just organized by grammatical category instead of acquisition
-order. Material from v1's later stages (zu retrofit, conditional, potential,
-subjunctive/imperative, allocutive, non-finite/passive, dialect variants) maps
-onto this version's Phase III–V plus a not-yet-placed "dialect variants /
-`etzan`" tail that would follow Unit 22 — left out of this revision's table
-for now since dialect variants are a "flavor" addition or to any
-already-mastered verb, not a sequencing-critical step.
