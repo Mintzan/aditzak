@@ -633,25 +633,43 @@ table.
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | didak / didan | dit | didagu | didazu | didazue | didate |
+| hiri | diat / dinat | *(refl.)* | dik / din | diagu / dinagu | *(hika/zuka)* | *(hika/zuka)* | ditek / diten |
 | hari | diot | diok / dion | dio | diogu | diozu | diozue | diote |
 | guri | *(refl.)* | diguk / digun | zigun | *(refl.)* | diguzu | diguzue | ziguten |
 | zuri | dizut | *(hika/zuka)* | dizu | dizugu | *(refl.)* | *(zu↔zuek)* | dizute |
+| zuei | dizuet | *(hika/zuka)* | dizue | dizuegu | *(zu↔zuek)* | *(refl.)* | dizuete |
 | haiei | diet | diek / dien | die | diegu | diezu | diezue | diete |
 
 Each form follows **`di-` + `NORI`-suffix + `NORK`-suffix**: `NORI`-suffixes
-`-da-`/`-o-`/`-gu-`/`-zu-`/`-e-` for `niri`/`hari`/`guri`/`zuri`/`haiei`;
-`NORK`-suffixes `-t`/`-k(/-n)`/`∅`/`-gu`/`-zu`/`-zue`/`-te` for
+`-da-`/`-o-`/`-gu-`/`-zu-`/`-zue-`/`-e-` for
+`niri`/`hari`/`guri`/`zuri`/`zuei`/`haiei`; `NORK`-suffixes
+`-t`/`-k(/-n)`/`∅`/`-gu`/`-zu`/`-zue`/`-te` for
 `nik`/`hik`/`hark`/`guk`/`zuk`/`zuek`/`haiek` — `hik`'s suffix gender-splits
 like §3's `-k`/`-n` (`diok`/`dion`, `didak`/`didan`, …). `zuri`/`zuei` with
 `NORK`=`hik` are `*(hika/zuka)*`, same register clash as `NORK`=`zuk`/`zuek`
-with `NOR`=`hi` in §3.
+with `NOR`=`hi` in §3. `zuei` mirrors `zuri` with `-zu-` → `-zue-` (`dizut` →
+`dizuet`, `dizu` → `dizue`, …), the same pluralisation §16.1 uses for its own
+`zuei` row.
 
-`niri`/`nik`, `guri`/`nik`, `guri`/`guk`, and `zuri`/`zuk` are all
-`*(refl.)*` under §3's same-person-category extension (1st person category =
-`ni`/`gu`, 2nd = `zu`/`zuek`): in each of these cells `NORI` and `NORK`
-belong to the same person category, so "I give it to myself/us" or "we/you
-give it to yourself/ourselves" can't be expressed with a distinct ditransitive
-form. In practice these meanings are expressed periphrastically with `buru`
+`hiri` doesn't fit the `-VOWEL-`-suffix template the other rows follow —
+instead its forms *are* §10's allocutive `-k`/`-n` (tokano/nokano) forms,
+gender-split for `hi` the same way `hik`-as-`NORK` cells are:
+`diat`/`dinat` (nik→hiri, mirroring `dut`→`diat`/`dinat`), `dik`/`din`
+(hark→hiri, mirroring `du`→`dik`/`din`), `diagu`/`dinagu` (guk→hiri, by the
+same `-a-`/`-na-`-before-the-NORK-suffix pattern as `dut`→`diat`), and
+`ditek`/`diten` (haiek→hiri, mirroring `dute`→`ditek`/`diten`). This is the
+same syncretism §10 describes from the other direction: a 3rd-person sentence
+"for `hi`'s benefit" and a sentence where `hi` genuinely *is* the dative
+produce identical surface forms.
+
+`niri`/`nik`, `hiri`/`hik`, `guri`/`nik`, `guri`/`guk`, `zuri`/`zuk`, and
+`zuei`/`zuek` are all `*(refl.)*` under §3's same-person-category extension
+(1st person category = `ni`/`gu`, 2nd = `zu`/`zuek`, and `hi`/`hiri` forms
+their own one-member category): in each of these cells `NORI` and `NORK`
+belong to the same person (category), so "I give it to myself/us",
+"you(-familiar) give it to yourself", or "we/you give it to
+yourself/ourselves" can't be expressed with a distinct ditransitive form. In
+practice these meanings are expressed periphrastically with `buru`
 ("head/self"), e.g. *nire buruari eman diot* ("I gave it to my own self").
 
 ### `NOR` = hura — Past
@@ -659,9 +677,11 @@ form. In practice these meanings are expressed periphrastically with `buru`
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hidan | zidan | genidan | zenidan | zenidaten | zidaten |
+| hiri | nian / ninan | *(refl.)* | zian / zinan | genian / geninan | *(hika/zuka)* | *(hika/zuka)* | zitean / zitenan |
 | hari | nion | hion | zion | genion | zenion | zenioten | zioten |
 | guri | *(refl.)* | higun | zigun | *(refl.)* | zenigun | zeniguten | ziguten |
 | zuri | nizun | *(hika/zuka)* | zizun | genizun | *(refl.)* | *(zu↔zuek)* | zizuten |
+| zuei | nizuen | *(hika/zuka)* | zizuen | genizuen | *(zu↔zuek)* | *(refl.)* | zizueten |
 | haiei | nien | hien | zien | genien | zenien | zenieten | zieten |
 
 The prefix-encodes-`NORK` pattern from §3's past-tense `ukan` grid
@@ -670,7 +690,16 @@ The prefix-encodes-`NORK` pattern from §3's past-tense `ukan` grid
 too — e.g. `genidan` = `gen-i-da-n` (guk→niri), `zenigun` = `zen-i-gu-n`
 (zuk→guri), `zenieten` = `zen-i-e-te-n` (zuek→haiei). `hik`'s `h-` prefix
 isn't gender-split here, mirroring §3's `huen`/`hituen` — `hidan` =
-`h-i-da-n` (hik→niri), `hion` = `h-i-o-n` (hik→hari).
+`h-i-da-n` (hik→niri), `hion` = `h-i-o-n` (hik→hari). `zuei` mirrors `zuri`
+the same way as in the Present grid (`-zu-` → `-zue-`: `nizun` → `nizuen`,
+`genizun` → `genizuen`, `zizuten` → `zizueten`).
+
+`hiri`'s forms are again, as in the Present grid, §10's allocutive
+`-a-`/`-na-`+`-n` past forms rather than a `NORI`-suffix+`-n`: `nian`/`ninan`
+(nik→hiri, mirroring `nuen`→`nian`/`ninan`), `zian`/`zinan` (hark→hiri,
+mirroring `zuen`→`zian`/`zinan`), `genian`/`geninan` (guk→hiri, by the same
+`gen-i-`+`-a-`/`-na-`+`-n` pattern), and `zitean`/`zitenan` (haiek→hiri,
+mirroring `zuten`→`zitean`/`zitenan`).
 
 ### `NOR` = haiek — Present
 
@@ -682,9 +711,11 @@ to him").
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | dizkidak / dizkidan | dizkida | dizkidagu | dizkidazu | dizkidazue | dizkidate |
+| hiri | dizkiat / dizkinat | *(refl.)* | dizkik / dizkin | dizkiagu / dizkinagu | *(hika/zuka)* | *(hika/zuka)* | dizkitek / dizkiten |
 | hari | dizkiot | dizkiok / dizkion | dizkio | dizkiogu | dizkiozu | dizkiozue | dizkiote |
 | guri | *(refl.)* | dizkiguk / dizkigun | dizkigu | *(refl.)* | dizkiguzu | dizkiguzue | dizkigute |
 | zuri | dizkizut | *(hika/zuka)* | dizkizu | dizkizugu | *(refl.)* | *(zu↔zuek)* | dizkizute |
+| zuei | dizkizuet | *(hika/zuka)* | dizkizue | dizkizuegu | *(zu↔zuek)* | *(refl.)* | dizkizuete |
 | haiei | dizkiet | dizkiek / dizkien | dizkie | dizkiegu | dizkiezu | dizkiezue | dizkiete |
 
 ### `NOR` = haiek — Past
@@ -696,9 +727,11 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hizkidan | zizkidan | genizkidan | zenizkidan | zenizkidaten | zizkidaten |
+| hiri | nizkian / nizkinan | *(refl.)* | zizkian / zizkinan | genizkian / genizkinan | *(hika/zuka)* | *(hika/zuka)* | zizkitean / zizkitenan |
 | hari | nizkion | hizkion | zizkion | genizkion | zenizkion | zenizkioten | zizkioten |
 | guri | *(refl.)* | hizkigun | zizkigun | *(refl.)* | zenizkigun | zenizkiguten | zizkiguten |
 | zuri | nizkizun | *(hika/zuka)* | zizkizun | genizkizun | *(refl.)* | *(zu↔zuek)* | zizkizuten |
+| zuei | nizkizuen | *(hika/zuka)* | zizkizuen | genizkizuen | *(zu↔zuek)* | *(refl.)* | zizkizueten |
 | haiei | nizkien | hizkien | zizkien | genizkien | zenizkien | zenizkieten | zizkieten |
 
 ### Baldintza
@@ -714,14 +747,47 @@ past grid's trailing `-n` (or `-ten`'s `-n`), swap `z-`/`zi-`→`l-`/`li-` on th
 gave it to him") → `lio` → `balio` ("if he were to give it to him"); `nion` →
 `nio` → `banio` ("if I were to give it to him").
 
+From here through the end of §5's conditional/potential grids (Baldintza,
+Ondorioa, Ahalera), `zuei` is filled in the same way as the indicative grids
+above — mirroring `zuri` with `-zu-` → `-zue-`. `hiri`, however, is left as
+`—` throughout, and this time it's not just "undocumented" — these forms are
+genuinely **ungrammatical**, for reasons that follow directly from how `hiri`
+worked in the indicative grids:
+
+- The indicative `hiri` forms (`diat`, `dik`, `diagu`, `ditek`, …) are only
+  interpretable *because* they're identical to **allocutive** (hitanoa)
+  marking on an otherwise-3rd-person sentence — `Liburua eman diat` ("I gave
+  it to you[masc]", `hiri` as true dative) and `Autoa erosi diat` ("I bought
+  the car — [telling you, dude]", `hiri` not an argument at all, pure
+  allocutive) are the *same form*, disambiguated only by context. Layering a
+  `-ke-` mood marker on top would require the verb to mark a true 2nd-person
+  dative argument *and* the allocutive addressee at once — the verbal complex
+  can't carry both, so the form simply doesn't exist.
+- Allocutive marking is independently **banned in subordinate clauses**
+  (Baldintza's protasis is exactly such a clause) — reinforcing why `hiri`
+  can't piggyback on the allocutive route there either.
+- More generally, *hitanoa* is an intimate spoken register, while the `-ke-`
+  potential/conditional paradigms (especially Lehenaldia/Alegiazkoa) are
+  formal/literary — the combination was never grammaticalized.
+
+Speakers express these meanings periphrastically instead: "I would give it to
+you[masc]" → `emango nian` (future participle `emango` + the plain allocutive
+past `nian`, **not** a `nizuke`-family form with `hiri` marked); "I can give
+it to you[masc]" → `eman ahal diat` (NOR=hura) / `eman ahal dizkiat`
+(NOR=haiek). `*(refl.)*`/`*(hika/zuka)*` cells are still filled in as usual,
+since those reflect grammatical blocking independent of this `-ke-`-specific
+gap.
+
 #### `NOR` = hura
 
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | bahida | balida | bagenida | bazenida | bazenidate | balidate |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | banio | bahio | balio | bagenio | bazenio | bazeniote | baliote |
 | guri | *(refl.)* | bahigu | baligu | *(refl.)* | bazenigu | bazenigute | baligute |
 | zuri | banizu | *(hika/zuka)* | balizu | bagenizu | *(refl.)* | *(zu↔zuek)* | balizute |
+| zuei | banizue | *(hika/zuka)* | balizue | bagenizue | *(zu↔zuek)* | *(refl.)* | balizuete |
 | haiei | banie | bahie | balie | bagenie | bazenie | bazeniete | baliete |
 
 *Adibidea:* `Liburu hau zuri eman banizu, oso pozik egongo zinateke` ("If I
@@ -738,9 +804,11 @@ Same `-zki-` infix as the indicative grids, inserted after the linking `i`:
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | bahizkida | balizkida | bagenizkida | bazenizkida | bazenizkidate | balizkidate |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | banizkio | bahizkio | balizkio | bagenizkio | bazenizkio | bazenizkiote | balizkiote |
 | guri | *(refl.)* | bahizkigu | balizkigu | *(refl.)* | bazenizkigu | bazenizkigute | balizkigute |
 | zuri | banizkizu | *(hika/zuka)* | balizkizu | bagenizkizu | *(refl.)* | *(zu↔zuek)* | balizkizute |
+| zuei | banizkizue | *(hika/zuka)* | balizkizue | bagenizkizue | *(zu↔zuek)* | *(refl.)* | balizkizuete |
 | haiei | banizkie | bahizkie | balizkie | bagenizkie | bazenizkie | bazenizkiete | balizkiete |
 
 ### Ondorioa, present
@@ -755,9 +823,11 @@ minus `Ba-` and plus `-ke`: `banio` → `nioke`, `balizu` → `lizuke`.
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hidake | lidake | genidake | zenidake | zenidakete | lidakete |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | nioke | hioke | lioke | genioke | zenioke | zeniokete | liokete |
 | guri | *(refl.)* | higuke | liguke | *(refl.)* | zeniguke | zenigukete | ligukete |
 | zuri | nizuke | *(hika/zuka)* | lizuke | genizuke | *(refl.)* | *(zu↔zuek)* | lizukete |
+| zuei | nizueke | *(hika/zuka)* | lizueke | genizueke | *(zu↔zuek)* | *(refl.)* | lizuekete |
 | haiei | nieke | hieke | lieke | genieke | zenieke | zeniekete | liekete |
 
 *Adibideak:* `Liburu hau emango nizuke, baina jada saldu dut` ("I would give
@@ -770,9 +840,11 @@ give the gifts to the children" — haiei/haiek, `NOR`=haiek — see grid below)
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hizkidake | lizkidake | genizkidake | zenizkidake | zenizkidakete | lizkidakete |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | nizkioke | hizkioke | lizkioke | genizkioke | zenizkioke | zenizkiokete | lizkiokete |
 | guri | *(refl.)* | hizkiguke | lizkiguke | *(refl.)* | zenizkiguke | zenizkigukete | lizkigukete |
 | zuri | nizkizuke | *(hika/zuka)* | lizkizuke | genizkizuke | *(refl.)* | *(zu↔zuek)* | lizkizukete |
+| zuei | nizkizueke | *(hika/zuka)* | lizkizueke | genizkizueke | *(zu↔zuek)* | *(refl.)* | lizkizuekete |
 | haiei | nizkieke | hizkieke | lizkieke | genizkieke | zenizkieke | zenizkiekete | lizkiekete |
 
 ### Ondorioa, past
@@ -789,9 +861,11 @@ where `-te-` already supplies the linking vowel): `nioke`→`niokeen`,
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hidakeen | zidakeen | genidakeen | zenidakeen | zenidaketen | zidaketen |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | niokeen | hiokeen | ziokeen | geniokeen | zeniokeen | zenioketen | zioketen |
 | guri | *(refl.)* | higukeen | zigukeen | *(refl.)* | zenigukeen | zeniguketen | ziguketen |
 | zuri | nizukeen | *(hika/zuka)* | zizukeen | genizukeen | *(refl.)* | *(zu↔zuek)* | zizuketen |
+| zuei | nizuekeen | *(hika/zuka)* | zizuekeen | genizuekeen | *(zu↔zuek)* | *(refl.)* | zizueketen |
 | haiei | niekeen | hiekeen | ziekeen | geniekeen | zeniekeen | zenieketen | zieketen |
 
 *Adibidea:* `Garaiz jakin izan banu, laguntza eskatuko niokeen` ("If I had
@@ -802,9 +876,11 @@ known in time, I would have asked him for help" — hari/nik).
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hizkidakeen | zizkidakeen | genizkidakeen | zenizkidakeen | zenizkidaketen | zizkidaketen |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | nizkiokeen | hizkiokeen | zizkiokeen | genizkiokeen | zenizkiokeen | zenizkioketen | zizkioketen |
 | guri | *(refl.)* | hizkigukeen | zizkigukeen | *(refl.)* | zenizkigukeen | zenizkiguketen | zizkiguketen |
 | zuri | nizkizukeen | *(hika/zuka)* | zizkizukeen | genizkizukeen | *(refl.)* | *(zu↔zuek)* | zizkizuketen |
+| zuei | nizkizuekeen | *(hika/zuka)* | zizkizuekeen | genizkizuekeen | *(zu↔zuek)* | *(refl.)* | zizkizueketen |
 | haiei | nizkiekeen | hizkiekeen | zizkiekeen | genizkiekeen | zenizkiekeen | zenizkieketen | zizkieketen |
 
 ### Ahalera, Orainaldia (Present potential), ditransitive
@@ -842,9 +918,11 @@ impossible.
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | diezadakek / diezadaken | diezadake | diezadakegu | diezadakezu | diezadakezue | diezadakete |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | diezaioket | diezaiokek / diezaioken | diezaioke | diezaiokegu | diezaiokezu | diezaiokezue | diezaiokete |
 | guri | *(refl.)* | diezagukek / diezaguken | diezaguke | *(refl.)* | diezagukezu | diezagukezue | diezagukete |
 | zuri | diezazuket | *(hika/zuka)* | diezazuke | diezazukegu | *(refl.)* | *(zu↔zuek)* | diezazukete |
+| zuei | diezazueket | *(hika/zuka)* | diezazueke | diezazuekegu | *(zu↔zuek)* | *(refl.)* | diezazuekete |
 | haiei | diezaieket | diezaiekek / diezaieken | diezaieke | diezaiekegu | diezaiekezu | diezaiekezue | diezaiekete |
 
 #### `NOR` = haiek (plural object)
@@ -852,9 +930,11 @@ impossible.
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | diezazkidakek / diezazkidaken | diezazkidake | diezazkidakegu | diezazkidakezu | diezazkidakezue | diezazkidakete |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | diezazkioket | diezazkiokek / diezazkioken | diezazkioke | diezazkiokegu | diezazkiokezu | diezazkiokezue | diezazkiokete |
 | guri | *(refl.)* | diezazkigukek / diezazkiguken | diezazkiguke | *(refl.)* | diezazkigukezu | diezazkigukezue | diezazkigukete |
 | zuri | diezazkizuket | *(hika/zuka)* | diezazkizuke | diezazkizukegu | *(refl.)* | *(zu↔zuek)* | diezazkizukete |
+| zuei | diezazkizueket | *(hika/zuka)* | diezazkizueke | diezazkizuekegu | *(zu↔zuek)* | *(refl.)* | diezazkizuekete |
 | haiei | diezazkieket | diezazkiekek / diezazkieken | diezazkieke | diezazkiekegu | diezazkiekezu | diezazkiekezue | diezazkiekete |
 
 *Adibideak:* `Lagun horrek mesede handia egin diezaguke egoera honetan` ("That
@@ -888,9 +968,11 @@ cell, not the masc./fem. pair seen in Orainaldia's `hik` column.
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hiezadakeen | ziezadakeen | geniezadakeen | zeniezadakeen | zeniezadaketen | ziezadaketen |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | niezaiokeen | hiezaiokeen | ziezaiokeen | geniezaiokeen | zeniezaiokeen | zeniezaioketen | ziezaioketen |
 | guri | niezagukeen | hiezagukeen | ziezagukeen | *(refl.)* | zeniezagukeen | zeniezaguketen | ziezaguketen |
 | zuri | niezazukeen | *(hika/zuka)* | ziezazukeen | geniezazukeen | *(refl.)* | *(zu↔zuek)* | ziezazuketen |
+| zuei | niezazuekeen | *(hika/zuka)* | ziezazuekeen | geniezazuekeen | *(zu↔zuek)* | *(refl.)* | ziezazueketen |
 | haiei | niezaiekeen | hiezaiekeen | ziezaiekeen | geniezaiekeen | zeniezaiekeen | zeniezaieketen | ziezaieketen |
 
 *Adibideak:* `Dirua beraiekin utzi izan banu, nik lagunari liburua eros
@@ -911,9 +993,11 @@ right before the `NORI` suffix), giving:
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hiezazkidakeen | ziezazkidakeen | geniezazkidakeen | zeniezazkidakeen | zeniezazkidaketen | ziezazkidaketen |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | niezazkiokeen | hiezazkiokeen | ziezazkiokeen | geniezazkiokeen | zeniezazkiokeen | zeniezazkioketen | ziezazkioketen |
 | guri | niezazkigukeen | hiezazkigukeen | ziezazkigukeen | *(refl.)* | zeniezazkigukeen | zeniezazkiguketen | ziezazkiguketen |
 | zuri | niezazkizukeen | *(hika/zuka)* | ziezazkizukeen | geniezazkizukeen | *(refl.)* | *(zu↔zuek)* | ziezazkizuketen |
+| zuei | niezazkizuekeen | *(hika/zuka)* | ziezazkizuekeen | geniezazkizuekeen | *(zu↔zuek)* | *(refl.)* | ziezazkizueketen |
 | haiei | niezazkiekeen | hiezazkiekeen | ziezazkiekeen | geniezazkiekeen | zeniezazkiekeen | zeniezazkieketen | ziezazkieketen |
 
 *Adibideak:* `Giltzak poltsikoan eraman izan banitu, nik giltza guztiak
@@ -952,9 +1036,11 @@ only), exactly as `ne-`/`he-`/`gene-`/`zene-`/`zene-…-te` do in §3.
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hiezadake | liezadake | geniezadake | zeniezadake | zeniezadakete | liezadakete |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | niezaioke | hiezaioke | liezaioke | geniezaioke | zeniezaioke | zeniezaiokete | liezaiokete |
 | guri | niezaguke | hiezaguke | liezaguke | *(refl.)* | zeniezaguke | zeniezagukete | liezagukete |
 | zuri | niezazuke | *(hika/zuka)* | liezazuke | geniezazuke | *(refl.)* | *(zu↔zuek)* | liezazukete |
+| zuei | niezazueke | *(hika/zuka)* | liezazueke | geniezazueke | *(zu↔zuek)* | *(refl.)* | liezazuekete |
 | haiei | niezaieke | hiezaieke | liezaieke | geniezaieke | zeniezaieke | zeniezaiekete | liezaiekete |
 
 *Adibideak:* `Denbora gehiago izango banu, liburua oparitu liezaioke
@@ -972,9 +1058,11 @@ The same `-zki-` infix as Orainaldia/Lehenaldia, applied to the forms above:
 | NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
 |---|---|---|---|---|---|---|---|
 | niri | *(refl.)* | hiezazkidake | liezazkidake | geniezazkidake | zeniezazkidake | zeniezazkidakete | liezazkidakete |
+| hiri | — | *(refl.)* | — | — | *(hika/zuka)* | *(hika/zuka)* | — |
 | hari | niezazkioke | hiezazkioke | liezazkioke | geniezazkioke | zeniezazkioke | zeniezazkiokete | liezazkiokete |
 | guri | niezazkiguke | hiezazkiguke | liezazkiguke | *(refl.)* | zeniezazkiguke | zeniezazkigukete | liezazkigukete |
 | zuri | niezazkizuke | *(hika/zuka)* | liezazkizuke | geniezazkizuke | *(refl.)* | *(zu↔zuek)* | liezazkizukete |
+| zuei | niezazkizueke | *(hika/zuka)* | liezazkizueke | geniezazkizueke | *(zu↔zuek)* | *(refl.)* | liezazkizuekete |
 | haiei | niezazkieke | hiezazkieke | liezazkieke | geniezazkieke | zeniezazkieke | zeniezazkiekete | liezazkiekete |
 
 ### `NOR` = 1st/2nd person

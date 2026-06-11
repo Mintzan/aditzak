@@ -4,6 +4,105 @@ A running log of notable decisions made while developing this app, and the
 reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
+## 2026-06-11 — Confirmed: `hiri` truly doesn't exist in §5's `-ke-` conditional/potential grids — upgraded the `—` placeholders with an explanation
+
+**Decision:** the previous entry left `hiri` as an unexplained `—` in
+Baldintza/Ondorioa/Ahalera ("can't derive with confidence"). Got a second
+opinion (consulted Gemini with the full derivation rules + `zuri` rows as
+reference) on whether attested forms exist. Answer: no — and not just
+"undocumented", genuinely ungrammatical. Replaced the placeholder explanation
+with the actual reasoning.
+
+**Why they don't exist:** the indicative `hiri` forms (`diat`, `dik`, …) work
+*only* because they're identical to allocutive (hitanoa) marking on an
+otherwise-3rd-person sentence — disambiguated solely by context (`Liburua
+eman diat` = true dative `hiri`, vs. `Autoa erosi diat` = pure allocutive,
+same surface form). A `-ke-`-marked form would need to encode a true
+2nd-person dative *and* the allocutive addressee simultaneously, which the
+verbal complex can't do. Compounding this: allocutive marking is independently
+banned in subordinate clauses (Baldintza's protasis is one), and *hitanoa* is
+an intimate spoken register while `-ke-` potential/conditional forms
+(especially Lehenaldia/Alegiazkoa) are formal/literary — the combination was
+never grammaticalized.
+
+**What to say instead:** added the periphrastic alternatives speakers actually
+use — `emango nian`/`ninan` (future participle + plain allocutive past, no
+synthetic `hiri`-marked `-ke-` form) for "would give it to you[hi]", and
+`eman ahal diat`/`dizkiat` for "can give it to you[hi]".
+
+`*(refl.)*`/`*(hika/zuka)*` cells (hi→hiri reflexivity, hiri-vs-zuk/zuek
+register clash) are unaffected — those reflect a different, independent kind
+of blocking and were already correct.
+
+## 2026-06-11 — Filled §5's missing `zuei` rows (and marked `hiri` as an honest gap) in the remaining NOR-NORI-NORK conditional/potential grids
+
+**Decision:** the same 5-row gap (missing `hiri`/`zuei`) also affected
+Baldintza, Ondorioa present/past, and Ahalera Orainaldia/Lehenaldia/Alegiazkoa
+— 6 sections × 2 (`NOR`=hura/haiek) = 12 grids. Added `zuei` to all of them;
+left `hiri` as `—` in all of them.
+
+**`zuei`:** same `-zu-`→`-zue-` mirror as the indicative grids (e.g. Baldintza
+`banizu`→`banizue`, Ondorioa-present `nizuke`→`nizueke`, Ahalera Orainaldia
+`diezazuket`→`diezazueket`), with the `*(refl.)*`/`*(zu↔zuek)*` swap mirrored
+the same way (zuri's `zuk`=refl/`zuek`=clash → zuei's `zuek`=refl/`zuk`=clash).
+
+**`hiri` left as `—`:** unlike the indicative Present/Past, where `hiri`'s
+forms turned out to coincide with §10's documented allocutive
+`-k`/`-n`/`-a-`/`-na-` forms, these `-ke-` conditional/potential forms have no
+allocutive counterpart documented anywhere in this document. Inventing ~24
+new word forms (with masc./fem. pairs) with no attestable basis would risk
+teaching incorrect Basque, so — per this document's "honest gap over an
+unverifiable form" policy (cf. §16.1's subjunctive past) — these cells are
+left as `—`. The `*(refl.)*` (hi→hiri) and `*(hika/zuka)*` (hiri vs.
+zuk/zuek) cells are still filled in, since those reflect grammatical blocking
+rather than missing forms, and are unaffected by the question of what the
+"positive" forms look like.
+
+## 2026-06-11 — Filled §5's missing `hiri`/`zuei` rows for the NOR-NORI-NORK Past grids (`NOR`=hura and `NOR`=haiek)
+
+**Decision:** same gap as the Present grids (see entry immediately below),
+same fix, applied to the Past grids.
+
+**`zuei`:** mirrors `zuri` with `-zu-` → `-zue-` (`nizun`→`nizuen`,
+`genizun`→`genizuen`, `zizuten`→`zizueten`), same as the Present `zuei` row.
+
+**`hiri`:** again the §10 allocutive forms, this time the past
+`-a-`/`-na-`+`-n` shapes: `nian`/`ninan` (nik→hiri, = `nuen`→`nian`/`ninan`),
+`zian`/`zinan` (hark→hiri, = `zuen`→`zian`/`zinan`), `genian`/`geninan`
+(guk→hiri, by the same `gen-i-`+`-a-`/`-na-`+`-n` pattern as `genidan`'s
+`gen-i-da-n`), `zitean`/`zitenan` (haiek→hiri, = `zuten`→`zitean`/`zitenan`).
+
+**`NOR`=haiek grid:** same rows with `-zki-` inserted right after the
+linking `-i-`, matching where `-zki-` lands in every other cell of that grid
+(`nizun`→`nizkizun`, `zigun`→`zizkigun`, …): `nizkian`/`nizkinan`,
+`zizkian`/`zizkinan`, `genizkian`/`genizkinan`, `zizkitean`/`zizkitenan`,
+`nizkizuen`, `zizkizuen`, `genizkizuen`, `zizkizueten`.
+
+## 2026-06-11 — Filled §5's missing `hiri`/`zuei` rows for the NOR-NORI-NORK Present grids (`NOR`=hura and `NOR`=haiek)
+
+**Decision:** §5's `NOR`=hura and `NOR`=haiek Present grids tabulated only
+`niri`/`hari`/`guri`/`zuri`/`haiei` — five of the seven `NORI` categories,
+silently skipping `hiri` and `zuei`. Added both as new rows to each grid.
+
+**`zuei`:** straightforward — mirrors `zuri` with `-zu-` → `-zue-`
+(`dizut`/`dizu`/`dizugu`/`dizute` → `dizuet`/`dizue`/`dizuegu`/`dizuete`),
+the same pluralisation §16.1's `zuei` row already uses. Gap cells follow the
+same swapped `*(refl.)*`/`*(zu↔zuek)*` mirroring as §16.1's `zuei` row
+(`zuek`=refl, `zuk`=`*(zu↔zuek)*`), plus `hik`=`*(hika/zuka)*` like `zuri`.
+
+**`hiri`:** doesn't fit the `di-` + vowel-`NORI`-suffix + `NORK`-suffix
+template the other rows follow. Instead its forms are §10's allocutive
+`-k`/`-n` (tokano/nokano) forms — `diat`/`dinat` (nik→hiri), `dik`/`din`
+(hark→hiri), `diagu`/`dinagu` (guk→hiri), `ditek`/`diten` (haiek→hiri) —
+the same syncretism §10 already documents from the other direction (a
+3rd-person sentence "for `hi`'s benefit" and one where `hi` genuinely *is*
+the dative produce identical surface forms). `hik`=`*(refl.)*` (hi→hiri,
+same person) and `zuk`/`zuek`=`*(hika/zuka)*` (mirroring `zuri`/`zuei`'s
+`hik`=`*(hika/zuka)*` clash, in the other direction).
+
+The `NOR`=haiek grid's new rows are the same forms with the `-zki-` infix
+(`diat`→`dizkiat`, `dizuet`→`dizkizuet`, …), per §5's existing infix rule.
+
 ## 2026-06-10 — Filled §16.1's missing `niri`/`guri`/`zuri`/`zuei` rows for the NOR-NORI-NORK Subjunctive Present
 
 **Decision:** §16.1's `NOR-NORI-NORK` Subjunctive Present previously tabulated
