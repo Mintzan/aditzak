@@ -62,6 +62,49 @@ export function recordResult(progress, lessonId, result) {
   }
 }
 
+// Returns today's date as a 'YYYY-MM-DD' string in the learner's local
+// timezone (as opposed to `toISOString`, which is UTC and could roll over to
+// the next/previous day depending on the learner's offset). Streak logic
+// always compares dates in this form.
+export function getLocalDateString(date = new Date()) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+const ONE_DAY_MS = 24 * 60 * 60 * 1000
+
+// Updates the daily streak after a lesson is completed. `today` is a
+// 'YYYY-MM-DD' string (see `getLocalDateString`), passed in rather than
+// computed here so this stays a pure, easily-testable function. Completing a
+// lesson again on the same day is a no-op; completing one the day after
+// `lastActiveDate` extends the streak; any bigger gap restarts it at 1.
+export function recordDailyStreak(streak, today) {
+  const { currentStreak = 0, longestStreak = 0, lastActiveDate = null } = streak ?? {}
+  if (lastActiveDate === today) {
+    return { currentStreak, longestStreak, lastActiveDate }
+  }
+  const isConsecutiveDay = lastActiveDate && Date.parse(today) - Date.parse(lastActiveDate) === ONE_DAY_MS
+  const nextStreak = isConsecutiveDay ? currentStreak + 1 : 1
+  return {
+    currentStreak: nextStreak,
+    longestStreak: Math.max(nextStreak, longestStreak),
+    lastActiveDate: today,
+  }
+}
+
+// The streak as it should be *displayed*: still alive (today's or
+// yesterday's `lastActiveDate`, so there's still time to extend it today) or
+// broken (anything older), in which case it reads as 0 even though
+// `currentStreak` itself isn't reset to 0 until the next completed lesson.
+export function getActiveStreak(streak, today) {
+  const { currentStreak = 0, lastActiveDate = null } = streak ?? {}
+  if (!lastActiveDate) return 0
+  const gap = Date.parse(today) - Date.parse(lastActiveDate)
+  return gap > ONE_DAY_MS ? 0 : currentStreak
+}
+
 // A lesson unlocks once the lesson before it has been attempted at least once.
 export function getUnlockedLessonIds(lessons, progress) {
   const unlocked = new Set()
@@ -99,8 +142,10 @@ export function shuffle(items) {
 // (an example sentence, a declined pronoun) gets asked that way rather than as
 // a bare-form question — rolled once per question, and split evenly between
 // whichever framings are available, so a lesson ends up with an organic mix of
-// styles rather than being uniformly one or the other.
-const SPECIAL_QUESTION_CHANCE = 0.5
+// styles rather than being uniformly one or the other. Weighted well above
+// 50/50 so a real Basque sentence is the common case and the bare "hura → ?"
+// framing is the occasional variation, not the other way around.
+const SPECIAL_QUESTION_CHANCE = 0.75
 
 // A single roll decides both *whether* a question gets a special framing and,
 // if so, *which* one: `[0, SPECIAL_QUESTION_CHANCE)` is divided into one equal
@@ -187,41 +232,68 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // sibling. Persons missing that supporting data always fall back to the bare
 // `form` question, so verbs can adopt any of the framings incrementally.
 //
-// `onlyBareForm` (set for a learner's first run through a lesson — see
-// `createExerciseState`) skips the sentence/pronoun/typed framings entirely,
-// so a brand-new conjugation is first met in its simplest, most recognisable
-// shape; once the learner's been through the lesson at least once, later runs
-// open up the full mix. Every question also carries the `verbId`/`tense` it
-// was generated from — irrelevant within a single-verb-and-tense lesson, but
-// what lets a "review" lesson (see `LESSONS`) interleave questions from
-// several lessons' worth of conjugation tables and still show each one in its
-// correct verb/tense context.
+// `noTyping` (set for a learner's first run(s) through a lesson — see
+// `createExerciseState`) drops the typed (`type-verb`/`type-pronoun`) and
+// `spot-error` framings — the ones that demand recalling or cross-checking a
+// brand-new form rather than just recognising it — while still letting the
+// `sentence`/`pronoun` multiple-choice framings through, so a brand-new
+// conjugation is met with real example sentences from the very first
+// question, just without being asked to type or spot-the-error yet. Once the
+// learner's been through the lesson enough times, later runs open up the full
+// mix. Every question also carries the `verbId`/`tense` it was generated
+// from — irrelevant within a single-verb-and-tense lesson, but what lets a
+// "review" lesson (see `LESSONS`) interleave questions from several lessons'
+// worth of conjugation tables and still show each one in its correct
+// verb/tense context.
 // `rounds` repeats the one-question-per-person pass this many times, each
 // pass independently shuffled (order) and re-rolled (question kind/options) —
 // this is how a lesson reaches a pedagogically reasonable length from a small
 // (3-6 person) conjugation table: see `TARGET_EXERCISE_COUNT` in `App.jsx`,
 // which derives `rounds` from the table size. Defaults to 1 (one question per
 // person, the original behaviour) so existing callers/tests are unaffected.
-export function generateQuestions(verb, tense, { onlyBareForm = false, rounds = 1 } = {}) {
+//
+// For a person with few available framings (e.g. a 3-person table during
+// `noTyping`, where only `sentence`/`pronoun`/`form` are on offer), an
+// independent roll per round can easily land on the same kind twice — and
+// since a kind's content is otherwise fully determined by `person` (same
+// sentence, same option set), that reads as the exact same question
+// reappearing. `usedKinds` tracks, per person, which kinds have already been
+// rolled across rounds; a repeat roll is swapped for an unused kind (`form`
+// plus whatever's in `availableKinds`) when one remains, so a person cycles
+// through its distinct framings before any repeats — only once every framing
+// has appeared does a person start repeating. With `rounds = 1` (the
+// default) `used` is always empty before the first roll, so this is a no-op
+// and existing single-round behaviour/tests are unaffected.
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } = {}) {
   const table = verb.conjugations[tense]
-  const sentences = onlyBareForm ? {} : (verb.sentences?.[tense] ?? {})
-  const pronounSentences = onlyBareForm ? {} : (verb.pronounSentences?.[tense] ?? {})
+  const sentences = verb.sentences?.[tense] ?? {}
+  const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const persons = Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
   const source = { verbId: verb.id, tense }
+  const usedKinds = new Map()
 
   function buildQuestion(person) {
     const sentence = pickVariant(sentences[person])
     const pronounSentence = verb.pronouns && pronounSentences[person]
     const availableKinds = [
       sentence && 'sentence',
-      sentence && 'type-verb',
-      sentence && personsWithSentences.length >= 4 && 'spot-error',
+      sentence && !noTyping && 'type-verb',
+      sentence && !noTyping && personsWithSentences.length >= 4 && 'spot-error',
       pronounSentence && 'pronoun',
-      pronounSentence && 'type-pronoun',
+      pronounSentence && !noTyping && 'type-pronoun',
     ].filter(Boolean)
 
-    switch (rollQuestionKind(availableKinds)) {
+    let kind = rollQuestionKind(availableKinds)
+    const used = usedKinds.get(person) ?? new Set()
+    if (used.has(kind)) {
+      const unused = ['form', ...availableKinds].filter((candidate) => !used.has(candidate))
+      if (unused.length > 0) kind = unused[Math.floor(Math.random() * unused.length)]
+    }
+    used.add(kind)
+    usedKinds.set(person, used)
+
+    switch (kind) {
       case 'sentence': {
         const { correct, options } = buildOptions(table, persons, person)
         return { ...source, kind: 'sentence', person, sentence, correct, options }

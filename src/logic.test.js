@@ -3,10 +3,13 @@ import {
   computeStars,
   exerciseReducer,
   generateQuestions,
+  getActiveStreak,
   getEncouragement,
+  getLocalDateString,
   getStreakEncouragement,
   getUnlockedLessonIds,
   isAnswerCorrect,
+  recordDailyStreak,
   recordResult,
   shuffle,
 } from './lessonLogic'
@@ -121,6 +124,67 @@ describe('recordResult', () => {
   })
 })
 
+describe('getLocalDateString', () => {
+  it('formats a date as YYYY-MM-DD using local fields, zero-padded', () => {
+    expect(getLocalDateString(new Date(2026, 0, 5))).toBe('2026-01-05')
+    expect(getLocalDateString(new Date(2026, 11, 31))).toBe('2026-12-31')
+  })
+})
+
+describe('recordDailyStreak', () => {
+  it('starts a streak of 1 on the first completed lesson', () => {
+    const streak = recordDailyStreak({}, '2026-06-10')
+
+    expect(streak).toEqual({ currentStreak: 1, longestStreak: 1, lastActiveDate: '2026-06-10' })
+  })
+
+  it('does not change the streak for a second lesson on the same day', () => {
+    const first = recordDailyStreak({}, '2026-06-10')
+    const second = recordDailyStreak(first, '2026-06-10')
+
+    expect(second).toEqual(first)
+  })
+
+  it('extends the streak on the very next day', () => {
+    const day1 = recordDailyStreak({}, '2026-06-10')
+    const day2 = recordDailyStreak(day1, '2026-06-11')
+
+    expect(day2).toEqual({ currentStreak: 2, longestStreak: 2, lastActiveDate: '2026-06-11' })
+  })
+
+  it('resets to 1 after a missed day, but keeps the longest streak record', () => {
+    const day1 = recordDailyStreak({}, '2026-06-10')
+    const day2 = recordDailyStreak(day1, '2026-06-11')
+    const afterGap = recordDailyStreak(day2, '2026-06-13')
+
+    expect(afterGap).toEqual({ currentStreak: 1, longestStreak: 2, lastActiveDate: '2026-06-13' })
+  })
+})
+
+describe('getActiveStreak', () => {
+  it('returns 0 when there is no recorded activity', () => {
+    expect(getActiveStreak({}, '2026-06-10')).toBe(0)
+  })
+
+  it('returns the current streak when last active today', () => {
+    const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
+
+    expect(getActiveStreak(streak, '2026-06-10')).toBe(4)
+  })
+
+  it('still counts the streak as alive the day after, before it lapses', () => {
+    const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
+
+    expect(getActiveStreak(streak, '2026-06-11')).toBe(4)
+  })
+
+  it('reads as broken (0) once more than a day has passed', () => {
+    const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
+
+    expect(getActiveStreak(streak, '2026-06-12')).toBe(0)
+  })
+})
+
 describe('getUnlockedLessonIds', () => {
   const lessons = [{ id: 'a' }, { id: 'b' }, { id: 'c' }]
 
@@ -155,7 +219,7 @@ describe('generateQuestions', () => {
   // `availableKinds` always has all five special framings —
   // `['sentence', 'type-verb', 'spot-error', 'pronoun', 'type-pronoun']` —
   // and a fixed roll deterministically lands on whichever index it maps to.
-  // Shared by the typed-framing and `onlyBareForm` specs below, which both
+  // Shared by the typed-framing and `noTyping` specs below, which both
   // need a verb where every special framing is available to roll into.
   const verbWithBoth = {
     ...verb,
@@ -289,9 +353,9 @@ describe('generateQuestions', () => {
 
     it('picks exactly one of four distinct, fully-filled sentences as the wrong one when the roll favours it', () => {
       // No `pronouns`, so with all six persons sentenced `availableKinds` is
-      // `['sentence', 'type-verb', 'spot-error']` — [0, 0.5) splits into three
-      // slices of ~0.167, and 0.4 lands in the last one: 'spot-error'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.4)
+      // `['sentence', 'type-verb', 'spot-error']` — [0, 0.75) splits into
+      // three slices of 0.25, and 0.6 lands in the last one: 'spot-error'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
 
       generateQuestions(verbWithManySentences, 'present').forEach((question) => {
         expect(question).toMatchObject({ kind: 'spot-error', verbId: verbWithManySentences.id, tense: 'present' })
@@ -378,9 +442,9 @@ describe('generateQuestions', () => {
     const pronounSentenced = verbWithBoth.pronounSentences.present
 
     it('frames a question as typing the verb form into the sentence blank when the roll favours it', () => {
-      // [0, 0.5) split into five equal slices of 0.1 — 0.15 lands in the
+      // [0, 0.75) split into five equal slices of 0.15 — 0.2 lands in the
       // second one, i.e. index 1 of the available-kinds list: 'type-verb'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.15)
+      vi.spyOn(Math, 'random').mockReturnValue(0.2)
 
       generateQuestions(verbWithBoth, 'present').forEach((question) => {
         expect(question).toMatchObject({
@@ -394,9 +458,9 @@ describe('generateQuestions', () => {
     })
 
     it('frames a question as typing the declined pronoun into the sentence blank when the roll favours it', () => {
-      // [0, 0.5) split into five equal slices of 0.1 — 0.4 lands in the last
-      // one, i.e. index 4 of the available-kinds list: 'type-pronoun'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.4)
+      // [0, 0.75) split into five equal slices of 0.15 — 0.65 lands in the
+      // last one, i.e. index 4 of the available-kinds list: 'type-pronoun'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.65)
 
       generateQuestions(verbWithBoth, 'present').forEach((question) => {
         expect(question).toMatchObject({
@@ -420,14 +484,31 @@ describe('generateQuestions', () => {
     })
   })
 
-  describe('with onlyBareForm', () => {
-    it('forces every question to the bare form, even on a roll that would otherwise favour a special framing', () => {
+  describe('with noTyping', () => {
+    it('still produces sentence/pronoun multiple-choice framings, not just the bare form', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0)
 
-      generateQuestions(verbWithBoth, 'present', { onlyBareForm: true }).forEach((question) => {
-        expect(question.kind).toBe('form')
-        expect(question).not.toHaveProperty('sentence')
-        expect(question.options).toContain(question.correct)
+      const questions = generateQuestions(verbWithBoth, 'present', { noTyping: true })
+
+      expect(questions.map((q) => q.kind)).toContain('sentence')
+      questions.forEach((question) => {
+        expect(['form', 'sentence', 'pronoun']).toContain(question.kind)
+        if (question.kind !== 'form') expect(question).toHaveProperty('options')
+      })
+    })
+
+    it('excludes typed and spot-error framings even on rolls that would otherwise favour them', () => {
+      // 0.2, 0.4, and 0.65 each select 'type-verb', 'spot-error', and
+      // 'type-pronoun' respectively in the full five-kind mix (see the typed-
+      // framing specs above) — with `noTyping`, only `['sentence', 'pronoun']`
+      // are on offer, so every roll below SPECIAL_QUESTION_CHANCE lands on one
+      // of those two instead.
+      ;[0, 0.2, 0.4, 0.65, 0.74].forEach((roll) => {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+
+        generateQuestions(verbWithBoth, 'present', { noTyping: true }).forEach((question) => {
+          expect(['sentence', 'pronoun']).toContain(question.kind)
+        })
       })
     })
 
@@ -478,7 +559,8 @@ describe('generateQuestions', () => {
     })
 
     it('fills the blank with one of the variants in a spot-error question too', () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0.4)
+      // As above: with all six persons sentenced, 0.6 lands on 'spot-error'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
 
       const question = generateQuestions(verbWithVariants, 'present').find((q) => q.kind === 'spot-error' && q.person === 'ni')
       const niItem = question.items.find((item) => item.person === 'ni')
@@ -500,6 +582,41 @@ describe('generateQuestions', () => {
 
     it('defaults to a single round', () => {
       expect(generateQuestions(verb, 'present')).toHaveLength(persons.length)
+    })
+
+    it('cycles through every available framing for a person before repeating one', () => {
+      const verbWithFramings = {
+        ...verb,
+        conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da' } },
+        sentences: {
+          present: {
+            ni: 'Ni irakaslea ___.',
+            zu: 'Zu ikaslea ___.',
+            hura: 'Hura medikua ___.',
+          },
+        },
+        pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+        pronounSentences: {
+          present: {
+            ni: '___ irakaslea naiz.',
+            zu: '___ ikaslea zara.',
+            hura: '___ medikua da.',
+          },
+        },
+      }
+      const personsHere = Object.keys(verbWithFramings.conjugations.present)
+
+      // With `noTyping`, each person has exactly three framings on offer —
+      // `form`, `sentence`, `pronoun` — matching `rounds: 3`, so every person
+      // should see one of each with no repeats, regardless of how the
+      // underlying rolls land.
+      const questions = generateQuestions(verbWithFramings, 'present', { noTyping: true, rounds: 3 })
+
+      personsHere.forEach((person) => {
+        const kinds = questions.filter((q) => q.person === person).map((q) => q.kind)
+        expect(kinds).toHaveLength(3)
+        expect(new Set(kinds)).toEqual(new Set(['form', 'sentence', 'pronoun']))
+      })
     })
   })
 })
