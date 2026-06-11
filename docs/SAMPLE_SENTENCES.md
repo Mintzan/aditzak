@@ -16,6 +16,12 @@ Each sentence keeps the existing `___` blank marking where the conjugated
 verb form goes (`verb.conjugations[tense][person]` fills it in), exactly like
 today's single-variant `sentences` tables.
 
+The **Aplikazioa (oraingoa)** column in each table below is the current
+`verb.sentences[tense][person]` value from `src/App.jsx` — included for
+direct comparison with the new category variants, and itself a candidate to
+fold into whichever category column it best fits (or to keep as a bonus
+extra variant).
+
 ## Categories
 
 | Category | Theme |
@@ -33,25 +39,21 @@ author and review, while still spanning enough real-world contexts to feel
 
 ## `izan` — "to be" (present)
 
-| Person | Eskola | Familia eta etxea | Bidaiak | Eguneroko bizitza |
-|---|---|---|---|---|
-| ni | Ni ikaslea ___. | Ni aita ___. | Ni turista ___. | Ni langilea ___. |
-| zu | Zu irakaslea ___. | Zu ama ___. | Zu gidaria ___. | Zu auzokidea ___. |
-| hura | Hura zuzendaria ___. | Hura aitona ___. | Hura bidaiaria ___. | Hura saltzailea ___. |
-
-(The current single-variant table uses "Ni irakaslea ___." / "Zu ikaslea
-___." / "Hura medikua ___." — close cousins of the **Eskola** column above;
-those can be folded in as a fifth variant or swapped for one of these.)
+| Person | Aplikazioa (oraingoa) | Eskola | Familia eta etxea | Bidaiak | Eguneroko bizitza |
+|---|---|---|---|---|---|
+| ni | Ni irakaslea ___. | Ni ikaslea ___. | Ni aita ___. | Ni turista ___. | Ni langilea ___. |
+| zu | Zu ikaslea ___. | Zu irakaslea ___. | Zu ama ___. | Zu gidaria ___. | Zu auzokidea ___. |
+| hura | Hura medikua ___. | Hura zuzendaria ___. | Hura aitona ___. | Hura bidaiaria ___. | Hura saltzailea ___. |
 
 ---
 
 ## `egon` — "to be (located / in a state)" (present)
 
-| Person | Eskola | Familia eta etxea | Bidaiak | Eguneroko bizitza |
-|---|---|---|---|---|
-| ni | Ni ikasgelan ___. | Ni etxean ___. | Ni Bilbon ___. | Ni lanean ___. |
-| zu | Zu liburutegian ___. | Zu sukaldean ___. | Zu Donostian ___. | Zu dendan ___. |
-| hura | Hura patioan ___. | Hura logelan ___. | Hura Gasteizen ___. | Hura kalean ___. |
+| Person | Aplikazioa (oraingoa) | Eskola | Familia eta etxea | Bidaiak | Eguneroko bizitza |
+|---|---|---|---|---|---|
+| ni | Ni etxean ___. | Ni ikasgelan ___. | Ni etxean ___. | Ni Bilbon ___. | Ni lanean ___. |
+| zu | Zu kalean ___. | Zu liburutegian ___. | Zu sukaldean ___. | Zu Donostian ___. | Zu dendan ___. |
+| hura | Hura eskolan ___. | Hura patioan ___. | Hura logelan ___. | Hura Gasteizen ___. | Hura kalean ___. |
 
 ---
 
@@ -61,31 +63,25 @@ forms)
 
 ### Present
 
-| Person | Eskola | Familia eta etxea | Bidaiak | Eguneroko bizitza |
-|---|---|---|---|---|
-| ni (Nik) | Nik liburu bat ___. | Nik arreba bat ___. | Nik txartel bat ___. | Nik bilera bat ___. |
-| hi (Hik) | Hik koaderno bat ___. | Hik anaia bat ___. | Hik mapa bat ___. | Hik auto bat ___. |
-| hura (Hark/Berak) | Hark arkatz bat ___. | Berak seme bat ___. | Hark pasaporte bat ___. | Berak etxe bat ___. |
-| gu (Guk) | Guk azterketa bat ___. | Guk etxe handi bat ___. | Guk maleta bat ___. | Guk denbora ___. |
-| zuek | Zuek azterketa bat ___. | Zuek lorategi bat ___. | Zuek hotel bat ___. | Zuek arazo bat ___. |
-| haiek | Haiek liburutegi bat ___. | Haiek anaia bat ___. | Haiek hegazkin bat ___. | Haiek aukera bat ___. |
+| Person | Aplikazioa (oraingoa) | Eskola | Familia eta etxea | Bidaiak | Eguneroko bizitza |
+|---|---|---|---|---|---|
+| ni (Nik) | Nik liburu bat ___. | Nik liburu bat ___. | Nik arreba bat ___. | Nik txartel bat ___. | Nik bilera bat ___. |
+| hi (Hik) | Hik auto bat ___. | Hik koaderno bat ___. | Hik anaia bat ___. | Hik mapa bat ___. | Hik auto bat ___. |
+| hura (Hark/Berak) | Berak etxe bat ___. | Hark arkatz bat ___. | Berak seme bat ___. | Hark pasaporte bat ___. | Berak etxe bat ___. |
+| gu (Guk) | Guk denbora ___. | Guk azterketa bat ___. | Guk etxe handi bat ___. | Guk maleta bat ___. | Guk denbora ___. |
+| zuek | Zuek arazo bat ___. | Zuek azterketa bat ___. | Zuek lorategi bat ___. | Zuek hotel bat ___. | Zuek arazo bat ___. |
+| haiek | Haiek aukera bat ___. | Haiek liburutegi bat ___. | Haiek anaia bat ___. | Haiek hegazkin bat ___. | Haiek aukera bat ___. |
 
 ### Past
 
-| Person | Eskola | Familia eta etxea | Bidaiak | Eguneroko bizitza |
-|---|---|---|---|---|
-| ni (Nik) | Nik azterketa bat ___. | Nik arazo bat ___. | Nik txartel bat ___. | Nik diru asko ___. |
-| hi (Hik) | Hik liburu bat ___. | Hik etxe bat ___. | Hik mapa bat ___. | Hik lan bat ___. |
-| hura (Hark/Berak) | Hark ideia on bat ___. | Berak seme bat ___. | Hark pasaporte bat ___. | Berak auto bat ___. |
-| gu (Guk) | Guk azterketa bat ___. | Guk etxe handi bat ___. | Guk maleta bat ___. | Guk arrazoi ___. |
-| zuek | Zuek galdera bat ___. | Zuek anaia bat ___. | Zuek hotel bat ___. | Zuek lan asko ___. |
-| haiek | Haiek azterketa bat ___. | Haiek anaia bat ___. | Haiek hegazkin bat ___. | Haiek denbora gutxi ___. |
-
-(Cells matching the current single-variant `sentences` tables verbatim —
-e.g. "Nik liburu bat ___.", "Hark ideia on bat ___.", "Guk denbora ___.",
-"Zuek arazo bat ___.", "Haiek aukera bat ___.", "Nik diru asko ___.", "Hik
-liburu bat ___.", "Guk arrazoi ___.", "Zuek galdera bat ___.", "Haiek
-denbora gutxi ___." — can simply become one variant in their cell's array.)
+| Person | Aplikazioa (oraingoa) | Eskola | Familia eta etxea | Bidaiak | Eguneroko bizitza |
+|---|---|---|---|---|---|
+| ni (Nik) | Nik diru asko ___. | Nik azterketa bat ___. | Nik arazo bat ___. | Nik txartel bat ___. | Nik diru asko ___. |
+| hi (Hik) | Hik liburu bat ___. | Hik liburu bat ___. | Hik etxe bat ___. | Hik mapa bat ___. | Hik lan bat ___. |
+| hura (Hark/Berak) | Hark ideia on bat ___. | Hark ideia on bat ___. | Berak seme bat ___. | Hark pasaporte bat ___. | Berak auto bat ___. |
+| gu (Guk) | Guk arrazoi ___. | Guk azterketa bat ___. | Guk etxe handi bat ___. | Guk maleta bat ___. | Guk arrazoi ___. |
+| zuek | Zuek galdera bat ___. | Zuek galdera bat ___. | Zuek anaia bat ___. | Zuek hotel bat ___. | Zuek lan asko ___. |
+| haiek | Haiek denbora gutxi ___. | Haiek azterketa bat ___. | Haiek anaia bat ___. | Haiek hegazkin bat ___. | Haiek denbora gutxi ___. |
 
 ---
 
