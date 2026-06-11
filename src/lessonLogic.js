@@ -99,8 +99,10 @@ export function shuffle(items) {
 // (an example sentence, a declined pronoun) gets asked that way rather than as
 // a bare-form question — rolled once per question, and split evenly between
 // whichever framings are available, so a lesson ends up with an organic mix of
-// styles rather than being uniformly one or the other.
-const SPECIAL_QUESTION_CHANCE = 0.5
+// styles rather than being uniformly one or the other. Weighted well above
+// 50/50 so a real Basque sentence is the common case and the bare "hura → ?"
+// framing is the occasional variation, not the other way around.
+const SPECIAL_QUESTION_CHANCE = 0.75
 
 // A single roll decides both *whether* a question gets a special framing and,
 // if so, *which* one: `[0, SPECIAL_QUESTION_CHANCE)` is divided into one equal
@@ -177,25 +179,29 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // sibling. Persons missing that supporting data always fall back to the bare
 // `form` question, so verbs can adopt any of the framings incrementally.
 //
-// `onlyBareForm` (set for a learner's first run through a lesson — see
-// `createExerciseState`) skips the sentence/pronoun/typed framings entirely,
-// so a brand-new conjugation is first met in its simplest, most recognisable
-// shape; once the learner's been through the lesson at least once, later runs
-// open up the full mix. Every question also carries the `verbId`/`tense` it
-// was generated from — irrelevant within a single-verb-and-tense lesson, but
-// what lets a "review" lesson (see `LESSONS`) interleave questions from
-// several lessons' worth of conjugation tables and still show each one in its
-// correct verb/tense context.
+// `noTyping` (set for a learner's first run(s) through a lesson — see
+// `createExerciseState`) drops the typed (`type-verb`/`type-pronoun`) and
+// `spot-error` framings — the ones that demand recalling or cross-checking a
+// brand-new form rather than just recognising it — while still letting the
+// `sentence`/`pronoun` multiple-choice framings through, so a brand-new
+// conjugation is met with real example sentences from the very first
+// question, just without being asked to type or spot-the-error yet. Once the
+// learner's been through the lesson enough times, later runs open up the full
+// mix. Every question also carries the `verbId`/`tense` it was generated
+// from — irrelevant within a single-verb-and-tense lesson, but what lets a
+// "review" lesson (see `LESSONS`) interleave questions from several lessons'
+// worth of conjugation tables and still show each one in its correct
+// verb/tense context.
 // `rounds` repeats the one-question-per-person pass this many times, each
 // pass independently shuffled (order) and re-rolled (question kind/options) —
 // this is how a lesson reaches a pedagogically reasonable length from a small
 // (3-6 person) conjugation table: see `TARGET_EXERCISE_COUNT` in `App.jsx`,
 // which derives `rounds` from the table size. Defaults to 1 (one question per
 // person, the original behaviour) so existing callers/tests are unaffected.
-export function generateQuestions(verb, tense, { onlyBareForm = false, rounds = 1 } = {}) {
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } = {}) {
   const table = verb.conjugations[tense]
-  const sentences = onlyBareForm ? {} : (verb.sentences?.[tense] ?? {})
-  const pronounSentences = onlyBareForm ? {} : (verb.pronounSentences?.[tense] ?? {})
+  const sentences = verb.sentences?.[tense] ?? {}
+  const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const persons = Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
   const source = { verbId: verb.id, tense }
@@ -205,10 +211,10 @@ export function generateQuestions(verb, tense, { onlyBareForm = false, rounds = 
     const pronounSentence = verb.pronouns && pronounSentences[person]
     const availableKinds = [
       sentence && 'sentence',
-      sentence && 'type-verb',
-      sentence && personsWithSentences.length >= 4 && 'spot-error',
+      sentence && !noTyping && 'type-verb',
+      sentence && !noTyping && personsWithSentences.length >= 4 && 'spot-error',
       pronounSentence && 'pronoun',
-      pronounSentence && 'type-pronoun',
+      pronounSentence && !noTyping && 'type-pronoun',
     ].filter(Boolean)
 
     switch (rollQuestionKind(availableKinds)) {
