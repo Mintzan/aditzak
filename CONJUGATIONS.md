@@ -701,6 +701,112 @@ Same `-zki-` infix over the past grid's prefix-encodes-`NORK` forms — e.g.
 | zuri | nizkizun | *(hika/zuka)* | zizkizun | genizkizun | *(refl.)* | *(zu↔zuek)* | zizkizuten |
 | haiei | nizkien | hizkien | zizkien | genizkien | zenizkien | zenizkieten | zizkieten |
 
+### Baldintza
+
+The ditransitive protasis ("if [NORK] were to give [NOR] to [NORI]") rides the
+same `n-i-`/`h-i-`/`z-i-`/`gen-i-`/`zen-i-` `NORK`-prefix + linking-`i` +
+`NORI`-suffix shape as the Past indicative grids above (`nion`, `zion`,
+`genidan`, …), with `hark`/`haiek` swapping their past-tense `z-`/`zi-` prefix
+for `l-`/`li-` — the same non-past-conditional alternation §3's
+Baldintza/Ondorioa-present use for `zuen`→`balu`/`luke`. Concretely: drop the
+past grid's trailing `-n` (or `-ten`'s `-n`), swap `z-`/`zi-`→`l-`/`li-` on the
+`hark`/`haiek` columns only, and prefix `Ba-` — e.g. `zion` (hark→hari, "he
+gave it to him") → `lio` → `balio` ("if he were to give it to him"); `nion` →
+`nio` → `banio` ("if I were to give it to him").
+
+#### `NOR` = hura
+
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | bahida | balida | bagenida | bazenida | bazenidate | balidate |
+| hari | banio | bahio | balio | bagenio | bazenio | bazeniote | baliote |
+| guri | *(refl.)* | bahigu | baligu | *(refl.)* | bazenigu | bazenigute | baligute |
+| zuri | banizu | *(hika/zuka)* | balizu | bagenizu | *(refl.)* | *(zu↔zuek)* | balizute |
+| haiei | banie | bahie | balie | bagenie | bazenie | bazeniete | baliete |
+
+*Adibidea:* `Liburu hau zuri eman banizu, oso pozik egongo zinateke` ("If I
+gave you this book, you'd be very happy" — zuri/nik).
+
+**Note:** `balio` (hari/hark — "if he/she were to give it to him/her") is
+homophonous with the common noun `balio` ("value/worth", as in `balio izan`,
+"to be worth") — context disambiguates the two readings.
+
+#### `NOR` = haiek
+
+Same `-zki-` infix as the indicative grids, inserted after the linking `i`:
+
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | bahizkida | balizkida | bagenizkida | bazenizkida | bazenizkidate | balizkidate |
+| hari | banizkio | bahizkio | balizkio | bagenizkio | bazenizkio | bazenizkiote | balizkiote |
+| guri | *(refl.)* | bahizkigu | balizkigu | *(refl.)* | bazenizkigu | bazenizkigute | balizkigute |
+| zuri | banizkizu | *(hika/zuka)* | balizkizu | bagenizkizu | *(refl.)* | *(zu↔zuek)* | balizkizute |
+| haiei | banizkie | bahizkie | balizkie | bagenizkie | bazenizkie | bazenizkiete | balizkiete |
+
+### Ondorioa, present
+
+The "would" apodosis — used as the auxiliary in periphrastic conditionals
+(`emango nizuke`, "I would give it to you"; §13's **Geroa + Ondorioa** =
+"Conditional — 'would'"). Same shape as Baldintza's `NOR`=hura grid above,
+minus `Ba-` and plus `-ke`: `banio` → `nioke`, `balizu` → `lizuke`.
+
+#### `NOR` = hura
+
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | hidake | lidake | genidake | zenidake | zenidakete | lidakete |
+| hari | nioke | hioke | lioke | genioke | zenioke | zeniokete | liokete |
+| guri | *(refl.)* | higuke | liguke | *(refl.)* | zeniguke | zenigukete | ligukete |
+| zuri | nizuke | *(hika/zuka)* | lizuke | genizuke | *(refl.)* | *(zu↔zuek)* | lizukete |
+| haiei | nieke | hieke | lieke | genieke | zenieke | zeniekete | liekete |
+
+*Adibideak:* `Liburu hau emango nizuke, baina jada saldu dut` ("I would give
+you this book, but I've already sold it" — zuri/nik); `Sariak irabaziko
+balute, opariak haurrei emango lizkiekete` ("If they won the prizes, they'd
+give the gifts to the children" — haiei/haiek, `NOR`=haiek — see grid below).
+
+#### `NOR` = haiek
+
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | hizkidake | lizkidake | genizkidake | zenizkidake | zenizkidakete | lizkidakete |
+| hari | nizkioke | hizkioke | lizkioke | genizkioke | zenizkioke | zenizkiokete | lizkiokete |
+| guri | *(refl.)* | hizkiguke | lizkiguke | *(refl.)* | zenizkiguke | zenizkigukete | lizkigukete |
+| zuri | nizkizuke | *(hika/zuka)* | lizkizuke | genizkizuke | *(refl.)* | *(zu↔zuek)* | lizkizukete |
+| haiei | nizkieke | hizkieke | lizkieke | genizkieke | zenizkieke | zenizkiekete | lizkiekete |
+
+### Ondorioa, past
+
+The "would have" apodosis — used as the auxiliary in §13's **Ez-ohiko
+Baldintza** ("would have", `emango niokeen` = "I would have given it to him").
+Keeps Ondorioa-present's prefixes but reverts `hark`/`haiek` to the past-tense
+`z-`/`zi-` prefix (mirroring §3's `luke`→`zukeen`) and appends `-en` (`-ten`
+where `-te-` already supplies the linking vowel): `nioke`→`niokeen`,
+`lioke`→`ziokeen`, `liokete`→`zioketen`.
+
+#### `NOR` = hura
+
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | hidakeen | zidakeen | genidakeen | zenidakeen | zenidaketen | zidaketen |
+| hari | niokeen | hiokeen | ziokeen | geniokeen | zeniokeen | zenioketen | zioketen |
+| guri | *(refl.)* | higukeen | zigukeen | *(refl.)* | zenigukeen | zeniguketen | ziguketen |
+| zuri | nizukeen | *(hika/zuka)* | zizukeen | genizukeen | *(refl.)* | *(zu↔zuek)* | zizuketen |
+| haiei | niekeen | hiekeen | ziekeen | geniekeen | zeniekeen | zenieketen | zieketen |
+
+*Adibidea:* `Garaiz jakin izan banu, laguntza eskatuko niokeen` ("If I had
+known in time, I would have asked him for help" — hari/nik).
+
+#### `NOR` = haiek
+
+| NORI ↓ ╲ NORK → | nik | hik | hark | guk | zuk | zuek | haiek |
+|---|---|---|---|---|---|---|---|
+| niri | *(refl.)* | hizkidakeen | zizkidakeen | genizkidakeen | zenizkidakeen | zenizkidaketen | zizkidaketen |
+| hari | nizkiokeen | hizkiokeen | zizkiokeen | genizkiokeen | zenizkiokeen | zenizkioketen | zizkioketen |
+| guri | *(refl.)* | hizkigukeen | zizkigukeen | *(refl.)* | zenizkigukeen | zenizkiguketen | zizkiguketen |
+| zuri | nizkizukeen | *(hika/zuka)* | zizkizukeen | genizkizukeen | *(refl.)* | *(zu↔zuek)* | zizkizuketen |
+| haiei | nizkiekeen | hizkiekeen | zizkiekeen | genizkiekeen | zenizkiekeen | zenizkieketen | zizkieketen |
+
 ### Ahalera, Orainaldia (Present potential), ditransitive
 
 The ditransitive potential ("[NORK] can give X to Y") follows a `dieza-`
@@ -1689,11 +1795,67 @@ forms (`diezaion`, `diezaiegun`, `diezazkion`):
 `Gurasoek nahi dute opariak haurrei eman diezazkien` ("The parents want the
 gifts to be given to the children" — haiei/haiek).
 
-`niri`/`guri`/`zuri`/`zuei` as `NORI` follow the identical recipe (root
-`diezada-`/`diezagu-`/`diezazu-`/`diezazue-`, from §5's already-verified
-`Ahalera` columns, plus the same `-n`-family suffixes) but aren't tabulated
-here — left as a future pass, the same posture as other not-yet-expanded
-grids in this document (see `DECISIONS.md`).
+`niri`/`guri`/`zuri`/`zuei` as `NORI` follow the identical recipe — roots
+`diezada-`/`diezagu-`/`diezazu-`/`diezazue-` (from §5's already-verified
+`Ahalera` columns, the same roots that underlie that section's
+`niri`/`guri`/`zuri` rows before `-ke-`; `diezazue-` mirrors §4's `zuei` row,
+which §5's own grids don't tabulate separately), plus the same `-n`-family
+suffixes. `*(refl.)*`/`*(hika/zuka)*`/`*(zu↔zuek)*` cells follow §5's
+person-category rule, mirrored onto `zuei` the same way `zuri`'s `zuk`=`*(refl.)*`/
+`zuek`=`*(zu↔zuek)*` split mirrors to `zuei`'s `zuek`=`*(refl.)*`/`zuk`=`*(zu↔zuek)*`:
+
+##### NORI = niri ("...so that [NORK] may give [NOR] to me")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | *(refl.)* | *(refl.)* |
+| hik | diezada**an** / diezada**nan** *(masc./fem.)* | diezazkida**an** / diezazkida**nan** |
+| hark | diezada**n** | diezazkida**n** |
+| guk | diezada**gun** | diezazkida**gun** |
+| zuk | diezada**zun** | diezazkida**zun** |
+| zuek | diezada**zuen** | diezazkida**zuen** |
+| haiek | diezada**ten** | diezazkida**ten** |
+
+##### NORI = guri ("...so that [NORK] may give [NOR] to us")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | *(refl.)* | *(refl.)* |
+| hik | diezagu**an** / diezagu**nan** *(masc./fem.)* | diezazkigu**an** / diezazkigu**nan** |
+| hark | diezagu**n** | diezazkigu**n** |
+| guk | *(refl.)* | *(refl.)* |
+| zuk | diezagu**zun** | diezazkigu**zun** |
+| zuek | diezagu**zuen** | diezazkigu**zuen** |
+| haiek | diezagu**ten** | diezazkigu**ten** |
+
+##### NORI = zuri ("...so that [NORK] may give [NOR] to you")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | diezazu**dan** | diezazkizu**dan** |
+| hik | *(hika/zuka)* | *(hika/zuka)* |
+| hark | diezazu**n** | diezazkizu**n** |
+| guk | diezazu**gun** | diezazkizu**gun** |
+| zuk | *(refl.)* | *(refl.)* |
+| zuek | *(zu↔zuek)* | *(zu↔zuek)* |
+| haiek | diezazu**ten** | diezazkizu**ten** |
+
+##### NORI = zuei ("...so that [NORK] may give [NOR] to you all")
+
+| NORK | Present (NOR=hura) | Present (NOR=haiek, -izki-) |
+|---|---|---|
+| nik | diezazue**dan** | diezazkizue**dan** |
+| hik | *(hika/zuka)* | *(hika/zuka)* |
+| hark | diezazue**n** | diezazkizue**n** |
+| guk | diezazue**gun** | diezazkizue**gun** |
+| zuk | *(zu↔zuek)* | *(zu↔zuek)* |
+| zuek | *(refl.)* | *(refl.)* |
+| haiek | diezazue**ten** | diezazkizue**ten** |
+
+*Adibideak:* `Eskertuko nuke norbaitek dirua itzul diezadan` ("I'd be grateful
+if someone gave the money back to me" — niri/haiek-as-generic-someone, `hark`
+row); `Nahi dut zuk argazkiak erakuts diezazkidazun` ("I want you to show me
+the photos" — niri/zuk, `NOR`=haiek).
 
 **Past (Lehenaldia) note:** a synthetic `NOR-NORI-NORK` subjunctive past
 (mirroring `niezaiokeen` → `niezaioen`) is morphologically derivable by the
