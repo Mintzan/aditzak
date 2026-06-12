@@ -63,3 +63,38 @@ After a deploy with the key configured, open the live site and play through a
 lesson, then check **Activity → Events** in the PostHog dashboard for that
 project — `$pageview`, `lesson_started`, and `lesson_completed` events should
 appear within a minute or two.
+
+## 5. Suggested dashboard
+
+Once events are flowing, create a dashboard (**Dashboards → New dashboard**)
+and pin these insights — each is built via **Insights → New insight**, then
+**Add to dashboard**:
+
+1. **Start → completion funnel** — Funnel, steps `lesson_started` →
+   `lesson_completed` (1-day conversion window). Overall % of learners who
+   finish a lesson once they start it.
+2. **Funnel by lesson** — same funnel, breakdown by `lessonId`. Surfaces
+   individual lessons with unusually low completion (too long, too hard, or
+   confusing).
+3. **Difficulty by lesson** — Trends on `lesson_completed`, formula `A / B`
+   where A = sum of `correctCount` and B = sum of `total`, broken down by
+   `lessonId`. Low values flag tenses/verbs that may need more practice
+   content or an earlier review lesson.
+4. **Star distribution** — Trends on `lesson_completed`, breakdown by
+   `stars`, shown as a bar chart. How many 0/1/2/3-star results overall or
+   per lesson.
+5. **Replay rate** — Trends on `lesson_completed` filtered to `isRepeat =
+   true`, as a percentage of all `lesson_completed` events. How often
+   learners repeat a lesson (a proxy for "wants more practice" vs.
+   "frustrated").
+6. **Funnel by tense** — `lesson_started` → `lesson_completed`, broken down
+   by `tense`. Which grammatical tenses learners abandon most.
+7. **Attempts before completion** — Trends on `lesson_started`, breakdown by
+   `attemptNumber`. Distribution of first-try vs. retry starts.
+8. **Active learners** — Trends, unique users on `$pageview`, daily and
+   weekly. Basic engagement volume (works without `posthog.identify()` since
+   PostHog persists an anonymous distinct ID per browser).
+9. **Retention** — Retention insight based on `lesson_completed`. % of
+   learners returning on subsequent days/weeks.
+10. **Points earned** — Trends, sum of `pointsEarned` from
+    `lesson_completed`, daily. Overall progression/engagement trend.
