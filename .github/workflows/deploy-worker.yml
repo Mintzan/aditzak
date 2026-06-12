@@ -27,7 +27,11 @@ jobs:
           cache-dependency-path: worker/package-lock.json
       - run: npm ci
         working-directory: worker
-      - uses: cloudflare/wrangler-action@v3
+      - if: ${{ secrets.CLOUDFLARE_API_TOKEN == '' }}
+        run: |
+          echo "::warning::Skipping worker deploy: CLOUDFLARE_API_TOKEN repo secret is not set. See docs/CLOUDFLARE_FEEDBACK_WORKER.md."
+      - if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

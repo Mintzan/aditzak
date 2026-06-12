@@ -8,6 +8,20 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Made `deploy-worker.yml` skip (not fail) when Cloudflare secrets are unset
+
+**Decision:** The `cloudflare/wrangler-action@v3` step now only runs `if:
+secrets.CLOUDFLARE_API_TOKEN != ''`, with a sibling step emitting a
+`::warning::` and skipping when it's empty, instead of letting `wrangler
+deploy` hard-fail the workflow run on `main`.
+
+**Why:** `docs/CLOUDFLARE_FEEDBACK_WORKER.md` already documents
+`CLOUDFLARE_API_TOKEN`/`CLOUDFLARE_ACCOUNT_ID` as repo secrets the maintainer
+adds manually post-merge — until that's done, every push to `main` touching
+`worker/**` (or the workflow file itself) showed a failing "Deploy feedback
+worker" run, which read as a broken main branch even though the app build
+(CI, Pages deploy) was fine. Skipping with a warning keeps `main` green while
+still surfacing that the deploy hasn't actually run yet.
 ## 2026-06-12 — Added CI deploy for the feedback worker (`cloudflare/wrangler-action`)
 
 **Decision:** Added `.github/workflows/deploy-worker.yml`, running
