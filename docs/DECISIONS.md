@@ -8,6 +8,40 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Extracted `VERBS`/`LESSONS` out of `App.jsx` into `src/data/`, added a `journey.test.js` consistency check
+
+**Decision:** The previous entry's journey redesign touched `journey.js`,
+`App.jsx` (`VERBS` + `LESSONS`, ~1300 of its 3162 lines), and four docs in one
+pass — `App.jsx` mixed ~1300 lines of curriculum data into an otherwise
+UI-only file, and nothing checked that `journey.js`'s `lessonIds` actually
+lined up with `LESSONS`/`VERBS`. To make the next such redesign cheaper and
+safer:
+
+- Moved `VERBS` plus its post-processing loops (future/past sentence-reuse,
+  `SINGLE_WORD_PAST_NEGATION`) and the lookup-table metadata (`TENSE_META`,
+  `TYPE_META`, `AGREEMENT_META`, `DIALECT_LABELS`, `PERSON_LABEL_KEYS`) into
+  `src/data/verbs.js`.
+- Moved `LESSONS` plus `PHASE_1_PERSONS`/`PHASE_1_PLURAL_PERSONS` into
+  `src/data/lessons.js`.
+- `App.jsx` now just imports both — purely mechanical, no logic changes;
+  `npm run build`/`npm run lint`/`npm test` all still pass. `journey.js`,
+  `data/lessons.js`, and `data/verbs.js` are now a self-contained ~1700-line
+  "curriculum" trio with zero UI code, so a journey change can be made by
+  reading just those three files.
+- Added `src/journey.test.js` (part of `npm test`): checks every `JOURNEY`
+  unit's `lessonIds` resolve to a `LESSONS` entry and vice versa (each
+  referenced exactly once), `available` units have `lessonIds` and `pending`
+  ones don't, and every practice/review lesson's `verbId`/`tense`/`persons`
+  resolves into `VERBS`. Catches the kind of dangling reference a renumbering
+  could silently introduce.
+- Added a "Working on the learning journey" section to `CLAUDE.md` mapping
+  change types (reorder units, add a verb/tense, flip `pending` →
+  `available`) to the files that need updating together.
+
+**Why not split `App.jsx` further (e.g. extracting screen components):** out
+of scope here — the goal was specifically to isolate the curriculum *data*
+that journey redesigns touch, not a general `App.jsx` reorganization.
+
 ## 2026-06-12 — Redesigned the learning journey: pulled `ikusi` into Phase I (new Unit 3), split the future mega-unit into four, and added "Looking Back I/II" past-tense units — renumbering Units 7-25 to 10-32
 
 **Decision:** Addressed three pacing/variety complaints about the journey
