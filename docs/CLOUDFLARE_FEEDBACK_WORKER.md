@@ -48,7 +48,7 @@ blocked by the browser.
 
 Non-secret config lives in `[vars]`:
 
-- `ALLOWED_ORIGIN` — the app's origin (e.g. `https://gorbeia.github.io` for
+- `ALLOWED_ORIGIN` — the app's origin (e.g. `https://mintzan.github.io` for
   the current GitHub Pages deploy). No trailing slash/path.
 - `FEEDBACK_TO_EMAIL` — mailbox that receives feedback.
 - `FEEDBACK_FROM_EMAIL` — Resend "from" address (`onboarding@resend.dev` or

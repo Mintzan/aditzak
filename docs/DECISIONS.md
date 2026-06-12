@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Updated `base`/package names/CORS origin for the `gorbeia/testapp005` → `Mintzan/aditzak` repo rename
+
+**Decision:** The GitHub Pages deploy workflow (`.github/workflows/deploy.yml`)
+still ran successfully after the repo was renamed, but `vite.config.js`'s
+`base: '/testapp005/'` no longer matched the new Pages URL
+(`https://mintzan.github.io/aditzak/`), so every built asset URL 404'd and the
+deployed site loaded blank. Updated `base` to `/aditzak/`, renamed
+`package.json`/`package-lock.json` from `testapp005` to `aditzak`, and updated
+the feedback worker's `ALLOWED_ORIGIN` (`worker/wrangler.toml` +
+`docs/CLOUDFLARE_FEEDBACK_WORKER.md`'s example) from `gorbeia.github.io` to
+`mintzan.github.io`.
+
+**Why:** this is exactly the case the 2026-06-07 "Deploy to GitHub Pages"
+entry below flagged — `base` was hardcoded "since the app isn't expected to be
+renamed/forked — update `base` if that changes." The rename happened, so the
+update follows that documented plan. `ALLOWED_ORIGIN` isn't load-bearing yet
+(the feedback worker isn't wired into the app), but keeping it consistent with
+the actual Pages origin avoids a stale value surprising whoever wires it up.
+
 ## 2026-06-12 — Implemented Unit 9 (future tense, 13 verbs), reused present-tense sentences by reference, split review into 4 lessons
 
 **Decision:** Added a `conjugations.future` table to all 12 of Units 1-8's

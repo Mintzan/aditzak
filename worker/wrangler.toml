@@ -6,7 +6,7 @@ compatibility_date = "2024-11-01"
 # environments or `wrangler deploy --var KEY:value` if needed.
 [vars]
 # Origin allowed to call this worker (no trailing slash).
-ALLOWED_ORIGIN = "https://gorbeia.github.io"
+ALLOWED_ORIGIN = "https://mintzan.github.io"
 # Mailbox that receives feedback.
 FEEDBACK_TO_EMAIL = "inakiibarrola@yahoo.es"
 # Resend "from" address. Must be on a domain verified in Resend, or
