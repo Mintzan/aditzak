@@ -8,6 +8,21 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Reworded the "Why is this correct?" explanations to drop linguistics jargon
+
+**Decision:** Rewrote `explanationPronounErgative`/`explanationPronounAbsolutive`
+(`src/i18n/translations.js`, all three locales) to explain the `-k` ending in
+plain terms — "the person doing the action always gets a '-k'" / "only one
+person here, so no '-k' is needed" — instead of naming the `ergative`/
+`absolutive`/`NOR-NORK`/`NOR`/"case ending" terminology.
+
+**Why:** the target audience is language learners, not linguistics students —
+terms like "ergative case" and the `NOR-NORK` notation (meaningful to us from
+`docs/CONJUGATIONS.md`) are exactly the kind of jargon a beginner has no
+context for. The underlying contrast (does the verb need to mark a "doer" vs
+just one plain person) is the same; only the wording changed, no behavioral
+change to `getExplanation`/`FeedbackBar`.
+
 ## 2026-06-12 — Already-attempted lessons stay unlocked, even if their predecessor hasn't been attempted
 
 **Decision:** `getUnlockedLessonIds` (`lessonLogic.js`) now also unlocks a
