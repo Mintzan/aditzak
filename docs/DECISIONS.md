@@ -8,6 +8,51 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Review lessons get up to 4 extra "weak spot" questions, targeting the learner's most-missed verb/tense/person combos
+
+**Decision:** `exerciseReducer`'s `answer` action now tracks `misses` — one
+`{ verbId, tense, person }` entry per question gotten wrong on the *first*
+attempt (retries don't count again, mirroring how `correctCount` already only
+credits first attempts). `ExerciseScreen` passes `state.misses` through
+`onComplete`, and `AppShell` merges them into a new `aditzak:errors:v1`
+storage key via `recordErrors` — a map keyed by `verbId:tense:person`, each
+entry holding a running `count` and `lastMissed` timestamp. `handleResetProgress`
+clears it alongside `progress`/`dailyStreak`/`points`.
+
+`createExerciseState` now also takes `errorStats`, and for `review: true`
+lessons calls `getWeakSpotQuestions(errorStats, lesson.sources, VERBS)` —
+this picks up to `EXTRA_REVIEW_EXERCISES` (4) of the learner's most-missed
+verb/tense/person combos *among this review's own sources* (so a review only
+ever drills forms it actually covers), sorted by miss count then recency, and
+generates one fresh `generateQuestions` roll for each. These extra questions
+are shuffled in alongside the review's normal cross-section, so `total` grows
+by up to 4 for a learner with relevant weak spots and is unchanged (0 extra)
+for one with none recorded yet.
+
+**Why "among this review's own sources" rather than globally weakest:** a
+review lesson's whole point is drilling the verb/tense pairs it was built
+from (per the "Every available unit ends with a trailing 'Unit review'
+lesson" entry below) — pulling in a weak spot from an unrelated unit would mix
+unrelated content into what's supposed to be that unit's consolidation pass.
+Scoping to `sources` keeps the boost relevant while still reaching across
+*all* of a review's sources (not just one verb), since reviews already mix
+several.
+
+**Why re-roll via `generateQuestions` rather than replaying the exact missed
+question:** "similar to the failed ones" reads better as another attempt at
+the same conjugated-form slot — possibly a different framing/kind or sentence
+variant, per the existing per-question rolls — than as literally repeating the
+identical question (same sentence, same distractor set) the learner just got
+wrong. A person whose conjugation table no longer has the recorded `person`
+(e.g. a future data change) is filtered out rather than falling back to a
+different person, so "weak spot" questions always match what they claim to
+target.
+
+**Why a separate storage key, no `STORAGE_KEY` bump:** same precedent as
+`aditzak:streak:v1`/`aditzak:points:v1` — error stats are orthogonal to any
+single lesson's `progress` entry and "Reset progress" can clear it
+independently.
+
 ## 2026-06-12 — Split `unit-5-review`/`unit-6-review` into three reviews each, paired across origin units
 
 **Decision:** Replaced the single `unit-5-review` (6 sources, ~33 questions)

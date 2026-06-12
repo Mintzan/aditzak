@@ -13,8 +13,10 @@ import {
   pickEncouragementVariantIndex,
   getStreakEncouragement,
   getUnlockedLessonIds,
+  getWeakSpotQuestions,
   isAnswerCorrect,
   recordDailyStreak,
+  recordErrors,
   recordResult,
   repairStreak,
   shuffle,
@@ -831,10 +833,18 @@ const STREAK_STORAGE_KEY = 'aditzak:streak:v1'
 // can clear it without a version bump to `progress`/`STORAGE_KEY`.
 const POINTS_STORAGE_KEY = 'aditzak:points:v1'
 
-// `progress`/`dailyStreak`/`points` each live under their own key (see above)
-// but share the same read/write shape: a JSON object, defaulting to `{}` if
-// missing or unparsable, silently no-oping if localStorage itself is
-// unavailable (private browsing, quota).
+// Tracks the verb/tense/person combinations the learner has gotten wrong on
+// the first attempt (see `lessonLogic.js`'s `recordErrors`), used to surface
+// extra "weak spot" questions in review lessons (`getWeakSpotQuestions`).
+// Its own key for the same reasons as the streak/points: orthogonal to any
+// single lesson's progress, and "Reset progress" can clear it without a
+// version bump to `progress`/`STORAGE_KEY`.
+const ERROR_STORAGE_KEY = 'aditzak:errors:v1'
+
+// `progress`/`dailyStreak`/`points`/`errorStats` each live under their own key
+// (see above) but share the same read/write shape: a JSON object, defaulting
+// to `{}` if missing or unparsable, silently no-oping if localStorage itself
+// is unavailable (private browsing, quota).
 function createStorage(key) {
   return {
     load() {
@@ -858,6 +868,7 @@ function createStorage(key) {
 const progressStorage = createStorage(STORAGE_KEY)
 const streakStorage = createStorage(STREAK_STORAGE_KEY)
 const pointsStorage = createStorage(POINTS_STORAGE_KEY)
+const errorStorage = createStorage(ERROR_STORAGE_KEY)
 
 // Looks up a verb's English/Spanish/Basque gloss, falling back to English if
 // the active interface language has no translation for this verb.
@@ -1351,25 +1362,31 @@ const NO_TYPING_ATTEMPTS = 2
 // rather than presenting the exact same question twice in a row.
 const TARGET_EXERCISE_COUNT = 12
 
-function createExerciseState(lesson, attempts) {
+function createExerciseState(lesson, attempts, errorStats = {}) {
   const sources = lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]
   const noTyping = !lesson.review && attempts < NO_TYPING_ATTEMPTS
   const targetPerSource = TARGET_EXERCISE_COUNT / sources.length
-  const questions = shuffle(
-    sources.flatMap(({ verbId, tense }) => {
-      const verb = VERBS.find((v) => v.id === verbId)
-      const personCount = Object.keys(verb.conjugations[tense]).length
-      const rounds = Math.max(1, Math.round(targetPerSource / personCount))
-      return generateQuestions(verb, tense, { noTyping, rounds, includeNegation: Boolean(lesson.negation) })
-    }),
-  )
+  const questions = sources.flatMap(({ verbId, tense }) => {
+    const verb = VERBS.find((v) => v.id === verbId)
+    const personCount = Object.keys(verb.conjugations[tense]).length
+    const rounds = Math.max(1, Math.round(targetPerSource / personCount))
+    return generateQuestions(verb, tense, { noTyping, rounds, includeNegation: Boolean(lesson.negation) })
+  })
+  // Review lessons get up to `EXTRA_REVIEW_EXERCISES` extra questions, drawn
+  // from the verb/tense/person combinations this learner has most often
+  // gotten wrong on the first try (see `getWeakSpotQuestions`) — extra
+  // reinforcement for exactly the forms that need it, on top of the review's
+  // normal cross-section.
+  const extraQuestions = lesson.review ? getWeakSpotQuestions(errorStats, sources, VERBS) : []
+  const allQuestions = shuffle([...questions, ...extraQuestions])
   return {
-    queue: questions,
-    total: questions.length,
+    queue: allQuestions,
+    total: allQuestions.length,
     selected: null,
     status: 'active', // 'active' | 'correct' | 'incorrect'
     correctCount: 0,
     streak: 0,
+    misses: [],
   }
 }
 
@@ -1793,9 +1810,9 @@ function rollStreakNudgeChance() {
   return Math.random() < STREAK_NUDGE_CHANCE
 }
 
-function ExerciseScreen({ lesson, attempts, onExit, onComplete, canShowStreakNudge, onStreakNudgeShown }) {
+function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canShowStreakNudge, onStreakNudgeShown }) {
   const { t } = useLanguage()
-  const [state, dispatch] = useReducer(exerciseReducer, undefined, () => createExerciseState(lesson, attempts))
+  const [state, dispatch] = useReducer(exerciseReducer, undefined, () => createExerciseState(lesson, attempts, errorStats))
   const [finished, setFinished] = useState(false)
   const [streakEncouragement, setStreakEncouragement] = useState(null)
   // Whether the "why is this correct?" panel (see `ExplanationToggle`) is
@@ -1894,7 +1911,7 @@ function ExerciseScreen({ lesson, attempts, onExit, onComplete, canShowStreakNud
         correctCount={state.correctCount}
         total={total}
         pointsEarned={computeLessonPoints(state.correctCount, total, attempts > 0)}
-        onDone={() => onComplete({ correctCount: state.correctCount, total })}
+        onDone={() => onComplete({ correctCount: state.correctCount, total, misses: state.misses })}
       />
     )
   }
@@ -2004,6 +2021,7 @@ function AppShell() {
   const [progress, setProgress] = useState(progressStorage.load)
   const [dailyStreak, setDailyStreak] = useState(streakStorage.load)
   const [points, setPoints] = useState(pointsStorage.load)
+  const [errorStats, setErrorStats] = useState(errorStorage.load)
   const [tab, setTab] = useState('home')
   const [activeLessonId, setActiveLessonId] = useState(null)
   // Session-level gate for the mid-lesson streak nudge: counts down once a
@@ -2023,6 +2041,10 @@ function AppShell() {
     pointsStorage.save(points)
   }, [points])
 
+  useEffect(() => {
+    errorStorage.save(errorStats)
+  }, [errorStats])
+
   const handleStreakNudgeShown = useCallback(() => {
     setStreakNudgeCooldown(randomStreakNudgeCooldown())
   }, [])
@@ -2034,6 +2056,7 @@ function AppShell() {
     setProgress({})
     setDailyStreak({})
     setPoints({})
+    setErrorStats({})
   }
 
   function handleRepairStreak() {
@@ -2056,6 +2079,7 @@ function AppShell() {
         key={lesson.id}
         lesson={lesson}
         attempts={progress[lesson.id]?.attempts ?? 0}
+        errorStats={errorStats}
         onExit={() => setActiveLessonId(null)}
         canShowStreakNudge={streakNudgeCooldown === 0}
         onStreakNudgeShown={handleStreakNudgeShown}
@@ -2074,6 +2098,7 @@ function AppShell() {
           setProgress((previous) => recordResult(previous, lesson.id, result))
           setDailyStreak((previous) => recordDailyStreak(previous, getLocalDateString()))
           setPoints((previous) => addPoints(previous, pointsEarned))
+          setErrorStats((previous) => recordErrors(previous, result.misses))
           setStreakNudgeCooldown((cooldown) => Math.max(0, cooldown - 1))
           setActiveLessonId(null)
         }}

@@ -440,6 +440,59 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   return Array.from({ length: rounds }, () => shuffle(persons).map(buildQuestion)).flat()
 }
 
+// =============================================================================
+// Error tracking & weak-spot review boosters
+// =============================================================================
+
+// Up to this many extra questions get appended to a review lesson's queue,
+// targeting the verb/tense/person combinations the learner has most often
+// gotten wrong on the first attempt (see `getWeakSpotQuestions`).
+export const EXTRA_REVIEW_EXERCISES = 4
+
+// Merges a batch of first-attempt misses (`{ verbId, tense, person }` — see
+// `exerciseReducer`'s `misses`) into the persisted error-tracking map, keyed
+// by `verbId:tense:person` so repeated misses on the same form accumulate
+// into one growing count rather than separate entries. `lastMissed` is an
+// ISO timestamp, used by `getWeakSpotQuestions` to break ties between
+// equally-missed spots.
+export function recordErrors(errorStats, misses) {
+  if (!misses || misses.length === 0) return errorStats
+  const next = { ...errorStats }
+  const now = new Date().toISOString()
+  for (const { verbId, tense, person } of misses) {
+    const key = `${verbId}:${tense}:${person}`
+    next[key] = { verbId, tense, person, count: (next[key]?.count ?? 0) + 1, lastMissed: now }
+  }
+  return next
+}
+
+// Picks the learner's most-missed verb/tense/person combinations among this
+// review lesson's `sources` (so a review only ever drills forms it actually
+// covers), and generates one fresh question for each — up to `count`. These
+// read as "similar to the failed ones" rather than identical: each is a
+// normal `generateQuestions` roll for that exact person, so the framing/kind
+// and (for sentence-based kinds) the phrasing variant can differ from
+// whichever question was originally missed, while still targeting the same
+// conjugated form. Sorted by miss count (most-missed first), then by
+// recency, so the weakest spots are favoured when there are more of them
+// than slots.
+export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_REVIEW_EXERCISES) {
+  const sourceKeys = new Set(sources.map(({ verbId, tense }) => `${verbId}:${tense}`))
+  const weakSpots = Object.values(errorStats)
+    .filter(({ verbId, tense, person }) => {
+      if (!sourceKeys.has(`${verbId}:${tense}`)) return false
+      const verb = verbs.find((v) => v.id === verbId)
+      return Boolean(verb?.conjugations[tense]?.[person])
+    })
+    .sort((a, b) => b.count - a.count || new Date(b.lastMissed) - new Date(a.lastMissed))
+    .slice(0, count)
+
+  return weakSpots.map(({ verbId, tense, person }) => {
+    const verb = verbs.find((v) => v.id === verbId)
+    return generateQuestions(verb, tense, { rounds: 1 }).find((question) => question.person === person)
+  })
+}
+
 // Optional "why is this correct?" explanation, surfaced by `FeedbackBar` only
 // after a *correct* answer and only for question kinds that test a concept
 // rather than just a memorized form. `pronoun`/`type-pronoun` are one prime
@@ -481,13 +534,19 @@ export function exerciseReducer(state, action) {
       if (state.status !== 'active') return state
       const question = state.queue[0]
       const isCorrect = isAnswerCorrect(action.option, question.correct)
-      const countsTowardScore = isCorrect && !question.retry
+      const isFirstAttempt = !question.retry
+      const countsTowardScore = isCorrect && isFirstAttempt
+      const misses =
+        !isCorrect && isFirstAttempt
+          ? [...(state.misses ?? []), { verbId: question.verbId, tense: question.tense, person: question.person }]
+          : state.misses ?? []
       return {
         ...state,
         selected: action.option,
         status: isCorrect ? 'correct' : 'incorrect',
         correctCount: state.correctCount + (countsTowardScore ? 1 : 0),
         streak: isCorrect ? state.streak + 1 : 0,
+        misses,
       }
     }
     case 'next': {

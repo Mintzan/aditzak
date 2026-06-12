@@ -4,6 +4,7 @@ import {
   canRepairStreak,
   computeLessonPoints,
   computeStars,
+  EXTRA_REVIEW_EXERCISES,
   exerciseReducer,
   generateQuestions,
   getActiveStreak,
@@ -12,9 +13,11 @@ import {
   getLocalDateString,
   getStreakEncouragement,
   getUnlockedLessonIds,
+  getWeakSpotQuestions,
   isAnswerCorrect,
   pickEncouragementVariantIndex,
   recordDailyStreak,
+  recordErrors,
   recordResult,
   repairStreak,
   shuffle,
@@ -880,8 +883,8 @@ describe('shuffle', () => {
 })
 
 describe('exerciseReducer', () => {
-  const questionA = { person: 'ni', correct: 'naiz', options: ['naiz', 'haiz', 'da', 'gara'] }
-  const questionB = { person: 'hi', correct: 'haiz', options: ['naiz', 'haiz', 'da', 'gara'] }
+  const questionA = { verbId: 'izan', tense: 'present', person: 'ni', correct: 'naiz', options: ['naiz', 'haiz', 'da', 'gara'] }
+  const questionB = { verbId: 'izan', tense: 'present', person: 'hi', correct: 'haiz', options: ['naiz', 'haiz', 'da', 'gara'] }
   const baseState = {
     queue: [questionA, questionB],
     total: 2,
@@ -889,6 +892,7 @@ describe('exerciseReducer', () => {
     status: 'active',
     correctCount: 0,
     streak: 0,
+    misses: [],
   }
 
   it('marks a correct answer, increments the score, and extends the streak', () => {
@@ -940,5 +944,107 @@ describe('exerciseReducer', () => {
     const next = exerciseReducer(retryState, { type: 'answer', option: 'naiz' })
 
     expect(next).toMatchObject({ status: 'correct', correctCount: 0 })
+  })
+
+  it('records a first-attempt miss with the verb/tense/person of the missed question', () => {
+    const next = exerciseReducer(baseState, { type: 'answer', option: 'haiz' })
+
+    expect(next.misses).toEqual([{ verbId: 'izan', tense: 'present', person: 'ni' }])
+  })
+
+  it('does not record a miss for a correct answer', () => {
+    const next = exerciseReducer(baseState, { type: 'answer', option: 'naiz' })
+
+    expect(next.misses).toEqual([])
+  })
+
+  it('does not record another miss for a requeued question missed again on retry', () => {
+    const retryState = { ...baseState, queue: [{ ...questionA, retry: true }], total: 1, misses: [{ verbId: 'izan', tense: 'present', person: 'ni' }] }
+    const next = exerciseReducer(retryState, { type: 'answer', option: 'haiz' })
+
+    expect(next.misses).toEqual([{ verbId: 'izan', tense: 'present', person: 'ni' }])
+  })
+})
+
+describe('recordErrors', () => {
+  it('returns the same stats object when there are no misses', () => {
+    const stats = { 'izan:present:ni': { verbId: 'izan', tense: 'present', person: 'ni', count: 1, lastMissed: '2026-01-01T00:00:00.000Z' } }
+
+    expect(recordErrors(stats, [])).toBe(stats)
+  })
+
+  it('adds a new entry for a verb/tense/person missed for the first time', () => {
+    const next = recordErrors({}, [{ verbId: 'izan', tense: 'present', person: 'ni' }])
+
+    expect(next['izan:present:ni']).toMatchObject({ verbId: 'izan', tense: 'present', person: 'ni', count: 1 })
+    expect(next['izan:present:ni'].lastMissed).toBeTypeOf('string')
+  })
+
+  it('increments the count for a verb/tense/person missed again', () => {
+    const stats = { 'izan:present:ni': { verbId: 'izan', tense: 'present', person: 'ni', count: 2, lastMissed: '2026-01-01T00:00:00.000Z' } }
+    const next = recordErrors(stats, [{ verbId: 'izan', tense: 'present', person: 'ni' }])
+
+    expect(next['izan:present:ni'].count).toBe(3)
+  })
+
+  it('tracks multiple misses from the same lesson independently', () => {
+    const next = recordErrors({}, [
+      { verbId: 'izan', tense: 'present', person: 'ni' },
+      { verbId: 'izan', tense: 'present', person: 'hura' },
+    ])
+
+    expect(Object.keys(next).sort()).toEqual(['izan:present:hura', 'izan:present:ni'])
+  })
+})
+
+describe('getWeakSpotQuestions', () => {
+  const verbA = {
+    id: 'izan',
+    conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da' } },
+  }
+  const verbB = {
+    id: 'egon',
+    conjugations: { present: { ni: 'nago', zu: 'zaude', hura: 'dago' } },
+  }
+  const verbs = [verbA, verbB]
+  const sources = [{ verbId: 'izan', tense: 'present' }]
+
+  it('returns no questions when there are no recorded errors', () => {
+    expect(getWeakSpotQuestions({}, sources, verbs)).toEqual([])
+  })
+
+  it('generates a question for the missed person, sourced from the right verb/tense', () => {
+    const stats = { 'izan:present:hura': { verbId: 'izan', tense: 'present', person: 'hura', count: 1, lastMissed: '2026-01-01T00:00:00.000Z' } }
+    const [question] = getWeakSpotQuestions(stats, sources, verbs)
+
+    expect(question).toMatchObject({ verbId: 'izan', tense: 'present', person: 'hura' })
+  })
+
+  it('ignores errors from verbs/tenses outside this lesson\'s sources', () => {
+    const stats = { 'egon:present:ni': { verbId: 'egon', tense: 'present', person: 'ni', count: 5, lastMissed: '2026-01-01T00:00:00.000Z' } }
+
+    expect(getWeakSpotQuestions(stats, sources, verbs)).toEqual([])
+  })
+
+  it('ignores errors for a person no longer present in the verb\'s table', () => {
+    const stats = { 'izan:present:hi': { verbId: 'izan', tense: 'present', person: 'hi', count: 5, lastMissed: '2026-01-01T00:00:00.000Z' } }
+
+    expect(getWeakSpotQuestions(stats, sources, verbs)).toEqual([])
+  })
+
+  it('caps the number of questions at EXTRA_REVIEW_EXERCISES, favoring the most-missed spots', () => {
+    const stats = {
+      'izan:present:ni': { verbId: 'izan', tense: 'present', person: 'ni', count: 1, lastMissed: '2026-01-01T00:00:00.000Z' },
+      'izan:present:zu': { verbId: 'izan', tense: 'present', person: 'zu', count: 5, lastMissed: '2026-01-01T00:00:00.000Z' },
+      'izan:present:hura': { verbId: 'izan', tense: 'present', person: 'hura', count: 3, lastMissed: '2026-01-01T00:00:00.000Z' },
+    }
+    const questions = getWeakSpotQuestions(stats, sources, verbs, 2)
+
+    expect(questions).toHaveLength(2)
+    expect(questions.map((q) => q.person)).toEqual(['zu', 'hura'])
+  })
+
+  it('exports EXTRA_REVIEW_EXERCISES as the default cap', () => {
+    expect(EXTRA_REVIEW_EXERCISES).toBe(4)
   })
 })
