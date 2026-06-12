@@ -23,6 +23,7 @@ import {
 import { JOURNEY } from './journey'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext'
+import { trackEvent } from './analytics'
 
 // =============================================================================
 // Verb data
@@ -1520,6 +1521,19 @@ function ExerciseScreen({ lesson, attempts, onExit, onComplete, canShowStreakNud
   // already had its own practice-lesson intro.
   const [showPreview, setShowPreview] = useState(!lesson.review && attempts === 0)
 
+  // Fires once the learner is actually answering questions — on mount for
+  // review/repeat lessons (which skip the preview), or once the preview's
+  // "Start" button is dismissed for a lesson's first attempt.
+  useEffect(() => {
+    if (showPreview) return
+    trackEvent('lesson_started', {
+      lessonId: lesson.id,
+      review: Boolean(lesson.review),
+      attemptNumber: attempts + 1,
+      ...(lesson.review ? {} : { verbId: lesson.verbId, tense: lesson.tense }),
+    })
+  }, [showPreview, lesson, attempts])
+
   if (showPreview) {
     const verb = VERBS.find((v) => v.id === lesson.verbId)
     return (
@@ -1755,9 +1769,19 @@ function AppShell() {
         onStreakNudgeShown={handleStreakNudgeShown}
         onComplete={(result) => {
           const isRepeat = (progress[lesson.id]?.attempts ?? 0) > 0
+          const pointsEarned = computeLessonPoints(result.correctCount, result.total, isRepeat)
+          trackEvent('lesson_completed', {
+            lessonId: lesson.id,
+            review: Boolean(lesson.review),
+            correctCount: result.correctCount,
+            total: result.total,
+            stars: computeStars(result.correctCount, result.total),
+            isRepeat,
+            pointsEarned,
+          })
           setProgress((previous) => recordResult(previous, lesson.id, result))
           setDailyStreak((previous) => recordDailyStreak(previous, getLocalDateString()))
-          setPoints((previous) => addPoints(previous, computeLessonPoints(result.correctCount, result.total, isRepeat)))
+          setPoints((previous) => addPoints(previous, pointsEarned))
           setStreakNudgeCooldown((cooldown) => Math.max(0, cooldown - 1))
           setActiveLessonId(null)
         }}
