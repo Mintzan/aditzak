@@ -117,6 +117,11 @@ export const TRANSLATIONS = {
     streakRepairDescription: 'Spend {cost} points to restore your streak and pick up where you left off.',
     streakRepairButton: 'Repair streak ({cost} 💎)',
     streakRepairConfirm: 'Repair your streak for {cost} points?',
+    explanationToggle: 'Why is this correct?',
+    explanationPronounErgative:
+      "'{pronoun}' takes the ergative '-k' because the subject of '{verb}' acts on something else (NOR-NORK) — the verb form '{form}' agrees with that ergative subject.",
+    explanationPronounAbsolutive:
+      "'{pronoun}' has no case ending because the subject of '{verb}' is simply what's being described (NOR) — the verb form '{form}' agrees with that absolutive subject.",
   },
   es: {
     appTagline: 'Práctica de conjugación verbal en euskera',
@@ -205,6 +210,11 @@ export const TRANSLATIONS = {
     streakRepairDescription: 'Gasta {cost} puntos para restaurar tu racha y seguir donde la dejaste.',
     streakRepairButton: 'Reparar racha ({cost} 💎)',
     streakRepairConfirm: '¿Reparar tu racha por {cost} puntos?',
+    explanationToggle: '¿Por qué es correcta?',
+    explanationPronounErgative:
+      "'{pronoun}' lleva la '-k' ergativa porque el sujeto de '{verb}' actúa sobre otra cosa (NOR-NORK) — la forma verbal '{form}' concuerda con ese sujeto ergativo.",
+    explanationPronounAbsolutive:
+      "'{pronoun}' no lleva marca de caso porque el sujeto de '{verb}' es simplemente de quién se habla (NOR) — la forma verbal '{form}' concuerda con ese sujeto absolutivo.",
   },
   eu: {
     appTagline: 'Euskarazko aditz-jokoen praktika',
@@ -293,5 +303,10 @@ export const TRANSLATIONS = {
     streakRepairDescription: 'Gastatu {cost} puntu zure jarraipena konpontzeko eta utzi zenuen tokitik jarraitzeko.',
     streakRepairButton: 'Konpondu jarraipena ({cost} 💎)',
     streakRepairConfirm: 'Zure jarraipena konpondu nahi duzu {cost} punturen truke?',
+    explanationToggle: 'Zergatik da zuzena?',
+    explanationPronounErgative:
+      "'{pronoun}'-k '-k' ergatiboa darama, '{verb}' aditzaren subjektuak beste zerbaiti eragiten dionez (NOR-NORK) — '{form}' formak subjektu ergatibo horrekin bat egiten du.",
+    explanationPronounAbsolutive:
+      "'{pronoun}'-k ez darama kasu-markarik, '{verb}' aditzaren subjektua besterik gabe hizpide dena delako (NOR) — '{form}' formak subjektu absolutibo horrekin bat egiten du.",
   },
 }

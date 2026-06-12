@@ -404,6 +404,27 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } 
   return Array.from({ length: rounds }, () => shuffle(persons).map(buildQuestion)).flat()
 }
 
+// Optional "why is this correct?" explanation, surfaced by `FeedbackBar` only
+// after a *correct* answer and only for question kinds that test a concept
+// rather than just a memorized form. `pronoun`/`type-pronoun` are the prime
+// candidates: whether a Basque pronoun takes the ergative `-k` or stays
+// unmarked depends on the verb's `agreement` (NOR vs NOR-NORK) — a distinction
+// with no equivalent in English/Spanish, and the kind of thing a learner can
+// answer correctly by pattern-matching the sentence without understanding why.
+// Every other kind (`form`, `sentence`, `type-verb`, `spot-error`) is "produce/
+// recognize this conjugated form", which doesn't have a similarly compact
+// "why" beyond "that's the form" — `getExplanation` returns `null` for those,
+// and `FeedbackBar` simply doesn't show the toggle.
+//
+// `t` is the caller's `useLanguage().t`, so the explanation text follows the
+// interface language while `{pronoun}`/`{verb}`/`{form}` stay the untranslated
+// Basque being taught — same split as `getEncouragement`/`describeLesson`.
+export function getExplanation(verb, question, t) {
+  if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
+  const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'
+  return t(key, { pronoun: question.correct, verb: verb.verb, form: verb.conjugations[question.tense][question.person] })
+}
+
 // The exercise works through a queue rather than a fixed list: a question
 // answered correctly is dropped, one answered incorrectly is pushed to the
 // back (marked `retry`) so it resurfaces later in the same session — the

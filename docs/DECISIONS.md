@@ -8,6 +8,37 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Added an optional "Why is this correct?" explanation, for `pronoun`/`type-pronoun` questions only
+
+**Decision:** Added `getExplanation(verb, question, t)` (`lessonLogic.js`),
+returning a translated explanation string for `pronoun`/`type-pronoun`
+questions — whether the answer pronoun (`Ni`/`Nik`, `Hura`/`Hark`, ...) takes
+the ergative `-k` or stays unmarked, based on `verb.agreement` (`nork` present
+→ `explanationPronounErgative`, otherwise `explanationPronounAbsolutive`) —
+and `null` for every other kind. `FeedbackBar` shows it only after a *correct*
+answer, as a collapsed `ExplanationToggle` pill ("💡 Why is this correct?")
+above the Continue/Finish button; tapping it expands the explanation text.
+`ExerciseScreen` tracks `showExplanation`, reset to collapsed on every new
+answer (alongside `streakEncouragement`).
+
+**Why only `pronoun`/`type-pronoun`:** these are the one question kind that
+tests a *concept* — Basque's NOR vs NOR-NORK case marking on pronouns, which
+has no equivalent in English/Spanish and is easy to answer right by
+pattern-matching without understanding why. The other kinds (`form`,
+`sentence`, `type-verb`, `spot-error`) are "recognize/produce this conjugated
+form", which doesn't have a comparably compact "why" beyond "that's the form"
+— `spot-error` in particular isn't reachable yet in any live lesson (needs ≥4
+sentenced persons, not available until Unit 6's expansion), so an explanation
+for it would be untested dead code for now.
+
+**Why only on correct answers, and collapsed:** revealing the reasoning before
+the learner has committed to an answer would give it away; showing it
+unconditionally would clutter the feedback bar for the ~5 other question kinds
+that have no explanation. A collapsed, tappable pill keeps it discoverable
+without competing with the main "Bikain!"/Continue flow.
+
+No `STORAGE_KEY` bump — purely a presentation addition, no new stored state.
+
 ## 2026-06-12 — Every available unit ends with a trailing "Unit review" lesson
 
 **Decision:** Added `unit-1-review`/`unit-2-review`/`unit-3-review` to

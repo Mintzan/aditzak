@@ -7,6 +7,7 @@ import {
   exerciseReducer,
   generateQuestions,
   getActiveStreak,
+  getExplanation,
   getEncouragement,
   getLocalDateString,
   pickEncouragementVariantIndex,
@@ -1173,7 +1174,38 @@ const QUESTION_PROMPT_KEYS = {
   'type-pronoun': 'questionTypePronoun',
 }
 
-function FeedbackBar({ status, isLast, streakEncouragement, onContinue }) {
+// The explanation toggle is its own pill-shaped button above the
+// Continue/Finish button — collapsed by default so it doesn't compete with
+// the main "what happened" feedback, but styled to invite a tap (lightbulb
+// icon, dashed border, chevron that flips when open) rather than reading as
+// throwaway fine print. `showExplanation`/`onToggleExplanation` are owned by
+// `ExerciseScreen` (reset alongside the rest of the per-question feedback
+// state), not local to this component, so they can be reset together with
+// `streakEncouragement`/`typedValue` when a new question comes up.
+function ExplanationToggle({ explanation, expanded, onToggle }) {
+  const { t } = useLanguage()
+  return (
+    <div className="mb-3">
+      <button
+        type="button"
+        onClick={onToggle}
+        style={{ minHeight: 48 }}
+        className="flex w-full items-center gap-2 rounded-2xl border-2 border-dashed border-green-300 bg-white px-4 text-left text-sm font-bold text-green-700 transition hover:border-green-400 hover:bg-green-50"
+      >
+        <span className="text-xl" aria-hidden="true">
+          💡
+        </span>
+        <span className="flex-1">{t('explanationToggle')}</span>
+        <span className={`transition-transform ${expanded ? 'rotate-180' : ''}`} aria-hidden="true">
+          ▾
+        </span>
+      </button>
+      {expanded && <p className="mt-2 rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed text-gray-700">{explanation}</p>}
+    </div>
+  )
+}
+
+function FeedbackBar({ status, isLast, streakEncouragement, explanation, showExplanation, onToggleExplanation, onContinue }) {
   const { t } = useLanguage()
   if (status === 'active') return null
   const isCorrect = status === 'correct'
@@ -1193,6 +1225,9 @@ function FeedbackBar({ status, isLast, streakEncouragement, onContinue }) {
           <span>{t('feedbackIncorrect')}</span>
         )}
       </p>
+      {isCorrect && explanation && (
+        <ExplanationToggle explanation={explanation} expanded={showExplanation} onToggle={onToggleExplanation} />
+      )}
       <button
         type="button"
         onClick={onContinue}
@@ -1351,6 +1386,12 @@ function ExerciseScreen({ lesson, attempts, onExit, onComplete, canShowStreakNud
   const [state, dispatch] = useReducer(exerciseReducer, undefined, () => createExerciseState(lesson, attempts))
   const [finished, setFinished] = useState(false)
   const [streakEncouragement, setStreakEncouragement] = useState(null)
+  // Whether the "why is this correct?" panel (see `ExplanationToggle`) is
+  // expanded for the current question's feedback — reset to collapsed
+  // alongside `streakEncouragement` whenever a new answer is submitted, so
+  // each question's explanation starts hidden rather than carrying over the
+  // previous question's open/closed state.
+  const [showExplanation, setShowExplanation] = useState(false)
   // Only used by typed-answer questions (`question.options` absent) — reset
   // whenever a new question comes up so the field doesn't carry over what was
   // typed for the previous one.
@@ -1404,6 +1445,7 @@ function ExerciseScreen({ lesson, attempts, onExit, onComplete, canShowStreakNud
     const showEncouragement = milestone !== null && canShowStreakNudge && rollStreakNudgeChance()
     setStreakEncouragement(showEncouragement ? milestone : null)
     if (showEncouragement) onStreakNudgeShown()
+    setShowExplanation(false)
     dispatch({ type: 'answer', option: value })
   }
 
@@ -1472,7 +1514,15 @@ function ExerciseScreen({ lesson, attempts, onExit, onComplete, canShowStreakNud
         )}
       </div>
 
-      <FeedbackBar status={state.status} isLast={isLast} streakEncouragement={streakEncouragement} onContinue={handleContinue} />
+      <FeedbackBar
+        status={state.status}
+        isLast={isLast}
+        streakEncouragement={streakEncouragement}
+        explanation={state.status === 'correct' ? getExplanation(verb, question, t) : null}
+        showExplanation={showExplanation}
+        onToggleExplanation={() => setShowExplanation((expanded) => !expanded)}
+        onContinue={handleContinue}
+      />
     </div>
   )
 }
