@@ -8,6 +8,31 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Implemented Unit 8 (`eduki`/`ibili`), no extra dedicated practice lesson
+
+**Decision:** Added `eduki` (nor-nork, `daukat`/`daukazu`/`dauka`/`daukagu`/
+`daukazue`/`daukate`, object fixed `hura`) and `ibili` (nor,
+`nabil`/`zabiltza`/`dabil`/`gabiltza`/`zabiltzate`/`dabiltza`) to `VERBS`, both
+`type: 'synthetic'` per `docs/CONJUGATIONS.md` §7, both full 6-person grids
+from their first lesson. Added `eduki-present`/`ibili-present`/
+`unit-8-review` to `LESSONS` and flipped Unit 8 to `available` in
+`journey.js` — same `(2 new verbs) + (1 review)` shape as Unit 7, no code
+changes needed. Both are single-word forms that stay intact under negation,
+so both got `negativeSentences` (ni/zu/hura), like `izan`/`egon`/`ukan`/
+`joan`/`etorri`/`jakin`. `eduki`'s present table uses the singular-object
+alternants (`daukat`, not `dauzkat`) — consistent with `object: 'hura'`
+fixed-singular, same convention as `ukan`.
+
+**Why:** `docs/LEARNING_JOURNEY.md` flags Unit 8 as needing "first full
+6-person transitive grid" extra practice (§6's flagged-units list), but Unit 7
+(`jan`/`edan`/`erosi`/`ikusi`) already implemented exactly that — every new
+verb gets a full 6-person grid from lesson one, per the Person-Expansion Rule
+— so by the time Unit 8 was built there was nothing structurally new left to
+drill in isolation. Treating that flag as superseded by Unit 7's
+implementation and following Unit 7's plain `(verbs) + (review)` shape was
+simpler and avoided a redundant lesson; revisit if a future unit's extra-lesson
+flag turns out to describe something Unit 7 *didn't* already cover.
+
 ## 2026-06-12 — Home screen scroll restoration via `window`/`document` APIs, no library
 
 **Decision:** Added scroll handling around `HomeScreen` in `App.jsx`: on the
