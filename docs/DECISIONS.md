@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Added a manually-triggered workflow to set the worker's `RESEND_API_KEY` secret, as a CLI-free alternative to `wrangler secret put`
+
+**Decision:** Added `.github/workflows/set-worker-secret.yml`
+(`workflow_dispatch` only) — installs `worker/`'s deps and runs
+`wrangler secret put RESEND_API_KEY` reading the value from a `RESEND_API_KEY`
+repo secret, authenticated via the existing `CLOUDFLARE_API_TOKEN`/
+`CLOUDFLARE_ACCOUNT_ID`. Documented in `docs/CLOUDFLARE_FEEDBACK_WORKER.md` as
+the "no CLI access" path, with a note that the `RESEND_API_KEY` repo secret can
+be deleted afterwards since Cloudflare stores it on the worker from then on.
+
+**Why a separate manual workflow, not a step in `deploy-worker.yml`:** the
+2026-06-12 entry below ("Added CI deploy for the feedback worker") chose to
+keep `RESEND_API_KEY` Cloudflare-side only, set once via CLI, specifically to
+avoid duplicating it into GitHub secrets and re-running `secret put` on every
+push. That reasoning still holds for users *with* CLI access. But for a user
+with none, a one-time manually-triggered workflow achieves the same
+"set once, never touched again" property without adding any step to the
+push-triggered deploy — `deploy-worker.yml` itself is unchanged.
+
 ## 2026-06-12 — Updated `base`/package names/CORS origin for the `gorbeia/testapp005` → `Mintzan/aditzak` repo rename
 
 **Decision:** The GitHub Pages deploy workflow (`.github/workflows/deploy.yml`)

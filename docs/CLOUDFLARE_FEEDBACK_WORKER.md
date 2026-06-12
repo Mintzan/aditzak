@@ -66,6 +66,15 @@ npx wrangler secret put RESEND_API_KEY
 Paste the Resend API key when prompted. Secrets aren't stored in the repo or
 `wrangler.toml`.
 
+**No CLI access?** Add `RESEND_API_KEY` as a repo secret (**Settings → Secrets
+and variables → Actions → New repository secret**), then run the
+**Set feedback worker secret** workflow (**Actions → Set feedback worker
+secret → Run workflow**). It's a one-time, manually-triggered job that runs
+`wrangler secret put RESEND_API_KEY` using that secret plus the existing
+`CLOUDFLARE_API_TOKEN`/`CLOUDFLARE_ACCOUNT_ID`. You can delete the
+`RESEND_API_KEY` repo secret afterwards — Cloudflare stores it on the worker
+from then on, the workflow doesn't need it again unless the key is rotated.
+
 ## 4. Develop and deploy locally
 
 ```sh
