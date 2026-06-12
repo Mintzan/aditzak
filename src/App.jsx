@@ -1584,21 +1584,33 @@ function FeedbackModal({ onClose }) {
   const [message, setMessage] = useState('')
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle') // idle | sending | success | error
+  const [errorDetail, setErrorDetail] = useState('')
 
   async function handleSubmit(event) {
     event.preventDefault()
     if (!message.trim() || status === 'sending') return
     setStatus('sending')
+    setErrorDetail('')
     try {
       const response = await fetch(FEEDBACK_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: message.trim(), email: email.trim(), context: 'profile' }),
       })
-      if (!response.ok) throw new Error('Feedback request failed')
+      if (!response.ok) {
+        let detail = `HTTP ${response.status} ${response.statusText}`
+        try {
+          const data = await response.json()
+          if (data?.error) detail += ` — ${data.error}`
+        } catch {
+          // response body wasn't JSON; keep the status-only detail
+        }
+        throw new Error(detail)
+      }
       setStatus('success')
-    } catch {
+    } catch (err) {
       setStatus('error')
+      setErrorDetail(err instanceof Error ? err.message : String(err))
     }
   }
 
@@ -1666,7 +1678,12 @@ function FeedbackModal({ onClose }) {
                 className="w-full rounded-2xl border border-gray-200 p-3 text-sm text-gray-900 focus:border-green-500 focus:outline-none"
               />
             </div>
-            {status === 'error' && <p className="text-sm text-red-500">{t('feedbackError')}</p>}
+            {status === 'error' && (
+              <div className="text-sm text-red-500">
+                <p>{t('feedbackError')}</p>
+                {errorDetail && <p className="mt-1 font-mono text-xs break-all text-red-400">{errorDetail}</p>}
+              </div>
+            )}
             <button
               type="submit"
               disabled={status === 'sending' || !message.trim()}
