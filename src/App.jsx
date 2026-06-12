@@ -434,7 +434,7 @@ const VERBS = [
     sentences: {
       present: {
         ni: ['Ni jaten ___.', 'Ni lan egiten ___.', 'Ni ikasten ___.', 'Ni idazten ___.'],
-        zu: ['Zer ___?', 'Zu zer egiten ___?', 'Zu irakurtzen ___?'],
+        zu: ['Zu zer ___?', 'Zu zer egiten ___?', 'Zu irakurtzen ___?'],
         hura: [
           'Hura irakurtzen ___.',
           'Hura jaten ___.',

@@ -8,6 +8,19 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Fixed `ari`'s `zu` example sentence to include an explicit subject
+
+**Decision:** Changed `ari`'s `sentences.present.zu` from `'Zer ___?'` to
+`'Zu zer ___?'`. Same issue as the `nahi`/`zu` fix below: without an explicit
+subject, `'Zer ___?'` was ambiguous between `ari naiz`/`ari zara`/`ari da` —
+all three complete it into an equally valid (just differently-meant) Basque
+question ("What am I/are you/is he-she up to?"), so a learner had no way to
+tell which person's form was being asked for. `ari`'s `agreement` is `nor`
+(absolutive), so the fix prefixes the absolutive `Zu` rather than the
+ergative `Zuk` the `nahi` fix used. `'Zu zer ___?'` → `'Zu zer ari zara?'`
+("You, what are you up to?") still reads naturally and keeps the other `zu`
+variants (`'Zu zer egiten ___?'`, `'Zu irakurtzen ___?'`) distinct.
+
 ## 2026-06-12 — Review lessons get up to 4 extra "weak spot" questions, targeting the learner's most-missed verb/tense/person combos
 
 **Decision:** `exerciseReducer`'s `answer` action now tracks `misses` — one
