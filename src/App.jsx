@@ -304,6 +304,47 @@ const VERBS = [
       },
     },
   },
+  // Unit 4 ("The Immediate Continuous") — `ari` ("in the process of") +
+  // imperfective participle + `izan`. Modeled as its own `VERBS` entry like
+  // `nahi`/`jakin`: conjugates *exactly* like `izan`'s present
+  // (`naiz`/`zara`/`da`, per `docs/VERB_COVERAGE.md` §5), so `agreement:
+  // ['nor']` and unmarked `pronouns` (no ergative `-k`) — the construction
+  // always takes `izan`, regardless of the lexical verb's own transitivity.
+  {
+    id: 'ari',
+    verb: 'ari izan',
+    meaning: { en: 'to be busy (doing something)', es: 'estar (haciendo algo)', eu: 'ari izan' },
+    type: 'periphrastic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'ari naiz', zu: 'ari zara', hura: 'ari da' },
+    },
+    sentences: {
+      present: {
+        ni: ['Ni jaten ___.', 'Ni lan egiten ___.', 'Ni ikasten ___.', 'Ni idazten ___.'],
+        zu: ['Zer ___?', 'Zu zer egiten ___?', 'Zu irakurtzen ___?'],
+        hura: [
+          'Hura irakurtzen ___.',
+          'Hura jaten ___.',
+          'Hura lan egiten ___.',
+          'Mikel ikasten ___.',
+          'Ane idazten ___.',
+          'Txakurra jolasten ___.',
+          'Katua lo egiten ___.',
+          'Hura telefonoz hizketan ___.',
+        ],
+      },
+    },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+    pronounSentences: {
+      present: {
+        ni: '___ jaten ari naiz.',
+        zu: '___ lanean ari zara.',
+        hura: '___ irakurtzen ari da.',
+      },
+    },
+  },
 ]
 
 // Maps grammatical persons / tenses / verb types / agreement roles to the
@@ -397,6 +438,12 @@ const LESSONS = [
       { verbId: 'joan', tense: 'present' },
       { verbId: 'etorri', tense: 'present' },
     ],
+  },
+  { id: 'ari-present', verbId: 'ari', tense: 'present' },
+  {
+    id: 'unit-4-review',
+    review: true,
+    sources: [{ verbId: 'ari', tense: 'present' }],
   },
 ]
 

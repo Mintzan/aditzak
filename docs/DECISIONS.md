@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Implemented Unit 4 ("The Immediate Continuous"), modeling `ari` as its own `VERBS` entry
+
+**Decision:** Added an `ari` entry to `VERBS` (`type: 'periphrastic'`,
+`agreement: ['nor']`) whose `conjugations.present` is `ari naiz`/`ari
+zara`/`ari da` — `izan`'s own present forms with the invariant `ari`
+prefixed, per `docs/VERB_COVERAGE.md` §5. Added `ari-present` +
+`unit-4-review` (single source) to `LESSONS`, and flipped Unit 4 to
+`available` with those `lessonIds` in `journey.js`.
+
+**Why:** same precedent as `nahi`/`jakin` (Unit 2) — `ari` isn't a separate
+lexical verb, but modeling it as its own `VERBS` entry costs zero new
+conjugation data (it rides `izan`'s exact `naiz`/`zara`/`da` verbatim) while
+giving it its own lesson card, sentences, and review, consistent with how the
+journey frames it as something new to *discover*. Unlike `nahi`/`jakin`
+(which fix the auxiliary to `ukan`, hence ergative `nik`/`hik`/... pronouns),
+`ari` always takes `izan`, so `pronouns` stay unmarked (`Ni`/`Zu`/`Hura`),
+matching `izan`/`egon`/`joan`/`etorri`. One example sentence ("Zer ___?" →
+"ari zara") reproduces the unit's own headline phrase, "Zer ari zara?".
+
 ## 2026-06-12 — Reworded the "Why is this correct?" explanations to drop linguistics jargon
 
 **Decision:** Rewrote `explanationPronounErgative`/`explanationPronounAbsolutive`
