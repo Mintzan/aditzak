@@ -626,6 +626,100 @@ const VERBS = [
       },
     },
   },
+  // Unit 8 ("Physical States & Possessions", Phase II). `eduki` ("to have/
+  // hold physically") is a synthetic nor-nork verb riding the same
+  // `-t`/`-zu`/∅/`-gu`/`-zue`/`-te` suffix family as `ukan`
+  // (`daukat`/`daukazu`/`dauka`/`daukagu`/`daukazue`/`daukate`, object fixed
+  // `hura`), per `docs/CONJUGATIONS.md` §7 — full 6-person grid from its
+  // first lesson per the Person-Expansion Rule. `ibili` ("to walk around /
+  // be doing") is a synthetic nor verb (`nabil`/`zabiltza`/`dabil`/
+  // `gabiltza`/`zabiltzate`/`dabiltza`), same shape as `joan`/`etorri`. Both
+  // are single-word forms that stay intact under negation, so both get
+  // `negativeSentences` like `izan`/`egon`/`ukan`/`joan`/`etorri`/`jakin`.
+  {
+    id: 'eduki',
+    verb: 'eduki',
+    meaning: { en: 'to have / hold (physically)', es: 'tener / sostener (físicamente)', eu: 'eduki' },
+    type: 'synthetic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'daukat', zu: 'daukazu', hura: 'dauka', gu: 'daukagu', zuek: 'daukazue', haiek: 'daukate' },
+    },
+    sentences: {
+      present: {
+        ni: ['Nik giltza poltsikoan ___.', 'Nik dirua eskuan ___.', 'Nik liburu bat eskuan ___.'],
+        zu: ['Zuk giltza poltsikoan ___?', 'Zuk telefonoa eskuan ___.'],
+        hura: [
+          'Hark giltza poltsikoan ___.',
+          'Mikelek dirua eskuan ___.',
+          'Anek liburua eskuan ___.',
+          'Umeak jostailua eskuan ___.',
+        ],
+        gu: ['Guk giltza poltsikoan ___.', 'Guk dirua eskuan ___.'],
+        zuek: ['Zuek giltza poltsikoan ___?', 'Zuek txartela eskuan ___.'],
+        haiek: ['Haiek giltza poltsikoan ___.', 'Gurasoek dirua eskuan ___.'],
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    pronounSentences: {
+      present: {
+        ni: '___ giltza poltsikoan daukat.',
+        zu: '___ telefonoa eskuan daukazu.',
+        hura: '___ dirua eskuan dauka.',
+        gu: '___ giltza poltsikoan daukagu.',
+        zuek: '___ txartela eskuan daukazue.',
+        haiek: '___ giltza poltsikoan daukate.',
+      },
+    },
+    negativeSentences: {
+      present: {
+        ni: 'Nik ez ___ giltza poltsikoan.',
+        zu: 'Zuk ez ___ dirua eskuan.',
+        hura: 'Hark ez ___ liburua eskuan.',
+      },
+    },
+  },
+  {
+    id: 'ibili',
+    verb: 'ibili',
+    meaning: { en: 'to walk around / be doing', es: 'andar / estar haciendo', eu: 'ibili' },
+    type: 'synthetic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'nabil', zu: 'zabiltza', hura: 'dabil', gu: 'gabiltza', zuek: 'zabiltzate', haiek: 'dabiltza' },
+    },
+    sentences: {
+      present: {
+        ni: ['Ni kalean ___.', 'Ni oinez ___.', 'Ni parkean ___.'],
+        zu: ['Zu non ___?', 'Zu lanean ___.'],
+        hura: ['Hura kalean ___.', 'Mikel parkean ___.', 'Ane oinez ___.', 'Txakurra etxean ___.'],
+        gu: ['Gu kalean ___.', 'Gu oinez ___.'],
+        zuek: ['Zuek non ___?', 'Zuek parkean ___.'],
+        haiek: ['Haiek kalean ___.', 'Mikel eta Ane oinez ___.'],
+      },
+    },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+    pronounSentences: {
+      present: {
+        ni: '___ kalean nabil.',
+        zu: '___ lanean zabiltza.',
+        hura: '___ kalean dabil.',
+        gu: '___ kalean gabiltza.',
+        zuek: '___ parkean zabiltzate.',
+        haiek: '___ kalean dabiltza.',
+      },
+    },
+    negativeSentences: {
+      present: {
+        ni: 'Ni ez ___ kalean.',
+        zu: 'Zu ez ___ lanean.',
+        hura: 'Hura ez ___ kalean.',
+      },
+    },
+  },
 ]
 
 // Maps grammatical persons / tenses / verb types / agreement roles to the
@@ -812,6 +906,19 @@ const LESSONS = [
       { verbId: 'edan', tense: 'present' },
       { verbId: 'erosi', tense: 'present' },
       { verbId: 'ikusi', tense: 'present' },
+    ],
+  },
+  // Unit 8 ("Physical States & Possessions", Phase II) — two new synthetic
+  // verbs, `eduki` (nor-nork) and `ibili` (nor), each already a full
+  // 6-person grid per the Person-Expansion Rule. `unit-8-review` covers both.
+  { id: 'eduki-present', verbId: 'eduki', tense: 'present' },
+  { id: 'ibili-present', verbId: 'ibili', tense: 'present' },
+  {
+    id: 'unit-8-review',
+    review: true,
+    sources: [
+      { verbId: 'eduki', tense: 'present' },
+      { verbId: 'ibili', tense: 'present' },
     ],
   },
 ]
