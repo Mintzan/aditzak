@@ -8,6 +8,48 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Implemented Unit 6 ("Expansion — Bringing in the Plural", Refresh Gate A), growing `izan`/`egon`/`ukan`/`joan`/`etorri`'s present tense to the full 6-person grid in place
+
+**Decision:** Added `gu`/`zuek`/`haiek` rows (per `docs/CONJUGATIONS.md` §1/§3/§6)
+directly to `izan`/`egon`/`ukan`/`joan`/`etorri`'s existing `present`
+`conjugations`, plus matching `sentences`, `pronouns`, and `pronounSentences`
+entries for those three persons — option (a) from `docs/LEARNING_JOURNEY.md`'s
+"Data & architecture implications" section, picked over adding a `persons`
+filter to `generateQuestions` (option (b)) because it needs no engine change
+and matches "Unit 6 = Expansion" literally: the same five tables that taught
+`ni`/`zu`/`hura` now teach the full grid. `jakin`/`nahi`/`ari` are untouched —
+the journey explicitly scopes Unit 6 to those five verbs (`nahi`/`ari` "ride"
+`izan`/`ukan`'s tables and `jakin` isn't listed at all).
+
+Added `unit-6-review` (`review: true`, `sources` = the five expanded verbs'
+present tense, no `negation`) and flipped Unit 6 to `available` with
+`lessonIds: ['unit-6-review']` in `journey.js`.
+
+**Why no `negativeSentences` for `gu`/`zuek`/`haiek`:** Unit 6's focus is
+person-grid expansion, not negation (Unit 5 already covered that for
+`ni`/`zu`/`hura`). Leaving `negativeSentences` at 3 persons means
+`unit-5-review` (which sets `includeNegation: true`) now falls back to the
+normal `sentence`/`pronoun`/... mix for `gu`/`zuek`/`haiek` on replay (those
+persons have no `negativeSentences[tense][person]`, so `includeNegation`'s
+"exclusively negation" branch doesn't apply to them) — a minor dilution of
+that lesson's focus on replay, consistent with the existing "data sits unused
+for verbs/persons that don't have it" precedent from Unit 5's own entry above.
+
+**Side effect — `conjugations.present` growing from 3 to 6 persons cascades
+into every existing lesson/review that references these tables**
+(`izan-present`, `egon-present`, `ukan-present`, `joan-present`,
+`etorri-present`, `unit-1/2/3/5-review`): `generateQuestions` builds one
+question per person in the table, so those lessons now drill all 6 persons
+instead of 3. `createExerciseState`'s `rounds = round(targetPerSource /
+personCount)` mostly self-corrects single-verb lessons back toward
+`TARGET_EXERCISE_COUNT` (e.g. a 3-person lesson's 4 rounds become a 6-person
+lesson's 2 rounds, ~12 questions either way), but `unit-5-review` mixes five
+now-6-person sources with one still-3-person source (`jakin`) under a
+per-source `max(1, …)` floor, so it grows from ~18 to ~33 questions. This is
+the documented tradeoff of option (a) — accepted as appropriate for a Refresh
+Gate's cumulative review, but flagged here in case a future session wants to
+trim it.
+
 ## 2026-06-12 — Replaced Cloudflare Web Analytics with PostHog, and added `lesson_started`/`lesson_completed` custom events
 
 **Decision:** Swapped `src/analytics.js`'s `loadCloudflareAnalytics` for

@@ -87,7 +87,7 @@ const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'naiz', zu: 'zara', hura: 'da' },
+      present: { ni: 'naiz', zu: 'zara', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
     },
     sentences: {
       present: {
@@ -105,14 +105,26 @@ const VERBS = [
           'Katua beltza ___.',
           'Autoa berria ___.',
         ],
+        gu: ['Gu ikasleak ___.', 'Gu irakasleak ___.', 'Gu lagunak ___.', 'Gu langileak ___.'],
+        zuek: ['Zuek ikasleak ___.', 'Zuek irakasleak ___.', 'Zuek auzokideak ___.', 'Zuek gidariak ___.'],
+        haiek: [
+          'Haiek medikuak ___.',
+          'Haiek zuzendariak ___.',
+          'Haiek bidaiariak ___.',
+          'Mikel eta Ane ikasleak ___.',
+          'Txakurrak eta katuak handiak ___.',
+        ],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ irakaslea naiz.',
         zu: '___ ikaslea zara.',
         hura: '___ medikua da.',
+        gu: '___ ikasleak gara.',
+        zuek: '___ irakasleak zarete.',
+        haiek: '___ medikuak dira.',
       },
     },
     negativeSentences: {
@@ -131,7 +143,7 @@ const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'nago', zu: 'zaude', hura: 'dago' },
+      present: { ni: 'nago', zu: 'zaude', hura: 'dago', gu: 'gaude', zuek: 'zaudete', haiek: 'daude' },
     },
     sentences: {
       present: {
@@ -149,14 +161,26 @@ const VERBS = [
           'Katua sukaldean ___.',
           'Liburua mahai gainean ___.',
         ],
+        gu: ['Gu etxean ___.', 'Gu lanean ___.', 'Gu Bilbon ___.', 'Gu liburutegian ___.'],
+        zuek: ['Zuek kalean ___.', 'Zuek dendan ___.', 'Zuek Donostian ___.', 'Zuek ikasgelan ___.'],
+        haiek: [
+          'Haiek eskolan ___.',
+          'Haiek kalean ___.',
+          'Gurasoak etxean ___.',
+          'Mikel eta Ane patioan ___.',
+          'Liburuak mahai gainean ___.',
+        ],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ etxean nago.',
         zu: '___ kalean zaude.',
         hura: '___ eskolan dago.',
+        gu: '___ etxean gaude.',
+        zuek: '___ kalean zaudete.',
+        haiek: '___ eskolan daude.',
       },
     },
     negativeSentences: {
@@ -167,9 +191,9 @@ const VERBS = [
       },
     },
   },
-  // Unit 2 ("Having, Wanting, and Knowing") — `ukan` present, trimmed to
-  // Phase I's `ni`/`zu`/`hura` horizon (with `zu` per `docs/CONJUGATIONS.md`
-  // §3). The old 6-person, no-`zu`, `hi`-based `past` table was removed —
+  // Unit 2 ("Having, Wanting, and Knowing") — `ukan` present (with `zu` per
+  // `docs/CONJUGATIONS.md` §3; `gu`/`zuek`/`haiek` added by Unit 6
+  // "Expansion"). The old no-`zu`, `hi`-based `past` table was removed —
   // unused by any implemented unit, shaped for the pre-journey model, and
   // will be re-added correctly, with `zu`, when Unit 12 ("I Was, I Had") is
   // implemented (same precedent as `izan`'s past table).
@@ -182,7 +206,7 @@ const VERBS = [
     object: 'hura',
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'dut', zu: 'duzu', hura: 'du' },
+      present: { ni: 'dut', zu: 'duzu', hura: 'du', gu: 'dugu', zuek: 'duzue', haiek: 'dute' },
     },
     sentences: {
       present: {
@@ -198,14 +222,25 @@ const VERBS = [
           'Txakurrak hezur bat ___.',
           'Etxeak lorategi bat ___.',
         ],
+        gu: ['Guk etxe bat ___.', 'Guk auto bat ___.', 'Guk bilera bat ___.', 'Guk txartel bat ___.'],
+        zuek: ['Zuek liburu bat ___.', 'Zuek mapa bat ___.', 'Zuek koaderno bat ___.', 'Zuek arkatz bat ___.'],
+        haiek: [
+          'Haiek seme bat ___.',
+          'Haiek pasaporte bat ___.',
+          'Gurasoek etxe bat ___.',
+          'Ikasleek liburu bat ___.',
+        ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark' },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ liburu bat dut.',
         zu: '___ auto bat duzu.',
         hura: '___ etxe bat du.',
+        gu: '___ etxe bat dugu.',
+        zuek: '___ liburu bat duzue.',
+        haiek: '___ seme bat dute.',
       },
     },
     negativeSentences: {
@@ -288,10 +323,9 @@ const VERBS = [
       },
     },
   },
-  // Unit 3 ("Moving Around") — `joan` present, trimmed to Phase I's
-  // `ni`/`zu`/`hura` horizon (`noa`/`zoaz`/`doa`), per
-  // `docs/CONJUGATIONS.md` §6 (already has a `zu` row). `gu`/`zuek`/`haiek`
-  // arrive in Unit 6 ("Expansion"), same as every Phase I verb.
+  // Unit 3 ("Moving Around") — `joan` present (`noa`/`zoaz`/`doa`/`goaz`/
+  // `zoazte`/`doaz`), per `docs/CONJUGATIONS.md` §6 (already has a `zu` row).
+  // `gu`/`zuek`/`haiek` were added by Unit 6 ("Expansion").
   {
     id: 'joan',
     verb: 'joan',
@@ -300,21 +334,27 @@ const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'noa', zu: 'zoaz', hura: 'doa' },
+      present: { ni: 'noa', zu: 'zoaz', hura: 'doa', gu: 'goaz', zuek: 'zoazte', haiek: 'doaz' },
     },
     sentences: {
       present: {
         ni: 'Ni hondartzara ___.',
         zu: 'Zu eskolara ___.',
         hura: 'Hura lanera ___.',
+        gu: 'Gu hondartzara ___.',
+        zuek: 'Zuek eskolara ___.',
+        haiek: 'Haiek lanera ___.',
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ hondartzara noa.',
         zu: '___ eskolara zoaz.',
         hura: '___ lanera doa.',
+        gu: '___ hondartzara goaz.',
+        zuek: '___ eskolara zoazte.',
+        haiek: '___ lanera doaz.',
       },
     },
     negativeSentences: {
@@ -335,21 +375,27 @@ const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'nator', zu: 'zatoz', hura: 'dator' },
+      present: { ni: 'nator', zu: 'zatoz', hura: 'dator', gu: 'gatoz', zuek: 'zatozte', haiek: 'datoz' },
     },
     sentences: {
       present: {
         ni: 'Ni etxera ___.',
         zu: 'Zu bihar ___.',
         hura: 'Hura orain ___.',
+        gu: 'Gu etxera ___.',
+        zuek: 'Zuek bihar ___.',
+        haiek: 'Haiek orain ___.',
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ etxera nator.',
         zu: '___ bihar zatoz.',
         hura: '___ orain dator.',
+        gu: '___ etxera gatoz.',
+        zuek: '___ bihar zatozte.',
+        haiek: '___ orain datoz.',
       },
     },
     negativeSentences: {
@@ -517,6 +563,25 @@ const LESSONS = [
       { verbId: 'joan', tense: 'present' },
       { verbId: 'etorri', tense: 'present' },
       { verbId: 'jakin', tense: 'present' },
+    ],
+  },
+  // Unit 6 ("Expansion — Bringing in the Plural", Refresh Gate A) — zero new
+  // verbs. `izan`/`egon`/`ukan`/`joan`/`etorri`'s `conjugations.present`
+  // (plus their `sentences`/`pronouns`/`pronounSentences`) gained `gu`/`zuek`/
+  // `haiek` rows directly (see `docs/DECISIONS.md`), so every practice lesson
+  // and review above that already references these verbs' present tense now
+  // covers the full 6-person grid automatically — no `persons` filter needed.
+  // `unit-6-review` is this unit's own consolidation pass across all five
+  // newly-expanded tables.
+  {
+    id: 'unit-6-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'egon', tense: 'present' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'joan', tense: 'present' },
+      { verbId: 'etorri', tense: 'present' },
     ],
   },
 ]
