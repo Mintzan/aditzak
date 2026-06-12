@@ -22,6 +22,34 @@ adds manually post-merge — until that's done, every push to `main` touching
 worker" run, which read as a broken main branch even though the app build
 (CI, Pages deploy) was fine. Skipping with a warning keeps `main` green while
 still surfacing that the deploy hasn't actually run yet.
+
+## 2026-06-12 — Filled the remaining sentence-variety gaps: `joan`/`etorri` (all 6 persons) and `nahi`/`jakin`'s `ni`/`zu`
+
+**Decision:** Converted `joan`/`etorri`'s `sentences.present` from single
+fixed strings to 4-6-variant arrays per person (same `pickVariant` mechanism
+as `izan`/`egon`/`ukan`, per the 2026-06-11 "multiple phrasing variants"
+entry), and gave `nahi`/`jakin`'s `ni`/`zu` rows variant arrays too (`hura`
+already had 4 variants each). `joan`'s variants rotate the allative
+destination (`hondartzara`/`eskolara`/`lanera`/`dendara`/`liburutegira`/
+`unibertsitatera`/`parkera`), keeping `hura`/`haiek` rows' existing
+name/animal subjects (Mikel, Ane, Txakurra). `etorri`'s mix destinations
+(`etxera`/`eskolara`) with time adverbs (`orain`/`bihar`/`gaur`), matching its
+existing rows' style. `nahi`/`jakin`'s new variants reuse the same
+object-noun pool already used in their `hura` rows (`kafe bat`/`ur
+bat`/`liburu bat`/`opari bat`/`sagar bat` for `nahi`; `erantzuna`/`egia`/
+`sekretua`/`bidea` for `jakin`), with `nahi`'s `zu` row keeping the explicit
+`Zuk` ergative subject (per the 2026-06-11 "nahi's zu example sentence"
+entry).
+
+**Why:** these were the last `sentence`/`type-verb`/`spot-error`-eligible
+persons across Phase I/II still showing the exact same sentence every time a
+question repeats — `joan`/`etorri` had zero variants on any person, and
+`nahi`/`jakin`'s `ni`/`zu` had one each. New vocabulary is reused from
+elsewhere in `VERBS`/`docs/SAMPLE_SENTENCES.md` rather than invented, per the
+doc's "no inventing vocabulary on the fly" guidance. `pronounSentences`/
+`negativeSentences` stay single-string — still deferred, per
+`docs/SAMPLE_SENTENCES.md`'s "Next steps" item 3.
+
 ## 2026-06-12 — Added CI deploy for the feedback worker (`cloudflare/wrangler-action`)
 
 **Decision:** Added `.github/workflows/deploy-worker.yml`, running
