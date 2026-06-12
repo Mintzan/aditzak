@@ -8,6 +8,81 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Redesigned the learning journey: pulled `ikusi` into Phase I (new Unit 3), split the future mega-unit into four, and added "Looking Back I/II" past-tense units — renumbering Units 7-25 to 10-32
+
+**Decision:** Addressed three pacing/variety complaints about the journey
+(`docs/LEARNING_JOURNEY.md`) in one pass:
+
+1. **Added `ikusi` to Phase I as a new Unit 3 ("Seeing")** — Phase I's first
+   periphrastic verb, reusing its existing 6-person `present` table (from the
+   old Unit 7) via a `persons: PHASE_1_PERSONS`-filtered `ikusi-present`
+   lesson + `ikusi-present-review`. Refresh Gate A's old Unit 6 ("Expansion")
+   — now Unit 7 — gained an `ikusi-present-plural` lesson + review alongside
+   its existing `gu`/`zuek`/`haiek` retrofit for `izan`/`egon`/`ukan`/`joan`/
+   `etorri`. `ikusi` was deliberately **left out of** Unit 6's ("Inversion
+   Matrix") negation drills — like `nahi`/`ari`, its auxiliary splits from the
+   invariant participle under negation, so it has no `negativeSentences`.
+2. **Split the old 32-lesson "Geroa" future unit into four** (now Units
+   14-17), one per verb group (`izan/egon/ukan`, `nahi/jakin/joan/etorri`,
+   `jan/edan/erosi`, `ikusi/eduki/ibili`) — purely a `journey.js`
+   `lessonIds`-redistribution into 4 units; zero `VERBS`/`LESSONS` changes,
+   since the future tense's `<verbId>-future` lessons and `unit-9-review-N`
+   reviews already existed and slot in 1:1.
+3. **Added two new "Looking Back" units, each split into two sub-units**:
+   - Unit 8 ("Looking Back I — I Was, I Had"): `izan`/`egon`/`ukan` simple
+     past, full 6-person grid, singular+plural lesson pairs per verb +
+     `looking-back-1a-review`/`-plural`.
+   - Unit 9 ("Looking Back I — I Went, I Came, I Saw"): `joan`/`etorri`/
+     `ikusi` simple past, same shape + `looking-back-1b-review`/`-plural`.
+   - Unit 12 ("Looking Back II — I Ate, I Drank, I Bought"): `jan`/`edan`/
+     `erosi` simple past + `looking-back-2a-review`/`-plural`.
+   - Unit 13 ("Looking Back II — I Had, I Walked Around"): `eduki`/`ibili`
+     simple past + `looking-back-2b-review`/`-plural`.
+
+   Each "Looking Back" unit is positioned immediately after the present-tense
+   unit(s) for the same verbs (Units 1-2/4 → Unit 8/9; Units 10-11 → Units
+   12-13), so present and past arrive close together instead of "present for
+   everyone, then past for everyone much later." `conjugations.past` was added
+   to `joan`/`etorri`/`jan`/`edan`/`erosi`/`ikusi`/`eduki`/`ibili` (8 new
+   tables — `izan`/`egon`/`ukan` already had theirs from an earlier session);
+   `sentences.past`/`pronounSentences.past` are aliased to each verb's
+   `present` arrays by reference (same `pickVariant`-compatible reuse loop as
+   the future tense), and `negativeSentences.past` is aliased only for the
+   four single-word past forms (`izan`/`egon`/`ukan`/`eduki`) where the past
+   form stays intact under negation — periphrastic pasts (`joan nintzen`,
+   `ikusi nuen`, ...) split apart under negation just like their present
+   counterparts, so they get no `negativeSentences`. See
+   `docs/LANGUAGE_DECISIONS.md` for the conjugation-data sourcing.
+
+**Renumbering**: old Units 7-11 (`jan`/`edan`/`erosi`/`ikusi` present through
+Gate B) → new Units 10-11 + 14-19 (the `+8`/`-1`/`+N` shifts come from
+absorbing old Unit 12's "I Was, I Had" content into new Unit 8, inserting
+Units 3/8/9/12/13, and the future split). Old Units 13-25 (Phase III onward)
+→ new Units 20-32, a flat `+7` shift (old Unit 12 is absorbed into new Unit 8,
+so it has no new-numbering counterpart). **Old `DECISIONS.md`/
+`LANGUAGE_DECISIONS.md` entries below this one use the *old* numbering** —
+they're a historical record of what was true when written, not rewritten for
+this renumbering. Use this entry's mapping to translate: old 5→6, old 6→7, old
+7→10, old 8→11, old 9→14-17 (split), old 10→18, old 11→19, old 12→(absorbed
+into 8), old 13→20, old 14→21, old 15→22, ..., old 25→32 (flat `+7` from old
+13 onward).
+
+**Why reordering `LESSONS` is safe:** `getUnlockedLessonIds` unlocks a lesson
+once its *predecessor in `LESSONS` order* has `attempts > 0`, **or** the
+lesson itself already has `attempts > 0` (2026-06-12, "Already-attempted
+lessons stay unlocked" below) — so inserting new lessons (the Looking Back
+units, `ikusi-present`/`-plural`) into the middle of `LESSONS` doesn't re-lock
+anything for an existing learner who'd progressed past that point; it only
+adds new content for them to backfill. No `STORAGE_KEY` bump — all existing
+lesson ids are unchanged, only reordered/regrouped, plus new ids appended.
+
+**Why split into singular/plural "Looking Back" sub-units rather than one big
+unit per verb group:** follows the same "max 3 persons per exercise" /
+singular-plural-pair convention already established for Units 10-17
+(2026-06-12, "App-wide 'max 3 persons per exercise' rule" below) — six verbs ×
+(present + past) would otherwise reproduce the old Unit 9's 30+-lesson pacing
+cliff this redesign set out to fix.
+
 ## 2026-06-12 — Added a UI-only "optional account" prototype to the Profile tab, with mock sign-in state
 
 **Decision:** Added `AccountSection` (a card in `ProfileTab`) and
