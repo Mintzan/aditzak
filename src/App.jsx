@@ -405,45 +405,11 @@ const LESSONS = [
 
 const STORAGE_KEY = 'aditzak:progress:v1'
 
-function loadProgress() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : {}
-  } catch {
-    return {}
-  }
-}
-
-function saveProgress(progress) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
-  } catch {
-    // localStorage may be unavailable (private browsing, quota) — ignore.
-  }
-}
-
 // Daily streak data lives under its own key — it tracks calendar-day
 // activity across all lessons, not any single lesson's progress, and
 // shouldn't need a shape-version bump every time `progress` does (or vice
 // versa).
 const STREAK_STORAGE_KEY = 'aditzak:streak:v1'
-
-function loadStreak() {
-  try {
-    const raw = localStorage.getItem(STREAK_STORAGE_KEY)
-    return raw ? JSON.parse(raw) : {}
-  } catch {
-    return {}
-  }
-}
-
-function saveStreak(streak) {
-  try {
-    localStorage.setItem(STREAK_STORAGE_KEY, JSON.stringify(streak))
-  } catch {
-    // localStorage may be unavailable (private browsing, quota) — ignore.
-  }
-}
 
 // Points ("gems") earned from lesson results, spendable on streak repair.
 // Kept in its own key for the same reasons as the daily streak: it tracks
@@ -451,22 +417,33 @@ function saveStreak(streak) {
 // can clear it without a version bump to `progress`/`STORAGE_KEY`.
 const POINTS_STORAGE_KEY = 'aditzak:points:v1'
 
-function loadPoints() {
-  try {
-    const raw = localStorage.getItem(POINTS_STORAGE_KEY)
-    return raw ? JSON.parse(raw) : {}
-  } catch {
-    return {}
+// `progress`/`dailyStreak`/`points` each live under their own key (see above)
+// but share the same read/write shape: a JSON object, defaulting to `{}` if
+// missing or unparsable, silently no-oping if localStorage itself is
+// unavailable (private browsing, quota).
+function createStorage(key) {
+  return {
+    load() {
+      try {
+        const raw = localStorage.getItem(key)
+        return raw ? JSON.parse(raw) : {}
+      } catch {
+        return {}
+      }
+    },
+    save(value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value))
+      } catch {
+        // localStorage may be unavailable (private browsing, quota) — ignore.
+      }
+    },
   }
 }
 
-function savePoints(points) {
-  try {
-    localStorage.setItem(POINTS_STORAGE_KEY, JSON.stringify(points))
-  } catch {
-    // localStorage may be unavailable (private browsing, quota) — ignore.
-  }
-}
+const progressStorage = createStorage(STORAGE_KEY)
+const streakStorage = createStorage(STREAK_STORAGE_KEY)
+const pointsStorage = createStorage(POINTS_STORAGE_KEY)
 
 // Looks up a verb's English/Spanish/Basque gloss, falling back to English if
 // the active interface language has no translation for this verb.
@@ -1549,9 +1526,9 @@ function LanguageOnboardingScreen() {
 
 function AppShell() {
   const { t, hasChosenLanguage } = useLanguage()
-  const [progress, setProgress] = useState(loadProgress)
-  const [dailyStreak, setDailyStreak] = useState(loadStreak)
-  const [points, setPoints] = useState(loadPoints)
+  const [progress, setProgress] = useState(progressStorage.load)
+  const [dailyStreak, setDailyStreak] = useState(streakStorage.load)
+  const [points, setPoints] = useState(pointsStorage.load)
   const [tab, setTab] = useState('home')
   const [activeLessonId, setActiveLessonId] = useState(null)
   // Session-level gate for the mid-lesson streak nudge: counts down once a
@@ -1560,15 +1537,15 @@ function AppShell() {
   const [streakNudgeCooldown, setStreakNudgeCooldown] = useState(0)
 
   useEffect(() => {
-    saveProgress(progress)
+    progressStorage.save(progress)
   }, [progress])
 
   useEffect(() => {
-    saveStreak(dailyStreak)
+    streakStorage.save(dailyStreak)
   }, [dailyStreak])
 
   useEffect(() => {
-    savePoints(points)
+    pointsStorage.save(points)
   }, [points])
 
   const handleStreakNudgeShown = useCallback(() => {
