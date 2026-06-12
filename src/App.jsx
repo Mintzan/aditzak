@@ -74,11 +74,13 @@ import { trackEvent } from './analytics'
 //
 // Per `docs/LEARNING_JOURNEY.md`'s Phase I ("Survival Present"), every verb's
 // first lesson is restricted to `ni`/`zu`/`hura` — `gu`/`zuek`/`haiek` (and,
-// much later, `hi`) are added once Unit 6 ("Expansion") is implemented. Until
-// then, a Phase I verb's `present` table simply *contains only* those three
-// person keys — `generateQuestions` already builds one question per key in
-// the table, so a smaller table is all a 3-person lesson needs (see
-// `docs/EXERCISE_ENGINE.md`, "Phase I's 3-person horizon", option (a)).
+// much later, `hi`) are added together in Unit 6 ("Expansion"). `izan`/`egon`/
+// `ukan`/`joan`/`etorri`'s `present` tables already contain all 6 persons (Unit
+// 6 grew them in place — see `docs/DECISIONS.md`); their pre-Unit-6 lessons
+// (`LESSONS` in `App.jsx`) use a `persons` filter to stay on the 3-person
+// horizon instead (`docs/EXERCISE_ENGINE.md`, "Phase I's 3-person horizon",
+// option (b)). Verbs whose first lesson is still pending (`nahi`/`jakin`/`ari`)
+// simply have 3-person tables (option (a)) since there's nothing to expand yet.
 // =============================================================================
 
 const VERBS = [
@@ -885,34 +887,49 @@ const DIALECT_LABELS = {
 // `LessonPreviewScreen`) before the next unit unlocks. The journey's Refresh
 // Gate units (5, 6, 11, 17, ...) are a bigger, cross-unit version of the same
 // shape once implemented.
+// Phase I's "Survival Present" horizon (`docs/LEARNING_JOURNEY.md`) restricts
+// every verb's first lessons to `ni`/`zu`/`hura` — `gu`/`zuek`/`haiek` arrive
+// together in Unit 6 ("Expansion"). Unit 6 grew `izan`/`egon`/`ukan`/`joan`/
+// `etorri`'s `conjugations.present` tables to 6 persons *in place*, which
+// cascaded into these verbs' own Units 1-3 lessons and Unit 5's reviews
+// (all of which run before Unit 6). `persons` re-restricts those lessons back
+// to the 3-person horizon — see `docs/DECISIONS.md`, "Restored Phase I's
+// 3-person pacing". The app-wide rule is: never drill more than 3 grammatical
+// persons in a single exercise.
+const PHASE_1_PERSONS = ['ni', 'zu', 'hura']
+const PHASE_1_PLURAL_PERSONS = ['gu', 'zuek', 'haiek']
+
 const LESSONS = [
-  { id: 'izan-present', verbId: 'izan', tense: 'present' },
-  { id: 'egon-present', verbId: 'egon', tense: 'present' },
+  { id: 'izan-present', verbId: 'izan', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'egon-present', verbId: 'egon', tense: 'present', persons: PHASE_1_PERSONS },
   {
     id: 'unit-1-review',
     review: true,
+    persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'izan', tense: 'present' },
       { verbId: 'egon', tense: 'present' },
     ],
   },
-  { id: 'ukan-present', verbId: 'ukan', tense: 'present' },
+  { id: 'ukan-present', verbId: 'ukan', tense: 'present', persons: PHASE_1_PERSONS },
   { id: 'nahi-present', verbId: 'nahi', tense: 'present' },
   { id: 'jakin-present', verbId: 'jakin', tense: 'present' },
   {
     id: 'unit-2-review',
     review: true,
+    persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'ukan', tense: 'present' },
       { verbId: 'nahi', tense: 'present' },
       { verbId: 'jakin', tense: 'present' },
     ],
   },
-  { id: 'joan-present', verbId: 'joan', tense: 'present' },
-  { id: 'etorri-present', verbId: 'etorri', tense: 'present' },
+  { id: 'joan-present', verbId: 'joan', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'etorri-present', verbId: 'etorri', tense: 'present', persons: PHASE_1_PERSONS },
   {
     id: 'unit-3-review',
     review: true,
+    persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'joan', tense: 'present' },
       { verbId: 'etorri', tense: 'present' },
@@ -929,17 +946,23 @@ const LESSONS = [
   // six Units 1–3 verbs whose present-tense form is a single word that stays
   // intact under negation. `negation: true` tells `createExerciseState` to
   // pass `includeNegation` through to `generateQuestions` for every source.
-  // Split into three reviews of two sources each — a single six-source review
-  // landed at ~33 questions (see `docs/DECISIONS.md`, 2026-06-12 "Implemented
-  // Unit 6"), well past `TARGET_EXERCISE_COUNT`; each of these three lands at
-  // exactly 12. Per `docs/LEARNING_JOURNEY.md`, a Refresh Gate's whole point is
-  // a cumulative cross-unit mixer, so sources are deliberately paired *across*
-  // their originating units (Unit 1: izan/egon, Unit 2: ukan/jakin, Unit 3:
+  // `persons: PHASE_1_PERSONS` keeps this Refresh Gate on Phase I's 3-person
+  // horizon (matching the lessons it reviews) — also conveniently the only
+  // persons with `negativeSentences` data, so every question stays focused on
+  // the `ez`/auxiliary-fronting drill instead of falling back to a plain
+  // `sentence`/`pronoun` question for `gu`/`zuek`/`haiek`. Split into three
+  // reviews of two sources each — a single six-source review landed at ~33
+  // questions (see `docs/DECISIONS.md`, 2026-06-12 "Implemented Unit 6"), well
+  // past `TARGET_EXERCISE_COUNT`; each of these three lands at exactly 12. Per
+  // `docs/LEARNING_JOURNEY.md`, a Refresh Gate's whole point is a cumulative
+  // cross-unit mixer, so sources are deliberately paired *across* their
+  // originating units (Unit 1: izan/egon, Unit 2: ukan/jakin, Unit 3:
   // joan/etorri) rather than keeping each origin unit's pair together.
   {
     id: 'unit-5-review-1',
     review: true,
     negation: true,
+    persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'izan', tense: 'present' },
       { verbId: 'ukan', tense: 'present' },
@@ -949,6 +972,7 @@ const LESSONS = [
     id: 'unit-5-review-2',
     review: true,
     negation: true,
+    persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'egon', tense: 'present' },
       { verbId: 'joan', tense: 'present' },
@@ -958,6 +982,7 @@ const LESSONS = [
     id: 'unit-5-review-3',
     review: true,
     negation: true,
+    persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'jakin', tense: 'present' },
       { verbId: 'etorri', tense: 'present' },
@@ -966,9 +991,12 @@ const LESSONS = [
   // Unit 6 ("Expansion — Bringing in the Plural", Refresh Gate A) — zero new
   // verbs. `izan`/`egon`/`ukan`/`joan`/`etorri`'s `conjugations.present`
   // (plus their `sentences`/`pronouns`/`pronounSentences`) gained `gu`/`zuek`/
-  // `haiek` rows directly (see `docs/DECISIONS.md`), so every practice lesson
-  // and review above that already references these verbs' present tense now
-  // covers the full 6-person grid automatically — no `persons` filter needed.
+  // `haiek` rows directly (see `docs/DECISIONS.md`). Units 1-3/5's lessons
+  // above stay on the 3-person horizon via `PHASE_1_PERSONS`, so this unit's
+  // own reviews are the *first* place those verbs' present tense is drilled
+  // with `gu`/`zuek`/`haiek` — `persons: PHASE_1_PLURAL_PERSONS` keeps each
+  // review focused on exactly those three new forms (never more than 3
+  // persons per exercise), matching the unit's "bringing in the plural" focus.
   // This unit's own consolidation pass is split into three reviews, using the
   // same cross-unit pairing as Unit 5 above (Unit 1: izan/egon, Unit 2: ukan,
   // Unit 3: joan/etorri all paired across origins) — a single five-source
@@ -976,6 +1004,7 @@ const LESSONS = [
   {
     id: 'unit-6-review-1',
     review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'izan', tense: 'present' },
       { verbId: 'ukan', tense: 'present' },
@@ -984,6 +1013,7 @@ const LESSONS = [
   {
     id: 'unit-6-review-2',
     review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'egon', tense: 'present' },
       { verbId: 'joan', tense: 'present' },
@@ -992,19 +1022,40 @@ const LESSONS = [
   {
     id: 'unit-6-review-3',
     review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
     sources: [{ verbId: 'etorri', tense: 'present' }],
   },
   // Unit 7 ("Daily Routine (Transitive)", Phase II) — first unit past Refresh
   // Gate A, introducing four new periphrastic nor-nork verbs (`jan`/`edan`/
-  // `erosi`/`ikusi`), each already a full 6-person grid per the
-  // Person-Expansion Rule. `unit-7-review` covers all four.
-  { id: 'jan-present', verbId: 'jan', tense: 'present' },
-  { id: 'edan-present', verbId: 'edan', tense: 'present' },
-  { id: 'erosi-present', verbId: 'erosi', tense: 'present' },
-  { id: 'ikusi-present', verbId: 'ikusi', tense: 'present' },
+  // `erosi`/`ikusi`), each with a full 6-person grid (Person-Expansion Rule).
+  // Per the app-wide "never more than 3 persons per exercise" rule, each
+  // verb's present-tense practice splits into a `PHASE_1_PERSONS` lesson
+  // (ni/zu/hura) immediately followed by a `-plural` `PHASE_1_PLURAL_PERSONS`
+  // lesson (gu/zuek/haiek); `unit-7-review`/`unit-7-review-plural` mirror that
+  // split across all four verbs.
+  { id: 'jan-present', verbId: 'jan', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'jan-present-plural', verbId: 'jan', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'edan-present', verbId: 'edan', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'edan-present-plural', verbId: 'edan', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'erosi-present', verbId: 'erosi', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'erosi-present-plural', verbId: 'erosi', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ikusi-present', verbId: 'ikusi', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'ikusi-present-plural', verbId: 'ikusi', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
   {
     id: 'unit-7-review',
     review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'jan', tense: 'present' },
+      { verbId: 'edan', tense: 'present' },
+      { verbId: 'erosi', tense: 'present' },
+      { verbId: 'ikusi', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-7-review-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'jan', tense: 'present' },
       { verbId: 'edan', tense: 'present' },
@@ -1013,13 +1064,25 @@ const LESSONS = [
     ],
   },
   // Unit 8 ("Physical States & Possessions", Phase II) — two new synthetic
-  // verbs, `eduki` (nor-nork) and `ibili` (nor), each already a full
-  // 6-person grid per the Person-Expansion Rule. `unit-8-review` covers both.
-  { id: 'eduki-present', verbId: 'eduki', tense: 'present' },
-  { id: 'ibili-present', verbId: 'ibili', tense: 'present' },
+  // verbs, `eduki` (nor-nork) and `ibili` (nor), each with a full 6-person
+  // grid — same singular/plural split as Unit 7.
+  { id: 'eduki-present', verbId: 'eduki', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'eduki-present-plural', verbId: 'eduki', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ibili-present', verbId: 'ibili', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'ibili-present-plural', verbId: 'ibili', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
   {
     id: 'unit-8-review',
     review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'eduki', tense: 'present' },
+      { verbId: 'ibili', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-8-review-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'eduki', tense: 'present' },
       { verbId: 'ibili', tense: 'present' },
@@ -1029,27 +1092,53 @@ const LESSONS = [
   // the participle-formation rule is new" (`docs/LEARNING_JOURNEY.md`): every
   // verb from Units 1-8 except `ari` (see `docs/LANGUAGE_DECISIONS.md`) gets a
   // `future` practice lesson, reusing its existing present-tense auxiliary
-  // table under a `-ko`/`-go` participle. 13 practice lessons is more than any
-  // prior unit, so — following Units 5/6's precedent for oversized
-  // consolidation passes — the unit's review is split into four
-  // `unit-9-review-N` lessons of 3-4 sources each (~18 questions apiece)
-  // rather than one review covering all 13.
-  { id: 'izan-future', verbId: 'izan', tense: 'future' },
-  { id: 'egon-future', verbId: 'egon', tense: 'future' },
-  { id: 'ukan-future', verbId: 'ukan', tense: 'future' },
+  // table under a `-ko`/`-go` participle. `nahi`/`jakin`'s `future` tables stay
+  // 3-person (ni/zu/hura) like their `present` ones, so they're unchanged
+  // below. Every other verb's `future` table is 6-person, so — same
+  // singular/plural split as Units 7-8 — each gets a `PHASE_1_PERSONS` lesson
+  // immediately followed by a `-plural` `PHASE_1_PLURAL_PERSONS` lesson.
+  // Following Units 5/6's precedent for oversized consolidation passes, the
+  // unit's review is split into four `unit-9-review-N` pairs (each with its
+  // own `-plural` sibling); `unit-9-review-2-plural` drops `nahi`/`jakin` (no
+  // plural data) and covers just `joan`/`etorri`.
+  { id: 'izan-future', verbId: 'izan', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'izan-future-plural', verbId: 'izan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'egon-future', verbId: 'egon', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'egon-future-plural', verbId: 'egon', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ukan-future', verbId: 'ukan', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'ukan-future-plural', verbId: 'ukan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
   { id: 'nahi-future', verbId: 'nahi', tense: 'future' },
   { id: 'jakin-future', verbId: 'jakin', tense: 'future' },
-  { id: 'joan-future', verbId: 'joan', tense: 'future' },
-  { id: 'etorri-future', verbId: 'etorri', tense: 'future' },
-  { id: 'jan-future', verbId: 'jan', tense: 'future' },
-  { id: 'edan-future', verbId: 'edan', tense: 'future' },
-  { id: 'erosi-future', verbId: 'erosi', tense: 'future' },
-  { id: 'ikusi-future', verbId: 'ikusi', tense: 'future' },
-  { id: 'eduki-future', verbId: 'eduki', tense: 'future' },
-  { id: 'ibili-future', verbId: 'ibili', tense: 'future' },
+  { id: 'joan-future', verbId: 'joan', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'joan-future-plural', verbId: 'joan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'etorri-future', verbId: 'etorri', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'etorri-future-plural', verbId: 'etorri', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'jan-future', verbId: 'jan', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'jan-future-plural', verbId: 'jan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'edan-future', verbId: 'edan', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'edan-future-plural', verbId: 'edan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'erosi-future', verbId: 'erosi', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'erosi-future-plural', verbId: 'erosi', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ikusi-future', verbId: 'ikusi', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'ikusi-future-plural', verbId: 'ikusi', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'eduki-future', verbId: 'eduki', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'eduki-future-plural', verbId: 'eduki', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ibili-future', verbId: 'ibili', tense: 'future', persons: PHASE_1_PERSONS },
+  { id: 'ibili-future-plural', verbId: 'ibili', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
   {
     id: 'unit-9-review-1',
     review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'egon', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-9-review-1-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'izan', tense: 'future' },
       { verbId: 'egon', tense: 'future' },
@@ -1059,6 +1148,7 @@ const LESSONS = [
   {
     id: 'unit-9-review-2',
     review: true,
+    persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'nahi', tense: 'future' },
       { verbId: 'jakin', tense: 'future' },
@@ -1067,8 +1157,28 @@ const LESSONS = [
     ],
   },
   {
+    id: 'unit-9-review-2-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'joan', tense: 'future' },
+      { verbId: 'etorri', tense: 'future' },
+    ],
+  },
+  {
     id: 'unit-9-review-3',
     review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'jan', tense: 'future' },
+      { verbId: 'edan', tense: 'future' },
+      { verbId: 'erosi', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-9-review-3-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'jan', tense: 'future' },
       { verbId: 'edan', tense: 'future' },
@@ -1078,6 +1188,17 @@ const LESSONS = [
   {
     id: 'unit-9-review-4',
     review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'ikusi', tense: 'future' },
+      { verbId: 'eduki', tense: 'future' },
+      { verbId: 'ibili', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-9-review-4-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'ikusi', tense: 'future' },
       { verbId: 'eduki', tense: 'future' },
@@ -1155,26 +1276,36 @@ function verbMeaning(verb, language) {
 // `heading` is the single-line form `ProgressTab` shows in its flat list.
 // Takes `t`/`language` from the caller's `useLanguage()` since this is a
 // plain function, not a component.
+// Lessons restricted to a `persons` subset (`PHASE_1_PERSONS`/
+// `PHASE_1_PLURAL_PERSONS`, see above) show which grammatical persons they
+// drill, as literal Basque pronouns — language-independent, like
+// `TENSE_META`'s `basque` field.
+function personsLabel(persons) {
+  return persons?.join('/')
+}
+
 function describeLesson(lesson, t, language) {
+  const persons = personsLabel(lesson.persons)
   if (!lesson.review) {
     const verb = VERBS.find((v) => v.id === lesson.verbId)
     const meta = TENSE_META[lesson.tense]
     const label = t(meta.labelKey)
     return {
       icon: label[0],
-      title: { main: label, secondary: meta.basque },
+      title: { main: label, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
       subtitle: { main: verb.verb, secondary: verbMeaning(verb, language) },
-      heading: `${verb.verb} · ${label}`,
+      heading: persons ? `${verb.verb} · ${label} (${persons})` : `${verb.verb} · ${label}`,
     }
   }
   const verbNames = [...new Set(lesson.sources.map(({ verbId }) => VERBS.find((v) => v.id === verbId).verb))]
   const tenseLabels = [...new Set(lesson.sources.map(({ tense }) => t(TENSE_META[tense].labelKey)))]
   const reviewName = verbNames.length > 1 ? t('mixedReview') : t('verbReview', { verb: verbNames[0] })
+  const tenseLabel = tenseLabels.join(' + ')
   return {
     icon: '🔁',
-    title: { main: t('reviewLabel'), secondary: tenseLabels.join(' + ') },
+    title: { main: t('reviewLabel'), secondary: persons ? `${tenseLabel} · ${persons}` : tenseLabel },
     subtitle: { main: verbNames.join(' & '), secondary: t('mixedPractice') },
-    heading: `${reviewName} · ${tenseLabels.join(' + ')}`,
+    heading: persons ? `${reviewName} · ${tenseLabel} (${persons})` : `${reviewName} · ${tenseLabel}`,
   }
 }
 
@@ -1788,9 +1919,9 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   const targetPerSource = TARGET_EXERCISE_COUNT / sources.length
   const questions = sources.flatMap(({ verbId, tense }) => {
     const verb = VERBS.find((v) => v.id === verbId)
-    const personCount = Object.keys(verb.conjugations[tense]).length
+    const personCount = (lesson.persons ?? Object.keys(verb.conjugations[tense])).length
     const rounds = Math.max(1, Math.round(targetPerSource / personCount))
-    return generateQuestions(verb, tense, { noTyping, rounds, includeNegation: Boolean(lesson.negation) })
+    return generateQuestions(verb, tense, { noTyping, rounds, includeNegation: Boolean(lesson.negation), persons: lesson.persons })
   })
   // Review lessons get up to `EXTRA_REVIEW_EXERCISES` extra questions, drawn
   // from the verb/tense/person combinations this learner has most often

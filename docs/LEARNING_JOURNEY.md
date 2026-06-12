@@ -36,8 +36,13 @@
    `haiek` columns for *every* verb introduced so far (`izan`, `egon`,
    `ukan`, `joan`, `etorri` — `ari`/`nahi` ride `izan`/`ukan`'s tables and
    need no separate expansion). From Unit 7 onward, **every new verb is
-   taught with its full 6-person grid (`ni`/`zu`/`hura`/`gu`/`zuek`/`haiek`)
-   from its first lesson** — no further person-expansion passes needed.
+   taught with its full 6-person grid (`ni`/`zu`/`hura`/`gu`/`zuek`/`haiek`)**
+   — but per the app-wide "max 3 persons per exercise" rule
+   (`docs/DECISIONS.md`, 2026-06-12), that grid is now split across **two**
+   lessons per (verb × tense) — a `ni`/`zu`/`hura` lesson immediately
+   followed by a `gu`/`zuek`/`haiek` `-plural` sibling — rather than drilled
+   all 6 persons in one lesson. Unit 6's own reviews (`unit-6-review-*`) are
+   similarly scoped to `gu`/`zuek`/`haiek` only.
 6. **Difficulty-weighted extra practice.** Most units introduce one new verb
    in a pattern the learner already knows (same `nor`/`nor-nork` shape, just
    new vocabulary) and get the standard treatment: one practice lesson per new

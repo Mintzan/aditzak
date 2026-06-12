@@ -370,6 +370,19 @@ describe('generateQuestions', () => {
     expect(questions.map((q) => q.person).sort()).toEqual([...persons].sort())
   })
 
+  it('restricts questions and distractors to the `persons` filter when given', () => {
+    const filtered = ['ni', 'zu', 'hura']
+    const questions = generateQuestions({ ...verb, conjugations: { present: { ...verb.conjugations.present, zu: 'zara' } } }, 'present', { persons: filtered })
+
+    expect(questions).toHaveLength(filtered.length)
+    expect(questions.map((q) => q.person).sort()).toEqual([...filtered].sort())
+    questions.forEach((question) => {
+      question.options.forEach((option) => {
+        expect(Object.values({ ni: 'naiz', zu: 'zara', hura: 'da' })).toContain(option)
+      })
+    })
+  })
+
   it('tags every question with the verb and tense it was generated from', () => {
     generateQuestions(verb, 'present').forEach((question) => {
       expect(question).toMatchObject({ verbId: verb.id, tense: 'present' })

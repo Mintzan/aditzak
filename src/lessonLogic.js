@@ -391,12 +391,21 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // has appeared does a person start repeating. With `rounds = 1` (the
 // default) `used` is always empty before the first roll, so this is a no-op
 // and existing single-round behaviour/tests are unaffected.
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false } = {}) {
+//
+// `persons` (optional) restricts question generation to a subset of the
+// table's grammatical persons — e.g. `['ni', 'zu', 'hura']` for a lesson that
+// should stay on Phase I's 3-person horizon even though its underlying
+// `conjugations[tense]` table has grown to 6 persons (see `docs/DECISIONS.md`,
+// "Restored Phase I's 3-person pacing"). Distractors and `personsWithSentences`
+// are drawn from this same subset, so a filtered lesson behaves exactly like a
+// lesson whose table only ever had that many persons. Defaults to every key in
+// the table (the original behaviour).
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const negativeSentences = verb.negativeSentences?.[tense] ?? {}
-  const persons = Object.keys(table)
+  const persons = personsFilter ?? Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
   const source = { verbId: verb.id, tense }
   const usedKinds = new Map()

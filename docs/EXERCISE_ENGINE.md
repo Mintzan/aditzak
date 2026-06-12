@@ -100,6 +100,13 @@ This is the single highest-leverage open decision — it shapes how *every*
 Phase I verb entry gets authored, so it should be settled before Unit 1's
 `VERBS` data is written, not discovered partway through.
 
+**Resolved as (a) + (b)**: Unit 6 was implemented via (a) — `izan`/`egon`/
+`ukan`/`joan`/`etorri`'s `present` tables grew from 3 to 6 persons in place.
+That cascaded the 6-person grid into those verbs' pre-Unit-6 lessons too, so
+(b)'s `persons` filter was added afterward and applied to just those lessons
+to restore the 3-person horizon where the journey still calls for it — see
+`docs/DECISIONS.md`, "Restored Phase I's 3-person pacing" (2026-06-12).
+
 ### Score-gating Refresh Gates B and beyond (Units 11, 17, Phase V wrap)
 `getUnlockedLessonIds` only checks `attempts > 0`. The journey doc's "must
 pass with high accuracy" framing for Unit 11 needs it to also check

@@ -34,7 +34,7 @@ describe('App', () => {
     const user = userEvent.setup()
     render(<App />)
 
-    await user.click(screen.getByRole('button', { name: /oraina izan — to be/ }))
+    await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
 
     expect(screen.getByText('Take a look before you start')).toBeInTheDocument()
     expect(screen.getByText('naiz')).toBeInTheDocument()
@@ -61,7 +61,7 @@ describe('App', () => {
     const user = userEvent.setup()
     render(<App />)
 
-    await user.click(screen.getByRole('button', { name: /oraina izan — to be/ }))
+    await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
 
     expect(screen.queryByText('Take a look before you start')).not.toBeInTheDocument()
     expect(screen.getByText('Which word completes the sentence?')).toBeInTheDocument()
