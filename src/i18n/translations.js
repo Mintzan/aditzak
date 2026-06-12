@@ -78,6 +78,8 @@ export const TRANSLATIONS = {
     questionPronoun: 'Which pronoun completes the sentence?',
     questionTypeVerb: 'Type the word that completes the sentence.',
     questionTypePronoun: 'Type the pronoun that completes the sentence.',
+    questionNegation: 'Which word completes the negative sentence?',
+    questionTypeNegation: 'Type the word that completes the negative sentence.',
     personNi: 'I',
     personHi: 'you (familiar)',
     personZu: 'you',
@@ -121,6 +123,8 @@ export const TRANSLATIONS = {
       "'{pronoun}' ends in '-k' because it's the person doing the action of '{verb}' — in Basque, the doer of an action always gets a '-k'. The verb form '{form}' matches that person.",
     explanationPronounAbsolutive:
       "'{pronoun}' has no extra ending because '{verb}' only involves one person here — there's no separate 'doer' and 'receiver' to mark, so no '-k' is needed. The verb form '{form}' matches that person.",
+    explanationNegation:
+      "To say 'not', Basque puts 'ez' right before the verb — and 'ez {form}' moves to right after the subject, with the rest of the sentence following after it.",
   },
   es: {
     navLearn: 'Aprender',
@@ -170,6 +174,8 @@ export const TRANSLATIONS = {
     questionPronoun: '¿Qué pronombre completa la frase?',
     questionTypeVerb: 'Escribe la palabra que completa la frase.',
     questionTypePronoun: 'Escribe el pronombre que completa la frase.',
+    questionNegation: '¿Qué palabra completa la frase negativa?',
+    questionTypeNegation: 'Escribe la palabra que completa la frase negativa.',
     personNi: 'yo',
     personHi: 'tú (familiar)',
     personZu: 'tú',
@@ -213,6 +219,8 @@ export const TRANSLATIONS = {
       "'{pronoun}' termina en '-k' porque es quien realiza la acción de '{verb}' — en euskera, quien hace la acción siempre lleva '-k'. La forma verbal '{form}' concuerda con esa persona.",
     explanationPronounAbsolutive:
       "'{pronoun}' no lleva ninguna terminación extra porque '{verb}' solo tiene una persona en esta frase — no hay un 'que hace' y un 'a quién', así que no se añade '-k'. La forma verbal '{form}' concuerda con esa persona.",
+    explanationNegation:
+      "Para decir 'no', el euskera coloca 'ez' justo antes del verbo — y 'ez {form}' se desplaza justo después del sujeto, quedando el resto de la frase a continuación.",
   },
   eu: {
     navLearn: 'Ikasi',
@@ -262,6 +270,8 @@ export const TRANSLATIONS = {
     questionPronoun: 'Zein izenordainek osatzen du esaldia?',
     questionTypeVerb: 'Idatzi esaldia osatzen duen hitza.',
     questionTypePronoun: 'Idatzi esaldia osatzen duen izenordaina.',
+    questionNegation: 'Zein hitzek osatzen du esaldi ezeztatzailea?',
+    questionTypeNegation: 'Idatzi esaldi ezeztatzailea osatzen duen hitza.',
     personNi: 'ni',
     personHi: 'hi (hurbila)',
     personZu: 'zu',
@@ -305,5 +315,7 @@ export const TRANSLATIONS = {
       "'{pronoun}'-k '-k' bukaera darama, '{verb}'-en ekintza egiten duen pertsona delako — euskaraz, ekintza egiten duenak beti hartzen du '-k'. '{form}' formak pertsona horrekin bat egiten du.",
     explanationPronounAbsolutive:
       "'{pronoun}'-k ez darama bukaera berezirik, '{verb}'-ek pertsona bakarra duelako esaldi honetan — ez dago 'egilerik' eta 'jasolerik' bereizteko, eta horregatik ez da '-k' gehitzen. '{form}' formak pertsona horrekin bat egiten du.",
+    explanationNegation:
+      "Ezeztatzeko, euskarak 'ez' aditzaren aurrean jartzen du — eta 'ez {form}' subjektuaren ondora pasatzen da, gainerako esaldia horren ondoren utziz.",
   },
 }

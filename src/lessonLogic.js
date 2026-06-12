@@ -305,9 +305,9 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
   }
 }
 
-// One question per grammatical person, framed one of six ways — the first
-// four are multiple-choice (an `options` array to pick from), the last two
-// ask the learner to type the answer instead (`correct` only, no `options`):
+// One question per grammatical person, framed one of several ways — most are
+// multiple-choice (an `options` array to pick from), the typed ones ask the
+// learner to type the answer instead (`correct` only, no `options`):
 //   - `form`: recognise the bare conjugated form ("hura → ?")
 //   - `sentence`: fill the verb into an example sentence ("Hura medikua ___.")
 //   - `spot-error`: pick the one sentence, of four already filled in, whose
@@ -316,28 +316,46 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 //     is already given ("___ etxe bat du." → "Hark")
 //   - `type-verb`: type the verb into the same blanked sentence as `sentence`
 //   - `type-pronoun`: type the pronoun into the same blanked sentence as `pronoun`
+//   - `negative`: fill the verb into a negative-sentence template, e.g.
+//     "Ni ez ___ irakaslea." → "naiz" (see `negativeSentences` below)
+//   - `type-negative`: type the verb into the same negative-sentence blank as
+//     `negative`
 // The typed framings reuse exactly the same example-sentence data as their
 // multiple-choice counterparts (`sentence` needs `verb.sentences[tense][person]`;
 // `pronoun`/`type-pronoun` need both `verb.pronouns` and
-// `verb.pronounSentences[tense][person]`) — typing only makes sense with that
+// `verb.pronounSentences[tense][person]`; `negative`/`type-negative` need
+// `verb.negativeSentences[tense][person]`) — typing only makes sense with that
 // sentence context to anchor what's being asked for, and reusing the data means
 // a verb that already supports one framing automatically supports its typed
 // sibling. Persons missing that supporting data always fall back to the bare
 // `form` question, so verbs can adopt any of the framings incrementally.
 //
 // `noTyping` (set for a learner's first run(s) through a lesson — see
-// `createExerciseState`) drops the typed (`type-verb`/`type-pronoun`) and
-// `spot-error` framings — the ones that demand recalling or cross-checking a
-// brand-new form rather than just recognising it — while still letting the
-// `sentence`/`pronoun` multiple-choice framings through, so a brand-new
-// conjugation is met with real example sentences from the very first
-// question, just without being asked to type or spot-the-error yet. Once the
-// learner's been through the lesson enough times, later runs open up the full
-// mix. Every question also carries the `verbId`/`tense` it was generated
-// from — irrelevant within a single-verb-and-tense lesson, but what lets a
-// "review" lesson (see `LESSONS`) interleave questions from several lessons'
-// worth of conjugation tables and still show each one in its correct
-// verb/tense context.
+// `createExerciseState`) drops the typed (`type-verb`/`type-pronoun`/
+// `type-negative`) and `spot-error` framings — the ones that demand recalling
+// or cross-checking a brand-new form rather than just recognising it — while
+// still letting the `sentence`/`pronoun`/`negative` multiple-choice framings
+// through, so a brand-new conjugation is met with real example sentences from
+// the very first question, just without being asked to type or spot-the-error
+// yet. Once the learner's been through the lesson enough times, later runs
+// open up the full mix. Every question also carries the `verbId`/`tense` it
+// was generated from — irrelevant within a single-verb-and-tense lesson, but
+// what lets a "review" lesson (see `LESSONS`) interleave questions from
+// several lessons' worth of conjugation tables and still show each one in its
+// correct verb/tense context.
+//
+// `includeNegation` (set for the Refresh Gate A "Inversion Matrix" review —
+// see `LESSONS`'s `unit-5-review`) switches a person with
+// `negativeSentences[tense][person]` data over to *exclusively*
+// `negative`/`type-negative` framings (plus the occasional bare `form`,
+// same as any other kind) instead of the normal `sentence`/`pronoun`/...
+// mix — that lesson's whole point is drilling `ez` + auxiliary-fronting, so
+// negation questions shouldn't be diluted down to "one kind among six".
+// Defaults to `false`, so existing (verb × tense) practice lessons — which
+// don't pass it — never surface negation questions even once `negativeSentences`
+// data exists for their verb, keeping negation as something Unit 5
+// introduces deliberately rather than something that appears unannounced in
+// Units 1–4's own lessons.
 // `rounds` repeats the one-question-per-person pass this many times, each
 // pass independently shuffled (order) and re-rolled (question kind/options) —
 // this is how a lesson reaches a pedagogically reasonable length from a small
@@ -357,10 +375,11 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // has appeared does a person start repeating. With `rounds = 1` (the
 // default) `used` is always empty before the first roll, so this is a no-op
 // and existing single-round behaviour/tests are unaffected.
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } = {}) {
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
+  const negativeSentences = verb.negativeSentences?.[tense] ?? {}
   const persons = Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
   const source = { verbId: verb.id, tense }
@@ -369,13 +388,17 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } 
   function buildQuestion(person) {
     const sentence = pickVariant(sentences[person])
     const pronounSentence = verb.pronouns && pronounSentences[person]
-    const availableKinds = [
-      sentence && 'sentence',
-      sentence && !noTyping && 'type-verb',
-      sentence && !noTyping && personsWithSentences.length >= 4 && 'spot-error',
-      pronounSentence && 'pronoun',
-      pronounSentence && !noTyping && 'type-pronoun',
-    ].filter(Boolean)
+    const negativeSentence = pickVariant(negativeSentences[person])
+    const availableKinds =
+      includeNegation && negativeSentence
+        ? [negativeSentence && 'negative', negativeSentence && !noTyping && 'type-negative'].filter(Boolean)
+        : [
+            sentence && 'sentence',
+            sentence && !noTyping && 'type-verb',
+            sentence && !noTyping && personsWithSentences.length >= 4 && 'spot-error',
+            pronounSentence && 'pronoun',
+            pronounSentence && !noTyping && 'type-pronoun',
+          ].filter(Boolean)
 
     let kind = rollQuestionKind(availableKinds)
     const used = usedKinds.get(person) ?? new Set()
@@ -401,6 +424,12 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } 
       }
       case 'type-pronoun':
         return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence, correct: verb.pronouns[person] }
+      case 'negative': {
+        const { correct, options } = buildOptions(table, persons, person)
+        return { ...source, kind: 'negative', person, sentence: negativeSentence, correct, options }
+      }
+      case 'type-negative':
+        return { ...source, kind: 'type-negative', person, sentence: negativeSentence, correct: table[person] }
       default: {
         const { correct, options } = buildOptions(table, persons, person)
         return { ...source, kind: 'form', person, correct, options }
@@ -413,20 +442,27 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1 } 
 
 // Optional "why is this correct?" explanation, surfaced by `FeedbackBar` only
 // after a *correct* answer and only for question kinds that test a concept
-// rather than just a memorized form. `pronoun`/`type-pronoun` are the prime
-// candidates: whether a Basque pronoun takes the ergative `-k` or stays
+// rather than just a memorized form. `pronoun`/`type-pronoun` are one prime
+// candidate: whether a Basque pronoun takes the ergative `-k` or stays
 // unmarked depends on the verb's `agreement` (NOR vs NOR-NORK) — a distinction
 // with no equivalent in English/Spanish, and the kind of thing a learner can
 // answer correctly by pattern-matching the sentence without understanding why.
-// Every other kind (`form`, `sentence`, `type-verb`, `spot-error`) is "produce/
-// recognize this conjugated form", which doesn't have a similarly compact
-// "why" beyond "that's the form" — `getExplanation` returns `null` for those,
-// and `FeedbackBar` simply doesn't show the toggle.
+// `negative`/`type-negative` are the other: Basque negation isn't just
+// inserting "not" in place — `ez` plus the verb move together to right after
+// the subject, with the rest of the sentence following — another pattern with
+// no equivalent in English/Spanish word order. Every other kind (`form`,
+// `sentence`, `type-verb`, `spot-error`) is "produce/recognize this conjugated
+// form", which doesn't have a similarly compact "why" beyond "that's the
+// form" — `getExplanation` returns `null` for those, and `FeedbackBar` simply
+// doesn't show the toggle.
 //
 // `t` is the caller's `useLanguage().t`, so the explanation text follows the
 // interface language while `{pronoun}`/`{verb}`/`{form}` stay the untranslated
 // Basque being taught — same split as `getEncouragement`/`describeLesson`.
 export function getExplanation(verb, question, t) {
+  if (question.kind === 'negative' || question.kind === 'type-negative') {
+    return t('explanationNegation', { form: verb.conjugations[question.tense][question.person] })
+  }
   if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
   const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'
   return t(key, { pronoun: question.correct, verb: verb.verb, form: verb.conjugations[question.tense][question.person] })

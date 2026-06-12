@@ -8,6 +8,7 @@ import {
   generateQuestions,
   getActiveStreak,
   getEncouragement,
+  getExplanation,
   getLocalDateString,
   getStreakEncouragement,
   getUnlockedLessonIds,
@@ -546,6 +547,91 @@ describe('generateQuestions', () => {
     })
   })
 
+  describe('with negation', () => {
+    const verbWithNegation = {
+      ...verb,
+      negativeSentences: {
+        present: {
+          ni: 'Ni ez ___ irakaslea.',
+          hi: 'Hi ez ___ ikaslea.',
+          hura: 'Hura ez ___ medikua.',
+        },
+      },
+    }
+    const negated = verbWithNegation.negativeSentences.present
+
+    it('frames a question as filling the negative sentence when includeNegation is set and the roll favours it', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      generateQuestions(verbWithNegation, 'present', { includeNegation: true }).forEach((question) => {
+        if (negated[question.person]) {
+          expect(question).toMatchObject({
+            kind: 'negative',
+            sentence: negated[question.person],
+            correct: verbWithNegation.conjugations.present[question.person],
+          })
+          expect(question.sentence).toContain('___')
+          expect(question.options).toContain(question.correct)
+        } else {
+          expect(question.kind).toBe('form')
+        }
+      })
+    })
+
+    it('frames a question as typing the verb into the negative-sentence blank when the roll favours it', () => {
+      // ['negative', 'type-negative'] split [0, 0.75) into two slices of
+      // 0.375 — 0.5 lands in the second one: 'type-negative'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.5)
+
+      generateQuestions(verbWithNegation, 'present', { includeNegation: true }).forEach((question) => {
+        if (negated[question.person]) {
+          expect(question).toMatchObject({
+            kind: 'type-negative',
+            sentence: negated[question.person],
+            correct: verbWithNegation.conjugations.present[question.person],
+          })
+          expect(question.sentence).toContain('___')
+          expect(question).not.toHaveProperty('options')
+        }
+      })
+    })
+
+    it('only offers negative or type-negative for a person with negativeSentences data, never the usual mix', () => {
+      ;[0, 0.2, 0.5, 0.7].forEach((roll) => {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+
+        generateQuestions(verbWithNegation, 'present', { includeNegation: true }).forEach((question) => {
+          if (negated[question.person]) {
+            expect(['negative', 'type-negative']).toContain(question.kind)
+          }
+        })
+      })
+    })
+
+    it('excludes type-negative when noTyping is set, even on rolls that would otherwise favour it', () => {
+      ;[0, 0.5, 0.7].forEach((roll) => {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+
+        generateQuestions(verbWithNegation, 'present', { includeNegation: true, noTyping: true }).forEach((question) => {
+          expect(question.kind).not.toBe('type-negative')
+          if (negated[question.person] && question.kind !== 'form') {
+            expect(question.kind).toBe('negative')
+          }
+        })
+      })
+    })
+
+    it('never produces negative or type-negative questions without includeNegation, even with negativeSentences data present', () => {
+      ;[0, 0.2, 0.5, 0.7, 0.99].forEach((roll) => {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+
+        generateQuestions(verbWithNegation, 'present').forEach((question) => {
+          expect(['negative', 'type-negative']).not.toContain(question.kind)
+        })
+      })
+    })
+  })
+
   describe('with typed-answer framings', () => {
     const sentenced = verbWithBoth.sentences.present
     const pronounSentenced = verbWithBoth.pronounSentences.present
@@ -726,6 +812,58 @@ describe('generateQuestions', () => {
         expect(kinds).toHaveLength(3)
         expect(new Set(kinds)).toEqual(new Set(['form', 'sentence', 'pronoun']))
       })
+    })
+  })
+})
+
+describe('getExplanation', () => {
+  const verbAbsolutive = {
+    id: 'verb',
+    verb: 'izan',
+    agreement: ['nor'],
+    conjugations: {
+      present: { ni: 'naiz', hura: 'da' },
+    },
+  }
+  const verbErgative = {
+    id: 'verb-ergative',
+    verb: 'ukan',
+    agreement: ['nor', 'nork'],
+    conjugations: {
+      present: { ni: 'dut', hura: 'du' },
+    },
+  }
+  const t = (key, vars) => `${key}:${JSON.stringify(vars)}`
+
+  it('explains negative and type-negative questions with the conjugated form', () => {
+    const negative = getExplanation(verbAbsolutive, { kind: 'negative', tense: 'present', person: 'ni' }, t)
+    const typeNegative = getExplanation(verbAbsolutive, { kind: 'type-negative', tense: 'present', person: 'hura' }, t)
+
+    expect(negative).toBe('explanationNegation:{"form":"naiz"}')
+    expect(typeNegative).toBe('explanationNegation:{"form":"da"}')
+  })
+
+  it('explains pronoun questions differently depending on whether the verb takes an ergative subject', () => {
+    const question = { kind: 'pronoun', tense: 'present', person: 'ni', correct: 'Nik' }
+
+    expect(getExplanation(verbAbsolutive, question, t)).toBe(
+      'explanationPronounAbsolutive:{"pronoun":"Nik","verb":"izan","form":"naiz"}',
+    )
+    expect(getExplanation(verbErgative, { ...question, correct: 'Nik' }, t)).toBe(
+      'explanationPronounErgative:{"pronoun":"Nik","verb":"ukan","form":"dut"}',
+    )
+  })
+
+  it('uses a different explanation key for negation than for pronoun questions', () => {
+    const negative = getExplanation(verbAbsolutive, { kind: 'negative', tense: 'present', person: 'ni' }, t)
+    const pronoun = getExplanation(verbAbsolutive, { kind: 'pronoun', tense: 'present', person: 'ni', correct: 'Nik' }, t)
+
+    expect(negative).not.toBe(pronoun)
+  })
+
+  it('returns null for kinds with no explanation', () => {
+    ;['form', 'sentence', 'type-verb', 'spot-error'].forEach((kind) => {
+      expect(getExplanation(verbAbsolutive, { kind, tense: 'present', person: 'ni' }, t)).toBeNull()
     })
   })
 })

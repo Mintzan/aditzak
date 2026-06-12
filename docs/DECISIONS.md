@@ -8,6 +8,53 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Implemented Unit 5 ("REFRESH — The Inversion Matrix"), introducing negation via a new `negativeSentences` data shape and `negative`/`type-negative` question kinds
+
+**Decision:** Added `verb.negativeSentences[tense][person]` — sentence
+templates in negative word order (`ez` immediately before the verb, with "ez
+[verb]" fronted to right after the subject, e.g. `'Ni ez ___ irakaslea.'` →
+`naiz`), and two new question kinds, `negative` (multiple-choice) and
+`type-negative` (typed), that reuse `buildOptions(table, ...)` exactly like
+`sentence`/`type-verb` — only the sentence template differs. Added
+`negativeSentences` to `izan`, `egon`, `ukan`, `jakin`, `joan`, and `etorri`'s
+present tense (3 persons each: `ni`/`zu`/`hura`).
+
+`generateQuestions` gained `includeNegation` (default `false`). When set, a
+person with `negativeSentences[tense][person]` data gets *exclusively*
+`negative`/`type-negative` as its `availableKinds` (instead of the usual
+`sentence`/`pronoun`/... mix) — plus the normal chance of falling back to bare
+`form`. `unit-5-review` (a `review: true` lesson, `negation: true`,
+`sources` covering all 6 verbs' present tense) is the only lesson that sets
+`negation: true`, which `createExerciseState` forwards as `includeNegation`.
+Unit 5 flipped to `available` in `journey.js` with `lessonIds: ['unit-5-review']`.
+`getExplanation` gained an `explanationNegation` case for both new kinds,
+explaining the `ez`-fronting word-order shift.
+
+**Why exclusive rather than additive:** Unit 5's whole point ("Inversion
+Matrix") is drilling `ez` + auxiliary-fronting. Adding `negative`/
+`type-negative` as a 7th/8th option alongside the existing five would dilute
+negation to "1 of 8 question kinds" — easy to not see at all in a ~12-question
+session. Making it exclusive for persons with negation data, scoped to a
+dedicated review lesson via `includeNegation`/`negation: true`, guarantees
+every question in that lesson is a negation drill while leaving Units 1-4's
+own practice lessons completely unaffected (they never pass `includeNegation`,
+so `negativeSentences` data sits unused there).
+
+**Why only 6 verbs, and only `ni`/`zu`/`hura`:** `negative`/`type-negative`
+reuse the single-blank/single-`table[person]`-value shape of `sentence`/
+`type-verb`, which only works when the conjugated form is one word that stays
+intact under negation. `izan`/`egon`/`ukan`/`jakin`/`joan`/`etorri` all
+qualify (`naiz`, `nago`, `dut`, `dakit`, `noa`, `nator`, etc.). `nahi` ("nahi
+dut") and `ari` ("ari naiz") don't — their auxiliary splits off from the
+invariant participle under negation ("ez dut ... nahi", "ez naiz ari ..."),
+which doesn't fit a single `___` blank, so they were left without
+`negativeSentences`. Limited to `ni`/`zu`/`hura` since that's the horizon all
+six verbs' present tables currently cover (Phase I's 3-person horizon, per
+Unit 6's pending plural expansion).
+
+No `STORAGE_KEY` bump — new lesson id (`unit-5-review`), no change to stored
+progress shape.
+
 ## 2026-06-12 — Implemented Unit 4 ("The Immediate Continuous"), modeling `ari` as its own `VERBS` entry
 
 **Decision:** Added an `ari` entry to `VERBS` (`type: 'periphrastic'`,

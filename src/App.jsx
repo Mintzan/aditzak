@@ -55,6 +55,19 @@ import { LanguageProvider, useLanguage } from './i18n/LanguageContext'
 // `pronounSentences` gives a sentence with `___` marking where it goes, with
 // the verb already spelled out.
 //
+// `negativeSentences` (optional, by tense → person) is the negative-statement
+// counterpart of `sentences`: a sentence with `___` marking the conjugated
+// form, but in negative word order — `ez` immediately before the verb, with
+// "ez [verb]" fronted to right after the subject (e.g. "Ni ez ___ irakaslea."
+// → "naiz"). Only present on verbs whose conjugated form is a single word
+// that stays intact under negation (`izan`/`egon`/`ukan`/`joan`/`etorri`/
+// `jakin`) — `nahi`/`ari`'s two-word forms ("nahi dut", "ari naiz") break
+// apart under negation ("ez dut ... nahi", "ez naiz ari ...") and so don't fit
+// this single-blank shape; see `docs/DECISIONS.md` (Unit 5). Powers the
+// `negative`/`type-negative` question kinds, which only appear when a lesson
+// opts in via `includeNegation` (see `generateQuestions`) — Unit 5's
+// `unit-5-review` is the only lesson that currently does.
+//
 // Per `docs/LEARNING_JOURNEY.md`'s Phase I ("Survival Present"), every verb's
 // first lesson is restricted to `ni`/`zu`/`hura` — `gu`/`zuek`/`haiek` (and,
 // much later, `hi`) are added once Unit 6 ("Expansion") is implemented. Until
@@ -101,6 +114,13 @@ const VERBS = [
         hura: '___ medikua da.',
       },
     },
+    negativeSentences: {
+      present: {
+        ni: 'Ni ez ___ irakaslea.',
+        zu: 'Zu ez ___ ikaslea.',
+        hura: 'Hura ez ___ medikua.',
+      },
+    },
   },
   {
     id: 'egon',
@@ -136,6 +156,13 @@ const VERBS = [
         ni: '___ etxean nago.',
         zu: '___ kalean zaude.',
         hura: '___ eskolan dago.',
+      },
+    },
+    negativeSentences: {
+      present: {
+        ni: 'Ni ez ___ etxean.',
+        zu: 'Zu ez ___ kalean.',
+        hura: 'Hura ez ___ eskolan.',
       },
     },
   },
@@ -178,6 +205,13 @@ const VERBS = [
         ni: '___ liburu bat dut.',
         zu: '___ auto bat duzu.',
         hura: '___ etxe bat du.',
+      },
+    },
+    negativeSentences: {
+      present: {
+        ni: 'Nik ez ___ liburu bat.',
+        zu: 'Zuk ez ___ auto bat.',
+        hura: 'Berak ez ___ etxe bat.',
       },
     },
   },
@@ -245,6 +279,13 @@ const VERBS = [
         hura: '___ sekretua daki.',
       },
     },
+    negativeSentences: {
+      present: {
+        ni: 'Nik ez ___ erantzuna.',
+        zu: 'Zuk ez ___ egia.',
+        hura: 'Hark ez ___ sekretua.',
+      },
+    },
   },
   // Unit 3 ("Moving Around") — `joan` present, trimmed to Phase I's
   // `ni`/`zu`/`hura` horizon (`noa`/`zoaz`/`doa`), per
@@ -275,6 +316,13 @@ const VERBS = [
         hura: '___ lanera doa.',
       },
     },
+    negativeSentences: {
+      present: {
+        ni: 'Ni ez ___ hondartzara.',
+        zu: 'Zu ez ___ eskolara.',
+        hura: 'Hura ez ___ lanera.',
+      },
+    },
   },
   // `etorri` present, same Unit 3 ("Moving Around") trim — `nator`/`zatoz`/
   // `dator`, per `docs/CONJUGATIONS.md` §6.
@@ -301,6 +349,13 @@ const VERBS = [
         ni: '___ etxera nator.',
         zu: '___ bihar zatoz.',
         hura: '___ orain dator.',
+      },
+    },
+    negativeSentences: {
+      present: {
+        ni: 'Ni ez ___ etxera.',
+        zu: 'Zu ez ___ bihar.',
+        hura: 'Hura ez ___ orain.',
       },
     },
   },
@@ -444,6 +499,24 @@ const LESSONS = [
     id: 'unit-4-review',
     review: true,
     sources: [{ verbId: 'ari', tense: 'present' }],
+  },
+  // Unit 5 ("REFRESH — The Inversion Matrix", Refresh Gate A) — zero new
+  // verbs, drilling `ez` + auxiliary-fronting (`negativeSentences`) across the
+  // six Units 1–3 verbs whose present-tense form is a single word that stays
+  // intact under negation. `negation: true` tells `createExerciseState` to
+  // pass `includeNegation` through to `generateQuestions` for every source.
+  {
+    id: 'unit-5-review',
+    review: true,
+    negation: true,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'egon', tense: 'present' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'joan', tense: 'present' },
+      { verbId: 'etorri', tense: 'present' },
+      { verbId: 'jakin', tense: 'present' },
+    ],
   },
 ]
 
@@ -994,7 +1067,7 @@ function createExerciseState(lesson, attempts) {
       const verb = VERBS.find((v) => v.id === verbId)
       const personCount = Object.keys(verb.conjugations[tense]).length
       const rounds = Math.max(1, Math.round(targetPerSource / personCount))
-      return generateQuestions(verb, tense, { noTyping, rounds })
+      return generateQuestions(verb, tense, { noTyping, rounds, includeNegation: Boolean(lesson.negation) })
     }),
   )
   return {
@@ -1216,6 +1289,8 @@ const QUESTION_PROMPT_KEYS = {
   pronoun: 'questionPronoun',
   'type-verb': 'questionTypeVerb',
   'type-pronoun': 'questionTypePronoun',
+  negative: 'questionNegation',
+  'type-negative': 'questionTypeNegation',
 }
 
 // The explanation toggle is its own pill-shaped button above the

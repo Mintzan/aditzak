@@ -79,8 +79,9 @@ export const JOURNEY = [
             number: 5,
             title: 'REFRESH — The Inversion Matrix',
             focus: 'Negation drills across Units 1–4 — zero new verbs',
-            status: 'pending',
+            status: 'available',
             gate: true,
+            lessonIds: ['unit-5-review'],
           },
           {
             number: 6,
