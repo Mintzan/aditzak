@@ -8,6 +8,42 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Replaced Cloudflare Web Analytics with PostHog, and added `lesson_started`/`lesson_completed` custom events
+
+**Decision:** Swapped `src/analytics.js`'s `loadCloudflareAnalytics` for
+`initAnalytics` (PostHog, EU cloud), called once from `src/main.jsx`, using
+the same "committed default + env var override" pattern as before
+(`DEFAULT_POSTHOG_KEY`/`DEFAULT_POSTHOG_HOST`, overridable via
+`VITE_POSTHOG_KEY`/`VITE_POSTHOG_HOST`). `.github/workflows/deploy.yml` now
+passes through `POSTHOG_KEY`/`POSTHOG_HOST` repo variables instead of
+`CF_BEACON_TOKEN`. Full setup instructions live in
+`docs/POSTHOG_ANALYTICS.md` (replacing `docs/CLOUDFLARE_ANALYTICS.md`).
+
+Also added `trackEvent(name, properties)`, a thin wrapper around
+`posthog.capture` that no-ops until `initAnalytics` has run (so tests, which
+render components without the app's entry point, don't need a PostHog
+instance). Two events are now fired from `App.jsx`: `lesson_started` (in
+`ExerciseScreen`, once the preview is dismissed/skipped — `lessonId`,
+`review`, `attemptNumber`, plus `verbId`/`tense` for practice lessons) and
+`lesson_completed` (in `AppShell`'s `onComplete` — `lessonId`, `review`,
+`correctCount`, `total`, `stars`, `isRepeat`, `pointsEarned`).
+
+**Why PostHog over Cloudflare:** Cloudflare Web Analytics only does automatic
+pageviews, with no custom-event API — it couldn't answer "where do learners
+drop off in the lesson funnel" or "which lessons get replayed". PostHog's free
+tier (1M events/mo) covers this app's scale and keeps autocaptured
+pageviews/clicks plus custom events in one tool. `person_profiles:
+'identified_only'` is set since the app never calls `posthog.identify()` —
+events are still captured under an anonymous distinct ID without creating
+billable person profiles.
+
+**Why `lesson_started`/`lesson_completed` first:** these are the minimal pair
+needed to compute a per-lesson funnel (start → completion rate) and see which
+lessons/tenses are hardest (via `correctCount`/`total`/`stars`) or most
+replayed (`isRepeat`) — the two events discussed as highest-value before
+finer-grained instrumentation (per-question answers, tab switches, etc.),
+which can be added later the same way.
+
 ## 2026-06-12 — Added Cloudflare Web Analytics, with the beacon token committed as a default in `src/analytics.js`
 
 **Decision:** Added `src/analytics.js`'s `loadCloudflareAnalytics`, called

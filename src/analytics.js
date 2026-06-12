@@ -1,17 +1,31 @@
-// Cloudflare Web Analytics beacon token for this app's site.
-// Not secret: it's embedded in every page's public HTML/JS regardless.
-// See docs/CLOUDFLARE_ANALYTICS.md for how it was obtained, and how to
-// override it (e.g. for forks pointing at a different Cloudflare account).
-const DEFAULT_CF_BEACON_TOKEN = 'a112e250616c42b49ddfa5d54f9e5804'
+import posthog from 'posthog-js'
 
-// Loads the Cloudflare Web Analytics beacon.
-export function loadCloudflareAnalytics() {
-  const token = import.meta.env.VITE_CF_BEACON_TOKEN || DEFAULT_CF_BEACON_TOKEN
-  if (!token) return
+// PostHog project API key for this app's site.
+// Not secret: project API keys are meant to be embedded in client-side code
+// (write-only, used only to send events). See docs/POSTHOG_ANALYTICS.md for
+// where it came from and how to override it (e.g. for forks pointing at a
+// different PostHog project).
+const DEFAULT_POSTHOG_KEY = 'phc_qBmWmnpSzrrJ24AJuWWo7ZGVoGtrsZeVyuSeEKabB5A7'
+const DEFAULT_POSTHOG_HOST = 'https://eu.i.posthog.com'
 
-  const script = document.createElement('script')
-  script.src = 'https://static.cloudflareinsights.com/beacon.min.js'
-  script.defer = true
-  script.setAttribute('data-cf-beacon', JSON.stringify({ token }))
-  document.head.appendChild(script)
+let initialized = false
+
+// Initializes PostHog: autocaptured pageviews/clicks, plus custom events
+// sent via `trackEvent`.
+export function initAnalytics() {
+  const key = import.meta.env.VITE_POSTHOG_KEY || DEFAULT_POSTHOG_KEY
+  if (!key) return
+
+  posthog.init(key, {
+    api_host: import.meta.env.VITE_POSTHOG_HOST || DEFAULT_POSTHOG_HOST,
+    person_profiles: 'identified_only',
+  })
+  initialized = true
+}
+
+// Sends a custom event to PostHog. No-ops if `initAnalytics` hasn't run
+// (e.g. in tests, which render components without the app's entry point).
+export function trackEvent(name, properties) {
+  if (!initialized) return
+  posthog.capture(name, properties)
 }
