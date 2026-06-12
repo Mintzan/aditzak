@@ -271,8 +271,8 @@ const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Nik kafe bat ___.',
-        zu: 'Zuk etorri ___?',
+        ni: ['Nik kafe bat ___.', 'Nik ur bat ___.', 'Nik liburu bat ___.', 'Nik opari bat ___.'],
+        zu: ['Zuk etorri ___?', 'Zuk kafe bat ___?', 'Zuk liburu bat ___?', 'Zuk sagar bat ___?'],
         hura: ['Hark opari bat ___.', 'Mikelek kafe bat ___.', 'Anek liburu bat ___.', 'Katuak esne pixka bat ___.'],
       },
     },
@@ -302,8 +302,8 @@ const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Nik erantzuna ___.',
-        zu: 'Zuk egia ___.',
+        ni: ['Nik erantzuna ___.', 'Nik egia ___.', 'Nik sekretua ___.', 'Nik bidea ___.'],
+        zu: ['Zuk egia ___.', 'Zuk erantzuna ___.', 'Zuk sekretua ___.', 'Zuk bidea ___.'],
         hura: ['Hark sekretua ___.', 'Mikelek erantzuna ___.', 'Irakasleak erantzun zuzena ___.', 'Txakurrak etxerako bidea ___.'],
       },
     },
@@ -338,12 +338,19 @@ const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Ni hondartzara ___.',
-        zu: 'Zu eskolara ___.',
-        hura: 'Hura lanera ___.',
-        gu: 'Gu hondartzara ___.',
-        zuek: 'Zuek eskolara ___.',
-        haiek: 'Haiek lanera ___.',
+        ni: ['Ni hondartzara ___.', 'Ni eskolara ___.', 'Ni lanera ___.', 'Ni dendara ___.'],
+        zu: ['Zu eskolara ___.', 'Zu hondartzara ___.', 'Zu lanera ___.', 'Zu liburutegira ___.'],
+        hura: [
+          'Hura lanera ___.',
+          'Hura eskolara ___.',
+          'Hura hondartzara ___.',
+          'Mikel dendara ___.',
+          'Ane unibertsitatera ___.',
+          'Txakurra parkera ___.',
+        ],
+        gu: ['Gu hondartzara ___.', 'Gu lanera ___.', 'Gu eskolara ___.', 'Gu dendara ___.'],
+        zuek: ['Zuek eskolara ___.', 'Zuek hondartzara ___.', 'Zuek lanera ___.', 'Zuek parkera ___.'],
+        haiek: ['Haiek lanera ___.', 'Haiek eskolara ___.', 'Haiek hondartzara ___.', 'Mikel eta Ane dendara ___.'],
       },
     },
     pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
@@ -379,12 +386,12 @@ const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Ni etxera ___.',
-        zu: 'Zu bihar ___.',
-        hura: 'Hura orain ___.',
-        gu: 'Gu etxera ___.',
-        zuek: 'Zuek bihar ___.',
-        haiek: 'Haiek orain ___.',
+        ni: ['Ni etxera ___.', 'Ni eskolara ___.', 'Ni orain ___.', 'Ni gaur ___.'],
+        zu: ['Zu bihar ___.', 'Zu etxera ___.', 'Zu orain ___.', 'Zu gaur ___.'],
+        hura: ['Hura orain ___.', 'Hura etxera ___.', 'Hura bihar ___.', 'Mikel gaur ___.', 'Ane etxera ___.', 'Txakurra orain ___.'],
+        gu: ['Gu etxera ___.', 'Gu orain ___.', 'Gu gaur ___.', 'Gu bihar ___.'],
+        zuek: ['Zuek bihar ___.', 'Zuek etxera ___.', 'Zuek orain ___.', 'Zuek gaur ___.'],
+        haiek: ['Haiek orain ___.', 'Haiek etxera ___.', 'Haiek bihar ___.', 'Mikel eta Ane gaur ___.'],
       },
     },
     pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
