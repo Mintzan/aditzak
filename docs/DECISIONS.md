@@ -8,6 +8,24 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Already-attempted lessons stay unlocked, even if their predecessor hasn't been attempted
+
+**Decision:** `getUnlockedLessonIds` (`lessonLogic.js`) now also unlocks a
+lesson when `progress[lesson.id]?.attempts > 0`, in addition to the existing
+"previous lesson attempted" rule.
+
+**Why:** the previous entry's new `unit-N-review` lessons get inserted into
+the *middle* of `LESSONS`, immediately before the unit they review's first
+lesson moves one slot later. For a learner who'd already played past that
+point (e.g. completed `joan-present`), the newly-inserted `unit-2-review`
+becomes `joan-present`'s predecessor — and since that review has 0 attempts,
+strict linear unlocking re-locked `joan-present` despite its earned stars,
+while `etorri-present` (unlocked earlier, before the insertion) stayed
+unlocked. The result: a locked lesson with stars sitting before an unlocked
+lesson with none. Falling back to "have I already played this one" fixes that
+case and makes future mid-list insertions safe too, without weakening the
+strict-linear rule for lessons never attempted.
+
 ## 2026-06-12 — Added an optional "Why is this correct?" explanation, for `pronoun`/`type-pronoun` questions only
 
 **Decision:** Added `getExplanation(verb, question, t)` (`lessonLogic.js`),

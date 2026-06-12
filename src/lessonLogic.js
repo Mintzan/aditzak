@@ -191,12 +191,19 @@ export function repairStreak(streak, points, today) {
   }
 }
 
-// A lesson unlocks once the lesson before it has been attempted at least once.
+// A lesson unlocks once the lesson before it has been attempted at least
+// once, or once the lesson itself has — so a lesson the learner already
+// completed never re-locks just because a new lesson (e.g. a unit review)
+// gets inserted before it later.
 export function getUnlockedLessonIds(lessons, progress) {
   const unlocked = new Set()
   lessons.forEach((lesson, index) => {
     const previous = lessons[index - 1]
-    if (index === 0 || (progress[previous.id]?.attempts ?? 0) > 0) {
+    if (
+      index === 0 ||
+      (progress[previous.id]?.attempts ?? 0) > 0 ||
+      (progress[lesson.id]?.attempts ?? 0) > 0
+    ) {
       unlocked.add(lesson.id)
     }
   })

@@ -305,6 +305,13 @@ describe('getUnlockedLessonIds', () => {
 
     expect(getUnlockedLessonIds(lessons, progress)).toEqual(new Set(['a', 'b']))
   })
+
+  it('keeps an already-attempted lesson unlocked even if its predecessor has not been attempted', () => {
+    // e.g. a new lesson was inserted before a lesson the learner already completed
+    const progress = { a: { attempts: 1 }, c: { attempts: 1 } }
+
+    expect(getUnlockedLessonIds(lessons, progress)).toEqual(new Set(['a', 'b', 'c']))
+  })
 })
 
 describe('generateQuestions', () => {
