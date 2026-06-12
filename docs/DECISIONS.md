@@ -8,6 +8,30 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Added a UI-only "optional account" prototype to the Profile tab, with mock sign-in state
+
+**Decision:** Added `AccountSection` (a card in `ProfileTab`) and
+`AccountModal` (a sign-in bottom sheet, mirroring `FeedbackModal`'s
+structure) to `src/App.jsx`, plus `account*` translation keys in all three
+locales. The whole flow — "send sign-in link" → "check your email" → a
+first-sync merge-choice screen (shown only if the device has local progress)
+→ signed-in state with a "Sign out" button — is driven entirely by mock
+`useState` in `HomeScreen` (`account`, `showAccountModal`). There is no real
+authentication, network request, or backend; "Continue (demo)" stands in for
+clicking the email link, and the merge choice is captured but doesn't alter
+`progress` since there's no real cloud data to merge with.
+
+**Why:** this was scoped as a UI-first exploration of "what would an optional
+cross-device sync account feel like?" before committing to real auth/backend
+work (magic-link email, a Worker + KV/D1 datastore, etc. — a bigger and
+separate effort). Mock state is deliberately **not persisted** to
+`localStorage`: inventing a storage key/schema for throwaway prototype state
+would add versioning overhead (per this doc's `STORAGE_KEY` guidance) for a
+data shape that will change once real auth is designed. If this UX direction
+is approved, a follow-up decision should cover the real auth method and sync
+backend, and at that point `account` state would move to persisted storage
+with its own versioned key.
+
 ## 2026-06-12 — Hardcoded the feedback worker's URL as a default in `src/App.jsx`, `VITE_FEEDBACK_API_URL` now just an override
 
 **Decision:** `FEEDBACK_API_URL` now falls back to the deployed worker's URL

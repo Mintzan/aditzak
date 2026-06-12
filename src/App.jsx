@@ -1699,7 +1699,186 @@ function FeedbackModal({ onClose }) {
   )
 }
 
-function ProfileTab({ streak, points, onResetProgress, onRepairStreak, onOpenFeedback }) {
+// Mock sign-in flow for the optional-account UI prototype — no real
+// authentication or backend yet (see docs/DECISIONS.md). "Sending" a
+// sign-in link transitions straight to the "check your email" step, with a
+// clearly-labeled demo button standing in for clicking the email link.
+const ACCOUNT_MERGE_OPTIONS = [
+  { value: 'keepBest', labelKey: 'accountMergeKeepBest' },
+  { value: 'useDevice', labelKey: 'accountMergeUseDevice' },
+  { value: 'useAccount', labelKey: 'accountMergeUseAccount' },
+]
+
+function AccountModal({ hasLocalProgress, onClose, onSignedIn }) {
+  const { t } = useLanguage()
+  const [email, setEmail] = useState('')
+  const [step, setStep] = useState('email') // email | sent | merge
+  const [mergeChoice, setMergeChoice] = useState('keepBest')
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    if (!email.trim()) return
+    setStep('sent')
+  }
+
+  function handleDemoContinue() {
+    if (hasLocalProgress) {
+      setStep('merge')
+    } else {
+      onSignedIn(email.trim())
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="account-title"
+        className="w-full max-w-md rounded-t-3xl bg-white p-5 sm:rounded-3xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="mb-3 flex items-center justify-between">
+          <h2 id="account-title" className="text-lg font-bold text-gray-900">
+            {t(step === 'merge' ? 'accountMergeTitle' : 'accountSignInTitle')}
+          </h2>
+          <button type="button" onClick={onClose} aria-label={t('accountClose')} className="text-2xl leading-none text-gray-400">
+            ×
+          </button>
+        </div>
+
+        {step === 'email' && (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <div>
+              <label htmlFor="account-email" className="mb-1 block text-sm font-semibold text-gray-700">
+                {t('accountEmailLabel')}
+              </label>
+              <input
+                id="account-email"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder={t('accountEmailPlaceholder')}
+                required
+                className="w-full rounded-2xl border border-gray-200 p-3 text-sm text-gray-900 focus:border-green-500 focus:outline-none"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={!email.trim()}
+              style={{ minHeight: 48 }}
+              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:opacity-50"
+            >
+              {t('accountSendLink')}
+            </button>
+          </form>
+        )}
+
+        {step === 'sent' && (
+          <div className="flex flex-col items-center gap-3 py-4 text-center">
+            <span className="text-4xl" aria-hidden="true">
+              📧
+            </span>
+            <p className="text-sm font-bold text-gray-900">{t('accountLinkSentTitle')}</p>
+            <p className="text-sm text-gray-500">{t('accountLinkSentBody', { email: email.trim() })}</p>
+            <button
+              type="button"
+              onClick={handleDemoContinue}
+              style={{ minHeight: 48 }}
+              className="w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+            >
+              {t('accountDemoContinue')}
+            </button>
+          </div>
+        )}
+
+        {step === 'merge' && (
+          <div className="flex flex-col gap-3">
+            <p className="text-sm text-gray-500">{t('accountMergeBody')}</p>
+            <div className="flex flex-col gap-2">
+              {ACCOUNT_MERGE_OPTIONS.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setMergeChoice(option.value)}
+                  style={{ minHeight: 48 }}
+                  className={`rounded-2xl border-2 px-4 text-left text-sm font-bold transition ${
+                    mergeChoice === option.value
+                      ? 'border-green-500 bg-green-50 text-green-700'
+                      : 'border-gray-200 text-gray-500 hover:border-gray-300'
+                  }`}
+                >
+                  {t(option.labelKey)}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => onSignedIn(email.trim())}
+              style={{ minHeight: 48 }}
+              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+            >
+              {t('accountMergeConfirm')}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// Card shown in the Profile tab for the optional-account prototype — purely
+// presentational, driven by the mock `account` state held in `HomeScreen`.
+function AccountSection({ account, onOpenSignIn, onSignOut }) {
+  const { t } = useLanguage()
+  if (account) {
+    return (
+      <div className="w-full rounded-2xl border border-gray-200 bg-white p-4 text-left">
+        <div className="flex items-center gap-3">
+          <span className="text-3xl" aria-hidden="true">
+            ☁️
+          </span>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-gray-700">{account.email}</p>
+            <p className="text-xs text-gray-400">{t('accountSyncedJustNow')}</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onSignOut}
+          style={{ minHeight: 48 }}
+          className="mt-3 w-full rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-500 transition hover:border-red-300 hover:text-red-500"
+        >
+          {t('accountSignOut')}
+        </button>
+      </div>
+    )
+  }
+  return (
+    <div className="w-full rounded-2xl border border-gray-200 bg-white p-4 text-left">
+      <div className="flex items-center gap-3">
+        <span className="text-3xl" aria-hidden="true">
+          ☁️
+        </span>
+        <div>
+          <p className="text-sm font-semibold text-gray-700">{t('accountTitle')}</p>
+          <p className="text-xs text-gray-400">{t('accountSignedOutHint')}</p>
+        </div>
+      </div>
+      <button
+        type="button"
+        onClick={onOpenSignIn}
+        style={{ minHeight: 48 }}
+        className="mt-3 w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+      >
+        {t('accountSignIn')}
+      </button>
+      <p className="mt-2 text-center text-xs text-gray-400">{t('accountSignedOutNote')}</p>
+    </div>
+  )
+}
+
+function ProfileTab({ streak, points, account, onOpenSignIn, onSignOut, onResetProgress, onRepairStreak, onOpenFeedback }) {
   const { t, tCount, language, setLanguage, languages } = useLanguage()
   const today = getLocalDateString()
   const currentStreak = getActiveStreak(streak, today)
@@ -1750,6 +1929,7 @@ function ProfileTab({ streak, points, onResetProgress, onRepairStreak, onOpenFee
           </button>
         </div>
       )}
+      <AccountSection account={account} onOpenSignIn={onOpenSignIn} onSignOut={onSignOut} />
       <div className="w-full">
         <p className="mb-1 text-sm font-semibold text-gray-700">{t('profileLanguage')}</p>
         <p className="mb-2 text-xs text-gray-400">{t('profileLanguageHint')}</p>
@@ -1828,6 +2008,10 @@ function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson
   const currentStreak = getActiveStreak(streak, getLocalDateString())
   const balance = points?.balance ?? 0
   const [showFeedback, setShowFeedback] = useState(false)
+  // Mock account state for the optional-account UI prototype — not
+  // persisted, see docs/DECISIONS.md.
+  const [account, setAccount] = useState(null)
+  const [showAccountModal, setShowAccountModal] = useState(false)
 
   // Restores the scroll position the learner had before starting an exercise,
   // or — on the very first load — jumps straight to the last lesson they
@@ -1884,6 +2068,9 @@ function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson
           <ProfileTab
             streak={streak}
             points={points}
+            account={account}
+            onOpenSignIn={() => setShowAccountModal(true)}
+            onSignOut={() => setAccount(null)}
             onResetProgress={onResetProgress}
             onRepairStreak={onRepairStreak}
             onOpenFeedback={() => setShowFeedback(true)}
@@ -1894,6 +2081,16 @@ function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson
       <BottomNav active={tab} onSelect={onChangeTab} />
 
       {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
+      {showAccountModal && (
+        <AccountModal
+          hasLocalProgress={Object.keys(progress).length > 0}
+          onClose={() => setShowAccountModal(false)}
+          onSignedIn={(email) => {
+            setAccount({ email, syncedAt: Date.now() })
+            setShowAccountModal(false)
+          }}
+        />
+      )}
     </div>
   )
 }
