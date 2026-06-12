@@ -8,6 +8,32 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Home screen scroll restoration via `window`/`document` APIs, no library
+
+**Decision:** Added scroll handling around `HomeScreen` in `App.jsx`: on the
+very first load, scroll to the last lesson the learner completed
+(`getLastPlayedLessonId` in `lessonLogic.js`, keyed off `lastPlayed`); when
+returning from an exercise (`onExit`/`onComplete`), restore the `window.scrollY`
+the learner had right before opening it. Implemented with a `scrollTarget`
+prop computed in `AppShell` (`{ type: 'lastLesson', lessonId }` or
+`{ type: 'restore', y }`), consumed by a mount-only `useEffect` in
+`HomeScreen` that calls `scrollIntoView`/`scrollTo` inside a
+`requestAnimationFrame` (the lesson list isn't at its final layout height on
+the same tick as the initial commit). Each `LessonNode` got an
+`id={`lesson-${lesson.id}`}` so it can be targeted by `getElementById`.
+
+**Why:** `HomeScreen` scrolls the whole document (`min-h-dvh`, no
+`overflow-y-auto` wrapper — unlike `MultipleChoiceScreen`'s fixed `h-dvh`
+container), so plain `window`/`document` APIs are sufficient; no scroll-restoration
+library needed. `HomeScreen` unmounts whenever `activeLessonId` is set (it's
+one of `AppShell`'s two top-level returns), so its scroll position is lost on
+every exercise — capturing it in `AppShell` (which stays mounted) and replaying
+it via a `[]`-deps effect on remount was the simplest fix. Verified manually
+with Playwright; `page.reload()` triggers Chromium's own scroll restoration
+*after* React's effects and clobbers the result, so the fresh-navigation
+(`page.goto` + `addInitScript`) case is the one that matters and was confirmed
+working.
+
 ## 2026-06-12 — Fixed `ari`'s `zu` example sentence to include an explicit subject
 
 **Decision:** Changed `ari`'s `sentences.present.zu` from `'Zer ___?'` to

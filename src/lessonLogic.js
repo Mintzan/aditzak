@@ -210,6 +210,22 @@ export function getUnlockedLessonIds(lessons, progress) {
   return unlocked
 }
 
+// The id of the lesson the learner most recently completed (by `lastPlayed`),
+// or `null` if no lesson has been attempted yet — used to scroll the home
+// screen to that lesson on initial load.
+export function getLastPlayedLessonId(progress) {
+  let latestId = null
+  let latestTime = -Infinity
+  for (const [lessonId, entry] of Object.entries(progress ?? {})) {
+    const time = Date.parse(entry.lastPlayed)
+    if (!Number.isNaN(time) && time > latestTime) {
+      latestTime = time
+      latestId = lessonId
+    }
+  }
+  return latestId
+}
+
 function normalizeAnswer(value) {
   return value.trim().toLowerCase()
 }

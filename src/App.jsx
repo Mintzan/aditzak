@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import {
   addPoints,
   canRepairStreak,
@@ -9,6 +9,7 @@ import {
   getActiveStreak,
   getExplanation,
   getEncouragement,
+  getLastPlayedLessonId,
   getLocalDateString,
   pickEncouragementVariantIndex,
   getStreakEncouragement,
@@ -990,6 +991,7 @@ function LessonNode({ lesson, locked, stars, onSelect }) {
   return (
     <button
       type="button"
+      id={`lesson-${lesson.id}`}
       disabled={locked}
       onClick={() => onSelect(lesson.id)}
       style={{ minHeight: 48 }}
@@ -1281,12 +1283,31 @@ function BottomNav({ active, onSelect }) {
   )
 }
 
-function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson, onResetProgress, onRepairStreak }) {
+function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson, onResetProgress, onRepairStreak, scrollTarget }) {
   const { t } = useLanguage()
   const totalStars = LESSONS.reduce((sum, lesson) => sum + (progress[lesson.id]?.bestStars ?? 0), 0)
   const maxStars = LESSONS.length * 3
   const currentStreak = getActiveStreak(streak, getLocalDateString())
   const balance = points?.balance ?? 0
+
+  // Restores the scroll position the learner had before starting an exercise,
+  // or — on the very first load — jumps straight to the last lesson they
+  // completed, so returning learners don't land back at the top of the whole
+  // journey. Runs once per mount (HomeScreen unmounts while an exercise is
+  // active), using whichever `scrollTarget` was current at mount time. The
+  // `requestAnimationFrame` defers until after layout, since the lesson list
+  // isn't at its final height yet on the same tick as the initial commit.
+  useEffect(() => {
+    if (!scrollTarget) return
+    requestAnimationFrame(() => {
+      if (scrollTarget.type === 'restore') {
+        window.scrollTo(0, scrollTarget.y)
+      } else if (scrollTarget.type === 'lastLesson') {
+        document.getElementById(`lesson-${scrollTarget.lessonId}`)?.scrollIntoView?.({ block: 'center' })
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-gray-50">
@@ -2028,6 +2049,14 @@ function AppShell() {
   // nudge has been shown, so the next one waits a few lessons rather than
   // popping up again the moment another milestone streak comes around.
   const [streakNudgeCooldown, setStreakNudgeCooldown] = useState(0)
+  // Where the home screen should scroll to the next time it mounts: the last
+  // lesson the learner completed on initial load, or the scroll position they
+  // had before starting an exercise when they return from one.
+  const [homeScrollTarget, setHomeScrollTarget] = useState(() => {
+    const lastLessonId = getLastPlayedLessonId(progressStorage.load())
+    return lastLessonId ? { type: 'lastLesson', lessonId: lastLessonId } : null
+  })
+  const scrollBeforeLessonRef = useRef(null)
 
   useEffect(() => {
     progressStorage.save(progress)
@@ -2068,6 +2097,19 @@ function AppShell() {
     setPoints(nextPoints)
   }
 
+  function handleSelectLesson(lessonId) {
+    scrollBeforeLessonRef.current = window.scrollY
+    setActiveLessonId(lessonId)
+  }
+
+  function handleReturnToHome() {
+    setHomeScrollTarget(
+      scrollBeforeLessonRef.current !== null ? { type: 'restore', y: scrollBeforeLessonRef.current } : null,
+    )
+    scrollBeforeLessonRef.current = null
+    setActiveLessonId(null)
+  }
+
   if (!hasChosenLanguage) {
     return <LanguageOnboardingScreen />
   }
@@ -2080,7 +2122,7 @@ function AppShell() {
         lesson={lesson}
         attempts={progress[lesson.id]?.attempts ?? 0}
         errorStats={errorStats}
-        onExit={() => setActiveLessonId(null)}
+        onExit={handleReturnToHome}
         canShowStreakNudge={streakNudgeCooldown === 0}
         onStreakNudgeShown={handleStreakNudgeShown}
         onComplete={(result) => {
@@ -2100,7 +2142,7 @@ function AppShell() {
           setPoints((previous) => addPoints(previous, pointsEarned))
           setErrorStats((previous) => recordErrors(previous, result.misses))
           setStreakNudgeCooldown((cooldown) => Math.max(0, cooldown - 1))
-          setActiveLessonId(null)
+          handleReturnToHome()
         }}
       />
     )
@@ -2113,9 +2155,10 @@ function AppShell() {
       points={points}
       tab={tab}
       onChangeTab={setTab}
-      onSelectLesson={setActiveLessonId}
+      onSelectLesson={handleSelectLesson}
       onResetProgress={handleResetProgress}
       onRepairStreak={handleRepairStreak}
+      scrollTarget={homeScrollTarget}
     />
   )
 }
