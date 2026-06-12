@@ -8,6 +8,39 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-12 — Added a feedback form/modal to the Profile tab, wired to the feedback worker via `VITE_FEEDBACK_API_URL`
+
+**Decision:** Added `FeedbackModal` (`src/App.jsx`), opened from a new "Send
+feedback" button in `ProfileTab`. The modal is a `message` textarea
+(required, `maxLength` 2000) + optional `email` field, `POST`ing
+`{ message, email, context: 'profile' }` as JSON to
+`import.meta.env.VITE_FEEDBACK_API_URL` — the field limits and payload shape
+match the worker added in the 2026-06-12 "Added a standalone Cloudflare
+Worker for feedback emails" entry below. Shows a success state on `response.ok`,
+or a generic translated error otherwise (network failure, non-2xx, or the env
+var unset/empty — `fetch(undefined, ...)` resolves to a relative request that
+404s, hitting the same error path). Added `VITE_FEEDBACK_API_URL` to
+`.env.example` and `.github/workflows/deploy.yml` (as `vars.FEEDBACK_API_URL`),
+following the `VITE_POSTHOG_KEY`/`VITE_POSTHOG_HOST` pattern — build-time env
+var, no committed default, since the worker isn't deployed yet and its URL
+isn't known. Added `feedback*`/`profileFeedback` keys to all three
+`TRANSLATIONS` locales.
+
+**Why no client-side "is the endpoint configured" check:** letting the
+`fetch` itself fail and showing the same generic error message for "not yet
+configured" and "configured but request failed" avoids a third UI state for a
+condition (`VITE_FEEDBACK_API_URL` unset) that's purely a deployment detail —
+both cases mean "feedback didn't go through, try again later" from the
+learner's perspective. `docs/CLOUDFLARE_FEEDBACK_WORKER.md` documents that the
+form renders either way and explains the unset-var behavior for whoever sets
+`FEEDBACK_API_URL` once the worker is deployed.
+
+**Why `context: 'profile'` rather than the current lesson/tab:** the feedback
+button only exists in the Profile tab (no entry point from an exercise
+screen), so `context` is a fixed string for now — the worker's `context`
+field already supports richer values if a future entry point (e.g. from
+`MultipleChoiceScreen`) wants to report `lessonId`/`verbId`/`tense`.
+
 ## 2026-06-12 — Added a manually-triggered workflow to set the worker's `RESEND_API_KEY` secret, as a CLI-free alternative to `wrangler secret put`
 
 **Decision:** Added `.github/workflows/set-worker-secret.yml`

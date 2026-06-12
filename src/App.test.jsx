@@ -80,4 +80,41 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: 'Aditzak' })).toBeInTheDocument()
     expect(localStorage.getItem('aditzak:lang:v1')).toBe('en')
   })
+
+  it('lets a learner open the feedback form from the Profile tab and submit it', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: true })
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /Profile/ }))
+    await user.click(screen.getByRole('button', { name: 'Send feedback' }))
+
+    expect(screen.getByRole('dialog', { name: 'Send feedback' })).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText("What's on your mind?"), 'Great app!')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(await screen.findByText('Thanks! Your feedback has been sent.')).toBeInTheDocument()
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock.mock.calls[0][1]).toMatchObject({
+      method: 'POST',
+      body: JSON.stringify({ message: 'Great app!', email: '', context: 'profile' }),
+    })
+
+    await user.click(screen.getAllByRole('button', { name: 'Close' })[1])
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('shows an error if feedback submission fails', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false })
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /Profile/ }))
+    await user.click(screen.getByRole('button', { name: 'Send feedback' }))
+    await user.type(screen.getByLabelText("What's on your mind?"), 'Something is broken')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(await screen.findByText('Something went wrong. Please try again later.')).toBeInTheDocument()
+  })
 })

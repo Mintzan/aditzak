@@ -1439,7 +1439,119 @@ function ProgressTab({ progress }) {
   )
 }
 
-function ProfileTab({ streak, points, onResetProgress, onRepairStreak }) {
+// Cloudflare Worker endpoint for feedback submissions — see
+// docs/CLOUDFLARE_FEEDBACK_WORKER.md. Injected at build time, following the
+// same "env var, no committed default" approach as src/analytics.js's
+// PostHog overrides (the worker URL isn't known/committed yet).
+const FEEDBACK_API_URL = import.meta.env.VITE_FEEDBACK_API_URL
+// Mirrors the worker's own limits (worker/src/index.js).
+const FEEDBACK_MESSAGE_MAX_LENGTH = 2000
+const FEEDBACK_EMAIL_MAX_LENGTH = 320
+
+function FeedbackModal({ onClose }) {
+  const { t } = useLanguage()
+  const [message, setMessage] = useState('')
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    if (!message.trim() || status === 'sending') return
+    setStatus('sending')
+    try {
+      const response = await fetch(FEEDBACK_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: message.trim(), email: email.trim(), context: 'profile' }),
+      })
+      if (!response.ok) throw new Error('Feedback request failed')
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="feedback-title"
+        className="w-full max-w-md rounded-t-3xl bg-white p-5 sm:rounded-3xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="mb-3 flex items-center justify-between">
+          <h2 id="feedback-title" className="text-lg font-bold text-gray-900">
+            {t('feedbackTitle')}
+          </h2>
+          <button type="button" onClick={onClose} aria-label={t('feedbackClose')} className="text-2xl leading-none text-gray-400">
+            ×
+          </button>
+        </div>
+
+        {status === 'success' ? (
+          <div className="flex flex-col items-center gap-3 py-4 text-center">
+            <span className="text-4xl" aria-hidden="true">
+              ✅
+            </span>
+            <p className="text-sm text-gray-700">{t('feedbackSuccess')}</p>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{ minHeight: 48 }}
+              className="w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+            >
+              {t('feedbackClose')}
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <div>
+              <label htmlFor="feedback-message" className="mb-1 block text-sm font-semibold text-gray-700">
+                {t('feedbackMessageLabel')}
+              </label>
+              <textarea
+                id="feedback-message"
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                placeholder={t('feedbackMessagePlaceholder')}
+                maxLength={FEEDBACK_MESSAGE_MAX_LENGTH}
+                rows={4}
+                required
+                className="w-full rounded-2xl border border-gray-200 p-3 text-sm text-gray-900 focus:border-green-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label htmlFor="feedback-email" className="mb-1 block text-sm font-semibold text-gray-700">
+                {t('feedbackEmailLabel')}
+              </label>
+              <input
+                id="feedback-email"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder={t('feedbackEmailPlaceholder')}
+                maxLength={FEEDBACK_EMAIL_MAX_LENGTH}
+                className="w-full rounded-2xl border border-gray-200 p-3 text-sm text-gray-900 focus:border-green-500 focus:outline-none"
+              />
+            </div>
+            {status === 'error' && <p className="text-sm text-red-500">{t('feedbackError')}</p>}
+            <button
+              type="submit"
+              disabled={status === 'sending' || !message.trim()}
+              style={{ minHeight: 48 }}
+              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:opacity-50"
+            >
+              {status === 'sending' ? t('feedbackSending') : t('feedbackSubmit')}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function ProfileTab({ streak, points, onResetProgress, onRepairStreak, onOpenFeedback }) {
   const { t, tCount, language, setLanguage, languages } = useLanguage()
   const today = getLocalDateString()
   const currentStreak = getActiveStreak(streak, today)
@@ -1513,6 +1625,14 @@ function ProfileTab({ streak, points, onResetProgress, onRepairStreak }) {
       </div>
       <button
         type="button"
+        onClick={onOpenFeedback}
+        style={{ minHeight: 48 }}
+        className="w-full rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:text-green-600"
+      >
+        {t('profileFeedback')}
+      </button>
+      <button
+        type="button"
         onClick={onResetProgress}
         style={{ minHeight: 48 }}
         className="rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-500 transition hover:border-red-300 hover:text-red-500"
@@ -1559,6 +1679,7 @@ function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson
   const maxStars = LESSONS.length * 3
   const currentStreak = getActiveStreak(streak, getLocalDateString())
   const balance = points?.balance ?? 0
+  const [showFeedback, setShowFeedback] = useState(false)
 
   // Restores the scroll position the learner had before starting an exercise,
   // or — on the very first load — jumps straight to the last lesson they
@@ -1612,11 +1733,19 @@ function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson
         {tab === 'home' && <JourneyTab progress={progress} onSelectLesson={onSelectLesson} />}
         {tab === 'progress' && <ProgressTab progress={progress} />}
         {tab === 'profile' && (
-          <ProfileTab streak={streak} points={points} onResetProgress={onResetProgress} onRepairStreak={onRepairStreak} />
+          <ProfileTab
+            streak={streak}
+            points={points}
+            onResetProgress={onResetProgress}
+            onRepairStreak={onRepairStreak}
+            onOpenFeedback={() => setShowFeedback(true)}
+          />
         )}
       </main>
 
       <BottomNav active={tab} onSelect={onChangeTab} />
+
+      {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
     </div>
   )
 }
