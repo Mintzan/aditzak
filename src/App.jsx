@@ -1598,7 +1598,7 @@ function FeedbackModal({ onClose }) {
         body: JSON.stringify({ message: message.trim(), email: email.trim(), context: 'profile' }),
       })
       if (!response.ok) {
-        let detail = `HTTP ${response.status} ${response.statusText}`
+        let detail = `HTTP ${response.status} ${response.statusText} for ${response.url}`
         try {
           const data = await response.json()
           if (data?.error) detail += ` — ${data.error}`
