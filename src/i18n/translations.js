@@ -31,7 +31,6 @@ export const DEFAULT_LANGUAGE = 'en'
 
 export const TRANSLATIONS = {
   en: {
-    appTagline: 'Basque verb conjugation practice',
     navLearn: 'Learn',
     navProgress: 'Progress',
     navProfile: 'Profile',
@@ -124,7 +123,6 @@ export const TRANSLATIONS = {
       "'{pronoun}' has no case ending because the subject of '{verb}' is simply what's being described (NOR) — the verb form '{form}' agrees with that absolutive subject.",
   },
   es: {
-    appTagline: 'Práctica de conjugación verbal en euskera',
     navLearn: 'Aprender',
     navProgress: 'Progreso',
     navProfile: 'Perfil',
@@ -217,7 +215,6 @@ export const TRANSLATIONS = {
       "'{pronoun}' no lleva marca de caso porque el sujeto de '{verb}' es simplemente de quién se habla (NOR) — la forma verbal '{form}' concuerda con ese sujeto absolutivo.",
   },
   eu: {
-    appTagline: 'Euskarazko aditz-jokoen praktika',
     navLearn: 'Ikasi',
     navProgress: 'Aurrerapena',
     navProfile: 'Profila',

@@ -867,11 +867,8 @@ function HomeScreen({ progress, streak, points, tab, onChangeTab, onSelectLesson
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-gray-50">
       <header className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white/90 px-5 py-4 backdrop-blur">
-        <div className="min-w-0 flex-1 pr-3">
-          <h1 className="text-xl font-extrabold tracking-tight text-gray-900">Aditzak</h1>
-          <p className="truncate text-xs text-gray-500">{t('appTagline')}</p>
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
+        <h1 className="text-xl font-extrabold tracking-tight text-gray-900">Aditzak</h1>
+        <div className="flex items-center gap-2">
           <div
             className="flex items-center gap-1.5 rounded-full bg-orange-100 px-3 py-1.5 text-sm font-bold text-orange-600"
             aria-label={t('streakLabel', { count: currentStreak })}
