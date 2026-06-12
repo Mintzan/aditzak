@@ -16,6 +16,11 @@
 // `gate: true` marks the Refresh Gate units (zero-new-verb consolidation
 // checkpoints between phases).
 //
+// Two units after each "present tense" cluster ("Looking Back I"/"Looking
+// Back II") teach the simple past for verbs already met, so tense variety
+// (present → past → future) arrives well before Phase III rather than all at
+// once — see `docs/DECISIONS.md` for the redesign rationale.
+//
 // Keep this in sync with `docs/LEARNING_JOURNEY.md` — when a unit moves from
 // pending to available, flip its `status` and add its `lessonIds` here.
 // =============================================================================
@@ -47,6 +52,14 @@ export const JOURNEY = [
             status: 'available',
             lessonIds: ['ukan-present', 'nahi-present', 'jakin-present', 'unit-2-review'],
           },
+          {
+            number: 3,
+            title: 'Seeing',
+            focus: 'ikusi present (ni/zu/hura) — Phase I\'s first periphrastic verb',
+            payload: '"I see the mountain." · "Do you see it?" · "She sees the film."',
+            status: 'available',
+            lessonIds: ['ikusi-present', 'ikusi-present-review'],
+          },
         ],
       },
       {
@@ -54,7 +67,7 @@ export const JOURNEY = [
         title: 'Stage 2 — Basic Operations & Movement',
         units: [
           {
-            number: 3,
+            number: 4,
             title: 'Moving Around',
             focus: 'joan + etorri, present tense',
             payload: "\"I'm going to the beach.\" · \"She's coming tomorrow.\"",
@@ -62,7 +75,7 @@ export const JOURNEY = [
             lessonIds: ['joan-present', 'etorri-present', 'unit-3-review'],
           },
           {
-            number: 4,
+            number: 5,
             title: 'The Immediate Continuous',
             focus: 'ari + izan',
             payload: '"What are you doing?" (Zer ari zara?) · "I\'m eating." (Jaten ari naiz)',
@@ -76,20 +89,27 @@ export const JOURNEY = [
         title: 'Refresh Gate A — The "Ez" Trap & Person Expansion',
         units: [
           {
-            number: 5,
+            number: 6,
             title: 'REFRESH — The Inversion Matrix',
-            focus: 'Negation drills across Units 1–4 — zero new verbs',
+            focus: 'Negation drills across Units 1–5 — zero new verbs',
             status: 'available',
             gate: true,
             lessonIds: ['unit-5-review-1', 'unit-5-review-2', 'unit-5-review-3'],
           },
           {
-            number: 6,
+            number: 7,
             title: 'Expansion — Bringing in the Plural',
-            focus: 'Adds gu/zuek/haiek to izan, egon, ukan, joan, etorri — zero new verbs',
+            focus:
+              'Adds gu/zuek/haiek to izan, egon, ukan, joan, etorri, and ikusi — zero new verbs',
             status: 'available',
             gate: true,
-            lessonIds: ['unit-6-review-1', 'unit-6-review-2', 'unit-6-review-3'],
+            lessonIds: [
+              'unit-6-review-1',
+              'unit-6-review-2',
+              'unit-6-review-3',
+              'ikusi-present-plural',
+              'ikusi-present-plural-review',
+            ],
           },
         ],
       },
@@ -102,13 +122,53 @@ export const JOURNEY = [
     stages: [
       {
         id: 'phase-2-stage-3',
-        title: 'Stage 3 — Real-World Actions',
+        title: 'Stage 3 — Looking Back I',
         units: [
           {
-            number: 7,
+            number: 8,
+            title: 'Looking Back I — "I Was, I Had"',
+            focus: 'izan, egon, ukan — simple past, full 6-person grid',
+            payload: '"I was young." · "She had a dog." · "We were at home."',
+            status: 'available',
+            lessonIds: [
+              'izan-past',
+              'izan-past-plural',
+              'egon-past',
+              'egon-past-plural',
+              'ukan-past',
+              'ukan-past-plural',
+              'looking-back-1a-review',
+              'looking-back-1a-review-plural',
+            ],
+          },
+          {
+            number: 9,
+            title: 'Looking Back I — "I Went, I Came, I Saw"',
+            focus: 'joan, etorri, ikusi — simple past, full 6-person grid',
+            payload: '"I went to the beach." · "She came yesterday." · "We saw the film."',
+            status: 'available',
+            lessonIds: [
+              'joan-past',
+              'joan-past-plural',
+              'etorri-past',
+              'etorri-past-plural',
+              'ikusi-past',
+              'ikusi-past-plural',
+              'looking-back-1b-review',
+              'looking-back-1b-review-plural',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'phase-2-stage-4',
+        title: 'Stage 4 — Real-World Actions',
+        units: [
+          {
+            number: 10,
             title: 'Daily Routine (Transitive)',
-            focus: 'jan, edan, erosi (periphrastic + ukan), ikusi',
-            payload: '"I ate." · "You drink water." · "I bought a book." · "Do you see it?"',
+            focus: 'jan, edan, erosi — present tense (periphrastic + ukan)',
+            payload: '"I ate." · "You drink water." · "I bought a book."',
             status: 'available',
             lessonIds: [
               'jan-present',
@@ -117,14 +177,12 @@ export const JOURNEY = [
               'edan-present-plural',
               'erosi-present',
               'erosi-present-plural',
-              'ikusi-present',
-              'ikusi-present-plural',
               'unit-7-review',
               'unit-7-review-plural',
             ],
           },
           {
-            number: 8,
+            number: 11,
             title: 'Physical States & Possessions',
             focus: 'eduki, ibili — full 6-person grids',
             payload: '"I have the keys in my pocket." · "They are wandering around town."',
@@ -141,14 +199,53 @@ export const JOURNEY = [
         ],
       },
       {
-        id: 'phase-2-stage-4',
-        title: 'Stage 4 — Talking About the Future (Geroa)',
+        id: 'phase-2-stage-5',
+        title: 'Stage 5 — Looking Back II',
         units: [
           {
-            number: 9,
-            title: 'Intentions & Future Actions',
-            focus: '-ko/-go + present auxiliaries, applied to every verb so far',
-            payload: '"I will go tomorrow" (joango naiz) · "We will buy a house" (erosiko dugu)',
+            number: 12,
+            title: 'Looking Back II — "I Ate, I Drank, I Bought"',
+            focus: 'jan, edan, erosi — simple past, full 6-person grid',
+            payload: '"I ate the apple." · "You drank coffee." · "We bought a house."',
+            status: 'available',
+            lessonIds: [
+              'jan-past',
+              'jan-past-plural',
+              'edan-past',
+              'edan-past-plural',
+              'erosi-past',
+              'erosi-past-plural',
+              'looking-back-2a-review',
+              'looking-back-2a-review-plural',
+            ],
+          },
+          {
+            number: 13,
+            title: 'Looking Back II — "I Had, I Walked Around"',
+            focus: 'eduki, ibili — simple past, full 6-person grid',
+            payload: '"I had the keys." · "They were wandering around town."',
+            status: 'available',
+            lessonIds: [
+              'eduki-past',
+              'eduki-past-plural',
+              'ibili-past',
+              'ibili-past-plural',
+              'looking-back-2b-review',
+              'looking-back-2b-review-plural',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'phase-2-stage-6',
+        title: 'Stage 6 — Talking About the Future (Geroa)',
+        units: [
+          {
+            number: 14,
+            title: 'Future — Being & Having',
+            focus: '-ko/-go + present auxiliaries, applied to izan, egon, ukan',
+            payload:
+              '"I will be a teacher" (irakasle izango naiz) · "We will have a car" (autoa izango dugu)',
             status: 'available',
             lessonIds: [
               'izan-future',
@@ -157,36 +254,63 @@ export const JOURNEY = [
               'egon-future-plural',
               'ukan-future',
               'ukan-future-plural',
+              'unit-9-review-1',
+              'unit-9-review-1-plural',
+            ],
+          },
+          {
+            number: 15,
+            title: 'Future — Wanting, Knowing & Moving',
+            focus: '-ko/-go + present auxiliaries, applied to nahi, jakin, joan, etorri',
+            payload: '"I will go tomorrow" (joango naiz) · "Will you know?" (jakingo duzu?)',
+            status: 'available',
+            lessonIds: [
               'nahi-future',
               'jakin-future',
               'joan-future',
               'joan-future-plural',
               'etorri-future',
               'etorri-future-plural',
+              'unit-9-review-2',
+              'unit-9-review-2-plural',
+            ],
+          },
+          {
+            number: 16,
+            title: 'Future — Eating, Drinking & Buying',
+            focus: '-ko/-go + present auxiliaries, applied to jan, edan, erosi',
+            payload: '"We will buy a house" (erosiko dugu) · "I will eat later" (geroago jango dut)',
+            status: 'available',
+            lessonIds: [
               'jan-future',
               'jan-future-plural',
               'edan-future',
               'edan-future-plural',
               'erosi-future',
               'erosi-future-plural',
+              'unit-9-review-3',
+              'unit-9-review-3-plural',
+            ],
+          },
+          {
+            number: 17,
+            title: 'Future — Seeing, Having & Walking',
+            focus: '-ko/-go + present auxiliaries, applied to ikusi, eduki, ibili',
+            payload: '"You will see it" (ikusiko duzu) · "They will have time" (denbora edukiko dute)',
+            status: 'available',
+            lessonIds: [
               'ikusi-future',
               'ikusi-future-plural',
               'eduki-future',
               'eduki-future-plural',
               'ibili-future',
               'ibili-future-plural',
-              'unit-9-review-1',
-              'unit-9-review-1-plural',
-              'unit-9-review-2',
-              'unit-9-review-2-plural',
-              'unit-9-review-3',
-              'unit-9-review-3-plural',
               'unit-9-review-4',
               'unit-9-review-4-plural',
             ],
           },
           {
-            number: 10,
+            number: 18,
             title: 'Requirements & Obligations',
             focus: 'behar + ukan, present and future',
             payload:
@@ -197,13 +321,13 @@ export const JOURNEY = [
       },
       {
         id: 'phase-2-gate-b',
-        title: 'Refresh Gate B — The Core Present Checkpoint',
+        title: 'Refresh Gate B — The Core Tense Checkpoint',
         units: [
           {
-            number: 11,
-            title: 'REFRESH — Cumulative Present Mixer',
+            number: 19,
+            title: 'REFRESH — Cumulative Present/Past/Future Mixer',
             focus:
-              'Synthetic + periphrastic, positive + negative, present + future — zero new verbs, must-pass-with-high-accuracy',
+              'Synthetic + periphrastic, positive + negative, present + past + future — zero new verbs, must-pass-with-high-accuracy',
             status: 'pending',
             gate: true,
           },
@@ -217,28 +341,21 @@ export const JOURNEY = [
     subtitle: 'Shifting to the Past',
     stages: [
       {
-        id: 'phase-3-stage-5',
-        title: 'Stage 5 — Storytelling Basics',
+        id: 'phase-3-stage-7',
+        title: 'Stage 7 — Aspect in the Past',
         units: [
           {
-            number: 12,
-            title: '"I Was, I Had"',
-            focus: 'izan/ukan past, full grid',
-            payload: '"I was young." · "She had a dog."',
-            status: 'pending',
-          },
-          {
-            number: 13,
-            title: 'Past Narrative Flow',
+            number: 20,
+            title: '"I Used To..." — The Imperfective Past',
             focus:
-              'periphrastic past (ikusi nuen), imperfective/habitual past (etortzen nintzen), and completed motion (joan nintzen, etorri nintzen)',
-            payload: '"I saw it." · "I used to come (often)." · "I went." · "She came."',
+              'imperfective/habitual past (etortzen nintzen, "I used to come / I was coming") — distinct from the simple past taught in Units 8/9/12/13',
+            payload: '"I used to come here every day." · "I was working when she called."',
             status: 'pending',
           },
           {
-            number: 14,
+            number: 21,
             title: 'Motion in Progress (Past)',
-            focus: "joan/etorri/ibili's native past forms (nindoan, zetorren)",
+            focus: "joan/etorri/ibili's native imperfective past forms (nindoan, zetorren)",
             payload: '"I was on my way (when...)." · "He was coming (and then...)."',
             status: 'pending',
           },
@@ -252,18 +369,18 @@ export const JOURNEY = [
     subtitle: 'Interpersonal & Relationship Dynamics',
     stages: [
       {
-        id: 'phase-4-stage-6',
-        title: 'Stage 6 — The Dative Shift ("To Me / For Me")',
+        id: 'phase-4-stage-8',
+        title: 'Stage 8 — The Dative Shift ("To Me / For Me")',
         units: [
           {
-            number: 15,
+            number: 22,
             title: 'Pleasures, Opinions, and Physical Feelings',
             focus: 'present NOR-NORI, 3rd-person subjects (zait/zaizu/zaio)',
             payload: '"I like it." · "It seems good to me." · "I forgot."',
             status: 'pending',
           },
           {
-            number: 16,
+            number: 23,
             title: 'Communication & Giving',
             focus: 'present NOR-NORI-NORK (esan, eman)',
             payload: '"I give it to you" (ematen dizut) · "You tell it to him" (esaten diozu)',
@@ -276,7 +393,7 @@ export const JOURNEY = [
         title: 'Refresh Gate C — The Multi-Argument Audit',
         units: [
           {
-            number: 17,
+            number: 24,
             title: 'REFRESH — The Case-Ending Mixer',
             focus: 'Drills NOR/NORK/NORI role-swaps — zero new verbs',
             status: 'pending',
@@ -292,18 +409,18 @@ export const JOURNEY = [
     subtitle: 'Nuance, Modality, & Social Context',
     stages: [
       {
-        id: 'phase-5-stage-7',
-        title: 'Stage 7 — Hypotheticals and Potentials',
+        id: 'phase-5-stage-9',
+        title: 'Stage 9 — Hypotheticals and Potentials',
         units: [
           {
-            number: 18,
+            number: 25,
             title: 'Permissions & Capability (Ahalera)',
             focus: 'dezaket/naiteke contrasted with periphrastic ahal izan',
             payload: '"I can come." · "I could (have)..."',
             status: 'pending',
           },
           {
-            number: 19,
+            number: 26,
             title: 'Conditionals (Baldintza & Ondorioa)',
             focus: 'ba- protasis + -ke apodosis',
             payload: '"If I had money, I would buy that" (Dirua banu, hori erosiko nuke)',
@@ -312,23 +429,23 @@ export const JOURNEY = [
         ],
       },
       {
-        id: 'phase-5-stage-8',
-        title: 'Stage 8 — Social Registers & Complete Native Integration',
+        id: 'phase-5-stage-10',
+        title: 'Stage 10 — Social Registers & Complete Native Integration',
         units: [
           {
-            number: 20,
+            number: 27,
             title: 'Command & Subjunctives (Agintera, Subjuntiboa)',
             focus: 'Direct commands; "so that..." purpose clauses',
             status: 'pending',
           },
           {
-            number: 21,
+            number: 28,
             title: 'The Intimate Social Register (hi + Hitanoa/Hiketa)',
             focus: 'hi introduced for the first time, paired with toka/noka allocutive marking',
             status: 'pending',
           },
           {
-            number: 22,
+            number: 29,
             title: 'Passive Transformation & Reading Real Text',
             focus: 'Non-finite forms, nor-shift (ireki dut → ireki da)',
             status: 'pending',

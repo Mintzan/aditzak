@@ -6,6 +6,57 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-12 — Simple past (`Lehenaldi Mugatua`) for `joan`/`etorri`/`jan`/`edan`/`erosi`/`ikusi`/`eduki`/`ibili`, for the new "Looking Back I/II" journey units
+
+**Decision:** Added `conjugations.past` for 8 verbs, all full 6-person grids:
+
+- **`jan`/`edan`/`erosi`/`ikusi`** (`jan nuen`/`zenuen`/`zuen`/`genuen`/
+  `zenuten`/`zuten`, and the equivalent for `edan`/`erosi`/`ikusi`): perfective
+  participle + `ukan`'s past auxiliary, already documented as each verb's
+  "Past (lehena)" column in `CONJUGATIONS.md` §7 (`ikusi` was documented
+  there already; `jan`/`edan`/`erosi` per the 2026-06-12 "Documented
+  `jan`/`edan`/`erosi`" entry below) — copied directly, no new derivation.
+- **`eduki`** (`neukan`/`zeneukan`/`zeukan`/`geneukan`/`zeneukaten`/
+  `zeukaten`): synthetic, also already documented as §7's "Past (lehena)"
+  column for `eduki` — copied directly.
+- **`joan`/`etorri`/`ibili`** (`joan nintzen`/`zinen`/`zen`/`ginen`/`zineten`/
+  `ziren`, and the equivalent for `etorri`/`ibili`): perfective participle +
+  `izan`'s past auxiliary (§1's `nintzen`/`zinen`/`zen`/`ginen`/`zineten`/
+  `ziren`), per §11's periphrastic tense matrix ("Lehenaldi Mugatua" row —
+  perfective participle + `izan`/`ukan` past auxiliary, the same mechanism
+  Units 14-17's future uses with the present auxiliary). These are **not**
+  §6's existing "Past" column for these three verbs (`nindoan`/`zetorren`/
+  `nenbilen`) — see below.
+
+`sentences.past`/`pronounSentences.past` for all 8 verbs alias their
+`present` arrays by reference (same reuse-loop pattern as the future tense,
+since a sentence template's blank doesn't depend on tense).
+`negativeSentences.past` is aliased only for `eduki` (joining `izan`/`egon`/
+`ukan` from the earlier session) — the other 7 are periphrastic and split
+apart under negation (`ez nuen ikusi`, not a single `___` blank), same
+reasoning as their present-tense `negativeSentences` exclusion.
+
+**Why this is "simple past" and not §6's "Past" column for `joan`/`etorri`/
+`ibili`:** §6's `nindoan`/`zetorren`/`nenbilen`-type forms are **imperfective/
+habitual past** ("I was going" / "he was coming" / "I used to walk around") —
+ongoing or repeated past action, the opposite of "completed." The new
+`conjugations.past` added here is **simple/completed past** ("I went" / "she
+came" / "they walked around [that one time]") — what a learner needs to say
+"I went to the beach yesterday." These are grammatically distinct forms in
+Basque, not two names for the same thing; §6's imperfective forms remain
+reserved for Phase III's Unit 21 ("Motion in Progress (Past)"), contrasted
+explicitly with this entry's simple past.
+
+**Deferred — `jakin`/`nahi`/`ari` past:** `jakin`'s past
+(`CONJUGATIONS.md` §7) has gaps (`hik`/`zuk`/`zuek` rows are `—`), so it was
+left out of Unit 8 ("Looking Back I — I Was, I Had") despite riding `ukan`'s
+suffix family there. `nahi`/`ari` are modal particles whose past would derive
+from `ukan`/`izan`'s past once paired with the right participle (`nahi izan
+nuen`, `ari izan nintzen`) — grammatically straightforward but not part of
+this redesign's payload (neither old Unit 9's future nor any "Looking Back"
+unit's examples call for "I wanted"/"I was [in the middle of]"), so left for a
+future pass alongside `jakin`'s gap.
+
 ## 2026-06-12 — Future-tense (`Geroa`) forms for Units 1-8's 12 verbs, `izan` as suppletive future participle for `ukan`/`eduki`, `ari` excluded
 
 **Decision:** Per `docs/CONJUGATIONS.md` §11, every verb's future is its

@@ -1,6 +1,6 @@
 # Exercise Engine — Requirements for the Learning Journey
 
-This audits `LEARNING_JOURNEY.md`'s 22-unit sequence against the current
+This audits `LEARNING_JOURNEY.md`'s 32-unit sequence against the current
 exercise engine (`generateQuestions`/`exerciseReducer` in `lessonLogic.js`,
 `LESSONS`/`VERBS` and the screen components in `App.jsx`) and sorts the gaps
 by how much engine work each needs. It supersedes the scattered "Data &
@@ -39,15 +39,17 @@ These units fit the existing `[tense][person]` shape as long as the new
 `VERBS`/tense entries are written out as plain strings, same as today's
 `present`/`past`:
 
-- **Units 1–4, 7–8, 12–14** (present/past for `izan`/`egon`/`ukan`/`joan`/
-  `etorri`/`ari`/`eduki`/`ibili`, periphrastic past, imperfective-past
-  motion): all single-axis `nor` or `nor-nork`(object-fixed) tables, exactly
-  like today's `izan`/`ukan`.
-- **Units 9–10 (Geroa, future)**: `conjugations.future[person] = 'joango naiz'`
-  etc. — a new tense *key*, not a new shape. The "participle-formation rule"
-  the journey doc calls out is a content-authoring concern (how the strings
-  are derived), not a code concern.
-- **Unit 15 (NOR-NORI present — `gustatu`/`iruditu`/`ahaztu`)**: confirmed
+- **Units 1–5, 8–13, 21** (present/past for `izan`/`egon`/`ukan`/`joan`/
+  `etorri`/`ikusi`/`ari`/`jan`/`edan`/`erosi`/`eduki`/`ibili`, periphrastic
+  past, imperfective-past motion): all single-axis `nor` or
+  `nor-nork`(object-fixed) tables, exactly like today's `izan`/`ukan`.
+- **Units 14–18 (Geroa, future + `behar`)**: `conjugations.future[person] =
+  'joango naiz'` etc. — a new tense *key*, not a new shape. The
+  "participle-formation rule" the journey doc calls out is a content-authoring
+  concern (how the strings are derived), not a code concern. The future is
+  split across Units 14-17 (one verb-group each, ~8 lessons apiece) plus Unit
+  18 (`behar`+`ukan`) — a grouping/sizing concern, not a code concern either.
+- **Unit 22 (NOR-NORI present — `gustatu`/`iruditu`/`ahaztu`)**: confirmed
   against `CONJUGATIONS.md` §4 — these grids are NORI-rows × NOR-columns, and
   the `NOR=hura` column (`zait`/`zaizu`/`zaio`/`zaigu`/`zaizue`/`zaie`) is
   exactly one form per *NORI* person. So `person` here means "to whom", and
@@ -55,7 +57,7 @@ These units fit the existing `[tense][person]` shape as long as the new
   (badge support already exists, `App.jsx:167-171`) and `object: 'hura'`.
   `pronouns`/`pronounSentences` just need dative-declined pronouns
   (`niri`/`zuri`/...) — same shape, new strings.
-- **Units 18–19 (Ahalera/Baldintza/Ondorioa for `izan`/`ukan`)**: same as
+- **Units 25–26 (Ahalera/Baldintza/Ondorioa for `izan`/`ukan`)**: same as
   Geroa — new tense keys (`potential`, `conditional`, ...) with full strings.
 
 None of these need a `STORAGE_KEY` bump — `recordResult`/`computeStars`
@@ -66,7 +68,7 @@ pool.
 
 ### `buildOptions`'s distractor floor
 `buildOptions` (`lessonLogic.js:135-139`) takes `.slice(0, 3)` distractors,
-implicitly assuming ≥4 persons in the table. **Unit 20's imperative**
+implicitly assuming ≥4 persons in the table. **Unit 27's imperative**
 (`hi`/`zu`/`zuek`-only — 3 persons, the open question flagged in
 `DECISIONS.md`'s 2026-06-10 entry) breaks this: only 2 distractors available,
 so multiple-choice questions would show 3 options instead of 4. Fix is local
@@ -76,14 +78,14 @@ is small, or let distractors borrow forms from a sibling table (e.g. a
 different verb's imperative). Worth deciding once, since any future
 small-table verb hits the same wall.
 
-### Phase I's 3-person horizon (Units 1–6)
+### Phase I's 3-person horizon (Units 1–7)
 `LEARNING_JOURNEY.md` already names the two options:
 
 - **(a) Data-only**: `izan`/`ukan`/etc.'s `conjugations.present` literally
-  contain only `ni`/`zu`/`hura` keys until Unit 6 adds `gu`/`zuek`/`haiek` to
+  contain only `ni`/`zu`/`hura` keys until Unit 7 adds `gu`/`zuek`/`haiek` to
   the *same* objects. Zero code changes; `generateQuestions` already builds
   "one question per key". The cost: a verb's table grows after the fact, and
-  Unit 6 retroactively changes the distractor pool for lessons learners may
+  Unit 7 retroactively changes the distractor pool for lessons learners may
   have already 3-starred (izan-present, ukan-present, etc.) — not a stored-
   shape change (no `STORAGE_KEY` bump needed, same as the earlier `zu`-row
   retrofit), but worth a `DECISIONS.md` note when it happens since it's the
@@ -100,16 +102,18 @@ This is the single highest-leverage open decision — it shapes how *every*
 Phase I verb entry gets authored, so it should be settled before Unit 1's
 `VERBS` data is written, not discovered partway through.
 
-**Resolved as (a) + (b)**: Unit 6 was implemented via (a) — `izan`/`egon`/
-`ukan`/`joan`/`etorri`'s `present` tables grew from 3 to 6 persons in place.
-That cascaded the 6-person grid into those verbs' pre-Unit-6 lessons too, so
-(b)'s `persons` filter was added afterward and applied to just those lessons
-to restore the 3-person horizon where the journey still calls for it — see
-`docs/DECISIONS.md`, "Restored Phase I's 3-person pacing" (2026-06-12).
+**Resolved as (a) + (b)**: Unit 7 (the "Expansion" gate, predating this
+redesign's renumbering — implemented as old "Unit 6") was implemented via (a)
+— `izan`/`egon`/`ukan`/`joan`/`etorri`'s `present` tables grew from 3 to 6
+persons in place. That cascaded the 6-person grid into those verbs'
+pre-Expansion lessons too, so (b)'s `persons` filter was added afterward and
+applied to just those lessons to restore the 3-person horizon where the
+journey still calls for it — see `docs/DECISIONS.md`, "Restored Phase I's
+3-person pacing" (2026-06-12).
 
-### Score-gating Refresh Gates B and beyond (Units 11, 17, Phase V wrap)
+### Score-gating Refresh Gates B and beyond (Units 19, 24, 32, Phase V wrap)
 `getUnlockedLessonIds` only checks `attempts > 0`. The journey doc's "must
-pass with high accuracy" framing for Unit 11 needs it to also check
+pass with high accuracy" framing for Unit 19 needs it to also check
 `bestScore / totalQuestions` (or `bestStars`) against a threshold for lessons
 flagged e.g. `gate: true`. Two product decisions, deliberately left open by
 the journey doc:
@@ -125,7 +129,7 @@ different predicate for gate lessons.
 
 ## Tier 3 — new data shapes / new question kinds
 
-### Negation drills (Unit 5 / Refresh Gate A)
+### Negation drills (Unit 6 / Refresh Gate A)
 Basque negation fronts the auxiliary (`Mutila etorri da` → `Mutila ez da
 etorri`) — a word-order change, not a single `___` substitution, so it doesn't
 fit `sentences`/`type-verb`. Needs:
@@ -142,13 +146,13 @@ fit `sentences`/`type-verb`. Needs:
   path — the new work is mostly in `generateQuestions` (a
   `buildNegationQuestion` alongside `buildSpotErrorQuestion`) plus the new
   `negativeSentences` data per verb/tense/person.
-- **Refresh Gate C (Unit 17)** is described as drilling the *same* kind of
+- **Refresh Gate C (Unit 24)** is described as drilling the *same* kind of
   "candidate full sentences, pick the right/wrong one" exercise but for
   NOR/NORI/NORK role-swaps instead of negation — likely reuses this same new
   question-kind machinery once it exists, with a different sentence-pair
   source (role-swapped rather than negated).
 
-### Ditransitive NOR-NORI-NORK (Unit 16 — `esan`/`eman`)
+### Ditransitive NOR-NORI-NORK (Unit 23 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 15's NORI-only grids. The journey
 doc's examples vary *both* axes ("I give it to you" = nork=ni,nori=zu vs "you
@@ -173,7 +177,7 @@ represent that with a single `person` key. Two ways forward:
 judged worth the cost — flagged here as the decision point, same posture as
 the person-restriction question above.
 
-### Allocutive register / `hi` (Unit 21)
+### Allocutive register / `hi` (Unit 28)
 Hitanoa adds an **addressee-gender** dimension (masc./fem. `-k`/`-n` forms)
 that the current model has no slot for — `conjugations[tense][person]` cells
 are plain strings, and `isAnswerCorrect`/`buildOptions` assume one correct
@@ -190,11 +194,11 @@ string per cell. Two shapes to choose between:
   in several places (`generateQuestions`, `buildOptions`,
   `buildSpotErrorQuestion`) and adds new UI state.
 
-Given Unit 21 is late in the sequence (Phase V) this can be deferred, but it's
+Given Unit 28 is late in the sequence (Phase V) this can be deferred, but it's
 the second data-shape question (after ditransitives) that doesn't fit
 "one string per `[tense][person]` cell".
 
-### Non-finite forms & passive/"nor-shift" (Unit 22)
+### Non-finite forms & passive/"nor-shift" (Unit 29)
 Explicitly **recognition-oriented** ("reading real sentences"), not
 production — doesn't fit `conjugations[tense][person]` at all (there's no
 single "correct conjugated form" being drilled). Needs its own data table
@@ -236,17 +240,17 @@ concrete touch points so they're not lost:
 
 Roughly cheapest-and-most-unblocking first:
 
-1. **Tier 1 content** (Units 1–4, 7–8, 9–10, 12–15, 18–19) — can start
+1. **Tier 1 content** (Units 1–5, 8–18, 22, 25–26) — can start
    immediately, no engine work.
-2. **Person-restriction decision** (Phase I) — must be settled *before*
-   Unit 1's `VERBS` entries are written, since it determines their shape.
-3. **`buildOptions` distractor-floor fix** — small, unblocks Unit 20
+2. **Person-restriction decision** (Phase I) — resolved, see "Phase I's
+   3-person horizon" above.
+3. **`buildOptions` distractor-floor fix** — small, unblocks Unit 27
    (imperative) and removes a latent landmine for any future small table.
-4. **Negation question kind** — unblocks Unit 5 (Gate A); Gate C (17) likely
-   reuses the same machinery later.
-5. **Score-gating** — needed before Gate B (11), independent of the above.
-6. **Ditransitive data-shape decision** — needed before Unit 16.
-7. **Allocutive/hitanoa shape** — Unit 21, can be deferred until Phase V.
-8. **Reading/non-finite question kind** — Unit 22, last in the sequence.
+4. **Negation question kind** — resolved for Unit 6 (Gate A); Gate C (24)
+   likely reuses the same machinery later.
+5. **Score-gating** — needed before Gate B (19), independent of the above.
+6. **Ditransitive data-shape decision** — needed before Unit 23.
+7. **Allocutive/hitanoa shape** — Unit 28, can be deferred until Phase V.
+8. **Reading/non-finite question kind** — Unit 29, last in the sequence.
 9. **Flash drills / error-pattern detection** — separate design passes,
    whenever prioritized; not blocking any specific unit.
