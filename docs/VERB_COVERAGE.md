@@ -223,7 +223,7 @@ extending Unit 10's pooled drill or seeding later units:
 | bilatu | to search / look for | Bilatzen dut | Bilatu nuen | pairs with `aurkitu` (search/find) |
 | aurkitu | to find | Aurkitzen dut | Aurkitu nuen | |
 | zabaldu | to open / spread | Zabaltzen dut | Zabaldu nuen | |
-| itxi | to close | 🔲 present form unconfirmed (`itxiten dut`? `ixten dut`?) | Itxi nuen | needs a grammar-reference check before use |
+| itxi | to close | Ixten dut | Itxi nuen | |
 | egin | to do / make | Egiten dut | Egin nuen | §4a already lists `egin` as a 🔲 synthetic `nor-nork` candidate — these forms are periphrastic (participle + `ukan`), so reconcile the two entries before adding either |
 
 `maite izan` ("to love", lit. "to hold dear") doesn't fit this table:
