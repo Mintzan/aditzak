@@ -53,27 +53,33 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     'phase-2-stage-3': {
-      title: { es: 'Etapa 3 — Acciones del mundo real', eu: '3. atala — Eguneroko ekintzak' },
+      title: { es: 'Etapa 3 — Mirando atrás I', eu: '3. atala — Atzera begira I' },
     },
     'phase-2-stage-4': {
+      title: { es: 'Etapa 4 — Acciones del mundo real', eu: '4. atala — Eguneroko ekintzak' },
+    },
+    'phase-2-stage-5': {
+      title: { es: 'Etapa 5 — Mirando atrás II', eu: '5. atala — Atzera begira II' },
+    },
+    'phase-2-stage-6': {
       title: {
-        es: 'Etapa 4 — Hablando del futuro (Geroa)',
-        eu: '4. atala — Geroaz hizketan (Geroa)',
+        es: 'Etapa 6 — Hablando del futuro (Geroa)',
+        eu: '6. atala — Geroaz hizketan (Geroa)',
       },
     },
     'phase-2-gate-b': {
       title: {
-        es: 'Puerta de Repaso B — El control del presente básico',
-        eu: 'B Berrikuspen Atea — Oraineko oinarrien azterketa',
+        es: 'Puerta de Repaso B — El control de los tiempos verbales',
+        eu: 'B Berrikuspen Atea — Aditz-denboren azterketa',
       },
     },
-    'phase-3-stage-5': {
-      title: { es: 'Etapa 5 — Bases para contar historias', eu: '5. atala — Kontaketaren oinarriak' },
+    'phase-3-stage-7': {
+      title: { es: 'Etapa 7 — El aspecto en el pasado', eu: '7. atala — Iraganeko aspektua' },
     },
-    'phase-4-stage-6': {
+    'phase-4-stage-8': {
       title: {
-        es: 'Etapa 6 — El giro dativo ("a mí / para mí")',
-        eu: '6. atala — Datiboaren bira ("niri")',
+        es: 'Etapa 8 — El giro dativo ("a mí / para mí")',
+        eu: '8. atala — Datiboaren bira ("niri")',
       },
     },
     'phase-4-gate-c': {
@@ -82,13 +88,13 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'C Berrikuspen Atea — Argumentu anitzen azterketa',
       },
     },
-    'phase-5-stage-7': {
-      title: { es: 'Etapa 7 — Hipótesis y posibilidades', eu: '7. atala — Hipotesiak eta gaitasunak' },
+    'phase-5-stage-9': {
+      title: { es: 'Etapa 9 — Hipótesis y posibilidades', eu: '9. atala — Hipotesiak eta gaitasunak' },
     },
-    'phase-5-stage-8': {
+    'phase-5-stage-10': {
       title: {
-        es: 'Etapa 8 — Registros sociales e integración nativa completa',
-        eu: '8. atala — Erregistro sozialak eta erabateko integrazioa',
+        es: 'Etapa 10 — Registros sociales e integración nativa completa',
+        eu: '10. atala — Erregistro sozialak eta erabateko integrazioa',
       },
     },
   },
@@ -113,6 +119,17 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     3: {
+      title: { es: 'Ver', eu: 'Ikusten' },
+      focus: {
+        es: 'presente de ikusi (ni/zu/hura) — el primer verbo perifrástico de la Fase I',
+        eu: 'ikusi oraina (ni/zu/hura) — I. fasearen lehen aditz perifrastikoa',
+      },
+      payload: {
+        es: '"Veo la montaña." · "¿Lo ves?" · "Ella ve la película."',
+        eu: '"Mendia ikusten dut" (Veo la montaña) · "Ikusten duzu?" (¿Lo ves?) · "Filma ikusten du" (Ella ve la película)',
+      },
+    },
+    4: {
       title: { es: 'Moviéndose', eu: 'Mugitzen' },
       focus: { es: 'joan + etorri, presente', eu: 'joan + etorri, oraina' },
       payload: {
@@ -120,14 +137,14 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Hondartzara noa" (Voy a la playa) · "Bihar dator" (Ella viene mañana)',
       },
     },
-    4: {
+    5: {
       title: { es: 'Ampliación — Incorporando el plural', eu: 'Zabalpena — Plurala sartzen' },
       focus: {
         es: 'Añade gu/zuek/haiek a izan, egon, ukan, joan, etorri e ikusi — sin verbos nuevos',
         eu: 'gu/zuek/haiek gehitzen dizkie izan, egon, ukan, joan, etorri eta ikusi aditzei — aditz berririk gabe',
       },
     },
-    5: {
+    6: {
       title: { es: 'El continuo inmediato', eu: 'Oraingo jarduera (ari + izan)' },
       focus: { es: 'ari + izan', eu: 'ari + izan' },
       payload: {
@@ -135,25 +152,47 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Zer ari zara?" (¿Qué estás haciendo?) · "Jaten ari naiz" (Estoy comiendo)',
       },
     },
-    6: {
+    7: {
       title: { es: 'REPASO — La matriz de inversión', eu: 'BERRIKUSPENA — Aldrebeskeriaren matrizea' },
       focus: {
         es: 'Ejercicios de negación sobre las unidades 1–6 — sin verbos nuevos',
         eu: '1–6 unitateetako ezeztapen-ariketak — aditz berririk gabe',
       },
     },
-    7: {
+    8: {
+      title: { es: 'Mirando atrás I — El grupo del pasado de "izan"', eu: 'Atzera begira I — "izan"-en iraganeko taldea' },
+      focus: {
+        es: 'el auxiliar de pasado de izan (nintzen/zinen/zen/ginen/zineten/ziren), combinado entre izan, joan, etorri, ibili',
+        eu: 'izan-en iraganeko laguntzailea (nintzen/zinen/zen/ginen/zineten/ziren), izan, joan, etorri eta ibili artean nahasturik',
+      },
+      payload: {
+        es: '"Yo era joven." · "Fui a la playa." · "Ella vino ayer." · "Dimos vueltas por el pueblo."',
+        eu: '"Gaztea nintzen" (Yo era joven) · "Hondartzara joan nintzen" (Fui a la playa) · "Atzo etorri zen" (Ella vino ayer) · "Herrian ibili ginen" (Dimos vueltas por el pueblo)',
+      },
+    },
+    9: {
+      title: { es: 'Mirando atrás I — El grupo del pasado de "ukan"', eu: 'Atzera begira I — "ukan"-en iraganeko taldea' },
+      focus: {
+        es: 'el auxiliar de pasado de ukan (nuen/zenuen/zuen/genuen/zenuten/zuten), combinado entre ukan, jan, edan, erosi, ikusi',
+        eu: 'ukan-en iraganeko laguntzailea (nuen/zenuen/zuen/genuen/zenuten/zuten), ukan, jan, edan, erosi eta ikusi artean nahasturik',
+      },
+      payload: {
+        es: '"Tenía un coche." · "Comí la manzana." · "Bebiste café." · "Compramos una casa." · "Ella vio la película."',
+        eu: '"Autoa nuen" (Tenía un coche) · "Sagarra jan nuen" (Comí la manzana) · "Kafea edan zenuen" (Bebiste café) · "Etxea erosi genuen" (Compramos una casa) · "Filma ikusi zuen" (Ella vio la película)',
+      },
+    },
+    10: {
       title: { es: 'Rutina diaria (transitiva)', eu: 'Eguneroko ohitura (iragankorra)' },
       focus: {
-        es: 'jan, edan, erosi (perifrastiko + ukan), ikusi',
-        eu: 'jan, edan, erosi (aditz perifrastikoa + ukan), ikusi',
+        es: 'el auxiliar de presente de ukan (dut/duzu/du/dugu/duzue/dute), combinado entre jan, edan, erosi, ikusi',
+        eu: 'ukan-en oraineko laguntzailea (dut/duzu/du/dugu/duzue/dute), jan, edan, erosi eta ikusi artean nahasturik',
       },
       payload: {
         es: '"Comí." · "Bebes agua." · "Compré un libro." · "¿Lo ves?"',
         eu: '"Jan dut" (Comí) · "Ura edaten duzu" (Bebes agua) · "Liburu bat erosi dut" (Compré un libro) · "Ikusten duzu?" (¿Lo ves?)',
       },
     },
-    8: {
+    11: {
       title: { es: 'Estados físicos y posesiones', eu: 'Egoera fisikoak eta edukitzea' },
       focus: {
         es: 'eduki, ibili — tablas completas de 6 personas',
@@ -164,18 +203,73 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Giltzak poltsikoan ditut" (Tengo las llaves en el bolsillo) · "Herrian ibiltzen dira" (Andan dando vueltas por el pueblo)',
       },
     },
-    9: {
-      title: { es: 'Intenciones y acciones futuras', eu: 'Asmoak eta etorkizuneko ekintzak' },
+    12: {
+      title: { es: 'Mirando atrás II — "Estuve allí"', eu: 'Atzera begira II — "Han nengoen"' },
       focus: {
-        es: '-ko/-go + auxiliares de presente, aplicado a todos los verbos vistos hasta ahora',
-        eu: '-ko/-go + oraineko laguntzaileak, orain arteko aditz guztiei aplikatuta',
+        es: 'egon — pasado simple, su propio paradigma sintético (nengoen/zeunden/zegoen/geunden/zeundeten/zeuden)',
+        eu: 'egon — iragan soila, bere paradigma trinko propioa (nengoen/zeunden/zegoen/geunden/zeundeten/zeuden)',
       },
       payload: {
-        es: '"Iré mañana" (joango naiz) · "Compraremos una casa" (erosiko dugu)',
-        eu: '"Joango naiz" (bihar — Iré mañana) · "Erosiko dugu" (etxe bat — Compraremos una casa)',
+        es: '"Estaba en casa." · "Estuvimos en la playa."',
+        eu: '"Etxean nengoen" (Estaba en casa) · "Hondartzan geunden" (Estuvimos en la playa)',
       },
     },
-    10: {
+    13: {
+      title: { es: 'Mirando atrás II — "Lo tenía"', eu: 'Atzera begira II — "Banuen"' },
+      focus: {
+        es: 'eduki — pasado simple, su propio paradigma sintético (neukan/zeneukan/zeukan/geneukan/zeneukaten/zeukaten)',
+        eu: 'eduki — iragan soila, bere paradigma trinko propioa (neukan/zeneukan/zeukan/geneukan/zeneukaten/zeukaten)',
+      },
+      payload: {
+        es: '"Tenía la llave." · "Teníamos tiempo."',
+        eu: '"Giltza eskuan neukan" (Tenía la llave en la mano) · "Astia geneukan" (Teníamos tiempo)',
+      },
+    },
+    14: {
+      title: { es: 'Futuro — Ser y tener', eu: 'Geroa — Izan eta ukan' },
+      focus: {
+        es: '-ko/-go + auxiliares de presente, aplicado a izan, egon, ukan',
+        eu: '-ko/-go + oraineko laguntzaileak, izan, egon eta ukan-i aplikatuta',
+      },
+      payload: {
+        es: '"Seré profesor" (irakasle izango naiz) · "Tendremos un coche" (autoa izango dugu)',
+        eu: '"Irakasle izango naiz" (Seré profesor) · "Autoa izango dugu" (Tendremos un coche)',
+      },
+    },
+    15: {
+      title: { es: 'Futuro — Querer, saber y moverse', eu: 'Geroa — Nahi, jakin eta mugitu' },
+      focus: {
+        es: '-ko/-go + auxiliares de presente, aplicado a nahi, jakin, joan, etorri',
+        eu: '-ko/-go + oraineko laguntzaileak, nahi, jakin, joan eta etorri-ri aplikatuta',
+      },
+      payload: {
+        es: '"Iré mañana" (joango naiz) · "¿Sabrás?" (jakingo duzu?)',
+        eu: '"Bihar joango naiz" (Iré mañana) · "Jakingo duzu?" (¿Sabrás?)',
+      },
+    },
+    16: {
+      title: { es: 'Futuro — Comer, beber y comprar', eu: 'Geroa — Jan, edan eta erosi' },
+      focus: {
+        es: '-ko/-go + auxiliares de presente, aplicado a jan, edan, erosi',
+        eu: '-ko/-go + oraineko laguntzaileak, jan, edan eta erosi-ri aplikatuta',
+      },
+      payload: {
+        es: '"Compraremos una casa" (erosiko dugu) · "Comeré más tarde" (geroago jango dut)',
+        eu: '"Etxe bat erosiko dugu" (Compraremos una casa) · "Geroago jango dut" (Comeré más tarde)',
+      },
+    },
+    17: {
+      title: { es: 'Futuro — Ver, tener y caminar', eu: 'Geroa — Ikusi, eduki eta ibili' },
+      focus: {
+        es: '-ko/-go + auxiliares de presente, aplicado a ikusi, eduki, ibili',
+        eu: '-ko/-go + oraineko laguntzaileak, ikusi, eduki eta ibili-ri aplikatuta',
+      },
+      payload: {
+        es: '"Lo verás" (ikusiko duzu) · "Tendrán tiempo" (denbora edukiko dute)',
+        eu: '"Ikusiko duzu" (Lo verás) · "Denbora edukiko dute" (Tendrán tiempo)',
+      },
+    },
+    18: {
       title: { es: 'Necesidades y obligaciones', eu: 'Beharrak eta betebeharrak' },
       focus: { es: 'behar + ukan, presente y futuro', eu: 'behar + ukan, oraina eta geroa' },
       payload: {
@@ -183,36 +277,28 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Joan behar dut" (Tengo que ir) · "Etorri beharko duzu" (Tendrás que venir)',
       },
     },
-    11: {
+    19: {
       title: {
-        es: 'REPASO — Mezcla acumulativa del presente',
-        eu: 'BERRIKUSPENA — Oraina, dena nahasian',
+        es: 'REPASO — Mezcla acumulativa de presente, pasado y futuro',
+        eu: 'BERRIKUSPENA — Oraina, iragana eta geroa, dena nahasian',
       },
       focus: {
-        es: 'Sintético + perifrástico, afirmativo + negativo, presente + futuro — sin verbos nuevos, hay que aprobarlo con muy buena precisión',
-        eu: 'Aditz trinkoak + perifrastikoak, baiezkoak + ezezkoak, oraina + geroa — aditz berririk gabe, zehaztasun handiz gainditu beharrekoa',
+        es: 'Sintético + perifrástico, afirmativo + negativo, presente + pasado + futuro — sin verbos nuevos, hay que aprobarlo con muy buena precisión',
+        eu: 'Aditz trinkoak + perifrastikoak, baiezkoak + ezezkoak, oraina + iragana + geroa — aditz berririk gabe, zehaztasun handiz gainditu beharrekoa',
       },
     },
-    12: {
-      title: { es: '"Yo era, yo tenía"', eu: '"Nintzen, nuen"' },
-      focus: { es: 'pasado de izan/ukan, tabla completa', eu: 'izan/ukan iragana, taula osoa' },
-      payload: {
-        es: '"Yo era joven." · "Ella tenía un perro."',
-        eu: '"Gaztea nintzen" (Yo era joven) · "Txakurra zuen" (Ella tenía un perro)',
-      },
-    },
-    13: {
-      title: { es: 'El hilo narrativo del pasado', eu: 'Iraganeko kontaketa' },
+    20: {
+      title: { es: '"Solía..." — El pasado imperfectivo', eu: '"Joaten nintzen..." — Iragan ez-burutua' },
       focus: {
-        es: 'pasado perifrástico (ikusi nuen), pasado imperfectivo/habitual (etortzen nintzen), y movimiento completado (joan nintzen, etorri nintzen)',
-        eu: 'iragan perifrastikoa (ikusi nuen), iragan ohiturazkoa (etortzen nintzen) eta amaitutako mugimendua (joan nintzen, etorri nintzen)',
+        es: 'pasado imperfectivo/habitual (etortzen nintzen, "solía venir / venía") — distinto del pasado simple de las unidades 8/9/12/13',
+        eu: 'iragan ohiturazkoa/burutugabea (etortzen nintzen, "solía venir / venía") — 8/9/12/13 unitateetako iragan soilatik bestelakoa',
       },
       payload: {
-        es: '"Lo vi." · "Solía venir (a menudo)." · "Fui." · "Ella vino."',
-        eu: '"Ikusi nuen" (Lo vi) · "Etortzen nintzen" (Solía venir, a menudo) · "Joan nintzen" (Fui) · "Etorri zen" (Ella vino)',
+        es: '"Solía venir aquí todos los días." · "Estaba trabajando cuando llamó."',
+        eu: '"Egunero hona etortzen nintzen" (Solía venir aquí todos los días) · "Lanean ari nintzen deitu zuenean" (Estaba trabajando cuando llamó)',
       },
     },
-    14: {
+    21: {
       title: { es: 'Movimiento en curso (pasado)', eu: 'Mugimendua gertatzen ari zen (iragana)' },
       focus: {
         es: 'formas pasadas propias de joan/etorri/ibili (nindoan, zetorren)',
@@ -223,7 +309,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Bidean nindoan (...zenean)" (Estaba de camino, cuando...) · "Etortzen zetorren (eta orduan...)" (Él venía, y entonces...)',
       },
     },
-    15: {
+    22: {
       title: { es: 'Gustos, opiniones y sensaciones físicas', eu: 'Atseginak, iritziak eta sentsazio fisikoak' },
       focus: {
         es: 'presente NOR-NORI, sujetos de 3ª persona (zait/zaizu/zaio)',
@@ -234,7 +320,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Gustatzen zait" (Me gusta) · "Ondo iruditzen zait" (Me parece bien) · "Ahaztu zait" (Se me olvidó)',
       },
     },
-    16: {
+    23: {
       title: { es: 'Comunicación y dar', eu: 'Komunikazioa eta ematea' },
       focus: { es: 'presente NOR-NORI-NORK (esan, eman)', eu: 'oraina NOR-NORI-NORK (esan, eman)' },
       payload: {
@@ -242,14 +328,14 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Ematen dizut" (Te lo doy) · "Esaten diozu" (Se lo dices a él)',
       },
     },
-    17: {
+    24: {
       title: { es: 'REPASO — La mezcladora de declinación', eu: 'BERRIKUSPENA — Kasu-marken nahasketa' },
       focus: {
         es: 'Practica los intercambios de papeles NOR/NORK/NORI — sin verbos nuevos',
         eu: 'NOR/NORK/NORI rolen txandaketa lantzen du — aditz berririk gabe',
       },
     },
-    18: {
+    25: {
       title: { es: 'Permisos y capacidad (Ahalera)', eu: 'Baimenak eta gaitasuna (Ahalera)' },
       focus: {
         es: 'dezaket/naiteke contrastados con la forma perifrástica ahal izan',
@@ -260,7 +346,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Etor naiteke" (Puedo venir) · "...ahal izan(go) nuen" (Podría haber...)',
       },
     },
-    19: {
+    26: {
       title: { es: 'Condicionales (Baldintza eta Ondorioa)', eu: 'Baldintzazkoak (Baldintza eta Ondorioa)' },
       focus: { es: 'prótasis con ba- + apódosis con -ke', eu: 'ba- protasia + -ke ondorioa' },
       payload: {
@@ -268,14 +354,14 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Dirua banu, hori erosiko nuke" (Si tuviera dinero, compraría eso)',
       },
     },
-    20: {
+    27: {
       title: { es: 'Mandatos y subjuntivos (Agintera, Subjuntiboa)', eu: 'Agintera eta Subjuntiboa' },
       focus: {
         es: 'Órdenes directas; oraciones de finalidad ("para que...")',
         eu: 'Zuzeneko aginduak; helburuzko perpausak ("...-tzeko")',
       },
     },
-    21: {
+    28: {
       title: {
         es: 'El registro social cercano (hi + Hitanoa/Hiketa)',
         eu: 'Hurbileko erregistro soziala (hi + Hitanoa/Hiketa)',
@@ -285,7 +371,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'hi lehen aldiz aurkezten da, toka/noka tratamendu alokutiboarekin batera',
       },
     },
-    22: {
+    29: {
       title: {
         es: 'Transformación pasiva y lectura de textos reales',
         eu: 'Pasibora aldatzea eta benetako testuak irakurtzea',

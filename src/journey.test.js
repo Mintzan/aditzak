@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { JOURNEY } from './journey'
 import { LESSONS } from './data/lessons'
 import { VERBS } from './data/verbs'
+import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
 
 // Cross-checks the three files that make up "the learning journey"
 // (`journey.js`'s `JOURNEY`, `data/lessons.js`'s `LESSONS`, `data/verbs.js`'s
@@ -42,6 +43,22 @@ describe('JOURNEY <-> LESSONS', () => {
     }
     for (const id of lessonIds) {
       expect(referenceCounts.get(id) ?? 0, `lesson "${id}" should be referenced by exactly one unit's lessonIds`).toBe(1)
+    }
+  })
+})
+
+describe('JOURNEY <-> JOURNEY_TRANSLATIONS', () => {
+  it('has a units translation entry for every unit number in JOURNEY', () => {
+    for (const unit of allUnits()) {
+      expect(JOURNEY_TRANSLATIONS.units[unit.number], `unit ${unit.number} ("${unit.title}") has no journeyTranslations entry`).toBeDefined()
+    }
+  })
+
+  it('has a stages translation entry for every stage in JOURNEY', () => {
+    for (const phase of JOURNEY) {
+      for (const stage of phase.stages) {
+        expect(JOURNEY_TRANSLATIONS.stages[stage.id], `stage "${stage.id}" ("${stage.title}") has no journeyTranslations entry`).toBeDefined()
+      }
     }
   })
 })

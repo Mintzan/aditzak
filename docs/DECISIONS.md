@@ -8,6 +8,29 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Resolved issue #83: re-keyed `journeyTranslations.js`'s `units`/`stages` to `journey.js`'s current unit/stage numbering
+
+**Decision:** Did the holistic re-audit issue #83 asked for. Most of the old
+`units`/`stages` entries (1-22, plus the gate/stage titles) were content that
+still exists in `journey.js` but under a different number after several
+renumbering/reorder passes — those were moved to their current numbers (e.g.
+old unit 7 "Rutina diaria" → new Unit 10, old unit 10 "Necesidades y
+obligaciones" → new Unit 18, old `phase-2-stage-3`'s "Acciones del mundo real"
+→ `phase-2-stage-4`, etc.). Entries with no surviving counterpart (old unit 9
+"Intenciones y acciones futuras", which Units 14-17 replaced) were dropped.
+New units that had no prior translation at all (3, 8, 9, 12, 13, 14-17, 20)
+and three new stages (`phase-2-stage-3`, `phase-2-stage-5`, `phase-3-stage-7`)
+got fresh ES/EU copy written against `journey.js`'s current English text and
+`docs/LEARNING_JOURNEY.md`.
+
+**Drift prevention:** added two checks to `journey.test.js` asserting every
+`JOURNEY` unit number and stage id has a `JOURNEY_TRANSLATIONS` entry — this
+catches a unit/stage with *no* translation entry (the "23-29 missing
+entirely" half of #83), but can't catch a translation entry that exists but
+describes the *wrong* unit (the "drifted to the wrong number" half) — that
+class of bug requires a human content audit like this one, not a type-level
+check.
+
 ## 2026-06-13 — Resolved issue #84: pooled Units 8/9's past tense into izan-past/ukan-past auxiliary pools, moved egon-past/eduki-past to their own units (Stage 3/5 reshuffle)
 
 **Decision:** Replaced Units 8/9's six per-verb `-past`/`-past-plural` pairs
