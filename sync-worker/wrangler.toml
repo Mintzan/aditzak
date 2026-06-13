@@ -1,0 +1,21 @@
+name = "aditzak-sync"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Non-secret configuration. Override per-environment with `wrangler.toml`
+# environments or `wrangler deploy --var KEY:value` if needed.
+[vars]
+# Origin allowed to call this worker (no trailing slash).
+ALLOWED_ORIGIN = "https://mintzan.github.io"
+
+# D1 database used for users/sessions/magic links/progress snapshots. The
+# `database_id` below is a placeholder — replace it with the id printed by
+# `wrangler d1 create aditzak-sync` (see docs/CLOUDFLARE_SYNC_WORKER.md).
+[[d1_databases]]
+binding = "DB"
+database_name = "aditzak-sync"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+# Set with: wrangler secret put RESEND_API_KEY
+# RESEND_API_KEY

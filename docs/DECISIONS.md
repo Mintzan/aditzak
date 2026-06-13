@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Resolved issue #87: stood up `sync-worker/` (Cloudflare Worker + D1), `/healthz` only for now
+
+**Decision:** Added `sync-worker/` as a sibling of `worker/` (the existing
+stateless feedback worker), per epic #86's recommendation (open question #4:
+a separate worker, since this one handles PII/session tokens — a different
+trust boundary than the feedback relay). Mirrors `worker/`'s structure
+(`package.json`, `wrangler.toml`, `src/index.js`, `.gitignore`) and CORS
+pattern (`corsHeaders`/`jsonResponse` locked to `ALLOWED_ORIGIN`). Added a D1
+binding (`DB` → database `aditzak-sync`) and
+`migrations/0001_init.sql` creating `users`/`magic_links`/`sessions`/
+`progress_snapshots` exactly as specified in #86/#87. The worker currently
+only serves `GET /healthz` — `/auth/*` and `/sync` are separate follow-up
+issues (#88/#89).
+
+`.github/workflows/deploy-sync-worker.yml` mirrors `deploy-worker.yml`
+(path-filtered on `sync-worker/**`, same `CLOUDFLARE_API_TOKEN`/
+`CLOUDFLARE_ACCOUNT_ID` secrets), but runs `wrangler d1 migrations apply
+aditzak-sync --remote` before `deploy` on every push — so new migration files
+added by #88/#89 are applied automatically. `docs/CLOUDFLARE_SYNC_WORKER.md`
+documents the one-time `wrangler d1 create aditzak-sync` provisioning step
+(its `database_id` is a placeholder in `wrangler.toml` until that's run) and
+notes the deploy token needs **D1: Edit** permission in addition to the
+feedback worker's **Workers Scripts: Edit**.
+
+**Verified locally:** `wrangler d1 migrations apply aditzak-sync --local`
+applies cleanly, and `wrangler dev` serves `GET /healthz` → `{"ok":true}`
+and 404s everything else. Actual `wrangler deploy`/remote D1 provisioning
+needs real Cloudflare credentials and wasn't run from this session.
+
 ## 2026-06-13 — Resolved issue #83: re-keyed `journeyTranslations.js`'s `units`/`stages` to `journey.js`'s current unit/stage numbering
 
 **Decision:** Did the holistic re-audit issue #83 asked for. Most of the old
