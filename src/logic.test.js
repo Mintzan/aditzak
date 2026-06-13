@@ -17,10 +17,16 @@ import {
   getExplanation,
   getIntroducedSources,
   getLocalDateString,
+  getPointsBalance,
   getStreakEncouragement,
   getUnlockedLessonIds,
   getWeakSpotQuestions,
   isAnswerCorrect,
+  mergeDailyStreak,
+  mergeErrorStats,
+  mergePoints,
+  mergeProgress,
+  mergeSyncPayload,
   pickEncouragementVariantIndex,
   recordDailyStreak,
   recordErrors,
@@ -246,20 +252,36 @@ describe('computeLessonPoints', () => {
 })
 
 describe('addPoints', () => {
-  it('adds to an empty balance', () => {
-    expect(addPoints({}, 10)).toEqual({ balance: 10 })
+  it('adds to an empty points map under the current device', () => {
+    expect(addPoints({}, 10, 'device-a')).toEqual({ earned: { 'device-a': 10 }, spent: {} })
   })
 
-  it('accumulates onto an existing balance without mutating it', () => {
-    const points = { balance: 20 }
+  it('accumulates onto this device’s earned counter without mutating the input or other devices’ counters', () => {
+    const points = { earned: { 'device-a': 20, 'device-b': 5 }, spent: { 'device-b': 2 } }
 
-    expect(addPoints(points, 5)).toEqual({ balance: 25 })
-    expect(points).toEqual({ balance: 20 })
+    expect(addPoints(points, 5, 'device-a')).toEqual({
+      earned: { 'device-a': 25, 'device-b': 5 },
+      spent: { 'device-b': 2 },
+    })
+    expect(points).toEqual({ earned: { 'device-a': 20, 'device-b': 5 }, spent: { 'device-b': 2 } })
+  })
+})
+
+describe('getPointsBalance', () => {
+  it('is 0 for an empty points map', () => {
+    expect(getPointsBalance({})).toBe(0)
+    expect(getPointsBalance(undefined)).toBe(0)
+  })
+
+  it('sums earned across devices and subtracts spent across devices', () => {
+    const points = { earned: { 'device-a': 30, 'device-b': 15 }, spent: { 'device-a': 10 } }
+
+    expect(getPointsBalance(points)).toBe(35)
   })
 })
 
 describe('canRepairStreak', () => {
-  const points = { balance: STREAK_REPAIR_COST }
+  const points = { earned: { 'device-a': STREAK_REPAIR_COST }, spent: {} }
 
   it('is false when the streak is still alive', () => {
     const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
@@ -269,8 +291,9 @@ describe('canRepairStreak', () => {
 
   it('is false when the streak is broken but there are no points to repair it', () => {
     const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
+    const lowPoints = { earned: { 'device-a': STREAK_REPAIR_COST - 1 }, spent: {} }
 
-    expect(canRepairStreak(streak, { balance: STREAK_REPAIR_COST - 1 }, '2026-06-12')).toBe(false)
+    expect(canRepairStreak(streak, lowPoints, '2026-06-12')).toBe(false)
   })
 
   it('is false when there is no streak to repair', () => {
@@ -285,17 +308,136 @@ describe('canRepairStreak', () => {
 })
 
 describe('repairStreak', () => {
-  it('backdates lastActiveDate to yesterday and deducts the cost, preserving the streak counts', () => {
+  it('backdates lastActiveDate to yesterday and deducts the cost from this device’s spent counter, preserving the streak counts', () => {
     const streak = { currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-10' }
-    const points = { balance: STREAK_REPAIR_COST + 50 }
+    const points = { earned: { 'device-a': STREAK_REPAIR_COST + 50 }, spent: {} }
 
-    const result = repairStreak(streak, points, '2026-06-12')
+    const result = repairStreak(streak, points, '2026-06-12', 'device-a')
 
     expect(result.streak).toEqual({ currentStreak: 4, longestStreak: 4, lastActiveDate: '2026-06-11' })
-    expect(result.points).toEqual({ balance: 50 })
+    expect(result.points).toEqual({ earned: { 'device-a': STREAK_REPAIR_COST + 50 }, spent: { 'device-a': STREAK_REPAIR_COST } })
+    expect(getPointsBalance(result.points)).toBe(50)
     expect(getActiveStreak(result.streak, '2026-06-12')).toBe(4)
   })
 })
+
+describe('mergeProgress', () => {
+  it('returns the other side unchanged when one side is empty', () => {
+    const progress = { 'izan-present': { attempts: 1, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: '2026-06-10T00:00:00.000Z' } }
+
+    expect(mergeProgress({}, progress)).toEqual(progress)
+    expect(mergeProgress(progress, {})).toEqual(progress)
+  })
+
+  it('takes the max of each field per lesson, and the more recent lastPlayed', () => {
+    const local = {
+      'izan-present': { attempts: 2, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: '2026-06-10T00:00:00.000Z' },
+    }
+    const cloud = {
+      'izan-present': { attempts: 5, bestScore: 2, totalQuestions: 3, bestStars: 1, lastPlayed: '2026-06-12T00:00:00.000Z' },
+    }
+
+    expect(mergeProgress(local, cloud)).toEqual({
+      'izan-present': { attempts: 5, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: '2026-06-12T00:00:00.000Z' },
+    })
+  })
+
+  it('keeps lessons that only exist on one side', () => {
+    const local = { 'izan-present': { attempts: 1, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: '2026-06-10T00:00:00.000Z' } }
+    const cloud = { 'egon-present': { attempts: 2, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: '2026-06-11T00:00:00.000Z' } }
+
+    expect(mergeProgress(local, cloud)).toEqual({ ...local, ...cloud })
+  })
+})
+
+describe('mergeDailyStreak', () => {
+  it('returns the other side unchanged when one side is empty', () => {
+    const streak = { currentStreak: 3, longestStreak: 5, lastActiveDate: '2026-06-12' }
+
+    expect(mergeDailyStreak({}, streak)).toEqual(streak)
+    expect(mergeDailyStreak(streak, {})).toEqual(streak)
+  })
+
+  it('takes currentStreak/lastActiveDate from the more recently active side, but maxes longestStreak', () => {
+    const local = { currentStreak: 1, longestStreak: 5, lastActiveDate: '2026-06-13' }
+    const cloud = { currentStreak: 7, longestStreak: 7, lastActiveDate: '2026-06-10' }
+
+    expect(mergeDailyStreak(local, cloud)).toEqual({ currentStreak: 1, longestStreak: 7, lastActiveDate: '2026-06-13' })
+  })
+})
+
+describe('mergeErrorStats', () => {
+  it('unions entries that only exist on one side', () => {
+    const local = { 'izan-present:oraina:ni': { verbId: 'izan', tense: 'oraina', person: 'ni', count: 2, lastMissed: '2026-06-10T00:00:00.000Z' } }
+    const cloud = { 'egon-present:oraina:hi': { verbId: 'egon', tense: 'oraina', person: 'hi', count: 1, lastMissed: '2026-06-09T00:00:00.000Z' } }
+
+    expect(mergeErrorStats(local, cloud)).toEqual({ ...local, ...cloud })
+  })
+
+  it('takes the higher count and more recent lastMissed for overlapping entries', () => {
+    const key = 'izan-present:oraina:ni'
+    const local = { [key]: { verbId: 'izan', tense: 'oraina', person: 'ni', count: 1, lastMissed: '2026-06-12T00:00:00.000Z' } }
+    const cloud = { [key]: { verbId: 'izan', tense: 'oraina', person: 'ni', count: 3, lastMissed: '2026-06-10T00:00:00.000Z' } }
+
+    expect(mergeErrorStats(local, cloud)).toEqual({
+      [key]: { verbId: 'izan', tense: 'oraina', person: 'ni', count: 3, lastMissed: '2026-06-12T00:00:00.000Z' },
+    })
+  })
+})
+
+describe('mergePoints', () => {
+  it('unions deviceIds and takes the max per counter per device, independent of merge order', () => {
+    const local = { earned: { 'device-a': 30, 'device-b': 5 }, spent: { 'device-a': 10 } }
+    const cloud = { earned: { 'device-a': 20, 'device-c': 8 }, spent: { 'device-a': 10, 'device-c': 0 } }
+
+    const expected = {
+      earned: { 'device-a': 30, 'device-b': 5, 'device-c': 8 },
+      spent: { 'device-a': 10, 'device-c': 0 },
+    }
+    expect(mergePoints(local, cloud)).toEqual(expected)
+    expect(mergePoints(cloud, local)).toEqual(expected)
+  })
+
+  it('produces the correct summed balance with no loss across overlapping and disjoint deviceIds', () => {
+    const local = { earned: { 'device-a': 50 }, spent: { 'device-a': 10 } }
+    const cloud = { earned: { 'device-a': 30, 'device-b': 20 }, spent: { 'device-a': 10, 'device-b': 5 } }
+
+    const merged = mergePoints(local, cloud)
+    expect(getPointsBalance(merged)).toBe(50 - 10 + 20 - 5)
+  })
+
+  it('handles an empty input on either side', () => {
+    const points = { earned: { 'device-a': 10 }, spent: { 'device-a': 2 } }
+
+    expect(mergePoints({}, points)).toEqual({ earned: { 'device-a': 10 }, spent: { 'device-a': 2 } })
+    expect(mergePoints(points, {})).toEqual({ earned: { 'device-a': 10 }, spent: { 'device-a': 2 } })
+  })
+})
+
+describe('mergeSyncPayload', () => {
+  it('merges all four fields per their own rules', () => {
+    const local = {
+      progress: { 'izan-present': { attempts: 1, bestScore: 2, totalQuestions: 3, bestStars: 1, lastPlayed: '2026-06-10T00:00:00.000Z' } },
+      dailyStreak: { currentStreak: 1, longestStreak: 1, lastActiveDate: '2026-06-13' },
+      points: { earned: { 'device-a': 10 }, spent: {} },
+      errorStats: {},
+    }
+    const cloud = {
+      progress: { 'izan-present': { attempts: 3, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: '2026-06-11T00:00:00.000Z' } },
+      dailyStreak: { currentStreak: 5, longestStreak: 5, lastActiveDate: '2026-06-11' },
+      points: { earned: { 'device-b': 20 }, spent: {} },
+      errorStats: { 'egon-present:oraina:hi': { verbId: 'egon', tense: 'oraina', person: 'hi', count: 1, lastMissed: '2026-06-09T00:00:00.000Z' } },
+    }
+
+    expect(mergeSyncPayload(local, cloud)).toEqual({
+      progress: { 'izan-present': { attempts: 3, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: '2026-06-11T00:00:00.000Z' } },
+      dailyStreak: { currentStreak: 1, longestStreak: 5, lastActiveDate: '2026-06-13' },
+      points: { earned: { 'device-a': 10, 'device-b': 20 }, spent: {} },
+      errorStats: cloud.errorStats,
+    })
+  })
+})
+
 
 describe('getUnlockedLessonIds', () => {
   const lessons = [{ id: 'a' }, { id: 'b' }, { id: 'c' }]

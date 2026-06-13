@@ -154,8 +154,15 @@ export function computeLessonPoints(correctCount, total, isRepeat) {
   return Math.round(base * (correctCount / total))
 }
 
-export function addPoints(points, amount) {
-  return { balance: (points?.balance ?? 0) + amount }
+// `points` is a PN-Counter (see `getPointsBalance`/`mergePoints` below): a
+// device only ever increments its own `earned[deviceId]`, never touching
+// another device's entries — which is what makes the cross-device merge
+// lossless and order-independent.
+export function addPoints(points, amount, deviceId) {
+  return {
+    earned: { ...(points?.earned ?? {}), [deviceId]: (points?.earned?.[deviceId] ?? 0) + amount },
+    spent: points?.spent ?? {},
+  }
 }
 
 // Shifts a 'YYYY-MM-DD' string by `days` (negative allowed). Operates purely
@@ -175,19 +182,126 @@ function shiftDateString(dateString, days) {
 // above) can be repaired if the learner has enough points.
 export function canRepairStreak(streak, points, today) {
   const currentStreak = streak?.currentStreak ?? 0
-  const balance = points?.balance ?? 0
-  return currentStreak > 0 && getActiveStreak(streak, today) === 0 && balance >= STREAK_REPAIR_COST
+  return currentStreak > 0 && getActiveStreak(streak, today) === 0 && getPointsBalance(points) >= STREAK_REPAIR_COST
 }
 
 // Spends `STREAK_REPAIR_COST` points to revive a broken streak: backdating
 // `lastActiveDate` to "yesterday" makes `getActiveStreak` read `currentStreak`
 // as alive again (gap back down to exactly one day) without touching
 // `currentStreak`/`longestStreak` themselves — the streak resumes exactly
-// where it left off, with today still open to extend it further.
-export function repairStreak(streak, points, today) {
+// where it left off, with today still open to extend it further. The cost is
+// recorded as a `spent` increment for the current device (see `addPoints`).
+export function repairStreak(streak, points, today, deviceId) {
   return {
     streak: { ...streak, lastActiveDate: shiftDateString(today, -1) },
-    points: { balance: (points?.balance ?? 0) - STREAK_REPAIR_COST },
+    points: {
+      earned: points?.earned ?? {},
+      spent: { ...(points?.spent ?? {}), [deviceId]: (points?.spent?.[deviceId] ?? 0) + STREAK_REPAIR_COST },
+    },
+  }
+}
+
+// =============================================================================
+// Cross-device sync: PN-Counter balance + per-field "keep the best of both" merge
+// =============================================================================
+
+// Displayed balance for the `{ earned, spent }` PN-Counter shape (each a
+// `{ [deviceId]: number }` map, see `addPoints`/`repairStreak`) — also works
+// for the empty `{}` shape `pointsStorage` defaults to (both maps default to
+// `{}`, balance 0).
+export function getPointsBalance(points) {
+  const sum = (counters) => Object.values(counters ?? {}).reduce((total, value) => total + value, 0)
+  return sum(points?.earned) - sum(points?.spent)
+}
+
+function dateOrEpoch(dateString) {
+  return dateString ? Date.parse(dateString) : 0
+}
+
+// Per-lesson "keep the best of both": `attempts`/`bestScore`/`totalQuestions`/
+// `bestStars` are each independently monotonic (they only grow within a
+// device), so taking the max of each side is always safe and never loses
+// progress. `lastPlayed` takes whichever side is more recent.
+export function mergeProgress(local, cloud) {
+  const merged = {}
+  for (const lessonId of new Set([...Object.keys(local ?? {}), ...Object.keys(cloud ?? {})])) {
+    const a = local?.[lessonId]
+    const b = cloud?.[lessonId]
+    if (!a) merged[lessonId] = b
+    else if (!b) merged[lessonId] = a
+    else {
+      merged[lessonId] = {
+        attempts: Math.max(a.attempts ?? 0, b.attempts ?? 0),
+        bestScore: Math.max(a.bestScore ?? 0, b.bestScore ?? 0),
+        totalQuestions: Math.max(a.totalQuestions ?? 0, b.totalQuestions ?? 0),
+        bestStars: Math.max(a.bestStars ?? 0, b.bestStars ?? 0),
+        lastPlayed: dateOrEpoch(a.lastPlayed) >= dateOrEpoch(b.lastPlayed) ? a.lastPlayed : b.lastPlayed,
+      }
+    }
+  }
+  return merged
+}
+
+// Unlike `progress`, `currentStreak`/`lastActiveDate` aren't independently
+// monotonic — `currentStreak` resets to 1 after a gap, so maxing both sides
+// could resurrect a streak that's actually broken on the more-recent side.
+// Instead, the side with the more recent `lastActiveDate` wins for
+// `currentStreak`/`lastActiveDate`; `longestStreak` (which only ever grows)
+// is maxed across both regardless.
+export function mergeDailyStreak(local, cloud) {
+  const hasLocal = local && Object.keys(local).length > 0
+  const hasCloud = cloud && Object.keys(cloud).length > 0
+  if (!hasLocal) return cloud ?? {}
+  if (!hasCloud) return local
+  const longestStreak = Math.max(local.longestStreak ?? 0, cloud.longestStreak ?? 0)
+  const newer = dateOrEpoch(local.lastActiveDate) >= dateOrEpoch(cloud.lastActiveDate) ? local : cloud
+  return { currentStreak: newer.currentStreak ?? 0, longestStreak, lastActiveDate: newer.lastActiveDate ?? null }
+}
+
+// Union of both sides' missed-form counters (see `recordErrors`), keyed by
+// `verbId:tense:person`. Overlapping entries take the higher `count` and the
+// more recent `lastMissed`.
+export function mergeErrorStats(local, cloud) {
+  const merged = { ...(cloud ?? {}) }
+  for (const [key, entry] of Object.entries(local ?? {})) {
+    const existing = merged[key]
+    merged[key] = !existing
+      ? entry
+      : {
+          ...entry,
+          count: Math.max(entry.count ?? 0, existing.count ?? 0),
+          lastMissed:
+            dateOrEpoch(entry.lastMissed) >= dateOrEpoch(existing.lastMissed) ? entry.lastMissed : existing.lastMissed,
+        }
+  }
+  return merged
+}
+
+// The PN-Counter merge: union both sides' `deviceId` keys, `max` per counter
+// per device. Lossless and order-independent — a device's own counters only
+// ever grow, so the larger value of the two always reflects more (or equally)
+// complete information from that device, regardless of which side is "local".
+export function mergePoints(local, cloud) {
+  const mergeCounters = (a, b) => {
+    const merged = {}
+    for (const deviceId of new Set([...Object.keys(a ?? {}), ...Object.keys(b ?? {})])) {
+      merged[deviceId] = Math.max(a?.[deviceId] ?? 0, b?.[deviceId] ?? 0)
+    }
+    return merged
+  }
+  return { earned: mergeCounters(local?.earned, cloud?.earned), spent: mergeCounters(local?.spent, cloud?.spent) }
+}
+
+// "Keep the best of both" across all four synced fields — used for the
+// first-sign-in `keepBest` merge choice and for the pull-merge that runs on
+// every app load while already signed in (so edits made on another device
+// since the last sync aren't lost or overwritten).
+export function mergeSyncPayload(local, cloud) {
+  return {
+    progress: mergeProgress(local?.progress, cloud?.progress),
+    dailyStreak: mergeDailyStreak(local?.dailyStreak, cloud?.dailyStreak),
+    points: mergePoints(local?.points, cloud?.points),
+    errorStats: mergeErrorStats(local?.errorStats, cloud?.errorStats),
   }
 }
 

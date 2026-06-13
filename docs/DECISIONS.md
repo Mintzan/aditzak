@@ -8,6 +8,63 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Resolved issue #91: points become a PN-Counter, first-sync merge, ongoing background sync, sync status UI
+
+**Points data model (`POINTS_STORAGE_KEY` v1 → v2):** `points` changed from a
+single mutable `{ balance }` to a PN-Counter: `{ earned: { [deviceId]: n },
+spent: { [deviceId]: n } }`, balance = `sum(earned) - sum(spent)` via the new
+`getPointsBalance` (`lessonLogic.js`). Each device only ever increments its
+*own* `earned`/`spent` entries (`addPoints`/`repairStreak` now take a
+`deviceId`) — this is what makes the cross-device merge (`mergePoints`, "max
+per device per counter") lossless and order-independent, unlike a single
+shared counter where two devices' concurrent spends could double-count or
+clobber each other. A new `aditzak:deviceId:v1` key holds a `crypto.randomUUID`
+generated once per device. `pointsStorage.load()` migrates an existing v1
+`{ balance }` by attributing the whole balance to this device's `earned`
+(`{ earned: { [deviceId]: balance }, spent: {} }`) — chosen over e.g. a
+synthetic `"legacy"` device id so the migrated balance still participates
+correctly in future per-device merges.
+
+**First-sync merge:** on magic-link sign-in, `AppShell` checks `hasCloudData`
+(from `/auth/verify`) and `hasLocalSyncData` (any local progress/streak).
+Neither → nothing to do. Cloud-only → adopt the cloud snapshot wholesale,
+silently. Local-only → push local data, silently. Both → show `MergeModal`
+(reusing the `accountMerge*` keys left over from #90's removed prototype) with
+three choices: `keepBest` (per-field "best of both" via `mergeSyncPayload` —
+recommended, default-styled button), `useDevice` (push local as-is), or
+`useAccount` (overwrite local with the cloud payload). `mergeSyncPayload`
+composes four per-field merges: `mergeProgress` (per-lesson max of
+attempts/bestScore/totalQuestions/bestStars + most-recent `lastPlayed`),
+`mergeDailyStreak` (the side with the more recent `lastActiveDate` wins for
+`currentStreak`/`lastActiveDate` — since `currentStreak` resets after a gap
+and isn't independently monotonic — while `longestStreak` is maxed),
+`mergeErrorStats` (union by `verbId:tense:person`, overlapping entries take
+max `count` + latest `lastMissed`), and `mergePoints` (the PN-Counter union
+described above).
+
+**Ongoing background sync:** every app load while already signed in re-runs
+the same `mergeSyncPayload` pull-merge against `GET /sync` (so edits from
+another device since the last visit aren't lost), then pushes the merged
+result. After that initial reconcile, any change to `progress`/`dailyStreak`/
+`points`/`errorStats` schedules a debounced (`SYNC_PUSH_DEBOUNCE_MS = 1000`)
+`PUT /sync` of the latest snapshot. A `skipNextPushRef` (starts `true`) blocks
+this debounced effect until the initial reconcile/merge has finished — without
+it, the background-push effect would fire on the very first render (before any
+merge/pull has happened) and push this device's pre-merge data to the cloud,
+potentially overwriting another device's newer data. Failures are swallowed
+(`syncStatus = 'error'`); local storage remains the source of truth and the
+next save or app load retries — no blocking UI or retry loop.
+
+**Sync status UI:** `accountSyncedJustNow` (now reused for "no `lastSyncedAt`
+yet" as well as "synced <1 minute ago") is joined by `accountSyncedMinutesAgo`
+(`tCount`, "Synced {n} minute(s) ago"), `accountSyncing` ("Syncing…"), and
+`accountSyncFailed` ("Sync failed, will retry"), computed by `syncStatusText`
+and shown under the account email in `AccountSection`. `syncStatus`'s initial
+value is computed via a `useState` lazy initializer (checking for
+`?authToken=` or a stored session) rather than set inside the reconcile
+effect, to avoid the `react-hooks/set-state-in-effect` lint rule's "cascading
+render" warning for a synchronous `setState` at the top of an effect body.
+
 ## 2026-06-13 — Resolved issue #90: wired `AccountModal`/`AccountSection` to the real magic-link auth API, superseding the 2026-06-12 UI-only prototype
 
 **Decision:** `AccountModal`'s email step now calls `POST {SYNC_API_URL}/auth/request-link`

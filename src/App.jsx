@@ -15,11 +15,13 @@ import {
   getIntroducedSources,
   getLastPlayedLessonId,
   getLocalDateString,
+  getPointsBalance,
   pickEncouragementVariantIndex,
   getStreakEncouragement,
   getUnlockedLessonIds,
   getWeakSpotQuestions,
   isAnswerCorrect,
+  mergeSyncPayload,
   recordDailyStreak,
   recordErrors,
   recordResult,
@@ -50,7 +52,12 @@ const STREAK_STORAGE_KEY = 'aditzak:streak:v1'
 // Kept in its own key for the same reasons as the daily streak: it tracks
 // something orthogonal to any single lesson's progress, and "Reset progress"
 // can clear it without a version bump to `progress`/`STORAGE_KEY`.
-const POINTS_STORAGE_KEY = 'aditzak:points:v1'
+//
+// v2 (see `pointsStorage` below): a PN-Counter `{ earned, spent }` — each a
+// `{ [deviceId]: number }` map — instead of a single mutable `{ balance }`,
+// so cross-device sync can merge concurrent earns/spends losslessly (#91).
+const POINTS_STORAGE_KEY = 'aditzak:points:v2'
+const LEGACY_POINTS_STORAGE_KEY = 'aditzak:points:v1'
 
 // Tracks the verb/tense/person combinations the learner has gotten wrong on
 // the first attempt (see `lessonLogic.js`'s `recordErrors`), used to surface
@@ -86,8 +93,53 @@ function createStorage(key) {
 
 const progressStorage = createStorage(STORAGE_KEY)
 const streakStorage = createStorage(STREAK_STORAGE_KEY)
-const pointsStorage = createStorage(POINTS_STORAGE_KEY)
 const errorStorage = createStorage(ERROR_STORAGE_KEY)
+
+// A random id generated once per device on first use, identifying this
+// device's counters in the `points` PN-Counter (see `pointsStorage`,
+// `addPoints`/`repairStreak`/`mergePoints` in `lessonLogic.js`).
+const DEVICE_ID_STORAGE_KEY = 'aditzak:deviceId:v1'
+
+function getDeviceId() {
+  try {
+    const existing = localStorage.getItem(DEVICE_ID_STORAGE_KEY)
+    if (existing) return existing
+    const id = crypto.randomUUID?.() ?? `device-${Math.random().toString(36).slice(2)}${Date.now().toString(36)}`
+    localStorage.setItem(DEVICE_ID_STORAGE_KEY, id)
+    return id
+  } catch {
+    return 'unknown-device'
+  }
+}
+
+// Like `createStorage`, but migrates a pre-#91 `v1` `{ balance }` value (if
+// no `v2` value exists yet) by attributing the whole balance to this device's
+// `earned` counter — so upgrading never loses points.
+const pointsStorage = {
+  load() {
+    try {
+      const raw = localStorage.getItem(POINTS_STORAGE_KEY)
+      if (raw) return JSON.parse(raw)
+      const legacyRaw = localStorage.getItem(LEGACY_POINTS_STORAGE_KEY)
+      if (legacyRaw) {
+        const legacy = JSON.parse(legacyRaw)
+        if (typeof legacy?.balance === 'number') {
+          return { earned: { [getDeviceId()]: legacy.balance }, spent: {} }
+        }
+      }
+      return {}
+    } catch {
+      return {}
+    }
+  },
+  save(value) {
+    try {
+      localStorage.setItem(POINTS_STORAGE_KEY, JSON.stringify(value))
+    } catch {
+      // localStorage may be unavailable (private browsing, quota) — ignore.
+    }
+  },
+}
 
 // The signed-in account session (sync-worker bearer token + email), set on a
 // successful `/auth/verify` and restored on later loads. Unlike the maps
@@ -455,6 +507,45 @@ const FEEDBACK_EMAIL_MAX_LENGTH = 320
 // with VITE_SYNC_API_URL for forks or local `wrangler dev`.
 const SYNC_API_URL = import.meta.env.VITE_SYNC_API_URL || 'https://aditzak-sync.inakiibarrola.workers.dev'
 
+// `PUT /sync`'s `schemaVersion` — see docs/CLOUDFLARE_SYNC_WORKER.md. The
+// backend stores it as-is without validating; reconciling client/server
+// schema versions (if this ever needs to change) is the frontend's job.
+const SYNC_SCHEMA_VERSION = 1
+
+// Coalesces the four storage saves a single lesson completion triggers
+// (progress/streak/points/errorStats) into one `PUT /sync`.
+const SYNC_PUSH_DEBOUNCE_MS = 1000
+
+// The four locally-persisted maps, as the shape `/sync` stores/returns.
+function buildSyncPayload({ progress, dailyStreak, points, errorStats }) {
+  return { progress, dailyStreak, points, errorStats }
+}
+
+// `null` means "no cloud snapshot yet" (404).
+async function fetchSyncSnapshot(token) {
+  const response = await fetch(`${SYNC_API_URL}/sync`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (response.status === 404) return null
+  if (!response.ok) throw new Error('sync fetch failed')
+  return response.json()
+}
+
+async function pushSyncSnapshot(token, payload) {
+  const response = await fetch(`${SYNC_API_URL}/sync`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ payload, schemaVersion: SYNC_SCHEMA_VERSION }),
+  })
+  if (!response.ok) throw new Error('sync push failed')
+}
+
+// Whether this device has anything worth merging on first sign-in — if not,
+// there's nothing to lose by adopting the cloud copy wholesale.
+function hasLocalSyncData({ progress, dailyStreak }) {
+  return Object.keys(progress ?? {}).length > 0 || Object.keys(dailyStreak ?? {}).length > 0
+}
+
 function FeedbackModal({ onClose }) {
   const { t } = useLanguage()
   const [message, setMessage] = useState('')
@@ -678,11 +769,23 @@ function AccountModal({ onClose }) {
   )
 }
 
+// "Synced just now" / "Synced Xm ago" / "Syncing…" / "Sync failed, will
+// retry" — see `AppShell`'s `syncStatus`/`lastSyncedAt`.
+function syncStatusText(syncStatus, lastSyncedAt, t, tCount) {
+  if (syncStatus === 'syncing') return t('accountSyncing')
+  if (syncStatus === 'error') return t('accountSyncFailed')
+  if (lastSyncedAt) {
+    const minutes = Math.floor((Date.now() - lastSyncedAt) / 60000)
+    if (minutes >= 1) return tCount('accountSyncedMinutesAgo', minutes)
+  }
+  return t('accountSyncedJustNow')
+}
+
 // Card shown in the Profile tab — purely presentational, driven by the
-// `account` state held in `AppShell` (restored from/persisted to
-// `aditzak:session:v1`).
-function AccountSection({ account, onOpenSignIn, onSignOut }) {
-  const { t } = useLanguage()
+// `account`/`syncStatus`/`lastSyncedAt` state held in `AppShell` (restored
+// from/persisted to `aditzak:session:v1`).
+function AccountSection({ account, syncStatus, lastSyncedAt, onOpenSignIn, onSignOut }) {
+  const { t, tCount } = useLanguage()
   if (account) {
     return (
       <div className="w-full rounded-2xl border border-gray-200 bg-white p-4 text-left">
@@ -692,7 +795,7 @@ function AccountSection({ account, onOpenSignIn, onSignOut }) {
           </span>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-gray-700">{account.email}</p>
-            <p className="text-xs text-gray-400">{t('accountSyncedJustNow')}</p>
+            <p className="text-xs text-gray-400">{syncStatusText(syncStatus, lastSyncedAt, t, tCount)}</p>
           </div>
         </div>
         <button
@@ -730,12 +833,63 @@ function AccountSection({ account, onOpenSignIn, onSignOut }) {
   )
 }
 
-function ProfileTab({ streak, points, account, onOpenSignIn, onSignOut, onResetProgress, onRepairStreak, onOpenFeedback }) {
+// Shown once, right after a magic-link sign-in, when this device already had
+// local progress *and* the account already has cloud data from another
+// device — the three `ACCOUNT_MERGE_OPTIONS` choices from the 2026-06-12
+// prototype, now wired to real merge logic in `AppShell.handleResolveMerge`
+// (see `mergeSyncPayload` in `lessonLogic.js` for `keepBest`). Not
+// dismissible without choosing — there's no safe default that doesn't risk
+// silently discarding one side's progress.
+function MergeModal({ applying, onChoose }) {
+  const { t } = useLanguage()
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center">
+      <div role="dialog" aria-modal="true" aria-labelledby="merge-title" className="w-full max-w-md rounded-t-3xl bg-white p-5 sm:rounded-3xl">
+        <h2 id="merge-title" className="mb-1 text-lg font-bold text-gray-900">
+          {t('accountMergeTitle')}
+        </h2>
+        <p className="mb-4 text-sm text-gray-500">{t('accountMergeBody')}</p>
+        {applying ? (
+          <p className="py-4 text-center text-sm font-semibold text-gray-500">{t('accountSyncing')}</p>
+        ) : (
+          <div className="flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={() => onChoose('keepBest')}
+              style={{ minHeight: 48 }}
+              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+            >
+              {t('accountMergeKeepBest')}
+            </button>
+            <button
+              type="button"
+              onClick={() => onChoose('useDevice')}
+              style={{ minHeight: 48 }}
+              className="rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:text-green-600"
+            >
+              {t('accountMergeUseDevice')}
+            </button>
+            <button
+              type="button"
+              onClick={() => onChoose('useAccount')}
+              style={{ minHeight: 48 }}
+              className="rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:text-green-600"
+            >
+              {t('accountMergeUseAccount')}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function ProfileTab({ streak, points, account, syncStatus, lastSyncedAt, onOpenSignIn, onSignOut, onResetProgress, onRepairStreak, onOpenFeedback }) {
   const { t, tCount, language, setLanguage, languages } = useLanguage()
   const today = getLocalDateString()
   const currentStreak = getActiveStreak(streak, today)
   const longestStreak = streak?.longestStreak ?? 0
-  const balance = points?.balance ?? 0
+  const balance = getPointsBalance(points)
   const canRepair = canRepairStreak(streak, points, today)
   return (
     <div className="flex flex-col items-center gap-4 py-12 text-center">
@@ -781,7 +935,13 @@ function ProfileTab({ streak, points, account, onOpenSignIn, onSignOut, onResetP
           </button>
         </div>
       )}
-      <AccountSection account={account} onOpenSignIn={onOpenSignIn} onSignOut={onSignOut} />
+      <AccountSection
+        account={account}
+        syncStatus={syncStatus}
+        lastSyncedAt={lastSyncedAt}
+        onOpenSignIn={onOpenSignIn}
+        onSignOut={onSignOut}
+      />
       <div className="w-full">
         <p className="mb-1 text-sm font-semibold text-gray-700">{t('profileLanguage')}</p>
         <p className="mb-2 text-xs text-gray-400">{t('profileLanguageHint')}</p>
@@ -858,6 +1018,8 @@ function HomeScreen({
   streak,
   points,
   account,
+  syncStatus,
+  lastSyncedAt,
   onSignOut,
   tab,
   onChangeTab,
@@ -870,7 +1032,7 @@ function HomeScreen({
   const totalStars = LESSONS.reduce((sum, lesson) => sum + (progress[lesson.id]?.bestStars ?? 0), 0)
   const maxStars = LESSONS.length * 3
   const currentStreak = getActiveStreak(streak, getLocalDateString())
-  const balance = points?.balance ?? 0
+  const balance = getPointsBalance(points)
   const [showFeedback, setShowFeedback] = useState(false)
   const [showAccountModal, setShowAccountModal] = useState(false)
 
@@ -930,6 +1092,8 @@ function HomeScreen({
             streak={streak}
             points={points}
             account={account}
+            syncStatus={syncStatus}
+            lastSyncedAt={lastSyncedAt}
             onOpenSignIn={() => setShowAccountModal(true)}
             onSignOut={onSignOut}
             onResetProgress={onResetProgress}
@@ -1690,12 +1854,30 @@ function AppShell() {
   const [dailyStreak, setDailyStreak] = useState(streakStorage.load)
   const [points, setPoints] = useState(pointsStorage.load)
   const [errorStats, setErrorStats] = useState(errorStorage.load)
+  const [deviceId] = useState(getDeviceId)
   const [tab, setTab] = useState('home')
   const [activeLessonId, setActiveLessonId] = useState(null)
   const [account, setAccount] = useState(() => {
     const session = accountSessionStorage.load()
     return session ? { email: session.email } : null
   })
+  // Sync status for `AccountSection` — 'idle' before the first sync attempt
+  // this session, then 'syncing'/'synced'/'error' as `PUT`/`GET /sync` calls
+  // resolve. `lastSyncedAt` is a `Date.now()` timestamp, turned into "synced
+  // Xm ago" by `syncStatusText`.
+  const [syncStatus, setSyncStatus] = useState(() => {
+    if (typeof window === 'undefined') return 'idle'
+    const url = new URL(window.location.href)
+    if (url.searchParams.get('authToken')) return 'syncing'
+    return accountSessionStorage.load()?.token ? 'syncing' : 'idle'
+  })
+  const [lastSyncedAt, setLastSyncedAt] = useState(null)
+  // Set right after a magic-link sign-in when this device *and* the account
+  // both already have data to reconcile — `{ cloud }` holds the cloud
+  // snapshot fetched for `MergeModal`'s three choices (`null` = no merge
+  // pending).
+  const [pendingMerge, setPendingMerge] = useState(null)
+  const [mergeApplying, setMergeApplying] = useState(false)
   // Session-level gate for the mid-lesson streak nudge: counts down once a
   // nudge has been shown, so the next one waits a few lessons rather than
   // popping up again the moment another milestone streak comes around.
@@ -1708,6 +1890,22 @@ function AppShell() {
     return lastLessonId ? { type: 'lastLesson', lessonId: lastLessonId } : null
   })
   const scrollBeforeLessonRef = useRef(null)
+  // Mirrors `progress`/`dailyStreak`/`points`/`errorStats` for the async sync
+  // handlers below, which need the *current* values at the time a network
+  // call resolves rather than whatever was current when the handler was
+  // created.
+  const dataRef = useRef({ progress, dailyStreak, points, errorStats })
+  // Background `PUT /sync` debounce timer (ongoing sync, see below).
+  const syncTimeoutRef = useRef(null)
+  // Guards the background-sync effect until the initial reconcile (push/pull/
+  // merge, in the `authToken` effect below) has run — otherwise it would push
+  // this device's pre-merge data to the cloud before the merge choice (or
+  // pull-merge) has a chance to run.
+  const skipNextPushRef = useRef(true)
+
+  useEffect(() => {
+    dataRef.current = { progress, dailyStreak, points, errorStats }
+  })
 
   useEffect(() => {
     progressStorage.save(progress)
@@ -1725,15 +1923,61 @@ function AppShell() {
     errorStorage.save(errorStats)
   }, [errorStats])
 
-  // Completes a magic-link sign-in: if the URL has `?authToken=...` (the
-  // learner just clicked the emailed link), exchange it for a session via
-  // `/auth/verify`, persist it, and strip the token from the URL either way
-  // so it isn't left in the address bar or re-submitted on refresh.
+  const pushSnapshot = useCallback((token) => {
+    setSyncStatus('syncing')
+    return pushSyncSnapshot(token, buildSyncPayload(dataRef.current))
+      .then(() => {
+        setSyncStatus('synced')
+        setLastSyncedAt(Date.now())
+      })
+      .catch(() => {
+        setSyncStatus('error')
+      })
+  }, [])
+
+  // Runs once on mount. Two cases:
+  //
+  // - URL has `?authToken=...` (the learner just clicked the emailed link):
+  //   exchange it for a session via `/auth/verify`, persist it, and strip the
+  //   token from the URL either way so it isn't left in the address bar or
+  //   re-submitted on refresh. Then reconcile this device's local data with
+  //   the account's cloud data — see the three branches below.
+  // - Otherwise, if a session is already stored (returning signed-in
+  //   learner): pull the cloud snapshot and merge it with local data
+  //   (`mergeSyncPayload`, same rules as `keepBest`), so edits made on
+  //   another device since the last visit aren't lost or overwritten.
   useEffect(() => {
     if (typeof window === 'undefined') return
     const url = new URL(window.location.href)
     const authToken = url.searchParams.get('authToken')
-    if (!authToken) return
+
+    if (!authToken) {
+      const session = accountSessionStorage.load()
+      if (!session?.token) {
+        skipNextPushRef.current = false
+        return
+      }
+      fetchSyncSnapshot(session.token)
+        .then((snapshot) => {
+          if (!snapshot?.payload) return pushSyncSnapshot(session.token, buildSyncPayload(dataRef.current))
+          const merged = mergeSyncPayload(dataRef.current, snapshot.payload)
+          setProgress(merged.progress)
+          setDailyStreak(merged.dailyStreak)
+          setPoints(merged.points)
+          setErrorStats(merged.errorStats)
+          dataRef.current = merged
+          return pushSyncSnapshot(session.token, buildSyncPayload(merged))
+        })
+        .then(() => {
+          setSyncStatus('synced')
+          setLastSyncedAt(Date.now())
+        })
+        .catch(() => setSyncStatus('error'))
+        .finally(() => {
+          skipNextPushRef.current = false
+        })
+      return
+    }
 
     url.searchParams.delete('authToken')
     window.history.replaceState({}, '', url.toString())
@@ -1744,21 +1988,111 @@ function AppShell() {
       body: JSON.stringify({ token: authToken }),
     })
       .then(async (response) => {
-        if (!response.ok) return
+        if (!response.ok) {
+          skipNextPushRef.current = false
+          return
+        }
         const { sessionToken, email, hasCloudData } = await response.json()
         accountSessionStorage.save({ token: sessionToken, email, expiresAt: Date.now() + SESSION_TTL_MS })
         setAccount({ email, hasCloudData })
+
+        if (!hasCloudData) {
+          // New account, or first device on this account: nothing to merge —
+          // push this device's local data so it becomes the cloud copy.
+          await pushSnapshot(sessionToken)
+          skipNextPushRef.current = false
+          return
+        }
+
+        const snapshot = await fetchSyncSnapshot(sessionToken).catch(() => null)
+        if (!hasLocalSyncData(dataRef.current)) {
+          // Existing account, fresh device with nothing of its own yet:
+          // adopt the cloud copy wholesale.
+          if (snapshot?.payload) {
+            setProgress(snapshot.payload.progress ?? {})
+            setDailyStreak(snapshot.payload.dailyStreak ?? {})
+            setPoints(snapshot.payload.points ?? {})
+            setErrorStats(snapshot.payload.errorStats ?? {})
+          }
+          setSyncStatus('synced')
+          setLastSyncedAt(Date.now())
+          skipNextPushRef.current = false
+          return
+        }
+
+        // Both sides have data — ask the learner how to reconcile them
+        // (see `MergeModal`/`handleResolveMerge`).
+        setPendingMerge({ cloud: snapshot?.payload ?? {} })
       })
       .catch(() => {
-        // Network failure verifying the magic link — leave the learner
-        // signed out; they can request a new link from the Profile tab.
+        skipNextPushRef.current = false
       })
-  }, [])
+  }, [pushSnapshot])
+
+  // Ongoing background sync: after any of the four storage saves above, while
+  // signed in, debounce a `PUT /sync` of the latest data. If it fails, local
+  // data stays the source of truth and the next save (or the next app load's
+  // pull-merge) retries.
+  useEffect(() => {
+    if (!account || skipNextPushRef.current) return
+    const session = accountSessionStorage.load()
+    if (!session?.token) return
+    if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current)
+    syncTimeoutRef.current = setTimeout(() => {
+      pushSnapshot(session.token)
+    }, SYNC_PUSH_DEBOUNCE_MS)
+    return () => clearTimeout(syncTimeoutRef.current)
+  }, [account, progress, dailyStreak, points, errorStats, pushSnapshot])
+
+  // Applies the learner's `MergeModal` choice and clears `pendingMerge`.
+  const handleResolveMerge = useCallback(
+    async (choice) => {
+      const session = accountSessionStorage.load()
+      const cloud = pendingMerge?.cloud ?? {}
+      if (!session?.token) {
+        setPendingMerge(null)
+        skipNextPushRef.current = false
+        return
+      }
+      setMergeApplying(true)
+      setSyncStatus('syncing')
+      try {
+        if (choice === 'useDevice') {
+          await pushSyncSnapshot(session.token, buildSyncPayload(dataRef.current))
+        } else if (choice === 'useAccount') {
+          setProgress(cloud.progress ?? {})
+          setDailyStreak(cloud.dailyStreak ?? {})
+          setPoints(cloud.points ?? {})
+          setErrorStats(cloud.errorStats ?? {})
+        } else {
+          const merged = mergeSyncPayload(dataRef.current, cloud)
+          setProgress(merged.progress)
+          setDailyStreak(merged.dailyStreak)
+          setPoints(merged.points)
+          setErrorStats(merged.errorStats)
+          dataRef.current = merged
+          await pushSyncSnapshot(session.token, buildSyncPayload(merged))
+        }
+        setSyncStatus('synced')
+        setLastSyncedAt(Date.now())
+      } catch {
+        setSyncStatus('error')
+      } finally {
+        setMergeApplying(false)
+        setPendingMerge(null)
+        skipNextPushRef.current = false
+      }
+    },
+    [pendingMerge],
+  )
 
   const handleSignOut = useCallback(async () => {
     const session = accountSessionStorage.load()
     accountSessionStorage.save(null)
     setAccount(null)
+    setSyncStatus('idle')
+    setLastSyncedAt(null)
+    if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current)
     if (!session?.token) return
     try {
       await fetch(`${SYNC_API_URL}/auth/signout`, {
@@ -1788,7 +2122,7 @@ function AppShell() {
     if (typeof window !== 'undefined' && !window.confirm(t('streakRepairConfirm', { cost: STREAK_REPAIR_COST }))) {
       return
     }
-    const { streak, points: nextPoints } = repairStreak(dailyStreak, points, getLocalDateString())
+    const { streak, points: nextPoints } = repairStreak(dailyStreak, points, getLocalDateString(), deviceId)
     setDailyStreak(streak)
     setPoints(nextPoints)
   }
@@ -1835,7 +2169,7 @@ function AppShell() {
           })
           setProgress((previous) => recordResult(previous, lesson.id, result))
           setDailyStreak((previous) => recordDailyStreak(previous, getLocalDateString()))
-          setPoints((previous) => addPoints(previous, pointsEarned))
+          setPoints((previous) => addPoints(previous, pointsEarned, deviceId))
           setErrorStats((previous) => recordErrors(previous, result.misses))
           setStreakNudgeCooldown((cooldown) => Math.max(0, cooldown - 1))
           handleReturnToHome()
@@ -1845,19 +2179,24 @@ function AppShell() {
   }
 
   return (
-    <HomeScreen
-      progress={progress}
-      streak={dailyStreak}
-      points={points}
-      account={account}
-      onSignOut={handleSignOut}
-      tab={tab}
-      onChangeTab={setTab}
-      onSelectLesson={handleSelectLesson}
-      onResetProgress={handleResetProgress}
-      onRepairStreak={handleRepairStreak}
-      scrollTarget={homeScrollTarget}
-    />
+    <>
+      <HomeScreen
+        progress={progress}
+        streak={dailyStreak}
+        points={points}
+        account={account}
+        syncStatus={syncStatus}
+        lastSyncedAt={lastSyncedAt}
+        onSignOut={handleSignOut}
+        tab={tab}
+        onChangeTab={setTab}
+        onSelectLesson={handleSelectLesson}
+        onResetProgress={handleResetProgress}
+        onRepairStreak={handleRepairStreak}
+        scrollTarget={homeScrollTarget}
+      />
+      {pendingMerge && <MergeModal applying={mergeApplying} onChoose={handleResolveMerge} />}
+    </>
   )
 }
 
