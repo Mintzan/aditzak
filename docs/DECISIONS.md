@@ -8,6 +8,36 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Excluded type-verb/type-negative for forms ambiguous with another verb's form
+
+A learner reported a `type-verb` question for `nahi`-present (`ni`): "Nik
+liburu bat ___." expects "nahi dut" ("I want a book"), but typing just "dut"
+— which the learner knew as `ukan`'s `ni`-present form — was marked wrong
+even though "Nik liburu bat dut." ("I have a book") is itself a correct Basque
+sentence. The blank alone gives no signal which of the two the lesson wants;
+this isn't specific to this one sentence — `nahi`'s present forms are all
+literally `'nahi ' + ukan`'s present forms (`nahi dut`/`nahi duzu`/`nahi du`
+vs. `dut`/`duzu`/`du`), so *every* `nahi`-present sentence has the same
+collision, and the same will apply to future `behar`/`ahal`/`ari`-style
+particle+auxiliary verbs.
+
+**Decision:** Added `hasAmbiguousTypedForm` (`lessonLogic.js`): true when a
+verb's `conjugations[tense][person]` is a multi-word compound whose trailing
+word exactly equals another agreement-compatible verb's (`agreementsCompatible`)
+form for the same `[tense][person]`. `generateQuestions` now takes an optional
+`verbs` param (the full `VERBS` list, passed from `App.jsx`'s
+`createExerciseState` and `getWeakSpotQuestions`) and drops `type-verb`/
+`type-negative` from `availableKinds` whenever this holds, falling back to the
+multiple-choice framings (`sentence`/`pronoun`/`form`) — their `options` come
+from `verb`'s own table, so the colliding bare form never appears as a choice.
+Rejected accepting both forms as correct: "dut" alone doesn't mean "I want a
+book", so marking it correct for a `nahi` lesson would teach the wrong thing —
+the fix is to not ask for a typed answer there at all, not to accept more
+answers.
+
+**Consequence:** `nahi`-present's `ni`/`zu`/`hura` lose `type-verb` entirely
+(all three collide with `ukan`), staying multiple-choice/bare-form only.
+
 ## 2026-06-13 — Fixed unanswerable typed review questions hiding the verb name
 
 A learner reported a `type-verb` question in `unit-5-review-3` (mixes `jakin`

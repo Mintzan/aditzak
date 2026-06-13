@@ -1334,6 +1334,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
       includeNegation: Boolean(lesson.negation),
       persons: lesson.persons,
       extraCandidates,
+      verbs: VERBS,
     })
   })
   // Review lessons get up to `EXTRA_REVIEW_EXERCISES` extra questions, drawn

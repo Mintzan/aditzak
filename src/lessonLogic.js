@@ -435,6 +435,29 @@ function agreementsCompatible(a, b) {
   return a.includes('nork') === b.includes('nork')
 }
 
+// Whether `verb`'s `[tense][person]` form is a "particle + auxiliary"
+// compound (e.g. `nahi`'s `nahi dut`) whose trailing word is *itself* a
+// complete, correct form of some other agreement-compatible verb for the same
+// `[tense][person]` (e.g. `ukan`'s `dut`). When that's the case, a fill-in-
+// the-blank sentence built for `verb` (e.g. "Nik liburu bat ___.") is
+// genuinely ambiguous for a *typed* answer: typing just the trailing word
+// ("dut") produces a different but equally grammatical Basque sentence ("Nik
+// liburu bat dut" = "I have a book", vs the intended "Nik liburu bat nahi
+// dut" = "I want a book") — a learner who knows that other verb is marked
+// wrong for producing correct Basque. Multiple-choice framings aren't
+// affected: their `options` are drawn from `verb`'s own table, so the
+// ambiguous bare form never appears as a choice. `verbs` (optional, the full
+// `VERBS` list) — without it this always returns `false`, so existing callers
+// that don't pass it are unaffected.
+function hasAmbiguousTypedForm(verb, tense, person, verbs) {
+  const form = verb.conjugations[tense]?.[person]
+  if (!verbs || !form || !form.includes(' ')) return false
+  const trailing = form.slice(form.lastIndexOf(' ') + 1)
+  return verbs.some(
+    (other) => other.id !== verb.id && agreementsCompatible(other.agreement, verb.agreement) && other.conjugations[tense]?.[person] === trailing,
+  )
+}
+
 // For a review lesson's source `{ verbId, tense }` (already resolved to
 // `verb`), collects each grammatical person's conjugated form from the
 // review's *other* sources (`sources`, the full resolved list including this
@@ -598,7 +621,14 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // a different table (`verb.pronouns`) that cross-verb conjugated forms
 // wouldn't belong in. Defaults to no extra candidates (the original
 // same-table-only behaviour).
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates } = {}) {
+//
+// `verbs` (optional, the full `VERBS` list) lets `hasAmbiguousTypedForm` rule
+// out `type-verb`/`type-negative` for a person whose form is a "particle +
+// auxiliary" compound (e.g. `nahi`'s `nahi dut`) that another verb's form
+// (e.g. `ukan`'s `dut`) could also correctly — but differently — complete the
+// same sentence with. Without `verbs`, no person is treated as ambiguous (the
+// original behaviour).
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
@@ -612,12 +642,13 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     const sentence = pickVariant(sentences[person])
     const pronounSentence = verb.pronouns && pronounSentences[person]
     const negativeSentence = pickVariant(negativeSentences[person])
+    const ambiguousTyping = hasAmbiguousTypedForm(verb, tense, person, verbs)
     const availableKinds =
       includeNegation && negativeSentence
-        ? [negativeSentence && 'negative', negativeSentence && !noTyping && 'type-negative'].filter(Boolean)
+        ? [negativeSentence && 'negative', negativeSentence && !noTyping && !ambiguousTyping && 'type-negative'].filter(Boolean)
         : [
             sentence && 'sentence',
-            sentence && !noTyping && 'type-verb',
+            sentence && !noTyping && !ambiguousTyping && 'type-verb',
             sentence && !noTyping && personsWithSentences.length >= 4 && 'spot-error',
             pronounSentence && 'pronoun',
             pronounSentence && !noTyping && 'type-pronoun',
@@ -844,7 +875,7 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
 
   return weakSpots.map(({ verbId, tense, person }) => {
     const verb = verbs.find((v) => v.id === verbId)
-    return generateQuestions(verb, tense, { rounds: 1 }).find((question) => question.person === person)
+    return generateQuestions(verb, tense, { rounds: 1, verbs }).find((question) => question.person === person)
   })
 }
 
