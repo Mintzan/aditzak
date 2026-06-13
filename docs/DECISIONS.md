@@ -8,6 +8,26 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Resolved issue #89: progress sync endpoints (`GET`/`PUT /sync`) in `sync-worker/`
+
+**Decision:** `GET /sync` and `PUT /sync` (`src/routes/sync.js`) are
+bearer-authenticated via the `authenticateSession` helper from #88 and
+read/write a single `progress_snapshots` row per user (upsert via
+`ON CONFLICT(user_id) DO UPDATE`, added to `src/db.js`). `GET` returns
+`404 { payload: null }` when no snapshot exists — chosen over `200` with a
+null body so the frontend's "no cloud data yet" branch is a plain HTTP
+status check rather than inspecting the body of a 200.
+
+`PUT`'s `schemaVersion` is stored alongside the payload but not yet
+validated/rejected by the backend — reconciling client/server schema
+versions is the frontend's job (#91's first-sync merge), this endpoint just
+persists whatever it's given. The 256KB cap
+(`MAX_PAYLOAD_BYTES` in `src/routes/sync.js`) is checked against the
+UTF-8 byte length of the stringified `payload` *after* parsing the request
+body — simpler than streaming/Content-Length checks, and acceptable since
+Workers' own request body limits (100MB+) make a 256KB JSON parse
+negligible.
+
 ## 2026-06-13 — Resolved issue #88: magic-link auth endpoints + rate limiting in `sync-worker/`
 
 **Decision:** Implemented `POST /auth/request-link`, `POST /auth/verify`, and

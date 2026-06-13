@@ -27,10 +27,29 @@ endpoints land in a follow-up issue.
 - `POST /auth/signout` (bearer-authenticated) — deletes the caller's
   `sessions` row. Returns `401` without a valid, unexpired bearer token.
 
-Every other authenticated endpoint (the `/sync` follow-up) reuses
-`src/session.js`'s `authenticateSession` helper: validates
-`Authorization: Bearer <token>` against `sessions` (hash lookup + expiry
-check) and bumps `last_seen_at`.
+Every other authenticated endpoint reuses `src/session.js`'s
+`authenticateSession` helper: validates `Authorization: Bearer <token>`
+against `sessions` (hash lookup + expiry check) and bumps `last_seen_at`.
+Returns `401` without a valid, unexpired bearer token.
+
+### Progress sync
+
+- `GET /sync` (bearer-authenticated) — returns
+  `{ payload, schemaVersion, updatedAt }` from `progress_snapshots` for the
+  caller's user, or `404 { "payload": null }` if no snapshot exists yet (new
+  account).
+- `PUT /sync {payload, schemaVersion}` (bearer-authenticated) — upserts the
+  caller's `progress_snapshots` row (`updated_at` set to now) and returns
+  `200 { ok, updatedAt }`. `payload` mirrors the four `localStorage` shapes
+  from `src/App.jsx` (`progress`, `dailyStreak`, `points`, `errorStats`);
+  `schemaVersion` follows the `:v1`-suffix convention `CLAUDE.md` describes
+  for those storage keys, so the backend can flag payloads from an
+  older/newer client schema. Payloads over 256KB (`MAX_PAYLOAD_BYTES` in
+  `src/routes/sync.js`) are rejected with `413` without writing to D1.
+
+This endpoint only stores/retrieves the whole-blob snapshot — merging local
+and cloud data is the frontend's responsibility (see the "first-sync merge +
+background sync" follow-up issue).
 
 Everything else → `404`.
 
@@ -130,8 +149,5 @@ Edit**).
 
 ## Next steps (not yet done)
 
-- `/auth/request-link`, `/auth/verify`, `/auth/signout` (magic-link auth +
-  rate limiting) — separate follow-up issue.
-- `GET`/`PUT /sync` (progress snapshot storage) — separate follow-up issue.
 - Frontend wiring (`AccountModal`/`AccountSection`, background sync) —
   separate follow-up issues.

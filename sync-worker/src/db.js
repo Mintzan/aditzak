@@ -52,3 +52,24 @@ export async function hasProgressSnapshot(db, userId) {
   const row = await db.prepare('SELECT user_id FROM progress_snapshots WHERE user_id = ?').bind(userId).first()
   return row != null
 }
+
+export async function getProgressSnapshot(db, userId) {
+  return db
+    .prepare('SELECT schema_version, payload_json, updated_at FROM progress_snapshots WHERE user_id = ?')
+    .bind(userId)
+    .first()
+}
+
+export async function upsertProgressSnapshot(db, userId, schemaVersion, payloadJson, now) {
+  await db
+    .prepare(
+      `INSERT INTO progress_snapshots (user_id, schema_version, payload_json, updated_at)
+       VALUES (?, ?, ?, ?)
+       ON CONFLICT(user_id) DO UPDATE SET
+         schema_version = excluded.schema_version,
+         payload_json = excluded.payload_json,
+         updated_at = excluded.updated_at`,
+    )
+    .bind(userId, schemaVersion, payloadJson, now)
+    .run()
+}
