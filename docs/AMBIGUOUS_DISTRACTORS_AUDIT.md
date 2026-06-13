@@ -21,7 +21,13 @@ Tracked by epic #115, split into three sub-issues:
   ticks each entry's "both valid" or "wrong/ungrammatical" checkbox** — those ticks
   become the input for #114's curated `CROSS_CANDIDATE_EXCLUSIONS` table. Regenerate
   the doc with `node scripts/list-cross-candidates.mjs` after a `LESSONS`/`VERBS`
-  change (re-triage only the new/changed entries).
+  change (re-triage only the new/changed entries). `docs/CROSS_CANDIDATE_TRIAGE_PRIORITY.md`
+  groups the 2101 entries into 3 priority tiers (which verb pairs are most/least
+  likely to need a "both valid" tick) — start there rather than reading in order.
+  It also flags a likely *second* "both valid" pair beyond `ukan`/`nahi`/`eduki`/
+  `ikusi`/`jakin`: `joan`↔`etorri` (shared allative adjunct, opposite direction —
+  "Ane etxera dator." vs "Ane etxera doa." are both grammatical, different-meaning
+  sentences).
 - **#114 (Layer 2b/3, encode curated exclusions)** — not yet done, blocked on the
   triage above. Covers the broader "different sentence text, both still valid"
   cases below (`eduki` vs `ukan`/`ikusi`, `jakin`'s `dakit`, etc.), which need
