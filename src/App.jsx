@@ -836,9 +836,14 @@ function AccountModal({ onClose }) {
         setErrorKey('accountErrorRateLimited')
         return
       }
-      if (!response.ok) {
+      if (response.status === 400) {
         setStatus('error')
         setErrorKey('accountErrorInvalidEmail')
+        return
+      }
+      if (!response.ok) {
+        setStatus('error')
+        setErrorKey('accountErrorNetwork')
         return
       }
       setStatus('idle')

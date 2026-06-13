@@ -109,9 +109,16 @@ cd sync-worker
 npx wrangler secret put RESEND_API_KEY
 ```
 
+Or run the "Set sync worker secret" GitHub Actions workflow
+(`.github/workflows/set-sync-worker-secret.yml`, `workflow_dispatch`), which
+puts the repo's `RESEND_API_KEY` secret onto the sync-worker the same way.
+
 This worker has its **own** `RESEND_API_KEY` secret — separate from
 `worker/`'s, even if both use the same Resend account/key value, since each
-worker's secrets are independent.
+worker's secrets are independent. **Without this secret set, `/auth/request-link`
+returns HTTP 502** (Resend rejects the unauthenticated request), which the
+sign-in form currently can't distinguish from other server errors except by
+its generic "Something went wrong" message.
 
 ## 4. Develop and deploy locally
 
