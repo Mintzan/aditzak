@@ -21,7 +21,7 @@ AUTH_FROM_EMAIL = "onboarding@resend.dev"
 [[d1_databases]]
 binding = "DB"
 database_name = "aditzak-sync"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "1399fdb1-a3a1-4871-87d5-4d21951eb1bc"
 migrations_dir = "migrations"
 
 # Set with: wrangler secret put RESEND_API_KEY

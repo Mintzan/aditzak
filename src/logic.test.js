@@ -36,6 +36,7 @@ import {
   shuffle,
   STREAK_REPAIR_COST,
 } from './lessonLogic'
+import { VERBS } from './data/verbs'
 
 describe('computeStars', () => {
   it('returns 0 when there are no questions', () => {
@@ -714,6 +715,101 @@ describe('generateQuestions', () => {
           })
         }
       })
+    })
+  })
+
+  describe('with verbs (ambiguous typed forms)', () => {
+    // Mirrors `nahi`/`ukan`: `nahi dut` rides `ukan`'s `dut` for `ni`, so
+    // "Nik liburu bat ___." could be typed as either "nahi dut" (intended) or
+    // "dut" (a different but equally grammatical sentence, "I have a book").
+    const compoundVerb = {
+      id: 'compound',
+      agreement: ['nor', 'nork'],
+      conjugations: {
+        present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du' },
+      },
+      sentences: {
+        present: {
+          ni: 'Nik liburu bat ___.',
+          zu: 'Zuk liburu bat ___?',
+          hura: 'Hark liburu bat ___.',
+        },
+      },
+      negativeSentences: {
+        present: {
+          ni: 'Nik ez ___ liburu bat.',
+        },
+      },
+    }
+    const auxiliaryVerb = {
+      id: 'auxiliary',
+      agreement: ['nor', 'nork'],
+      conjugations: {
+        present: { ni: 'dut', zu: 'duzu', hura: 'du' },
+      },
+    }
+    const incompatibleVerb = {
+      id: 'incompatible',
+      agreement: ['nor'],
+      conjugations: {
+        present: { ni: 'naiz', zu: 'zara', hura: 'da' },
+      },
+    }
+
+    it('never offers type-verb for a person whose compound form\'s trailing word matches an agreement-compatible verb', () => {
+      const verbs = [compoundVerb, auxiliaryVerb]
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+        generateQuestions(compoundVerb, 'present', { verbs }).forEach((question) => {
+          expect(question.kind).not.toBe('type-verb')
+        })
+        vi.restoreAllMocks()
+      }
+    })
+
+    it('never offers type-negative for an ambiguous person, even with includeNegation', () => {
+      const verbs = [compoundVerb, auxiliaryVerb]
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+        generateQuestions(compoundVerb, 'present', { verbs, includeNegation: true }).forEach((question) => {
+          expect(question.kind).not.toBe('type-negative')
+        })
+        vi.restoreAllMocks()
+      }
+    })
+
+    it('still allows type-verb when the trailing word only matches an agreement-incompatible verb', () => {
+      // [0, 0.75) / 2 kinds ('sentence', 'type-verb') -> slice 1 (0.375-0.75) is 'type-verb'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.5)
+
+      const questions = generateQuestions(compoundVerb, 'present', { verbs: [compoundVerb, incompatibleVerb] })
+
+      expect(questions.some((question) => question.kind === 'type-verb')).toBe(true)
+    })
+
+    it('still allows type-verb when verbs is not provided (default, unaffected)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.5)
+
+      const questions = generateQuestions(compoundVerb, 'present')
+
+      expect(questions.some((question) => question.kind === 'type-verb')).toBe(true)
+    })
+
+    // Regression test for the real `nahi`/`ukan` collision: `nahi`'s present
+    // forms (`nahi dut`/`nahi duzu`/`nahi du`) are `'nahi ' + ukan`'s present
+    // forms (`dut`/`duzu`/`du`), so e.g. "Nik liburu bat ___." can be typed as
+    // either "nahi dut" (intended, "I want a book") or "dut" (also correct
+    // Basque, but "I have a book") — a `type-verb` question there has no way
+    // to tell the learner which is wanted.
+    it('never offers type-verb for nahi-present when generated with the real VERBS list', () => {
+      const nahi = VERBS.find((v) => v.id === 'nahi')
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+        generateQuestions(nahi, 'present', { verbs: VERBS, rounds: 2 }).forEach((question) => {
+          expect(question.kind).not.toBe('type-verb')
+        })
+        vi.restoreAllMocks()
+      }
     })
   })
 
