@@ -451,6 +451,38 @@ export function agreementsCompatible(a, b) {
   return a.includes('nork') === b.includes('nork')
 }
 
+// Layer 2b/3 of `docs/AMBIGUOUS_DISTRACTORS_AUDIT.md` (#114): curated pairs
+// where `agreementsCompatible` and `sentenceTemplatesCollide` aren't enough —
+// two verbs share the same `nor-nork` "Subject(-k) [Object] Verb" frame
+// closely enough that *either*'s form reads as a valid (if differently-meant)
+// completion of the other's sentence, even when the sentence *text* differs
+// (so `sentenceTemplatesCollide` doesn't catch it). `siblingVerbId` is
+// excluded from `verbId`'s cross-candidate pool:
+// - `'always'` — excluded from `getCrossVerbCandidates`'s `extraCandidates`
+//   *and* `collectCrossSourceCandidates`'s `verb-choice`/`case-mixer` pools.
+// - `'verb-choice-only'` — still allowed as a same-table-style distractor in
+//   `extraCandidates`, but excluded from `verb-choice`/`case-mixer` (where
+//   "which verb fits this sentence" *is* the whole question, so any
+//   also-valid sibling makes it unanswerable).
+//
+// Confirmed pairs so far (see `docs/CROSS_CANDIDATE_REVIEW.md` for the full
+// triage-in-progress): `ukan`/`nahi` ("have" vs "want" — #112 already excludes
+// their one *literal* shared sentence for `ni`/present; this pair-level entry
+// additionally covers other persons/templates, e.g. `nahi`'s "Katuak esne
+// pixka bat ___." accepting `ukan`'s `du` as "the cat has some milk", equally
+// valid alongside the intended `nahi du` "the cat wants some milk").
+const CROSS_CANDIDATE_EXCLUSIONS = {
+  ukan: { nahi: 'always' },
+  nahi: { ukan: 'always' },
+}
+
+export function isCrossCandidateExcluded(verbId, siblingVerbId, context) {
+  const entry = CROSS_CANDIDATE_EXCLUSIONS[verbId]?.[siblingVerbId]
+  if (!entry) return false
+  if (entry === 'always') return true
+  return entry === 'verb-choice-only' && context !== 'extra-candidates'
+}
+
 // Whether `verb`'s `[tense][person]` form is a "particle + auxiliary"
 // compound (e.g. `nahi`'s `nahi dut`) whose trailing word is *itself* a
 // complete, correct form of some other agreement-compatible verb for the same
@@ -525,6 +557,7 @@ export function getCrossVerbCandidates(verb, tense, sources, verbs, extraSources
         const siblingVerb = verbs.find((v) => v.id === verbId)
         if (!siblingVerb || !agreementsCompatible(siblingVerb.agreement, verb.agreement)) return null
         if (sentenceTemplatesCollide(verb, tense, siblingVerb, siblingTense, person)) return null
+        if (isCrossCandidateExcluded(verb.id, siblingVerb.id, 'extra-candidates')) return null
         return siblingVerb.conjugations[siblingTense]?.[person]
       })
       .filter(Boolean)
@@ -768,6 +801,7 @@ function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementM
       const siblingForms = siblings
         .filter((sibling) => agreementMatches(sibling.verb.agreement, verb.agreement))
         .filter((sibling) => !sentenceTemplatesCollide(verb, tense, sibling.verb, sibling.tense, person))
+        .filter((sibling) => !isCrossCandidateExcluded(verb.id, sibling.verb.id, 'verb-choice'))
         .map((sibling) => sibling.verb.conjugations[sibling.tense]?.[person])
         .filter(Boolean)
       // Capped at 3 distractors (4 options total, including `correct`) — same

@@ -31,7 +31,8 @@ Pairs (entry counts from `docs/CROSS_CANDIDATE_REVIEW.md`):
   (have/hold vs see — both valid per the audit)
 - `ukan`↔`ikusi`: 28 + 15 = 43
 - `jakin`↔`nahi`: 24 + 23 = 47
-- `ukan`↔`nahi`: 12 + 8 = 20 (non-`ni`/non-literal-collision instances)
+- `ukan`↔`nahi`: 12 + 8 = 20 (non-`ni`/non-literal-collision instances) —
+  **resolved by #114** (`CROSS_CANDIDATE_EXCLUSIONS`, see `docs/DECISIONS.md`)
 - `eduki`↔`ukan`: 15 + 15 = 30 — e.g. "Anek liburua eskuan dauka/du." (near-synonyms)
 - `jakin`↔`ikusi`: 12 + 9 = 21
 - `ikusi`↔`nahi`: 9 + 9 = 18

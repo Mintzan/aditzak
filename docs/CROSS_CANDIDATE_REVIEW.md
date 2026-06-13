@@ -16814,8 +16814,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - nahi (to want) — correct: `nahi du` → "Anek liburu bat nahi du."
 - ukan (to have) — substitute: `du` → "Anek liburu bat du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice)
-- [ ] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 1866. `nahi` (present) vs `ukan` (present)
 
@@ -16823,8 +16824,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - nahi (to want) — correct: `nahi du` → "Hark opari bat nahi du."
 - ukan (to have) — substitute: `du` → "Hark opari bat du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice)
-- [ ] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 1867. `nahi` (present) vs `ukan` (present)
 
@@ -16832,8 +16834,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - nahi (to want) — correct: `nahi du` → "Katuak esne pixka bat nahi du."
 - ukan (to have) — substitute: `du` → "Katuak esne pixka bat du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice)
-- [ ] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 1868. `nahi` (present) vs `ukan` (present)
 
@@ -16841,8 +16844,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - nahi (to want) — correct: `nahi du` → "Mikelek kafe bat nahi du."
 - ukan (to have) — substitute: `du` → "Mikelek kafe bat du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice)
-- [ ] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 1869. `nahi` (present) vs `ukan` (present)
 
@@ -16850,8 +16854,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - nahi (to want) — correct: `nahi duzu` → "Zuk etorri nahi duzu?"
 - ukan (to have) — substitute: `duzu` → "Zuk etorri duzu?"
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice)
-- [ ] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 1870. `nahi` (present) vs `ukan` (present)
 
@@ -16859,8 +16864,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - nahi (to want) — correct: `nahi duzu` → "Zuk kafe bat nahi duzu?"
 - ukan (to have) — substitute: `duzu` → "Zuk kafe bat duzu?"
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice)
-- [ ] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 1871. `nahi` (present) vs `ukan` (present)
 
@@ -16868,8 +16874,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - nahi (to want) — correct: `nahi duzu` → "Zuk liburu bat nahi duzu?"
 - ukan (to have) — substitute: `duzu` → "Zuk liburu bat duzu?"
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice)
-- [ ] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 1872. `nahi` (present) vs `ukan` (present)
 
@@ -16877,8 +16884,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - nahi (to want) — correct: `nahi duzu` → "Zuk sagar bat nahi duzu?"
 - ukan (to have) — substitute: `duzu` → "Zuk sagar bat duzu?"
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice)
-- [ ] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `ukan` from `nahi`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 1873. `ukan` (present) vs `ari` (present)
 
@@ -18839,8 +18847,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `du` → "Anek auto bat du."
 - nahi (to want) — substitute: `nahi du` → "Anek auto bat nahi du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2091. `ukan` (present) vs `nahi` (present)
 
@@ -18848,8 +18857,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `du` → "Berak etxe bat du."
 - nahi (to want) — substitute: `nahi du` → "Berak etxe bat nahi du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2092. `ukan` (present) vs `nahi` (present)
 
@@ -18857,8 +18867,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `du` → "Berak seme bat du."
 - nahi (to want) — substitute: `nahi du` → "Berak seme bat nahi du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2093. `ukan` (present) vs `nahi` (present)
 
@@ -18866,8 +18877,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `du` → "Etxeak lorategi bat du."
 - nahi (to want) — substitute: `nahi du` → "Etxeak lorategi bat nahi du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2094. `ukan` (present) vs `nahi` (present)
 
@@ -18875,8 +18887,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `du` → "Hark arkatz bat du."
 - nahi (to want) — substitute: `nahi du` → "Hark arkatz bat nahi du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2095. `ukan` (present) vs `nahi` (present)
 
@@ -18884,8 +18897,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `du` → "Hark pasaporte bat du."
 - nahi (to want) — substitute: `nahi du` → "Hark pasaporte bat nahi du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2096. `ukan` (present) vs `nahi` (present)
 
@@ -18893,8 +18907,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `du` → "Mikelek liburu bat du."
 - nahi (to want) — substitute: `nahi du` → "Mikelek liburu bat nahi du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2097. `ukan` (present) vs `nahi` (present)
 
@@ -18902,8 +18917,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `du` → "Txakurrak hezur bat du."
 - nahi (to want) — substitute: `nahi du` → "Txakurrak hezur bat nahi du."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2098. `ukan` (present) vs `nahi` (present)
 
@@ -18911,8 +18927,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `duzu` → "Zuk anaia bat duzu."
 - nahi (to want) — substitute: `nahi duzu` → "Zuk anaia bat nahi duzu."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2099. `ukan` (present) vs `nahi` (present)
 
@@ -18920,8 +18937,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `duzu` → "Zuk auto bat duzu."
 - nahi (to want) — substitute: `nahi duzu` → "Zuk auto bat nahi duzu."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2100. `ukan` (present) vs `nahi` (present)
 
@@ -18929,8 +18947,9 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `duzu` → "Zuk koaderno bat duzu."
 - nahi (to want) — substitute: `nahi duzu` → "Zuk koaderno bat nahi duzu."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).
 
 ### 2101. `ukan` (present) vs `nahi` (present)
 
@@ -18938,5 +18957,6 @@ pairs are most/least likely to need a "both valid" tick) before diving in.
 - ukan (to have) — correct: `duzu` → "Zuk mapa bat duzu."
 - nahi (to want) — substitute: `nahi duzu` → "Zuk mapa bat nahi duzu."
 - Found in: unit-2-review (extra candidate), unit-2-review (verb-choice), unit-5-review-1 (extra candidate), unit-5-review-1 (verb-choice)
-- [ ] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
+- [x] Both readings are valid Basque — exclude `nahi` from `ukan`'s pool (and consider the reverse direction too)
 - [ ] Substitution reads as wrong/ungrammatical — keep as a distractor
+- Resolved by #114: `CROSS_CANDIDATE_EXCLUSIONS` now excludes `ukan`/`nahi` from each other's pools in both directions (src/lessonLogic.js).

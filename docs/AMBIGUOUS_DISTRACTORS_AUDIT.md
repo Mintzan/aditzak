@@ -28,10 +28,16 @@ Tracked by epic #115, split into three sub-issues:
   `ikusi`/`jakin`: `joan`↔`etorri` (shared allative adjunct, opposite direction —
   "Ane etxera dator." vs "Ane etxera doa." are both grammatical, different-meaning
   sentences).
-- **#114 (Layer 2b/3, encode curated exclusions)** — not yet done, blocked on the
-  triage above. Covers the broader "different sentence text, both still valid"
-  cases below (`eduki` vs `ukan`/`ikusi`, `jakin`'s `dakit`, etc.), which need
-  native-speaker triage rather than a mechanical check.
+- **#114 (Layer 2b/3, encode curated exclusions)** — **partially done**: the
+  `ukan`↔`nahi` pair (both directions) is now encoded in
+  `CROSS_CANDIDATE_EXCLUSIONS` (`src/lessonLogic.js`), prompted by a live
+  in-the-wild report (the `nahi` `hura` sentence "Katuak esne pixka bat ___."
+  offering `ukan`'s `du` as a distractor — see `docs/DECISIONS.md`,
+  2026-06-13). The corresponding 20 `docs/CROSS_CANDIDATE_REVIEW.md` entries
+  (1865-1872, 2090-2101) are ticked. The broader "different sentence text,
+  both still valid" cases below (`eduki` vs `ukan`/`ikusi`, `jakin`'s `dakit`,
+  `joan`↔`etorri`, etc.) remain blocked on the native-speaker triage above —
+  see `docs/CROSS_CANDIDATE_TRIAGE_PRIORITY.md`.
 
 ## Summary
 
@@ -118,6 +124,11 @@ problem** — the audit below found no clear "both valid" cases there.
 
 This is the clearest case in the data: two verbs share a literal sentence
 string with two different, both-correct answers.
+
+**Resolved by #114** (2026-06-13): `ukan`/`nahi` now mutually excluded via
+`CROSS_CANDIDATE_EXCLUSIONS` — both the literal-template case above (also
+covered by #112) and other-template instances (e.g. `nahi`'s `hura` sentence
+"Katuak esne pixka bat ___.").
 
 ### `unit-8-review` / `unit-8-review-plural` (sources: `eduki`, `ibili` present — Delivery 4 fallback)
 

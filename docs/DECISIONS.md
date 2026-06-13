@@ -22,6 +22,35 @@ Pages without a SPA fallback) and requires no UI — kept deliberately
 undocumented/no toggle, since it's a developer convenience, not a feature for
 learners.
 
+## 2026-06-13 — #114: added `CROSS_CANDIDATE_EXCLUSIONS`, scoped to the confirmed `ukan`↔`nahi` pair
+
+#114 (Layer 2b/3 of `docs/AMBIGUOUS_DISTRACTORS_AUDIT.md`) is blocked on a
+native-speaker triage of `docs/CROSS_CANDIDATE_REVIEW.md`'s ~2100 entries
+(`docs/CROSS_CANDIDATE_TRIAGE_PRIORITY.md`), which hasn't happened yet. But a
+live instance of the bug was reported (screenshot of mintzan.github.io):
+`nahi`'s `hura` sentence "Katuak esne pixka bat ___." (correct `nahi du`, "the
+cat wants some milk") offered `ukan`'s `du` ("the cat has some milk") as a
+distractor — also valid Basque, just a different meaning. This is the
+`ukan`↔`nahi` pair already double-confirmed by the audit (the literal-template
+instance was fixed by #112; this is the same pair's non-literal instances).
+
+Rather than wait for the full triage, implemented just this one pair now:
+`CROSS_CANDIDATE_EXCLUSIONS` (`src/lessonLogic.js`) is a curated
+`{ [verbId]: { [siblingVerbId]: 'always' | 'verb-choice-only' } }` table,
+checked via `isCrossCandidateExcluded(verbId, siblingVerbId, context)` from
+both `getCrossVerbCandidates` (`extraCandidates`) and
+`collectCrossSourceCandidates` (`verb-choice`/`case-mixer`). Currently holds
+only `ukan: { nahi: 'always' }` / `nahi: { ukan: 'always' }`. Ticked the 20
+corresponding `docs/CROSS_CANDIDATE_REVIEW.md` entries (1865-1872, 2090-2101)
+as resolved.
+
+The other Tier 1 pairs (`eduki`↔`ukan`, `eduki`↔`ikusi`, `jakin`↔`nahi`, etc.)
+and the flagged `joan`↔`etorri` (Tier 2) remain unimplemented — they're
+plausible per the audit's reasoning but not yet confirmed by an in-the-wild
+report or a native speaker, so encoding them now would be guessing at
+exclusions per #114's own caution. `CROSS_CANDIDATE_EXCLUSIONS`'s table shape
+is designed to take more entries cheaply once those are confirmed.
+
 ## 2026-06-13 — Fixed a pre-existing crash in cross-verb question generation for "pool"-shaped lessons
 
 While building #113's triage script (below), `getIntroducedSources` crashed
