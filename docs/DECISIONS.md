@@ -8,6 +8,26 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Fixed "scroll to last lesson on load" being clobbered by browser scroll restoration
+
+**Problem:** The 2026-06-12 scroll-to-last-completed-lesson feature worked on a
+fresh `page.goto`, but not on an actual page reload — which is how most
+returning learners "load the page" (reopening a tab, refreshing). Reproduced
+with Playwright: load → scroll to last lesson (works) → reload → scroll jumps
+back to wherever it was before the reload, not the last lesson.
+
+**Cause:** `history.scrollRestoration` defaults to `'auto'`, so the browser
+restores the pre-reload scroll position itself, and it does so *after* React's
+effects run — overriding the `scrollIntoView`/`scrollTo` call in
+`HomeScreen`'s mount effect.
+
+**Fix:** Set `window.history.scrollRestoration = 'manual'` once at startup
+(`src/main.jsx`), opting the app out of the browser's automatic restoration
+entirely so our own scroll logic (jump to last lesson on first load, restore
+position when returning from an exercise) is the only thing moving the
+viewport. Verified with Playwright that a reload now lands back at the last
+completed lesson instead of the top.
+
 ## 2026-06-13 — Fixed unanswerable typed review questions hiding the verb name
 
 A learner reported a `type-verb` question in `unit-5-review-3` (mixes `jakin`
