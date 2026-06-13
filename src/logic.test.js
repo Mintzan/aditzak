@@ -4,8 +4,10 @@ import {
   canRepairStreak,
   computeLessonPoints,
   computeStars,
+  CROSS_VERB_QUESTION_COUNT,
   EXTRA_REVIEW_EXERCISES,
   exerciseReducer,
+  generateCrossVerbQuestions,
   generateQuestions,
   getActiveStreak,
   getCrossVerbCandidates,
@@ -956,6 +958,103 @@ describe('getCrossVerbCandidates', () => {
   })
 })
 
+describe('generateCrossVerbQuestions', () => {
+  const izan = {
+    id: 'izan',
+    verb: 'izan',
+    agreement: ['nor'],
+    conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da' } },
+    sentences: {
+      present: {
+        ni: 'Ni irakaslea ___.',
+        zu: 'Zu irakaslea ___.',
+        hura: 'Hura irakaslea ___.',
+      },
+    },
+  }
+  const egon = {
+    id: 'egon',
+    verb: 'egon',
+    agreement: ['nor'],
+    conjugations: { present: { ni: 'nago', zu: 'zaude', hura: 'dago' } },
+    sentences: {
+      present: {
+        ni: 'Ni etxean ___.',
+        zu: 'Zu etxean ___.',
+        hura: 'Hura etxean ___.',
+      },
+    },
+  }
+  const ukan = {
+    id: 'ukan',
+    verb: 'ukan',
+    agreement: ['nor', 'nork'],
+    conjugations: { present: { ni: 'dut', zu: 'duzu', hura: 'du' } },
+    sentences: {
+      present: {
+        ni: 'Nik liburua ___.',
+        zu: 'Zuk liburua ___.',
+        hura: 'Hark liburua ___.',
+      },
+    },
+  }
+
+  it('produces verb-choice questions whose options always include the correct form, with no duplicates', () => {
+    const sources = [
+      { verb: izan, tense: 'present' },
+      { verb: egon, tense: 'present' },
+    ]
+
+    const questions = generateCrossVerbQuestions(sources, { count: 10 })
+
+    expect(questions.length).toBeGreaterThan(0)
+    questions.forEach((question) => {
+      expect(question.kind).toBe('verb-choice')
+      expect(question.options).toContain(question.correct)
+      expect(new Set(question.options).size).toBe(question.options.length)
+      expect(question.options.length).toBe(2)
+      expect(question.sentence).toContain('___')
+    })
+  })
+
+  it('caps the number of returned questions at `count`', () => {
+    const sources = [
+      { verb: izan, tense: 'present' },
+      { verb: egon, tense: 'present' },
+    ]
+
+    expect(generateCrossVerbQuestions(sources, { count: 1 })).toHaveLength(1)
+    expect(generateCrossVerbQuestions(sources)).toHaveLength(CROSS_VERB_QUESTION_COUNT)
+  })
+
+  it('returns nothing for a single-source review with no siblings to choose between', () => {
+    const sources = [{ verb: izan, tense: 'present' }]
+
+    expect(generateCrossVerbQuestions(sources)).toEqual([])
+  })
+
+  it('excludes agreement-incompatible sources (nor vs nor-nork) from the options pool', () => {
+    const sources = [
+      { verb: izan, tense: 'present' },
+      { verb: ukan, tense: 'present' },
+    ]
+
+    expect(generateCrossVerbQuestions(sources)).toEqual([])
+  })
+
+  it('restricts questions to the given persons when `persons` is provided', () => {
+    const sources = [
+      { verb: izan, tense: 'present' },
+      { verb: egon, tense: 'present' },
+    ]
+
+    const questions = generateCrossVerbQuestions(sources, { persons: ['ni'], count: 10 })
+
+    expect(questions.length).toBeGreaterThan(0)
+    questions.forEach((question) => expect(question.person).toBe('ni'))
+  })
+})
+
 describe('getExplanation', () => {
   const verbAbsolutive = {
     id: 'verb',
@@ -1005,6 +1104,12 @@ describe('getExplanation', () => {
     ;['form', 'sentence', 'type-verb', 'spot-error'].forEach((kind) => {
       expect(getExplanation(verbAbsolutive, { kind, tense: 'present', person: 'ni' }, t)).toBeNull()
     })
+  })
+
+  it('explains verb-choice questions with the correct verb and form', () => {
+    const question = { kind: 'verb-choice', tense: 'present', person: 'ni', correct: 'naiz' }
+
+    expect(getExplanation(verbAbsolutive, question, t)).toBe('explanationVerbChoice:{"verb":"izan","form":"naiz"}')
   })
 })
 

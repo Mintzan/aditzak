@@ -5,6 +5,7 @@ import {
   computeLessonPoints,
   computeStars,
   exerciseReducer,
+  generateCrossVerbQuestions,
   generateQuestions,
   getActiveStreak,
   getCrossVerbCandidates,
@@ -978,7 +979,17 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // reinforcement for exactly the forms that need it, on top of the review's
   // normal cross-section.
   const extraQuestions = lesson.review ? getWeakSpotQuestions(errorStats, sources, VERBS) : []
-  const allQuestions = shuffle([...questions, ...extraQuestions])
+  // Review lessons also get up to `CROSS_VERB_QUESTION_COUNT` dedicated
+  // "which verb fits this sentence" questions (see
+  // `generateCrossVerbQuestions`) — the deliberate, single-focus counterpart
+  // to Delivery 1's occasional cross-verb distractor.
+  const crossVerbQuestions = lesson.review
+    ? generateCrossVerbQuestions(
+        sources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense })),
+        { persons: lesson.persons },
+      )
+    : []
+  const allQuestions = shuffle([...questions, ...extraQuestions, ...crossVerbQuestions])
   return {
     queue: allQuestions,
     total: allQuestions.length,
@@ -1212,6 +1223,7 @@ const QUESTION_PROMPT_KEYS = {
   'type-pronoun': 'questionTypePronoun',
   negative: 'questionNegation',
   'type-negative': 'questionTypeNegation',
+  'verb-choice': 'questionVerbChoice',
 }
 
 // The explanation toggle is its own pill-shaped button above the

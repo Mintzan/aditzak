@@ -80,6 +80,7 @@ export const TRANSLATIONS = {
     questionTypePronoun: 'Type the pronoun that completes the sentence.',
     questionNegation: 'Which word completes the negative sentence?',
     questionTypeNegation: 'Type the word that completes the negative sentence.',
+    questionVerbChoice: 'Which verb form fits this sentence?',
     personNi: 'I',
     personHi: 'you (familiar)',
     personZu: 'you',
@@ -157,6 +158,8 @@ export const TRANSLATIONS = {
       "'{pronoun}' has no extra ending because '{verb}' only involves one person here — there's no separate 'doer' and 'receiver' to mark, so no '-k' is needed. The verb form '{form}' matches that person.",
     explanationNegation:
       "To say 'not', Basque puts 'ez' right before the verb — and 'ez {form}' moves to right after the subject, with the rest of the sentence following after it.",
+    explanationVerbChoice:
+      "'{form}' is the right form of '{verb}' for this sentence — the other option(s) are forms of a different verb, which wouldn't fit this sentence's structure.",
   },
   es: {
     navLearn: 'Aprender',
@@ -208,6 +211,7 @@ export const TRANSLATIONS = {
     questionTypePronoun: 'Escribe el pronombre que completa la frase.',
     questionNegation: '¿Qué palabra completa la frase negativa?',
     questionTypeNegation: 'Escribe la palabra que completa la frase negativa.',
+    questionVerbChoice: '¿Qué forma verbal completa esta frase?',
     personNi: 'yo',
     personHi: 'tú (familiar)',
     personZu: 'tú',
@@ -285,6 +289,8 @@ export const TRANSLATIONS = {
       "'{pronoun}' no lleva ninguna terminación extra porque '{verb}' solo tiene una persona en esta frase — no hay un 'que hace' y un 'a quién', así que no se añade '-k'. La forma verbal '{form}' concuerda con esa persona.",
     explanationNegation:
       "Para decir 'no', el euskera coloca 'ez' justo antes del verbo — y 'ez {form}' se desplaza justo después del sujeto, quedando el resto de la frase a continuación.",
+    explanationVerbChoice:
+      "'{form}' es la forma correcta de '{verb}' para esta frase — la(s) otra(s) opción(es) son formas de otro verbo, que no encajarían en la estructura de esta frase.",
   },
   eu: {
     navLearn: 'Ikasi',
@@ -336,6 +342,7 @@ export const TRANSLATIONS = {
     questionTypePronoun: 'Idatzi esaldia osatzen duen izenordaina.',
     questionNegation: 'Zein hitzek osatzen du esaldi ezeztatzailea?',
     questionTypeNegation: 'Idatzi esaldi ezeztatzailea osatzen duen hitza.',
+    questionVerbChoice: 'Zein aditz-formak osatzen du esaldi hau?',
     personNi: 'ni',
     personHi: 'hi (hurbila)',
     personZu: 'zu',
@@ -413,5 +420,7 @@ export const TRANSLATIONS = {
       "'{pronoun}'-k ez darama bukaera berezirik, '{verb}'-ek pertsona bakarra duelako esaldi honetan — ez dago 'egilerik' eta 'jasolerik' bereizteko, eta horregatik ez da '-k' gehitzen. '{form}' formak pertsona horrekin bat egiten du.",
     explanationNegation:
       "Ezeztatzeko, euskarak 'ez' aditzaren aurrean jartzen du — eta 'ez {form}' subjektuaren ondora pasatzen da, gainerako esaldia horren ondoren utziz.",
+    explanationVerbChoice:
+      "'{form}' da '{verb}'-en forma egokia esaldi honetarako — beste aukera(k) beste aditz baten formak dira, eta ez dute esaldi honen egiturarekin bat egiten.",
   },
 }
