@@ -13,16 +13,51 @@ body:
 
 ```json
 {
-  "message": "Required. The feedback text (max 2000 chars).",
+  "message": "The feedback text (max 2000 chars). Required unless `diagnostics` is present.",
   "email": "Optional. Used as the email's reply-to address.",
-  "context": "Optional. Free-form string, e.g. current screen/lesson (max 500 chars)."
+  "context": "Optional. Free-form string, e.g. current screen/lesson (max 500 chars).",
+  "diagnostics": "Optional. Structured snapshot of a flagged question (see below, max ~4000 chars serialized)."
 }
 ```
+
+`diagnostics`, when present, must match the shape produced by
+`buildFlagDiagnostics` (`src/lessonLogic.js`) exactly — an object with only
+these keys:
+
+```json
+{
+  "lessonId": "string",
+  "review": "boolean",
+  "verbId": "string",
+  "tense": "string",
+  "person": "string",
+  "kind": "string",
+  "correct": "string",
+  "userAnswer": "string or null",
+  "outcome": "string",
+  "language": "string",
+  "timestamp": "string (ISO 8601)",
+  "question": {
+    "sentence": "string, optional",
+    "options": "string[], optional",
+    "items": "[{ person: string, sentence: string }], optional"
+  }
+}
+```
+
+Any unknown top-level/`question` key, wrong type, or an oversized
+`diagnostics` (serialized JSON over ~4000 chars) is rejected with `400`. When
+`diagnostics` is present, `message` is optional (an extra comment from the
+reporter on top of the auto-attached diagnostics) but still capped at 2000
+chars if provided. The relayed email gets a "--- Flagged question ---" block
+formatted from `diagnostics`, and its subject becomes "Aditzak question flag"
+instead of "Aditzak feedback".
 
 Responses:
 
 - `200 { "ok": true }` — email sent.
-- `400 { "error": "..." }` — invalid/missing `message`, or malformed JSON.
+- `400 { "error": "..." }` — invalid/missing `message`, invalid `diagnostics`,
+  or malformed JSON.
 - `405` — method other than `POST`/`OPTIONS`.
 - `502 { "error": "Failed to send feedback" }` — Resend API call failed
   (details logged via `console.error`, visible in `wrangler tail` /
@@ -133,8 +168,12 @@ across the redeploys the GitHub Action triggers.
 ## Frontend integration
 
 The Profile tab has a "Send feedback" button opening a modal
-(`FeedbackModal` in `src/App.jsx`) that `fetch()`s this worker's URL. The
-deployed worker's URL (`https://aditzak-feedback.inakiibarrola.workers.dev`)
+(`FeedbackModal` in `src/App.jsx`) that `fetch()`s this worker's URL. Each
+exercise question's result also has a 🚩 "report a problem" button
+(`FeedbackBar` → `FlagQuestionModal`) that posts to the same endpoint with
+`context: 'question-flag'` and a `diagnostics` snapshot built by
+`buildFlagDiagnostics` (`src/lessonLogic.js`). The deployed worker's URL
+(`https://aditzak-feedback.inakiibarrola.workers.dev`)
 is hardcoded as the default in `src/App.jsx` — it isn't a secret, since the
 worker's CORS is locked to `ALLOWED_ORIGIN` regardless of who knows the URL.
 Override it with the `VITE_FEEDBACK_API_URL` env var (repo variable

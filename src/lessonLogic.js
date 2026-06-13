@@ -925,3 +925,37 @@ export function exerciseReducer(state, action) {
       return state
   }
 }
+
+// =============================================================================
+// Question flagging
+// =============================================================================
+
+// Builds the diagnostic payload sent alongside a learner's "report a problem"
+// submission for a question (see `FlagQuestionModal` in App.jsx) — a pure
+// snapshot of everything needed to reproduce/inspect the question without
+// asking the learner to describe it themselves. `question`'s shape varies by
+// `kind` (see `generateQuestions`); only the fields relevant to *this*
+// question are included (`sentence`/`options`/`items` are each omitted when
+// absent rather than sent as `undefined`/`null`), keeping the payload small
+// and avoiding worker-side ambiguity between "field not applicable" and
+// "field present but empty".
+export function buildFlagDiagnostics({ lesson, question, selected, status, language }) {
+  return {
+    lessonId: lesson.id,
+    review: Boolean(lesson.review),
+    verbId: question.verbId,
+    tense: question.tense,
+    person: question.person,
+    kind: question.kind,
+    correct: question.correct,
+    userAnswer: selected,
+    outcome: status,
+    language,
+    timestamp: new Date().toISOString(),
+    question: {
+      ...(question.sentence ? { sentence: question.sentence } : {}),
+      ...(question.options ? { options: question.options } : {}),
+      ...(question.items ? { items: question.items } : {}),
+    },
+  }
+}

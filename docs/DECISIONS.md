@@ -8,6 +8,34 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Resolved issue #92: flag-a-question with diagnostics
+
+Added a 🚩 button to `FeedbackBar` (shown once a question is answered) that
+opens `FlagQuestionModal`, posting to the same feedback worker endpoint as
+`FeedbackModal` with `context: 'question-flag'` and a `diagnostics` object
+built by the new pure `buildFlagDiagnostics` (`lessonLogic.js`).
+
+**Why a separate `diagnostics` field instead of folding everything into
+`message`:** keeps the worker's validation precise (known keys, type-checked,
+size-capped) rather than trusting a free-text blob, and keeps the email body
+readable — a "--- Flagged question ---" block formatted server-side, with the
+learner's optional comment (if any) above it. `message` becomes optional in
+the worker when `diagnostics` is present, since a flag with no comment is
+still a useful report on its own.
+
+**Why `buildFlagDiagnostics` only includes `sentence`/`options`/`items` when
+present (rather than always sending the full question object):** the question
+shape varies by `kind` (see `generateQuestions`) — sending `undefined`/`null`
+placeholders for inapplicable fields would bloat the payload and create
+ambiguity (worker-side, "missing" vs "explicitly null") for no benefit, since
+`kind` alone tells a reviewer which fields to expect.
+
+**Why `answerSeq` + `key={answerSeq}` on `FeedbackBar`:** the "Reported"
+button state is local to `FeedbackBar`/`FlagQuestionModal`, but needs to reset
+when the learner moves to the next question — remounting via a changing `key`
+(same pattern used elsewhere for per-question reset) was simpler than lifting
+that state into `ExerciseScreen`'s reducer.
+
 ## 2026-06-13 — Resolved issue #91: points become a PN-Counter, first-sync merge, ongoing background sync, sync status UI
 
 **Points data model (`POINTS_STORAGE_KEY` v1 → v2):** `points` changed from a

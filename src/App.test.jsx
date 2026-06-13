@@ -118,6 +118,93 @@ describe('App', () => {
     expect(await screen.findByText('Something went wrong. Please try again later.')).toBeInTheDocument()
   })
 
+  describe('question flagging', () => {
+    async function startLessonAndAnswer(user) {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+
+      expect(await screen.findByText('Bikain! Great job!')).toBeInTheDocument()
+    }
+
+    it('lets a learner report a problem with a question, with diagnostics attached', async () => {
+      const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: true })
+      const user = userEvent.setup()
+      await startLessonAndAnswer(user)
+
+      await user.click(screen.getByRole('button', { name: 'Report a problem with this question' }))
+
+      expect(screen.getByRole('dialog', { name: 'Report a problem' })).toBeInTheDocument()
+      const paragraph = (regex) => screen.getByText((_, element) => element.tagName === 'P' && regex.test(element.textContent))
+      expect(paragraph(/Question:/)).toBeInTheDocument()
+      expect(paragraph(/Correct answer:\s*naiz/)).toBeInTheDocument()
+      expect(paragraph(/Your answer:\s*naiz/)).toBeInTheDocument()
+
+      await user.type(screen.getByLabelText("What's wrong? (optional)"), 'This seems off')
+      await user.click(screen.getByRole('button', { name: 'Send report' }))
+
+      expect(await screen.findByText("Thanks! We'll take a look.")).toBeInTheDocument()
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+      const [, options] = fetchMock.mock.calls[0]
+      const body = JSON.parse(options.body)
+      expect(body).toMatchObject({
+        message: 'This seems off',
+        email: '',
+        context: 'question-flag',
+        diagnostics: {
+          lessonId: 'izan-present',
+          review: false,
+          verbId: 'izan',
+          tense: 'present',
+          person: 'ni',
+          kind: 'form',
+          correct: 'naiz',
+          userAnswer: 'naiz',
+          outcome: 'correct',
+          language: 'en',
+          question: { options: expect.arrayContaining(['naiz']) },
+        },
+      })
+      expect(body.diagnostics.timestamp).toMatch(/^\d{4}-\d{2}-\d{2}T/)
+
+      await user.click(screen.getAllByRole('button', { name: 'Close' })[1])
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Reported' })).toBeDisabled()
+    })
+
+    it('resets the "reported" state for the next question', async () => {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: true })
+      const user = userEvent.setup()
+      await startLessonAndAnswer(user)
+
+      await user.click(screen.getByRole('button', { name: 'Report a problem with this question' }))
+      await user.click(screen.getByRole('button', { name: 'Send report' }))
+      await screen.findByText("Thanks! We'll take a look.")
+      await user.click(screen.getAllByRole('button', { name: 'Close' })[1])
+      expect(screen.getByRole('button', { name: 'Reported' })).toBeInTheDocument()
+
+      await user.click(screen.getByRole('button', { name: 'Continue' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+
+      expect(screen.getByRole('button', { name: 'Report a problem with this question' })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Reported' })).not.toBeInTheDocument()
+    })
+
+    it('shows an error if the report submission fails', async () => {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false })
+      const user = userEvent.setup()
+      await startLessonAndAnswer(user)
+
+      await user.click(screen.getByRole('button', { name: 'Report a problem with this question' }))
+      await user.click(screen.getByRole('button', { name: 'Send report' }))
+
+      expect(await screen.findByText('Something went wrong. Please try again later.')).toBeInTheDocument()
+    })
+  })
+
   describe('account sign-in', () => {
     afterEach(() => {
       window.history.replaceState({}, '', '/')

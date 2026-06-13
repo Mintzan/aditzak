@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   addPoints,
+  buildFlagDiagnostics,
   canRepairStreak,
   computeLessonPoints,
   CASE_MIXER_QUESTION_COUNT,
@@ -1571,6 +1572,118 @@ describe('exerciseReducer', () => {
 
     expect(next.misses).toEqual([{ verbId: 'izan', tense: 'present', person: 'ni' }])
   })
+})
+
+describe('buildFlagDiagnostics', () => {
+  const lesson = { id: 'unit-1-izan-present', verbId: 'izan', tense: 'present' }
+  const reviewLesson = { id: 'unit-5-review-1', review: true, sources: [{ verbId: 'izan', tense: 'present' }] }
+
+  it('includes the lesson, question, and answer context', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'form', correct: 'naiz', options: ['naiz', 'haiz', 'da', 'gara'] }
+
+    const diagnostics = buildFlagDiagnostics({ lesson, question, selected: 'haiz', status: 'incorrect', language: 'en' })
+
+    expect(diagnostics).toMatchObject({
+      lessonId: 'unit-1-izan-present',
+      review: false,
+      verbId: 'izan',
+      tense: 'present',
+      person: 'ni',
+      kind: 'form',
+      correct: 'naiz',
+      userAnswer: 'haiz',
+      outcome: 'incorrect',
+      language: 'en',
+      question: { options: ['naiz', 'haiz', 'da', 'gara'] },
+    })
+    expect(diagnostics.timestamp).toMatch(/^\d{4}-\d{2}-\d{2}T/)
+  })
+
+  it('marks review lessons as such', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'form', correct: 'naiz', options: ['naiz', 'haiz', 'da', 'gara'] }
+
+    const diagnostics = buildFlagDiagnostics({ lesson: reviewLesson, question, selected: 'naiz', status: 'correct', language: 'es' })
+
+    expect(diagnostics.review).toBe(true)
+    expect(diagnostics.lessonId).toBe('unit-5-review-1')
+  })
+
+  it('includes the sentence for a sentence question', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'sentence', sentence: 'Ni irakaslea ___.', correct: 'naiz', options: ['naiz', 'haiz', 'da', 'gara'] }
+
+    const diagnostics = buildFlagDiagnostics({ lesson, question, selected: 'naiz', status: 'correct', language: 'eu' })
+
+    expect(diagnostics.question).toMatchObject({ sentence: 'Ni irakaslea ___.', options: ['naiz', 'haiz', 'da', 'gara'] })
+  })
+
+  it('omits options for a typed question', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'type-verb', sentence: 'Ni irakaslea ___.', correct: 'naiz' }
+
+    const diagnostics = buildFlagDiagnostics({ lesson, question, selected: 'naiz', status: 'correct', language: 'en' })
+
+    expect(diagnostics.question).toEqual({ sentence: 'Ni irakaslea ___.' })
+  })
+
+  it('includes the pronoun sentence for a pronoun question', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'pronoun', sentence: '___ irakaslea naiz.', correct: 'Ni', options: ['Ni', 'Hi', 'Hura', 'Gu'] }
+
+    const diagnostics = buildFlagDiagnostics({ lesson, question, selected: 'Hi', status: 'incorrect', language: 'en' })
+
+    expect(diagnostics.question).toMatchObject({ sentence: '___ irakaslea naiz.', options: ['Ni', 'Hi', 'Hura', 'Gu'] })
+  })
+
+  it('omits sentence/options for a typed pronoun question', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'type-pronoun', sentence: '___ irakaslea naiz.', correct: 'Ni' }
+
+    const diagnostics = buildFlagDiagnostics({ lesson, question, selected: 'ni', status: 'correct', language: 'en' })
+
+    expect(diagnostics.question).toEqual({ sentence: '___ irakaslea naiz.' })
+  })
+
+  it('includes the negative sentence for a negative question', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'negative', sentence: 'Ni ez ___ irakaslea.', correct: 'naiz', options: ['naiz', 'haiz', 'da', 'gara'] }
+
+    const diagnostics = buildFlagDiagnostics({ lesson, question, selected: 'naiz', status: 'correct', language: 'en' })
+
+    expect(diagnostics.question).toMatchObject({ sentence: 'Ni ez ___ irakaslea.', options: ['naiz', 'haiz', 'da', 'gara'] })
+  })
+
+  it('omits options for a typed negative question', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'type-negative', sentence: 'Ni ez ___ irakaslea.', correct: 'naiz' }
+
+    const diagnostics = buildFlagDiagnostics({ lesson, question, selected: 'naiz', status: 'correct', language: 'en' })
+
+    expect(diagnostics.question).toEqual({ sentence: 'Ni ez ___ irakaslea.' })
+  })
+
+  it('includes the items for a spot-error question', () => {
+    const items = [
+      { person: 'ni', sentence: 'Ni irakaslea naiz.' },
+      { person: 'hi', sentence: 'Hi irakaslea naiz.' },
+    ]
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'spot-error', items, options: items.map((item) => item.sentence), correct: items[1].sentence }
+
+    const diagnostics = buildFlagDiagnostics({ lesson: reviewLesson, question, selected: items[0].sentence, status: 'incorrect', language: 'en' })
+
+    expect(diagnostics.question).toMatchObject({ items, options: items.map((item) => item.sentence) })
+  })
+
+  it('includes the sentence and options for a verb-choice question', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'verb-choice', sentence: 'Ni irakaslea ___.', correct: 'naiz', options: ['naiz', 'dut'] }
+
+    const diagnostics = buildFlagDiagnostics({ lesson: reviewLesson, question, selected: 'dut', status: 'incorrect', language: 'en' })
+
+    expect(diagnostics.question).toMatchObject({ sentence: 'Ni irakaslea ___.', options: ['naiz', 'dut'] })
+  })
+
+  it('includes the sentence and options for a case-mixer question', () => {
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'case-mixer', sentence: 'Ni irakaslea ___.', correct: 'naiz', options: ['naiz', 'dut'] }
+
+    const diagnostics = buildFlagDiagnostics({ lesson: reviewLesson, question, selected: 'naiz', status: 'correct', language: 'en' })
+
+    expect(diagnostics.question).toMatchObject({ sentence: 'Ni irakaslea ___.', options: ['naiz', 'dut'] })
+  })
+
 })
 
 describe('recordErrors', () => {

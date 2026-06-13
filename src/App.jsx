@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import {
   addPoints,
+  buildFlagDiagnostics,
   canRepairStreak,
   computeLessonPoints,
   computeStars,
@@ -658,6 +659,145 @@ function FeedbackModal({ onClose }) {
               className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:opacity-50"
             >
               {status === 'sending' ? t('feedbackSending') : t('feedbackSubmit')}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// A short text summary of what the question actually showed the learner —
+// used by `FlagQuestionModal` so a report is self-explanatory without the
+// learner having to re-describe the question. `sentence`-bearing kinds show
+// the (blanked) sentence; `spot-error` shows every candidate sentence so a
+// reviewer can see which one was marked wrong; everything else (`form`) shows
+// the bare pronoun/person the learner was asked to conjugate for.
+function flagQuestionSummary(question, verb) {
+  if (question.sentence) return question.sentence
+  if (question.items) return question.items.map((item) => item.sentence).join(' / ')
+  return verb.pronouns?.[question.person] ?? question.person
+}
+
+// "Report a problem with this question" modal, opened from `FeedbackBar`.
+// Mirrors `FeedbackModal`'s idle|sending|success|error flow, but the message
+// is optional (a comment on top of the auto-attached `diagnostics`) and there's
+// no email field — reports are anonymous diagnostic snapshots, not
+// conversations.
+function FlagQuestionModal({ lesson, question, verb, selected, status, onClose, onSubmitted }) {
+  const { t, language } = useLanguage()
+  const [comment, setComment] = useState('')
+  const [requestStatus, setRequestStatus] = useState('idle') // idle | sending | success | error
+  const [errorDetail, setErrorDetail] = useState('')
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    if (requestStatus === 'sending') return
+    setRequestStatus('sending')
+    setErrorDetail('')
+    try {
+      const diagnostics = buildFlagDiagnostics({ lesson, question, selected, status, language })
+      const response = await fetch(FEEDBACK_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: comment.trim(), email: '', context: 'question-flag', diagnostics }),
+      })
+      if (!response.ok) {
+        let detail = `HTTP ${response.status} ${response.statusText} for ${response.url}`
+        try {
+          const data = await response.json()
+          if (data?.error) detail += ` — ${data.error}`
+        } catch {
+          // response body wasn't JSON; keep the status-only detail
+        }
+        throw new Error(detail)
+      }
+      setRequestStatus('success')
+      onSubmitted()
+    } catch (err) {
+      setRequestStatus('error')
+      setErrorDetail(err instanceof Error ? err.message : String(err))
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="flag-title"
+        className="w-full max-w-md rounded-t-3xl bg-white p-5 sm:rounded-3xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="mb-3 flex items-center justify-between">
+          <h2 id="flag-title" className="text-lg font-bold text-gray-900">
+            {t('flagModalTitle')}
+          </h2>
+          <button type="button" onClick={onClose} aria-label={t('flagClose')} className="text-2xl leading-none text-gray-400">
+            ×
+          </button>
+        </div>
+
+        {requestStatus === 'success' ? (
+          <div className="flex flex-col items-center gap-3 py-4 text-center">
+            <span className="text-4xl" aria-hidden="true">
+              ✅
+            </span>
+            <p className="text-sm text-gray-700">{t('flagSuccess')}</p>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{ minHeight: 48 }}
+              className="w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+            >
+              {t('flagClose')}
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <div className="rounded-2xl bg-gray-50 p-3 text-sm text-gray-700">
+              <p>
+                <span className="font-semibold">{t('flagModalQuestionLabel')}: </span>
+                {flagQuestionSummary(question, verb)}
+              </p>
+              <p>
+                <span className="font-semibold">{t('flagModalCorrectLabel')}: </span>
+                {question.correct}
+              </p>
+              {selected != null && selected !== '' && (
+                <p>
+                  <span className="font-semibold">{t('flagModalYourAnswerLabel')}: </span>
+                  {selected}
+                </p>
+              )}
+            </div>
+            <div>
+              <label htmlFor="flag-comment" className="mb-1 block text-sm font-semibold text-gray-700">
+                {t('flagCommentLabel')}
+              </label>
+              <textarea
+                id="flag-comment"
+                value={comment}
+                onChange={(event) => setComment(event.target.value)}
+                placeholder={t('flagCommentPlaceholder')}
+                maxLength={FEEDBACK_MESSAGE_MAX_LENGTH}
+                rows={3}
+                className="w-full rounded-2xl border border-gray-200 p-3 text-sm text-gray-900 focus:border-green-500 focus:outline-none"
+              />
+            </div>
+            {requestStatus === 'error' && (
+              <div className="text-sm text-red-500">
+                <p>{t('flagError')}</p>
+                {errorDetail && <p className="mt-1 font-mono text-xs break-all text-red-400">{errorDetail}</p>}
+              </div>
+            )}
+            <button
+              type="submit"
+              disabled={requestStatus === 'sending'}
+              style={{ minHeight: 48 }}
+              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:opacity-50"
+            >
+              {requestStatus === 'sending' ? t('flagSending') : t('flagSubmit')}
             </button>
           </form>
         )}
@@ -1461,26 +1601,41 @@ function ExplanationToggle({ explanation, expanded, onToggle }) {
   )
 }
 
-function FeedbackBar({ status, isLast, streakEncouragement, explanation, showExplanation, onToggleExplanation, onContinue }) {
+function FeedbackBar({ status, isLast, streakEncouragement, explanation, showExplanation, onToggleExplanation, onContinue, lesson, question, verb, selected }) {
   const { t } = useLanguage()
+  const [showFlagModal, setShowFlagModal] = useState(false)
+  const [flagged, setFlagged] = useState(false)
   if (status === 'active') return null
   const isCorrect = status === 'correct'
   return (
     <div className={`px-5 pt-4 pb-6 ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
-      <p className={`mb-3 flex items-center gap-2 text-lg font-extrabold ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
-        <span className="text-2xl" aria-hidden="true">
-          {streakEncouragement ? streakEncouragement.icon : isCorrect ? '✓' : '✕'}
-        </span>
-        {streakEncouragement ? (
-          <span>
-            {streakEncouragement.headline} {t(streakEncouragement.messageKey)}
+      <div className="mb-3 flex items-start justify-between gap-2">
+        <p className={`flex items-center gap-2 text-lg font-extrabold ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+          <span className="text-2xl" aria-hidden="true">
+            {streakEncouragement ? streakEncouragement.icon : isCorrect ? '✓' : '✕'}
           </span>
-        ) : isCorrect ? (
-          <span>{t('feedbackCorrect')}</span>
-        ) : (
-          <span>{t('feedbackIncorrect')}</span>
-        )}
-      </p>
+          {streakEncouragement ? (
+            <span>
+              {streakEncouragement.headline} {t(streakEncouragement.messageKey)}
+            </span>
+          ) : isCorrect ? (
+            <span>{t('feedbackCorrect')}</span>
+          ) : (
+            <span>{t('feedbackIncorrect')}</span>
+          )}
+        </p>
+        <button
+          type="button"
+          onClick={() => setShowFlagModal(true)}
+          disabled={flagged}
+          aria-label={flagged ? t('flagButtonFlagged') : t('flagButtonLabel')}
+          title={flagged ? t('flagButtonFlagged') : t('flagButtonLabel')}
+          style={{ minHeight: 44, minWidth: 44 }}
+          className="flex shrink-0 items-center justify-center rounded-full text-lg text-gray-400 transition hover:bg-white hover:text-gray-600 disabled:opacity-50"
+        >
+          🚩
+        </button>
+      </div>
       {isCorrect && explanation && (
         <ExplanationToggle explanation={explanation} expanded={showExplanation} onToggle={onToggleExplanation} />
       )}
@@ -1494,6 +1649,17 @@ function FeedbackBar({ status, isLast, streakEncouragement, explanation, showExp
       >
         {isLast ? t('finish') : t('continue')}
       </button>
+      {showFlagModal && (
+        <FlagQuestionModal
+          lesson={lesson}
+          question={question}
+          verb={verb}
+          selected={selected}
+          status={status}
+          onClose={() => setShowFlagModal(false)}
+          onSubmitted={() => setFlagged(true)}
+        />
+      )}
     </div>
   )
 }
@@ -1652,6 +1818,10 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
   // whenever a new question comes up so the field doesn't carry over what was
   // typed for the previous one.
   const [typedValue, setTypedValue] = useState('')
+  // Bumped on every answer; used as `FeedbackBar`'s `key` so its "flagged"
+  // state (see `FlagQuestionModal`) resets between questions instead of
+  // persisting onto the next one.
+  const [answerSeq, setAnswerSeq] = useState(0)
   // Shown once, before the first attempt at a single-verb practice lesson —
   // see `LessonPreviewScreen`. Review lessons and pooled multi-verb practice
   // lessons (`lesson.sources`, e.g. Unit 10's `unit-10-present`) skip it:
@@ -1718,6 +1888,7 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
     setStreakEncouragement(showEncouragement ? milestone : null)
     if (showEncouragement) onStreakNudgeShown()
     setShowExplanation(false)
+    setAnswerSeq((n) => n + 1)
     dispatch({ type: 'answer', option: value })
   }
 
@@ -1789,6 +1960,7 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
       </div>
 
       <FeedbackBar
+        key={answerSeq}
         status={state.status}
         isLast={isLast}
         streakEncouragement={streakEncouragement}
@@ -1796,6 +1968,10 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
         showExplanation={showExplanation}
         onToggleExplanation={() => setShowExplanation((expanded) => !expanded)}
         onContinue={handleContinue}
+        lesson={lesson}
+        question={question}
+        verb={verb}
+        selected={state.selected}
       />
     </div>
   )
