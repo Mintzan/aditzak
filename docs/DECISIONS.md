@@ -8,6 +8,19 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Resolved issue #97: "Share result" on 3-star lesson results
+
+Added a "Share" button to `LessonResultsScreen`, gated to `stars === 3`,
+reusing `shareContent`/`getShareUrl` from #96. **Gated to a perfect score
+only** (not shown for 0/1/2-star results) — framed as a celebration moment
+(like the existing confetti/fireworks `Celebration`, also 3-star-only), not a
+"share to feel okay about your score" nudge offered on every attempt.
+
+Same conventions as #96: clipboard-fallback shows a brief "Link copied!"
+confirmation (local state + 2s `setTimeout`, same pattern as the Profile
+tab's button), `share_app` analytics event (`variant: 'result'`, plus
+`lessonId`), and share text in the sender's current UI language via `t()`.
+
 ## 2026-06-13 — Resolved issue #96: "Invite a friend" share entry point
 
 Added `src/shareUtils.js` (`getShareUrl`, `shareContent`) and an "Invite a

@@ -1776,6 +1776,27 @@ function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone
   const { icon, headline, messageKey } = getEncouragement(correctCount, total, variantIndex)
   const { heading } = describeLesson(lesson, t, language)
 
+  // Briefly swaps the "Share" button's label for `shareCopied` after a
+  // clipboard-fallback share (see `shareContent`) — same pattern as the
+  // Profile tab's "Invite a friend" button.
+  const [shareCopied, setShareCopied] = useState(false)
+  const shareCopiedTimeoutRef = useRef(null)
+  useEffect(() => () => clearTimeout(shareCopiedTimeoutRef.current), [])
+
+  async function handleShareResult() {
+    const result = await shareContent({
+      title: t('shareResultTitle'),
+      text: t('shareResultText', { lesson: heading }),
+      url: getShareUrl(),
+    })
+    trackEvent('share_app', { variant: 'result', lessonId: lesson.id, result })
+    if (result === 'copied') {
+      setShareCopied(true)
+      clearTimeout(shareCopiedTimeoutRef.current)
+      shareCopiedTimeoutRef.current = setTimeout(() => setShareCopied(false), 2000)
+    }
+  }
+
   return (
     <div className="mx-auto flex h-dvh w-full max-w-md flex-col items-center justify-center gap-5 bg-white px-8 text-center">
       {celebration && <Celebration celebration={celebration} />}
@@ -1804,6 +1825,16 @@ function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone
       >
         {t('continue')}
       </button>
+      {stars === 3 && (
+        <button
+          type="button"
+          onClick={handleShareResult}
+          style={{ minHeight: 48 }}
+          className="w-full rounded-2xl border-2 border-gray-200 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:text-green-600"
+        >
+          {shareCopied ? t('shareCopied') : t('shareResultButton')}
+        </button>
+      )}
     </div>
   )
 }
