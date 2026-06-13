@@ -380,6 +380,19 @@ describe('App', () => {
       expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument()
     })
 
+    it('shows a generic error for a server-side failure from the request-link endpoint', async () => {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false, status: 502 })
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
+      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
+      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
+
+      expect(await screen.findByText('Something went wrong. Please try again later.')).toBeInTheDocument()
+    })
+
     it('shows a network error if the request-link call fails', async () => {
       vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('offline'))
       const user = userEvent.setup()

@@ -8,6 +8,22 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Sign-in form's "invalid email" error was masking unrelated server errors
+
+A learner with a perfectly valid email saw "Enter a valid email address" when
+requesting a magic link. The actual cause was that the sync-worker's
+`RESEND_API_KEY` secret was never set, so `/auth/request-link` returned
+HTTP 502 — but `AccountModal.handleSubmit` (`App.jsx`) mapped *any* non-OK,
+non-429 response to `accountErrorInvalidEmail`.
+
+**Decision:** only a 400 response (the worker's actual "invalid email" code,
+`sync-worker/src/routes/auth.js`) maps to `accountErrorInvalidEmail`; other
+non-OK statuses (5xx etc.) now map to the existing generic
+`accountErrorNetwork` message. Also added
+`.github/workflows/set-sync-worker-secret.yml` (mirroring the feedback
+worker's secret-setting workflow) so `RESEND_API_KEY` can be provisioned for
+the sync-worker without local `wrangler` access.
+
 ## 2026-06-13 — Fixed "scroll to last lesson on load" being clobbered by browser scroll restoration
 
 **Problem:** The 2026-06-12 scroll-to-last-completed-lesson feature worked on a
