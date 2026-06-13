@@ -2,6 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
+import { generateQuestions } from './lessonLogic'
+import { VERBS } from './data/verbs'
 
 describe('App', () => {
   beforeEach(() => {
@@ -155,6 +157,90 @@ describe('App', () => {
         `I'm learning Basque verb conjugation with Aditzak — come give it a try: ${window.location.origin}${import.meta.env.BASE_URL}`,
       )
       expect(await screen.findByRole('button', { name: 'Link copied!' })).toBeInTheDocument()
+    })
+  })
+
+  describe('share result', () => {
+    afterEach(() => {
+      vi.unstubAllGlobals()
+    })
+
+    // With `Math.random` pinned to 0.99, `generateQuestions` is deterministic
+    // — replicate `createExerciseState`'s call for the "izan-present" lesson
+    // (12 questions: 4 rounds × the ni/zu/hura horizon, no typing on a first
+    // attempt) so each question's `correct` answer is known up front and can
+    // be clicked by its visible button text, regardless of question kind
+    // (form/sentence/pronoun all render `correct` as an option's label).
+    function izanPresentQuestions() {
+      const verb = VERBS.find((v) => v.id === 'izan')
+      return generateQuestions(verb, 'present', { noTyping: true, rounds: 4, persons: ['ni', 'zu', 'hura'] })
+    }
+
+    // Mirrors `exerciseReducer`'s `queue`: an incorrect first attempt is
+    // pushed to the back of the queue for a retry, so `wrongFirst` adds one
+    // extra round at the end (answered correctly) rather than just swapping
+    // one answer for another.
+    async function playLesson(user, { wrongFirst = false } = {}) {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      const queue = izanPresentQuestions()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+
+      let first = true
+      while (queue.length > 0) {
+        const question = queue[0]
+        const answer = wrongFirst && first ? question.options.find((o) => o !== question.correct) : question.correct
+        const isCorrect = answer === question.correct
+        const isLast = queue.length === 1 && isCorrect
+        await user.click(screen.getByRole('button', { name: answer }))
+        await user.click(screen.getByRole('button', { name: isLast ? 'Finish' : 'Continue' }))
+        if (isCorrect) {
+          queue.shift()
+        } else {
+          queue.push(queue.shift())
+        }
+        first = false
+      }
+    }
+
+    it('shows a "Share" button on a 3-star result and shares via the native share sheet', async () => {
+      const share = vi.fn().mockResolvedValue(undefined)
+      vi.stubGlobal('navigator', { ...navigator, share })
+      const user = userEvent.setup()
+      await playLesson(user)
+
+      const shareButton = await screen.findByRole('button', { name: 'Share' })
+      await user.click(shareButton)
+
+      expect(share).toHaveBeenCalledWith({
+        title: 'Aditzak — Basque Verb Conjugation',
+        text: 'I just got 3/3 ⭐ on izan · Present (ni/zu/hura) in Aditzak, a Basque verb conjugation app. Think you can do better?',
+        url: `${window.location.origin}${import.meta.env.BASE_URL}`,
+      })
+    })
+
+    it('falls back to copying the link and shows a brief confirmation', async () => {
+      const user = userEvent.setup()
+      const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue(undefined)
+      await playLesson(user)
+
+      const shareButton = await screen.findByRole('button', { name: 'Share' })
+      await user.click(shareButton)
+
+      expect(writeText).toHaveBeenCalledWith(
+        `I just got 3/3 ⭐ on izan · Present (ni/zu/hura) in Aditzak, a Basque verb conjugation app. Think you can do better? ${window.location.origin}${import.meta.env.BASE_URL}`,
+      )
+      expect(await screen.findByRole('button', { name: 'Link copied!' })).toBeInTheDocument()
+    })
+
+    it('does not show a "Share" button on a less-than-perfect result', async () => {
+      const user = userEvent.setup()
+      await playLesson(user, { wrongFirst: true })
+
+      expect(await screen.findByRole('button', { name: 'Continue' })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Share' })).not.toBeInTheDocument()
     })
   })
 
