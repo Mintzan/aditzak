@@ -181,7 +181,7 @@ export const JOURNEY = [
           {
             number: 12,
             title: 'Looking Back II — "I Was There"',
-            focus: 'egon — simple past, its own synthetic paradigm (nengoen/zeunden/zegoen/geunden/zeundeten/zeuden)',
+            focus: 'egon — simple past, its own synthetic paradigm (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
             payload: '"I was at home." · "We were at the beach."',
             status: 'available',
             lessonIds: ['egon-past', 'egon-past-review', 'egon-past-plural', 'egon-past-plural-review'],
@@ -189,7 +189,7 @@ export const JOURNEY = [
           {
             number: 13,
             title: 'Looking Back II — "I Had It"',
-            focus: 'eduki — simple past, its own synthetic paradigm (neukan/zeneukan/zeukan/geneukan/zeneukaten/zeukaten)',
+            focus: 'eduki — simple past, its own synthetic paradigm (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
             payload: '"I had the keys." · "We had time."',
             status: 'available',
             lessonIds: ['eduki-past', 'eduki-past-review', 'eduki-past-plural', 'eduki-past-plural-review'],

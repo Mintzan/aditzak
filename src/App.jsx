@@ -386,8 +386,8 @@ function PendingUnitCard({ unit }) {
         <p className="font-semibold text-gray-700">
           {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
         </p>
-        <p className="mt-0.5 text-sm text-gray-500">{focus}</p>
-        {payload && <p className="mt-1 text-sm text-gray-400 italic">{payload}</p>}
+        <p className="mt-0.5 text-sm text-gray-500 break-words">{focus}</p>
+        {payload && <p className="mt-1 text-sm text-gray-400 italic break-words">{payload}</p>}
         <span className="mt-2 inline-block rounded-full bg-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-500">{t('comingSoon')}</span>
       </div>
     </div>
@@ -407,7 +407,7 @@ function UnitLessons({ unit, progress, unlockedIds, onSelect }) {
       <p className="font-semibold text-gray-900">
         {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
       </p>
-      <p className="mt-0.5 mb-2 text-sm text-gray-500">{focus}</p>
+      <p className="mt-0.5 mb-2 text-sm text-gray-500 break-words">{focus}</p>
       <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
     </div>
   )

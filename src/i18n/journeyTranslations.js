@@ -206,8 +206,8 @@ export const JOURNEY_TRANSLATIONS = {
     12: {
       title: { es: 'Mirando atrás II — "Estuve allí"', eu: 'Atzera begira II — "Han nengoen"' },
       focus: {
-        es: 'egon — pasado simple, su propio paradigma sintético (nengoen/zeunden/zegoen/geunden/zeundeten/zeuden)',
-        eu: 'egon — iragan soila, bere paradigma trinko propioa (nengoen/zeunden/zegoen/geunden/zeundeten/zeuden)',
+        es: 'egon — pasado simple, su propio paradigma sintético (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
+        eu: 'egon — iragan soila, bere paradigma trinko propioa (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
       },
       payload: {
         es: '"Estaba en casa." · "Estuvimos en la playa."',
@@ -217,8 +217,8 @@ export const JOURNEY_TRANSLATIONS = {
     13: {
       title: { es: 'Mirando atrás II — "Lo tenía"', eu: 'Atzera begira II — "Banuen"' },
       focus: {
-        es: 'eduki — pasado simple, su propio paradigma sintético (neukan/zeneukan/zeukan/geneukan/zeneukaten/zeukaten)',
-        eu: 'eduki — iragan soila, bere paradigma trinko propioa (neukan/zeneukan/zeukan/geneukan/zeneukaten/zeukaten)',
+        es: 'eduki — pasado simple, su propio paradigma sintético (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
+        eu: 'eduki — iragan soila, bere paradigma trinko propioa (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
       },
       payload: {
         es: '"Tenía la llave." · "Teníamos tiempo."',
