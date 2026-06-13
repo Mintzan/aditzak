@@ -33,9 +33,17 @@ sync and a real sync-status indicator.
   `schemaVersion`, rather than normalizing into per-lesson rows — matches how
   the merge UI already operates on "the whole local state" and keeps the
   backend agnostic to lesson-shape changes.
-- Flagged one unresolved question for `#91`: `points` balance isn't
-  monotonic (spent on streak repairs), so the `keepBest` merge can't just take
-  `max(local, cloud)` for it the way `progress`/`dailyStreak`/`errorStats` can.
+- `points` (the one field that can *decrease*, via streak repairs) is
+  modeled as a **PN-Counter** rather than a single balance:
+  `{ earned: { [deviceId]: number }, spent: { [deviceId]: number } }`, one
+  entry per device the account has used. Each device only ever increments its
+  own counters; balance = `sum(earned) - sum(spent)`. Merge = union device
+  ids, `max` per counter — lossless and order-independent, unlike
+  last-write-wins on a single balance. Requires a `POINTS_STORAGE_KEY` `v1` →
+  `v2` bump (existing balance migrates to the current device's `earned`
+  counter) and a new `aditzak:deviceId:v1` key. This brings `points` in line
+  with `progress`/`dailyStreak`/`errorStats`, which were already
+  "merge by per-key max/union" by construction.
 
 **Why:** the prototype's mock state needed a concrete backend design before
 any of it could be built; breaking it into an epic + sequential sub-issues
