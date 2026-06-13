@@ -521,6 +521,65 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   return Array.from({ length: rounds }, () => shuffle(persons).map(buildQuestion)).flat()
 }
 
+// Up to this many `kind: 'verb-choice'` cross-verb questions (see
+// `generateCrossVerbQuestions`) get added to a review lesson's queue — kept
+// small/"a handful" since each one is a deliberately harder, single-focus
+// question, on top of the review's normal cross-section and
+// `getWeakSpotQuestions`'s extras.
+export const CROSS_VERB_QUESTION_COUNT = 2
+
+// A `kind: 'verb-choice'` question shows one source's example sentence
+// (`sentences[tense][person]`, with `___` marking the blank, same as
+// `sentence`/`type-verb`) and asks which verb's conjugated form actually
+// fits it. `options` mix that source's correct form for `person` with its
+// compatible siblings' (see `agreementsCompatible`) forms for the same
+// person — unlike Delivery 1's occasional cross-verb distractor (one option
+// among the usual same-table ones), here "which verb fits this sentence" is
+// the entire point of the question. `options` has only as many entries as
+// there are compatible sources with a usable form for this person (2-4, not
+// padded) — a review with only one compatible pair yields 2-option
+// questions.
+//
+// `resolvedSources` is the review's `{ verb, tense }` sources, already
+// resolved from `VERBS` (as `createExerciseState` produces). `persons`
+// (optional) restricts which grammatical persons are eligible, mirroring
+// `generateQuestions`'s `persons` filter. Up to `count` questions are
+// returned, picked at random from every eligible (source, person)
+// combination — a review with too few eligible combinations (e.g. a
+// single-source review, where there are no siblings to choose between at
+// all) simply returns fewer, down to none.
+export function generateCrossVerbQuestions(resolvedSources, { persons: personsFilter, count = CROSS_VERB_QUESTION_COUNT } = {}) {
+  const candidates = []
+  for (const { verb, tense } of resolvedSources) {
+    const sentences = verb.sentences?.[tense] ?? {}
+    const persons = personsFilter ?? Object.keys(verb.conjugations[tense] ?? {})
+    for (const person of persons) {
+      const sentence = sentences[person]
+      const correct = verb.conjugations[tense]?.[person]
+      if (!sentence || !correct) continue
+      const siblingForms = resolvedSources
+        .filter((sibling) => !(sibling.verb.id === verb.id && sibling.tense === tense))
+        .filter((sibling) => agreementsCompatible(sibling.verb.agreement, verb.agreement))
+        .map((sibling) => sibling.verb.conjugations[sibling.tense]?.[person])
+        .filter(Boolean)
+      const options = [...new Set([correct, ...siblingForms])]
+      if (options.length < 2) continue
+      candidates.push({ verbId: verb.id, tense, person, sentence: pickVariant(sentence), correct, options })
+    }
+  }
+  return shuffle(candidates)
+    .slice(0, count)
+    .map(({ verbId, tense, person, sentence, correct, options }) => ({
+      verbId,
+      tense,
+      kind: 'verb-choice',
+      person,
+      sentence,
+      correct,
+      options: shuffle(options),
+    }))
+}
+
 // =============================================================================
 // Error tracking & weak-spot review boosters
 // =============================================================================
@@ -584,11 +643,13 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
 // `negative`/`type-negative` are the other: Basque negation isn't just
 // inserting "not" in place — `ez` plus the verb move together to right after
 // the subject, with the rest of the sentence following — another pattern with
-// no equivalent in English/Spanish word order. Every other kind (`form`,
-// `sentence`, `type-verb`, `spot-error`) is "produce/recognize this conjugated
-// form", which doesn't have a similarly compact "why" beyond "that's the
-// form" — `getExplanation` returns `null` for those, and `FeedbackBar` simply
-// doesn't show the toggle.
+// no equivalent in English/Spanish word order. `verb-choice` (see
+// `generateCrossVerbQuestions`) is the third: the "why" is exactly which verb
+// this sentence's structure calls for, as opposed to its sibling option(s).
+// Every other kind (`form`, `sentence`, `type-verb`, `spot-error`) is
+// "produce/recognize this conjugated form", which doesn't have a similarly
+// compact "why" beyond "that's the form" — `getExplanation` returns `null`
+// for those, and `FeedbackBar` simply doesn't show the toggle.
 //
 // `t` is the caller's `useLanguage().t`, so the explanation text follows the
 // interface language while `{pronoun}`/`{verb}`/`{form}` stay the untranslated
@@ -596,6 +657,9 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
 export function getExplanation(verb, question, t) {
   if (question.kind === 'negative' || question.kind === 'type-negative') {
     return t('explanationNegation', { form: verb.conjugations[question.tense][question.person] })
+  }
+  if (question.kind === 'verb-choice') {
+    return t('explanationVerbChoice', { verb: verb.verb, form: question.correct })
   }
   if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
   const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'

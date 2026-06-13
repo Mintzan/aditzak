@@ -111,12 +111,14 @@ occasionally includes a real "wrong verb" choice.
 
 ### Open decisions
 
-- How aggressively to mix in cross-verb candidates — always ensure at least
+- ~~How aggressively to mix in cross-verb candidates — always ensure at least
   one cross-verb distractor when available, or just widen the pool and let
   random sampling decide (so it's *occasional*, not guaranteed every
-  question)?
-- Badge treatment: hide the per-question badge entirely for review lessons,
-  or replace it with a generic "Mixed review" badge?
+  question)?~~ Resolved: occasional — see `docs/DECISIONS.md` (2026-06-13,
+  Delivery 1).
+- ~~Badge treatment: hide the per-question badge entirely for review lessons,
+  or replace it with a generic "Mixed review" badge?~~ Resolved: hide
+  entirely — see `docs/DECISIONS.md` (2026-06-13, Delivery 1).
 
 ---
 
@@ -170,11 +172,15 @@ should make it the deliberate focus, the way `negative`/`type-negative` made
 
 ### Open decisions
 
-- Final `kind` name (`verb-choice` used as a placeholder here) and whether it
-  needs its own `QUESTION_PROMPTS` entry or piggybacks on `sentence`'s.
-- Whether a typed variant (`type-verb-choice` — type the correct form with no
-  options at all, the hardest version) is in scope now or deferred to a later
-  delivery.
+- ~~Final `kind` name (`verb-choice` used as a placeholder here) and whether
+  it needs its own `QUESTION_PROMPTS` entry or piggybacks on `sentence`'s.~~
+  Resolved: `verb-choice` is the real name, with its own
+  `QUESTION_PROMPT_KEYS`/`getExplanation` entries — see `docs/DECISIONS.md`
+  (2026-06-13, Delivery 2).
+- ~~Whether a typed variant (`type-verb-choice` — type the correct form with
+  no options at all, the hardest version) is in scope now or deferred to a
+  later delivery.~~ Resolved: deferred — see `docs/DECISIONS.md` (2026-06-13,
+  Delivery 2).
 
 ---
 

@@ -8,6 +8,48 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Delivery 2 of the Exercise Variety Plan: dedicated `verb-choice` cross-verb question kind
+
+**Decision:** review lessons (`lesson.review: true` with 2+ `sources`) now
+also get a handful of dedicated `kind: 'verb-choice'` questions
+(`generateCrossVerbQuestions`, `lessonLogic.js`, capped at
+`CROSS_VERB_QUESTION_COUNT = 2`) — each shows one source's example sentence
+and asks the learner to pick which verb's conjugated form actually fits it,
+with options drawn from that source's correct form plus its
+agreement-compatible siblings' (`agreementsCompatible`, shared with Delivery
+1) forms for the same person. Unlike Delivery 1's occasional incidental
+cross-verb distractor, here "which verb fits this sentence" *is* the
+question.
+
+**Final `kind` name (resolves the "final kind name" open decision):**
+`verb-choice` is the real name, not a placeholder — it has its own
+`QUESTION_PROMPT_KEYS` entry (`questionVerbChoice`) and `getExplanation` case
+(`explanationVerbChoice`), translated in `en`/`es`/`eu`.
+
+**UI (task 2.3):** no new rendering branch needed — `QuestionPrompt` already
+renders `SentenceWithBlank` whenever `question.sentence` is set, which
+`verb-choice` questions always have, and review lessons already pass
+`showVerb={false}` (Delivery 1's badge decision), so the verb name stays
+hidden automatically. The option-button stack is a vertical flex column, so
+2-option questions (the common case for a 2-source review) render fine
+without grid changes.
+
+**Option count (resolves part of task 2.2):** not padded — a question's
+`options` has exactly as many entries as there are compatible sources with a
+usable form for that person (2 for a typical 2-source review, up to 4 for
+more sources). A single-source review, or a review whose only other source is
+agreement-incompatible, yields zero `verb-choice` questions (`options.length
+< 2` for every candidate) — same graceful-degradation behaviour as Delivery
+1's `getCrossVerbCandidates`.
+
+**Typed variant (resolves the `type-verb-choice` open decision):** out of
+scope for this delivery. `verb-choice` is multiple-choice only for now; a
+typed "type the form that fits this sentence, no options" variant is deferred
+to a later delivery if it turns out to be needed.
+
+See `docs/EXERCISE_VARIETY_PLAN.md` for the full plan (Deliveries 3-4 remain
+open).
+
 ## 2026-06-13 — Delivery 1 of the Exercise Variety Plan: cross-verb distractors in review lessons
 
 **Decision:** Review lessons (`lesson.review: true` with 2+ `sources`) now
