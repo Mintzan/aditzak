@@ -262,38 +262,39 @@ export const LESSONS = [
       { verbId: 'ikusi', tense: 'past' },
     ],
   },
-  // Unit 10 ("Daily Routine (Transitive)", Phase II) — `jan`/`edan`/`erosi`,
-  // each with a full 6-person grid (Person-Expansion Rule). `ikusi` — the
-  // fourth verb of this group in the original journey — moved to Unit 3 as
-  // Phase I's first periphrastic verb, so `unit-7-review`/`unit-7-review-plural`
-  // below cover only `jan`/`edan`/`erosi`. Per the app-wide "never more than 3
-  // persons per exercise" rule, each verb's present-tense practice splits into
-  // a `PHASE_1_PERSONS` lesson (ni/zu/hura) immediately followed by a
-  // `-plural` `PHASE_1_PLURAL_PERSONS` lesson (gu/zuek/haiek).
-  { id: 'jan-present', verbId: 'jan', tense: 'present', persons: PHASE_1_PERSONS },
-  { id: 'jan-present-plural', verbId: 'jan', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'edan-present', verbId: 'edan', tense: 'present', persons: PHASE_1_PERSONS },
-  { id: 'edan-present-plural', verbId: 'edan', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'erosi-present', verbId: 'erosi', tense: 'present', persons: PHASE_1_PERSONS },
-  { id: 'erosi-present-plural', verbId: 'erosi', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  // Unit 10 ("Daily Routine (Transitive)", Phase II) — the `ukan`-present
+  // NOR-NORK auxiliary (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), drilled
+  // across a *pool* of verbs (`jan`/`edan`/`erosi`/`ikusi`, each with a full
+  // 6-person grid) rather than one practice lesson per verb. Per
+  // `docs/DECISIONS.md`, the point of this unit is the auxiliary pattern, not
+  // any one action — every question still isolates that pattern within its
+  // own verb's table (same participle, varying person), but which verb
+  // supplies a given question varies, so "whatever verb fits" rather than a
+  // verb-by-verb march. `ikusi` (Unit 3) already has full present-tense
+  // `sentences`/`pronounSentences`, so it slots into the pool with no new
+  // data. Per the app-wide "never more than 3 persons per exercise" rule,
+  // split into a `PHASE_1_PERSONS` lesson (ni/zu/hura) and a `-plural`
+  // `PHASE_1_PLURAL_PERSONS` lesson (gu/zuek/haiek). Adding another
+  // present-tense verb to this pattern later is just appending it to both
+  // `sources` arrays (plus its own `VERBS` table) — no new lesson ids needed.
   {
-    id: 'unit-7-review',
-    review: true,
+    id: 'unit-10-present',
     persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'jan', tense: 'present' },
       { verbId: 'edan', tense: 'present' },
       { verbId: 'erosi', tense: 'present' },
+      { verbId: 'ikusi', tense: 'present' },
     ],
   },
   {
-    id: 'unit-7-review-plural',
-    review: true,
+    id: 'unit-10-present-plural',
     persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'jan', tense: 'present' },
       { verbId: 'edan', tense: 'present' },
       { verbId: 'erosi', tense: 'present' },
+      { verbId: 'ikusi', tense: 'present' },
     ],
   },
   // Unit 11 ("Physical States & Possessions", Phase II) — two new synthetic

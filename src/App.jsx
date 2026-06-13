@@ -113,7 +113,7 @@ function personsLabel(persons) {
 
 function describeLesson(lesson, t, language) {
   const persons = personsLabel(lesson.persons)
-  if (!lesson.review) {
+  if (lesson.verbId) {
     const verb = VERBS.find((v) => v.id === lesson.verbId)
     const meta = TENSE_META[lesson.tense]
     const label = t(meta.labelKey)
@@ -126,8 +126,17 @@ function describeLesson(lesson, t, language) {
   }
   const verbNames = [...new Set(lesson.sources.map(({ verbId }) => VERBS.find((v) => v.id === verbId).verb))]
   const tenseLabels = [...new Set(lesson.sources.map(({ tense }) => t(TENSE_META[tense].labelKey)))]
-  const reviewName = verbNames.length > 1 ? t('mixedReview') : t('verbReview', { verb: verbNames[0] })
   const tenseLabel = tenseLabels.join(' + ')
+  if (!lesson.review) {
+    const meta = TENSE_META[lesson.sources[0].tense]
+    return {
+      icon: tenseLabel[0],
+      title: { main: tenseLabel, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
+      subtitle: { main: verbNames.join(' & '), secondary: t('mixedPractice') },
+      heading: persons ? `${verbNames.join(' & ')} · ${tenseLabel} (${persons})` : `${verbNames.join(' & ')} · ${tenseLabel}`,
+    }
+  }
+  const reviewName = verbNames.length > 1 ? t('mixedReview') : t('verbReview', { verb: verbNames[0] })
   return {
     icon: '🔁',
     title: { main: t('reviewLabel'), secondary: persons ? `${tenseLabel} · ${persons}` : tenseLabel },
@@ -1463,21 +1472,24 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
   // whenever a new question comes up so the field doesn't carry over what was
   // typed for the previous one.
   const [typedValue, setTypedValue] = useState('')
-  // Shown once, before the first attempt at a (non-review) lesson — see
-  // `LessonPreviewScreen`. Review lessons skip it: every form they cover has
-  // already had its own practice-lesson intro.
-  const [showPreview, setShowPreview] = useState(!lesson.review && attempts === 0)
+  // Shown once, before the first attempt at a single-verb practice lesson —
+  // see `LessonPreviewScreen`. Review lessons and pooled multi-verb practice
+  // lessons (`lesson.sources`, e.g. Unit 10's `unit-10-present`) skip it:
+  // either every form they cover has already had its own practice-lesson
+  // intro (review), or the preview's single-verb/single-table layout doesn't
+  // fit a pool of verbs (pooled practice).
+  const [showPreview, setShowPreview] = useState(!lesson.sources && attempts === 0)
 
   // Fires once the learner is actually answering questions — on mount for
-  // review/repeat lessons (which skip the preview), or once the preview's
-  // "Start" button is dismissed for a lesson's first attempt.
+  // review/pooled/repeat lessons (which skip the preview), or once the
+  // preview's "Start" button is dismissed for a lesson's first attempt.
   useEffect(() => {
     if (showPreview) return
     trackEvent('lesson_started', {
       lessonId: lesson.id,
       review: Boolean(lesson.review),
       attemptNumber: attempts + 1,
-      ...(lesson.review ? {} : { verbId: lesson.verbId, tense: lesson.tense }),
+      ...(lesson.verbId ? { verbId: lesson.verbId, tense: lesson.tense } : {}),
     })
   }, [showPreview, lesson, attempts])
 

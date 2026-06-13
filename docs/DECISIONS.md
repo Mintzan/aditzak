@@ -8,6 +8,56 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-13 — Unit 10 ("Daily Routine (Transitive)") rebuilt as a pooled "ukan present auxiliary" drill across jan/edan/erosi/ikusi, replacing per-verb practice lessons
+
+**Decision:** Replaced Unit 10's 8 lessons (`jan-present`/`-plural`,
+`edan-present`/`-plural`, `erosi-present`/`-plural`, `unit-7-review`/
+`-plural`) with 2: `unit-10-present` (ni/zu/hura) and
+`unit-10-present-plural` (gu/zuek/haiek), each with `sources` covering
+`jan`/`edan`/`erosi`/`ikusi`'s present tense — all four already have full
+6-person grids plus `sentences`/`pronounSentences`. `ikusi` (Unit 3) rejoins
+this pool: its present tense already shares the exact `ukan` NOR-NORK
+auxiliary shape, so it slots in with zero new data.
+
+`describeLesson` (`App.jsx`) gained a third branch alongside single-verb
+practice and "🔁 Mixed Review": non-review lessons with `sources` get the same
+title/icon layout as single-verb practice (tense label, persons), but
+subtitle/heading list the verb pool the way a review does (`mixedPractice`
+copy). `LessonPreviewScreen`'s single-verb/single-table layout doesn't fit a
+verb pool, so `showPreview` now keys off `!lesson.sources` instead of
+`!lesson.review` — pooled lessons skip the preview like reviews do.
+
+`journey.test.js`'s `LESSONS <-> VERBS` checks were split in two: one for
+single-verb practice lessons (`lesson.verbId`), one for any lesson with
+`sources` (review or pooled) — the latter now also checks `lesson.persons`
+against each source's table, which the old review-only check didn't do.
+
+**Why:** the previous design's distractors were already drawn from a single
+verb's own table (same participle, varying person — isolating the
+auxiliary-by-person pattern), but each *lesson* only ever used one participle
+across all its questions. Pooling `jan`/`edan`/`erosi`/`ikusi` into one lesson
+keeps that per-question isolation (distractors still come from whichever
+verb's table that question rolled) while varying the participle
+question-to-question — "to learn a conjugation between persons we can use
+whatever verb fits" rather than marching through one verb at a time. It also
+makes future additions to this pattern (e.g. `entzun`) a one-line append to
+both `sources` arrays, no new lesson ids.
+
+**No `STORAGE_KEY` bump:** removed lesson ids leave orphaned-but-harmless
+`progress` entries; `getUnlockedLessonIds` only iterates `LESSONS`'s current
+entries, and `unit-10-present`/`unit-10-present-plural` sit in the same array
+position the old lessons did, so an existing learner's unlock state carries
+over correctly.
+
+**Known pre-existing issue found, not fixed here:** `journeyTranslations.js`'s
+`units` keys are out of sync with `journey.js`'s current unit numbers for
+several units (e.g. key `10` holds "Requirements & Obligations" copy — the
+*old* Unit 10 — while the *current* Unit 10 is "Daily Routine"), so
+Spanish/Basque users likely see wrong-unit translated focus/payload text for
+several units. Left `journeyTranslations.js` untouched for Unit 10 rather than
+adding correct copy under a still-misaligned key — this needs a holistic
+re-audit across all renumbered units, not a one-unit patch.
+
 ## 2026-06-13 — Delivery 4 of the Exercise Variety Plan: broaden the cross-verb candidate pool for small reviews
 
 **Decision:** added `getIntroducedSources(lessons, upToLessonId)`

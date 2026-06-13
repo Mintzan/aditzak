@@ -56,9 +56,9 @@ describe('LESSONS <-> VERBS', () => {
     return verb
   }
 
-  it('points every practice lesson at a real verb + tense, and every person it restricts to', () => {
+  it('points every single-verb practice lesson at a real verb + tense, and every person it restricts to', () => {
     for (const lesson of LESSONS) {
-      if (lesson.review) continue
+      if (!lesson.verbId) continue
       const verb = expectTenseExists(lesson.verbId, lesson.tense, lesson.id)
       for (const person of lesson.persons ?? []) {
         expect(person in verb.conjugations[lesson.tense], `lesson "${lesson.id}" restricts to person "${person}", missing from ${lesson.verbId}.conjugations.${lesson.tense}`).toBe(true)
@@ -66,11 +66,14 @@ describe('LESSONS <-> VERBS', () => {
     }
   })
 
-  it('points every review lesson source at a real verb + tense', () => {
+  it('points every source of a review or pooled-practice lesson at a real verb + tense, with every restricted person present', () => {
     for (const lesson of LESSONS) {
-      if (!lesson.review) continue
+      if (!lesson.sources) continue
       for (const source of lesson.sources) {
-        expectTenseExists(source.verbId, source.tense, lesson.id)
+        const verb = expectTenseExists(source.verbId, source.tense, lesson.id)
+        for (const person of lesson.persons ?? []) {
+          expect(person in verb.conjugations[source.tense], `lesson "${lesson.id}" restricts to person "${person}", missing from ${source.verbId}.conjugations.${source.tense}`).toBe(true)
+        }
       }
     }
   })

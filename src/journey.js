@@ -170,19 +170,10 @@ export const JOURNEY = [
           {
             number: 10,
             title: 'Daily Routine (Transitive)',
-            focus: 'jan, edan, erosi — present tense (periphrastic + ukan)',
-            payload: '"I ate." · "You drink water." · "I bought a book."',
+            focus: 'the ukan present auxiliary (dut/duzu/du/dugu/duzue/dute), mixed across jan, edan, erosi, ikusi',
+            payload: '"I ate." · "You drink water." · "I bought a book." · "Do you see it?"',
             status: 'available',
-            lessonIds: [
-              'jan-present',
-              'jan-present-plural',
-              'edan-present',
-              'edan-present-plural',
-              'erosi-present',
-              'erosi-present-plural',
-              'unit-7-review',
-              'unit-7-review-plural',
-            ],
+            lessonIds: ['unit-10-present', 'unit-10-present-plural'],
           },
           {
             number: 11,

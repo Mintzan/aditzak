@@ -206,6 +206,31 @@ auxiliary-driven route alongside the native-synthetic one in §4a:
 - **`etorri`** is a natural bridge case: synthetic in present/past, but
   periphrastic in the other tenses
 
+### 4b-bis. More periphrastic `nor-nork` candidates (participle + `ukan`)
+A further batch of everyday verbs, all the same low-friction shape as
+`jan`/`edan`/`erosi`/`ikusi` (radical + `-tzen`/`-ten` for the present,
+bare participle + `ukan`'s past auxiliary for the past) — good fits for
+extending Unit 10's pooled drill or seeding later units:
+
+| Verb | Meaning | Present (nor-nork) | Past (nor-nork) | Notes |
+|---|---|---|---|---|
+| hartu | to take / receive | Hartzen dut | Hartu nuen | |
+| saldu | to sell | Saltzen dut | Saldu nuen | also §2's `nor-nori-nork` example ("saldu dio") — usable as a plain `nor-nork` verb too |
+| irakurri | to read | Irakurtzen dut | Irakurri nuen | pairs naturally with `idatzi` (read/write) |
+| idatzi | to write | Idazten dut | Idatzi nuen | already a §6 causative candidate (`idatzarazi`) |
+| ikasi | to learn / study | Ikasten dut | Ikasi nuen | |
+| utzi | to leave / let | Uzten dut | Utzi nuen | |
+| bilatu | to search / look for | Bilatzen dut | Bilatu nuen | pairs with `aurkitu` (search/find) |
+| aurkitu | to find | Aurkitzen dut | Aurkitu nuen | |
+| zabaldu | to open / spread | Zabaltzen dut | Zabaldu nuen | |
+| itxi | to close | 🔲 present form unconfirmed (`itxiten dut`? `ixten dut`?) | Itxi nuen | needs a grammar-reference check before use |
+| egin | to do / make | Egiten dut | Egin nuen | §4a already lists `egin` as a 🔲 synthetic `nor-nork` candidate — these forms are periphrastic (participle + `ukan`), so reconcile the two entries before adding either |
+
+`maite izan` ("to love", lit. "to hold dear") doesn't fit this table:
+"Maite dut"/"Maite nuen" are `maite` + `ukan`, the same fixed-expression-plus-
+auxiliary shape as §5's `nahi`/`behar` rather than a participle+auxiliary
+periphrastic verb — a §5-style candidate, not a §4b one.
+
 ### 4c. A natural cluster for `dialectVariants`
 Three East/West dialectal pairs turned up while surveying §4a/§4b — exactly
 the shape `dialectVariants: { bizkaiera: { conjugations: {...} } }` in

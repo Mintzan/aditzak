@@ -218,11 +218,12 @@ after 8+ units of present-only drilling.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 10 | **Daily Routine (Transitive)** — `jan`, `edan`, `erosi` present (periphrastic + `ukan`) | "I eat." / "You drink water." / "I buy a book." | §7 | ✅ implemented |
+| 10 | **Daily Routine (Transitive)** — the `ukan` present auxiliary (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), drilled across a pool of verbs (`jan`, `edan`, `erosi`, `ikusi`) rather than one lesson per verb | "I eat." / "You drink water." / "I buy a book." / "Do you see it?" | §7 | ✅ implemented |
 | 11 | **Physical States & Possessions** — `eduki`, `ibili` full 6-person grids | "I have the keys in my pocket." / "They are wandering around town." | §7 (eduki), §6 (ibili) | ✅ implemented |
 
-`ikusi` no longer appears here — it moved to Unit 3 as Phase I's first
-periphrastic verb, so this unit's verb set is `jan`/`edan`/`erosi` only.
+`ikusi` moved to Unit 3 as Phase I's first periphrastic verb, but rejoins
+Unit 10's verb pool here — it already has full present-tense
+`sentences`/`pronounSentences`, so it costs nothing extra to include.
 
 #### Stage 5: Looking Back II
 

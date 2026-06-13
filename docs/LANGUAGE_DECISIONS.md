@@ -6,6 +6,22 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-13 — Logged a batch of `nor-nork` periphrastic verb candidates in `VERB_COVERAGE.md`
+
+**Decision:** Added §4b-bis to `VERB_COVERAGE.md` — `hartu`, `saldu`,
+`irakurri`, `idatzi`, `ikasi`, `utzi`, `bilatu`, `aurkitu`, `zabaldu`, `itxi`,
+and `egin`, each with present/past `nor-nork` forms (user-supplied), as
+candidates for extending Unit 10's pooled `jan`/`edan`/`erosi`/`ikusi`-style
+drill or seeding later units. Documentation only — no `VERBS` entries yet.
+
+**Flags for whoever picks these up:** `itxi`'s present form is unconfirmed
+(`itxiten dut` vs `ixten dut`) and needs a grammar-reference check; `egin`
+overlaps with §4a's existing `egin` entry (listed there as synthetic, but the
+supplied forms are periphrastic) and the two should be reconciled before
+either is used. `maite izan` ("to love") was *not* added to this table — its
+"Maite dut" shape is `maite` + `ukan`, the §5 `nahi`/`behar`-style
+fixed-expression pattern, not a participle+auxiliary periphrastic verb.
+
 ## 2026-06-12 — Simple past (`Lehenaldi Mugatua`) for `joan`/`etorri`/`jan`/`edan`/`erosi`/`ikusi`/`eduki`/`ibili`, for the new "Looking Back I/II" journey units
 
 **Decision:** Added `conjugations.past` for 8 verbs, all full 6-person grids:
