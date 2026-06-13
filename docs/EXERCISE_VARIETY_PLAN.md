@@ -111,12 +111,14 @@ occasionally includes a real "wrong verb" choice.
 
 ### Open decisions
 
-- How aggressively to mix in cross-verb candidates — always ensure at least
+- ~~How aggressively to mix in cross-verb candidates — always ensure at least
   one cross-verb distractor when available, or just widen the pool and let
   random sampling decide (so it's *occasional*, not guaranteed every
-  question)?
-- Badge treatment: hide the per-question badge entirely for review lessons,
-  or replace it with a generic "Mixed review" badge?
+  question)?~~ Resolved: occasional — see `docs/DECISIONS.md` (2026-06-13,
+  Delivery 1).
+- ~~Badge treatment: hide the per-question badge entirely for review lessons,
+  or replace it with a generic "Mixed review" badge?~~ Resolved: hide
+  entirely — see `docs/DECISIONS.md` (2026-06-13, Delivery 1).
 
 ---
 
@@ -170,11 +172,15 @@ should make it the deliberate focus, the way `negative`/`type-negative` made
 
 ### Open decisions
 
-- Final `kind` name (`verb-choice` used as a placeholder here) and whether it
-  needs its own `QUESTION_PROMPTS` entry or piggybacks on `sentence`'s.
-- Whether a typed variant (`type-verb-choice` — type the correct form with no
-  options at all, the hardest version) is in scope now or deferred to a later
-  delivery.
+- ~~Final `kind` name (`verb-choice` used as a placeholder here) and whether
+  it needs its own `QUESTION_PROMPTS` entry or piggybacks on `sentence`'s.~~
+  Resolved: `verb-choice` is the real name, with its own
+  `QUESTION_PROMPT_KEYS`/`getExplanation` entries — see `docs/DECISIONS.md`
+  (2026-06-13, Delivery 2).
+- ~~Whether a typed variant (`type-verb-choice` — type the correct form with
+  no options at all, the hardest version) is in scope now or deferred to a
+  later delivery.~~ Resolved: deferred — see `docs/DECISIONS.md` (2026-06-13,
+  Delivery 2).
 
 ---
 
@@ -194,22 +200,29 @@ mechanism reusing Delivery 2's machinery.
 
 ### Tasks
 
-1. **3.1** — Audit existing `sentences`/`pronouns` data for the relevant verbs
-   to confirm cross-pairing produces unambiguous right/wrong answers — e.g.
-   confirm `"Nik liburu bat naiz"` (ukan's sentence + izan's `ni` form) reads
-   as clearly wrong, not as an alternate-but-valid phrasing, for every pair
-   this delivery would generate.
-2. **3.2** — Extend `generateCrossVerbQuestions` (or add a sibling function)
+1. ~~**3.1** — Audit existing `sentences`/`pronouns` data for the relevant
+   verbs to confirm cross-pairing produces unambiguous right/wrong answers —
+   e.g. confirm `"Nik liburu bat naiz"` (ukan's sentence + izan's `ni` form)
+   reads as clearly wrong, not as an alternate-but-valid phrasing, for every
+   pair this delivery would generate.~~ Done — see `docs/DECISIONS.md`
+   (2026-06-13, Delivery 3).
+2. ~~**3.2** — Extend `generateCrossVerbQuestions` (or add a sibling function)
    to allow mixed-agreement source pairs, with Delivery 1.4's filter
-   deliberately disabled/inverted for these questions.
-3. **3.3** — Flesh out Unit 24's spec in `docs/LEARNING_JOURNEY.md` describing
-   this mechanism concretely (what sources, what persons, how many
-   questions), then add a real review lesson to `data/lessons.js` and flip
-   Unit 24's `status`/`lessonIds` in `journey.js`.
-4. **3.4** — Update `docs/EXERCISE_ENGINE.md`'s "Score-gating Refresh Gates"
-   and "Refresh Gate C" notes to reference this as the resolved approach
-   (mirroring how the doc already tracks Gate A's negation-kind resolution).
-5. **3.5** — Add a `docs/DECISIONS.md` entry once shipped.
+   deliberately disabled/inverted for these questions.~~ Done:
+   `generateCaseMixerQuestions`, `kind: 'case-mixer'` — see
+   `docs/DECISIONS.md` (2026-06-13, Delivery 3).
+3. ~~**3.3** — Flesh out Unit 24's spec in `docs/LEARNING_JOURNEY.md`... then
+   add a real review lesson to `data/lessons.js` and flip Unit 24's
+   `status`/`lessonIds` in `journey.js`.~~ **Deferred** — Unit 24 stays
+   `pending`; its full NOR/NORI/NORK scope needs Units 22-23's dative verbs,
+   which don't exist yet. `case-mixer` instead ships as a general
+   review-lesson mechanism (active wherever sources already mix
+   `nor`/`nor-nork`). See `docs/DECISIONS.md` (2026-06-13, Delivery 3).
+4. ~~**3.4** — Update `docs/EXERCISE_ENGINE.md`'s "Score-gating Refresh Gates"
+   and "Refresh Gate C" notes to reference this as the resolved approach...~~
+   Done (Refresh Gate C note updated to reference Delivery 3 and the
+   deferral above).
+5. ~~**3.5** — Add a `docs/DECISIONS.md` entry once shipped.~~ Done.
 
 **Dependencies:** builds directly on Delivery 2; don't start before 2 is
 validated and shipped.
@@ -229,19 +242,32 @@ ceiling noted during planning, without weakening Delivery 1/2's "this review
 
 ### Tasks
 
-1. **4.1** — Add a helper, e.g. `getIntroducedVerbIds(lessons, upToLessonId)`,
-   deriving "verbs taught so far" from `LESSONS` order (position-based,
-   mirroring how `getUnlockedLessonIds` already reasons about `LESSONS`
-   order).
-2. **4.2** — Extend Delivery 1/2's candidate-pool logic to fall back to this
+1. ~~**4.1** — Add a helper, e.g. `getIntroducedVerbIds(lessons,
+   upToLessonId)`, deriving "verbs taught so far" from `LESSONS` order
+   (position-based, mirroring how `getUnlockedLessonIds` already reasons about
+   `LESSONS` order).~~ Done: `getIntroducedSources(lessons, upToLessonId)` —
+   returns `{ verbId, tense }` pairs (tense-level, not just verb ids — needed
+   for 4.3's spoiler guard) — see `docs/DECISIONS.md` (2026-06-13, Delivery
+   4).
+2. ~~**4.2** — Extend Delivery 1/2's candidate-pool logic to fall back to this
    broader set only when a review's own sibling sources don't provide enough
-   candidates (e.g. fewer than 1-2 cross-verb candidates available).
-3. **4.3** — Guard against spoilers: exclude tenses/forms not yet introduced
+   candidates (e.g. fewer than 1-2 cross-verb candidates available).~~ Done:
+   gated on `sources.length < 3` in `createExerciseState`, threaded into
+   `getCrossVerbCandidates` (`extraSources`) and
+   `generateCrossVerbQuestions`/`generateCaseMixerQuestions`
+   (`extraSiblingSources`) — see `docs/DECISIONS.md` (2026-06-13, Delivery 4).
+3. ~~**4.3** — Guard against spoilers: exclude tenses/forms not yet introduced
    for a given verb even if the verb itself has been introduced elsewhere
    (e.g. don't pull a verb's `future` form into a present-tense review if that
-   verb's `future` lesson hasn't been reached yet).
-4. **4.4** — Tests + manual validation on a 2-source review (e.g.
-   `unit-1-review` or `unit-3-review`).
+   verb's `future` lesson hasn't been reached yet).~~ Done:
+   `getIntroducedSources` only looks *before* the review's own position in
+   `LESSONS`, so this falls out for free — see `docs/DECISIONS.md` (2026-06-13,
+   Delivery 4).
+4. ~~**4.4** — Tests + manual validation on a 2-source review (e.g.
+   `unit-1-review` or `unit-3-review`).~~ Done: `unit-1-review` (izan+egon) is
+   unaffected (its sources already cover every prior lesson);
+   `unit-3-review` (joan+etorri) gains izan/egon/ukan/nahi/jakin/ikusi as
+   fallback siblings — see `docs/DECISIONS.md` (2026-06-13, Delivery 4).
 
 ---
 
@@ -253,3 +279,12 @@ resolved items and link to the `docs/DECISIONS.md` entry, the way
 `docs/EXERCISE_ENGINE.md` does for its own resolved items). Deliveries don't
 need to ship in a single pass each — e.g. Delivery 1 could ship for
 `unit-1-review` alone first (task 1.6) before 1.7's wider rollout.
+
+**Status: all four deliveries shipped** (see `docs/DECISIONS.md`, 2026-06-13
+entries for Deliveries 1-4). Delivery 3 deliberately left Unit 24
+(`journey.js`) `pending` — its full NOR/NORI/NORK scope needs Units 22-23's
+dative verbs, which don't exist yet; `case-mixer` instead ships as a general
+review-lesson mechanism active wherever a review's sources (including
+Delivery 4's fallback pool) mix `nor`/`nor-nork`. Any further follow-up
+(e.g. revisiting Unit 24 once Units 22-23 land) should start a new planning
+doc rather than reopen this one.

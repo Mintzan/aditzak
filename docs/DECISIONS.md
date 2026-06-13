@@ -58,6 +58,182 @@ several units. Left `journeyTranslations.js` untouched for Unit 10 rather than
 adding correct copy under a still-misaligned key — this needs a holistic
 re-audit across all renumbered units, not a one-unit patch.
 
+## 2026-06-13 — Delivery 4 of the Exercise Variety Plan: broaden the cross-verb candidate pool for small reviews
+
+**Decision:** added `getIntroducedSources(lessons, upToLessonId)`
+(`lessonLogic.js`) — position-based like `getUnlockedLessonIds`, returning
+every practice lesson's `{ verbId, tense }` before `upToLessonId` in `LESSONS`
+order (review lessons skipped, since they have no `verbId`/`tense` of their
+own). Because it only looks *before* the review's own position, it's
+inherently spoiler-safe (task 4.3) — a verb's `future` form can't leak into a
+`present`-tense review if that verb's `future` lesson hasn't been reached yet.
+
+In `createExerciseState` (`App.jsx`), reviews with fewer than 3 sources
+(`unit-1-review`, `unit-3-review`, ...) compute this as `extraSources` and
+pass it through three places:
+- `getCrossVerbCandidates(verb, tense, sources, VERBS, extraSources)` — its
+  new 5th parameter, merged into the sibling pool for Delivery 1's
+  `extraCandidates`, deduped against `sources` and restricted to the same
+  `tense` as the lookup.
+- `generateCrossVerbQuestions`/`generateCaseMixerQuestions`'s new
+  `extraSiblingSources` option, threaded into
+  `collectCrossSourceCandidates`'s shared sibling pool with the same
+  dedup/same-tense rules.
+
+Reviews with 3+ sources are untouched — "this review = these sources" stays
+intact where there's already enough variety, per the plan's framing.
+
+**Option-count cap added as part of this delivery:**
+`collectCrossSourceCandidates` now caps every `verb-choice`/`case-mixer`
+question at 4 options (`correct` + up to 3 randomly-sampled distractors),
+matching `buildOptions`'s existing ceiling. Before Delivery 4, a 2-3-source
+review's sibling pool was small enough that this never mattered (capped
+naturally), but `unit-3-review`'s fallback pool (6 additional `present`-tense
+verbs) could otherwise produce 5+ option `case-mixer` questions — capping
+keeps every multiple-choice question's option count consistent regardless of
+how big the candidate pool gets.
+
+**Pilot:** `unit-1-review` (izan+egon) gets no new candidates — its 2 sources
+*are* the only two practice lessons before it, so `extraSources` dedupes to
+empty and Delivery 3's behaviour is unchanged. `unit-3-review` (joan+etorri,
+both `nor`) is the more useful case: `extraSources` picks up
+izan/egon/ukan/nahi/jakin/ikusi's `present` tables, so `verb-choice` options
+grow from 2 to 4 (izan/egon now compatible siblings) and `case-mixer` —
+previously empty, since joan/etorri are both `nor` — now fires using
+ukan/nahi/jakin/ikusi (`nor-nork`) as siblings.
+
+## 2026-06-13 — Delivery 3 of the Exercise Variety Plan: `case-mixer` questions (mechanism only, Unit 24 deferred)
+
+**Decision:** added `generateCaseMixerQuestions` (`lessonLogic.js`) — Delivery
+2's `generateCrossVerbQuestions` with `agreementsCompatible`'s filter
+*inverted*, so it pairs sources whose `agreement` differs on the `nork` axis
+(`nor` vs `nor-nork`) instead of matching ones. Both functions now share a
+`collectCrossSourceCandidates`/`pickCrossSourceQuestions` pair of helpers.
+`kind: 'case-mixer'` questions are wired into `createExerciseState` for every
+review lesson (capped at `CASE_MIXER_QUESTION_COUNT = 1`, deliberately lower
+than `verb-choice`'s 2 — this drill is narrower/harder) — reviews whose
+sources don't mix `nor`/`nor-nork` simply get none, same graceful
+degradation as `verb-choice`. No new UI: `QuestionPrompt` already renders any
+`question.sentence`; `getExplanation` gains a `case-mixer` case
+(`explanationCaseMixerErgative`/`Absolutive`, reusing the pronoun
+explanations' "-k marks the doer" framing) and `QUESTION_PROMPT_KEYS` gains
+`questionCaseMixer`.
+
+**Audit (resolves task 3.1):** checked existing mixed-agreement review pairs
+(`izan`/`ukan` in `unit-5-review-1`/`unit-6-review-1`, `jakin`/`etorri` in
+`unit-5-review-3`, `izan`/`egon`/`ukan` in the `looking-back-1a-review*`
+pairs) — every `nor` sentence's subject is written as the bare pronoun
+("Ni...", "Zu...", "Hura...") while every `nor-nork` sentence's subject
+carries `-k` ("Nik...", "Zuk...", "Hark..."/"Berak..."/a `-k`-marked noun).
+Swapping in the wrong verb's form (e.g. "Txakurrak hezur bat da" instead of
+"...du") always produces a case-marking mismatch — i.e. a clearly wrong
+sentence, never an alternate-but-valid phrasing. Piloted via a throwaway
+script against `unit-5-review-1`, `unit-5-review-3`, `unit-6-review-1`, and
+`looking-back-1a-review`; `unit-1-review` (izan+egon, both `nor`) correctly
+produced zero `case-mixer` questions.
+
+**Unit 24 deferred (resolves the "ship Unit 24 now?" question):** `journey.js`
+Unit 24 ("REFRESH — The Case-Ending Mixer", Refresh Gate C) stays `pending`.
+Its `docs/LEARNING_JOURNEY.md` description is a full NOR/NORK/**NORI**
+role-swap drill depending on Units 22-23's dative verbs (still `pending`,
+zero data today) and `docs/EXERCISE_ENGINE.md` describes its likely mechanism
+as a `spot-error`-style "pick the right/wrong full sentence" kind — neither
+matches this delivery's narrower NOR-vs-NOR-NORK, multiple-choice
+`case-mixer` mechanism. Rather than ship a reduced-scope Unit 24 now and
+revisit its spec twice, `case-mixer` ships as a general review-lesson
+mechanism (active wherever `nor`/`nor-nork` sources already mix, e.g. Gate A's
+`unit-5-review-1`/`-3` and `unit-6-review-1`) and Unit 24 itself waits for
+Units 22-23 to land so it can be specced and built in its originally-described
+full form in one pass.
+
+See `docs/EXERCISE_VARIETY_PLAN.md` for the full plan (Delivery 4 remains
+open).
+
+## 2026-06-13 — Delivery 2 of the Exercise Variety Plan: dedicated `verb-choice` cross-verb question kind
+
+**Decision:** review lessons (`lesson.review: true` with 2+ `sources`) now
+also get a handful of dedicated `kind: 'verb-choice'` questions
+(`generateCrossVerbQuestions`, `lessonLogic.js`, capped at
+`CROSS_VERB_QUESTION_COUNT = 2`) — each shows one source's example sentence
+and asks the learner to pick which verb's conjugated form actually fits it,
+with options drawn from that source's correct form plus its
+agreement-compatible siblings' (`agreementsCompatible`, shared with Delivery
+1) forms for the same person. Unlike Delivery 1's occasional incidental
+cross-verb distractor, here "which verb fits this sentence" *is* the
+question.
+
+**Final `kind` name (resolves the "final kind name" open decision):**
+`verb-choice` is the real name, not a placeholder — it has its own
+`QUESTION_PROMPT_KEYS` entry (`questionVerbChoice`) and `getExplanation` case
+(`explanationVerbChoice`), translated in `en`/`es`/`eu`.
+
+**UI (task 2.3):** no new rendering branch needed — `QuestionPrompt` already
+renders `SentenceWithBlank` whenever `question.sentence` is set, which
+`verb-choice` questions always have, and review lessons already pass
+`showVerb={false}` (Delivery 1's badge decision), so the verb name stays
+hidden automatically. The option-button stack is a vertical flex column, so
+2-option questions (the common case for a 2-source review) render fine
+without grid changes.
+
+**Option count (resolves part of task 2.2):** not padded — a question's
+`options` has exactly as many entries as there are compatible sources with a
+usable form for that person (2 for a typical 2-source review, up to 4 for
+more sources). A single-source review, or a review whose only other source is
+agreement-incompatible, yields zero `verb-choice` questions (`options.length
+< 2` for every candidate) — same graceful-degradation behaviour as Delivery
+1's `getCrossVerbCandidates`.
+
+**Typed variant (resolves the `type-verb-choice` open decision):** out of
+scope for this delivery. `verb-choice` is multiple-choice only for now; a
+typed "type the form that fits this sentence, no options" variant is deferred
+to a later delivery if it turns out to be needed.
+
+See `docs/EXERCISE_VARIETY_PLAN.md` for the full plan (Deliveries 3-4 remain
+open).
+
+## 2026-06-13 — Delivery 1 of the Exercise Variety Plan: cross-verb distractors in review lessons
+
+**Decision:** Review lessons (`lesson.review: true` with 2+ `sources`) now
+widen `buildOptions`'s distractor pool with each source's *sibling* sources'
+same-person conjugated forms (`getCrossVerbCandidates`, `lessonLogic.js`) —
+e.g. an `egon-present` `ni` question in `unit-1-review` (sources: izan + egon)
+can now occasionally offer `izan`'s `naiz` as a distractor alongside `egon`'s
+own `zaude`/`dago`/etc. Only applied to `sentence`/`negative`/`form` kinds
+(whose options come from `conjugations[tense]`) — not `pronoun`, whose options
+come from a different table (`verb.pronouns`).
+
+**Compatibility filter (resolves task 1.4):** a sibling source's forms are only
+mixed in if its verb's `agreement` matches on the `nork` axis (`nor` ↔ `nor`,
+`nor-nork` ↔ `nor-nork`) — so a cross-verb distractor is "right shape, wrong
+verb" (a real but wrong sentence, e.g. "Ni etxean naiz") rather than
+structurally broken ("Nik liburu bat naiz"). The latter — mixing across the
+`nor`/`nor-nork` boundary — is deliberately Delivery 3's territory (NOR vs
+NOR-NORK case-marking drills).
+
+**Aggressiveness (resolves the "how aggressively to mix" open decision):**
+candidates are merged into the pool and `shuffle().slice(0, 3)` picks from the
+combined set — so a cross-verb option is *occasional*, not guaranteed every
+question. Simpler than forcing one in, and keeps "right verb, wrong person"
+distractors (the original behaviour) as the common case.
+
+**Badge treatment (resolves task 1.3 / the badge open decision):** for review
+lessons, `ExerciseScreen` no longer renders the per-question `VerbBadgeRow`
+(type/agreement/dialect badges), and `QuestionPrompt`'s verb-name/meaning line
+is replaced with just the tense label. Chose "hide entirely" over a generic
+"Mixed review" badge — hiding is simpler (no new badge component or i18n
+strings), and applying it uniformly to *all* review questions (not just ones
+whose options happen to include a cross-verb distractor) avoids the badge's
+presence/absence itself becoming a tell. Practice lessons are unaffected.
+
+**Rollout (task 1.7):** since `getCrossVerbCandidates` is computed generically
+for any review lesson in `createExerciseState`, every multi-source review
+benefits automatically — no per-lesson changes needed. Single-source reviews
+(`ikusi-present-review`, `unit-4-review`, etc.) get an empty candidate set and
+behave exactly as before.
+
+See `docs/EXERCISE_VARIETY_PLAN.md` for the full plan (Deliveries 2-4 remain
+open).
+
 ## 2026-06-13 — Moved the Expansion gate earlier (now Unit 5, right after "Moving Around")
 
 **Decision:** Reordered Phase I's last three units. "Expansion — Bringing in

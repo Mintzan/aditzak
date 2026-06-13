@@ -5,10 +5,14 @@ import {
   computeLessonPoints,
   computeStars,
   exerciseReducer,
+  generateCaseMixerQuestions,
+  generateCrossVerbQuestions,
   generateQuestions,
   getActiveStreak,
+  getCrossVerbCandidates,
   getExplanation,
   getEncouragement,
+  getIntroducedSources,
   getLastPlayedLessonId,
   getLocalDateString,
   pickEncouragementVariantIndex,
@@ -963,11 +967,27 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   const sources = lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]
   const noTyping = !lesson.review && attempts < NO_TYPING_ATTEMPTS
   const targetPerSource = TARGET_EXERCISE_COUNT / sources.length
+  // Reviews with fewer than 3 sources fall back to forms from verbs/tenses
+  // already introduced earlier in `LESSONS` (see `getIntroducedSources`) when
+  // widening the cross-verb candidate pools below — a 2-source review (e.g.
+  // `unit-1-review`) otherwise has only a single sibling to draw from.
+  const extraSources = lesson.review && sources.length < 3 ? getIntroducedSources(LESSONS, lesson.id) : []
   const questions = sources.flatMap(({ verbId, tense }) => {
     const verb = VERBS.find((v) => v.id === verbId)
     const personCount = (lesson.persons ?? Object.keys(verb.conjugations[tense])).length
     const rounds = Math.max(1, Math.round(targetPerSource / personCount))
-    return generateQuestions(verb, tense, { noTyping, rounds, includeNegation: Boolean(lesson.negation), persons: lesson.persons })
+    // Review lessons widen the distractor pool with sibling sources' forms
+    // for the same person (see `getCrossVerbCandidates`) — occasionally
+    // offering a "right shape, wrong verb" option alongside the usual
+    // same-table distractors.
+    const extraCandidates = lesson.review ? getCrossVerbCandidates(verb, tense, sources, VERBS, extraSources) : undefined
+    return generateQuestions(verb, tense, {
+      noTyping,
+      rounds,
+      includeNegation: Boolean(lesson.negation),
+      persons: lesson.persons,
+      extraCandidates,
+    })
   })
   // Review lessons get up to `EXTRA_REVIEW_EXERCISES` extra questions, drawn
   // from the verb/tense/person combinations this learner has most often
@@ -975,7 +995,24 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // reinforcement for exactly the forms that need it, on top of the review's
   // normal cross-section.
   const extraQuestions = lesson.review ? getWeakSpotQuestions(errorStats, sources, VERBS) : []
-  const allQuestions = shuffle([...questions, ...extraQuestions])
+  // Review lessons also get up to `CROSS_VERB_QUESTION_COUNT` dedicated
+  // "which verb fits this sentence" questions (see
+  // `generateCrossVerbQuestions`) — the deliberate, single-focus counterpart
+  // to Delivery 1's occasional cross-verb distractor.
+  const resolvedSources = sources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
+  const extraSiblingSources = extraSources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
+  const crossVerbQuestions = lesson.review
+    ? generateCrossVerbQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources })
+    : []
+  // Reviews whose sources mix `nor` and `nor-nork` verbs also get up to
+  // `CASE_MIXER_QUESTION_COUNT` "which form matches this sentence's subject"
+  // questions (see `generateCaseMixerQuestions`) — `verb-choice`'s mirror
+  // image, framed around `-k` ergative-subject marking. Reviews with no such
+  // mix simply get none.
+  const caseMixerQuestions = lesson.review
+    ? generateCaseMixerQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources })
+    : []
+  const allQuestions = shuffle([...questions, ...extraQuestions, ...crossVerbQuestions, ...caseMixerQuestions])
   return {
     queue: allQuestions,
     total: allQuestions.length,
@@ -1166,12 +1203,23 @@ function SentenceWithBlank({ sentence }) {
 // multiple choice when `question.options` is present, typed in otherwise (see
 // `ExerciseScreen`). Every combination still tests recognising/recalling the
 // right Basque form, just packaged differently.
-function QuestionPrompt({ verb, tenseMeta, question }) {
+// `showVerb` (default `true`) controls whether the verb's name/meaning is
+// shown alongside the tense — set to `false` for review-lesson questions
+// (see `ExerciseScreen`), since naming the verb would give away the answer
+// for questions whose options include a cross-verb distractor (see
+// `getCrossVerbCandidates`). The tense label alone is still shown either way.
+function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
   const { t, language } = useLanguage()
   return (
     <>
       <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">
-        {verb.verb} — {verbMeaning(verb, language)} · {t(tenseMeta.labelKey)}
+        {showVerb ? (
+          <>
+            {verb.verb} — {verbMeaning(verb, language)} · {t(tenseMeta.labelKey)}
+          </>
+        ) : (
+          t(tenseMeta.labelKey)
+        )}
       </p>
       {question.sentence ? (
         <SentenceWithBlank sentence={question.sentence} />
@@ -1198,6 +1246,8 @@ const QUESTION_PROMPT_KEYS = {
   'type-pronoun': 'questionTypePronoun',
   negative: 'questionNegation',
   'type-negative': 'questionTypeNegation',
+  'verb-choice': 'questionVerbChoice',
+  'case-mixer': 'questionCaseMixer',
 }
 
 // The explanation toggle is its own pill-shaped button above the
@@ -1532,11 +1582,13 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 pt-8">
-        <div className="mb-6">
-          <VerbBadgeRow verb={verb} />
-        </div>
+        {!lesson.review && (
+          <div className="mb-6">
+            <VerbBadgeRow verb={verb} />
+          </div>
+        )}
 
-        <QuestionPrompt verb={verb} tenseMeta={tenseMeta} question={question} />
+        <QuestionPrompt verb={verb} tenseMeta={tenseMeta} question={question} showVerb={!lesson.review} />
 
         <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{t(QUESTION_PROMPT_KEYS[question.kind])}</p>
         {question.options ? (

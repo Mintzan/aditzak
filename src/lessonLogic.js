@@ -210,6 +210,25 @@ export function getUnlockedLessonIds(lessons, progress) {
   return unlocked
 }
 
+// Every `{ verbId, tense }` a practice lesson before `upToLessonId` (in
+// `lessons` order) introduces — "what a learner reaching `upToLessonId` has
+// already seen", position-based like `getUnlockedLessonIds`. Review lessons
+// (no `verbId`/`tense` of their own) are skipped. Used to broaden the
+// cross-verb candidate pools (`getCrossVerbCandidates`,
+// `generateCrossVerbQuestions`, `generateCaseMixerQuestions`) beyond a small
+// review's own `sources` — since it only ever looks *before* `upToLessonId`,
+// it can't surface a verb/tense the learner hasn't reached yet (no `future`
+// spoilers in a `present`-tense review, etc.), even if that verb appears
+// again later under a different tense.
+export function getIntroducedSources(lessons, upToLessonId) {
+  const cutoff = lessons.findIndex((lesson) => lesson.id === upToLessonId)
+  const end = cutoff === -1 ? lessons.length : cutoff
+  return lessons
+    .slice(0, end)
+    .filter((lesson) => !lesson.review)
+    .map(({ verbId, tense }) => ({ verbId, tense }))
+}
+
 // The id of the lesson the learner most recently completed (by `lastPlayed`),
 // or `null` if no lesson has been attempted yet — used to scroll the home
 // screen to that lesson on initial load.
@@ -275,10 +294,67 @@ function rollQuestionKind(availableKinds) {
 // sentence verb-form questions (table = conjugations) and pronoun questions
 // (table = declined pronouns), so every option is always a plausible answer of
 // the same kind as the correct one.
-function buildOptions(table, persons, person) {
+//
+// `extraCandidates` (optional) are additional forms — from a review's sibling
+// sources, see `getCrossVerbCandidates` — merged into the same pool before
+// picking distractors, occasionally surfacing a "right shape, wrong verb"
+// option (e.g. `egon`'s `nago` as a distractor for `izan`'s `naiz`) alongside
+// the usual "right verb, wrong person" ones. Deduplicated against `correct`
+// and each other so the same surface form never appears twice in `options`.
+function buildOptions(table, persons, person, extraCandidates = []) {
   const correct = table[person]
-  const distractors = shuffle(persons.filter((candidate) => candidate !== person).map((candidate) => table[candidate])).slice(0, 3)
+  const pool = [...persons.filter((candidate) => candidate !== person).map((candidate) => table[candidate]), ...extraCandidates].filter(
+    (form) => form !== correct,
+  )
+  const distractors = shuffle([...new Set(pool)]).slice(0, 3)
   return { correct, options: shuffle([correct, ...distractors]) }
+}
+
+// Whether two verbs' subject-marking is compatible enough that one's
+// conjugated form could plausibly (if incorrectly) fill the other's blank —
+// `nor` (absolutive-only: izan, egon, joan, etorri, ari) vs `nor-nork`
+// (ergative subject: ukan, nahi, jakin, ...). Mixing across this boundary
+// would produce a structurally broken sentence rather than a "wrong verb,
+// right shape" distractor — that's deliberately out of scope here (see
+// Delivery 3 in `docs/EXERCISE_VARIETY_PLAN.md`).
+function agreementsCompatible(a, b) {
+  return a.includes('nork') === b.includes('nork')
+}
+
+// For a review lesson's source `{ verbId, tense }` (already resolved to
+// `verb`), collects each grammatical person's conjugated form from the
+// review's *other* sources (`sources`, the full resolved list including this
+// one) — restricted to sources whose verb has compatible subject-marking (see
+// `agreementsCompatible`) — as extra distractor candidates. Returns
+// `{ [person]: string[] }`, passed through to `generateQuestions`'s
+// `extraCandidates` and from there into `buildOptions`. Only persons present
+// in `verb.conjugations[tense]` get an entry, and only if at least one
+// compatible sibling has a form for that person.
+//
+// `extraSources` (optional, same `{ verbId, tense }` shape as `sources` —
+// see `getIntroducedSources`) is a fallback pool for reviews whose own
+// `sources` are too few to give much variety (Delivery 4): merged in
+// alongside `sources`, deduped, and restricted to the same `tense` as this
+// candidate lookup (so a `present`-tense review never pulls in a sibling
+// verb's `past`/`future` forms as same-person distractors — that'd be a
+// tense mismatch on top of a verb mismatch, not the "right shape, wrong
+// verb" distractor this is meant to be).
+export function getCrossVerbCandidates(verb, tense, sources, verbs, extraSources = []) {
+  const known = new Set(sources.map((source) => `${source.verbId}:${source.tense}`))
+  const pool = [...sources, ...extraSources.filter((source) => source.tense === tense && !known.has(`${source.verbId}:${source.tense}`))]
+  const siblings = pool.filter((source) => !(source.verbId === verb.id && source.tense === tense))
+  const candidates = {}
+  for (const person of Object.keys(verb.conjugations[tense] ?? {})) {
+    const forms = siblings
+      .map(({ verbId, tense: siblingTense }) => {
+        const siblingVerb = verbs.find((v) => v.id === verbId)
+        if (!siblingVerb || !agreementsCompatible(siblingVerb.agreement, verb.agreement)) return null
+        return siblingVerb.conjugations[siblingTense]?.[person]
+      })
+      .filter(Boolean)
+    if (forms.length > 0) candidates[person] = [...new Set(forms)]
+  }
+  return candidates
 }
 
 // `sentences[tense][person]` may be a single string or an array of phrasing
@@ -400,7 +476,15 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // are drawn from this same subset, so a filtered lesson behaves exactly like a
 // lesson whose table only ever had that many persons. Defaults to every key in
 // the table (the original behaviour).
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter } = {}) {
+//
+// `extraCandidates` (optional, `{ [person]: string[] }` — see
+// `getCrossVerbCandidates`) widens `buildOptions`'s distractor pool for the
+// `sentence`/`negative`/`form` kinds, which all draw their options from
+// `verb.conjugations[tense]`. Not used for `pronoun`, whose options come from
+// a different table (`verb.pronouns`) that cross-verb conjugated forms
+// wouldn't belong in. Defaults to no extra candidates (the original
+// same-table-only behaviour).
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
@@ -434,9 +518,11 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     used.add(kind)
     usedKinds.set(person, used)
 
+    const extra = extraCandidates?.[person]
+
     switch (kind) {
       case 'sentence': {
-        const { correct, options } = buildOptions(table, persons, person)
+        const { correct, options } = buildOptions(table, persons, person, extra)
         return { ...source, kind: 'sentence', person, sentence, correct, options }
       }
       case 'type-verb':
@@ -450,19 +536,149 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
       case 'type-pronoun':
         return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence, correct: verb.pronouns[person] }
       case 'negative': {
-        const { correct, options } = buildOptions(table, persons, person)
+        const { correct, options } = buildOptions(table, persons, person, extra)
         return { ...source, kind: 'negative', person, sentence: negativeSentence, correct, options }
       }
       case 'type-negative':
         return { ...source, kind: 'type-negative', person, sentence: negativeSentence, correct: table[person] }
       default: {
-        const { correct, options } = buildOptions(table, persons, person)
+        const { correct, options } = buildOptions(table, persons, person, extra)
         return { ...source, kind: 'form', person, correct, options }
       }
     }
   }
 
   return Array.from({ length: rounds }, () => shuffle(persons).map(buildQuestion)).flat()
+}
+
+// Shared by `generateCrossVerbQuestions` and `generateCaseMixerQuestions`:
+// for every (source, person) with both a `sentences[tense][person]` and a
+// `conjugations[tense][person]`, collects the other sources' same-person
+// forms that `agreementMatches` accepts as siblings, and keeps the
+// combination only if that yields at least 2 distinct option values (the
+// source's own correct form plus 1+ siblings) — a source with no accepted
+// siblings for a given person (e.g. a single-source review, or one where
+// every sibling's agreement is rejected) simply contributes nothing.
+//
+// `extraSiblingSources` (optional, `{ verb, tense }` shape like
+// `resolvedSources` — see `getIntroducedSources`) is Delivery 4's fallback
+// pool for reviews whose own `resolvedSources` are too few to produce much
+// variety: merged into the sibling pool (never as new anchors), deduped
+// against `resolvedSources`, and restricted to the same `tense` as the
+// anchor — same rationale as `getCrossVerbCandidates`'s `extraSources`.
+function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementMatches, extraSiblingSources = []) {
+  const candidates = []
+  const known = new Set(resolvedSources.map(({ verb, tense }) => `${verb.id}:${tense}`))
+  const extras = extraSiblingSources.filter(({ verb, tense }) => !known.has(`${verb.id}:${tense}`))
+  for (const { verb, tense } of resolvedSources) {
+    const sentences = verb.sentences?.[tense] ?? {}
+    const persons = personsFilter ?? Object.keys(verb.conjugations[tense] ?? {})
+    for (const person of persons) {
+      const sentence = sentences[person]
+      const correct = verb.conjugations[tense]?.[person]
+      if (!sentence || !correct) continue
+      const siblings = [
+        ...resolvedSources.filter((sibling) => !(sibling.verb.id === verb.id && sibling.tense === tense)),
+        ...extras.filter((sibling) => sibling.tense === tense),
+      ]
+      const siblingForms = siblings
+        .filter((sibling) => agreementMatches(sibling.verb.agreement, verb.agreement))
+        .map((sibling) => sibling.verb.conjugations[sibling.tense]?.[person])
+        .filter(Boolean)
+      // Capped at 3 distractors (4 options total, including `correct`) — same
+      // ceiling as `buildOptions` — so Delivery 4's broader fallback pool
+      // widens *variety* (which siblings show up) without ever showing more
+      // options than a regular multiple-choice question.
+      const distractors = shuffle([...new Set(siblingForms)].filter((form) => form !== correct)).slice(0, 3)
+      if (distractors.length === 0) continue
+      const options = [correct, ...distractors]
+      candidates.push({ verbId: verb.id, tense, person, sentence: pickVariant(sentence), correct, options })
+    }
+  }
+  return candidates
+}
+
+// Picks up to `count` candidates at random and shapes them into questions of
+// the given `kind`, shuffling each one's `options`.
+function pickCrossSourceQuestions(candidates, count, kind) {
+  return shuffle(candidates)
+    .slice(0, count)
+    .map(({ verbId, tense, person, sentence, correct, options }) => ({
+      verbId,
+      tense,
+      kind,
+      person,
+      sentence,
+      correct,
+      options: shuffle(options),
+    }))
+}
+
+// Up to this many `kind: 'verb-choice'` cross-verb questions (see
+// `generateCrossVerbQuestions`) get added to a review lesson's queue — kept
+// small/"a handful" since each one is a deliberately harder, single-focus
+// question, on top of the review's normal cross-section and
+// `getWeakSpotQuestions`'s extras.
+export const CROSS_VERB_QUESTION_COUNT = 2
+
+// A `kind: 'verb-choice'` question shows one source's example sentence
+// (`sentences[tense][person]`, with `___` marking the blank, same as
+// `sentence`/`type-verb`) and asks which verb's conjugated form actually
+// fits it. `options` mix that source's correct form for `person` with its
+// compatible siblings' (see `agreementsCompatible`) forms for the same
+// person — unlike Delivery 1's occasional cross-verb distractor (one option
+// among the usual same-table ones), here "which verb fits this sentence" is
+// the entire point of the question. `options` has only as many entries as
+// there are compatible sources with a usable form for this person (2-4, not
+// padded) — a review with only one compatible pair yields 2-option
+// questions.
+//
+// `resolvedSources` is the review's `{ verb, tense }` sources, already
+// resolved from `VERBS` (as `createExerciseState` produces). `persons`
+// (optional) restricts which grammatical persons are eligible, mirroring
+// `generateQuestions`'s `persons` filter. `extraSiblingSources` (optional,
+// see `collectCrossSourceCandidates`) widens the sibling pool for reviews
+// with too few sources of their own (Delivery 4). Up to `count` questions are
+// returned, picked at random from every eligible (source, person)
+// combination — a review with too few eligible combinations (e.g. a
+// single-source review, where there are no siblings to choose between at
+// all) simply returns fewer, down to none.
+export function generateCrossVerbQuestions(resolvedSources, { persons: personsFilter, count = CROSS_VERB_QUESTION_COUNT, extraSiblingSources = [] } = {}) {
+  return pickCrossSourceQuestions(
+    collectCrossSourceCandidates(resolvedSources, personsFilter, agreementsCompatible, extraSiblingSources),
+    count,
+    'verb-choice',
+  )
+}
+
+// Up to this many `kind: 'case-mixer'` questions (see
+// `generateCaseMixerQuestions`) get added to a review lesson's queue — kept
+// to a bare minimum (1), since this drill is narrower and harder than
+// `verb-choice`: it only fires for reviews that happen to mix `nor` and
+// `nor-nork` sources, which is most of them but not the point of any of them
+// yet (that's Refresh Gate C / Unit 24's job, once Units 22-23 exist — see
+// `docs/DECISIONS.md`).
+export const CASE_MIXER_QUESTION_COUNT = 1
+
+// A `kind: 'case-mixer'` question is `generateCrossVerbQuestions`'s mirror
+// image: same shape (one source's example sentence, `options` mixing its
+// correct form with sibling sources' same-person forms), but
+// `agreementsCompatible`'s filter is *inverted* — only sources whose
+// `agreement` differs on the `nork` axis (`nor` vs `nor-nork`) qualify as
+// siblings. Where `verb-choice` asks "which verb fits this sentence" among
+// same-shape verbs, `case-mixer` asks it among verbs that differ in subject
+// case-marking (absolutive "Ni..." vs ergative "Nik..."), e.g. izan's `naiz`
+// vs ukan's `dut` for a `ni`-person sentence — the wrong option doesn't just
+// belong to a different verb, it carries the wrong case for that sentence's
+// subject. Reviews with no `nor`/`nor-nork` mix among their sources (or none
+// for the given `persons`) simply yield none, same graceful-degradation
+// pattern as `generateCrossVerbQuestions`.
+export function generateCaseMixerQuestions(resolvedSources, { persons: personsFilter, count = CASE_MIXER_QUESTION_COUNT, extraSiblingSources = [] } = {}) {
+  return pickCrossSourceQuestions(
+    collectCrossSourceCandidates(resolvedSources, personsFilter, (a, b) => !agreementsCompatible(a, b), extraSiblingSources),
+    count,
+    'case-mixer',
+  )
 }
 
 // =============================================================================
@@ -528,11 +744,16 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
 // `negative`/`type-negative` are the other: Basque negation isn't just
 // inserting "not" in place — `ez` plus the verb move together to right after
 // the subject, with the rest of the sentence following — another pattern with
-// no equivalent in English/Spanish word order. Every other kind (`form`,
-// `sentence`, `type-verb`, `spot-error`) is "produce/recognize this conjugated
-// form", which doesn't have a similarly compact "why" beyond "that's the
-// form" — `getExplanation` returns `null` for those, and `FeedbackBar` simply
-// doesn't show the toggle.
+// no equivalent in English/Spanish word order. `verb-choice` (see
+// `generateCrossVerbQuestions`) is the third: the "why" is exactly which verb
+// this sentence's structure calls for, as opposed to its sibling option(s).
+// `case-mixer` (see `generateCaseMixerQuestions`) is `verb-choice`'s mirror
+// image, framed around the `-k` ergative-subject distinction instead — its
+// explanation reuses the pronoun explanations' "doer always gets '-k'"
+// framing. Every other kind (`form`, `sentence`, `type-verb`, `spot-error`) is
+// "produce/recognize this conjugated form", which doesn't have a similarly
+// compact "why" beyond "that's the form" — `getExplanation` returns `null`
+// for those, and `FeedbackBar` simply doesn't show the toggle.
 //
 // `t` is the caller's `useLanguage().t`, so the explanation text follows the
 // interface language while `{pronoun}`/`{verb}`/`{form}` stay the untranslated
@@ -540,6 +761,13 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
 export function getExplanation(verb, question, t) {
   if (question.kind === 'negative' || question.kind === 'type-negative') {
     return t('explanationNegation', { form: verb.conjugations[question.tense][question.person] })
+  }
+  if (question.kind === 'verb-choice') {
+    return t('explanationVerbChoice', { verb: verb.verb, form: question.correct })
+  }
+  if (question.kind === 'case-mixer') {
+    const key = verb.agreement.includes('nork') ? 'explanationCaseMixerErgative' : 'explanationCaseMixerAbsolutive'
+    return t(key, { verb: verb.verb, form: question.correct })
   }
   if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
   const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'

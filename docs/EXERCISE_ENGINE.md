@@ -150,7 +150,13 @@ fit `sentences`/`type-verb`. Needs:
   "candidate full sentences, pick the right/wrong one" exercise but for
   NOR/NORI/NORK role-swaps instead of negation — likely reuses this same new
   question-kind machinery once it exists, with a different sentence-pair
-  source (role-swapped rather than negated).
+  source (role-swapped rather than negated). The Exercise Variety Plan's
+  Delivery 3 shipped a narrower NOR-vs-NOR-NORK piece of this
+  (`generateCaseMixerQuestions`, `kind: 'case-mixer'` — multiple-choice, not
+  this `spot-error`-style mechanism) as a general review-lesson mechanism, but
+  deliberately left Unit 24 itself `pending`: its full NOR/NORI/NORK scope
+  needs Units 22-23's dative verbs, which don't exist yet. See
+  `docs/DECISIONS.md` (2026-06-13, Delivery 3).
 
 ### Ditransitive NOR-NORI-NORK (Unit 23 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
