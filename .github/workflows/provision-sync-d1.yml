@@ -1,0 +1,62 @@
+name: Provision sync D1 database
+
+# One-off setup workflow: creates (or finds) the `aditzak-sync` D1 database
+# and writes its real database_id into sync-worker/wrangler.toml, replacing
+# the "00000000-0000-0000-0000-000000000000" placeholder. This is what makes
+# the "Deploy sync worker" workflow's `d1 migrations apply --remote` step
+# (and the deploy itself) succeed. See docs/CLOUDFLARE_SYNC_WORKER.md.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: provision-sync-d1
+  cancel-in-progress: false
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: sync-worker/package-lock.json
+      - run: npm ci
+        working-directory: sync-worker
+      - name: Create D1 database if it doesn't exist
+        working-directory: sync-worker
+        run: |
+          set -e
+          EXISTING_ID=$(npx wrangler d1 list --json | jq -r '.[] | select(.name=="aditzak-sync") | .uuid')
+          if [ -n "$EXISTING_ID" ]; then
+            echo "Database 'aditzak-sync' already exists: $EXISTING_ID"
+            DB_ID="$EXISTING_ID"
+          else
+            CREATE_OUTPUT=$(npx wrangler d1 create aditzak-sync)
+            echo "$CREATE_OUTPUT"
+            DB_ID=$(echo "$CREATE_OUTPUT" | grep -oP 'database_id = "\K[^"]+')
+          fi
+          if [ -z "$DB_ID" ]; then
+            echo "Could not determine database_id" >&2
+            exit 1
+          fi
+          echo "Resolved database_id: $DB_ID"
+          sed -i "s/database_id = \"00000000-0000-0000-0000-000000000000\"/database_id = \"$DB_ID\"/" wrangler.toml
+      - name: Commit updated wrangler.toml
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sync-worker/wrangler.toml
+          git commit -m "Set sync-worker D1 database_id"
+          git push
