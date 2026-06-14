@@ -2156,3 +2156,43 @@ describe('getWeakSpotQuestions', () => {
     expect(EXTRA_REVIEW_EXERCISES).toBe(4)
   })
 })
+
+describe('validFor coverage for the in-review nor/nor-nork clusters (#124)', () => {
+  // Every sentences[tense][person] variant for these 12 verbs must be tagged
+  // with validFor (even if []), so cross-verb distractors are governed by a
+  // deliberate decision rather than the "not yet vetted" safe default. See
+  // docs/SENTENCE_FRAMES.md for the schema and docs/DECISIONS.md for the
+  // migration notes (one exception: etorri's frameless present-tense variants
+  // are tagged with every nor-cluster sibling on purpose, flagged for #125's
+  // sentence rewrite rather than left untagged).
+  const reviewedVerbIds = ['izan', 'egon', 'joan', 'etorri', 'ukan', 'nahi', 'jakin', 'eduki', 'ikusi', 'jan', 'edan', 'erosi']
+
+  const variantsOf = (value) => (Array.isArray(value) ? value : [value])
+
+  for (const verbId of reviewedVerbIds) {
+    const verb = VERBS.find((v) => v.id === verbId)
+
+    it(`${verbId}: every sentences.present variant has a validFor array`, () => {
+      expect(verb.sentences?.present).toBeTruthy()
+
+      for (const [person, value] of Object.entries(verb.sentences.present)) {
+        for (const variant of variantsOf(value)) {
+          expect(variant, `${verbId}.sentences.present.${person}`).not.toBeTypeOf('string')
+          expect(Array.isArray(variant.validFor), `${verbId}.sentences.present.${person}`).toBe(true)
+        }
+      }
+    })
+
+    it(`${verbId}: every negativeSentences.present variant (if any) has a validFor array`, () => {
+      const negatives = verb.negativeSentences?.present
+      if (!negatives) return
+
+      for (const [person, value] of Object.entries(negatives)) {
+        for (const variant of variantsOf(value)) {
+          expect(variant, `${verbId}.negativeSentences.present.${person}`).not.toBeTypeOf('string')
+          expect(Array.isArray(variant.validFor), `${verbId}.negativeSentences.present.${person}`).toBe(true)
+        }
+      }
+    })
+  }
+})
