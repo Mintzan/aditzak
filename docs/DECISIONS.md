@@ -8,6 +8,40 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-14 — #125: rewrote `etorri`'s frameless present/negative sentences to carry a discriminating adjunct
+
+**Decision:** `etorri.sentences.present`'s bare-temporal variants (`'Ni orain
+___.'`, `'Hura orain ___.'`, `'Zu bihar ___.'`, etc. — 18 of the 24 present
+variants) and two `negativeSentences` entries (`zu`: `'Zu ez ___ bihar.'`,
+`hura`: `'Hura ez ___ orain.'`) had no destination, location, or predicate —
+`da`/`dago`/`doa`/`dator` were all equally grammatical, exactly the
+`'Hura orain ___.'` `verb-choice` ambiguity reported in #127. Each was
+rewritten to combine its existing subject/time adverb with an allative `-ra`
+destination (`'Hura orain ikastolara ___.'`, `'Zu bihar eskolara ___.'`,
+etc.), reusing destinations already established in `joan`/`etorri`'s other
+variants (`etxera`, `eskolara`, `lanera`, `dendara`, `hondartzara`,
+`liburutegira`, `unibertsitatera`, `parkera`) plus two new ones
+(`ikastolara`, `auzora`, `kalera`) for variety. All rewritten variants are now
+in the same allative frame as `etorri`'s existing tagged variants, so they get
+`validFor: ['joan']` (per `docs/SENTENCE_FRAMES.md` worked example 2) instead
+of the `['izan', 'egon', 'joan']` "still ambiguous" marker from #124's
+backfill.
+
+**Audit of `izan`/`egon`/`joan` for the same pattern**: none found. Every
+`izan` variant is a predicate-nominal frame, every `egon` variant is a
+locative `-an`/`-en` frame, and every `joan` variant is already an allative
+`-ra` frame (`validFor: ['etorri']`) — all already tagged `validFor: []`/
+`['etorri']` with no frameless leftovers. The frameless pattern was isolated
+to `etorri`.
+
+**Why:** `validFor: ['izan', 'egon', 'joan']` correctly marked these sentences
+as "still ambiguous, don't offer any cross candidate" — but left the
+underlying ambiguity in place for a learner answering a `verb-choice`/
+`case-mixer` question built around one of them (every `nor`-cluster form would
+read as equally correct). Rewriting the sentence itself, rather than
+permanently excluding it from being a useful source, is the fix #122 always
+intended for this case (`docs/SENTENCE_FRAMES.md` worked example 3).
+
 ## 2026-06-14 — Results screen vibrates with a result-tier pattern, with variety per tier
 
 **Decision:** Added `pickResultVibrationPattern`/`vibrateResult` to

@@ -514,55 +514,52 @@ export const VERBS = [
     // `validFor: ['joan']` — joan's same-person form ("Ni etxera noa" = "I'm
     // going home") is an equally natural, opposite-direction completion of
     // the same allative (docs/SENTENCE_FRAMES.md worked example 2;
-    // "Ane etxera ___." is the confirmed Tier-2 spot-check). The bare
-    // temporal ("orain"/"gaur"/"bihar") variants have no destination,
-    // location, or predicate at all — da/dago/doa/dator are *all* grammatical
-    // completions (worked example 3), so there's no useful `validFor` to
-    // write; `validFor: ['izan', 'egon', 'joan']` lists every other
-    // `nor`-cluster sibling as an explicit, honest "still ambiguous, every
-    // sibling fits" marker (same exclude-everything effect as the untagged
-    // default, but distinguishable from "forgot to tag" by the coverage
-    // test). Flagged for #125, which rewrites these to carry a discriminating
-    // adjunct — see docs/DECISIONS.md.
+    // "Ane etxera ___." is the confirmed Tier-2 spot-check). #125: the
+    // formerly-bare-temporal variants ("Hura orain ___.", etc.) had no
+    // destination, location, or predicate at all — da/dago/doa/dator were
+    // *all* grammatical completions (worked example 3) — so each has been
+    // rewritten to combine its existing subject/time adverb with a
+    // destination (e.g. "Hura orain ikastolara ___."), putting it back into
+    // the same allative frame and `validFor: ['joan']`.
     sentences: {
       present: {
         ni: [
           { text: 'Ni etxera ___.', validFor: ['joan'] },
           { text: 'Ni eskolara ___.', validFor: ['joan'] },
-          { text: 'Ni orain ___.', validFor: ['izan', 'egon', 'joan'] },
-          { text: 'Ni gaur ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Ni orain hondartzara ___.', validFor: ['joan'] },
+          { text: 'Ni gaur parkera ___.', validFor: ['joan'] },
         ],
         zu: [
-          { text: 'Zu bihar ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Zu bihar dendara ___.', validFor: ['joan'] },
           { text: 'Zu etxera ___.', validFor: ['joan'] },
-          { text: 'Zu orain ___.', validFor: ['izan', 'egon', 'joan'] },
-          { text: 'Zu gaur ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Zu orain etxera ___.', validFor: ['joan'] },
+          { text: 'Zu gaur unibertsitatera ___.', validFor: ['joan'] },
         ],
         hura: [
-          { text: 'Hura orain ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Hura orain ikastolara ___.', validFor: ['joan'] },
           { text: 'Hura etxera ___.', validFor: ['joan'] },
-          { text: 'Hura bihar ___.', validFor: ['izan', 'egon', 'joan'] },
-          { text: 'Mikel gaur ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Hura bihar etxera ___.', validFor: ['joan'] },
+          { text: 'Mikel gaur liburutegira ___.', validFor: ['joan'] },
           { text: 'Ane etxera ___.', validFor: ['joan'] },
-          { text: 'Txakurra orain ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Txakurra orain kalera ___.', validFor: ['joan'] },
         ],
         gu: [
           { text: 'Gu etxera ___.', validFor: ['joan'] },
-          { text: 'Gu orain ___.', validFor: ['izan', 'egon', 'joan'] },
-          { text: 'Gu gaur ___.', validFor: ['izan', 'egon', 'joan'] },
-          { text: 'Gu bihar ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Gu orain etxera ___.', validFor: ['joan'] },
+          { text: 'Gu gaur liburutegira ___.', validFor: ['joan'] },
+          { text: 'Gu bihar parkera ___.', validFor: ['joan'] },
         ],
         zuek: [
-          { text: 'Zuek bihar ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Zuek bihar dendara ___.', validFor: ['joan'] },
           { text: 'Zuek etxera ___.', validFor: ['joan'] },
-          { text: 'Zuek orain ___.', validFor: ['izan', 'egon', 'joan'] },
-          { text: 'Zuek gaur ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Zuek orain etxera ___.', validFor: ['joan'] },
+          { text: 'Zuek gaur liburutegira ___.', validFor: ['joan'] },
         ],
         haiek: [
-          { text: 'Haiek orain ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Haiek orain auzora ___.', validFor: ['joan'] },
           { text: 'Haiek etxera ___.', validFor: ['joan'] },
-          { text: 'Haiek bihar ___.', validFor: ['izan', 'egon', 'joan'] },
-          { text: 'Mikel eta Ane gaur ___.', validFor: ['izan', 'egon', 'joan'] },
+          { text: 'Haiek bihar etxera ___.', validFor: ['joan'] },
+          { text: 'Mikel eta Ane gaur liburutegira ___.', validFor: ['joan'] },
         ],
       },
     },
@@ -580,8 +577,8 @@ export const VERBS = [
     negativeSentences: {
       present: {
         ni: { text: 'Ni ez ___ etxera.', validFor: ['joan'] },
-        zu: { text: 'Zu ez ___ bihar.', validFor: ['izan', 'egon', 'joan'] },
-        hura: { text: 'Hura ez ___ orain.', validFor: ['izan', 'egon', 'joan'] },
+        zu: { text: 'Zu ez ___ bihar eskolara.', validFor: ['joan'] },
+        hura: { text: 'Hura ez ___ orain etxera.', validFor: ['joan'] },
       },
     },
   },
