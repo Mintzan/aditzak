@@ -1473,7 +1473,7 @@ function AnswerOption({ option, status, disabled, onSelect }) {
       style={{ minHeight: 48 }}
       className={`w-full rounded-2xl border-2 px-5 py-4 text-left text-lg font-semibold transition ${OPTION_STYLES[status]} ${
         disabled ? 'cursor-default' : 'active:scale-[0.98]'
-      }`}
+      } ${disabled && status === 'idle' ? 'opacity-50' : ''}`}
     >
       {option}
     </button>
