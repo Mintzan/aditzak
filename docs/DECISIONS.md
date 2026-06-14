@@ -8,6 +8,107 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-14 — #126: retired the pair-level cross-candidate audit artifacts
+
+**Decision:** Removed `scripts/list-cross-candidates.mjs`,
+`docs/CROSS_CANDIDATE_REVIEW.md`, `docs/CROSS_CANDIDATE_TRIAGE_PRIORITY.md`,
+and `docs/AMBIGUOUS_DISTRACTORS_AUDIT.md` — the pair-level audit/triage
+workflow (#112-115) that `validFor` (#122-125) supersedes.
+`CROSS_CANDIDATE_EXCLUSIONS`/`isCrossCandidateExcluded`/
+`sentenceTemplatesCollide` were already removed from `src/lessonLogic.js` by
+#123, so this is purely doc/script cleanup — confirmed via grep that nothing
+in `src/` or `package.json` referenced the removed script. `docs/DECISIONS.md`
+entries that reference these now-removed files/identifiers (the #112-115
+history below) are left as-is — they're a historical record of what was
+decided and why at the time, not living documentation. `docs/SENTENCE_FRAMES.md`
+gained a brief "Status: epic #127 complete" note pointing back here instead
+of being rewritten — its schema/call-site sections remain the reference for
+`validFor`. This closes out epic #127 (#121-126 all done).
+
+## 2026-06-14 — #124: backfilled `validFor` across the `nor-nork` cluster's sentences
+
+**Decision:** Every `sentences.present`/`negativeSentences.present` variant
+for the eight `nor-nork` verbs (`ukan`, `nahi`, `jakin`, `eduki`, `ikusi`,
+`jan`, `edan`, `erosi`) is now `{ text, validFor }` — no bare strings left in
+those fields for this cluster (`future`/`past` automatically inherit via the
+existing by-reference reuse loops in `src/data/verbs.js`). A new coverage
+test (`src/logic.test.js`, "validFor coverage for the nor-nork cluster")
+enforces this going forward: every `agreement.includes('nork')` verb's
+present-tense sentence/negative-sentence variants must have an explicit
+`validFor` array (even `[]`), for any future sentence additions.
+
+**Judgment approach** (per `docs/SENTENCE_FRAMES.md`'s worked examples):
+candidate siblings for each verb were restricted to #114's confirmed
+"both valid" pairs (`ukan`↔`nahi`/`eduki`/`ikusi`, `jakin`↔`ikusi`/`nahi`,
+`eduki`↔`nahi`, `jan`/`edan`↔`erosi`) — `jakin`↔`ukan`, `jakin`↔`eduki`, and
+`jan`↔`edan` (#114's confirmed-*wrong* pairs) never appear in any `validFor`.
+Within those candidate pairs, each sentence was judged on its own object:
+concrete/ownable/visible nouns (book, car, key, ticket...) admit the full
+candidate set (`ukan`'s `'Nik liburu bat ___.'` → `['nahi','eduki','ikusi']`,
+matching the doc's worked example exactly); abstract or non-agentive-subject
+sentences admit a narrower set or none (`ukan`'s `'Nik bilera bat ___.'` "I
+have a meeting" → `['eduki']` only — `nahi`/`ikusi` don't fit "a meeting";
+`'Etxeak lorategi bat ___.'` "the house has a garden" → `['eduki']`, since
+`nahi`/`ikusi` need an agentive subject). `jakin`'s candidates split on
+whether the object is something you can "see" (`'Nik bidea ___.'`, the way →
+`['ikusi']`) vs "want" (`'Nik sekretua ___.'`, a secret → `['nahi']`) vs both
+(`'Nik erantzuna ___.'`, the answer → `['ikusi','nahi']`) — the same verb pair
+gets different verdicts per sentence, as the doc's "book" vs "time" contrast
+intends. `eduki`'s `'[object] poltsikoan/eskuan ___.'` ("in my pocket/hand")
+sentences all get `['ukan','ikusi']` (near-synonym "have" plus the audit's
+"I see X in my hand" example) but never `nahi` ("I want X in my pocket" reads
+oddly). `jan`/`edan`'s food/drink objects all get `['erosi']` ("eat/drink X"
+vs "buy X" both natural) except `'Katuak esnea ___.'` (a cat can't be the one
+buying milk) → `[]`. `erosi`'s own sentences get `['jan']` only for the
+literal food objects (`'Nik ogia ___.'`, `'Zuk sagarrak ___?'`, `'Saltzaileak
+fruta ___.'`) — non-food objects (books, cars, houses, jackets, tickets,
+gifts, records) get `[]`, since `jan`/`edan` forms don't fit them.
+`pronounSentences` was left as-is (bare strings) per
+`docs/SENTENCE_FRAMES.md`'s "fields that don't consume `validFor` yet" —
+`pronoun`/`type-pronoun` questions don't draw cross-verb candidates, so an
+untagged `pronounSentences` entry changes nothing.
+
+**Out of scope:** `ari`/`ibili` (the two `nor`-only verbs not covered by
+#125's `izan`/`egon`/`joan`/`etorri` pass) — the original audit found no
+"both valid" cases for the `nor` cluster and the migration mapping in
+`docs/SENTENCE_FRAMES.md` doesn't list any `ari`/`ibili` pairs, so they're
+left untagged (the safe default) and outside the new coverage test's scope
+(which only covers `agreement.includes('nork')` verbs).
+
+## 2026-06-14 — #125: rewrote `etorri`'s frameless present/negative sentences to carry a discriminating adjunct
+
+**Decision:** `etorri.sentences.present`'s bare-temporal variants (`'Ni orain
+___.'`, `'Hura orain ___.'`, `'Zu bihar ___.'`, etc. — 18 of the 24 present
+variants) and two `negativeSentences` entries (`zu`: `'Zu ez ___ bihar.'`,
+`hura`: `'Hura ez ___ orain.'`) had no destination, location, or predicate —
+`da`/`dago`/`doa`/`dator` were all equally grammatical, exactly the
+`'Hura orain ___.'` `verb-choice` ambiguity reported in #127. Each was
+rewritten to combine its existing subject/time adverb with an allative `-ra`
+destination (`'Hura orain ikastolara ___.'`, `'Zu bihar eskolara ___.'`,
+etc.), reusing destinations already established in `joan`/`etorri`'s other
+variants (`etxera`, `eskolara`, `lanera`, `dendara`, `hondartzara`,
+`liburutegira`, `unibertsitatera`, `parkera`) plus two new ones
+(`ikastolara`, `auzora`, `kalera`) for variety. All rewritten variants are now
+in the same allative frame as `etorri`'s existing tagged variants, so they get
+`validFor: ['joan']` (per `docs/SENTENCE_FRAMES.md` worked example 2) instead
+of the `['izan', 'egon', 'joan']` "still ambiguous" marker from #124's
+backfill.
+
+**Audit of `izan`/`egon`/`joan` for the same pattern**: none found. Every
+`izan` variant is a predicate-nominal frame, every `egon` variant is a
+locative `-an`/`-en` frame, and every `joan` variant is already an allative
+`-ra` frame (`validFor: ['etorri']`) — all already tagged `validFor: []`/
+`['etorri']` with no frameless leftovers. The frameless pattern was isolated
+to `etorri`.
+
+**Why:** `validFor: ['izan', 'egon', 'joan']` correctly marked these sentences
+as "still ambiguous, don't offer any cross candidate" — but left the
+underlying ambiguity in place for a learner answering a `verb-choice`/
+`case-mixer` question built around one of them (every `nor`-cluster form would
+read as equally correct). Rewriting the sentence itself, rather than
+permanently excluding it from being a useful source, is the fix #122 always
+intended for this case (`docs/SENTENCE_FRAMES.md` worked example 3).
+
 ## 2026-06-14 — Results screen vibrates with a result-tier pattern, with variety per tier
 
 **Decision:** Added `pickResultVibrationPattern`/`vibrateResult` to
