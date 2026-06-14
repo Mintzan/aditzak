@@ -35,7 +35,7 @@ delivery ships, add a `docs/DECISIONS.md` entry per the usual convention.
   verbs' tables via `lesson.sources`).
 - Increase distractor-option variety so option sets don't repeat the same
   same-table-only set across replays.
-- Lay concrete groundwork for Refresh Gate C (`journey.js` Unit 24,
+- Lay concrete groundwork for Refresh Gate C (`journey.js` Unit 22,
   "REFRESH — The Case-Ending Mixer"), currently just a one-line `pending`
   placeholder with no mechanism.
 
@@ -193,7 +193,7 @@ feature becomes subject case-marking, not just verb meaning — deliberately
 relaxing Delivery 1.4's "compatible agreement" filter.
 
 **Why:** this is the "steepest" cross-verb confusion, and is exactly what
-`journey.js`'s Unit 24 ("REFRESH — The Case-Ending Mixer — drills NOR/NORK/
+`journey.js`'s Unit 22 ("REFRESH — The Case-Ending Mixer — drills NOR/NORK/
 NORI role-swaps, zero new verbs") is meant to cover. Today that unit is a
 one-line `pending` placeholder with no spec; this delivery gives it a concrete
 mechanism reusing Delivery 2's machinery.
@@ -211,10 +211,10 @@ mechanism reusing Delivery 2's machinery.
    deliberately disabled/inverted for these questions.~~ Done:
    `generateCaseMixerQuestions`, `kind: 'case-mixer'` — see
    `docs/DECISIONS.md` (2026-06-13, Delivery 3).
-3. ~~**3.3** — Flesh out Unit 24's spec in `docs/LEARNING_JOURNEY.md`... then
-   add a real review lesson to `data/lessons.js` and flip Unit 24's
-   `status`/`lessonIds` in `journey.js`.~~ **Deferred** — Unit 24 stays
-   `pending`; its full NOR/NORI/NORK scope needs Units 22-23's dative verbs,
+3. ~~**3.3** — Flesh out Unit 22's spec in `docs/LEARNING_JOURNEY.md`... then
+   add a real review lesson to `data/lessons.js` and flip Unit 22's
+   `status`/`lessonIds` in `journey.js`.~~ **Deferred** — Unit 22 stays
+   `pending`; its full NOR/NORI/NORK scope needs Units 20-21's dative verbs,
    which don't exist yet. `case-mixer` instead ships as a general
    review-lesson mechanism (active wherever sources already mix
    `nor`/`nor-nork`). See `docs/DECISIONS.md` (2026-06-13, Delivery 3).
@@ -281,10 +281,10 @@ need to ship in a single pass each — e.g. Delivery 1 could ship for
 `unit-1-review` alone first (task 1.6) before 1.7's wider rollout.
 
 **Status: all four deliveries shipped** (see `docs/DECISIONS.md`, 2026-06-13
-entries for Deliveries 1-4). Delivery 3 deliberately left Unit 24
-(`journey.js`) `pending` — its full NOR/NORI/NORK scope needs Units 22-23's
+entries for Deliveries 1-4). Delivery 3 deliberately left Unit 22
+(`journey.js`) `pending` — its full NOR/NORI/NORK scope needs Units 20-21's
 dative verbs, which don't exist yet; `case-mixer` instead ships as a general
 review-lesson mechanism active wherever a review's sources (including
 Delivery 4's fallback pool) mix `nor`/`nor-nork`. Any further follow-up
-(e.g. revisiting Unit 24 once Units 22-23 land) should start a new planning
+(e.g. revisiting Unit 22 once Units 20-21 land) should start a new planning
 doc rather than reopen this one.

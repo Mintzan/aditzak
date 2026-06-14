@@ -54,7 +54,7 @@ raised here, were resolved in later entries above.)
   `izan`'s past auxiliary (§1's `nintzen`/`zinen`/`zen`/`ginen`/`zineten`/
   `ziren`), per §11's periphrastic tense matrix ("Lehenaldi Mugatua" row —
   perfective participle + `izan`/`ukan` past auxiliary, the same mechanism
-  Units 14-17's future uses with the present auxiliary). These are **not**
+  Units 14-15's future uses with the present auxiliary). These are **not**
   §6's existing "Past" column for these three verbs (`nindoan`/`zetorren`/
   `nenbilen`) — see below.
 
@@ -74,7 +74,7 @@ ongoing or repeated past action, the opposite of "completed." The new
 came" / "they walked around [that one time]") — what a learner needs to say
 "I went to the beach yesterday." These are grammatically distinct forms in
 Basque, not two names for the same thing; §6's imperfective forms remain
-reserved for Phase III's Unit 21 ("Motion in Progress (Past)"), contrasted
+reserved for Phase III's Unit 19 ("Motion in Progress (Past)"), contrasted
 explicitly with this entry's simple past.
 
 **Deferred — `jakin`/`nahi`/`ari` past:** `jakin`'s past

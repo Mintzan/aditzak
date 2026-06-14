@@ -989,7 +989,7 @@ export const VERBS = [
   },
 ]
 
-// Units 14-17 ("Intentions & Future Actions") gave every verb above (except
+// Stage 6 (Units 14-15, "Talking About the Future") gave every verb above (except
 // `ari`, see `docs/LANGUAGE_DECISIONS.md`) a `conjugations.future` table. The blank
 // in a `sentences`/`pronounSentences` template doesn't depend on tense — "Ni
 // irakaslea ___." fills equally well with `naiz` (present) or `izango naiz`

@@ -866,7 +866,7 @@ export function generateCrossVerbQuestions(resolvedSources, { persons: personsFi
 // to a bare minimum (1), since this drill is narrower and harder than
 // `verb-choice`: it only fires for reviews that happen to mix `nor` and
 // `nor-nork` sources, which is most of them but not the point of any of them
-// yet (that's Refresh Gate C / Unit 24's job, once Units 22-23 exist — see
+// yet (that's Refresh Gate C / Unit 22's job, once Units 20-21 exist — see
 // `docs/DECISIONS.md`).
 export const CASE_MIXER_QUESTION_COUNT = 1
 

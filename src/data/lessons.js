@@ -20,7 +20,7 @@
 // giving each unit an extra, harder consolidation lesson (reviews skip the
 // no-typing ramp and the conjugation preview, see `NO_TYPING_ATTEMPTS`/
 // `LessonPreviewScreen`) before the next unit unlocks. The journey's Refresh
-// Gate units (6, 7, 19, 24, ...) are a bigger, cross-unit version of the same
+// Gate units (6, 7, 17, 22, ...) are a bigger, cross-unit version of the same
 // shape once implemented.
 // Phase I's "Survival Present" horizon (`docs/LEARNING_JOURNEY.md`) restricts
 // every verb's first lessons to `ni`/`zu`/`hura` — `gu`/`zuek`/`haiek` arrive
@@ -359,126 +359,142 @@ export const LESSONS = [
     persons: PHASE_1_PLURAL_PERSONS,
     sources: [{ verbId: 'eduki', tense: 'past' }],
   },
-  // Units 14-17 ("Intentions & Future Actions", Phase II) — zero new verbs,
+  // Stage 6 — "Talking About the Future (Geroa)", Phase II — zero new verbs,
   // "only the participle-formation rule is new" (`docs/LEARNING_JOURNEY.md`):
   // every verb from Units 1-13 except `ari` (see `docs/LANGUAGE_DECISIONS.md`)
-  // gets a `future` practice lesson, reusing its existing present-tense
-  // auxiliary table under a `-ko`/`-go` participle. `nahi`/`jakin`'s `future`
-  // tables stay 3-person (ni/zu/hura) like their `present` ones, so they're
-  // unchanged below. Every other verb's `future` table is 6-person, so — same
-  // singular/plural split as Units 10-13 — each gets a `PHASE_1_PERSONS`
-  // lesson immediately followed by a `-plural` `PHASE_1_PLURAL_PERSONS`
-  // lesson. This was originally one 32-lesson mega-unit; it's split into four
-  // ~8-lesson units (Future Groups A-D) for pacing, each with its own
-  // `unit-9-review-N`/`-plural` consolidation pair (`unit-9-review-2-plural`
-  // drops `nahi`/`jakin`, which have no plural data, and covers just
-  // `joan`/`etorri`).
-  // Unit 14 (Future Group A): izan/egon/ukan
+  // can take a `future` form built by reusing its existing present-tense
+  // auxiliary table under a `-ko`/`-go` participle.
+  //
+  // The Basque future is morphologically trivial — one rule, layered onto
+  // auxiliaries the learner already drilled in Units 1-13 — so this was
+  // deliberately *compressed* from four near-identical per-verb drill units
+  // (the old "Future Groups A-D", ~32 lessons) into two: Unit 14 teaches the
+  // rule on a small core set, and Unit 15 spreads it across the remaining
+  // verbs as cross-verb *mixer reviews* rather than re-drilling each verb's
+  // table one at a time. See `docs/DECISIONS.md` (2026-06-14, "Compressed the
+  // future stage").
+  //
+  // Unit 14 (The Future Tense): introduce `-ko`/`-go` on a three-verb core
+  // spanning both auxiliary patterns — `izan` (nor / `naiz`), `ukan`
+  // (nor-nork / `dut`), `joan` (nor motion / `naiz`) — full singular/plural
+  // split (same as Units 10-13) plus an intro-review pair.
   { id: 'izan-future', verbId: 'izan', tense: 'future', persons: PHASE_1_PERSONS },
   { id: 'izan-future-plural', verbId: 'izan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'egon-future', verbId: 'egon', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'egon-future-plural', verbId: 'egon', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
   { id: 'ukan-future', verbId: 'ukan', tense: 'future', persons: PHASE_1_PERSONS },
   { id: 'ukan-future-plural', verbId: 'ukan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  {
-    id: 'unit-9-review-1',
-    review: true,
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'izan', tense: 'future' },
-      { verbId: 'egon', tense: 'future' },
-      { verbId: 'ukan', tense: 'future' },
-    ],
-  },
-  {
-    id: 'unit-9-review-1-plural',
-    review: true,
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'izan', tense: 'future' },
-      { verbId: 'egon', tense: 'future' },
-      { verbId: 'ukan', tense: 'future' },
-    ],
-  },
-  // Unit 15 (Future Group B): nahi/jakin/joan/etorri
-  { id: 'nahi-future', verbId: 'nahi', tense: 'future' },
-  { id: 'jakin-future', verbId: 'jakin', tense: 'future' },
   { id: 'joan-future', verbId: 'joan', tense: 'future', persons: PHASE_1_PERSONS },
   { id: 'joan-future-plural', verbId: 'joan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'etorri-future', verbId: 'etorri', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'etorri-future-plural', verbId: 'etorri', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
   {
-    id: 'unit-9-review-2',
+    id: 'future-intro-review',
     review: true,
     persons: PHASE_1_PERSONS,
     sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'joan', tense: 'future' },
+    ],
+  },
+  {
+    id: 'future-intro-review-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'joan', tense: 'future' },
+    ],
+  },
+  // Unit 15 (The Future, Across Every Verb): the rule is already learned, so
+  // the remaining verbs arrive as themed mixer reviews — which the engine
+  // makes the *more* varied exercise type (cross-verb "which verb fits?",
+  // case-mixer, the full sentence/typing/spot-error mix, weak-spot boosters)
+  // rather than another round of one-verb-at-a-time form drills. `nahi`/`jakin`
+  // stay 3-person (ni/zu/hura), so they appear only in singular mixers; their
+  // plural counterparts simply drop them.
+  {
+    id: 'future-mixer-being-going',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'egon', tense: 'future' },
+      { verbId: 'etorri', tense: 'future' },
+      { verbId: 'ibili', tense: 'future' },
+    ],
+  },
+  {
+    id: 'future-mixer-being-going-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'egon', tense: 'future' },
+      { verbId: 'etorri', tense: 'future' },
+      { verbId: 'ibili', tense: 'future' },
+    ],
+  },
+  {
+    id: 'future-mixer-eating-buying',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'jan', tense: 'future' },
+      { verbId: 'edan', tense: 'future' },
+      { verbId: 'erosi', tense: 'future' },
+    ],
+  },
+  {
+    id: 'future-mixer-eating-buying-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'jan', tense: 'future' },
+      { verbId: 'edan', tense: 'future' },
+      { verbId: 'erosi', tense: 'future' },
+    ],
+  },
+  {
+    id: 'future-mixer-having-knowing',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'ikusi', tense: 'future' },
+      { verbId: 'eduki', tense: 'future' },
       { verbId: 'nahi', tense: 'future' },
       { verbId: 'jakin', tense: 'future' },
-      { verbId: 'joan', tense: 'future' },
-      { verbId: 'etorri', tense: 'future' },
     ],
   },
   {
-    id: 'unit-9-review-2-plural',
-    review: true,
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'joan', tense: 'future' },
-      { verbId: 'etorri', tense: 'future' },
-    ],
-  },
-  // Unit 16 (Future Group C): jan/edan/erosi
-  { id: 'jan-future', verbId: 'jan', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'jan-future-plural', verbId: 'jan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'edan-future', verbId: 'edan', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'edan-future-plural', verbId: 'edan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'erosi-future', verbId: 'erosi', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'erosi-future-plural', verbId: 'erosi', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  {
-    id: 'unit-9-review-3',
-    review: true,
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'jan', tense: 'future' },
-      { verbId: 'edan', tense: 'future' },
-      { verbId: 'erosi', tense: 'future' },
-    ],
-  },
-  {
-    id: 'unit-9-review-3-plural',
-    review: true,
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'jan', tense: 'future' },
-      { verbId: 'edan', tense: 'future' },
-      { verbId: 'erosi', tense: 'future' },
-    ],
-  },
-  // Unit 17 (Future Group D): ikusi/eduki/ibili
-  { id: 'ikusi-future', verbId: 'ikusi', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'ikusi-future-plural', verbId: 'ikusi', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'eduki-future', verbId: 'eduki', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'eduki-future-plural', verbId: 'eduki', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'ibili-future', verbId: 'ibili', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'ibili-future-plural', verbId: 'ibili', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  {
-    id: 'unit-9-review-4',
-    review: true,
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'ikusi', tense: 'future' },
-      { verbId: 'eduki', tense: 'future' },
-      { verbId: 'ibili', tense: 'future' },
-    ],
-  },
-  {
-    id: 'unit-9-review-4-plural',
+    id: 'future-mixer-having-knowing-plural',
     review: true,
     persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'ikusi', tense: 'future' },
       { verbId: 'eduki', tense: 'future' },
-      { verbId: 'ibili', tense: 'future' },
+    ],
+  },
+  // Cumulative capstone — a cross-section spanning both units and both
+  // auxiliary patterns (nor: izan/joan · nor-nork: ukan/ikusi), so the stage
+  // ends on mixed nor/nor-nork case-mixer and verb-choice questions rather
+  // than a single verb's table.
+  {
+    id: 'future-mixer-capstone',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'joan', tense: 'future' },
+      { verbId: 'ikusi', tense: 'future' },
+    ],
+  },
+  {
+    id: 'future-mixer-capstone-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'joan', tense: 'future' },
+      { verbId: 'ikusi', tense: 'future' },
     ],
   },
 ]

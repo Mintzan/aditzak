@@ -207,8 +207,8 @@ gaurko bazkarirako.'` (blanking the auxiliary `du`, per `CLAUDE.md`'s
 A second pass over the same four argument structures, this time covering the
 **aspect/mood** territory beyond plain present/past — future, conditional,
 potential, imperative, and past continuous — per `docs/EXERCISE_ENGINE.md`'s
-Tier 1 (Geroa, Units 9–10), Tier 3 (imperative, Unit 20), and Tier 1
-(Ahalera/Baldintza/Ondorioa, Units 18–19) entries. Same culture/geography/
+Tier 1 (Geroa, Units 14–15), Tier 3 (imperative, Unit 25), and Tier 1
+(Ahalera/Baldintza/Ondorioa, Units 23–24) entries. Same culture/geography/
 folklore approach as above; same "full sentence, adapt later" status.
 
 ### 1. NOR (Intransitive) — advanced tenses
@@ -542,13 +542,13 @@ action itself is transitive or intransitive.*
 
 ---
 
-## Cultural sentence bank — causative (-arazi/-erazi) (Phase VI, Units 23-25)
+## Cultural sentence bank — causative (-arazi/-erazi) (Phase VI, Units 28-30)
 
 The **causative suffix `-arazi`** (sometimes `-erazi`) attaches to a verb's
 radical and changes the meaning from *doing* an action to *making, causing,
 or forcing someone else* to do it — see `docs/VERB_COVERAGE.md` §6 for the
 grammar (the `nor`→`nor-nork` and `nor-nork`→`nor-nori-nork` argument shifts)
-and `docs/LEARNING_JOURNEY.md`'s Phase VI (Units 23-25) for where these land
+and `docs/LEARNING_JOURNEY.md`'s Phase VI (Units 28-30) for where these land
 in the curriculum. Same "full sentence, adapt later" status as the banks
 above — the drilled form is the auxiliary at the end, exactly like any other
 periphrastic verb.
@@ -643,7 +643,7 @@ periphrastic verb.
   - *Base verb:* *Edan* (to drink) → *Edanarazi* (to make drink).
 
 ### 3. Advanced tenses & moods with `-arazi`
-*Pairs with Refresh Gate D (Unit 25)'s recombination of `-arazi` with future,
+*Pairs with Refresh Gate D (Unit 30)'s recombination of `-arazi` with future,
 conditional, and imperative.*
 
 #### Future Tense (Geroaldia)
@@ -1078,9 +1078,9 @@ Past (Lehena):
    into that verb's `sentences`/`pronounSentences` tables (plus a theme from
    the categories above) as each unit is implemented.
 6. The modal-verb bank pairs with Unit 2 (`nahi` per `journey.js`'s "Having
-   and Wanting") and Units 9–10's `behar`/Geroa work — `ahal`'s sentences also
+   and Wanting") and Units 14–16's `behar`/Geroa work — `ahal`'s sentences also
    double as early `potential`-tense examples once that tense exists.
-7. The causative bank pairs with the new Phase VI (Units 23-25,
+7. The causative bank pairs with the new Phase VI (Units 28-30,
    `LEARNING_JOURNEY.md`) — `docs/VERB_COVERAGE.md` §6 still needs the
    `-arazi`/`-erazi` conditioning rule sourced before any of these become
    `VERBS` entries.

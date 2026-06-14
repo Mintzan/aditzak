@@ -8,6 +8,49 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-14 — Compressed the future stage (Stage 6) from four units to two, renumbering the downstream curriculum
+
+**Decision:** Stage 6 ("Talking About the Future") was four near-identical
+per-verb drill units (old Units 14-17, "Future Groups A-D", ~32 lessons), each
+applying the same `-ko`/`-go` participle rule to three more verbs as
+singular/plural practice pairs + a review. Collapsed into two:
+- **Unit 14 "The Future Tense"** — introduces the rule on a three-verb core
+  spanning both auxiliary patterns (`izan` nor/`naiz`, `ukan` nor-nork/`dut`,
+  `joan` motion/`naiz`), full singular/plural + an intro-review pair (8 lessons).
+- **Unit 15 "The Future, Across Every Verb"** — the remaining ten verbs
+  delivered as themed cross-verb *mixer reviews* (`future-mixer-*`) ending in a
+  cumulative capstone, rather than per-verb form drills (8 lessons).
+
+Net: 16 lessons across 2 units, down from ~32 across 4. Every verb is still
+covered (three focused in Unit 14, all of them across Unit 15's mixers + the
+capstone, which reuses the Unit 14 core).
+
+**Why:** the Basque future is morphologically trivial — one participle rule
+layered onto auxiliaries already mastered in Units 1-13 — so four units of
+verb-by-verb drilling is vocabulary review dressed as grammar, and repetitive.
+Reviews are the engine's *more* varied exercise type (cross-verb "which verb
+fits?", case-mixer, the full sentence/typing/spot-error mix, weak-spot
+boosters), so a mixer-based Unit 15 is both shorter and less monotonous than
+re-drilling each table. `TARGET_EXERCISE_COUNT` self-balances each mixer's
+length regardless of how many sources it pools, so the mixers stay ~12
+questions.
+
+**Renumbering:** collapsing two unit slots shifted every later unit down by two
+(old 18→16 … old 32→30). Updated the live trio (`journey.js`,
+`data/lessons.js`, `i18n/journeyTranslations.js` — `journey.test.js` green) and
+the forward-looking docs (`LEARNING_JOURNEY.md`, `EXERCISE_ENGINE.md`,
+`LANGUAGE_DECISIONS.md`, `EXERCISE_VARIETY_PLAN.md`), plus unit-number mentions
+in `src/` comments. The old future lesson ids (`*-future` per-verb practice,
+`unit-9-review-1..4`) are replaced by `future-intro-review*` and
+`future-mixer-*`.
+
+**This log left on its own (multi-scheme) numbering:** `DECISIONS.md` is a
+dated archive where each entry uses the numbering current on its date — and
+several entries record explicit old→new renumbering arithmetic (e.g. 2026-06-12
+"renumbering Units 7-25 to 10-32") that mechanically renumbering would break
+rather than make consistent. So past entries are left as written; this entry is
+the authoritative record in the current numbering.
+
 ## 2026-06-14 — Answer feedback triggers a short vibration via the Vibration API
 
 **Decision:** Added `src/hapticsUtils.js` (`vibrateCorrect`/`vibrateIncorrect`),

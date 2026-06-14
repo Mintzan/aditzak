@@ -311,7 +311,7 @@ reaching for §4b, not after.
 ## 6. Valency-changing morphology — the causative (`-arazi`/`-erazi`)
 
 🔲 Not represented anywhere in `VERBS` yet — flagged here, and given a home in
-`LEARNING_JOURNEY.md`'s new Phase VI (Units 23-25), so it isn't lost.
+`LEARNING_JOURNEY.md`'s new Phase VI (Units 28-30), so it isn't lost.
 
 The causative suffix **`-arazi`** (an **`-erazi`** alternant also occurs; 🔲
 the exact conditioning environment — stem-final segment, dialect, or both —
@@ -333,7 +333,7 @@ agreement pattern (§2) one of two ways — both attested in
 
 🔲 Whether `nor-nori` verbs (`gustatu`-class, §2) can also be causativized,
 and what agreement pattern results, isn't covered by the sentences gathered
-so far — worth checking once Unit 15's verbs exist.
+so far — worth checking once Unit 20's verbs exist.
 
 **Fits the existing data model with zero new shapes.** A causativized verb
 behaves exactly like any other `type: 'periphrastic'` entry (`CLAUDE.md`):
@@ -346,19 +346,19 @@ auxiliary pattern as `present`/`past` elsewhere in this doc, and Tier 1 of
 
 **Compounds with every tense/mood already in the curriculum** — the
 auxiliary just inflects normally, so "make X do Y" (present), "made" (past),
-"will make" (future, Unit 9), "would make" (conditional, Unit 19), and "make
-him do it!" (imperative, Unit 20) are all the *same* causativized verb with a
+"will make" (future, Units 14-15), "would make" (conditional, Unit 24), and "make
+him do it!" (imperative, Unit 25) are all the *same* causativized verb with a
 different auxiliary form. `docs/SAMPLE_SENTENCES.md`'s causative bank has
 worked examples of all of these — `LEARNING_JOURNEY.md`'s Phase VI (Units
-23-25) recombines `-arazi` with those tenses/moods explicitly rather than
+28-30) recombines `-arazi` with those tenses/moods explicitly rather than
 introducing them as "new" again.
 
 **Candidate verbs** (drawn from the sample-sentence bank, all already
 candidates elsewhere in this doc): `itzuli`→`itzularazi` (§4a, "to return"),
 `joan`→`joanarazi` (§4a), `jan`→`janarazi`/`edan`→`edanarazi` (§4b, both Unit
-7 candidates), `idatzi`→`idatzarazi`, `jokatu`→`jokarazi`,
+10 candidates), `idatzi`→`idatzarazi`, `jokatu`→`jokarazi`,
 `itzali`→`itzalarazi`, `dastatu`→`dastarazi` — picking 2-3 of these for Units
-23-24 means Phase VI introduces no vocabulary a learner hasn't already met by
+28-29 means Phase VI introduces no vocabulary a learner hasn't already met by
 then.
 
 ## 7. Suggested coverage checklist
