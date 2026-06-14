@@ -17,6 +17,7 @@ import {
   getEncouragement,
   getExplanation,
   getIntroducedSources,
+  isCrossCandidateExcluded,
   getLocalDateString,
   getPointsBalance,
   getStreakEncouragement,
@@ -1309,64 +1310,71 @@ describe('getCrossVerbCandidates', () => {
   // each verb's own form already correctly completes that sentence — offering
   // the other as a distractor would mean two options are both "correct", just
   // with different meanings.
+  // Uses made-up ids ('verb-a'/'verb-b') rather than real verbs like
+  // ukan/nahi, so this test exercises sentenceTemplatesCollide in isolation —
+  // ukan/nahi now also have a pair-level CROSS_CANDIDATE_EXCLUSIONS entry
+  // (#114) that would otherwise mask what this test is checking.
   it('excludes a sibling form for a person whose sentence is identical to the source verb\'s own sentence', () => {
-    const ukanWithSentence = {
+    const verbAWithSentence = {
       ...ukan,
+      id: 'verb-a',
       sentences: { present: { ni: 'Nik liburu bat ___.' } },
     }
-    const nahi = {
-      id: 'nahi',
+    const verbB = {
+      id: 'verb-b',
       agreement: ['nor', 'nork'],
       conjugations: { present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du' } },
       sentences: { present: { ni: 'Nik liburu bat ___.' } },
     }
     const sources = [
-      { verbId: 'ukan', tense: 'present' },
-      { verbId: 'nahi', tense: 'present' },
+      { verbId: 'verb-a', tense: 'present' },
+      { verbId: 'verb-b', tense: 'present' },
     ]
 
-    expect(getCrossVerbCandidates(ukanWithSentence, 'present', sources, [izan, egon, ukanWithSentence, nahi])).toEqual({
+    expect(getCrossVerbCandidates(verbAWithSentence, 'present', sources, [izan, egon, verbAWithSentence, verbB])).toEqual({
       zu: ['nahi duzu'],
       hura: ['nahi du'],
     })
   })
 
   it('treats sentence templates as colliding even when one side uses an array of phrasing variants', () => {
-    const ukanWithSentence = {
+    const verbAWithSentence = {
       ...ukan,
+      id: 'verb-a',
       sentences: { present: { ni: ['Nik liburu bat ___.', 'Nik arreba bat ___.'] } },
     }
-    const nahi = {
-      id: 'nahi',
+    const verbB = {
+      id: 'verb-b',
       agreement: ['nor', 'nork'],
       conjugations: { present: { ni: 'nahi dut' } },
       sentences: { present: { ni: 'Nik liburu bat ___.' } },
     }
     const sources = [
-      { verbId: 'ukan', tense: 'present' },
-      { verbId: 'nahi', tense: 'present' },
+      { verbId: 'verb-a', tense: 'present' },
+      { verbId: 'verb-b', tense: 'present' },
     ]
 
-    expect(getCrossVerbCandidates(ukanWithSentence, 'present', sources, [izan, egon, ukanWithSentence, nahi])).toEqual({})
+    expect(getCrossVerbCandidates(verbAWithSentence, 'present', sources, [izan, egon, verbAWithSentence, verbB])).toEqual({})
   })
 
   it('still offers a sibling form for persons whose sentences differ', () => {
-    const ukanWithSentence = {
+    const verbAWithSentence = {
       ...ukan,
+      id: 'verb-a',
       sentences: { present: { ni: 'Nik liburu bat ___.', zu: 'Zuk auto bat ___.' } },
     }
-    const nahi = {
-      id: 'nahi',
+    const verbB = {
+      id: 'verb-b',
       agreement: ['nor', 'nork'],
       conjugations: { present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du' } },
       sentences: { present: { ni: 'Nik liburu bat ___.', zu: 'Zuk kafe bat ___?' } },
     }
     const sources = [
-      { verbId: 'ukan', tense: 'present' },
-      { verbId: 'nahi', tense: 'present' },
+      { verbId: 'verb-a', tense: 'present' },
+      { verbId: 'verb-b', tense: 'present' },
     ]
 
-    expect(getCrossVerbCandidates(ukanWithSentence, 'present', sources, [izan, egon, ukanWithSentence, nahi])).toEqual({
+    expect(getCrossVerbCandidates(verbAWithSentence, 'present', sources, [izan, egon, verbAWithSentence, verbB])).toEqual({
       zu: ['nahi duzu'],
       hura: ['nahi du'],
     })
@@ -1387,6 +1395,60 @@ describe('getCrossVerbCandidates', () => {
 
     expect(getCrossVerbCandidates(ukanReal, 'present', sources, VERBS).ni ?? []).not.toContain('nahi dut')
     expect(getCrossVerbCandidates(nahiReal, 'present', sources, VERBS).ni ?? []).not.toContain('dut')
+  })
+
+  // #114: pair-level CROSS_CANDIDATE_EXCLUSIONS, beyond #112's literal-sentence
+  // check. Reported in play: nahi's hura-person sentence "Katuak esne pixka
+  // bat ___." (correct `nahi du`, "the cat wants some milk") was offering
+  // ukan's `du` ("the cat has some milk") as a distractor — also a valid,
+  // just differently-meant, completion. ukan and nahi don't share this
+  // sentence's literal text, so sentenceTemplatesCollide doesn't catch it;
+  // the pair-level exclusion does.
+  it('excludes ukan\'s hura form from nahi\'s candidates even for a sentence the two verbs don\'t share literally, with the real VERBS list', () => {
+    const ukanReal = VERBS.find((v) => v.id === 'ukan')
+    const nahiReal = VERBS.find((v) => v.id === 'nahi')
+    const sources = [
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'nahi', tense: 'present' },
+      { verbId: 'jakin', tense: 'present' },
+    ]
+
+    expect(getCrossVerbCandidates(nahiReal, 'present', sources, VERBS).hura ?? []).not.toContain('du')
+    expect(getCrossVerbCandidates(ukanReal, 'present', sources, VERBS).hura ?? []).not.toContain('nahi du')
+  })
+})
+
+describe('isCrossCandidateExcluded', () => {
+  it('excludes ukan/nahi from each other\'s pools in every context', () => {
+    expect(isCrossCandidateExcluded('ukan', 'nahi', 'extra-candidates')).toBe(true)
+    expect(isCrossCandidateExcluded('ukan', 'nahi', 'verb-choice')).toBe(true)
+    expect(isCrossCandidateExcluded('nahi', 'ukan', 'extra-candidates')).toBe(true)
+    expect(isCrossCandidateExcluded('nahi', 'ukan', 'verb-choice')).toBe(true)
+  })
+
+  it('excludes the other pairs confirmed "both valid" in docs/DECISIONS.md, in both directions', () => {
+    const confirmedPairs = [
+      ['eduki', 'ukan'],
+      ['eduki', 'ikusi'],
+      ['ukan', 'ikusi'],
+      ['jakin', 'ikusi'],
+      ['ikusi', 'nahi'],
+      ['jakin', 'nahi'],
+      ['eduki', 'nahi'],
+      ['jan', 'erosi'],
+      ['edan', 'erosi'],
+      ['joan', 'etorri'],
+    ]
+    for (const [a, b] of confirmedPairs) {
+      expect(isCrossCandidateExcluded(a, b, 'extra-candidates')).toBe(true)
+      expect(isCrossCandidateExcluded(b, a, 'verb-choice')).toBe(true)
+    }
+  })
+
+  it('does not exclude pairs with no entry, or pairs checked and found not "both valid"', () => {
+    expect(isCrossCandidateExcluded('ukan', 'jakin', 'extra-candidates')).toBe(false)
+    expect(isCrossCandidateExcluded('eduki', 'jakin', 'verb-choice')).toBe(false)
+    expect(isCrossCandidateExcluded('jan', 'edan', 'extra-candidates')).toBe(false)
   })
 })
 
@@ -1650,6 +1712,51 @@ describe('cross-verb sentence-template collisions (real VERBS)', () => {
         const options = new Set(question.options)
         if (question.correct === 'dut') expect(options.has('nahi dut')).toBe(false)
         if (question.correct === 'nahi dut') expect(options.has('dut')).toBe(false)
+      })
+      vi.restoreAllMocks()
+    }
+  })
+
+  // #114: ukan's `du` / nahi's `nahi du` for the `hura` person, where
+  // ukan and nahi don't share a literal sentence template (so #112's
+  // sentenceTemplatesCollide doesn't apply) but CROSS_CANDIDATE_EXCLUSIONS'
+  // pair-level ukan<->nahi entry should still keep them out of each other's
+  // verb-choice/case-mixer options.
+  it('never offers nahi\'s "nahi du" as a distractor for ukan\'s present-hura question, or vice versa', () => {
+    for (let roll = 0; roll < 1; roll += 0.1) {
+      vi.spyOn(Math, 'random').mockReturnValue(roll)
+      const questions = [
+        ...generateCrossVerbQuestions(sources, { persons: ['hura'], count: 10 }),
+        ...generateCaseMixerQuestions(sources, { persons: ['hura'], count: 10 }),
+      ]
+      questions.forEach((question) => {
+        const options = new Set(question.options)
+        if (question.correct === 'du') expect(options.has('nahi du')).toBe(false)
+        if (question.correct === 'nahi du') expect(options.has('du')).toBe(false)
+      })
+      vi.restoreAllMocks()
+    }
+  })
+
+  // #114: joan ("Ane etxera doa", "Ane is going home") and etorri ("Ane
+  // etxera dator", "Ane is coming home") share the same allative adjunct but
+  // opposite direction — both grammatical, different-meaning sentences, so
+  // CROSS_CANDIDATE_EXCLUSIONS' joan<->etorri entry should keep each out of
+  // the other's verb-choice options.
+  it('never offers etorri\'s "dator" as a distractor for joan\'s present-hura question, or vice versa', () => {
+    const joanReal = VERBS.find((v) => v.id === 'joan')
+    const etorriReal = VERBS.find((v) => v.id === 'etorri')
+    const norSources = [
+      { verb: joanReal, tense: 'present' },
+      { verb: etorriReal, tense: 'present' },
+    ]
+    for (let roll = 0; roll < 1; roll += 0.1) {
+      vi.spyOn(Math, 'random').mockReturnValue(roll)
+      const questions = generateCrossVerbQuestions(norSources, { persons: ['hura'], count: 10 })
+      questions.forEach((question) => {
+        const options = new Set(question.options)
+        if (question.correct === 'doa') expect(options.has('dator')).toBe(false)
+        if (question.correct === 'dator') expect(options.has('doa')).toBe(false)
       })
       vi.restoreAllMocks()
     }

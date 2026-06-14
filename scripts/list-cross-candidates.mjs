@@ -203,6 +203,10 @@ Regenerate with \`node scripts/list-cross-candidates.mjs\` after a
 \`LESSONS\`/\`VERBS\` change (this file is a snapshot, not auto-generated on
 every run).
 
+**2101 entries is a lot to read in order** — see
+\`docs/CROSS_CANDIDATE_TRIAGE_PRIORITY.md\` for a priority grouping (which verb
+pairs are most/least likely to need a "both valid" tick) before diving in.
+
 ---
 
 `

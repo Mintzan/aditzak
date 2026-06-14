@@ -451,6 +451,66 @@ export function agreementsCompatible(a, b) {
   return a.includes('nork') === b.includes('nork')
 }
 
+// Layer 2b/3 of `docs/AMBIGUOUS_DISTRACTORS_AUDIT.md` (#114): curated pairs
+// where `agreementsCompatible` and `sentenceTemplatesCollide` aren't enough —
+// two verbs share the same `nor-nork` "Subject(-k) [Object] Verb" frame
+// closely enough that *either*'s form reads as a valid (if differently-meant)
+// completion of the other's sentence, even when the sentence *text* differs
+// (so `sentenceTemplatesCollide` doesn't catch it). `siblingVerbId` is
+// excluded from `verbId`'s cross-candidate pool:
+// - `'always'` — excluded from `getCrossVerbCandidates`'s `extraCandidates`
+//   *and* `collectCrossSourceCandidates`'s `verb-choice`/`case-mixer` pools.
+// - `'verb-choice-only'` — still allowed as a same-table-style distractor in
+//   `extraCandidates`, but excluded from `verb-choice`/`case-mixer` (where
+//   "which verb fits this sentence" *is* the whole question, so any
+//   also-valid sibling makes it unanswerable).
+//
+// Confirmed pairs so far (see `docs/CROSS_CANDIDATE_REVIEW.md` for the full
+// triage; pair-level verdicts recorded in `docs/DECISIONS.md`):
+// - `ukan`/`nahi` ("have" vs "want" — #112 already excludes their one
+//   *literal* shared sentence for `ni`/present; this pair-level entry
+//   additionally covers other persons/templates, e.g. `nahi`'s "Katuak esne
+//   pixka bat ___." accepting `ukan`'s `du` as "the cat has some milk",
+//   equally valid alongside the intended `nahi du` "the cat wants some milk").
+// - `eduki`/`ukan` — near-synonyms ("to have/hold" vs "to have"),
+//   interchangeable in any `nor-nork` possession sentence.
+// - `eduki`/`ikusi`, `ukan`/`ikusi`, `jakin`/`ikusi`, `ikusi`/`nahi` — "see X"
+//   is a sensible alternate reading of most concrete-object sentences used
+//   for `eduki`/`ukan`/`jakin`/`nahi`.
+// - `jakin`/`nahi` — "know X" / "want X" both read sensibly for the same
+//   object sentences.
+// - `eduki`/`nahi` — "hold X" / "want X", both sensible.
+// - `jan`/`erosi`, `edan`/`erosi` — "eat/drink X" vs "buy X" are both
+//   sensible for the same food/drink object.
+// - `joan`/`etorri` (`nor`-only, not `nor-nork`) — same allative adjunct,
+//   opposite direction ("Ane etxera doa" "Ane is going home" vs "Ane etxera
+//   dator" "Ane is coming home") — both grammatical, different meaning.
+//
+// Checked and NOT excluded (substitution reads as genuinely odd/wrong, so
+// remains a useful distractor): `ukan`/`jakin` ("Anek auto bat daki" — "Anek
+// knows a car" — doesn't make sense), `eduki`/`jakin` ("...eskuan daki" —
+// "...knows in hand" — doesn't make sense), `jan`/`edan` ("Anek entsalada
+// edango du" — "Anek will drink salad" — doesn't make sense).
+const CROSS_CANDIDATE_EXCLUSIONS = {
+  ukan: { nahi: 'always', eduki: 'always', ikusi: 'always' },
+  nahi: { ukan: 'always', jakin: 'always', ikusi: 'always', eduki: 'always' },
+  eduki: { ukan: 'always', ikusi: 'always', nahi: 'always' },
+  ikusi: { ukan: 'always', eduki: 'always', jakin: 'always', nahi: 'always' },
+  jakin: { nahi: 'always', ikusi: 'always' },
+  jan: { erosi: 'always' },
+  erosi: { jan: 'always', edan: 'always' },
+  edan: { erosi: 'always' },
+  joan: { etorri: 'always' },
+  etorri: { joan: 'always' },
+}
+
+export function isCrossCandidateExcluded(verbId, siblingVerbId, context) {
+  const entry = CROSS_CANDIDATE_EXCLUSIONS[verbId]?.[siblingVerbId]
+  if (!entry) return false
+  if (entry === 'always') return true
+  return entry === 'verb-choice-only' && context !== 'extra-candidates'
+}
+
 // Whether `verb`'s `[tense][person]` form is a "particle + auxiliary"
 // compound (e.g. `nahi`'s `nahi dut`) whose trailing word is *itself* a
 // complete, correct form of some other agreement-compatible verb for the same
@@ -525,6 +585,7 @@ export function getCrossVerbCandidates(verb, tense, sources, verbs, extraSources
         const siblingVerb = verbs.find((v) => v.id === verbId)
         if (!siblingVerb || !agreementsCompatible(siblingVerb.agreement, verb.agreement)) return null
         if (sentenceTemplatesCollide(verb, tense, siblingVerb, siblingTense, person)) return null
+        if (isCrossCandidateExcluded(verb.id, siblingVerb.id, 'extra-candidates')) return null
         return siblingVerb.conjugations[siblingTense]?.[person]
       })
       .filter(Boolean)
@@ -768,6 +829,7 @@ function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementM
       const siblingForms = siblings
         .filter((sibling) => agreementMatches(sibling.verb.agreement, verb.agreement))
         .filter((sibling) => !sentenceTemplatesCollide(verb, tense, sibling.verb, sibling.tense, person))
+        .filter((sibling) => !isCrossCandidateExcluded(verb.id, sibling.verb.id, 'verb-choice'))
         .map((sibling) => sibling.verb.conjugations[sibling.tense]?.[person])
         .filter(Boolean)
       // Capped at 3 distractors (4 options total, including `correct`) — same
