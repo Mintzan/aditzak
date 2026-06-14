@@ -8,6 +8,56 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-14 — #124: backfilled `validFor` across the `nor-nork` cluster's sentences
+
+**Decision:** Every `sentences.present`/`negativeSentences.present` variant
+for the eight `nor-nork` verbs (`ukan`, `nahi`, `jakin`, `eduki`, `ikusi`,
+`jan`, `edan`, `erosi`) is now `{ text, validFor }` — no bare strings left in
+those fields for this cluster (`future`/`past` automatically inherit via the
+existing by-reference reuse loops in `src/data/verbs.js`). A new coverage
+test (`src/logic.test.js`, "validFor coverage for the nor-nork cluster")
+enforces this going forward: every `agreement.includes('nork')` verb's
+present-tense sentence/negative-sentence variants must have an explicit
+`validFor` array (even `[]`), for any future sentence additions.
+
+**Judgment approach** (per `docs/SENTENCE_FRAMES.md`'s worked examples):
+candidate siblings for each verb were restricted to #114's confirmed
+"both valid" pairs (`ukan`↔`nahi`/`eduki`/`ikusi`, `jakin`↔`ikusi`/`nahi`,
+`eduki`↔`nahi`, `jan`/`edan`↔`erosi`) — `jakin`↔`ukan`, `jakin`↔`eduki`, and
+`jan`↔`edan` (#114's confirmed-*wrong* pairs) never appear in any `validFor`.
+Within those candidate pairs, each sentence was judged on its own object:
+concrete/ownable/visible nouns (book, car, key, ticket...) admit the full
+candidate set (`ukan`'s `'Nik liburu bat ___.'` → `['nahi','eduki','ikusi']`,
+matching the doc's worked example exactly); abstract or non-agentive-subject
+sentences admit a narrower set or none (`ukan`'s `'Nik bilera bat ___.'` "I
+have a meeting" → `['eduki']` only — `nahi`/`ikusi` don't fit "a meeting";
+`'Etxeak lorategi bat ___.'` "the house has a garden" → `['eduki']`, since
+`nahi`/`ikusi` need an agentive subject). `jakin`'s candidates split on
+whether the object is something you can "see" (`'Nik bidea ___.'`, the way →
+`['ikusi']`) vs "want" (`'Nik sekretua ___.'`, a secret → `['nahi']`) vs both
+(`'Nik erantzuna ___.'`, the answer → `['ikusi','nahi']`) — the same verb pair
+gets different verdicts per sentence, as the doc's "book" vs "time" contrast
+intends. `eduki`'s `'[object] poltsikoan/eskuan ___.'` ("in my pocket/hand")
+sentences all get `['ukan','ikusi']` (near-synonym "have" plus the audit's
+"I see X in my hand" example) but never `nahi` ("I want X in my pocket" reads
+oddly). `jan`/`edan`'s food/drink objects all get `['erosi']` ("eat/drink X"
+vs "buy X" both natural) except `'Katuak esnea ___.'` (a cat can't be the one
+buying milk) → `[]`. `erosi`'s own sentences get `['jan']` only for the
+literal food objects (`'Nik ogia ___.'`, `'Zuk sagarrak ___?'`, `'Saltzaileak
+fruta ___.'`) — non-food objects (books, cars, houses, jackets, tickets,
+gifts, records) get `[]`, since `jan`/`edan` forms don't fit them.
+`pronounSentences` was left as-is (bare strings) per
+`docs/SENTENCE_FRAMES.md`'s "fields that don't consume `validFor` yet" —
+`pronoun`/`type-pronoun` questions don't draw cross-verb candidates, so an
+untagged `pronounSentences` entry changes nothing.
+
+**Out of scope:** `ari`/`ibili` (the two `nor`-only verbs not covered by
+#125's `izan`/`egon`/`joan`/`etorri` pass) — the original audit found no
+"both valid" cases for the `nor` cluster and the migration mapping in
+`docs/SENTENCE_FRAMES.md` doesn't list any `ari`/`ibili` pairs, so they're
+left untagged (the safe default) and outside the new coverage test's scope
+(which only covers `agreement.includes('nork')` verbs).
+
 ## 2026-06-14 — #125: rewrote `etorri`'s frameless present/negative sentences to carry a discriminating adjunct
 
 **Decision:** `etorri.sentences.present`'s bare-temporal variants (`'Ni orain

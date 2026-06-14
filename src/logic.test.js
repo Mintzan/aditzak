@@ -1802,6 +1802,49 @@ describe('getIntroducedSources + cross-verb question generation (real LESSONS/VE
   })
 })
 
+// #124: every `nor-nork` verb's `sentences.present`/`negativeSentences.present`
+// variant has an explicit `validFor` decision (docs/SENTENCE_FRAMES.md) — even
+// `validFor: []` counts as "decided"; a bare string or an object with no
+// `validFor` key is the pre-#124 "not yet vetted" state and fails this test.
+// `present` is the only tense that needs checking: `future`/`past` reuse
+// `sentences.present`/`negativeSentences.present` by reference (see the
+// reuse loops at the bottom of `src/data/verbs.js`).
+describe('validFor coverage for the nor-nork cluster (docs/SENTENCE_FRAMES.md, #124)', () => {
+  const norNorkVerbs = VERBS.filter((verb) => verb.agreement.includes('nork'))
+
+  it('covers more than one verb', () => {
+    expect(norNorkVerbs.length).toBeGreaterThan(1)
+  })
+
+  for (const verb of norNorkVerbs) {
+    describe(verb.id, () => {
+      it('every sentences.present variant has an explicit validFor array', () => {
+        const sentences = verb.sentences?.present ?? {}
+        for (const [person, value] of Object.entries(sentences)) {
+          const variants = Array.isArray(value) ? value : [value]
+          for (const variant of variants) {
+            expect(variant, `${verb.id}.sentences.present.${person}`).toEqual(
+              expect.objectContaining({ validFor: expect.any(Array) }),
+            )
+          }
+        }
+      })
+
+      it('every negativeSentences.present variant has an explicit validFor array', () => {
+        const sentences = verb.negativeSentences?.present ?? {}
+        for (const [person, value] of Object.entries(sentences)) {
+          const variants = Array.isArray(value) ? value : [value]
+          for (const variant of variants) {
+            expect(variant, `${verb.id}.negativeSentences.present.${person}`).toEqual(
+              expect.objectContaining({ validFor: expect.any(Array) }),
+            )
+          }
+        }
+      })
+    })
+  }
+})
+
 describe('getExplanation', () => {
   const verbAbsolutive = {
     id: 'verb',
