@@ -8,6 +8,23 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-14 — Results screen vibrates with a result-tier pattern, with variety per tier
+
+**Decision:** Added `pickResultVibrationPattern`/`vibrateResult` to
+`hapticsUtils.js`, called once from a `useEffect` in `LessonResultsScreen`
+(keyed on `stars`, so it fires once when the screen first mounts). Each star
+band (`computeStars`' 0-3) has its own `navigator.vibrate` pattern(s) — 3-star
+bands have several options, picked at random, so a perfect score doesn't
+always feel identical; 0-star is a single short, gentle pulse, just enough to
+mark "done" without reading as punishment. Same `?.()` no-op-on-unsupported
+approach as `vibrateCorrect`/`vibrateIncorrect`.
+
+**Why:** Extends the existing per-answer haptics (2026-06-14, below) to the
+lesson conclusion, Duolingo-style — the celebration should be felt as well as
+seen/read, and varying it the same way `ENCOURAGEMENT_VARIANTS` and
+`createCelebration` already vary keeps repeated perfect scores from feeling
+mechanical.
+
 ## 2026-06-14 — Compressed the future stage (Stage 6) from four units to two, renumbering the downstream curriculum
 
 **Decision:** Stage 6 ("Talking About the Future") was four near-identical

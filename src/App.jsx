@@ -35,7 +35,7 @@ import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext'
 import { trackEvent } from './analytics'
 import { getShareUrl, shareContent } from './shareUtils'
-import { vibrateCorrect, vibrateIncorrect } from './hapticsUtils'
+import { vibrateCorrect, vibrateIncorrect, vibrateResult } from './hapticsUtils'
 import { VERBS, TENSE_META, TYPE_META, AGREEMENT_META, DIALECT_LABELS, PERSON_LABEL_KEYS } from './data/verbs'
 import { LESSONS } from './data/lessons'
 
@@ -1791,6 +1791,12 @@ function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone
   const [celebration] = useState(() => (stars === 3 ? createCelebration() : null))
   const { icon, headline, messageKey } = getEncouragement(correctCount, total, variantIndex)
   const { heading } = describeLesson(lesson, t, language)
+
+  // Vibrate once when the results screen first appears, with a pattern that
+  // scales with the result — see `vibrateResult`.
+  useEffect(() => {
+    vibrateResult(stars)
+  }, [stars])
 
   // Briefly swaps the "Share" button's label for `shareCopied` after a
   // clipboard-fallback share (see `shareContent`) — same pattern as the
