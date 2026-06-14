@@ -8,6 +8,23 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-14 — #126: retired the pair-level cross-candidate audit artifacts
+
+**Decision:** Removed `scripts/list-cross-candidates.mjs`,
+`docs/CROSS_CANDIDATE_REVIEW.md`, `docs/CROSS_CANDIDATE_TRIAGE_PRIORITY.md`,
+and `docs/AMBIGUOUS_DISTRACTORS_AUDIT.md` — the pair-level audit/triage
+workflow (#112-115) that `validFor` (#122-125) supersedes.
+`CROSS_CANDIDATE_EXCLUSIONS`/`isCrossCandidateExcluded`/
+`sentenceTemplatesCollide` were already removed from `src/lessonLogic.js` by
+#123, so this is purely doc/script cleanup — confirmed via grep that nothing
+in `src/` or `package.json` referenced the removed script. `docs/DECISIONS.md`
+entries that reference these now-removed files/identifiers (the #112-115
+history below) are left as-is — they're a historical record of what was
+decided and why at the time, not living documentation. `docs/SENTENCE_FRAMES.md`
+gained a brief "Status: epic #127 complete" note pointing back here instead
+of being rewritten — its schema/call-site sections remain the reference for
+`validFor`. This closes out epic #127 (#121-126 all done).
+
 ## 2026-06-14 — #124: backfilled `validFor` across the `nor-nork` cluster's sentences
 
 **Decision:** Every `sentences.present`/`negativeSentences.present` variant

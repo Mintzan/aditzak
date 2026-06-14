@@ -12,6 +12,17 @@ This is a **pure design/documentation issue (#122)** — no `src/` runtime or
 candidate selection around `validFor`) and #124 (backfill `validFor` across
 `VERBS`).
 
+**Status: epic #127 complete.** #123 (candidate-selection rewrite), #124
+(`validFor` backfill across the `nor-nork` cluster), #125 (`etorri`'s
+frameless-sentence rewrite), and #126 (retiring `CROSS_CANDIDATE_EXCLUSIONS`/
+`isCrossCandidateExcluded`/`scripts/list-cross-candidates.mjs`/
+`docs/CROSS_CANDIDATE_REVIEW.md`/`docs/CROSS_CANDIDATE_TRIAGE_PRIORITY.md`/
+`docs/AMBIGUOUS_DISTRACTORS_AUDIT.md`) have all landed — see `docs/DECISIONS.md`.
+The sections below describe the schema as designed and remain the reference
+for `validFor`'s meaning and call sites; the "needs to"/"#123 should..."
+phrasing throughout reflects the original design-time framing and is kept for
+historical context.
+
 ## Why per-sentence, not per-pair
 
 `CROSS_CANDIDATE_EXCLUSIONS` answers "can verb A's form ever stand in for verb
