@@ -8,6 +8,29 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-14 — #137: renumbered `JOURNEY` to the 37-unit layout
+
+**Decision:** Rewrote `src/journey.js`'s phases/stages/units to match
+`docs/LEARNING_JOURNEY_PROPOSED.md`'s 37-unit layout (the O-n → P-n mapping
+from `docs/LEARNING_JOURNEY_EVALUATION.md`), updated `docs/LEARNING_JOURNEY.md`
+and `src/i18n/journeyTranslations.js` (es/eu) to match, and marked `gate: true`
+on the new Refresh Gate units (8, 18, 25, 37). This is part of epic #149 and
+unblocks its other sub-issues (#138-#148).
+
+**Lesson-id stability:** No `LESSONS` ids changed and `STORAGE_KEY` stays
+`v1` — only `journey.js`'s unit→`lessonIds` wiring and the explanatory
+"Unit N" comments in `src/data/lessons.js` were renumbered to match the new
+unit numbers (old 6→7, 7→8, 8→9, 9→10, 10→11, 11→12, 12→13, 13→14, 14→15,
+15→16; units 1-5 unchanged). Existing player progress survives untouched.
+
+**Unit 5/6 split deferred:** The proposed split of O-5 "Expansion" into P-5
+(absolutive plurals) and P-6 (ergative plurals) is *not* done here — Unit 5
+keeps all of O-5's existing `lessonIds` (renamed "Expansion: Absolutive
+Plurals", `available`) even though some of that content is ergative-paradigm,
+and the new Unit 6 "Expansion: Ergative Plurals" is added as `pending` with no
+`lessonIds`. Redistributing the actual lessons between Units 5 and 6 is left to
+#143, per #137's "data/labels only, no engine changes" scope.
+
 ## 2026-06-14 — #126: retired the pair-level cross-candidate audit artifacts
 
 **Decision:** Removed `scripts/list-cross-candidates.mjs`,
