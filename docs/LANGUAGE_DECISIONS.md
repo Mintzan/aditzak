@@ -6,6 +6,48 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-15 — Added `esan`/`eman` (NOR-NORI-NORK) as the first ditransitive `VERBS` entries; forms need native-speaker check
+
+**Decision:** #147 added `esan` ("to tell/say") and `eman` ("to give") as
+`VERBS` entries for Unit 25 ("Communication & Giving") and Unit 26 ("Telling &
+Giving Across Time"), the first verbs to use #142's `recipient`/`agent`
+axis-fixed metadata:
+
+- `esan` sets `recipient: 'hura'` (NORI fixed = "to him/her"), so `person`
+  varies over NORK — present `esaten diot`/`esaten diozu`/`esaten dio`/
+  `esaten diogu`/`esaten diozue`/`esaten diote` (CONJUGATIONS.md §5's `hari`
+  row), past `esan nion`/.../`esan zioten`, future `esango diot`/....
+- `eman` sets `agent: 'ni'` (NORK fixed = "I give it to..."), so `person`
+  varies over NORI — present `ematen dizut`/`ematen diot`/`ematen dizuet`/
+  `ematen diet`, past `eman nizun`/`eman nion`/`eman nizuen`/`eman nien`,
+  future `emango dizut`/.... Only 4 persons exist for this axis (`zu`/`hura`/
+  `zuek`/`haiek`) — `ni`/`gu` are reflexive-only (§5) and `hi` is hitanoa
+  (not yet modeled, #144), same shape as the small allocutive tables #139's
+  distractor-floor fix anticipates.
+
+**Present tense is periphrastic** (`esaten`/`ematen` + the `di-` ditransitive
+auxiliary), matching `docs/LEARNING_JOURNEY_PROPOSED.md`'s Unit 25 examples
+("ematen diot", "esaten diozu") rather than CONJUGATIONS.md §8's bare `diot`
+(which §8 frames as `esan`'s own synthetic present but is ambiguous with the
+shared `eman`/other-ditransitive auxiliary out of context). Past/future drop
+the `-ten` infinitive for the bare participle + auxiliary (`esan nion`,
+`esango diot`), per the same proposed-doc examples.
+
+**Flag for native-speaker review:** `esan`'s past forms (`nion`/`zion`/
+`genion`/`zenion`) follow CONJUGATIONS.md §5's general `hari`-row past grid
+and the proposed doc's "Esan nion" example, but §8's `esan`-specific table
+gives `nioen`/`zioen`/`genioen`/`zenioen` for the same NORK cells instead — a
+genuine discrepancy between the two doc sections that should be resolved
+against a grammar reference. None of `esan`/`eman`'s forms or example
+sentences have had a native-speaker check yet.
+
+**Deferred to a follow-up issue** (per #147's scope, split out at the user's
+request): the `-zki-` object-number fodder (`dizkiot`, etc.) for the
+Distractor Engine Matrix's number slot, and Unit 25's four extra-practice
+lessons (fix-NORI, fix-NORK, object-number, two-axis recombination). This PR
+covers the core "drillable present+past+future, one axis per lesson" piece of
+the acceptance criteria.
+
 ## 2026-06-15 — Promoted `hartu` from candidate to a `VERBS` entry; forms need native-speaker check
 
 **Decision:** #143 promoted `hartu` ("to take") from `VERB_COVERAGE.md`
