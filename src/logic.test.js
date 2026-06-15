@@ -986,6 +986,166 @@ describe('generateQuestions', () => {
     })
   })
 
+  describe('with verbs (small-table distractor/spot-error borrowing, #139)', () => {
+    // Mirrors `nahi`/`jakin`: a 3-person present table can't supply 3
+    // distractors from its own persons alone (`buildOptions`'s own-table
+    // pool is just the other 2 persons' forms). `siblingVerb` is
+    // `agreementsCompatible` (both `nor-nork`) and has a 4th person (`gu`)
+    // beyond `smallVerb`'s `ni`/`zu`/`hura`, so it can top up both the
+    // distractor pool (`getBorrowedDistractors`) and, via its own sentenced
+    // `gu`, the spot-error slot pool (`getBorrowedSpotErrorSlots`).
+    const smallVerb = {
+      id: 'small',
+      agreement: ['nor', 'nork'],
+      conjugations: {
+        present: { ni: 'dut', zu: 'duzu', hura: 'du' },
+      },
+      sentences: {
+        present: {
+          ni: 'Nik liburua ___.',
+          zu: 'Zuk liburua ___.',
+          hura: 'Hark liburua ___.',
+        },
+      },
+    }
+    const siblingVerb = {
+      id: 'sibling',
+      agreement: ['nor', 'nork'],
+      conjugations: {
+        present: { ni: 'dakit', zu: 'dakizu', hura: 'daki', gu: 'dakigu' },
+      },
+      sentences: {
+        present: {
+          ni: 'Nik egia ___.',
+          gu: 'Guk egia ___.',
+        },
+      },
+    }
+    const incompatibleSibling = {
+      id: 'incompatible',
+      agreement: ['nor'],
+      conjugations: {
+        present: { ni: 'naiz', zu: 'zara', hura: 'da', gu: 'gara' },
+      },
+      sentences: {
+        present: {
+          ni: 'Ni irakaslea ___.',
+          gu: 'Gu lagunak ___.',
+        },
+      },
+    }
+
+    it('falls back to 3 options for a 3-person table without verbs', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      generateQuestions(smallVerb, 'present').forEach((question) => {
+        expect(question.kind).toBe('sentence')
+        expect(question.options).toHaveLength(3)
+        expect(question.options).toContain(question.correct)
+      })
+    })
+
+    it('borrows a 4th distractor from an agreement-compatible sibling', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(smallVerb, 'present', { verbs: [smallVerb, siblingVerb] })
+
+      questions.forEach((question) => {
+        expect(question.kind).toBe('sentence')
+        expect(question.options).toHaveLength(4)
+        expect(new Set(question.options).size).toBe(4)
+        expect(question.options).toContain(question.correct)
+
+        const ownForms = Object.values(smallVerb.conjugations.present)
+        const borrowed = question.options.filter((option) => !ownForms.includes(option))
+        expect(borrowed).toEqual([siblingVerb.conjugations.present[question.person]])
+      })
+    })
+
+    it('never borrows from an agreement-incompatible sibling', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(smallVerb, 'present', { verbs: [smallVerb, incompatibleSibling] })
+
+      questions.forEach((question) => {
+        expect(question.options).toHaveLength(3)
+        question.options.forEach((option) => {
+          expect(Object.values(incompatibleSibling.conjugations.present)).not.toContain(option)
+        })
+      })
+    })
+
+    it('does not qualify for spot-error with only its own 3 sentenced persons', () => {
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+        generateQuestions(smallVerb, 'present').forEach((question) => {
+          expect(question.kind).not.toBe('spot-error')
+        })
+        vi.restoreAllMocks()
+      }
+    })
+
+    it('still does not qualify for spot-error against an agreement-incompatible sibling', () => {
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+        generateQuestions(smallVerb, 'present', { verbs: [smallVerb, incompatibleSibling] }).forEach((question) => {
+          expect(question.kind).not.toBe('spot-error')
+        })
+        vi.restoreAllMocks()
+      }
+    })
+
+    it('qualifies for spot-error by borrowing a sentenced person from a compatible sibling', () => {
+      // availableKinds = ['sentence', 'type-verb', 'spot-error'] (no pronouns)
+      // -> [0, 0.75) / 3 -> slice 2, [0.5, 0.75), is 'spot-error'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+
+      const questions = generateQuestions(smallVerb, 'present', { verbs: [smallVerb, siblingVerb] })
+
+      questions.forEach((question) => {
+        expect(question.kind).toBe('spot-error')
+        expect(question.items).toHaveLength(4)
+
+        const persons = question.items.map((item) => item.person)
+        expect(new Set(persons).size).toBe(persons.length)
+        expect(persons).toContain('gu')
+
+        const guItem = question.items.find((item) => item.person === 'gu')
+        expect(guItem.sentence.startsWith('Guk egia ')).toBe(true)
+      })
+    })
+  })
+
+  describe('with the real VERBS list (#139 regression)', () => {
+    // `nahi`/`jakin`'s present tables only have 3 persons (`ni`/`zu`/`hura`),
+    // so before #139 their `sentence`/`form` questions had only 3 options
+    // (correct + 2 distractors) instead of the usual 4 — borrowing from a
+    // compatible sibling (`ukan`'s `dut`/`dakit`-family forms) fills the 4th.
+    it('gives nahi (3-person present table) a 4th option by borrowing from a compatible sibling', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const nahi = VERBS.find((v) => v.id === 'nahi')
+      generateQuestions(nahi, 'present', { verbs: VERBS }).forEach((question) => {
+        expect(question.kind).toBe('sentence')
+        expect(question.options).toHaveLength(4)
+        expect(new Set(question.options).size).toBe(4)
+        expect(question.options).toContain(question.correct)
+      })
+    })
+
+    it('gives jakin (3-person present table) a 4th option by borrowing from a compatible sibling', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const jakin = VERBS.find((v) => v.id === 'jakin')
+      generateQuestions(jakin, 'present', { verbs: VERBS }).forEach((question) => {
+        expect(question.kind).toBe('sentence')
+        expect(question.options).toHaveLength(4)
+        expect(new Set(question.options).size).toBe(4)
+        expect(question.options).toContain(question.correct)
+      })
+    })
+  })
+
   describe('spot-error questions', () => {
     const verbWithManySentences = {
       ...verb,
