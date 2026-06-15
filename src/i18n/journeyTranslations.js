@@ -66,10 +66,10 @@ export const JOURNEY_TRANSLATIONS = {
       title: { es: 'Etapa 3 — Mirando atrás I', eu: '3. atala — Atzera begira I' },
     },
     'phase-2-stage-4': {
-      title: { es: 'Etapa 4 — Acciones del mundo real', eu: '4. atala — Eguneroko ekintzak' },
+      title: { es: 'Etapa 4 — Acciones diarias', eu: '4. atala — Eguneroko ekintzak' },
     },
     'phase-2-stage-5': {
-      title: { es: 'Etapa 5 — Mirando atrás II', eu: '5. atala — Atzera begira II' },
+      title: { es: 'Etapa 5 — Posesiones y mirando atrás II', eu: '5. atala — Edukitzea eta atzera begira II' },
     },
     'phase-2-stage-6': {
       title: {
@@ -190,10 +190,10 @@ export const JOURNEY_TRANSLATIONS = {
     },
     6: {
       title: { es: 'Moviéndose', eu: 'Mugitzen' },
-      focus: { es: 'joan + etorri, presente', eu: 'joan + etorri, oraina' },
+      focus: { es: 'joan + etorri + ibili, presente', eu: 'joan + etorri + ibili, oraina' },
       payload: {
-        es: '"Voy a la playa." · "Ella viene mañana."',
-        eu: '"Hondartzara noa" (Voy a la playa) · "Bihar dator" (Ella viene mañana)',
+        es: '"Voy a la playa." · "Ella viene mañana." · "Anda dando vueltas por el pueblo."',
+        eu: '"Hondartzara noa" (Voy a la playa) · "Bihar dator" (Ella viene mañana) · "Herrian zehar dabil" (Anda dando vueltas por el pueblo)',
       },
     },
     7: {
@@ -245,6 +245,17 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     12: {
+      title: { es: 'Rutina diaria (transitiva)', eu: 'Eguneroko ohitura (iragankorra)' },
+      focus: {
+        es: 'el auxiliar de presente de ukan (dut/duzu/du/dugu/duzue/dute), combinado entre jan, edan, erosi, ikusi, hartu — primer par mínimo -tzen/-ten (jaten frente a hartzen)',
+        eu: 'ukan-en oraineko laguntzailea (dut/duzu/du/dugu/duzue/dute), jan, edan, erosi, ikusi eta hartu artean nahasturik — lehen -tzen/-ten bikote minimoa (jaten vs hartzen)',
+      },
+      payload: {
+        es: '"Comí." · "Bebes agua." · "Compré un libro." · "¿Lo ves?" · "Tomo el autobús."',
+        eu: '"Jan dut" (Comí) · "Ura edaten duzu" (Bebes agua) · "Liburu bat erosi dut" (Compré un libro) · "Ikusten duzu?" (¿Lo ves?) · "Autobusa hartzen dut" (Tomo el autobús)',
+      },
+    },
+    13: {
       title: { es: 'Mirando atrás I — El grupo del pasado de "ukan"', eu: 'Atzera begira I — "ukan"-en iraganeko taldea' },
       focus: {
         es: 'el auxiliar de pasado de ukan (nuen/zenuen/zuen/genuen/zenuten/zuten), combinado entre ukan, jan, edan, erosi, ikusi',
@@ -255,22 +266,11 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Autoa nuen" (Tenía un coche) · "Sagarra jan nuen" (Comí la manzana) · "Kafea edan zenuen" (Bebiste café) · "Etxea erosi genuen" (Compramos una casa) · "Filma ikusi zuen" (Ella vio la película)',
       },
     },
-    13: {
-      title: { es: 'Rutina diaria (transitiva)', eu: 'Eguneroko ohitura (iragankorra)' },
-      focus: {
-        es: 'el auxiliar de presente de ukan (dut/duzu/du/dugu/duzue/dute), combinado entre jan, edan, erosi, ikusi — primer par mínimo -tzen/-ten (jaten frente a hartzen)',
-        eu: 'ukan-en oraineko laguntzailea (dut/duzu/du/dugu/duzue/dute), jan, edan, erosi eta ikusi artean nahasturik — lehen -tzen/-ten bikote minimoa (jaten vs hartzen)',
-      },
-      payload: {
-        es: '"Comí." · "Bebes agua." · "Compré un libro." · "¿Lo ves?"',
-        eu: '"Jan dut" (Comí) · "Ura edaten duzu" (Bebes agua) · "Liburu bat erosi dut" (Compré un libro) · "Ikusten duzu?" (¿Lo ves?)',
-      },
-    },
     14: {
       title: { es: 'Estados físicos y posesiones', eu: 'Egoera fisikoak eta edukitzea' },
       focus: {
-        es: 'eduki, ibili — tablas completas de 6 personas',
-        eu: 'eduki, ibili — 6 pertsonen taula osoa',
+        es: 'eduki — tabla completa de 6 personas; ibili añade gu/zuek/haiek (su presente se introdujo en la unidad 6)',
+        eu: 'eduki — 6 pertsonen taula osoa; ibili-k gu/zuek/haiek gehitzen ditu (oraina 6. unitatean aurkeztua)',
       },
       payload: {
         es: '"Tengo las llaves en el bolsillo." · "Andan dando vueltas por el pueblo."',
@@ -278,18 +278,7 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     15: {
-      title: { es: 'Mirando atrás II — "Estuve allí"', eu: 'Atzera begira II — "Han nengoen"' },
-      focus: {
-        es: 'egon — pasado simple, su propio paradigma sintético (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
-        eu: 'egon — iragan soila, bere paradigma trinko propioa (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
-      },
-      payload: {
-        es: '"Estaba en casa." · "Estuvimos en la playa."',
-        eu: '"Etxean nengoen" (Estaba en casa) · "Hondartzan geunden" (Estuvimos en la playa)',
-      },
-    },
-    16: {
-      title: { es: 'Mirando atrás II — "Lo tenía"', eu: 'Atzera begira II — "Banuen"' },
+      title: { es: '"Lo tenía"', eu: '"Banuen"' },
       focus: {
         es: 'eduki — pasado simple, su propio paradigma sintético (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
         eu: 'eduki — iragan soila, bere paradigma trinko propioa (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
@@ -297,6 +286,17 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Tenía la llave." · "Teníamos tiempo."',
         eu: '"Giltza eskuan neukan" (Tenía la llave en la mano) · "Astia geneukan" (Teníamos tiempo)',
+      },
+    },
+    16: {
+      title: { es: '"Estuve allí"', eu: '"Han nengoen"' },
+      focus: {
+        es: 'egon — pasado simple, su propio paradigma sintético (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
+        eu: 'egon — iragan soila, bere paradigma trinko propioa (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
+      },
+      payload: {
+        es: '"Estaba en casa." · "Estuvimos en la playa."',
+        eu: '"Etxean nengoen" (Estaba en casa) · "Hondartzan geunden" (Estuvimos en la playa)',
       },
     },
     17: {
