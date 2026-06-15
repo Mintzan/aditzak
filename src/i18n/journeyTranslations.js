@@ -45,12 +45,15 @@ export const JOURNEY_TRANSLATIONS = {
   },
   stages: {
     'phase-1-stage-1': {
-      title: { es: 'Etapa 1 — Fundamentos absolutos', eu: '1. atala — Oinarri-oinarrizkoak' },
+      title: {
+        es: 'Etapa 1 — Ser, tener y el salto ergativo',
+        eu: '1. atala — Izatea, edukitzea eta jauzi ergatiboa',
+      },
     },
     'phase-1-stage-2': {
       title: {
-        es: 'Etapa 2 — Operaciones, movimiento y ampliación',
-        eu: '2. atala — Eragiketak, mugimendua eta zabalpena',
+        es: 'Etapa 2 — Ver y moverse',
+        eu: '2. atala — Ikustea eta mugitzea',
       },
     },
     'phase-1-gate-a': {
@@ -139,17 +142,42 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     2: {
-      title: { es: 'Tener, querer y saber', eu: 'Izan, nahi eta jakin' },
+      title: { es: 'El salto ergativo', eu: 'Jauzi ergatiboa' },
       focus: {
-        es: 'presente de ukan (objeto fijado en hura) + nahi + jakin',
-        eu: 'ukan oraina (objektua hura-n finkatuta) + nahi + jakin',
+        es: 'presente de ukan (objeto fijado en hura), enseñado solo — ni/zu/hura',
+        eu: 'ukan oraina (objektua hura-n finkatuta), bakarrik irakatsia — ni/zu/hura',
       },
       payload: {
-        es: '"Tengo un coche." · "Quiero un café." · "¿Quieres venir?" · "No lo sé."',
-        eu: '"Autoa dut" (Tengo un coche) · "Kafe bat nahi dut" (Quiero un café) · "Etorri nahi duzu?" (¿Quieres venir?) · "Ez dakit" (No lo sé)',
+        es: '"Tengo un coche." (Nik auto bat dut) · "¿Tienes café?" (Kafea duzu?) · "Él tiene una casa." (Hark etxe bat du)',
+        eu: '"Nik auto bat dut" (Tengo un coche) · "Kafea duzu?" (¿Tienes café?) · "Hark etxe bat du" (Él tiene una casa)',
       },
     },
     3: {
+      title: {
+        es: '"Ni" vs. "Nik" — El control de la marca de caso',
+        eu: '"Ni" vs. "Nik" — Kasu-markaren azterketa',
+      },
+      focus: {
+        es: 'sin verbos nuevos — sujetos en absolutivo (izan/egon) frente a sujetos ergativos (ukan), ni/zu/hura',
+        eu: 'aditz berririk gabe — absolutiboko subjektuak (izan/egon) ergatiboko subjektuen (ukan) aurrean, ni/zu/hura',
+      },
+      payload: {
+        es: '"Ni ikaslea naiz" (Yo soy estudiante) frente a "Nik liburua dut" (Yo tengo el libro) · "Zu etxean zaude" (Tú estás en casa) frente a "Zuk kafea duzu" (Tú tienes café)',
+        eu: '"Ni ikaslea naiz" vs. "Nik liburua dut" · "Zu etxean zaude" vs. "Zuk kafea duzu"',
+      },
+    },
+    4: {
+      title: { es: 'Saber y querer', eu: 'Jakin eta nahi' },
+      focus: {
+        es: 'jakin (sintético, mismos sufijos ergativos que ukan) + nahi + ukan',
+        eu: 'jakin (aditz trinkoa, ukan-en sufixo ergatibo berberak) + nahi + ukan',
+      },
+      payload: {
+        es: '"No lo sé." (Ez dakit) · "¿Quieres venir?" (Etorri nahi duzu?)',
+        eu: '"Ez dakit" (No lo sé) · "Etorri nahi duzu?" (¿Quieres venir?)',
+      },
+    },
+    5: {
       title: { es: 'Ver', eu: 'Ikusten' },
       focus: {
         es: 'presente de ikusi (ni/zu/hura) — el primer verbo perifrástico de la Fase I',
@@ -160,7 +188,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Mendia ikusten dut" (Veo la montaña) · "Ikusten duzu?" (¿Lo ves?) · "Filma ikusten du" (Ella ve la película)',
       },
     },
-    4: {
+    6: {
       title: { es: 'Moviéndose', eu: 'Mugitzen' },
       focus: { es: 'joan + etorri, presente', eu: 'joan + etorri, oraina' },
       payload: {
@@ -168,7 +196,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Hondartzara noa" (Voy a la playa) · "Bihar dator" (Ella viene mañana)',
       },
     },
-    5: {
+    7: {
       title: { es: 'Ampliación: plurales absolutivos', eu: 'Zabalpena: plural absolutiboa' },
       focus: {
         es: 'Añade gu/zuek/haiek a izan, egon, ukan, joan, etorri e ikusi — sin verbos nuevos',
@@ -179,7 +207,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Irakasleak gara" (Somos profesores) · "Etxean zaudete" (Estáis en casa) · "Hondartzara goaz" (Vamos a la playa)',
       },
     },
-    6: {
+    8: {
       title: { es: 'Ampliación: plurales ergativos', eu: 'Zabalpena: plural ergatiboa' },
       focus: {
         es: 'ukan + ikusi — añade gu/zuek/haiek al paradigma ergativo ("nor-nork"), presentado como "el plural se trasladó: ahora es un sufijo"',
@@ -190,7 +218,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Auto bat dugu" (Tenemos un coche) · "Filma ikusten dute" (Ven la película)',
       },
     },
-    7: {
+    9: {
       title: { es: 'El continuo inmediato', eu: 'Oraingo jarduera (ari + izan)' },
       focus: { es: 'ari + izan', eu: 'ari + izan' },
       payload: {
@@ -198,14 +226,14 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Zer ari zara?" (¿Qué estás haciendo?) · "Jaten ari naiz" (Estoy comiendo)',
       },
     },
-    8: {
+    10: {
       title: { es: 'REPASO — La matriz de inversión', eu: 'BERRIKUSPENA — Aldrebeskeriaren matrizea' },
       focus: {
-        es: 'Ejercicios de negación sobre las unidades 1–7 — sin verbos nuevos',
-        eu: '1–7 unitateetako ezeztapen-ariketak — aditz berririk gabe',
+        es: 'Ejercicios de negación sobre las unidades 1–9 — sin verbos nuevos',
+        eu: '1–9 unitateetako ezeztapen-ariketak — aditz berririk gabe',
       },
     },
-    9: {
+    11: {
       title: { es: 'Mirando atrás I — El grupo del pasado de "izan"', eu: 'Atzera begira I — "izan"-en iraganeko taldea' },
       focus: {
         es: 'el auxiliar de pasado de izan (nintzen/zinen/zen/ginen/zineten/ziren), combinado entre izan, joan, etorri, ibili',
@@ -216,7 +244,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Gaztea nintzen" (Yo era joven) · "Hondartzara joan nintzen" (Fui a la playa) · "Atzo etorri zen" (Ella vino ayer) · "Herrian ibili ginen" (Dimos vueltas por el pueblo)',
       },
     },
-    10: {
+    12: {
       title: { es: 'Mirando atrás I — El grupo del pasado de "ukan"', eu: 'Atzera begira I — "ukan"-en iraganeko taldea' },
       focus: {
         es: 'el auxiliar de pasado de ukan (nuen/zenuen/zuen/genuen/zenuten/zuten), combinado entre ukan, jan, edan, erosi, ikusi',
@@ -227,7 +255,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Autoa nuen" (Tenía un coche) · "Sagarra jan nuen" (Comí la manzana) · "Kafea edan zenuen" (Bebiste café) · "Etxea erosi genuen" (Compramos una casa) · "Filma ikusi zuen" (Ella vio la película)',
       },
     },
-    11: {
+    13: {
       title: { es: 'Rutina diaria (transitiva)', eu: 'Eguneroko ohitura (iragankorra)' },
       focus: {
         es: 'el auxiliar de presente de ukan (dut/duzu/du/dugu/duzue/dute), combinado entre jan, edan, erosi, ikusi — primer par mínimo -tzen/-ten (jaten frente a hartzen)',
@@ -238,7 +266,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Jan dut" (Comí) · "Ura edaten duzu" (Bebes agua) · "Liburu bat erosi dut" (Compré un libro) · "Ikusten duzu?" (¿Lo ves?)',
       },
     },
-    12: {
+    14: {
       title: { es: 'Estados físicos y posesiones', eu: 'Egoera fisikoak eta edukitzea' },
       focus: {
         es: 'eduki, ibili — tablas completas de 6 personas',
@@ -249,7 +277,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Giltzak poltsikoan ditut" (Tengo las llaves en el bolsillo) · "Herrian ibiltzen dira" (Andan dando vueltas por el pueblo)',
       },
     },
-    13: {
+    15: {
       title: { es: 'Mirando atrás II — "Estuve allí"', eu: 'Atzera begira II — "Han nengoen"' },
       focus: {
         es: 'egon — pasado simple, su propio paradigma sintético (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
@@ -260,7 +288,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Etxean nengoen" (Estaba en casa) · "Hondartzan geunden" (Estuvimos en la playa)',
       },
     },
-    14: {
+    16: {
       title: { es: 'Mirando atrás II — "Lo tenía"', eu: 'Atzera begira II — "Banuen"' },
       focus: {
         es: 'eduki — pasado simple, su propio paradigma sintético (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
@@ -271,7 +299,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Giltza eskuan neukan" (Tenía la llave en la mano) · "Astia geneukan" (Teníamos tiempo)',
       },
     },
-    15: {
+    17: {
       title: { es: 'La regla del futuro', eu: 'Geroaldiaren araua' },
       focus: {
         es: 'formar el futuro con -ko/-go + auxiliares de presente (izan, ukan, joan) — primer par mínimo -ko/-go (izango frente a etorriko)',
@@ -282,7 +310,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Irakasle izango naiz" (Seré profesor) · "Autoa izango dugu" (Tendremos un coche) · "Bihar joango naiz" (Iré mañana)',
       },
     },
-    16: {
+    18: {
       title: { es: 'El futuro, con todos los verbos', eu: 'Geroaldia, aditz guztiekin' },
       focus: {
         es: 'la misma regla -ko/-go aplicada a todos los verbos conocidos, practicada con mezcladores de varios verbos',
@@ -293,7 +321,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Ikusiko duzu" (Lo verás) · "Etxe bat erosiko dugu" (Compraremos una casa) · "Jakingo duzu?" (¿Sabrás?)',
       },
     },
-    17: {
+    19: {
       title: { es: 'Necesidades y obligaciones', eu: 'Beharrak eta betebeharrak' },
       focus: { es: 'behar + ukan, presente y futuro', eu: 'behar + ukan, oraina eta geroa' },
       payload: {
@@ -301,7 +329,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Joan behar dut" (Tengo que ir) · "Etorri beharko duzu" (Tendrás que venir)',
       },
     },
-    18: {
+    20: {
       title: {
         es: 'REPASO — Mezcla acumulativa de presente, pasado y futuro',
         eu: 'BERRIKUSPENA — Oraina, iragana eta geroa, dena nahasian',
@@ -311,18 +339,18 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Aditz trinkoak + perifrastikoak, baiezkoak + ezezkoak, oraina + iragana + geroa — aditz berririk gabe, puntuazioaren arabera blokeatuta (bestStars >= 2 jarraitzeko)',
       },
     },
-    19: {
+    21: {
       title: { es: '"Solía..." — El pasado imperfectivo', eu: '"Joaten nintzen..." — Iragan ez-burutua' },
       focus: {
-        es: 'pasado imperfectivo/habitual (etortzen nintzen, "solía venir / venía") — distinto del pasado simple de las unidades 9/10/13/14',
-        eu: 'iragan ohiturazkoa/burutugabea (etortzen nintzen, "solía venir / venía") — 9/10/13/14 unitateetako iragan soilatik bestelakoa',
+        es: 'pasado imperfectivo/habitual (etortzen nintzen, "solía venir / venía") — distinto del pasado simple de las unidades 11/12/15/16',
+        eu: 'iragan ohiturazkoa/burutugabea (etortzen nintzen, "solía venir / venía") — 11/12/15/16 unitateetako iragan soilatik bestelakoa',
       },
       payload: {
         es: '"Solía venir aquí todos los días." · "Estaba trabajando cuando llamó."',
         eu: '"Egunero hona etortzen nintzen" (Solía venir aquí todos los días) · "Lanean ari nintzen deitu zuenean" (Estaba trabajando cuando llamó)',
       },
     },
-    20: {
+    22: {
       title: { es: 'Movimiento en curso (pasado)', eu: 'Mugimendua gertatzen ari zen (iragana)' },
       focus: {
         es: 'formas pasadas propias de joan/etorri/ibili (nindoan, zetorren)',
@@ -333,29 +361,29 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Bidean nindoan (...zenean)" (Estaba de camino, cuando...) · "Etortzen zetorren (eta orduan...)" (Él venía, y entonces...)',
       },
     },
-    21: {
+    23: {
       title: { es: 'Gustos, opiniones, sentimientos', eu: 'Atseginak, iritziak, sentimenduak' },
       focus: {
-        es: 'presente NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; termina con una lección "colchón" de marco de caso antes del salto ditransitivo de la unidad 23',
-        eu: 'oraina NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; 23. unitatearen jauzi ditransitiboaren aurretik kasu-markoaren "koltxoi" saio batekin amaitzen da',
+        es: 'presente NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; termina con una lección "colchón" de marco de caso antes del salto ditransitivo de la unidad 25',
+        eu: 'oraina NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; 25. unitatearen jauzi ditransitiboaren aurretik kasu-markoaren "koltxoi" saio batekin amaitzen da',
       },
       payload: {
         es: '"Me gusta esto." (Hau gustatzen zait) · "Le parece bien." (Ongi iruditzen zaio) · "Se me olvidó el libro." (Liburua ahaztu zait)',
         eu: '"Hau gustatzen zait" (Me gusta esto) · "Ongi iruditzen zaio" (Le parece bien) · "Liburua ahaztu zait" (Se me olvidó el libro)',
       },
     },
-    22: {
+    24: {
       title: { es: 'El dativo a través del tiempo', eu: 'Datiboa denboran zehar' },
       focus: {
-        es: 'NOR-NORI en pasado y futuro — recombina la tabla dativa de la unidad 21 con el pasado perifrástico y el futuro -ko/-go',
-        eu: 'NOR-NORI iraganean eta geroan — 21. unitateko datibo-taula iragan perifrastikoarekin eta -ko/-go geroaldiarekin berrelkartzen du',
+        es: 'NOR-NORI en pasado y futuro — recombina la tabla dativa de la unidad 23 con el pasado perifrástico y el futuro -ko/-go',
+        eu: 'NOR-NORI iraganean eta geroan — 23. unitateko datibo-taula iragan perifrastikoarekin eta -ko/-go geroaldiarekin berrelkartzen du',
       },
       payload: {
         es: '"Me gustó ayer." (Atzo gustatu zitzaidan) · "Se me olvidarán las llaves." (Giltzak ahaztuko zaizkit) · "Seguro que te gustará." (Ziur gustatuko zaizu)',
         eu: '"Atzo gustatu zitzaidan" (Me gustó ayer) · "Giltzak ahaztuko zaizkit" (Se me olvidarán las llaves) · "Ziur gustatuko zaizu" (Seguro que te gustará)',
       },
     },
-    23: {
+    25: {
       title: { es: 'Comunicación y dar', eu: 'Komunikazioa eta ematea' },
       focus: {
         es: 'presente NOR-NORI-NORK (esan, eman), con andamiaje por ejes — cada lección fija un eje (NORK o NORI) antes de combinar ambos',
@@ -366,25 +394,25 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Ematen diot" (Se lo doy a él) · "Esaten diozu" (Se lo dices a él)',
       },
     },
-    24: {
+    26: {
       title: { es: 'Contar y dar a través del tiempo', eu: 'Esan eta eman denboran zehar' },
       focus: {
-        es: 'NOR-NORI-NORK en pasado y futuro — reutiliza el pasado perifrástico y el futuro -ko/-go sobre los recortes de eje fijo de la unidad 23',
-        eu: 'NOR-NORI-NORK iraganean eta geroan — 23. unitateko ardatz finkoko zatiei iragan perifrastikoa eta -ko/-go geroaldia aplikatzen die',
+        es: 'NOR-NORI-NORK en pasado y futuro — reutiliza el pasado perifrástico y el futuro -ko/-go sobre los recortes de eje fijo de la unidad 25',
+        eu: 'NOR-NORI-NORK iraganean eta geroan — 25. unitateko ardatz finkoko zatiei iragan perifrastikoa eta -ko/-go geroaldia aplikatzen die',
       },
       payload: {
         es: '"Se lo dije." (Esan nion) · "Me lo dio." (Eman zidan) · "Te lo diré mañana." (Bihar esango dizut)',
         eu: '"Esan nion" (Se lo dije) · "Eman zidan" (Me lo dio) · "Bihar esango dizut" (Te lo diré mañana)',
       },
     },
-    25: {
+    27: {
       title: { es: 'REPASO — La mezcladora de declinación', eu: 'BERRIKUSPENA — Kasu-marken nahasketa' },
       focus: {
         es: 'Practica los intercambios de papeles NOR/NORK/NORI y la recombinación dativa en pasado/futuro — sin verbos nuevos, con gating por puntuación y aprobación obligatoria antes de la Fase V',
         eu: 'NOR/NORK/NORI rolen txandaketa eta datiboaren iragan/geroaldiko berrelkarketa lantzen ditu — aditz berririk gabe, puntuazioaren arabera blokeatuta eta V. fasearen aurretik nahitaez gainditu beharrekoa',
       },
     },
-    26: {
+    28: {
       title: { es: 'Permisos y capacidad (Ahalera)', eu: 'Baimenak eta gaitasuna (Ahalera)' },
       focus: {
         es: 'dezaket/naiteke contrastados con la forma perifrástica ahal izan — producción para NOR/NOR-NORK, solo reconocimiento para los paradigmas dativos',
@@ -395,7 +423,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Etor naiteke" (Puedo venir) · "...ahal izan(go) nuen" (Podría haber...)',
       },
     },
-    27: {
+    29: {
       title: { es: 'Condicionales (Baldintza eta Ondorioa)', eu: 'Baldintzazkoak (Baldintza eta Ondorioa)' },
       focus: {
         es: 'prótasis con ba- + apódosis con -ke — producción para NOR/NOR-NORK, solo reconocimiento para los paradigmas dativos',
@@ -406,7 +434,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Dirua banu, hori erosiko nuke" (Si tuviera dinero, compraría eso)',
       },
     },
-    28: {
+    30: {
       title: { es: 'Órdenes (Agintera)', eu: 'Aginduak (Agintera)' },
       focus: {
         es: 'el imperativo — producción para NOR/NOR-NORK, reconocimiento únicamente para el ditransitivo (iezadazu); las tablas pequeñas toman distractores de verbos hermanos',
@@ -417,7 +445,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Etorri! · Egizu lan. · Emadazu ura.',
       },
     },
-    29: {
+    31: {
       title: { es: 'Finalidad y deseo (Subjuntiboa)', eu: 'Helburua eta nahia (Subjuntiboa)' },
       focus: {
         es: 'el subjuntivo como construcción (verbo principal + cláusula subordinada) — producción para NOR/NOR-NORK en 3ª persona, reconocimiento para el dativo/ditransitivo',
@@ -428,7 +456,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Nahi dut etor dadin. · Esan dio etor dadila. · ...ikus dezan.',
       },
     },
-    30: {
+    32: {
       title: { es: 'Conoce a "hi"', eu: '"Hi" ezagutu' },
       focus: {
         es: 'hi como sujeto en paradigmas ya conocidos — todavía sin alocutividad',
@@ -439,7 +467,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Hi ikaslea haiz. · Hago lasai. · Hator hona. · Hik badakik?',
       },
     },
-    31: {
+    33: {
       title: { es: 'Toka (alocutivo masculino)', eu: 'Toka (gizonezko alokutiboa)' },
       focus: {
         es: 'concordancia con el destinatario en frases de 3ª persona, registro masculino',
@@ -450,25 +478,25 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Lanean dik. · Etorri duk. · Ez nauk ondo.',
       },
     },
-    32: {
+    34: {
       title: { es: 'Noka (alocutivo femenino)', eu: 'Noka (emakumezko alokutiboa)' },
       focus: {
-        es: 'se enseña como la transformación -k → -n de las formas toka de la unidad 31, registro femenino',
-        eu: '31. unitateko toka formen -k → -n eraldaketa gisa irakatsia, emakumezko erregistroa',
+        es: 'se enseña como la transformación -k → -n de las formas toka de la unidad 33, registro femenino',
+        eu: '33. unitateko toka formen -k → -n eraldaketa gisa irakatsia, emakumezko erregistroa',
       },
       payload: {
         es: '"Está trabajando." (Lanean din) · "Ha venido." (Etorri dun) · "No estoy bien." (Ez naun ondo)',
         eu: 'Lanean din. · Etorri dun. · Ez naun ondo.',
       },
     },
-    33: {
+    35: {
       title: { es: 'Hitanoa recombinada', eu: 'Hitanoa berrelkartuta' },
       focus: {
         es: 'toka/noka mezclados según el género del destinatario, y cuándo no usarlo — se suprime en cláusulas subordinadas y en los modos formales -ke-',
         eu: 'toka/noka nahasian, hartzailearen generoaren arabera aukeratuta, eta noiz ez erabili — mendeko perpausetan eta -ke- moduko forma formaletan kentzen da',
       },
     },
-    34: {
+    36: {
       title: {
         es: 'Transformación pasiva y lectura de textos reales',
         eu: 'Pasibora aldatzea eta benetako testuak irakurtzea',
@@ -478,7 +506,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Forma ez-finituak, NOR aldaketa (ireki dut → ireki da) — benetako esaldien ulermena, ezagutza hutsa',
       },
     },
-    35: {
+    37: {
       title: { es: 'Hacer que alguien lo haga', eu: 'Norbaiti zerbait eginarazi' },
       focus: {
         es: '-arazi sobre verbos intransitivos (nor → nor-nork), presente/pasado/futuro',
@@ -489,7 +517,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Ekaitzak mendizaleak itzularazi zituen. · Musikak umeak dantzarazi ditu.',
       },
     },
-    36: {
+    38: {
       title: { es: 'Hacer que alguien le haga algo a alguien', eu: 'Norbaitek norbaiti zerbait eginarazi' },
       focus: {
         es: '-arazi sobre verbos transitivos (nor-nork → nor-nori-nork), presente/pasado/futuro',
@@ -500,14 +528,14 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Amonak umeei babarrunak janarazi zizkien. · Irakasleak ikasleei hori idatzarazi die.',
       },
     },
-    37: {
+    39: {
       title: {
         es: 'REPASO — Causativos en todos los tiempos y modos',
         eu: 'BERRIKUSPENA — Kausatiboak denbora eta moduetan zehar',
       },
       focus: {
-        es: 'Recombina las unidades 35–36 con el futuro, el condicional y el imperativo — sin verbos nuevos, con gating por puntuación',
-        eu: '35-36 unitateak geroaldiarekin, baldintzarekin eta agintera moduarekin berrelkartzen ditu — aditz berririk gabe, puntuazioaren arabera blokeatuta',
+        es: 'Recombina las unidades 37–38 con el futuro, el condicional y el imperativo — sin verbos nuevos, con gating por puntuación',
+        eu: '37-38 unitateak geroaldiarekin, baldintzarekin eta agintera moduarekin berrelkartzen ditu — aditz berririk gabe, puntuazioaren arabera blokeatuta',
       },
     },
   },
