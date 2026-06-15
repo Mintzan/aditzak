@@ -2,10 +2,10 @@
 // The learning journey — Aditzak's curriculum roadmap
 //
 // Mirrors `docs/LEARNING_JOURNEY.md`'s phases → stages → units, which in turn
-// follows the 37-unit layout specified in `docs/LEARNING_JOURNEY_PROPOSED.md`
-// (unit numbers below are that spec's "P-n"; see
-// `docs/LEARNING_JOURNEY_EVALUATION.md` for the O-n → P-n mapping that drove
-// this renumber — issue #149/#137). Each unit is either:
+// follows the 39-unit layout specified in `docs/LEARNING_JOURNEY_PROPOSED.md`
+// (unit numbers below are that spec's "N-n"; see
+// `docs/LEARNING_JOURNEY_EVALUATION.md` for the O-n → N-n mapping that drove
+// this renumber — issue #149/#137/#151). Each unit is either:
 //   - `available`: has `lessonIds`, pointing at entries in `LESSONS`
 //     (App.jsx) that the home screen renders as playable lesson cards. Every
 //     available unit's `lessonIds` ends with that unit's `unit-N-review`
@@ -17,8 +17,8 @@
 //     visible from day one even as units are filled in one at a time.
 //
 // `gate: true` marks Refresh Gate units — zero-new-verb consolidation or
-// expansion checkpoints (P-8, P-18, P-25, P-37). Most sit between
-// phases/stages, but Phase I's "Expansion" gate (Unit 5) sits mid-phase,
+// expansion checkpoints (N-10, N-20, N-27, N-39). Most sit between
+// phases/stages, but Phase I's "Expansion" gate (Unit 7) sits mid-phase,
 // right after the verbs it expands are introduced — see `docs/DECISIONS.md`,
 // "Moved the Expansion gate earlier".
 //
@@ -30,10 +30,11 @@
 // Keep this in sync with `docs/LEARNING_JOURNEY.md` — when a unit moves from
 // pending to available, flip its `status` and add its `lessonIds` here.
 //
-// Lesson ids in `LESSONS` were kept stable across this renumber (see
-// `docs/DECISIONS.md`, 2026-06-14 "37-unit journey renumber") — only this
-// file's unit numbers/titles/stage groupings changed, so existing
-// `localStorage` progress (keyed by lesson id) survives untouched.
+// Lesson ids in `LESSONS` were kept stable across the #137 renumber (see
+// `docs/DECISIONS.md`, 2026-06-14 "37-unit journey renumber"). #151's
+// ergative restructure (Units 2-4) added new lesson ids and re-scoped
+// `unit-2-review` — see `docs/DECISIONS.md`, "#151 ergative restructure", for
+// why this didn't need a `STORAGE_KEY` bump either.
 // =============================================================================
 
 export const JOURNEY = [
@@ -44,7 +45,7 @@ export const JOURNEY = [
     stages: [
       {
         id: 'phase-1-stage-1',
-        title: 'Stage 1 — Absolute Foundations',
+        title: 'Stage 1 — Being, Having & the Ergative Leap',
         units: [
           {
             number: 1,
@@ -54,38 +55,73 @@ export const JOURNEY = [
             status: 'available',
             lessonIds: ['izan-present', 'egon-present', 'unit-1-review'],
           },
+          // Unit 2 ("The Ergative Leap") used to be bundled with `nahi` and
+          // `jakin` (the pre-#151 Unit 2). Per
+          // docs/LEARNING_JOURNEY_EVALUATION.md F6/F7, the absolutive→ergative
+          // subject shift (`ni naiz` → `nik dut`) is the single steepest
+          // conceptual jump in the journey, so it now gets its own unit plus
+          // a dedicated case-marking checkpoint (Unit 3) before `jakin`/`nahi`
+          // arrive as reinforcement (Unit 4) — see docs/DECISIONS.md, "#151
+          // ergative restructure".
           {
             number: 2,
-            title: 'Having, Wanting, and Knowing',
-            focus: 'ukan present (object fixed to hura) + nahi + jakin',
+            title: 'The Ergative Leap',
+            focus: 'ukan present (object fixed to hura), taught alone — ni/zu/hura',
             payload:
-              '"I have a car." · "I want coffee." · "Do you want to come?" · "I don\'t know."',
+              '"I have a car." (Nik auto bat dut.) · "Do you have coffee?" (Kafea duzu?) · "He has a house." (Hark etxe bat du.)',
             status: 'available',
-            lessonIds: ['ukan-present', 'nahi-present', 'jakin-present', 'unit-2-review'],
+            lessonIds: ['ukan-present', 'ukan-ni-nik-shift-review', 'unit-2-review'],
           },
+          // Unit 3 — the "Ni vs. Nik" case-marking checkpoint (zero new
+          // verbs): drills the absolutive (izan/egon, bare subject) vs.
+          // ergative (ukan, -k subject) contrast Unit 2 just introduced —
+          // pre-empting "ergative drift" (†Nik naiz), the most common
+          // beginner error (F7). The Phase-I counterpart of Gate C (Unit 27).
           {
             number: 3,
+            title: '"Ni" vs. "Nik" — The Case-Marking Checkpoint',
+            focus:
+              'zero new verbs — bare izan/egon subjects vs. ergative ukan subjects, ni/zu/hura',
+            payload:
+              '"Ni ikaslea naiz" vs. "Nik liburua dut." · "Zu etxean zaude" vs. "Zuk kafea duzu."',
+            status: 'available',
+            lessonIds: [
+              'case-marking-sort-review',
+              'case-marking-drift-review',
+              'case-marking-checkpoint-review',
+            ],
+          },
+          {
+            number: 4,
+            title: 'Knowing & Wanting',
+            focus: 'jakin (synthetic, same ergative suffixes as ukan) + nahi + ukan',
+            payload: '"I don\'t know." (Ez dakit.) · "Do you want to come?" (Etorri nahi duzu?)',
+            status: 'available',
+            lessonIds: ['jakin-present', 'nahi-present', 'jakin-suffix-family-review', 'knowing-wanting-review'],
+          },
+        ],
+      },
+      {
+        id: 'phase-1-stage-2',
+        title: 'Stage 2 — Seeing & Moving',
+        units: [
+          {
+            number: 5,
             title: 'Seeing',
             focus: 'ikusi present (ni/zu/hura) — Phase I\'s first periphrastic verb',
             payload: '"I see the mountain." · "Do you see it?" · "She sees the film."',
             status: 'available',
             lessonIds: ['ikusi-present', 'ikusi-present-review'],
           },
-        ],
-      },
-      {
-        id: 'phase-1-stage-2',
-        title: 'Stage 2 — Operations, Movement & Expansion',
-        units: [
           {
-            number: 4,
+            number: 6,
             title: 'Moving Around',
             focus: 'joan + etorri, present tense',
             payload: "\"I'm going to the beach.\" · \"She's coming tomorrow.\"",
             status: 'available',
             lessonIds: ['joan-present', 'etorri-present', 'unit-3-review'],
           },
-          // Unit 5 ("Expansion: Absolutive Plurals") and Unit 6 ("Expansion:
+          // Unit 7 ("Expansion: Absolutive Plurals") and Unit 8 ("Expansion:
           // Ergative Plurals") split O-5's single "Expansion" gate into two
           // internally-homogeneous units — the absolutive plural (gara/goaz,
           // marked on the stem) and the ergative plural (dugu/dute, a suffix
@@ -93,10 +129,10 @@ export const JOURNEY = [
           // invites †dugara-type blending (docs/LEARNING_JOURNEY_EVALUATION.md
           // F4). This renumber (#137) keeps O-5's existing lessons — which mix
           // both paradigms (izan/egon/joan/etorri absolutive plus ukan/ikusi
-          // ergative) — under Unit 5 for now; #143 does the actual content
-          // split (redistributing the ukan/ikusi lessons into Unit 6).
+          // ergative) — under Unit 7 for now; #143 does the actual content
+          // split (redistributing the ukan/ikusi lessons into Unit 8).
           {
-            number: 5,
+            number: 7,
             title: 'Expansion: Absolutive Plurals',
             focus:
               'Adds gu/zuek/haiek to izan, egon, ukan, joan, etorri, and ikusi — zero new verbs',
@@ -113,7 +149,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 6,
+            number: 8,
             title: 'Expansion: Ergative Plurals',
             focus:
               'ukan + ikusi — adds gu/zuek/haiek to the ergative ("nor-nork") paradigm, framed as "the plural moved — now it\'s a suffix"',
@@ -121,7 +157,7 @@ export const JOURNEY = [
             status: 'pending',
           },
           {
-            number: 7,
+            number: 9,
             title: 'The Immediate Continuous',
             focus: 'ari + izan',
             payload: '"What are you doing?" (Zer ari zara?) · "I\'m eating." (Jaten ari naiz)',
@@ -135,9 +171,9 @@ export const JOURNEY = [
         title: 'Refresh Gate A — The "Ez" Trap',
         units: [
           {
-            number: 8,
+            number: 10,
             title: 'REFRESH — The Inversion Matrix',
-            focus: 'Negation drills across Units 1–7 — zero new verbs',
+            focus: 'Negation drills across Units 1–9 — zero new verbs',
             status: 'available',
             gate: true,
             lessonIds: ['unit-5-review-1', 'unit-5-review-2', 'unit-5-review-3'],
@@ -156,7 +192,7 @@ export const JOURNEY = [
         title: 'Stage 3 — Looking Back I',
         units: [
           {
-            number: 9,
+            number: 11,
             title: 'Looking Back I — The "izan" Past Pool',
             focus: 'the izan past auxiliary (nintzen/zinen/zen/ginen/zineten/ziren), mixed across izan, joan, etorri, ibili',
             payload: '"I was young." · "I went to the beach." · "She came yesterday." · "We wandered around town."',
@@ -164,7 +200,7 @@ export const JOURNEY = [
             lessonIds: ['izan-past-pool', 'izan-past-pool-plural'],
           },
           {
-            number: 10,
+            number: 12,
             title: 'Looking Back I — The "ukan" Past Pool',
             focus: 'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi',
             payload: '"I had a car." · "I ate the apple." · "You drank coffee." · "We bought a house." · "She saw the film."',
@@ -178,7 +214,7 @@ export const JOURNEY = [
         title: 'Stage 4 — Real-World Actions',
         units: [
           {
-            number: 11,
+            number: 13,
             title: 'Daily Routine (Transitive)',
             focus: 'the ukan present auxiliary (dut/duzu/du/dugu/duzue/dute), mixed across jan, edan, erosi, ikusi — first -tzen/-ten minimal pair (jaten vs. hartzen)',
             payload: '"I ate." · "You drink water." · "I bought a book." · "Do you see it?"',
@@ -186,7 +222,7 @@ export const JOURNEY = [
             lessonIds: ['unit-10-present', 'unit-10-present-plural'],
           },
           {
-            number: 12,
+            number: 14,
             title: 'Physical States & Possessions',
             focus: 'eduki, ibili — full 6-person grids',
             payload: '"I have the keys in my pocket." · "They are wandering around town."',
@@ -207,7 +243,7 @@ export const JOURNEY = [
         title: 'Stage 5 — Looking Back II',
         units: [
           {
-            number: 13,
+            number: 15,
             title: 'Looking Back II — "I Was There"',
             focus: 'egon — simple past, its own synthetic paradigm (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
             payload: '"I was at home." · "We were at the beach."',
@@ -215,7 +251,7 @@ export const JOURNEY = [
             lessonIds: ['egon-past', 'egon-past-review', 'egon-past-plural', 'egon-past-plural-review'],
           },
           {
-            number: 14,
+            number: 16,
             title: 'Looking Back II — "I Had It"',
             focus: 'eduki — simple past, its own synthetic paradigm (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
             payload: '"I had the keys." · "We had time."',
@@ -229,7 +265,7 @@ export const JOURNEY = [
         title: 'Stage 6 — The Future (Geroa)',
         units: [
           {
-            number: 15,
+            number: 17,
             title: 'The Future Rule',
             focus: 'forming the future with -ko/-go + present auxiliaries (izan, ukan, joan) — first -ko/-go minimal pair (izango vs. etorriko)',
             payload:
@@ -247,7 +283,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 16,
+            number: 18,
             title: 'The Future, Across Every Verb',
             focus: 'the same -ko/-go rule applied across all known verbs, drilled as cross-verb mixers',
             payload:
@@ -265,7 +301,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 17,
+            number: 19,
             title: 'Requirements & Obligations',
             focus: 'behar + ukan, present and future',
             payload:
@@ -279,7 +315,7 @@ export const JOURNEY = [
         title: 'Refresh Gate B — The Core Tense Checkpoint',
         units: [
           {
-            number: 18,
+            number: 20,
             title: 'REFRESH — Cumulative Present/Past/Future Mixer',
             focus:
               'Synthetic + periphrastic, positive + negative, present + past + future — zero new verbs, score-gated (bestStars >= 2 to continue)',
@@ -300,7 +336,7 @@ export const JOURNEY = [
         title: 'Stage 7 — Aspect in the Past',
         units: [
           {
-            number: 19,
+            number: 21,
             title: '"I Used To..." — The Imperfective Past',
             focus:
               'imperfective/habitual past (etortzen nintzen, "I used to come / I was coming") — distinct from the simple past taught in Units 9/10/13/14',
@@ -308,7 +344,7 @@ export const JOURNEY = [
             status: 'pending',
           },
           {
-            number: 20,
+            number: 22,
             title: 'Motion in Progress (Past)',
             focus: "joan/etorri/ibili's native imperfective past forms (nindoan, zetorren)",
             payload: '"I was on my way (when...)." · "He was coming (and then...)."',
@@ -328,17 +364,17 @@ export const JOURNEY = [
         title: 'Stage 8 — The Dative Shift (NOR-NORI)',
         units: [
           {
-            number: 21,
+            number: 23,
             title: 'Pleasures, Opinions, Feelings',
             focus:
-              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; ends with a case-frame buffer lesson ahead of Unit 23\'s ditransitive jump',
+              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; ends with a case-frame buffer lesson ahead of Unit 25\'s ditransitive jump',
             payload: '"I like this." (Hau gustatzen zait) · "It seems good to him/her." (Ongi iruditzen zaio) · "I forgot the book." (Liburua ahaztu zait)',
             status: 'pending',
           },
           {
-            number: 22,
+            number: 24,
             title: 'Dative Across Time',
-            focus: 'NOR-NORI past + future — recombines Unit 21\'s dative grid with the periphrastic past and -ko/-go future',
+            focus: 'NOR-NORI past + future — recombines Unit 23\'s dative grid with the periphrastic past and -ko/-go future',
             payload: '"I liked it yesterday." (Atzo gustatu zitzaidan) · "I forgot the keys." (Giltzak ahaztu zitzaizkidan) · "You\'ll like it for sure." (Ziur gustatuko zaizu)',
             status: 'pending',
           },
@@ -349,16 +385,16 @@ export const JOURNEY = [
         title: 'Stage 9 — Communication & Giving (NOR-NORI-NORK)',
         units: [
           {
-            number: 23,
+            number: 25,
             title: 'Communication & Giving',
             focus: 'present NOR-NORI-NORK (esan, eman), axis-scaffolded — each lesson fixes one axis (NORK or NORI) before recombining both',
             payload: '"I give it to him." (Ematen diot) · "You tell it to him." (Esaten diozu)',
             status: 'pending',
           },
           {
-            number: 24,
+            number: 26,
             title: 'Telling & Giving Across Time',
-            focus: 'NOR-NORI-NORK past + future — reuses the periphrastic past and -ko/-go future on the axis-fixed slices from Unit 23',
+            focus: 'NOR-NORI-NORK past + future — reuses the periphrastic past and -ko/-go future on the axis-fixed slices from Unit 25',
             payload: '"I told him." (Esan nion) · "He gave it to me." (Eman zidan) · "I\'ll tell you tomorrow." (Bihar esango dizut)',
             status: 'pending',
           },
@@ -369,7 +405,7 @@ export const JOURNEY = [
         title: 'Refresh Gate C — The Multi-Argument Audit',
         units: [
           {
-            number: 25,
+            number: 27,
             title: 'REFRESH — The Case-Ending Mixer',
             focus: 'Drills NOR/NORK/NORI role-swaps plus dative past/future recombination — zero new verbs, score-gated and a mandatory pass before Phase V',
             status: 'pending',
@@ -389,14 +425,14 @@ export const JOURNEY = [
         title: 'Stage 10 — Hypotheticals & Potentials',
         units: [
           {
-            number: 26,
+            number: 28,
             title: 'Permissions & Capability (Ahalera)',
             focus: 'dezaket/naiteke contrasted with periphrastic ahal izan — production for NOR/NOR-NORK, recognition-only for the dative paradigms',
             payload: '"I can come." · "I could (have)..."',
             status: 'pending',
           },
           {
-            number: 27,
+            number: 29,
             title: 'Conditionals (Baldintza & Ondorioa)',
             focus: 'ba- protasis + -ke apodosis — production for NOR/NOR-NORK, recognition-only for the dative paradigms',
             payload: '"If I had money, I would buy that" (Dirua banu, hori erosiko nuke)',
@@ -409,14 +445,14 @@ export const JOURNEY = [
         title: 'Stage 11 — Directives & Wishes',
         units: [
           {
-            number: 28,
+            number: 30,
             title: 'Commands (Agintera)',
             focus: 'the imperative — production for NOR/NOR-NORK, ditransitive (iezadazu) recognition-only; small tables borrow distractors from sibling verbs (distractor-floor fix)',
             payload: 'Etorri! · Egizu lan. · Emadazu ura.',
             status: 'pending',
           },
           {
-            number: 29,
+            number: 31,
             title: 'Purpose & Wishing (Subjuntiboa)',
             focus: 'the subjunctive as a construction (matrix verb + subordinate clause) — NOR/NOR-NORK 3rd-person in-construction production, dative/ditransitive recognition-only',
             payload: 'Nahi dut etor dadin. · Esan dio etor dadila. · ...ikus dezan.',
@@ -429,28 +465,28 @@ export const JOURNEY = [
         title: 'Stage 12 — The Intimate Register (hi + Hitanoa)',
         units: [
           {
-            number: 30,
+            number: 32,
             title: 'Meet "hi"',
             focus: 'hi as a subject in known paradigms — no allocutivity yet',
             payload: 'Hi ikaslea haiz. · Hago lasai. · Hator hona. · Hik badakik?',
             status: 'pending',
           },
           {
-            number: 31,
+            number: 33,
             title: 'Toka (Masculine Allocutive)',
             focus: 'addressee-agreement on 3rd-person statements, masculine register',
             payload: 'Lanean dik. · Etorri duk. · Ez nauk ondo.',
             status: 'pending',
           },
           {
-            number: 32,
+            number: 34,
             title: 'Noka (Feminine Allocutive)',
-            focus: 'taught as the -k → -n transform of Unit 31\'s toka forms, feminine register',
+            focus: 'taught as the -k → -n transform of Unit 33\'s toka forms, feminine register',
             payload: 'Lanean din. · Etorri dun. · Ez naun ondo.',
             status: 'pending',
           },
           {
-            number: 33,
+            number: 35,
             title: 'Hitanoa Recombined',
             focus: 'mixed toka/noka chosen by addressee gender, plus when not to use it — suppressed in subordinate clauses and formal -ke- moods',
             status: 'pending',
@@ -462,7 +498,7 @@ export const JOURNEY = [
         title: 'Stage 13 — Reading Real Text',
         units: [
           {
-            number: 34,
+            number: 36,
             title: 'Passive & Reading Real Text',
             focus: 'non-finite forms, nor-shift (ireki dut → ireki da) — comprehension over real sentences, recognition-only throughout',
             status: 'pending',
@@ -481,14 +517,14 @@ export const JOURNEY = [
         title: 'Stage 14 — The Causative Suffix (-arazi)',
         units: [
           {
-            number: 35,
+            number: 37,
             title: 'Making Someone Do It',
             focus: '-arazi on intransitives (nor → nor-nork), present/past/future',
             payload: 'Ekaitzak mendizaleak itzularazi zituen. · Musikak umeak dantzarazi ditu.',
             status: 'pending',
           },
           {
-            number: 36,
+            number: 38,
             title: 'Making Someone Do Something to Someone',
             focus: '-arazi on transitives (nor-nork → nor-nori-nork), present/past/future',
             payload: 'Amonak umeei babarrunak janarazi zizkien. · Irakasleak ikasleei hori idatzarazi die.',
@@ -501,7 +537,7 @@ export const JOURNEY = [
         title: 'Refresh Gate D — The Causative Recombination',
         units: [
           {
-            number: 37,
+            number: 39,
             title: 'REFRESH — Causatives Across Tenses & Moods',
             focus: 'Recombines Units 35–36\'s -arazi with future, conditional, and imperative — zero new verbs, score-gated',
             status: 'pending',
@@ -513,8 +549,8 @@ export const JOURNEY = [
   },
 ]
 
-// The last `lessonIds` entry of every `available`, `gate: true` unit (P-8,
-// P-18, P-25, P-37 — see the `gate: true` note above) — `getUnlockedLessonIds`
+// The last `lessonIds` entry of every `available`, `gate: true` unit (N-10,
+// N-20, N-27, N-39 — see the `gate: true` note above) — `getUnlockedLessonIds`
 // (`src/lessonLogic.js`) treats reaching `GATE_PASS_STARS` on one of these as
 // the unlock condition for the lesson that follows it, instead of the regular
 // "previous lesson attempted" rule. A `pending` gate has no `lessonIds` yet

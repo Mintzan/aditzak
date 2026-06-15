@@ -8,6 +8,43 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #151: 37→39 spine renumber — split old Unit 2 into N-2/N-3/N-4
+
+**Decision:** Completed the 37→39 renumber promised by #137/#138 (the
+O-n/P-n → N-n mapping in `docs/LEARNING_JOURNEY_EVALUATION.md`). Old Unit 2
+("Having, Wanting, Knowing" — `ukan`+`nahi`+`jakin` all at once) is the single
+steepest jump in Phase I (the absolutive→ergative `ni`→`nik` subject shift),
+per findings F6/F7, so it's now a three-unit on-ramp:
+
+- **N-2 "The Ergative Leap"** — `ukan` present taught *alone* (object fixed to
+  `hura`), with extra practice isolating the `ni`→`nik` shift
+  (`ukan-ni-nik-shift-review`). `unit-2-review` is redefined to drill `ukan`
+  present only (it previously also covered `nahi`/`jakin`, which moved to N-4).
+- **N-3 '"Ni" vs. "Nik" — The Case-Marking Checkpoint"** — zero new verbs;
+  drills bare (`izan`/`egon`) vs. ergative (`ukan`) subjects to kill ergative
+  `-k` drift at its source. N-3·L2's "spot the drift" framing (recognizing
+  `†Nik naiz`-style errors) is implemented with today's case-mixer/verb-choice
+  primitives (`generateCaseMixerQuestions`/`generateCrossVerbQuestions`)
+  rather than a dedicated error-spotting mechanic — that's deferred to #141.
+- **N-4 "Knowing & Wanting"** — `jakin` + `nahi`, reinforcing the same
+  ergative suffix family on a fully synthetic verb (`jakin`), plus extra
+  practice pairing `jakin` with `ukan` (`jakin-suffix-family-review`).
+
+Old units 3-37 shift +2 to new units 5-39 (gates: P-8/18/25/37 → N-10/20/27/39,
+matching #138's `GATE_LESSON_IDS`, derived generically from `gate: true` so it
+needed no code changes). Updated `journey.js`, `data/lessons.js` (including its
+explanatory "Unit N" comments), `i18n/journeyTranslations.js` (new
+`units[2]`/`units[3]`/`units[4]`, re-keyed `units[5..39]`, updated stage 1/2
+titles), and `docs/LEARNING_JOURNEY.md` throughout.
+
+**Lesson-id stability:** all pre-existing `LESSONS` ids and `STORAGE_KEY`
+(`v1`) are unchanged — `ukan-present`, `jakin-present`, `nahi-present` keep
+their ids, just reassigned to different units; only new review-lesson ids
+(`ukan-ni-nik-shift-review`, `case-marking-sort-review`,
+`case-marking-drift-review`, `case-marking-checkpoint-review`,
+`jakin-suffix-family-review`, `knowing-wanting-review`) were added. Existing
+player progress survives untouched.
+
 ## 2026-06-15 — #138: score-gated Refresh Gate units
 
 **Decision:** `getUnlockedLessonIds` (`src/lessonLogic.js`) now takes an
