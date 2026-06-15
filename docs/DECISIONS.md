@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #142: Axis-fixed metadata (`recipient`/`agent`) for future ditransitive verbs
+
+**Decision:** NOR-NORI-NORK (ditransitive) verbs' `conjugations` are genuinely
+2D (NORK x NORI), which the existing `conjugations[tense][person]` shape can't
+represent directly. Rather than redesign the data model now (no ditransitive
+verb exists yet — that's #147's job), added forward-compatible *axis-fixed*
+metadata mirroring `nor-nork`'s existing `object: 'hura'`: a ditransitive verb
+sets exactly one of `recipient` (fixes NORI, so `person` varies over NORK —
+e.g. `recipient: 'hura'` → `diot`/`diozu`/`dio`/... "I/you/he tell *him*") or
+`agent` (fixes NORK, so `person` varies over NORI — e.g. `agent: 'ni'` →
+`diot`/`dizut`/`diet`/... "I tell him/you/them"). A lesson on such a verb is
+thus still a flat `conjugations[tense][person]` table, just with one argument
+held constant across the whole table.
+
+Added `getFixedArgument(verb)` (`lessonLogic.js`) to resolve `recipient`/
+`agent` into `{ role, person }` (or `null` for every current verb), threaded
+it into `generateQuestions`'s per-question `source.fixedArgument`, and added a
+`FixedArgumentBadge` (`App.jsx`) that shows e.g. "NORI: hura" — used in
+`VerbBadgeRow` (verb preview), `LessonNode` (lesson list), and `QuestionPrompt`
+(per-question during exercises), so learners always know which argument is
+held fixed. Also extended `agreementsCompatible` to compare `nori`-inclusion
+(in addition to the existing `nork` check), so cross-verb distractor borrowing
+won't mix ditransitive and non-ditransitive forms once #147 lands.
+
+All of this is currently inert — no `VERBS` entry sets `recipient`/`agent` or
+has `nori` in `agreement` — but a `logic.test.js` test loops over any future
+ditransitive `VERBS` entries to enforce exactly one fixed argument resolves
+correctly, so #147 gets fast feedback if it misses a field.
+
 ## 2026-06-15 — #143: Phase II reorder (present-before-past), `ibili`/`hartu` moves, MP staging
 
 **Decision:** Reordered Phase II per `docs/LEARNING_JOURNEY_PROPOSED.md`'s
