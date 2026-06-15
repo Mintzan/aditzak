@@ -512,3 +512,15 @@ export const JOURNEY = [
     ],
   },
 ]
+
+// The last `lessonIds` entry of every `available`, `gate: true` unit (P-8,
+// P-18, P-25, P-37 — see the `gate: true` note above) — `getUnlockedLessonIds`
+// (`src/lessonLogic.js`) treats reaching `GATE_PASS_STARS` on one of these as
+// the unlock condition for the lesson that follows it, instead of the regular
+// "previous lesson attempted" rule. A `pending` gate has no `lessonIds` yet
+// and contributes nothing.
+export const GATE_LESSON_IDS = new Set(
+  JOURNEY.flatMap((phase) => phase.stages.flatMap((stage) => stage.units))
+    .filter((unit) => unit.gate && unit.lessonIds?.length)
+    .map((unit) => unit.lessonIds[unit.lessonIds.length - 1]),
+)

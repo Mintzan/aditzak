@@ -8,6 +8,31 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #138: score-gated Refresh Gate units
+
+**Decision:** `getUnlockedLessonIds` (`src/lessonLogic.js`) now takes an
+optional `gateLessonIds` set (`journey.js`'s new `GATE_LESSON_IDS` — the last
+`lessonIds` entry of every `available`, `gate: true` unit, currently just
+Unit 8's `unit-5-review-3`). For the lesson right after one of these, the
+unlock predicate is `bestStars >= GATE_PASS_STARS` (2, i.e. ≥80%) instead of
+the usual `attempts > 0`. Everything else (already-unlocked lessons never
+re-lock, `?dev=unlock-all`, non-gate progression) is unchanged.
+
+A new `isLockedByGateScore` helper distinguishes "locked, gate not attempted
+yet" from "locked, gate attempted but under 80%" — `LessonNode` and
+`ProgressTab` show a `gateNeedsScore` prompt ("Score 80% on the Refresh Gate
+above to continue", translated in all three languages) only in the latter
+case. The gate itself stays fully replayable either way — this is a soft
+wall, no lockout and no progress loss, per
+`docs/LEARNING_JOURNEY_PROPOSED.md` design principle 4.
+
+Implemented against the foundation as it stands today (37-unit layout from
+#137, gates at P-8/18/25/37, only P-8 currently `available`) rather than
+#138's issue body, which cites "N-10/20/27/39" — the post-#151 39-unit
+numbering for these same four gates (#151 tracks the 37→39 spine renumber).
+`GATE_LESSON_IDS` is derived generically from `gate: true`, so it needs no
+changes once #151 lands and once P-18/25/37 (→ N-20/27/39) gain `lessonIds`.
+
 ## 2026-06-14 — #137: renumbered `JOURNEY` to the 37-unit layout
 
 **Decision:** Rewrote `src/journey.js`'s phases/stages/units to match

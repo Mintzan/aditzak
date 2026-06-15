@@ -305,15 +305,26 @@ export function mergeSyncPayload(local, cloud) {
   }
 }
 
+// Score threshold (≥80%, per `computeStars`) a `gate: true` unit's final
+// lesson must reach before the lesson after it unlocks (see
+// `getUnlockedLessonIds`/`isLockedByGateScore`) — `docs/LEARNING_JOURNEY_PROPOSED.md`,
+// design principle 4. Below this the gate is a "soft wall": it stays
+// replayable and nothing already-unlocked re-locks, but the next lesson
+// shows a "needs 80% to continue" prompt instead of unlocking.
+export const GATE_PASS_STARS = 2
+
 // A lesson unlocks once the lesson before it has been attempted at least
 // once, or once the lesson itself has — so a lesson the learner already
 // completed never re-locks just because a new lesson (e.g. a unit review)
-// gets inserted before it later.
+// gets inserted before it later. The one exception: if the previous lesson's
+// id is in `gateLessonIds` (the final lesson of a `gate: true` unit — see
+// `journey.js`'s `GATE_LESSON_IDS`), it must additionally reach
+// `GATE_PASS_STARS` — merely attempting the gate isn't enough.
 //
 // Undocumented `?dev=unlock-all` query param bypasses this entirely and
 // unlocks every lesson — for trying out/demoing any lesson without grinding
 // through the journey. No UI toggle by design.
-export function getUnlockedLessonIds(lessons, progress, search = window.location.search) {
+export function getUnlockedLessonIds(lessons, progress, search = window.location.search, gateLessonIds = new Set()) {
   if (new URLSearchParams(search).get('dev') === 'unlock-all') {
     return new Set(lessons.map((lesson) => lesson.id))
   }
@@ -321,15 +332,29 @@ export function getUnlockedLessonIds(lessons, progress, search = window.location
   const unlocked = new Set()
   lessons.forEach((lesson, index) => {
     const previous = lessons[index - 1]
-    if (
+    const previousCleared =
       index === 0 ||
-      (progress[previous.id]?.attempts ?? 0) > 0 ||
-      (progress[lesson.id]?.attempts ?? 0) > 0
-    ) {
+      (gateLessonIds.has(previous.id)
+        ? (progress[previous.id]?.bestStars ?? 0) >= GATE_PASS_STARS
+        : (progress[previous.id]?.attempts ?? 0) > 0)
+    if (previousCleared || (progress[lesson.id]?.attempts ?? 0) > 0) {
       unlocked.add(lesson.id)
     }
   })
   return unlocked
+}
+
+// Whether `lessonId` is locked specifically because the `gate: true` unit
+// before it was attempted but didn't reach `GATE_PASS_STARS` — as opposed to
+// not having been attempted at all. Drives the "needs 80% to continue" prompt
+// (`LessonNode`/`ProgressTab`) for the soft wall described above.
+export function isLockedByGateScore(lessons, progress, gateLessonIds, lessonId) {
+  const index = lessons.findIndex((lesson) => lesson.id === lessonId)
+  if (index <= 0) return false
+  const previous = lessons[index - 1]
+  if (!gateLessonIds.has(previous.id)) return false
+  const gateProgress = progress[previous.id]
+  return (gateProgress?.attempts ?? 0) > 0 && (gateProgress?.bestStars ?? 0) < GATE_PASS_STARS
 }
 
 // Every `{ verbId, tense }` a practice lesson before `upToLessonId` (in

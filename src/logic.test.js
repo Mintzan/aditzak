@@ -23,6 +23,7 @@ import {
   getUnlockedLessonIds,
   getWeakSpotQuestions,
   isAnswerCorrect,
+  isLockedByGateScore,
   mergeDailyStreak,
   mergeErrorStats,
   mergePoints,
@@ -476,6 +477,59 @@ describe('getUnlockedLessonIds', () => {
 
   it('ignores unrelated query params', () => {
     expect(getUnlockedLessonIds(lessons, {}, '?dev=something-else')).toEqual(new Set(['a']))
+  })
+
+  describe('with a gate lesson', () => {
+    // `b` is the final lesson of a `gate: true` unit — `c` requires
+    // `bestStars >= GATE_PASS_STARS` on `b`, not just an attempt.
+    const gateLessonIds = new Set(['b'])
+
+    it('keeps the lesson after a gate locked until the gate is passed', () => {
+      const progress = { a: { attempts: 1 }, b: { attempts: 1, bestStars: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', gateLessonIds)).toEqual(new Set(['a', 'b']))
+    })
+
+    it('unlocks the lesson after a gate once bestStars reaches GATE_PASS_STARS', () => {
+      const progress = { a: { attempts: 1 }, b: { attempts: 1, bestStars: 2 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', gateLessonIds)).toEqual(new Set(['a', 'b', 'c']))
+    })
+
+    it('does not affect non-gate progression', () => {
+      const progress = { a: { attempts: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', gateLessonIds)).toEqual(new Set(['a', 'b']))
+    })
+  })
+})
+
+describe('isLockedByGateScore', () => {
+  const lessons = [{ id: 'a' }, { id: 'b' }, { id: 'c' }]
+  const gateLessonIds = new Set(['b'])
+
+  it('is false for the first lesson', () => {
+    expect(isLockedByGateScore(lessons, {}, gateLessonIds, 'a')).toBe(false)
+  })
+
+  it('is false when the previous lesson is not a gate', () => {
+    expect(isLockedByGateScore(lessons, { a: { attempts: 1, bestStars: 0 } }, gateLessonIds, 'b')).toBe(false)
+  })
+
+  it('is false when the gate has not been attempted yet', () => {
+    expect(isLockedByGateScore(lessons, {}, gateLessonIds, 'c')).toBe(false)
+  })
+
+  it('is true when the gate was attempted but scored below GATE_PASS_STARS', () => {
+    const progress = { b: { attempts: 1, bestStars: 1 } }
+
+    expect(isLockedByGateScore(lessons, progress, gateLessonIds, 'c')).toBe(true)
+  })
+
+  it('is false once the gate reaches GATE_PASS_STARS', () => {
+    const progress = { b: { attempts: 1, bestStars: 2 } }
+
+    expect(isLockedByGateScore(lessons, progress, gateLessonIds, 'c')).toBe(false)
   })
 })
 
