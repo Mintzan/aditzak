@@ -368,14 +368,16 @@ export const JOURNEY = [
             focus:
               'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; ends with a case-frame buffer lesson ahead of Unit 25\'s ditransitive jump',
             payload: '"I like this." (Hau gustatzen zait) · "It seems good to him/her." (Ongi iruditzen zaio) · "I forgot the book." (Liburua ahaztu zait)',
-            status: 'pending',
+            status: 'available',
+            lessonIds: ['gustatu-present', 'iruditu-present', 'ahaztu-present'],
           },
           {
             number: 24,
             title: 'Dative Across Time',
             focus: 'NOR-NORI past + future — recombines Unit 23\'s dative grid with the periphrastic past and -ko/-go future',
             payload: '"I liked it yesterday." (Atzo gustatu zitzaidan) · "I forgot the keys." (Giltzak ahaztu zitzaizkidan) · "You\'ll like it for sure." (Ziur gustatuko zaizu)',
-            status: 'pending',
+            status: 'available',
+            lessonIds: ['gustatu-past', 'gustatu-future', 'iruditu-past', 'iruditu-future', 'ahaztu-past', 'ahaztu-future'],
           },
         ],
       },

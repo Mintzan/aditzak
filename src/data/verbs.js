@@ -10,8 +10,12 @@
 // nor-nori-nork system. `ukan` is shown here in its citation paradigm,
 // i.e. with a fixed 3rd-person-singular absolutive object ("it/him/her").
 //
-// `object` (for `nor-nork` verbs) names that fixed absolutive argument —
-// always `'hura'` so far. NOR-NORI-NORK (ditransitive) verbs' `conjugations`
+// `object` names a fixed absolutive (`nor`) argument — always `'hura'` so
+// far. For `nor-nork` verbs it's the fixed *object* ("it/him/her", citation
+// paradigm); #146 reuses it the same way for `nor-nori` (dative-subject /
+// "psych") verbs like `gustatu`, where `nor` ("it") is likewise fixed to
+// `hura` and `person` instead ranges over `nori` (CONJUGATIONS.md §4).
+// NOR-NORI-NORK (ditransitive) verbs' `conjugations`
 // are genuinely 2D (NORK x NORI — see `CONJUGATIONS.md` §5), which a single
 // `person` key can't represent; #142's axis-fixed approach instead fixes one
 // of the two free arguments per verb/lesson, mirroring `object`:
@@ -1390,6 +1394,130 @@ export const VERBS = [
         hura: [{ text: 'Nik liburua hari ___.', validFor: [] }],
         zuek: [{ text: 'Nik liburua zuei ___.', validFor: [] }],
         haiek: [{ text: 'Nik liburua haiei ___.', validFor: [] }],
+      },
+    },
+  },
+  // #146: the first NOR-NORI (dative-subject / "psych") verbs — `gustatu`,
+  // `iruditu`, `ahaztu`. `agreement: ['nor', 'nori']` with `object: 'hura'`
+  // fixes NOR to `hura` ("it"); `person` ranges over NORI, the dative
+  // experiencer (`zait`/`zaizu`/`zaio`/`zaigu`/`zaizue`/`zaie`, "it
+  // [pleases/seems/is-forgotten-by] me/you/...", CONJUGATIONS.md §4).
+  // `gustatu`/`iruditu` use the `-tzen` habitual present (`gustatzen zait`,
+  // "I like it"); `ahaztu`'s present is the bare participle + present dative
+  // aux (`ahaztu zait`, "I forgot it") — a resultative/perfect-like reading,
+  // per `docs/LEARNING_JOURNEY_PROPOSED.md`'s dedicated `ahaztu` table and
+  // Unit 23 examples. Past keeps the bare participle + past dative aux
+  // (`zitzaidan` etc.) for all three; future is `[participle]+ko` + present
+  // dative aux (`gustatuko zait`). `hi`/`hiri` cells omitted (hitanoa, see
+  // #144). Forms flagged in `docs/LANGUAGE_DECISIONS.md` for native-speaker
+  // confirmation.
+  {
+    id: 'gustatu',
+    verb: 'gustatu',
+    meaning: { en: 'to like / please', es: 'gustar', eu: 'gustatu' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'gustatzen zait', zu: 'gustatzen zaizu', hura: 'gustatzen zaio',
+        gu: 'gustatzen zaigu', zuek: 'gustatzen zaizue', haiek: 'gustatzen zaie',
+      },
+      past: {
+        ni: 'gustatu zitzaidan', zu: 'gustatu zitzaizun', hura: 'gustatu zitzaion',
+        gu: 'gustatu zitzaigun', zuek: 'gustatu zitzaizuen', haiek: 'gustatu zitzaien',
+      },
+      future: {
+        ni: 'gustatuko zait', zu: 'gustatuko zaizu', hura: 'gustatuko zaio',
+        gu: 'gustatuko zaigu', zuek: 'gustatuko zaizue', haiek: 'gustatuko zaie',
+      },
+    },
+    // NORI is the varying slot here, so each sentence leads with the dative
+    // pronoun ("Niri"/"Zuri"/...). `validFor: []`: gustatu/iruditu/ahaztu are
+    // `agreementsCompatible` (mutual nor-nori distractor donors for
+    // bare-form questions), but whether each sibling's same-person form would
+    // *also* grammatically complete this exact sentence text hasn't been
+    // reviewed — left unclaimed pending the native-speaker check above.
+    sentences: {
+      present: {
+        ni: [{ text: 'Niri hau ___.', validFor: [] }],
+        zu: [{ text: 'Zuri hau ___.', validFor: [] }],
+        hura: [{ text: 'Hari hau ___.', validFor: [] }],
+        gu: [{ text: 'Guri hau ___.', validFor: [] }],
+        zuek: [{ text: 'Zuei hau ___.', validFor: [] }],
+        haiek: [{ text: 'Haiei hau ___.', validFor: [] }],
+      },
+    },
+  },
+  {
+    id: 'iruditu',
+    verb: 'iruditu',
+    meaning: { en: 'to seem (to someone)', es: 'parecer', eu: 'iruditu' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'iruditzen zait', zu: 'iruditzen zaizu', hura: 'iruditzen zaio',
+        gu: 'iruditzen zaigu', zuek: 'iruditzen zaizue', haiek: 'iruditzen zaie',
+      },
+      past: {
+        ni: 'iruditu zitzaidan', zu: 'iruditu zitzaizun', hura: 'iruditu zitzaion',
+        gu: 'iruditu zitzaigun', zuek: 'iruditu zitzaizuen', haiek: 'iruditu zitzaien',
+      },
+      future: {
+        ni: 'irudituko zait', zu: 'irudituko zaizu', hura: 'irudituko zaio',
+        gu: 'irudituko zaigu', zuek: 'irudituko zaizue', haiek: 'irudituko zaie',
+      },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Niri ongi ___.', validFor: [] }],
+        zu: [{ text: 'Zuri ongi ___.', validFor: [] }],
+        hura: [{ text: 'Hari ongi ___.', validFor: [] }],
+        gu: [{ text: 'Guri ongi ___.', validFor: [] }],
+        zuek: [{ text: 'Zuei ongi ___.', validFor: [] }],
+        haiek: [{ text: 'Haiei ongi ___.', validFor: [] }],
+      },
+    },
+  },
+  {
+    id: 'ahaztu',
+    verb: 'ahaztu',
+    meaning: { en: 'to forget', es: 'olvidar', eu: 'ahaztu' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori'],
+    object: 'hura',
+    dialect: 'batua',
+    // Present is the bare participle + present dative aux (`ahaztu zait`),
+    // *not* the `-tzen` habitual (`ahazten zait`, "I tend to forget it") —
+    // the resultative reading ("it is [in a state of being] forgotten to
+    // me") is what `docs/LEARNING_JOURNEY_PROPOSED.md`'s dedicated `ahaztu`
+    // table and Unit 23 example ("Liburua ahaztu zait") both use.
+    conjugations: {
+      present: {
+        ni: 'ahaztu zait', zu: 'ahaztu zaizu', hura: 'ahaztu zaio',
+        gu: 'ahaztu zaigu', zuek: 'ahaztu zaizue', haiek: 'ahaztu zaie',
+      },
+      past: {
+        ni: 'ahaztu zitzaidan', zu: 'ahaztu zitzaizun', hura: 'ahaztu zitzaion',
+        gu: 'ahaztu zitzaigun', zuek: 'ahaztu zitzaizuen', haiek: 'ahaztu zitzaien',
+      },
+      future: {
+        ni: 'ahaztuko zait', zu: 'ahaztuko zaizu', hura: 'ahaztuko zaio',
+        gu: 'ahaztuko zaigu', zuek: 'ahaztuko zaizue', haiek: 'ahaztuko zaie',
+      },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Niri liburua ___.', validFor: [] }],
+        zu: [{ text: 'Zuri liburua ___.', validFor: [] }],
+        hura: [{ text: 'Hari liburua ___.', validFor: [] }],
+        gu: [{ text: 'Guri liburua ___.', validFor: [] }],
+        zuek: [{ text: 'Zuei liburua ___.', validFor: [] }],
+        haiek: [{ text: 'Haiei liburua ___.', validFor: [] }],
       },
     },
   },
