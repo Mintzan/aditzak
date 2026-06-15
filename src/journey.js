@@ -471,8 +471,9 @@ export const JOURNEY = [
             number: 32,
             title: 'Meet "hi"',
             focus: 'hi as a subject in known paradigms — no allocutivity yet',
-            payload: 'Hi ikaslea haiz. · Hago lasai. · Hator hona. · Hik badakik?',
-            status: 'pending',
+            payload: 'Hi ikaslea haiz. · Hago lasai. · Hator hona.',
+            status: 'available',
+            lessonIds: ['unit-32-hi-present', 'unit-32-hi-past'],
           },
           {
             number: 33,

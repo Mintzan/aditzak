@@ -8,6 +8,46 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #144: `hi` as a new ungendered person (Unit 32, core scope)
+
+**Decision:** Implemented Unit 32 ("Meet `hi`" — `hi` as a subject in known
+paradigms, no allocutivity yet) as #144's core scope, deferring Units 33-35
+(toka/noka allocutive forms), `jakin`/`ukan`'s gender-split `hi`-as-`NORK`
+present (`dakik`/`dakin`, `duk`/`dun`), and the hi/hitanoa distractor-matrix
+row to a follow-up issue (#167).
+
+**Data-shape convention** (resolving #144's central question): `hi` is added
+as a plain, **ungendered** person key wherever Basque genuinely has a single
+invariant `hi`-as-subject form — `izan`/`egon`/`joan`/`etorri` are `nor`-only,
+so `hi` as the absolutive subject takes one form per tense regardless of `hi`'s
+own gender (`haiz`/`hago`/`hoa`/`hator`, `hintzen`/`hengoen`/`joan
+hintzen`/`etorri hintzen`, CONJUGATIONS.md §1/§6). `hi-m`/`hi-f` keys are
+reserved for cells where Basque *does* split by gender — either `hi`-as-`NORK`
+present tense (`ukan`'s `duk`/`dun`, `jakin`'s `dakik`/`dakin`, CONJUGATIONS.md
+§3) or allocutive (hitanoa) marking on verbs where `hi` isn't even an argument
+(§10) — both deferred to #167. This lets #144 add `hi` with zero changes to
+`buildOptions`/`generateQuestions`/the UI: it's just a 7th key in
+`conjugations`/`pronouns`, like any other person.
+
+`joan`/`etorri`'s `hi` past is the periphrastic `joan hintzen`/`etorri
+hintzen` — matching their existing `ni: 'joan nintzen'`/`ni: 'etorri nintzen'`
+shape (the "Simple Past" forms, 2026-06-12) — not CONJUGATIONS.md §6's
+synthetic literary `hindoan`/`hentorren`, which `VERBS` doesn't use for these
+verbs' other persons either.
+
+No `sentences`/`pronounSentences`/`negativeSentences` were added for `hi` —
+`hi` questions are always `kind: 'form'` (bare conjugated form). Two new pooled
+review lessons (`unit-32-hi-present`/`unit-32-hi-past`, `persons: ['hi']`,
+sources = izan/egon/joan/etorri) rely on #139's cross-verb borrowing: each
+verb's `hi` question borrows its 3 distractors from the other three verbs' `hi`
+forms for that tense — exactly 3 siblings, exactly 3 distractors, no padding
+needed. Past-tense questions also pick up #141's cross-tense lure (`haiz`
+alongside `hintzen`) automatically.
+
+Unit 32's payload dropped its `jakin` example ("Hik badakik?") since `jakin`
+isn't touched by this core scope (its `hi`-as-`NORK` present is gender-split,
+deferred to #167).
+
 ## 2026-06-15 — #141: Case-frame/cross-tense distractor lures (core scope)
 
 **Decision:** Implemented the Distractor Engine Matrix (`docs/LEARNING_JOURNEY_PROPOSED.md`)

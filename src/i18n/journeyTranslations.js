@@ -463,8 +463,8 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'hi subjektu gisa ezagutzen diren paradigmetan — oraindik alokutibotasunik gabe',
       },
       payload: {
-        es: '"Tú eres estudiante." (Hi ikaslea haiz) · "Quédate tranquilo." (Hago lasai) · "Ven aquí." (Hator hona) · "¿Tú lo sabes?" (Hik badakik?)',
-        eu: 'Hi ikaslea haiz. · Hago lasai. · Hator hona. · Hik badakik?',
+        es: '"Tú eres estudiante." (Hi ikaslea haiz) · "Quédate tranquilo." (Hago lasai) · "Ven aquí." (Hator hona)',
+        eu: 'Hi ikaslea haiz. · Hago lasai. · Hator hona.',
       },
     },
     33: {
