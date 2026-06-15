@@ -8,6 +8,30 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #140: `mode: 'recognition'` lesson scope
+
+**Decision:** Added an optional `mode: 'recognition'` field to `generateQuestions`
+(threaded from a `LESSONS` entry via `createExerciseState`), for the
+`docs/LEARNING_JOURNEY_PROPOSED.md` units marked **[R]** (recognition-only) —
+the dative potential/conditional (N-28/N-29), ditransitive
+imperative/subjunctive (N-30/N-31), the reading unit, and the recognized
+`-erazi` variant (N-36). It permanently excludes the production framings
+(`type-verb`/`type-pronoun`/`type-negative`) for that lesson's entire
+lifetime.
+
+**Relationship to `noTyping`:** `noTyping` (a learner's first attempts at any
+lesson) *also* drops `spot-error` — recalling/cross-checking a brand-new form
+feels too demanding on a first pass. `mode: 'recognition'` keeps `spot-error`
+available, since spotting a wrong form in someone else's sentence is itself a
+recognition task, not production — exactly the kind of question an [R] unit
+should lean on. Internally both collapse into one `noProduction` flag for the
+three typed kinds; `spot-error`'s own gate stays keyed to `noTyping` only.
+
+No stored-progress shape change. `describeLesson` now also returns
+`recognitionOnly`, surfaced as a small badge (`recognitionOnly` i18n key) on
+`LessonNode` — purely cosmetic, no lesson currently sets `mode: 'recognition'`
+until the [R]-tagged units (#148) land.
+
 ## 2026-06-15 — #139: distractor-floor fix — borrow distractors/spot-error slots for small tables
 
 **Decision:** `buildOptions` requires 3 distractors to reach the usual

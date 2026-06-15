@@ -204,6 +204,7 @@ function personsLabel(persons) {
 
 function describeLesson(lesson, t, language) {
   const persons = personsLabel(lesson.persons)
+  const recognitionOnly = lesson.mode === 'recognition'
   if (lesson.verbId) {
     const verb = VERBS.find((v) => v.id === lesson.verbId)
     const meta = TENSE_META[lesson.tense]
@@ -213,6 +214,7 @@ function describeLesson(lesson, t, language) {
       title: { main: label, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
       subtitle: { main: verb.verb, secondary: verbMeaning(verb, language) },
       heading: persons ? `${verb.verb} · ${label} (${persons})` : `${verb.verb} · ${label}`,
+      recognitionOnly,
     }
   }
   const verbNames = [...new Set(lesson.sources.map(({ verbId }) => VERBS.find((v) => v.id === verbId).verb))]
@@ -225,6 +227,7 @@ function describeLesson(lesson, t, language) {
       title: { main: tenseLabel, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
       subtitle: { main: verbNames.join(' & '), secondary: t('mixedPractice') },
       heading: persons ? `${verbNames.join(' & ')} · ${tenseLabel} (${persons})` : `${verbNames.join(' & ')} · ${tenseLabel}`,
+      recognitionOnly,
     }
   }
   const reviewName = verbNames.length > 1 ? t('mixedReview') : t('verbReview', { verb: verbNames[0] })
@@ -233,6 +236,7 @@ function describeLesson(lesson, t, language) {
     title: { main: t('reviewLabel'), secondary: persons ? `${tenseLabel} · ${persons}` : tenseLabel },
     subtitle: { main: verbNames.join(' & '), secondary: t('mixedPractice') },
     heading: persons ? `${reviewName} · ${tenseLabel} (${persons})` : `${reviewName} · ${tenseLabel}`,
+    recognitionOnly,
   }
 }
 
@@ -315,7 +319,7 @@ function journeyText(scope, id, field, language, fallback) {
 
 function LessonNode({ lesson, locked, needsGateScore, stars, onSelect }) {
   const { t, language } = useLanguage()
-  const { icon, title, subtitle } = describeLesson(lesson, t, language)
+  const { icon, title, subtitle, recognitionOnly } = describeLesson(lesson, t, language)
   return (
     <button
       type="button"
@@ -344,6 +348,7 @@ function LessonNode({ lesson, locked, needsGateScore, stars, onSelect }) {
         <p className="truncate text-sm text-gray-500">
           {subtitle.main} — {subtitle.secondary}
         </p>
+        {recognitionOnly && <p className="mt-1 text-sm font-semibold text-sky-600">{t('recognitionOnly')}</p>}
         {needsGateScore && <p className="mt-1 text-sm font-semibold text-amber-600">{t('gateNeedsScore')}</p>}
       </div>
       <Stars count={stars} />
@@ -1349,6 +1354,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
       persons: lesson.persons,
       extraCandidates,
       verbs: VERBS,
+      mode: lesson.mode,
     })
   })
   // Review lessons get up to `EXTRA_REVIEW_EXERCISES` extra questions, drawn

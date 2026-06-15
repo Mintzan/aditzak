@@ -792,7 +792,18 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, 
 // borrowing (`getBorrowedDistractors`/`getBorrowedSpotErrorSlots`) — without
 // `verbs`, both return `[]` and small tables fall back to fewer
 // options/no `spot-error`, same as before #139.
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs } = {}) {
+//
+// `mode: 'recognition'` (#140, optional — `LESSONS` entries for advanced
+// [R]-scoped units per `docs/LEARNING_JOURNEY_PROPOSED.md`, e.g. the dative
+// conditional or ditransitive imperative/subjunctive) permanently drops the
+// typed/production framings (`type-verb`/`type-pronoun`/`type-negative`) —
+// like `noTyping`, but for the lesson's entire lifetime rather than just a
+// learner's first attempts, since these forms are never meant to be drilled
+// for recall. Unlike `noTyping`, `spot-error` stays available (it's a
+// recognition task — spotting a wrong form in a sentence someone else wrote
+// — not production). Defaults to `undefined`, i.e. the original behaviour
+// (every kind `noTyping` would also allow stays on the table).
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
@@ -802,6 +813,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   const source = { verbId: verb.id, tense }
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
+  const noProduction = noTyping || mode === 'recognition'
 
   function buildQuestion(person) {
     const sentence = normalizeSentence(pickVariant(sentences[person]))
@@ -811,13 +823,13 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     const borrowed = getBorrowedDistractors(verbs, verb.agreement, tense, person, verb.id)
     const availableKinds =
       includeNegation && negativeSentence
-        ? [negativeSentence && 'negative', negativeSentence && !noTyping && !ambiguousTyping && 'type-negative'].filter(Boolean)
+        ? [negativeSentence && 'negative', negativeSentence && !noProduction && !ambiguousTyping && 'type-negative'].filter(Boolean)
         : [
             sentence && 'sentence',
-            sentence && !noTyping && !ambiguousTyping && 'type-verb',
+            sentence && !noProduction && !ambiguousTyping && 'type-verb',
             sentence && !noTyping && personsWithSentences.length + borrowedSpotErrorSlots.length >= 4 && 'spot-error',
             pronounSentence && 'pronoun',
-            pronounSentence && !noTyping && 'type-pronoun',
+            pronounSentence && !noProduction && 'type-pronoun',
           ].filter(Boolean)
 
     let kind = rollQuestionKind(availableKinds)

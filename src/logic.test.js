@@ -1323,6 +1323,19 @@ describe('generateQuestions', () => {
       })
     })
 
+    it('excludes type-negative when mode is "recognition", even on rolls that would otherwise favour it (#140)', () => {
+      ;[0, 0.5, 0.7].forEach((roll) => {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+
+        generateQuestions(verbWithNegation, 'present', { includeNegation: true, mode: 'recognition' }).forEach((question) => {
+          expect(question.kind).not.toBe('type-negative')
+          if (negated[question.person] && question.kind !== 'form') {
+            expect(question.kind).toBe('negative')
+          }
+        })
+      })
+    })
+
     it('never produces negative or type-negative questions without includeNegation, even with negativeSentences data present', () => {
       ;[0, 0.2, 0.5, 0.7, 0.99].forEach((roll) => {
         vi.spyOn(Math, 'random').mockReturnValue(roll)
@@ -1415,6 +1428,57 @@ describe('generateQuestions', () => {
       const kinds = generateQuestions(verbWithBoth, 'present').map((q) => q.kind)
 
       expect(kinds).toContain('sentence')
+    })
+  })
+
+  describe('with mode: "recognition" (#140)', () => {
+    // `verbWithBoth` (defined above) has all five special framings on offer
+    // — `['sentence', 'type-verb', 'spot-error', 'pronoun', 'type-pronoun']`
+    // — without `mode`, so it's the clearest fixture for checking which of
+    // those `mode: 'recognition'` drops.
+    it('never produces a typed/production framing, on any roll', () => {
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+
+        generateQuestions(verbWithBoth, 'present', { mode: 'recognition' }).forEach((question) => {
+          expect(['type-verb', 'type-pronoun', 'type-negative']).not.toContain(question.kind)
+        })
+        vi.restoreAllMocks()
+      }
+    })
+
+    it('still allows spot-error, unlike noTyping', () => {
+      // With `type-verb`/`type-pronoun` excluded, availableKinds becomes
+      // ['sentence', 'spot-error', 'pronoun'] -> [0, 0.75) / 3 -> slice 1,
+      // [0.25, 0.5), is 'spot-error'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.3)
+
+      const kinds = generateQuestions(verbWithBoth, 'present', { mode: 'recognition' }).map((q) => q.kind)
+
+      expect(kinds).toContain('spot-error')
+    })
+
+    it('still produces sentence/pronoun multiple-choice framings, not just the bare form', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(verbWithBoth, 'present', { mode: 'recognition' })
+
+      expect(questions.map((q) => q.kind)).toContain('sentence')
+      questions.forEach((question) => {
+        expect(['form', 'sentence', 'spot-error', 'pronoun']).toContain(question.kind)
+        if (question.kind !== 'form' && question.kind !== 'spot-error') expect(question).toHaveProperty('options')
+      })
+    })
+
+    it('produces the same kinds as the default when left unset (regression)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+
+      const withoutMode = generateQuestions(verbWithBoth, 'present').map((q) => q.kind)
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+      const withUndefinedMode = generateQuestions(verbWithBoth, 'present', { mode: undefined }).map((q) => q.kind)
+
+      expect(withUndefinedMode).toEqual(withoutMode)
+      expect(withoutMode).toContain('type-pronoun')
     })
   })
 
