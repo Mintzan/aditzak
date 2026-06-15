@@ -8,6 +8,51 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #143: Phase II reorder (present-before-past), `ibili`/`hartu` moves, MP staging
+
+**Decision:** Reordered Phase II per `docs/LEARNING_JOURNEY_PROPOSED.md`'s
+Stage 3-7 layout: Unit 12 ("Daily Routine (Transitive)" — `jan`/`edan`/`erosi`/
+`ikusi`/`hartu` present) now precedes Unit 13 (the `ukan` past pool covering
+those same verbs), so every verb's present is taught before its past
+(`LEARNING_JOURNEY_EVALUATION.md` finding F8). Similarly, Unit 15 (`eduki`
+past) now precedes Unit 16 (`egon` past), keeping `eduki`'s present (Unit 14)
+and past (Unit 15) adjacent like Units 12/13. `ibili`'s present moved from
+Unit 14 to Unit 6 (alongside `joan`/`etorri`) — its past was already in Unit
+11's `izan`-past pool, so it was debuting in the past before the present
+(F8); only its `gu`/`zuek`/`haiek` forms still arrive in Unit 14.
+
+**New verb — `hartu` ("to take"):** added to Unit 12's pool to stage the first
+`-tzen`/`-ten` minimal pair against `jan`'s `jaten` (`jaten` vs. `hartzen`).
+Full periphrastic nor-nork present/past/future tables, regular `-tu`
+conjugation. Sentence objects (autobusa/trena/taxia/aterkia/katua/erabakia/
+txanda) are deliberately non-food/drink/purchase so `validFor: []` holds
+against every other pool verb (jan/edan/erosi/ikusi) without a cross-verb
+audit — flagged in `docs/LANGUAGE_DECISIONS.md` for a native-speaker sanity
+check of the forms/sentences themselves.
+
+**`-ko`/`-go` MP at Unit 17:** `future-intro-review`/`-plural` (Unit 17) now
+include `etorri`'s future alongside `izan`/`ukan`/`joan`, staging `izango`
+(-go) vs. `etorriko` (-ko) — `etorri`'s future table already existed for Unit
+18's mixer, so this needed no new `VERBS` data.
+
+**Stage regroup — merged rather than split:** The proposed doc gives Phase II
+five stages (3: Looking Back I; 4: Daily Actions; 5: Possessions; 6: Location,
+past; 7: The Future). Stage numbers are global across the whole journey
+(`src/i18n/journeyTranslations.js`'s "Etapa N"/"N. atala" labels), and Phase III's
+existing stage is already `phase-3-stage-7` — adding a fifth Phase II stage
+would either collide with that id or require renumbering every stage from
+Phase III onward (through Phase VI), which is out of scope here. Instead,
+Phase II keeps **4** stages: Stage 3 (Unit 11 alone), Stage 4 "Daily Actions"
+(Units 12-13), Stage 5 "Possessions & Looking Back II" (Units 14-16, merging
+the proposed Stages 5 and 6), Stage 6 "The Future" (Units 17-19, unchanged).
+The unit-level reordering — the actual substance of F8's fix — is identical
+either way.
+
+**Pronoun-Fading:** already compliant — Phase I lessons use explicit
+`pronoun`/`pronounSentences` framings (Stage A) and nothing in Phase II-III
+introduces pro-drop yet (Stage C arrives with Phase III, #145/#148). No code
+changes needed for this item.
+
 ## 2026-06-15 — #140: `mode: 'recognition'` lesson scope
 
 **Decision:** Added an optional `mode: 'recognition'` field to `generateQuestions`

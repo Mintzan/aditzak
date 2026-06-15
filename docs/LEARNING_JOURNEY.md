@@ -188,10 +188,10 @@ arrive at Units 7–8). Pronoun stage: **A (explicit)**.
 | Unit | Focus | Payload | Persons | Ref | Data status |
 |---|---|---|---|---|---|
 | 5 | **Seeing** — `ikusi` present (ni/zu/hura), Phase I's first periphrastic verb | "I see the mountain." / "Do you see it?" / "She sees the film." | ni/zu/hura: `ikusten dut`/`ikusten duzu`/`ikusten du` | §7 (ikusi) | ✅ implemented — reuses `ikusi`'s existing 6-person `present` table via `persons: PHASE_1_PERSONS` |
-| 6 | **Moving Around** — `joan` + `etorri` present | "I'm going to the beach." / "She's coming tomorrow." | ni/zu/hura: `noa`/`zoaz`/`doa`, `nator`/`zatoz`/`dator` | §6 | ✅ implemented |
+| 6 | **Moving Around** — `joan` + `etorri` + `ibili` present | "I'm going to the beach." / "She's coming tomorrow." / "She wanders around town." | ni/zu/hura: `noa`/`zoaz`/`doa`, `nator`/`zatoz`/`dator`, `nabil`/`zabiltza`/`dabil` | §6 | ✅ implemented — `ibili`'s present moved here from Unit 14 (#143) so it precedes its past (Unit 11's `izan`-past pool); its plural forms still arrive in Unit 14 |
 | 7 | 🛡️ **Expansion: Absolutive Plurals** | "We are teachers." (`Irakasleak gara.`) / "You all are at home." (`Etxean zaudete.`) / "We're going to the beach." (`Hondartzara goaz.`) | gu/zuek/haiek (`nor`): `izan`, `egon`, `joan`, `etorri` | §1/§6 | ✅ implemented — currently still carries the `ukan`/`ikusi` (ergative) lessons too; #143 redistributes those into Unit 8 |
 | 8 | 🛡️ **Expansion: Ergative Plurals** | "We have a car." (`Auto bat dugu.`) / "They watch the film." (`Filma ikusten dute.`) | gu/zuek/haiek (`nor-nork`): `ukan`, `ikusi` | §3/§7 | pending — content currently lives inside Unit 7's lessons (`unit-6-review-1`, `ikusi-present-plural*`); #143 splits it out |
-| 9 | **The Immediate Continuous** — `ari` + `izan` | "What are you doing?" (`Zer ari zara?`) / "I'm eating." (`Jaten ari naiz`) | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ implemented — `jaten` (`jan`'s imperfective participle, Unit 13's verb) introduced here as a single fixed vocabulary item |
+| 9 | **The Immediate Continuous** — `ari` + `izan` | "What are you doing?" (`Zer ari zara?`) / "I'm eating." (`Jaten ari naiz`) | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ implemented — `jaten` (`jan`'s imperfective participle, Unit 12's verb) introduced here as a single fixed vocabulary item |
 
 ### 🛡️ Refresh Gate A — The "Ez" Trap
 
@@ -212,45 +212,53 @@ grid, every verb, from each verb's first lesson. Pronoun stage: **B
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
 | 11 | **Looking Back I — The "izan" Past Pool** — the `izan` past auxiliary (`nintzen`/`zinen`/`zen`/`ginen`/`zineten`/`ziren`), mixed across `izan`, `joan`, `etorri`, `ibili` | "I was young." / "I went to the beach." / "She came yesterday." / "We wandered around town." | `izan`: §1; `joan`/`etorri`/`ibili`: §11 (periphrastic Lehenaldi Mugatua) + §1 (`izan` past auxiliary) | ✅ implemented |
-| 12 | **Looking Back I — The "ukan" Past Pool** — the `ukan` past auxiliary (`nuen`/`zenuen`/`zuen`/`genuen`/`zenuten`/`zuten`), mixed across `ukan`, `jan`, `edan`, `erosi`, `ikusi` | "I had a car." / "I ate the apple." / "You drank coffee." / "We bought a house." / "She saw the film." | `ukan`: §3; `jan`/`edan`/`erosi`/`ikusi`: §7 (periphrastic, participle + `ukan` past auxiliary) | ✅ implemented |
 
-Each unit pools its verbs the way Unit 13 pools `jan`/`edan`/`erosi`/`ikusi`'s
-present tense (`docs/DECISIONS.md`): one drill per person, but which verb's
-participle supplies a given question varies question-to-question, instead of
-marching through one verb's full table at a time — `izan`/`joan`/`etorri`/
-`ibili` share *exactly* the same past-auxiliary shape, as do `ukan`/`jan`/
-`edan`/`erosi`/`ikusi` (see issue #84). `egon` and `eduki` each have their own
-distinct synthetic past paradigm and fit neither pool — they get their own
-units in Stage 5 instead.
+This unit pools its verbs the way Unit 12 pools `jan`/`edan`/`erosi`/`ikusi`/
+`hartu`'s present tense (`docs/DECISIONS.md`): one drill per person, but which
+verb's participle supplies a given question varies question-to-question,
+instead of marching through one verb's full table at a time —
+`izan`/`joan`/`etorri`/`ibili` share *exactly* the same past-auxiliary shape
+(see issue #84). `ukan`/`jan`/`edan`/`erosi`/`ikusi` share another past
+auxiliary (Unit 13); `egon` and `eduki` each have their own distinct synthetic
+past paradigm and fit neither pool — they get their own units in Stage 5
+instead.
 
 Pairing each verb group's simple past with its present soon after — rather
 than saving *all* past tense for Phase III — is this journey's central idea:
-tense variety (present → past → future) now arrives by Unit 12, instead of
+tense variety (present → past → future) now arrives by Unit 13, instead of
 after 10+ units of present-only drilling.
 
-#### Stage 4: Real-World Actions
+#### Stage 4: Daily Actions
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 13 | **Daily Routine (Transitive)** — the `ukan` present auxiliary (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), drilled across a pool of verbs (`jan`, `edan`, `erosi`, `ikusi`) rather than one lesson per verb. **MP**: first `-tzen`/`-ten` minimal pair (`jaten` vs. `hartzen`). | "I eat." / "You drink water." / "I buy a book." / "Do you see it?" | §7 | ✅ implemented |
-| 14 | **Physical States & Possessions** — `eduki`, `ibili` full 6-person grids | "I have the keys in my pocket." / "They are wandering around town." | §7 (eduki), §6 (ibili) | ✅ implemented |
+| 12 | **Daily Routine (Transitive)** — the `ukan` present auxiliary (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), drilled across a pool of verbs (`jan`, `edan`, `erosi`, `ikusi`, `hartu`) rather than one lesson per verb. **MP**: first `-tzen`/`-ten` minimal pair (`jaten` vs. `hartzen`). | "I eat." / "You drink water." / "I buy a book." / "Do you see it?" / "I take the bus." | §7 (jan/edan/erosi/ikusi); VERB_COVERAGE §4b-bis (`hartu`) | ✅ implemented |
+| 13 | **Looking Back I — The "ukan" Past Pool** — the `ukan` past auxiliary (`nuen`/`zenuen`/`zuen`/`genuen`/`zenuten`/`zuten`), mixed across `ukan`, `jan`, `edan`, `erosi`, `ikusi` | "I had a car." / "I ate the apple." / "You drank coffee." / "We bought a house." / "She saw the film." | `ukan`: §3; `jan`/`edan`/`erosi`/`ikusi`: §7 (periphrastic, participle + `ukan` past auxiliary) | ✅ implemented |
 
 `ikusi` moved to Unit 5 as Phase I's first periphrastic verb, but rejoins
-Unit 13's verb pool here — it already has full present-tense
-`sentences`/`pronounSentences`, so it costs nothing extra to include.
+Unit 12's verb pool here — it already has full present-tense
+`sentences`/`pronounSentences`, so it costs nothing extra to include. `hartu`
+(new in this unit, #143) stages the first `-tzen`/`-ten` minimal pair against
+`jan`'s `jaten` — see `docs/LANGUAGE_DECISIONS.md` for its sourcing. Unit 13
+follows Unit 12 immediately so every pooled verb's present (Unit 12) is taught
+before its past (this unit) — closing `LEARNING_JOURNEY_EVALUATION.md` finding
+F8.
 
-#### Stage 5: Looking Back II
+#### Stage 5: Possessions & Looking Back II
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 15 | **Looking Back II — "I Was There"** — `egon` simple past, its own synthetic paradigm (`nengoen`/`zeunden`/`zegoen`/`geunden`/`zeundeten`/`zeuden`), full 6-person grid | "I was at home." / "We were at the beach." | §6 | ✅ implemented |
-| 16 | **Looking Back II — "I Had It"** — `eduki` simple past, its own synthetic paradigm (`neukan`/`zeneukan`/`zeukan`/`geneukan`/`zeneukaten`/`zeukaten`), full 6-person grid | "I had the keys." / "We had time." | §7 | ✅ implemented |
+| 14 | **Physical States & Possessions** — `eduki` full 6-person grid; `ibili` gains `gu`/`zuek`/`haiek` (its present debuted in Unit 6) | "I have the keys in my pocket." / "They are wandering around town." | §7 (eduki), §6 (ibili) | ✅ implemented |
+| 15 | **"I Had It"** — `eduki` simple past, its own synthetic paradigm (`neukan`/`zeneukan`/`zeukan`/`geneukan`/`zeneukaten`/`zeukaten`), full 6-person grid | "I had the keys." / "We had time." | §7 | ✅ implemented |
+| 16 | **"I Was There"** — `egon` simple past, its own synthetic paradigm (`nengoen`/`zeunden`/`zegoen`/`geunden`/`zeundeten`/`zeuden`), full 6-person grid | "I was at home." / "We were at the beach." | §6 | ✅ implemented |
 
-Stage 3's two pools (above) cover every verb whose past tense rides a shared
-auxiliary; Stage 5 covers the two "odd ones out" (`egon`, `eduki`) whose past
-forms don't pool with anything — `joan`/`etorri`/`ibili`'s past moved into
-Unit 11's pool and `jan`/`edan`/`erosi`/`ikusi`'s into Unit 12's, so neither
-appears here anymore (see issue #84).
+`ibili`'s present moved to Unit 6 (#143), so only its plural forms arrive
+here, alongside `eduki`'s full present grid. `eduki` and `egon` are the two
+"odd ones out" (issue #84) whose past forms don't pool with anything —
+`joan`/`etorri`/`ibili`'s past lives in Unit 11's pool and `jan`/`edan`/
+`erosi`/`ikusi`'s in Unit 13's. Unit 15 keeps `eduki`'s present (Unit 14) and
+past (this unit) adjacent, mirroring Units 12/13's present/past adjacency,
+with `egon`'s own past following in Unit 16.
 
 #### Stage 6: The Future (*Geroa*)
 

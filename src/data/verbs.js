@@ -951,6 +951,89 @@ export const VERBS = [
     },
   },
   {
+    id: 'hartu',
+    verb: 'hartu',
+    meaning: { en: 'to take', es: 'tomar / coger', eu: 'hartu' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'hartzen dut',
+        zu: 'hartzen duzu',
+        hura: 'hartzen du',
+        gu: 'hartzen dugu',
+        zuek: 'hartzen duzue',
+        haiek: 'hartzen dute',
+      },
+      past: {
+        ni: 'hartu nuen',
+        zu: 'hartu zenuen',
+        hura: 'hartu zuen',
+        gu: 'hartu genuen',
+        zuek: 'hartu zenuten',
+        haiek: 'hartu zuten',
+      },
+      future: {
+        ni: 'hartuko dut',
+        zu: 'hartuko duzu',
+        hura: 'hartuko du',
+        gu: 'hartuko dugu',
+        zuek: 'hartuko duzue',
+        haiek: 'hartuko dute',
+      },
+    },
+    // #143: `hartu` added to the Unit 12 "daily routine" pool to stage the
+    // `jaten`(-ten)/`hartzen`(-tzen) minimal pair. Sentence objects
+    // (autobusa/trena/taxia/aterkia/katua/erabakia/txanda) are chosen so that
+    // none of the pool's other verbs (jan/edan/erosi/ikusi) would also fit —
+    // hence `validFor: []` throughout. Flagged in docs/LANGUAGE_DECISIONS.md
+    // for a native-speaker check of these forms/sentences.
+    sentences: {
+      present: {
+        ni: [
+          { text: 'Nik autobusa ___.', validFor: [] },
+          { text: 'Nik aterkia ___.', validFor: [] },
+          { text: 'Nik erabaki bat ___.', validFor: [] },
+        ],
+        zu: [
+          { text: 'Zuk taxia ___?', validFor: [] },
+          { text: 'Zuk telefonoa ___.', validFor: [] },
+        ],
+        hura: [
+          { text: 'Hark trena ___.', validFor: [] },
+          { text: 'Mikelek katua ___.', validFor: [] },
+          { text: 'Anek txanda ___.', validFor: [] },
+          { text: 'Gidariak autobusa ___.', validFor: [] },
+        ],
+        gu: [
+          { text: 'Guk taxia ___.', validFor: [] },
+          { text: 'Guk erabaki garrantzitsu bat ___.', validFor: [] },
+        ],
+        zuek: [
+          { text: 'Zuek autobusa ___?', validFor: [] },
+          { text: 'Zuek aterkiak ___.', validFor: [] },
+        ],
+        haiek: [
+          { text: 'Haiek trena ___.', validFor: [] },
+          { text: 'Gurasoek erabakia ___.', validFor: [] },
+        ],
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    pronounSentences: {
+      present: {
+        ni: '___ autobusa hartzen dut.',
+        zu: '___ taxia hartzen duzu.',
+        hura: '___ trena hartzen du.',
+        gu: '___ aterkia hartzen dugu.',
+        zuek: '___ autobusa hartzen duzue.',
+        haiek: '___ trena hartzen dute.',
+      },
+    },
+  },
+  {
     id: 'ikusi',
     verb: 'ikusi',
     meaning: { en: 'to see', es: 'ver', eu: 'ikusi' },

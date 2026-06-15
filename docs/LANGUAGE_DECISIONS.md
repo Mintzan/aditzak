@@ -6,6 +6,23 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-15 — Promoted `hartu` from candidate to a `VERBS` entry; forms need native-speaker check
+
+**Decision:** #143 promoted `hartu` ("to take") from `VERB_COVERAGE.md`
+§4b-bis's user-supplied candidate list to a full `VERBS` entry, used to stage
+the `jaten`(-ten)/`hartzen`(-tzen) morphophonological pairing alongside `jan`
+in Unit 12. Present (`hartzen dut`) and past (`hartu nuen`) reuse the forms
+already logged in §4b-bis's 2026-06-13 entry; the future (`hartuko dut`...)
+is new, following the regular `-tu` → `-tuko` periphrastic future pattern
+used elsewhere (not yet present in VERB_COVERAGE.md's §4b-bis table).
+
+None of `hartu`'s forms — conjugation tables or the example sentences
+(`autobusa`/`aterkia`/`trena`/`taxia`/`katua`/`erabakia`/`txanda hartu`) — have
+had a native-speaker sanity check yet, unlike most other active `VERBS`
+entries. Flagging here so a future pass can confirm both the conjugations and
+the naturalness of the example sentences before treating `hartu` as fully
+verified.
+
 ## 2026-06-13 — Resolved `egin`'s synthetic-vs-periphrastic conflict: both exist, periphrastic is the everyday form
 
 **Decision:** `egin` genuinely has both: rare synthetic forms (`dakit` "I do

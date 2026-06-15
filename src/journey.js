@@ -116,10 +116,10 @@ export const JOURNEY = [
           {
             number: 6,
             title: 'Moving Around',
-            focus: 'joan + etorri, present tense',
-            payload: "\"I'm going to the beach.\" · \"She's coming tomorrow.\"",
+            focus: 'joan + etorri + ibili, present tense',
+            payload: "\"I'm going to the beach.\" · \"She's coming tomorrow.\" · \"She wanders around town.\"",
             status: 'available',
-            lessonIds: ['joan-present', 'etorri-present', 'unit-3-review'],
+            lessonIds: ['joan-present', 'etorri-present', 'ibili-present', 'unit-3-review'],
           },
           // Unit 7 ("Expansion: Absolutive Plurals") and Unit 8 ("Expansion:
           // Ergative Plurals") split O-5's single "Expansion" gate into two
@@ -199,8 +199,22 @@ export const JOURNEY = [
             status: 'available',
             lessonIds: ['izan-past-pool', 'izan-past-pool-plural'],
           },
+        ],
+      },
+      {
+        id: 'phase-2-stage-4',
+        title: 'Stage 4 — Daily Actions',
+        units: [
           {
             number: 12,
+            title: 'Daily Routine (Transitive)',
+            focus: 'the ukan present auxiliary (dut/duzu/du/dugu/duzue/dute), mixed across jan, edan, erosi, ikusi, hartu — first -tzen/-ten minimal pair (jaten vs. hartzen)',
+            payload: '"I ate." · "You drink water." · "I bought a book." · "Do you see it?" · "I take the bus."',
+            status: 'available',
+            lessonIds: ['unit-10-present', 'unit-10-present-plural'],
+          },
+          {
+            number: 13,
             title: 'Looking Back I — The "ukan" Past Pool',
             focus: 'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi',
             payload: '"I had a car." · "I ate the apple." · "You drank coffee." · "We bought a house." · "She saw the film."',
@@ -210,53 +224,38 @@ export const JOURNEY = [
         ],
       },
       {
-        id: 'phase-2-stage-4',
-        title: 'Stage 4 — Real-World Actions',
+        id: 'phase-2-stage-5',
+        title: 'Stage 5 — Possessions & Looking Back II',
         units: [
-          {
-            number: 13,
-            title: 'Daily Routine (Transitive)',
-            focus: 'the ukan present auxiliary (dut/duzu/du/dugu/duzue/dute), mixed across jan, edan, erosi, ikusi — first -tzen/-ten minimal pair (jaten vs. hartzen)',
-            payload: '"I ate." · "You drink water." · "I bought a book." · "Do you see it?"',
-            status: 'available',
-            lessonIds: ['unit-10-present', 'unit-10-present-plural'],
-          },
           {
             number: 14,
             title: 'Physical States & Possessions',
-            focus: 'eduki, ibili — full 6-person grids',
+            focus: 'eduki — full 6-person grid; ibili gains gu/zuek/haiek (present introduced in Unit 6)',
             payload: '"I have the keys in my pocket." · "They are wandering around town."',
             status: 'available',
             lessonIds: [
               'eduki-present',
               'eduki-present-plural',
-              'ibili-present',
               'ibili-present-plural',
               'unit-8-review',
               'unit-8-review-plural',
             ],
           },
-        ],
-      },
-      {
-        id: 'phase-2-stage-5',
-        title: 'Stage 5 — Looking Back II',
-        units: [
           {
             number: 15,
-            title: 'Looking Back II — "I Was There"',
-            focus: 'egon — simple past, its own synthetic paradigm (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
-            payload: '"I was at home." · "We were at the beach."',
-            status: 'available',
-            lessonIds: ['egon-past', 'egon-past-review', 'egon-past-plural', 'egon-past-plural-review'],
-          },
-          {
-            number: 16,
-            title: 'Looking Back II — "I Had It"',
+            title: '"I Had It"',
             focus: 'eduki — simple past, its own synthetic paradigm (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
             payload: '"I had the keys." · "We had time."',
             status: 'available',
             lessonIds: ['eduki-past', 'eduki-past-review', 'eduki-past-plural', 'eduki-past-plural-review'],
+          },
+          {
+            number: 16,
+            title: '"I Was There"',
+            focus: 'egon — simple past, its own synthetic paradigm (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
+            payload: '"I was at home." · "We were at the beach."',
+            status: 'available',
+            lessonIds: ['egon-past', 'egon-past-review', 'egon-past-plural', 'egon-past-plural-review'],
           },
         ],
       },
