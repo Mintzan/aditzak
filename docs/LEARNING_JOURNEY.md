@@ -366,7 +366,7 @@ novelties — new person, addressee-agreement, gender — one at a time (see
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 36 | **Passive & Reading Real Text** — non-finite forms, nor-shift (`ireki dut` → `ireki da`) | comprehension over real sentences | [R] throughout | §14/§15 | pending — new `reading` question kind |
+| 36 | **Passive & Reading Real Text** — non-finite forms, nor-shift (`ireki dut` → `ireki da`) | comprehension over real sentences | [R] throughout | §14/§15 | available (#145) — `kind: 'reading'`, §15 nor-shift only; §14 non-finite forms deferred |
 
 ---
 

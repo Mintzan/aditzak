@@ -505,6 +505,10 @@ export const JOURNEY_TRANSLATIONS = {
         es: 'Formas no finitas, cambio de NOR (ireki dut → ireki da) — comprensión sobre frases reales, solo reconocimiento',
         eu: 'Forma ez-finituak, NOR aldaketa (ireki dut → ireki da) — benetako esaldien ulermena, ezagutza hutsa',
       },
+      payload: {
+        es: 'Nik atea ireki dut. → Atea ireki da. · Eskolan liburu hau irakurtzen da.',
+        eu: 'Nik atea ireki dut. → Atea ireki da. · Eskolan liburu hau irakurtzen da.',
+      },
     },
     37: {
       title: { es: 'Hacer que alguien lo haga', eu: 'Norbaiti zerbait eginarazi' },

@@ -9,6 +9,7 @@ import {
   generateCaseMixerQuestions,
   generateCrossVerbQuestions,
   generateQuestions,
+  generateReadingQuestions,
   getActiveStreak,
   getCrossVerbCandidates,
   getExplanation,
@@ -40,6 +41,7 @@ import { getShareUrl, shareContent } from './shareUtils'
 import { vibrateCorrect, vibrateIncorrect, vibrateResult } from './hapticsUtils'
 import { VERBS, TENSE_META, TYPE_META, AGREEMENT_META, DIALECT_LABELS, PERSON_LABEL_KEYS } from './data/verbs'
 import { LESSONS } from './data/lessons'
+import { READING_ITEMS } from './data/readingItems'
 
 // =============================================================================
 // Progress persistence (localStorage)
@@ -206,6 +208,15 @@ function personsLabel(persons) {
 function describeLesson(lesson, t, language) {
   const persons = personsLabel(lesson.persons)
   const recognitionOnly = lesson.mode === 'recognition'
+  if (lesson.kind === 'reading') {
+    return {
+      icon: '📖',
+      title: { main: t('readingLessonTitle'), secondary: t('readingLessonTag') },
+      subtitle: { main: t('readingLessonTag'), secondary: t('readingLessonSubtitle') },
+      heading: t('readingLessonTitle'),
+      recognitionOnly,
+    }
+  }
   if (lesson.verbId) {
     const verb = VERBS.find((v) => v.id === lesson.verbId)
     const meta = TENSE_META[lesson.tense]
@@ -712,6 +723,7 @@ function FeedbackModal({ onClose }) {
 function flagQuestionSummary(question, verb) {
   if (question.sentence) return question.sentence
   if (question.items) return question.items.map((item) => item.sentence).join(' / ')
+  if (question.source) return question.source
   return verb.pronouns?.[question.person] ?? question.person
 }
 
@@ -1354,6 +1366,19 @@ const NO_TYPING_ATTEMPTS = 2
 const TARGET_EXERCISE_COUNT = 12
 
 function createExerciseState(lesson, attempts, errorStats = {}) {
+  if (lesson.kind === 'reading') {
+    const items = lesson.itemIds.map((itemId) => READING_ITEMS.find((item) => item.id === itemId))
+    const allQuestions = generateReadingQuestions(items)
+    return {
+      queue: allQuestions,
+      total: allQuestions.length,
+      selected: null,
+      status: 'active',
+      correctCount: 0,
+      streak: 0,
+      misses: [],
+    }
+  }
   const sources = lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]
   const noTyping = !lesson.review && attempts < NO_TYPING_ATTEMPTS
   const targetPerSource = TARGET_EXERCISE_COUNT / sources.length
@@ -1608,6 +1633,17 @@ function SentenceWithBlank({ sentence }) {
 // rather than just harder. The tense label alone is still shown either way.
 function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
   const { t, language } = useLanguage()
+  if (question.kind === 'reading') {
+    const gloss = question.gloss[language] ?? question.gloss.en
+    return (
+      <>
+        <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">{t('readingLessonTag')}</p>
+        <h2 className="mt-2 text-2xl font-extrabold text-gray-900">{question.source}</h2>
+        {gloss !== question.source && <p className="mt-1 text-gray-500">{gloss}</p>}
+        <p className="mt-4 text-gray-700">{question.prompt[language] ?? question.prompt.en}</p>
+      </>
+    )
+  }
   return (
     <>
       <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">
@@ -1651,6 +1687,7 @@ const QUESTION_PROMPT_KEYS = {
   'type-negative': 'questionTypeNegation',
   'verb-choice': 'questionVerbChoice',
   'case-mixer': 'questionCaseMixer',
+  reading: 'questionReading',
 }
 
 // The explanation toggle is its own pill-shaped button above the
@@ -1948,7 +1985,7 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
   // either every form they cover has already had its own practice-lesson
   // intro (review), or the preview's single-verb/single-table layout doesn't
   // fit a pool of verbs (pooled practice).
-  const [showPreview, setShowPreview] = useState(!lesson.sources && attempts === 0)
+  const [showPreview, setShowPreview] = useState(!lesson.sources && lesson.kind !== 'reading' && attempts === 0)
 
   // Fires once the learner is actually answering questions — on mount for
   // review/pooled/repeat lessons (which skip the preview), or once the
