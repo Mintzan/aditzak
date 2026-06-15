@@ -593,4 +593,16 @@ export const LESSONS = [
       { verbId: 'ikusi', tense: 'future' },
     ],
   },
+  // Unit 25 (#147) — axis-scaffolded NOR-NORI-NORK: L1 fixes NORI (`esan`,
+  // `recipient: 'hura'`, NORK varies), L2 fixes NORK (`eman`, `agent: 'ni'`,
+  // NORI varies). Object-number (-zki-) fodder and the unit's four
+  // extra-practice lessons are deferred — see the issue filed for #147's
+  // remaining scope.
+  { id: 'esan-present', verbId: 'esan', tense: 'present' },
+  { id: 'eman-present', verbId: 'eman', tense: 'present' },
+  // Unit 26 (#147) — past + future on the same axis-fixed slices.
+  { id: 'esan-past', verbId: 'esan', tense: 'past' },
+  { id: 'esan-future', verbId: 'esan', tense: 'future' },
+  { id: 'eman-past', verbId: 'eman', tense: 'past' },
+  { id: 'eman-future', verbId: 'eman', tense: 'future' },
 ]

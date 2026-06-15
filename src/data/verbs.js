@@ -1284,6 +1284,115 @@ export const VERBS = [
       },
     },
   },
+  // #147: the first NOR-NORI-NORK (ditransitive) verbs, introducing the
+  // `recipient`/`agent` axis-fixed metadata #142 added. Present tense is
+  // periphrastic (`esaten`/`ematen` + the `di-` ditransitive auxiliary,
+  // mirroring `jan`/`edan`'s `[participle] + ukan` shape); past and future
+  // drop the `-ten` infinitive for the bare participle (`esan nion`, `esango
+  // diot`), per `docs/LEARNING_JOURNEY_PROPOSED.md` Unit 25/26's examples.
+  // `hi`/`hiri` cells are omitted throughout (hitanoa, not yet modeled — see
+  // #144), matching every other verb's 6-person table.
+  {
+    id: 'esan',
+    verb: 'esan',
+    meaning: { en: 'to tell / say (to someone)', es: 'decir (a alguien)', eu: 'esan' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    // `recipient: 'hura'` fixes NORI = hari ("to him/her"); `person` varies
+    // over NORK (25·L1 — "Nik/Zuk/... egia esaten diot/diozu/...").
+    recipient: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'esaten diot',
+        zu: 'esaten diozu',
+        hura: 'esaten dio',
+        gu: 'esaten diogu',
+        zuek: 'esaten diozue',
+        haiek: 'esaten diote',
+      },
+      // `nion`/`zion`/`genion`/`zenion` per CONJUGATIONS.md §5's `hari`/past
+      // row. §8's `esan`-specific table gives `nioen`/`zioen`/`genioen`/
+      // `zenioen` instead for the same cells — flagged in
+      // docs/LANGUAGE_DECISIONS.md for native-speaker confirmation; `nion`
+      // was chosen as it matches both §5's general grid and the
+      // LEARNING_JOURNEY_PROPOSED.md N-26 example ("Esan nion").
+      past: {
+        ni: 'esan nion',
+        zu: 'esan zenion',
+        hura: 'esan zion',
+        gu: 'esan genion',
+        zuek: 'esan zenioten',
+        haiek: 'esan zioten',
+      },
+      future: {
+        ni: 'esango diot',
+        zu: 'esango diozu',
+        hura: 'esango dio',
+        gu: 'esango diogu',
+        zuek: 'esango diozue',
+        haiek: 'esango diote',
+      },
+    },
+    // Ditransitive sentences are structurally unlike every other verb's
+    // (NORI is fixed, not the varying slot), so `validFor: []` throughout —
+    // `agreementsCompatible` already excludes cross-verb borrowing for
+    // nor-nori-nork verbs, but this documents the call explicitly.
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik egia ___.', validFor: [] }],
+        zu: [{ text: 'Zuk egia ___.', validFor: [] }],
+        hura: [{ text: 'Hark egia ___.', validFor: [] }],
+        gu: [{ text: 'Guk egia ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek egia ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek egia ___.', validFor: [] }],
+      },
+    },
+  },
+  {
+    id: 'eman',
+    verb: 'eman',
+    meaning: { en: 'to give', es: 'dar', eu: 'eman' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    // `agent: 'ni'` fixes NORK = nik ("I give it to..."); `person` varies
+    // over NORI (25·L2 — "Nik liburua zuri/hari/... ematen dizut/diot/...").
+    // `ni`/`gu` are reflexive-only ("give it to myself/ourselves" isn't a
+    // distinct ditransitive form, per CONJUGATIONS.md §5) and `hi` is
+    // hitanoa, so only `zu`/`hura`/`zuek`/`haiek` exist for this axis — a
+    // 4-person table, same shape as the small allocutive tables #139's
+    // distractor-floor fix anticipates.
+    agent: 'ni',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        zu: 'ematen dizut',
+        hura: 'ematen diot',
+        zuek: 'ematen dizuet',
+        haiek: 'ematen diet',
+      },
+      past: {
+        zu: 'eman nizun',
+        hura: 'eman nion',
+        zuek: 'eman nizuen',
+        haiek: 'eman nien',
+      },
+      future: {
+        zu: 'emango dizut',
+        hura: 'emango diot',
+        zuek: 'emango dizuet',
+        haiek: 'emango diet',
+      },
+    },
+    sentences: {
+      present: {
+        zu: [{ text: 'Nik liburua zuri ___.', validFor: [] }],
+        hura: [{ text: 'Nik liburua hari ___.', validFor: [] }],
+        zuek: [{ text: 'Nik liburua zuei ___.', validFor: [] }],
+        haiek: [{ text: 'Nik liburua haiei ___.', validFor: [] }],
+      },
+    },
+  },
 ]
 
 // Stage 6 (Units 14-15, "Talking About the Future") gave every verb above (except
