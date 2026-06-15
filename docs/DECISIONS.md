@@ -8,6 +8,37 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #139: distractor-floor fix — borrow distractors/spot-error slots for small tables
+
+**Decision:** `buildOptions` requires 3 distractors to reach the usual
+4-option multiple choice, but a 3-person conjugation table (e.g. `nahi`/
+`jakin`'s `present`/`future`, and the upcoming N-30 imperative) can only
+supply 2 from its own other persons — leaving those questions stuck at 3
+options. Fixed by adding a last-resort "borrow pool": when `verbs` (the full
+`VERBS` list) is passed to `generateQuestions`, `getBorrowedDistractors`
+collects the same-person form from every `agreementsCompatible` sibling verb
+(skipping the anchor itself), and `buildOptions` tops up its own-table
+distractor pool from that borrow pool only when it's short. `buildOptions`'s
+dedup/cap logic is unchanged, so 4+-person tables (which already fill 3
+distractors from their own table) are unaffected.
+
+The same gap existed for `spot-error` questions, which require
+`personsWithSentences.length >= 4`: `nahi`/`jakin` only have 3 sentenced
+persons, so they could never qualify. `getBorrowedSpotErrorSlots` lends a
+compatible sibling's own (person, sentence, form, altForms) slots for any
+person the anchor doesn't already cover (e.g. `ukan`'s `gu`/`zuek`/`haiek`
+beyond `nahi`/`jakin`'s `ni`/`zu`/`hura`), and `buildSpotErrorQuestion` was
+rewritten around a uniform "slot" shape so anchor/own/borrowed slots are
+interchangeable. `availableKinds`'s spot-error gate now checks
+`personsWithSentences.length + borrowedSpotErrorSlots.length >= 4`.
+
+**Scope:** `pronoun`/`type-pronoun` questions deliberately don't borrow —
+`verb.pronouns` is a tiny fixed 3-entry table unrelated to other verbs'
+conjugations, so there's no sensible sibling pool, and they were already
+excluded from `extraCandidates` for the same reason. Both new helpers return
+`[]` without `verbs` (or without `agreement` — some minimal test fixtures
+omit it), preserving the original same-table-only behaviour exactly.
+
 ## 2026-06-15 — #151: 37→39 spine renumber — split old Unit 2 into N-2/N-3/N-4
 
 **Decision:** Completed the 37→39 renumber promised by #137/#138 (the

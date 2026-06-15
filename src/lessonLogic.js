@@ -456,12 +456,22 @@ function rollQuestionKind(availableKinds) {
 // option (e.g. `egon`'s `nago` as a distractor for `izan`'s `naiz`) alongside
 // the usual "right verb, wrong person" ones. Deduplicated against `correct`
 // and each other so the same surface form never appears twice in `options`.
-function buildOptions(table, persons, person, extraCandidates = []) {
+// `borrowPool` (optional, see `getBorrowedDistractors`) is a last-resort
+// top-up: only consulted when the own-table pool (`persons` + `extraCandidates`)
+// can't supply 3 distractors on its own (e.g. a 3-person table like the
+// upcoming imperative unit, or `nahi`/`jakin`'s 3-person `present`/`future`).
+// Existing 4+-person tables are unaffected — the dedup/length check is a no-op
+// for them.
+function buildOptions(table, persons, person, extraCandidates = [], borrowPool = []) {
   const correct = table[person]
   const pool = [...persons.filter((candidate) => candidate !== person).map((candidate) => table[candidate]), ...extraCandidates].filter(
     (form) => form !== correct,
   )
-  const distractors = shuffle([...new Set(pool)]).slice(0, 3)
+  let distractors = shuffle([...new Set(pool)]).slice(0, 3)
+  if (distractors.length < 3 && borrowPool.length > 0) {
+    const borrowed = shuffle([...new Set(borrowPool)].filter((form) => form !== correct && !distractors.includes(form)))
+    distractors = [...distractors, ...borrowed].slice(0, 3)
+  }
   return { correct, options: shuffle([correct, ...distractors]) }
 }
 
@@ -539,6 +549,59 @@ export function getCrossVerbCandidates(verb, tense, sources, verbs, extraSources
   return candidates
 }
 
+// Last-resort distractor top-up for `buildOptions` (see #139): for a given
+// `person`/`tense`, collects that same-slot conjugated form from every
+// `agreementsCompatible` sibling in `verbs` (skipping `excludeVerbId`, the
+// anchor verb itself). Used only when a table is too small (e.g. a 3-person
+// paradigm) to supply 3 distractors on its own — `buildOptions` dedupes and
+// caps the combined pool, so no capping happens here. Returns `[]` without
+// `verbs` (the original same-table-only behaviour).
+function getBorrowedDistractors(verbs, agreement, tense, person, excludeVerbId) {
+  if (!verbs || !agreement) return []
+  return verbs
+    .filter((sibling) => sibling.id !== excludeVerbId && agreementsCompatible(sibling.agreement, agreement))
+    .map((sibling) => sibling.conjugations[tense]?.[person])
+    .filter(Boolean)
+}
+
+// Last-resort slot top-up for `buildSpotErrorQuestion` (see #139): when the
+// anchor verb has fewer than 4 `personsWithSentences`, lends a compatible
+// sibling's own (person, sentence, form) slots — genuinely correct sentences
+// from the sibling's *own* paradigm, eligible to be either a "correct"
+// companion or the deliberately-mismatched item, exactly like an anchor slot.
+// `altForms` (the same sibling's other-person forms) travels with each
+// borrowed slot so a mismatch never mixes a sibling's sentence with the
+// anchor's (or a different sibling's) forms. `excludePersons` (the anchor's
+// own `personsWithSentences`) keeps a borrowed slot's person distinct from
+// the anchor's own slots — only a sibling with at least one *extra* person
+// (e.g. `ukan`'s `gu`/`zuek`/`haiek` beyond `nahi`/`jakin`'s `ni`/`zu`/`hura`)
+// can contribute. Requires >=2 sentenced persons in the sibling (so a
+// mismatch has an `altForms` candidate). Returns `[]` without `verbs`.
+function getBorrowedSpotErrorSlots(verbs, agreement, tense, excludeVerbId, excludePersons) {
+  if (!verbs || !agreement) return []
+  const slots = []
+  for (const sibling of verbs) {
+    if (sibling.id === excludeVerbId || !agreementsCompatible(sibling.agreement, agreement)) continue
+    const siblingSentences = sibling.sentences?.[tense] ?? {}
+    const siblingTable = sibling.conjugations[tense] ?? {}
+    const siblingPersons = Object.keys(siblingSentences).filter((p) => siblingTable[p])
+    if (siblingPersons.length < 2) continue
+    for (const p of siblingPersons) {
+      if (excludePersons.includes(p)) continue
+      const sentence = normalizeSentence(pickVariant(siblingSentences[p]))
+      if (!sentence) continue
+      slots.push({
+        verbId: sibling.id,
+        person: p,
+        sentence: sentence.text,
+        form: siblingTable[p],
+        altForms: siblingPersons.filter((other) => other !== p).map((other) => siblingTable[other]),
+      })
+    }
+  }
+  return slots
+}
+
 // `sentences[tense][person]` may be a single string or an array of phrasing
 // variants (different contexts for the same person/blank, e.g. "Ni irakaslea
 // ___." vs "Ni turista ___."); picking one at random per question keeps a
@@ -591,14 +654,30 @@ export function filterExtraCandidates(candidates, validFor) {
 // `type-verb` — just filling the blank itself instead of leaving it open —
 // so any verb that supports those automatically supports this too, once it
 // has at least four sentenced persons to draw four *distinct* sentences from.
-function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) {
-  const companions = shuffle(personsWithSentences.filter((candidate) => candidate !== person)).slice(0, 3)
-  const candidates = shuffle([person, ...companions])
+//
+// `borrowedSlots` (optional, see `getBorrowedSpotErrorSlots`) tops up the
+// companion pool when the anchor verb itself has fewer than 4
+// `personsWithSentences` (e.g. a 3-person table) — each borrowed slot is a
+// genuinely correct sentence+form from a compatible sibling's own paradigm,
+// eligible to be either a "correct" companion or the mismatched item, exactly
+// like an anchor slot. Every slot (own or borrowed) carries its own
+// `altForms` (that same verb's other-person forms), so a mismatch never mixes
+// one verb's sentence with another's forms.
+function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, borrowedSlots = []) {
+  const ownSlots = personsWithSentences.map((p) => ({
+    person: p,
+    sentence: normalizeSentence(pickVariant(sentences[p])).text,
+    form: table[p],
+    altForms: personsWithSentences.filter((other) => other !== p).map((other) => table[other]),
+  }))
+  const anchorSlot = ownSlots.find((slot) => slot.person === person)
+  const companions = shuffle([...ownSlots.filter((slot) => slot.person !== person), ...borrowedSlots]).slice(0, 3)
+  const candidates = shuffle([anchorSlot, ...companions])
   const wrongIndex = Math.floor(Math.random() * candidates.length)
-  const items = candidates.map((candidate, index) => {
+  const items = candidates.map((slot, index) => {
     const isWrong = index === wrongIndex
-    const form = isWrong ? table[shuffle(personsWithSentences.filter((other) => other !== candidate))[0]] : table[candidate]
-    return { person: candidate, sentence: normalizeSentence(pickVariant(sentences[candidate])).text.replace('___', form) }
+    const form = isWrong ? shuffle(slot.altForms)[0] : slot.form
+    return { person: slot.person, sentence: slot.sentence.replace('___', form) }
   })
   return {
     kind: 'spot-error',
@@ -709,7 +788,10 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person) 
 // auxiliary" compound (e.g. `nahi`'s `nahi dut`) that another verb's form
 // (e.g. `ukan`'s `dut`) could also correctly — but differently — complete the
 // same sentence with. Without `verbs`, no person is treated as ambiguous (the
-// original behaviour).
+// original behaviour). It doubles as the source pool for #139's small-table
+// borrowing (`getBorrowedDistractors`/`getBorrowedSpotErrorSlots`) — without
+// `verbs`, both return `[]` and small tables fall back to fewer
+// options/no `spot-error`, same as before #139.
 export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
@@ -719,19 +801,21 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
   const source = { verbId: verb.id, tense }
   const usedKinds = new Map()
+  const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
 
   function buildQuestion(person) {
     const sentence = normalizeSentence(pickVariant(sentences[person]))
     const pronounSentence = verb.pronouns && normalizeSentence(pronounSentences[person])
     const negativeSentence = normalizeSentence(pickVariant(negativeSentences[person]))
     const ambiguousTyping = hasAmbiguousTypedForm(verb, tense, person, verbs)
+    const borrowed = getBorrowedDistractors(verbs, verb.agreement, tense, person, verb.id)
     const availableKinds =
       includeNegation && negativeSentence
         ? [negativeSentence && 'negative', negativeSentence && !noTyping && !ambiguousTyping && 'type-negative'].filter(Boolean)
         : [
             sentence && 'sentence',
             sentence && !noTyping && !ambiguousTyping && 'type-verb',
-            sentence && !noTyping && personsWithSentences.length >= 4 && 'spot-error',
+            sentence && !noTyping && personsWithSentences.length + borrowedSpotErrorSlots.length >= 4 && 'spot-error',
             pronounSentence && 'pronoun',
             pronounSentence && !noTyping && 'type-pronoun',
           ].filter(Boolean)
@@ -748,13 +832,13 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     switch (kind) {
       case 'sentence': {
         const extra = filterExtraCandidates(extraCandidates?.[person], sentence.validFor)
-        const { correct, options } = buildOptions(table, persons, person, extra)
+        const { correct, options } = buildOptions(table, persons, person, extra, borrowed)
         return { ...source, kind: 'sentence', person, sentence: sentence.text, correct, options }
       }
       case 'type-verb':
         return { ...source, kind: 'type-verb', person, sentence: sentence.text, correct: table[person] }
       case 'spot-error':
-        return { ...source, ...buildSpotErrorQuestion(table, sentences, personsWithSentences, person) }
+        return { ...source, ...buildSpotErrorQuestion(table, sentences, personsWithSentences, person, borrowedSpotErrorSlots) }
       case 'pronoun': {
         const { correct, options } = buildOptions(verb.pronouns, persons, person)
         return { ...source, kind: 'pronoun', person, sentence: pronounSentence.text, correct, options }
@@ -763,13 +847,13 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
         return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence.text, correct: verb.pronouns[person] }
       case 'negative': {
         const extra = filterExtraCandidates(extraCandidates?.[person], negativeSentence.validFor)
-        const { correct, options } = buildOptions(table, persons, person, extra)
+        const { correct, options } = buildOptions(table, persons, person, extra, borrowed)
         return { ...source, kind: 'negative', person, sentence: negativeSentence.text, correct, options }
       }
       case 'type-negative':
         return { ...source, kind: 'type-negative', person, sentence: negativeSentence.text, correct: table[person] }
       default: {
-        const { correct, options } = buildOptions(table, persons, person)
+        const { correct, options } = buildOptions(table, persons, person, [], borrowed)
         return { ...source, kind: 'form', person, correct, options }
       }
     }
