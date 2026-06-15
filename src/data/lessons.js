@@ -593,6 +593,21 @@ export const LESSONS = [
       { verbId: 'ikusi', tense: 'future' },
     ],
   },
+  // Unit 23 (#146) — present NOR-NORI: `gustatu`/`iruditu`/`ahaztu`, `person`
+  // ranges over NORI (object: 'hura' fixes NOR = "it"). Plural-NOR (`-zki-`)
+  // distractor fodder and the unit's extra-practice lessons (recognition,
+  // production, number-split, case-frame buffer) are deferred — see the
+  // issue filed for #146's remaining scope.
+  { id: 'gustatu-present', verbId: 'gustatu', tense: 'present' },
+  { id: 'iruditu-present', verbId: 'iruditu', tense: 'present' },
+  { id: 'ahaztu-present', verbId: 'ahaztu', tense: 'present' },
+  // Unit 24 (#146) — NOR-NORI past + future on the same verbs.
+  { id: 'gustatu-past', verbId: 'gustatu', tense: 'past' },
+  { id: 'gustatu-future', verbId: 'gustatu', tense: 'future' },
+  { id: 'iruditu-past', verbId: 'iruditu', tense: 'past' },
+  { id: 'iruditu-future', verbId: 'iruditu', tense: 'future' },
+  { id: 'ahaztu-past', verbId: 'ahaztu', tense: 'past' },
+  { id: 'ahaztu-future', verbId: 'ahaztu', tense: 'future' },
   // Unit 25 (#147) — axis-scaffolded NOR-NORI-NORK: L1 fixes NORI (`esan`,
   // `recipient: 'hura'`, NORK varies), L2 fixes NORK (`eman`, `agent: 'ni'`,
   // NORI varies). Object-number (-zki-) fodder and the unit's four

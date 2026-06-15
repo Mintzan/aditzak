@@ -6,6 +6,45 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-15 — Added `gustatu`/`iruditu`/`ahaztu` (NOR-NORI) as the first dative-subject `VERBS` entries; forms need native-speaker check
+
+**Decision:** #146 added `gustatu` ("to like/please"), `iruditu` ("to seem"),
+and `ahaztu` ("to forget") as `VERBS` entries for Unit 23 ("Pleasures,
+Opinions, Feelings") and Unit 24 ("Dative Across Time") — the first NOR-NORI
+("psych"/dative-subject) verbs. All three use `agreement: ['nor', 'nori']`
+with `object: 'hura'` (NOR fixed to "it", reusing the same field `nor-nork`
+verbs use for their fixed absolutive object); `person` ranges over NORI, the
+dative experiencer, per CONJUGATIONS.md §4's `hari`/NOR=`hura` column:
+
+- Present: `gustatu`/`iruditu` use the `-tzen` habitual participle —
+  `gustatzen zait`/`zaizu`/`zaio`/`zaigu`/`zaizue`/`zaie` and
+  `iruditzen zait`/.... `ahaztu` instead uses the **bare participle**
+  (`ahaztu zait`/`zaizu`/...) — a resultative/perfect-like "it is in a state
+  of being forgotten to me" reading, per `docs/LEARNING_JOURNEY_PROPOSED.md`'s
+  dedicated `ahaztu` table and its Unit 23 example ("Liburua ahaztu zait").
+  `ahazten zait` ("I tend to forget it", habitual) was *not* used.
+- Past: bare participle + past dative aux for all three —
+  `gustatu zitzaidan`/..., `iruditu zitzaidan`/..., `ahaztu zitzaidan`/...,
+  per CONJUGATIONS.md §4's past grid (`hari` row, NOR=`hura`: `zitzaion` →
+  generalizes to `zitzaidan`/`zitzaizun`/`zitzaigun`/`zitzaizuen`/`zitzaien`
+  across NORI).
+- Future: `[participle]+ko` + present dative aux — `gustatuko zait`/...,
+  `irudituko zait`/..., `ahaztuko zait`/..., following the issue's stated
+  `-tu` → `-tuko` rule (all three verbs end in `-tu`).
+
+**Flag for native-speaker review:** none of these forms or example sentences
+have had a native-speaker check yet — in particular `ahaztu`'s bare-participle
+present (vs the `-tzen` habitual) and `iruditu`'s `-tzen`/`zitzai-`/`-ko` forms
+(derived by analogy with `gustatu`/`ahaztu` rather than taken from a worked
+example in the docs).
+
+**Deferred to a follow-up issue** (same split-out pattern as #147/#162, per
+the user's standing instruction): plural-NOR (`-zki-`) distractor fodder
+(`zaizkit`/`gustatuko zaizkit`/etc., for the Distractor Engine Matrix's number
+slot) and Unit 23's extra-practice lessons (recognition, production,
+number-split, case-frame buffer). This PR covers the core "present+past+future
+drillable" piece of the acceptance criteria.
+
 ## 2026-06-15 — Added `esan`/`eman` (NOR-NORI-NORK) as the first ditransitive `VERBS` entries; forms need native-speaker check
 
 **Decision:** #147 added `esan` ("to tell/say") and `eman` ("to give") as
