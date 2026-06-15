@@ -204,18 +204,15 @@ Given Unit 26 is late in the sequence (Phase V) this can be deferred, but it's
 the second data-shape question (after ditransitives) that doesn't fit
 "one string per `[tense][person]` cell".
 
-### Non-finite forms & passive/"nor-shift" (Unit 27)
-Explicitly **recognition-oriented** ("reading real sentences"), not
-production — doesn't fit `conjugations[tense][person]` at all (there's no
-single "correct conjugated form" being drilled). Needs its own data table
-(source sentence + gloss/translation + what's being asked about it) and a new
-question kind, e.g. `kind: 'reading'`: "what does this sentence mean?" or
-"which version of this sentence is the nor-shifted/passive one?", multiple
-choice over translations or sentence variants. This is the least-shaped of
-all the gaps — closest in spirit to `spot-error`/the negation kind (candidate
-full sentences as options) but the *prompt* is a translation/comprehension
-question rather than "find the verb form", so `QuestionPrompt`
-(`App.jsx:726-744`) likely needs a new branch too.
+### Non-finite forms & passive/"nor-shift" (Unit 36) — done (#145, core scope)
+Implemented as `kind: 'reading'` (`generateReadingQuestions` in
+`lessonLogic.js`, items in `src/data/readingItems.js`, Unit 36 now
+`available`). Recognition-only, multiple choice over candidate sentences —
+"which sentence says the same thing without naming who did it?" /
+"which sentence names who does this?", grounded in CONJUGATIONS.md §15's
+nor-shift table. §14's non-finite forms are **not** covered (deferred to a
+follow-up issue, see `docs/DECISIONS.md`) — only the nor-shift/passive half of
+this gap is closed.
 
 ## Tier 4 — structural engine work (explicitly out of the unit sequence)
 
@@ -257,6 +254,7 @@ Roughly cheapest-and-most-unblocking first:
 5. **Score-gating** — needed before Gate B (17), independent of the above.
 6. **Ditransitive data-shape decision** — needed before Unit 21.
 7. **Allocutive/hitanoa shape** — Unit 26, can be deferred until Phase V.
-8. **Reading/non-finite question kind** — Unit 27, last in the sequence.
+8. **Reading/non-finite question kind** — Unit 36, done for the
+   nor-shift/passive half (#145); §14 non-finite forms remain a follow-up.
 9. **Flash drills / error-pattern detection** — separate design passes,
    whenever prioritized; not blocking any specific unit.

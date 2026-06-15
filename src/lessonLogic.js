@@ -1098,6 +1098,27 @@ export function generateCaseMixerQuestions(resolvedSources, { persons: personsFi
   )
 }
 
+// `kind: 'reading'` questions (Unit 36, see `src/data/readingItems.js`) have
+// no `verbId`/`tense`/`person` of their own — each is just a source sentence
+// plus a comprehension prompt and four candidate sentences, one of which
+// (`item.answer`) answers it. `rounds` repeats/reshuffles the whole item set,
+// same idea as `generateQuestions`'s `rounds` — each repetition gets its own
+// `shuffle` of both the item order and each item's `options`, so a repeat
+// isn't a verbatim rerun.
+export function generateReadingQuestions(items, { rounds = 1 } = {}) {
+  return Array.from({ length: rounds }, () => shuffle(items)).flatMap((roundItems) =>
+    roundItems.map((item) => ({
+      kind: 'reading',
+      itemId: item.id,
+      source: item.source,
+      gloss: item.gloss,
+      prompt: item.prompt,
+      correct: item.answer,
+      options: shuffle(item.options),
+    })),
+  )
+}
+
 // =============================================================================
 // Error tracking & weak-spot review boosters
 // =============================================================================
@@ -1207,7 +1228,7 @@ export function exerciseReducer(state, action) {
       const isFirstAttempt = !question.retry
       const countsTowardScore = isCorrect && isFirstAttempt
       const misses =
-        !isCorrect && isFirstAttempt
+        !isCorrect && isFirstAttempt && question.verbId
           ? [...(state.misses ?? []), { verbId: question.verbId, tense: question.tense, person: question.person }]
           : state.misses ?? []
       return {
@@ -1259,6 +1280,7 @@ export function buildFlagDiagnostics({ lesson, question, selected, status, langu
       ...(question.sentence ? { sentence: question.sentence } : {}),
       ...(question.options ? { options: question.options } : {}),
       ...(question.items ? { items: question.items } : {}),
+      ...(question.source ? { source: question.source } : {}),
     },
   }
 }

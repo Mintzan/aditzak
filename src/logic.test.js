@@ -13,6 +13,7 @@ import {
   generateCaseMixerQuestions,
   generateCrossVerbQuestions,
   generateQuestions,
+  generateReadingQuestions,
   getActiveStreak,
   getCaseFrameLure,
   getCaseFramePronounLure,
@@ -46,6 +47,7 @@ import {
 } from './lessonLogic'
 import { LESSONS } from './data/lessons'
 import { VERBS } from './data/verbs'
+import { READING_ITEMS } from './data/readingItems'
 
 describe('computeStars', () => {
   it('returns 0 when there are no questions', () => {
@@ -2176,7 +2178,7 @@ describe('getIntroducedSources + cross-verb question generation (real LESSONS/VE
   // `review: true`, so they have no verbId/tense), these reviews crashed
   // generateCrossVerbQuestions/generateCaseMixerQuestions on `sibling.verb.id` of an
   // undefined `verb`.
-  const reviewsWithFewSources = LESSONS.filter((lesson) => lesson.review && lesson.sources.length < 3)
+  const reviewsWithFewSources = LESSONS.filter((lesson) => lesson.review && lesson.sources && lesson.sources.length < 3)
 
   it('returns only well-formed {verbId, tense} entries for every review with fewer than 3 sources', () => {
     expect(reviewsWithFewSources.length).toBeGreaterThan(0)
@@ -2516,6 +2518,23 @@ describe('buildFlagDiagnostics', () => {
     expect(diagnostics.question).toMatchObject({ sentence: 'Ni irakaslea ___.', options: ['naiz', 'dut'] })
   })
 
+  it('includes the source sentence and options for a reading question (#145)', () => {
+    const question = {
+      kind: 'reading',
+      itemId: 'reading-nor-shift-ireki',
+      source: 'Nik atea ireki dut.',
+      gloss: { en: 'I opened the door.', es: 'Yo abrí la puerta.', eu: 'Nik atea ireki dut.' },
+      prompt: { en: 'Which sentence says the same thing without naming who did it?' },
+      correct: 'Atea ireki da.',
+      options: ['Atea ireki da.', 'Nik atea ireki dut.'],
+    }
+
+    const diagnostics = buildFlagDiagnostics({ lesson: { id: 'unit-36-reading', review: true, kind: 'reading' }, question, selected: 'Atea ireki da.', status: 'correct', language: 'en' })
+
+    expect(diagnostics.question).toMatchObject({ source: 'Nik atea ireki dut.', options: ['Atea ireki da.', 'Nik atea ireki dut.'] })
+    expect(diagnostics.verbId).toBeUndefined()
+  })
+
 })
 
 describe('recordErrors', () => {
@@ -2657,6 +2676,58 @@ describe('ditransitive (NOR-NORI-NORK) verb metadata (#142)', () => {
       expect(['nori', 'nork']).toContain(fixedArgument.role)
       expect(PERSONS).toContain(fixedArgument.person)
       expect(verb.recipient && verb.agent).toBeFalsy()
+    })
+  })
+})
+
+describe('generateReadingQuestions (#145)', () => {
+  const items = [
+    { id: 'a', source: 'Nik atea ireki dut.', gloss: { en: 'I opened the door.' }, prompt: { en: 'Which sentence says the same thing without naming who did it?' }, options: ['Atea ireki da.', 'Nik atea ireki dut.', 'Atea ireki dute.', 'Atea irekitzen da.'], answer: 'Atea ireki da.' },
+    { id: 'b', source: 'Haurrak leihoa hautsi du.', gloss: { en: 'The child broke the window.' }, prompt: { en: 'Which sentence says the same thing without naming who did it?' }, options: ['Leihoa hautsi da.', 'Haurrak leihoa hautsi du.', 'Leihoa hausten du.', 'Leihoak haurra hautsi du.'], answer: 'Leihoa hautsi da.' },
+  ]
+
+  it('produces one `kind: \'reading\'` question per item by default, carrying through source/gloss/prompt/correct', () => {
+    const questions = generateReadingQuestions(items)
+
+    expect(questions).toHaveLength(items.length)
+    questions.forEach((question) => {
+      const item = items.find((candidate) => candidate.id === question.itemId)
+      expect(question.kind).toBe('reading')
+      expect(question.source).toBe(item.source)
+      expect(question.gloss).toBe(item.gloss)
+      expect(question.prompt).toBe(item.prompt)
+      expect(question.correct).toBe(item.answer)
+    })
+  })
+
+  it('keeps every item\'s options intact (same set, correct answer included) but possibly reordered', () => {
+    const questions = generateReadingQuestions(items)
+
+    questions.forEach((question) => {
+      const item = items.find((candidate) => candidate.id === question.itemId)
+      expect(question.options).toContain(question.correct)
+      expect(new Set(question.options)).toEqual(new Set(item.options))
+    })
+  })
+
+  it('repeats and reshuffles the item set for `rounds > 1`', () => {
+    const questions = generateReadingQuestions(items, { rounds: 3 })
+
+    expect(questions).toHaveLength(items.length * 3)
+    for (const item of items) {
+      expect(questions.filter((question) => question.itemId === item.id)).toHaveLength(3)
+    }
+  })
+
+  it('produces well-formed questions for every item in READING_ITEMS', () => {
+    const questions = generateReadingQuestions(READING_ITEMS)
+
+    expect(questions).toHaveLength(READING_ITEMS.length)
+    questions.forEach((question) => {
+      expect(question.options).toContain(question.correct)
+      expect(new Set(question.options).size).toBe(question.options.length)
+      expect(question.gloss.en).toBeTruthy()
+      expect(question.prompt.en).toBeTruthy()
     })
   })
 })

@@ -651,4 +651,29 @@ export const LESSONS = [
       { verbId: 'etorri', tense: 'past' },
     ],
   },
+  // Unit 36 (#145) — Stage 13, "Passive & Reading Real Text": a new
+  // `kind: 'reading'` lesson, comprehension questions over real sentences
+  // rather than a conjugation table. `itemIds` resolve into
+  // `src/data/readingItems.js`'s `READING_ITEMS`; `mode: 'recognition'`
+  // marks it recognition-only per the unit's focus (composes with #140's
+  // recognition-mode flag). §14 non-finite-form items are deferred — see the
+  // issue filed for #145's remaining scope.
+  {
+    id: 'unit-36-reading',
+    review: true,
+    kind: 'reading',
+    mode: 'recognition',
+    itemIds: [
+      'reading-nor-shift-ireki',
+      'reading-nor-shift-hautsi',
+      'reading-nor-shift-itzali',
+      'reading-impersonal-hitzegin',
+      'reading-impersonal-erre',
+      'reading-nor-shift-piztu',
+      'reading-nor-shift-itxi',
+      'reading-impersonal-idatzi',
+      'reading-impersonal-irakurri',
+      'reading-impersonal-sagarrak',
+    ],
+  },
 ]

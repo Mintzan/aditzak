@@ -8,6 +8,50 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #145: `kind: 'reading'` comprehension questions (Unit 36, core scope)
+
+**Decision:** Implemented Unit 36 ("Passive & Reading Real Text") as a new
+`kind: 'reading'` question type, grounded entirely in CONJUGATIONS.md §15's
+"nor-shift" table (`Nik atea ireki dut.` → `Atea ireki da.`, plus its
+"impersonal/passive" siblings like `hitz egin`/`erre`/`idatzi`). §14's
+non-finite forms are **not** covered — authoring correct non-finite items
+without native-speaker verification was judged too risky for a core scope;
+deferred to a follow-up issue alongside expanding `READING_ITEMS` beyond its
+10 starter items.
+
+**Data shape:** `src/data/readingItems.js` exports `READING_ITEMS`, an array
+of `{ id, source, gloss: {en,es,eu}, prompt: {en,es,eu}, options, answer }` —
+a Basque `source` sentence, a `gloss` (translation/restatement), a `prompt`
+(the comprehension question), and four candidate Basque sentences. Items 1-8
+go agent → agentless (anticausative/impersonal nor-shift); items 9-10 go the
+other way (agentless → "who does this?"), since both directions appear in
+§15's prose examples. `gloss.eu` deliberately repeats `source` verbatim
+(a Basque-speaking learner needs no translation of Basque) — `QuestionPrompt`
+skips the gloss line when it equals `source`, rather than inventing a
+from-scratch Basque paraphrase of each sentence.
+
+**Engine integration:** `generateReadingQuestions` (`lessonLogic.js`) is a new
+sibling to `generateCrossVerbQuestions`/`generateCaseMixerQuestions` — takes
+`READING_ITEMS`-shaped items and `{ rounds }`, returns `{ kind: 'reading',
+itemId, source, gloss, prompt, correct, options }`. `unit-36-reading`
+(`data/lessons.js`) is `{ review: true, kind: 'reading', mode: 'recognition',
+itemIds: [...] }` — a lesson with neither `verbId` nor `sources`, the first of
+its kind. `createExerciseState` (`App.jsx`) special-cases `lesson.kind ===
+'reading'` with an early return before the `sources`/cross-verb/case-mixer
+machinery (none of which applies — a reading item has no verb/tense/person).
+Three other `App.jsx` spots needed guards for a `kind: 'reading'`
+lesson/question having no `verbId`/`tense`: `describeLesson` (new top branch,
+before the `lesson.sources.map` that assumes pooled/review shape),
+`ExerciseScreen`'s `showPreview` (excluded, since `LessonPreviewScreen` needs
+a real verb/tense), and `QuestionPrompt` (new early branch rendering
+`source`/`gloss`/`prompt` instead of `verb`/`tenseMeta`). `getExplanation`
+needed no change — its existing kind-checks already fall through to `null`
+without touching `verb` for an unrecognized kind.
+`flagQuestionSummary`/`buildFlagDiagnostics` needed only additive guards
+(`question.source`). `exerciseReducer` also gained a `question.verbId` guard
+before recording a miss, so a missed reading question doesn't add a bogus
+`undefined:undefined:undefined` entry to `errorStats`.
+
 ## 2026-06-15 — #144: `hi` as a new ungendered person (Unit 32, core scope)
 
 **Decision:** Implemented Unit 32 ("Meet `hi`" — `hi` as a subject in known
