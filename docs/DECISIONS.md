@@ -8,6 +8,41 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-15 — #141: Case-frame/cross-tense distractor lures (core scope)
+
+**Decision:** Implemented the Distractor Engine Matrix (`docs/LEARNING_JOURNEY_PROPOSED.md`)
+rows implementable with existing `izan`/`ukan` data — NOR-NORK present, past
+pools, and the case-marking checkpoint's `pronoun` questions — as a new
+**case-frame lure** primitive, deferring NOR-NORI, NOR-NORI-NORK, future,
+hi/hitanoa, and the moods with no data yet to a follow-up issue (#165).
+
+`getCaseFrameLure`/`getCaseFramePronounLure` (`lessonLogic.js`) find a verb's
+*case-frame-inverse* sibling — same `nori` status, opposite `nork` status
+(`izan` <-> `ukan`) — and return that sibling's same-person form/pronoun as a
+designated "ergative drift" distractor (`naiz` alongside `dut`, `Nik`
+alongside `Ni`). `getCrossTenseLure` returns a past-tense question's own
+verb's present-tense form for the same person (`naiz` alongside `nintzen`) —
+the matrix's "Past pools" Slot 3. Both are gated by `agreement.includes('nori')`,
+so NOR-NORI/NOR-NORI-NORK verbs (#146/#147) never participate until #165.
+
+**Automatic, not opt-in**: `buildOptions` gained a `priorityCandidates` param —
+forms guaranteed a distractor slot (ahead of the random same-table pool) when
+present and distinct from `correct`, still counting toward the existing
+3-distractor cap. `generateQuestions` computes these lures and passes them for
+every `form`/`sentence`/`negative`/`pronoun` question where the matrix calls
+for one (NOR-NORK present, any verb's past, any non-NOR-NORI verb's `pronoun`
+questions) — rather than a new opt-in flag like `mode`/`includeNegation` —
+because the acceptance criterion ("each agreement pattern generates
+distractors matching its matrix row") reads as a blanket guarantee, and the
+lures gracefully no-op (return `undefined`, filtered out) without `verbs` or
+for agreement shapes that don't qualify, so existing test fixtures without
+`agreement`/`pronouns` are unaffected. One existing #139 fixture
+(`incompatibleSibling` in `logic.test.js`) had its `agreement` changed from
+`['nor']` to `['nor', 'nori']` to stay genuinely unrelated to its NOR-NORK
+anchor under the new case-frame-inverse matching — it was previously *only*
+"not agreement-compatible", which #141 now redefines as "case-frame-inverse
+and thus a deliberate lure".
+
 ## 2026-06-15 — #142: Axis-fixed metadata (`recipient`/`agent`) for future ditransitive verbs
 
 **Decision:** NOR-NORI-NORK (ditransitive) verbs' `conjugations` are genuinely

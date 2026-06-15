@@ -14,6 +14,9 @@ import {
   generateCrossVerbQuestions,
   generateQuestions,
   getActiveStreak,
+  getCaseFrameLure,
+  getCaseFramePronounLure,
+  getCrossTenseLure,
   getCrossVerbCandidates,
   getEncouragement,
   getExplanation,
@@ -1035,9 +1038,14 @@ describe('generateQuestions', () => {
         },
       },
     }
+    // `agreement: ['nor', 'nori']` (rather than plain `['nor']`) makes this
+    // sibling genuinely unrelated to `smallVerb` (`['nor', 'nork']`) on both
+    // axes — neither `agreementsCompatible` (the `nork` axis differs) nor
+    // #141's case-frame-inverse (the `nori` axis also differs), so it can't
+    // surface via either the general borrowing here or the case-frame lure.
     const incompatibleSibling = {
       id: 'incompatible',
-      agreement: ['nor'],
+      agreement: ['nor', 'nori'],
       conjugations: {
         present: { ni: 'naiz', zu: 'zara', hura: 'da', gu: 'gara' },
       },
@@ -1592,6 +1600,75 @@ describe('generateQuestions', () => {
         expect(kinds).toHaveLength(3)
         expect(new Set(kinds)).toEqual(new Set(['form', 'sentence', 'pronoun']))
       })
+    })
+  })
+
+  describe('#141 case-frame/cross-tense lures', () => {
+    const izan = VERBS.find((v) => v.id === 'izan')
+    const ukan = VERBS.find((v) => v.id === 'ukan')
+
+    describe('getCaseFrameLure/getCaseFramePronounLure/getCrossTenseLure', () => {
+      it('finds the case-frame-inverse sibling\'s same-person form (izan <-> ukan)', () => {
+        expect(getCaseFrameLure(VERBS, ukan, 'present', 'ni')).toBe('naiz')
+        expect(getCaseFrameLure(VERBS, izan, 'present', 'ni')).toBe('dut')
+        expect(getCaseFrameLure(VERBS, izan, 'past', 'ni')).toBe('nuen')
+      })
+
+      it('finds the case-frame-inverse sibling\'s declined pronoun', () => {
+        expect(getCaseFramePronounLure(VERBS, izan, 'ni')).toBe('Nik')
+        expect(getCaseFramePronounLure(VERBS, ukan, 'ni')).toBe('Ni')
+      })
+
+      it('returns undefined without a `verbs` list, or for NOR-NORI verbs', () => {
+        expect(getCaseFrameLure(undefined, izan, 'present', 'ni')).toBeUndefined()
+        const gustatu = VERBS.find((v) => v.id === 'gustatu')
+        expect(getCaseFrameLure(VERBS, gustatu, 'present', 'ni')).toBeUndefined()
+      })
+
+      it('returns the verb\'s own present-tense form for past tense, and undefined otherwise', () => {
+        expect(getCrossTenseLure(izan, 'past', 'ni')).toBe('naiz')
+        expect(getCrossTenseLure(izan, 'present', 'ni')).toBeUndefined()
+      })
+    })
+
+    it('offers the case-frame-inverse sibling\'s present form as a NOR-NORK distractor (`naiz` for `dut`)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
+
+      const question = generateQuestions(ukan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('form')
+      expect(question.options).toContain('naiz')
+    })
+
+    it('offers cross-pool aux and own-present-tense forms as past-tense distractors (`nuen`/`naiz` for `nintzen`)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
+
+      const question = generateQuestions(izan, 'past', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('form')
+      expect(question.correct).toBe('nintzen')
+      expect(question.options).toContain('nuen')
+      expect(question.options).toContain('naiz')
+    })
+
+    it('offers the case-frame-inverse sibling\'s pronoun as a distractor (`Nik` for `Ni`)', () => {
+      // [0, 0.75) / 5 kinds ('sentence','type-verb','spot-error','pronoun','type-pronoun')
+      // -> slice 3 (0.45-0.6) is 'pronoun'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.5)
+
+      const question = generateQuestions(izan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('pronoun')
+      expect(question.options).toContain('Nik')
+    })
+
+    it('does not add a case-frame lure for NOR present (no `nork`, present tense)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
+
+      const question = generateQuestions(izan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('form')
+      expect(question.options).not.toContain('dut')
     })
   })
 })
