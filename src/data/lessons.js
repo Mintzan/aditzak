@@ -620,4 +620,35 @@ export const LESSONS = [
   { id: 'esan-future', verbId: 'esan', tense: 'future' },
   { id: 'eman-past', verbId: 'eman', tense: 'past' },
   { id: 'eman-future', verbId: 'eman', tense: 'future' },
+  // Unit 32 (#144) — "Meet hi": `hi` (familiar "you") joins izan/egon/joan/
+  // etorri's present and past tables as a 7th person. These four are
+  // `nor`-only verbs, so `hi`-as-subject takes a single invariant form in
+  // both tenses (`haiz`/`hago`/`hoa`/`hator`, `hintzen`/`hengoen`/`joan
+  // hintzen`/`etorri hintzen`) — no allocutive (toka/noka) gender split here
+  // (see docs/DECISIONS.md for the `hi`/`hi-m`/`hi-f` data-shape convention).
+  // `persons: ['hi']` pools each tense across all four verbs, so every `hi`
+  // question borrows its distractors from the other three verbs' `hi` forms
+  // (#139's borrowing) — exactly 3 siblings, exactly 3 distractors.
+  {
+    id: 'unit-32-hi-present',
+    review: true,
+    persons: ['hi'],
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'egon', tense: 'present' },
+      { verbId: 'joan', tense: 'present' },
+      { verbId: 'etorri', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-32-hi-past',
+    review: true,
+    persons: ['hi'],
+    sources: [
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'egon', tense: 'past' },
+      { verbId: 'joan', tense: 'past' },
+      { verbId: 'etorri', tense: 'past' },
+    ],
+  },
 ]

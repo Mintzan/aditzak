@@ -79,8 +79,8 @@ export const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'naiz', zu: 'zara', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
-      past: { ni: 'nintzen', zu: 'zinen', hura: 'zen', gu: 'ginen', zuek: 'zineten', haiek: 'ziren' },
+      present: { ni: 'naiz', hi: 'haiz', zu: 'zara', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
+      past: { ni: 'nintzen', hi: 'hintzen', zu: 'zinen', hura: 'zen', gu: 'ginen', zuek: 'zineten', haiek: 'ziren' },
       future: {
         ni: 'izango naiz',
         zu: 'izango zara',
@@ -143,7 +143,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ irakaslea naiz.',
@@ -170,9 +170,10 @@ export const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'nago', zu: 'zaude', hura: 'dago', gu: 'gaude', zuek: 'zaudete', haiek: 'daude' },
+      present: { ni: 'nago', hi: 'hago', zu: 'zaude', hura: 'dago', gu: 'gaude', zuek: 'zaudete', haiek: 'daude' },
       past: {
         ni: 'nengoen',
+        hi: 'hengoen',
         zu: 'zeunden',
         hura: 'zegoen',
         gu: 'geunden',
@@ -241,7 +242,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ etxean nago.',
@@ -484,9 +485,10 @@ export const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'noa', zu: 'zoaz', hura: 'doa', gu: 'goaz', zuek: 'zoazte', haiek: 'doaz' },
+      present: { ni: 'noa', hi: 'hoa', zu: 'zoaz', hura: 'doa', gu: 'goaz', zuek: 'zoazte', haiek: 'doaz' },
       past: {
         ni: 'joan nintzen',
+        hi: 'joan hintzen',
         zu: 'joan zinen',
         hura: 'joan zen',
         gu: 'joan ginen',
@@ -551,7 +553,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ hondartzara noa.',
@@ -580,9 +582,10 @@ export const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'nator', zu: 'zatoz', hura: 'dator', gu: 'gatoz', zuek: 'zatozte', haiek: 'datoz' },
+      present: { ni: 'nator', hi: 'hator', zu: 'zatoz', hura: 'dator', gu: 'gatoz', zuek: 'zatozte', haiek: 'datoz' },
       past: {
         ni: 'etorri nintzen',
+        hi: 'etorri hintzen',
         zu: 'etorri zinen',
         hura: 'etorri zen',
         gu: 'etorri ginen',
@@ -651,7 +654,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ etxera nator.',

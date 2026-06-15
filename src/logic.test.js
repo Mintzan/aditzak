@@ -1671,6 +1671,38 @@ describe('generateQuestions', () => {
       expect(question.options).not.toContain('dut')
     })
   })
+
+  // #144 added `hi` as a new, ungendered person to izan/egon/joan/etorri's
+  // present and past tables (Unit 32, "Meet hi" — no allocutivity yet, see
+  // docs/DECISIONS.md). With no `sentences`/`pronounSentences` for `hi`,
+  // `availableKinds` is always empty, so `hi` questions are always `kind:
+  // 'form'` regardless of `Math.random`.
+  describe('#144 `hi` as a new person (izan/egon/joan/etorri)', () => {
+    const izan = VERBS.find((v) => v.id === 'izan')
+    const joan = VERBS.find((v) => v.id === 'joan')
+    const etorri = VERBS.find((v) => v.id === 'etorri')
+
+    it('drills `hi` present with the other nor verbs\' `hi` forms as distractors', () => {
+      const question = generateQuestions(izan, 'present', { persons: ['hi'], verbs: VERBS })[0]
+
+      expect(question.kind).toBe('form')
+      expect(question.correct).toBe('haiz')
+      expect(question.options).toEqual(expect.arrayContaining(['haiz', 'hago', 'hoa', 'hator']))
+    })
+
+    it('drills `hi` past, with `hi` present (`haiz`) as a #141 cross-tense lure', () => {
+      const question = generateQuestions(izan, 'past', { persons: ['hi'], verbs: VERBS })[0]
+
+      expect(question.kind).toBe('form')
+      expect(question.correct).toBe('hintzen')
+      expect(question.options).toContain('haiz')
+    })
+
+    it('gives joan/etorri a periphrastic `hi` past, matching their existing `ni`/`zu`/... shape', () => {
+      expect(joan.conjugations.past.hi).toBe('joan hintzen')
+      expect(etorri.conjugations.past.hi).toBe('etorri hintzen')
+    })
+  })
 })
 
 describe('getCrossVerbCandidates', () => {
