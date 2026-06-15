@@ -478,12 +478,28 @@ function buildOptions(table, persons, person, extraCandidates = [], borrowPool =
 // Whether two verbs' subject-marking is compatible enough that one's
 // conjugated form could plausibly (if incorrectly) fill the other's blank —
 // `nor` (absolutive-only: izan, egon, joan, etorri, ari) vs `nor-nork`
-// (ergative subject: ukan, nahi, jakin, ...). Mixing across this boundary
-// would produce a structurally broken sentence rather than a "wrong verb,
-// right shape" distractor — that's deliberately out of scope here (see
-// Delivery 3 in `docs/EXERCISE_VARIETY_PLAN.md`).
+// (ergative subject: ukan, nahi, jakin, ...) vs `nor-nori-nork` (ditransitive:
+// esan, eman, ...). Mixing across these boundaries would produce a
+// structurally broken sentence rather than a "wrong verb, right shape"
+// distractor — that's deliberately out of scope here (see Delivery 3 in
+// `docs/EXERCISE_VARIETY_PLAN.md`). No current verb has `nori`, so the added
+// check is a no-op until #147 adds the first ditransitive verb.
 export function agreementsCompatible(a, b) {
-  return a.includes('nork') === b.includes('nork')
+  return a.includes('nork') === b.includes('nork') && a.includes('nori') === b.includes('nori')
+}
+
+// For a NOR-NORI-NORK (ditransitive) verb, resolves its axis-fixed metadata
+// (#142, mirroring `object: 'hura'`'s role for `nor-nork` verbs) into
+// `{ role, person }`: `recipient` fixes NORI (`role: 'nori'`) so
+// `conjugations[tense][person]` varies over NORK (e.g. `recipient: 'hura'` ->
+// `diot`/`diozu`/`dio`/... "I/you/he tell *him*"); `agent` fixes NORK
+// (`role: 'nork'`) so `person` varies over NORI (e.g. `agent: 'ni'` ->
+// `diot`/`dizut`/`diet`/... "I tell him/you/them"). Returns `null` for verbs
+// with neither field set — every verb today, until #147 adds `esan`/`eman`.
+export function getFixedArgument(verb) {
+  if (verb.recipient) return { role: 'nori', person: verb.recipient }
+  if (verb.agent) return { role: 'nork', person: verb.agent }
+  return null
 }
 
 // Whether `verb`'s `[tense][person]` form is a "particle + auxiliary"
@@ -810,7 +826,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   const negativeSentences = verb.negativeSentences?.[tense] ?? {}
   const persons = personsFilter ?? Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
-  const source = { verbId: verb.id, tense }
+  const source = { verbId: verb.id, tense, fixedArgument: getFixedArgument(verb) }
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
   const noProduction = noTyping || mode === 'recognition'

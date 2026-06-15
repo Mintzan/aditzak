@@ -13,6 +13,7 @@ import {
   getCrossVerbCandidates,
   getExplanation,
   getEncouragement,
+  getFixedArgument,
   getIntroducedSources,
   getLastPlayedLessonId,
   getLocalDateString,
@@ -215,6 +216,7 @@ function describeLesson(lesson, t, language) {
       subtitle: { main: verb.verb, secondary: verbMeaning(verb, language) },
       heading: persons ? `${verb.verb} · ${label} (${persons})` : `${verb.verb} · ${label}`,
       recognitionOnly,
+      fixedArgument: getFixedArgument(verb),
     }
   }
   const verbNames = [...new Set(lesson.sources.map(({ verbId }) => VERBS.find((v) => v.id === verbId).verb))]
@@ -264,6 +266,22 @@ function AgreementBadge({ role }) {
   )
 }
 
+// For a NOR-NORI-NORK lesson (#142), shows which argument is fixed for this
+// lesson/question — e.g. "NORI: hura" for `recipient: 'hura'` (every form
+// means "... to him/her") or "NORK: ni" for `agent: 'ni'` (every form means
+// "I ..."). `fixedArgument` is `getFixedArgument(verb)`'s `{ role, person }`
+// result; renders nothing for the `null` every non-ditransitive verb returns.
+function FixedArgumentBadge({ fixedArgument }) {
+  const { t } = useLanguage()
+  if (!fixedArgument) return null
+  const { role, person } = fixedArgument
+  return (
+    <span title={t('fixedArgumentTitle')} className={`rounded-full px-2.5 py-1 text-xs font-semibold whitespace-nowrap ${AGREEMENT_META[role].className}`}>
+      {AGREEMENT_META[role].label}: {t(PERSON_LABEL_KEYS[person])}
+    </span>
+  )
+}
+
 function DialectBadge({ dialect }) {
   return (
     <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-gray-500">
@@ -280,6 +298,7 @@ function VerbBadgeRow({ verb }) {
         <AgreementBadge key={role} role={role} />
       ))}
       <DialectBadge dialect={verb.dialect} />
+      <FixedArgumentBadge fixedArgument={getFixedArgument(verb)} />
     </div>
   )
 }
@@ -319,7 +338,7 @@ function journeyText(scope, id, field, language, fallback) {
 
 function LessonNode({ lesson, locked, needsGateScore, stars, onSelect }) {
   const { t, language } = useLanguage()
-  const { icon, title, subtitle, recognitionOnly } = describeLesson(lesson, t, language)
+  const { icon, title, subtitle, recognitionOnly, fixedArgument } = describeLesson(lesson, t, language)
   return (
     <button
       type="button"
@@ -350,6 +369,11 @@ function LessonNode({ lesson, locked, needsGateScore, stars, onSelect }) {
         </p>
         {recognitionOnly && <p className="mt-1 text-sm font-semibold text-sky-600">{t('recognitionOnly')}</p>}
         {needsGateScore && <p className="mt-1 text-sm font-semibold text-amber-600">{t('gateNeedsScore')}</p>}
+        {fixedArgument && (
+          <div className="mt-1">
+            <FixedArgumentBadge fixedArgument={fixedArgument} />
+          </div>
+        )}
       </div>
       <Stars count={stars} />
     </button>
@@ -1595,6 +1619,11 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
           t(tenseMeta.labelKey)
         )}
       </p>
+      {question.fixedArgument && (
+        <div className="mt-2">
+          <FixedArgumentBadge fixedArgument={question.fixedArgument} />
+        </div>
+      )}
       {question.sentence ? (
         <SentenceWithBlank sentence={question.sentence} />
       ) : question.items ? null : (

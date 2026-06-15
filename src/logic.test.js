@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   addPoints,
+  agreementsCompatible,
   buildFlagDiagnostics,
   canRepairStreak,
   computeLessonPoints,
@@ -16,6 +17,7 @@ import {
   getCrossVerbCandidates,
   getEncouragement,
   getExplanation,
+  getFixedArgument,
   getIntroducedSources,
   getLocalDateString,
   getPointsBalance,
@@ -661,7 +663,19 @@ describe('generateQuestions', () => {
 
   it('tags every question with the verb and tense it was generated from', () => {
     generateQuestions(verb, 'present').forEach((question) => {
-      expect(question).toMatchObject({ verbId: verb.id, tense: 'present' })
+      expect(question).toMatchObject({ verbId: verb.id, tense: 'present', fixedArgument: null })
+    })
+  })
+
+  it('resolves fixedArgument from a recipient/agent verb (#142)', () => {
+    const recipientVerb = { ...verb, recipient: 'hura' }
+    generateQuestions(recipientVerb, 'present').forEach((question) => {
+      expect(question.fixedArgument).toEqual({ role: 'nori', person: 'hura' })
+    })
+
+    const agentVerb = { ...verb, agent: 'ni' }
+    generateQuestions(agentVerb, 'present').forEach((question) => {
+      expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
     })
   })
 
@@ -2475,5 +2489,65 @@ describe('getWeakSpotQuestions', () => {
 
   it('exports EXTRA_REVIEW_EXERCISES as the default cap', () => {
     expect(EXTRA_REVIEW_EXERCISES).toBe(4)
+  })
+})
+
+describe('getFixedArgument', () => {
+  it('returns null for a verb with neither recipient nor agent', () => {
+    expect(getFixedArgument({ id: 'izan', agreement: ['nor'] })).toBeNull()
+  })
+
+  it('resolves recipient into a nori-fixed argument (#142)', () => {
+    expect(getFixedArgument({ id: 'esan', agreement: ['nor', 'nori', 'nork'], recipient: 'hura' })).toEqual({
+      role: 'nori',
+      person: 'hura',
+    })
+  })
+
+  it('resolves agent into a nork-fixed argument (#142)', () => {
+    expect(getFixedArgument({ id: 'eman', agreement: ['nor', 'nori', 'nork'], agent: 'ni' })).toEqual({
+      role: 'nork',
+      person: 'ni',
+    })
+  })
+
+  it('prefers recipient when both are set', () => {
+    expect(getFixedArgument({ id: 'both', recipient: 'hura', agent: 'ni' })).toEqual({ role: 'nori', person: 'hura' })
+  })
+})
+
+describe('agreementsCompatible', () => {
+  it('treats two nor-only verbs as compatible', () => {
+    expect(agreementsCompatible(['nor'], ['nor'])).toBe(true)
+  })
+
+  it('treats two nor-nork verbs as compatible', () => {
+    expect(agreementsCompatible(['nor', 'nork'], ['nor', 'nork'])).toBe(true)
+  })
+
+  it('treats nor and nor-nork verbs as incompatible', () => {
+    expect(agreementsCompatible(['nor'], ['nor', 'nork'])).toBe(false)
+  })
+
+  it('treats nor-nork and nor-nori-nork verbs as incompatible (#142)', () => {
+    expect(agreementsCompatible(['nor', 'nork'], ['nor', 'nori', 'nork'])).toBe(false)
+  })
+
+  it('treats two nor-nori-nork verbs as compatible (#142)', () => {
+    expect(agreementsCompatible(['nor', 'nori', 'nork'], ['nor', 'nori', 'nork'])).toBe(true)
+  })
+})
+
+describe('ditransitive (NOR-NORI-NORK) verb metadata (#142)', () => {
+  const PERSONS = ['ni', 'hi', 'zu', 'hura', 'gu', 'zuek', 'haiek']
+
+  it('gives every ditransitive verb exactly one resolvable fixed argument', () => {
+    VERBS.filter((verb) => verb.agreement.includes('nori') && verb.agreement.includes('nork')).forEach((verb) => {
+      const fixedArgument = getFixedArgument(verb)
+      expect(fixedArgument).not.toBeNull()
+      expect(['nori', 'nork']).toContain(fixedArgument.role)
+      expect(PERSONS).toContain(fixedArgument.person)
+      expect(verb.recipient && verb.agent).toBeFalsy()
+    })
   })
 })

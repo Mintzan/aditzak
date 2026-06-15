@@ -10,6 +10,19 @@
 // nor-nori-nork system. `ukan` is shown here in its citation paradigm,
 // i.e. with a fixed 3rd-person-singular absolutive object ("it/him/her").
 //
+// `object` (for `nor-nork` verbs) names that fixed absolutive argument —
+// always `'hura'` so far. NOR-NORI-NORK (ditransitive) verbs' `conjugations`
+// are genuinely 2D (NORK x NORI — see `CONJUGATIONS.md` §5), which a single
+// `person` key can't represent; #142's axis-fixed approach instead fixes one
+// of the two free arguments per verb/lesson, mirroring `object`:
+//   - `recipient` fixes NORI, so `person` varies over NORK (e.g.
+//     `recipient: 'hura'` -> `conjugations[tense]` is `diot`/`diozu`/`dio`/...
+//     "I/you/he tell *him*").
+//   - `agent` fixes NORK, so `person` varies over NORI (e.g. `agent: 'ni'` ->
+//     `conjugations[tense]` is `diot`/`dizut`/`diet`/... "I tell him/you/them").
+// Exactly one of the two is set on a ditransitive verb; `getFixedArgument`
+// (`lessonLogic.js`) resolves either into `{ role, person }` for the UI.
+//
 // `dialect` is a placeholder for future variants: a verb could later carry
 // e.g. `dialectVariants: { bizkaiera: { conjugations: {...} } }` overrides
 // without changing this shape.
