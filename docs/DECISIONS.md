@@ -26,11 +26,12 @@ case. The gate itself stays fully replayable either way — this is a soft
 wall, no lockout and no progress loss, per
 `docs/LEARNING_JOURNEY_PROPOSED.md` design principle 4.
 
-Implemented against the foundation's actual gate numbers (P-8/18/25/37, from
-#137/`docs/LEARNING_JOURNEY_EVALUATION.md`) rather than #138's issue body,
-which cites "N-10/20/27/39" — that looks like a stale numbering from an
-earlier draft; `GATE_LESSON_IDS` is derived generically from `gate: true` so
-it'll pick up P-18/25/37 automatically once those units gain `lessonIds`.
+Implemented against the foundation as it stands today (37-unit layout from
+#137, gates at P-8/18/25/37, only P-8 currently `available`) rather than
+#138's issue body, which cites "N-10/20/27/39" — the post-#151 39-unit
+numbering for these same four gates (#151 tracks the 37→39 spine renumber).
+`GATE_LESSON_IDS` is derived generically from `gate: true`, so it needs no
+changes once #151 lands and once P-18/25/37 (→ N-20/27/39) gain `lessonIds`.
 
 ## 2026-06-14 — #137: renumbered `JOURNEY` to the 37-unit layout
 
