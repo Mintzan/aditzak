@@ -22,6 +22,7 @@ import {
   getUnlockedLessonIds,
   getWeakSpotQuestions,
   isAnswerCorrect,
+  isLockedByGateScore,
   mergeSyncPayload,
   recordDailyStreak,
   recordErrors,
@@ -30,7 +31,7 @@ import {
   shuffle,
   STREAK_REPAIR_COST,
 } from './lessonLogic'
-import { JOURNEY } from './journey'
+import { GATE_LESSON_IDS, JOURNEY } from './journey'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext'
 import { trackEvent } from './analytics'
@@ -312,7 +313,7 @@ function journeyText(scope, id, field, language, fallback) {
 // Home screen — lesson selection
 // =============================================================================
 
-function LessonNode({ lesson, locked, stars, onSelect }) {
+function LessonNode({ lesson, locked, needsGateScore, stars, onSelect }) {
   const { t, language } = useLanguage()
   const { icon, title, subtitle } = describeLesson(lesson, t, language)
   return (
@@ -334,7 +335,7 @@ function LessonNode({ lesson, locked, stars, onSelect }) {
         }`}
         aria-hidden="true"
       >
-        {locked ? '🔒' : icon}
+        {locked ? (needsGateScore ? '🛡️' : '🔒') : icon}
       </div>
       <div className="min-w-0 flex-1">
         <p className="font-semibold text-gray-900">
@@ -343,6 +344,7 @@ function LessonNode({ lesson, locked, stars, onSelect }) {
         <p className="truncate text-sm text-gray-500">
           {subtitle.main} — {subtitle.secondary}
         </p>
+        {needsGateScore && <p className="mt-1 text-sm font-semibold text-amber-600">{t('gateNeedsScore')}</p>}
       </div>
       <Stars count={stars} />
     </button>
@@ -357,6 +359,7 @@ function LessonList({ lessons, progress, unlockedIds, onSelect }) {
           key={lesson.id}
           lesson={lesson}
           locked={!unlockedIds.has(lesson.id)}
+          needsGateScore={isLockedByGateScore(LESSONS, progress, GATE_LESSON_IDS, lesson.id)}
           stars={progress[lesson.id]?.bestStars ?? 0}
           onSelect={onSelect}
         />
@@ -456,7 +459,7 @@ function PhaseSection({ phase, progress, unlockedIds, onSelect }) {
 // `LessonNode`s and pending units rendering locked `PendingUnitCard`s.
 function JourneyTab({ progress, onSelectLesson }) {
   const { t } = useLanguage()
-  const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress), [progress])
+  const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress, undefined, GATE_LESSON_IDS), [progress])
 
   return (
     <div>
@@ -477,6 +480,7 @@ function ProgressTab({ progress }) {
         {LESSONS.map((lesson) => {
           const { heading } = describeLesson(lesson, t, language)
           const entry = progress[lesson.id]
+          const needsGateScore = isLockedByGateScore(LESSONS, progress, GATE_LESSON_IDS, lesson.id)
           return (
             <div key={lesson.id} className="flex items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4">
               <div className="min-w-0">
@@ -486,6 +490,7 @@ function ProgressTab({ progress }) {
                     ? `${t('progressBest', { best: entry.bestScore, total: entry.totalQuestions })} · ${tCount('attempt', entry.attempts)}`
                     : t('progressNotStarted')}
                 </p>
+                {needsGateScore && <p className="mt-1 text-sm font-semibold text-amber-600">{t('gateNeedsScore')}</p>}
               </div>
               <Stars count={entry?.bestStars ?? 0} />
             </div>
