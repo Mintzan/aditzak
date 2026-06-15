@@ -462,12 +462,22 @@ function rollQuestionKind(availableKinds) {
 // upcoming imperative unit, or `nahi`/`jakin`'s 3-person `present`/`future`).
 // Existing 4+-person tables are unaffected — the dedup/length check is a no-op
 // for them.
-function buildOptions(table, persons, person, extraCandidates = [], borrowPool = []) {
+//
+// `priorityCandidates` (optional, see `getCaseFrameLure`/`getCaseFramePronounLure`/
+// `getCrossTenseLure`) are forms guaranteed a distractor slot (ahead of the
+// random `pool` sample) when present, distinct from `correct`, and not
+// already in `pool` — #141's matrix-row-specific "diagnosable mistake" slots
+// (ergative drift, cross-pool aux, wrong tense). Each still counts toward the
+// 3-distractor cap, so a table with few own-person candidates yields fewer
+// random ones, not more options overall.
+function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = []) {
   const correct = table[person]
   const pool = [...persons.filter((candidate) => candidate !== person).map((candidate) => table[candidate]), ...extraCandidates].filter(
     (form) => form !== correct,
   )
-  let distractors = shuffle([...new Set(pool)]).slice(0, 3)
+  const priority = [...new Set(priorityCandidates)].filter((form) => form && form !== correct)
+  const rest = shuffle([...new Set(pool)].filter((form) => !priority.includes(form)))
+  let distractors = [...priority, ...rest].slice(0, 3)
   if (distractors.length < 3 && borrowPool.length > 0) {
     const borrowed = shuffle([...new Set(borrowPool)].filter((form) => form !== correct && !distractors.includes(form)))
     distractors = [...distractors, ...borrowed].slice(0, 3)
@@ -486,6 +496,45 @@ function buildOptions(table, persons, person, extraCandidates = [], borrowPool =
 // check is a no-op until #147 adds the first ditransitive verb.
 export function agreementsCompatible(a, b) {
   return a.includes('nork') === b.includes('nork') && a.includes('nori') === b.includes('nori')
+}
+
+// Finds the sibling verb whose subject-marking is the *case-frame inverse* of
+// `agreement` — same `nori` status, but the opposite `nork` status (`nor` <->
+// `nor-nork`, e.g. izan <-> ukan). Used by #141's "ergative drift" distractor
+// slot: a verb's case-frame-inverse sibling's same-person form is a
+// plausible-looking but case-mismatched answer (`naiz` offered alongside
+// `dut`, `Nik` offered alongside `Ni`). Returns the first such sibling in
+// `verbs`, or `undefined` if `verbs`/`agreement` is missing or none qualifies.
+// NOR-NORI and NOR-NORI-NORK verbs (#146/#147) have no case-frame-inverse
+// sibling yet — that needs #164/#162's fodder (#141's follow-up issue) — so
+// `agreement.includes('nori')` excludes them both as seekers and as matches.
+function getCaseFrameSibling(verbs, agreement) {
+  if (!verbs || !agreement || agreement.includes('nori')) return undefined
+  return verbs.find((sibling) => sibling.agreement && !sibling.agreement.includes('nori') && sibling.agreement.includes('nork') !== agreement.includes('nork'))
+}
+
+// The case-frame-inverse sibling's (see `getCaseFrameSibling`) same-person/
+// tense conjugated form — `dut` for `naiz`, `nuen` for `nintzen`, etc. — #141's
+// "NOR-NORK present" Slot 3 and "Past pools" Slot 2.
+export function getCaseFrameLure(verbs, verb, tense, person) {
+  return getCaseFrameSibling(verbs, verb.agreement)?.conjugations[tense]?.[person]
+}
+
+// The case-frame-inverse sibling's (see `getCaseFrameSibling`) declined
+// pronoun for the same person — `Nik` offered alongside `Ni`, or vice versa —
+// #141's "Case-marking checkpoint" Slot 1, the "wrong-case subject"
+// (ergative-drift) trap for `pronoun` questions.
+export function getCaseFramePronounLure(verbs, verb, person) {
+  return getCaseFrameSibling(verbs, verb.agreement)?.pronouns?.[person]
+}
+
+// For a past-tense question, the verb's own *present*-tense form for the same
+// person — #141's "Past pools" Slot 3 ("present same-person form"): a
+// plausible answer for the right verb and person, but the wrong tense (e.g.
+// `naiz` offered alongside `nintzen`). `undefined` for any tense but `past`.
+export function getCrossTenseLure(verb, tense, person) {
+  if (tense !== 'past') return undefined
+  return verb.conjugations.present?.[person]
 }
 
 // For a NOR-NORI-NORK (ditransitive) verb, resolves its axis-fixed metadata
@@ -819,6 +868,19 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, 
 // recognition task — spotting a wrong form in a sentence someone else wrote
 // — not production). Defaults to `undefined`, i.e. the original behaviour
 // (every kind `noTyping` would also allow stays on the table).
+//
+// #141's case-frame/cross-tense lures (`getCaseFrameLure`/
+// `getCaseFramePronounLure`/`getCrossTenseLure`) add up to two further
+// guaranteed distractors, on top of the same-table ones above, for the rows
+// of `docs/LEARNING_JOURNEY_PROPOSED.md`'s Distractor Engine Matrix
+// implementable with existing `izan`/`ukan` data: a NOR-NORK verb's present
+// (`naiz` alongside `dut`), any verb's past (`nuen` alongside `nintzen`, and
+// the verb's own present form alongside its past one), and `pronoun`
+// questions for any non-NOR-NORI verb (`Nik` alongside `Ni`, or vice versa —
+// the "ergative drift" trap). Require `verbs` (for the sibling lookup) and
+// gracefully contribute nothing without it. NOR-NORI/NOR-NORI-NORK, future,
+// hi/hitanoa, and the moods with no data yet are out of scope — see #141's
+// follow-up issue.
 export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
@@ -837,6 +899,14 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     const negativeSentence = normalizeSentence(pickVariant(negativeSentences[person]))
     const ambiguousTyping = hasAmbiguousTypedForm(verb, tense, person, verbs)
     const borrowed = getBorrowedDistractors(verbs, verb.agreement, tense, person, verb.id)
+    // #141's case-frame/cross-tense lures: a NOR-NORK verb's present (Slot 3,
+    // "naiz for dut") and any verb's past (Slot 2 "nintzen for nuen", Slot 3
+    // "naiz for nintzen") get one or two guaranteed "diagnosable mistake"
+    // distractors on top of the usual same-table ones. NOR present (no
+    // `nork`, present tense) is left alone — its matrix row's Slot 3 is the
+    // post-Unit-7 plural/near-homophone borrow (#164), not a case-frame lure.
+    const formLures = tense === 'past' || verb.agreement?.includes('nork') ? [getCaseFrameLure(verbs, verb, tense, person), getCrossTenseLure(verb, tense, person)] : []
+    const pronounLures = [getCaseFramePronounLure(verbs, verb, person)]
     const availableKinds =
       includeNegation && negativeSentence
         ? [negativeSentence && 'negative', negativeSentence && !noProduction && !ambiguousTyping && 'type-negative'].filter(Boolean)
@@ -860,7 +930,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     switch (kind) {
       case 'sentence': {
         const extra = filterExtraCandidates(extraCandidates?.[person], sentence.validFor)
-        const { correct, options } = buildOptions(table, persons, person, extra, borrowed)
+        const { correct, options } = buildOptions(table, persons, person, extra, borrowed, formLures)
         return { ...source, kind: 'sentence', person, sentence: sentence.text, correct, options }
       }
       case 'type-verb':
@@ -868,20 +938,20 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
       case 'spot-error':
         return { ...source, ...buildSpotErrorQuestion(table, sentences, personsWithSentences, person, borrowedSpotErrorSlots) }
       case 'pronoun': {
-        const { correct, options } = buildOptions(verb.pronouns, persons, person)
+        const { correct, options } = buildOptions(verb.pronouns, persons, person, [], [], pronounLures)
         return { ...source, kind: 'pronoun', person, sentence: pronounSentence.text, correct, options }
       }
       case 'type-pronoun':
         return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence.text, correct: verb.pronouns[person] }
       case 'negative': {
         const extra = filterExtraCandidates(extraCandidates?.[person], negativeSentence.validFor)
-        const { correct, options } = buildOptions(table, persons, person, extra, borrowed)
+        const { correct, options } = buildOptions(table, persons, person, extra, borrowed, formLures)
         return { ...source, kind: 'negative', person, sentence: negativeSentence.text, correct, options }
       }
       case 'type-negative':
         return { ...source, kind: 'type-negative', person, sentence: negativeSentence.text, correct: table[person] }
       default: {
-        const { correct, options } = buildOptions(table, persons, person, [], borrowed)
+        const { correct, options } = buildOptions(table, persons, person, [], borrowed, formLures)
         return { ...source, kind: 'form', person, correct, options }
       }
     }
