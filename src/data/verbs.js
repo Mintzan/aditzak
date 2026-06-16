@@ -89,6 +89,21 @@ export const VERBS = [
         zuek: 'izango zarete',
         haiek: 'izango dira',
       },
+      // #148 core scope — Ahalera (potential, "can be"), Baldintza (if-clause,
+      // "if I were"), and Ondorioa present (apodosis, "would be"), all
+      // directly tabulated in `docs/CONJUGATIONS.md` §2. Form-only (no
+      // `sentences`/`pronounSentences`) — see `docs/DECISIONS.md`.
+      potential: { ni: 'naiteke', hi: 'haiteke', zu: 'zaitezke', hura: 'daiteke', gu: 'gaitezke', zuek: 'zaitezkete', haiek: 'daitezke' },
+      baldintza: { ni: 'banintz', hi: 'bahintz', zu: 'bazina', hura: 'balitz', gu: 'bagina', zuek: 'bazinete', haiek: 'balira' },
+      conditional: {
+        ni: 'nintzateke',
+        hi: 'hintzateke',
+        zu: 'zinateke',
+        hura: 'litzateke',
+        gu: 'ginateke',
+        zuek: 'zinatekete',
+        haiek: 'lirateke',
+      },
     },
     // Every variant here is a predicate-nominal/adjective frame ("Ni
     // irakaslea ___." = "I am a teacher", "Txakurra handia ___." = "The dog is
@@ -285,6 +300,14 @@ export const VERBS = [
         zuek: 'izango duzue',
         haiek: 'izango dute',
       },
+      // #148 core scope — Ahalera (potential, "can have"), Baldintza, and
+      // Ondorioa present, `NOR` fixed at `hura` (object), `NORK` varying —
+      // directly tabulated in `docs/CONJUGATIONS.md` §3 ("Ahalera,
+      // Orainaldia" and "Baldintza/Ondorioa, present", `NOR` = `hura`
+      // column). Form-only, no `hi` row (matching `ukan`'s existing tables).
+      potential: { ni: 'dezaket', zu: 'dezakezu', hura: 'dezake', gu: 'dezakegu', zuek: 'dezakezue', haiek: 'dezakete' },
+      baldintza: { ni: 'banu', zu: 'bazenu', hura: 'balu', gu: 'bagenu', zuek: 'bazenute', haiek: 'balute' },
+      conditional: { ni: 'nuke', zu: 'zenuke', hura: 'luke', gu: 'genuke', zuek: 'zenukete', haiek: 'lukete' },
     },
     // #124: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/ownable/visible
     // objects (book, car, pencil, ticket, passport, map, house, bone) admit
@@ -412,6 +435,43 @@ export const VERBS = [
         hura: '___ opari bat nahi du.',
       },
     },
+  },
+  // `behar` ("need to / have to") — #148 (N-19), the same invariant-particle
+  // + `ukan` shape as `nahi` (see above), riding `ukan`'s exact 6-person
+  // `dut`/`duzu`/`du`/`dugu`/`duzue`/`dute` suffixes for both `present`
+  // ("behar dut") and `future` ("beharko dut"). Unlike `nahi`/`jakin`,
+  // `behar`'s complement is an infinitive ("Joan behar dut" = "I have to
+  // go"), not an object noun, so no `sentences`/`pronounSentences` frame is a
+  // natural fit for #124's `validFor` machinery — core scope is form-only
+  // (multiple-choice over the conjugated `behar`/`beharko` forms); a
+  // sentence-frame pass is deferred — see `docs/DECISIONS.md`.
+  {
+    id: 'behar',
+    verb: 'behar izan',
+    meaning: { en: 'to need to / have to', es: 'tener que / necesitar', eu: 'behar izan' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'behar dut',
+        zu: 'behar duzu',
+        hura: 'behar du',
+        gu: 'behar dugu',
+        zuek: 'behar duzue',
+        haiek: 'behar dute',
+      },
+      future: {
+        ni: 'beharko dut',
+        zu: 'beharko duzu',
+        hura: 'beharko du',
+        gu: 'beharko dugu',
+        zuek: 'beharko duzue',
+        haiek: 'beharko dute',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
   // `jakin` ("to know a fact") — fully synthetic, sharing `ukan`'s
   // `-t`/`-zu`/∅ present suffix family (`dakit`/`dakizu`/`daki`), per
@@ -1581,6 +1641,9 @@ export const TENSE_META = {
   present: { labelKey: 'tensePresent', basque: 'oraina' },
   past: { labelKey: 'tensePast', basque: 'lehena' },
   future: { labelKey: 'tenseFuture', basque: 'geroa' },
+  potential: { labelKey: 'tensePotential', basque: 'ahalera' },
+  baldintza: { labelKey: 'tenseBaldintza', basque: 'baldintza' },
+  conditional: { labelKey: 'tenseConditional', basque: 'ondorioa' },
 }
 
 export const TYPE_META = {
