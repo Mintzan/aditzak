@@ -609,13 +609,43 @@ export const LESSONS = [
     ],
   },
   // Unit 23 (#146) — present NOR-NORI: `gustatu`/`iruditu`/`ahaztu`, `person`
-  // ranges over NORI (object: 'hura' fixes NOR = "it"). Plural-NOR (`-zki-`)
-  // distractor fodder and the unit's extra-practice lessons (recognition,
-  // production, number-split, case-frame buffer) are deferred — see the
-  // issue filed for #146's remaining scope.
+  // ranges over NORI (object: 'hura' fixes NOR = "it").
   { id: 'gustatu-present', verbId: 'gustatu', tense: 'present' },
   { id: 'iruditu-present', verbId: 'iruditu', tense: 'present' },
   { id: 'ahaztu-present', verbId: 'ahaztu', tense: 'present' },
+  // #164 — plural-NOR ("they please me") production drills, same three
+  // verbs, `object: 'haiek'` instead of `hura`.
+  { id: 'gustatu-present-plural', verbId: 'gustatu', tense: 'presentPlural' },
+  { id: 'iruditu-present-plural', verbId: 'iruditu', tense: 'presentPlural' },
+  { id: 'ahaztu-present-plural', verbId: 'ahaztu', tense: 'presentPlural' },
+  // #164 — number-split review: each verb's singular and plural present
+  // forms interleaved, recognition-only, drilling the `zait`-vs-`zaizkit`
+  // contrast directly (#164 scope item 2's "number-split" lesson).
+  {
+    id: 'unit-23-number-split-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'gustatu', tense: 'presentPlural' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'presentPlural' },
+      { verbId: 'ahaztu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'presentPlural' },
+    ],
+  },
+  // #164 — case-frame buffer: `gustatu`/`iruditu`/`ahaztu` mixed and
+  // over-learned (production) ahead of Unit 25's ditransitive jump (#164
+  // scope item 2's "case-frame buffer" lesson).
+  {
+    id: 'unit-23-case-frame-buffer',
+    review: true,
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'present' },
+    ],
+  },
   // Unit 24 (#146) — NOR-NORI past + future on the same verbs.
   { id: 'gustatu-past', verbId: 'gustatu', tense: 'past' },
   { id: 'gustatu-future', verbId: 'gustatu', tense: 'future' },

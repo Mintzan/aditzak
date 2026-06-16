@@ -367,10 +367,19 @@ export const JOURNEY = [
             number: 23,
             title: 'Pleasures, Opinions, Feelings',
             focus:
-              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; ends with a case-frame buffer lesson ahead of Unit 25\'s ditransitive jump',
-            payload: '"I like this." (Hau gustatzen zait) · "It seems good to him/her." (Ongi iruditzen zaio) · "I forgot the book." (Liburua ahaztu zait)',
+              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; ends with a case-frame buffer lesson ahead of Unit 25\'s ditransitive jump',
+            payload: '"I like this." (Hau gustatzen zait) · "It seems good to him/her." (Ongi iruditzen zaio) · "I forgot the book." (Liburua ahaztu zait) · "I forgot the keys." (Giltzak ahaztu zaizkit)',
             status: 'available',
-            lessonIds: ['gustatu-present', 'iruditu-present', 'ahaztu-present'],
+            lessonIds: [
+              'gustatu-present',
+              'iruditu-present',
+              'ahaztu-present',
+              'gustatu-present-plural',
+              'iruditu-present-plural',
+              'ahaztu-present-plural',
+              'unit-23-number-split-review',
+              'unit-23-case-frame-buffer',
+            ],
           },
           {
             number: 24,

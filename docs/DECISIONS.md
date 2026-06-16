@@ -8,6 +8,33 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-16 — #164: Unit 23 plural-NOR fodder + extra-practice lessons
+
+Closes #146's deferred scope. Added `presentPlural`/`pastPlural`/`futurePlural`
+as new `conjugations`/`TENSE_META` tense keys on `gustatu`/`iruditu`/`ahaztu`
+— reusing the existing `generateQuestions`/`describeLesson` machinery
+generically (same pattern as #148's `potential`/`baldintza`/`conditional`
+keys), so no engine changes were needed. Unit 23 gained three new production
+lessons drilling the plural forms directly (`*-present-plural`), plus two
+review lessons: `unit-23-number-split-review` (recognition-mode, interleaving
+each verb's singular and plural present sources to drill the `zait`-vs-
+`zaizkit` contrast) and `unit-23-case-frame-buffer` (production-mode,
+mixing all three verbs' singular present to over-learn the case frame ahead
+of Unit 25's ditransitive jump) — both built from the existing `review: true`
++ `sources` pooling, no new lesson-engine code required.
+
+Deliberately scoped out: a true side-by-side "pick zait or zaizkit for this
+exact sentence" question kind (would need new `kind` handling in
+`generateQuestions`/`buildQuestion`, since the engine currently treats each
+`(verb, tense, person)` triple as a single fixed answer, not a number choice)
+— the interleaved recognition review above drills the same contrast across
+separate questions instead, which needs no engine work and is good enough for
+now. Also out of scope: dedicated Unit 24 lessons for `pastPlural`/
+`futurePlural` (the data exists as distractor fodder for #141's Distractor
+Engine Matrix, per the issue's own framing, but #164 only asked for Unit 23's
+lessons) — left as data without lessons, same "fodder first, lesson later"
+split #141 itself depends on.
+
 ## 2026-06-16 — #155: `erosi` re-audit for purchasable-object `validFor` (residual #124 gap)
 
 The #124 `validFor` backfill that shipped to `main` was more conservative than

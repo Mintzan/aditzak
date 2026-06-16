@@ -309,7 +309,7 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 23 | **Pleasures, Opinions, Feelings** — present NOR-NORI, 3rd-person subjects (`zait`/`zaizu`/`zaio`/`zaigu`/`zaizue`/`zaie`) | "I like it." / "It seems good to me." / "I forgot (it slipped my mind)." | §4 (gustatu, iruditu, ahaztu) | pending — see `LEARNING_JOURNEY_PROPOSED.md` for `ahaztu`'s data shape and the four-lesson extra-practice sequence ending in a case-frame buffer |
+| 23 | **Pleasures, Opinions, Feelings** — present NOR-NORI, 3rd-person subjects (`zait`/`zaizu`/`zaio`/`zaigu`/`zaizue`/`zaie`) | "I like it." / "It seems good to me." / "I forgot (it slipped my mind)." | §4 (gustatu, iruditu, ahaztu) | available (#146, #164) — singular-NOR present (#146) plus plural-NOR (`-zki-`) production drills, a number-split review, and a case-frame buffer review (#164) |
 | 24 | **Dative Across Time** — NOR-NORI **past + future**, recombining Unit 23's grid with the periphrastic past and `-ko`/`-go` future | "I liked it yesterday." (`Atzo gustatu zitzaidan`) / "I'll forget the keys." (`Giltzak ahaztuko zaizkit`) | §4; §11 | pending — **new unit** (closes `LEARNING_JOURNEY_EVALUATION.md` finding F2) |
 
 #### Stage 9: Communication & Giving (NOR-NORI-NORK)
