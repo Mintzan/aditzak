@@ -8,6 +8,30 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-16 — #155: `erosi` re-audit for purchasable-object `validFor` (residual #124 gap)
+
+The #124 `validFor` backfill that shipped to `main` was more conservative than
+the alternative drafted in the superseded PR #132: for concrete/purchasable
+objects bought by an agentive human subject (book, car, pencil, ticket,
+passport, map, house, coffee, water, gift, film, the generic "hori"), it
+omitted `erosi` from `validFor`, meaning a correct "I buy X" alternative could
+be offered as a wrong distractor. Added `erosi` to `ukan`/`nahi`/`ikusi`'s
+matching sentences. Symmetrically, `erosi`'s own sentences for the same
+object classes (book, jacket, car, house, ticket, gift, record) were missing
+`ukan`/`nahi`/`eduki`/`ikusi` entirely — only `jan` had been considered as a
+candidate sibling for `erosi`'s non-food objects, so that gap was closed too.
+
+Left unchanged, with reasoning re-confirmed: kinship objects (sister/brother/
+son) and non-agentive subjects (a dog with a bone, a cat with milk, "Etxeak
+lorategi bat" — a house "having" a garden) keep `erosi` excluded — none of
+"a sister"/the dog/the cat/the house is a plausible buyer in these frames.
+`eduki`'s "object in pocket/hand" sentences (key, money, phone, card) also
+keep `erosi` excluded — "I buy a key in my pocket" doesn't read as the same
+statement as "I have a key in my pocket"; the location modifier doesn't
+combine with a buying-event reading. `jakin`'s fact/answer objects aren't
+purchasable, so `erosi` was never a candidate there. The confirmed-wrong pairs
+(`jan`↔`edan`, `ukan`↔`jakin`, `eduki`↔`jakin`) stay excluded throughout.
+
 ## 2026-06-16 — #148: `behar` + Ahalera/Baldintza/Ondorioa (Units 19/28/29, core scope)
 
 The epic's final sub-issue covers N-19 (behar/obligation), N-28 (Ahalera/
