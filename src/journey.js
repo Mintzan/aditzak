@@ -398,10 +398,15 @@ export const JOURNEY = [
           {
             number: 25,
             title: 'Communication & Giving',
-            focus: 'present NOR-NORI-NORK (esan, eman), axis-scaffolded — each lesson fixes one axis (NORK or NORI) before recombining both',
-            payload: '"I give it to him." (Ematen diot) · "You tell it to him." (Esaten diozu)',
+            focus: 'present NOR-NORI-NORK (esan, eman), axis-scaffolded — each lesson fixes one axis (NORK or NORI) before recombining both, plus plural-object (-zki-) fodder and extra-practice reviews',
+            payload: '"I give it to him." (Ematen diot) · "You tell it to him." (Esaten diozu) · "I tell him lies." (Gezurrak esaten dizkiot)',
             status: 'available',
-            lessonIds: ['esan-present', 'eman-present'],
+            lessonIds: [
+              'esan-present', 'eman-present',
+              'esan-present-plural', 'eman-present-plural',
+              'unit-25-fix-nori-review', 'unit-25-fix-nork-review',
+              'unit-25-object-number-review', 'unit-25-two-axis-review',
+            ],
           },
           {
             number: 26,

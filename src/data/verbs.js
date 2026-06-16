@@ -1412,6 +1412,34 @@ export const VERBS = [
         zuek: 'esango diozue',
         haiek: 'esango diote',
       },
+      // #162: plural-`NOR` object ("I tell him *lies*") — `-zki-`-infixed per
+      // CONJUGATIONS.md §5's `NOR`=haiek grids, `hari` row (NORI still fixed,
+      // NORK still the varying `person`). Future reuses the present aux
+      // forms with the `-go` participle, mirroring the singular future above.
+      presentPlural: {
+        ni: 'esaten dizkiot',
+        zu: 'esaten dizkiozu',
+        hura: 'esaten dizkio',
+        gu: 'esaten dizkiogu',
+        zuek: 'esaten dizkiozue',
+        haiek: 'esaten dizkiote',
+      },
+      pastPlural: {
+        ni: 'esan nizkion',
+        zu: 'esan zenizkion',
+        hura: 'esan zizkion',
+        gu: 'esan genizkion',
+        zuek: 'esan zenizkioten',
+        haiek: 'esan zizkioten',
+      },
+      futurePlural: {
+        ni: 'esango dizkiot',
+        zu: 'esango dizkiozu',
+        hura: 'esango dizkio',
+        gu: 'esango dizkiogu',
+        zuek: 'esango dizkiozue',
+        haiek: 'esango dizkiote',
+      },
     },
     // Ditransitive sentences are structurally unlike every other verb's
     // (NORI is fixed, not the varying slot), so `validFor: []` throughout —
@@ -1425,6 +1453,16 @@ export const VERBS = [
         gu: [{ text: 'Guk egia ___.', validFor: [] }],
         zuek: [{ text: 'Zuek egia ___.', validFor: [] }],
         haiek: [{ text: 'Haiek egia ___.', validFor: [] }],
+      },
+      // Plural object ("gezurrak", lies) so the cue noun phrase itself signals
+      // the `-zki-` slot, mirroring #164's plural-NOR sentence frames.
+      presentPlural: {
+        ni: [{ text: 'Nik gezurrak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk gezurrak ___.', validFor: [] }],
+        hura: [{ text: 'Hark gezurrak ___.', validFor: [] }],
+        gu: [{ text: 'Guk gezurrak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek gezurrak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek gezurrak ___.', validFor: [] }],
       },
     },
   },
@@ -1462,6 +1500,27 @@ export const VERBS = [
         zuek: 'emango dizuet',
         haiek: 'emango diet',
       },
+      // #162: plural-`NOR` object ("I give him *the books*") — `-zki-`-
+      // infixed per CONJUGATIONS.md §5's `NOR`=haiek grids, `nik` column
+      // (NORK still fixed, NORI still the varying `person`).
+      presentPlural: {
+        zu: 'ematen dizkizut',
+        hura: 'ematen dizkiot',
+        zuek: 'ematen dizkizuet',
+        haiek: 'ematen dizkiet',
+      },
+      pastPlural: {
+        zu: 'eman nizkizun',
+        hura: 'eman nizkion',
+        zuek: 'eman nizkizuen',
+        haiek: 'eman nizkien',
+      },
+      futurePlural: {
+        zu: 'emango dizkizut',
+        hura: 'emango dizkiot',
+        zuek: 'emango dizkizuet',
+        haiek: 'emango dizkiet',
+      },
     },
     sentences: {
       present: {
@@ -1469,6 +1528,13 @@ export const VERBS = [
         hura: [{ text: 'Nik liburua hari ___.', validFor: [] }],
         zuek: [{ text: 'Nik liburua zuei ___.', validFor: [] }],
         haiek: [{ text: 'Nik liburua haiei ___.', validFor: [] }],
+      },
+      // Plural object ("liburuak", the books).
+      presentPlural: {
+        zu: [{ text: 'Nik liburuak zuri ___.', validFor: [] }],
+        hura: [{ text: 'Nik liburuak hari ___.', validFor: [] }],
+        zuek: [{ text: 'Nik liburuak zuei ___.', validFor: [] }],
+        haiek: [{ text: 'Nik liburuak haiei ___.', validFor: [] }],
       },
     },
   },

@@ -8,6 +8,39 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-16 — #162: Unit 25 `-zki-` object-number fodder + four extra-practice reviews
+
+Closes #147's deferred scope items 2 and 4. Added `presentPlural`/
+`pastPlural`/`futurePlural` conjugation tables to `esan`/`eman` (reusing
+#164's tense-key names — zero new `TENSE_META`/i18n entries needed, since
+both pairs of verbs describe the same "absolutive `NOR` argument goes
+plural" concept) plus `esan-present-plural`/`eman-present-plural` lessons,
+proving the generic-tense-key pattern extends to `nor-nori-nork` verbs too.
+
+The issue's four "extra-practice" lesson types (fix-NORI, fix-NORK,
+object-number, two-axis recombination) were all built as `review: true`
+lessons pooling existing single-axis sources, rather than as a literal 2D
+`NORK`×`NORI` table — the current data model only supports one varying
+`person` axis per `conjugations` table (the other axis fixed via
+`recipient`/`agent`), and adding genuine dual-axis variation within a single
+question would require new data structure and new `generateQuestions`
+code. The issue itself only requires the *two-axis recombination* lesson to
+be recognition-only ("last recognition-first"), which is satisfiable by
+pooling `esan`'s NORK-varying source and `eman`'s NORI-varying source into
+one recognition review (`unit-25-two-axis-review`) — each individual
+question still varies a single axis, but the lesson as a whole recombines
+both rather than drilling either in isolation. Pooling for the same reason
+on `unit-25-object-number-review` (singular vs. plural object contrast).
+`unit-25-fix-nori-review`/`unit-25-fix-nork-review` are plain (non-
+recognition) reviews pooling each verb's present+past+future, since those
+just reinforce an already-drilled single axis.
+
+Deferred: a true single-question dual-axis "type both the NORK pronoun and
+the NORI suffix" lesson kind — no follow-up issue filed for this, since the
+issue's own acceptance criteria only ask for a recognition-first two-axis
+*review*, which the pooled approach above satisfies; revisit only if a
+future issue explicitly asks for production-level dual-axis recombination.
+
 ## 2026-06-16 — #164: Unit 23 plural-NOR fodder + extra-practice lessons
 
 Closes #146's deferred scope. Added `presentPlural`/`pastPlural`/`futurePlural`
