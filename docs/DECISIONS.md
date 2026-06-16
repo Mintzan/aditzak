@@ -8,6 +8,37 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-16 — #148: `behar` + Ahalera/Baldintza/Ondorioa (Units 19/28/29, core scope)
+
+The epic's final sub-issue covers N-19 (behar/obligation), N-28 (Ahalera/
+potential), N-29 (Baldintza & Ondorioa/conditional), N-30 (imperative), N-31
+(subjunctive), and N-37–39 (causatives). Core scope for this PR is N-19/28/29
+only — the three new `VERBS` tenses (`potential`, `baldintza`, `conditional`)
+and the new `behar` entry are all directly tabulated in
+`docs/CONJUGATIONS.md` §2 (`izan`) and §3 (`ukan`, `NOR` = `hura` column),
+needing no derivation. N-30/31/37-39 need new mechanics (imperative's
+addressee-only person gaps, subjunctive's construction-based recognition,
+causative's `-arazi`/`-erazi` conditioning) and are deferred to a follow-up
+issue.
+
+`izan`/`ukan`'s three new tenses are **form-only** — no `sentences`/
+`pronounSentences`/`negativeSentences` — same choice already made for
+`behar`. `generateQuestions` falls back to `kind: 'form'` (plain
+multiple-choice over the conjugation table) when a tense has no sentence
+data, so this needed zero engine changes; `TENSE_META` additions are
+similarly additive only. Sentence frames for these tenses (and for `behar`,
+whose complement is an infinitive — "Joan behar dut" — not an object noun,
+so #124's noun-object `validFor` tagging doesn't apply as-is) are deferred to
+the same follow-up.
+
+`ukan`'s three new tenses omit `hi` (6 persons, matching its existing
+`present`/`past`/`future` tables); `izan`'s include `hi` (7 persons, directly
+tabulated in CONJUGATIONS.md §2). Both verbs' dative-paradigm potential/
+conditional (`gustatu`/`iruditu`/`ahaztu`/`esan`/`eman`, recognition-only per
+the journey's own focus text) are deferred — they have zero existing
+potential/conditional keys and need a careful pass against §5's ditransitive
+Ahalera/Ondorioa grids.
+
 ## 2026-06-15 — #145: `kind: 'reading'` comprehension questions (Unit 36, core scope)
 
 **Decision:** Implemented Unit 36 ("Passive & Reading Real Text") as a new

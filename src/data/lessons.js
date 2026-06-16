@@ -593,6 +593,21 @@ export const LESSONS = [
       { verbId: 'ikusi', tense: 'future' },
     ],
   },
+  // Unit 19 (#148) — `behar` ("need to / have to"), riding `ukan`'s present/
+  // future suffixes (`behar dut` / `beharko dut`). Form-only (no
+  // `sentences`) — see `src/data/verbs.js`'s `behar` entry comment.
+  { id: 'behar-present', verbId: 'behar', tense: 'present' },
+  { id: 'behar-future', verbId: 'behar', tense: 'future' },
+  {
+    id: 'unit-19-review',
+    review: true,
+    sources: [
+      { verbId: 'behar', tense: 'present' },
+      { verbId: 'behar', tense: 'future' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'ukan', tense: 'future' },
+    ],
+  },
   // Unit 23 (#146) — present NOR-NORI: `gustatu`/`iruditu`/`ahaztu`, `person`
   // ranges over NORI (object: 'hura' fixes NOR = "it"). Plural-NOR (`-zki-`)
   // distractor fodder and the unit's extra-practice lessons (recognition,
@@ -620,6 +635,38 @@ export const LESSONS = [
   { id: 'esan-future', verbId: 'esan', tense: 'future' },
   { id: 'eman-past', verbId: 'eman', tense: 'past' },
   { id: 'eman-future', verbId: 'eman', tense: 'future' },
+  // Unit 28 (#148) — Ahalera (potential): `izan`/`ukan` production for
+  // NOR/NOR-NORK. Dative-paradigm (gustatu/iruditu/ahaztu/esan/eman)
+  // recognition-only potential is deferred — see the issue filed for #148's
+  // remaining scope.
+  { id: 'izan-potential', verbId: 'izan', tense: 'potential' },
+  { id: 'ukan-potential', verbId: 'ukan', tense: 'potential' },
+  {
+    id: 'unit-28-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'potential' },
+      { verbId: 'ukan', tense: 'potential' },
+    ],
+  },
+  // Unit 29 (#148) — Baldintza (if-clause) + Ondorioa present (would):
+  // `izan`/`ukan` production for NOR/NOR-NORK. Dative-paradigm recognition-
+  // only conditional is deferred alongside Unit 28's — see the issue filed
+  // for #148's remaining scope.
+  { id: 'izan-baldintza', verbId: 'izan', tense: 'baldintza' },
+  { id: 'izan-conditional', verbId: 'izan', tense: 'conditional' },
+  { id: 'ukan-baldintza', verbId: 'ukan', tense: 'baldintza' },
+  { id: 'ukan-conditional', verbId: 'ukan', tense: 'conditional' },
+  {
+    id: 'unit-29-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'baldintza' },
+      { verbId: 'izan', tense: 'conditional' },
+      { verbId: 'ukan', tense: 'baldintza' },
+      { verbId: 'ukan', tense: 'conditional' },
+    ],
+  },
   // Unit 32 (#144) — "Meet hi": `hi` (familiar "you") joins izan/egon/joan/
   // etorri's present and past tables as a 7th person. These four are
   // `nor`-only verbs, so `hi`-as-subject takes a single invariant form in
