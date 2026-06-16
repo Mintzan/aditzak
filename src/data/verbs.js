@@ -1507,6 +1507,22 @@ export const VERBS = [
         ni: 'gustatuko zait', zu: 'gustatuko zaizu', hura: 'gustatuko zaio',
         gu: 'gustatuko zaigu', zuek: 'gustatuko zaizue', haiek: 'gustatuko zaie',
       },
+      // #164: plural-`NOR` ("they please me") — same `NORI`-suffix family,
+      // `-zki-`-infixed per `docs/CONJUGATIONS.md` §4's `haiek`/`NOR` column.
+      // `person` here still ranges over `NORI`; the fixed `NOR` argument
+      // moves from `hura` to `haiek` for this whole table.
+      presentPlural: {
+        ni: 'gustatzen zaizkit', zu: 'gustatzen zaizkizu', hura: 'gustatzen zaizkio',
+        gu: 'gustatzen zaizkigu', zuek: 'gustatzen zaizkizue', haiek: 'gustatzen zaizkie',
+      },
+      pastPlural: {
+        ni: 'gustatu zitzaizkidan', zu: 'gustatu zitzaizkizun', hura: 'gustatu zitzaizkion',
+        gu: 'gustatu zitzaizkigun', zuek: 'gustatu zitzaizkizuen', haiek: 'gustatu zitzaizkien',
+      },
+      futurePlural: {
+        ni: 'gustatuko zaizkit', zu: 'gustatuko zaizkizu', hura: 'gustatuko zaizkio',
+        gu: 'gustatuko zaizkigu', zuek: 'gustatuko zaizkizue', haiek: 'gustatuko zaizkie',
+      },
     },
     // NORI is the varying slot here, so each sentence leads with the dative
     // pronoun ("Niri"/"Zuri"/...). `validFor: []`: gustatu/iruditu/ahaztu are
@@ -1522,6 +1538,16 @@ export const VERBS = [
         gu: [{ text: 'Guri hau ___.', validFor: [] }],
         zuek: [{ text: 'Zuei hau ___.', validFor: [] }],
         haiek: [{ text: 'Haiei hau ___.', validFor: [] }],
+      },
+      // #164: plural-object counterpart of the table above ("these please
+      // me", not "it pleases me") — `hau` ("this") becomes `hauek` ("these").
+      presentPlural: {
+        ni: [{ text: 'Niri hauek ___.', validFor: [] }],
+        zu: [{ text: 'Zuri hauek ___.', validFor: [] }],
+        hura: [{ text: 'Hari hauek ___.', validFor: [] }],
+        gu: [{ text: 'Guri hauek ___.', validFor: [] }],
+        zuek: [{ text: 'Zuei hauek ___.', validFor: [] }],
+        haiek: [{ text: 'Haiei hauek ___.', validFor: [] }],
       },
     },
   },
@@ -1546,6 +1572,20 @@ export const VERBS = [
         ni: 'irudituko zait', zu: 'irudituko zaizu', hura: 'irudituko zaio',
         gu: 'irudituko zaigu', zuek: 'irudituko zaizue', haiek: 'irudituko zaie',
       },
+      // #164: plural-`NOR` counterpart, see `gustatu`'s table above for the
+      // `-zki-` derivation.
+      presentPlural: {
+        ni: 'iruditzen zaizkit', zu: 'iruditzen zaizkizu', hura: 'iruditzen zaizkio',
+        gu: 'iruditzen zaizkigu', zuek: 'iruditzen zaizkizue', haiek: 'iruditzen zaizkie',
+      },
+      pastPlural: {
+        ni: 'iruditu zitzaizkidan', zu: 'iruditu zitzaizkizun', hura: 'iruditu zitzaizkion',
+        gu: 'iruditu zitzaizkigun', zuek: 'iruditu zitzaizkizuen', haiek: 'iruditu zitzaizkien',
+      },
+      futurePlural: {
+        ni: 'irudituko zaizkit', zu: 'irudituko zaizkizu', hura: 'irudituko zaizkio',
+        gu: 'irudituko zaizkigu', zuek: 'irudituko zaizkizue', haiek: 'irudituko zaizkie',
+      },
     },
     sentences: {
       present: {
@@ -1555,6 +1595,18 @@ export const VERBS = [
         gu: [{ text: 'Guri ongi ___.', validFor: [] }],
         zuek: [{ text: 'Zuei ongi ___.', validFor: [] }],
         haiek: [{ text: 'Haiei ongi ___.', validFor: [] }],
+      },
+      // #164: "ongi" (well/good) is an adverb, not a NOR argument, so the
+      // plural-NOR variant swaps in a genuine plural subject ("these
+      // things") rather than re-using "ongi" — `iruditu` needs a real noun
+      // phrase to host the number contrast.
+      presentPlural: {
+        ni: [{ text: 'Niri gauza hauek ongi ___.', validFor: [] }],
+        zu: [{ text: 'Zuri gauza hauek ongi ___.', validFor: [] }],
+        hura: [{ text: 'Hari gauza hauek ongi ___.', validFor: [] }],
+        gu: [{ text: 'Guri gauza hauek ongi ___.', validFor: [] }],
+        zuek: [{ text: 'Zuei gauza hauek ongi ___.', validFor: [] }],
+        haiek: [{ text: 'Haiei gauza hauek ongi ___.', validFor: [] }],
       },
     },
   },
@@ -1584,6 +1636,22 @@ export const VERBS = [
         ni: 'ahaztuko zait', zu: 'ahaztuko zaizu', hura: 'ahaztuko zaio',
         gu: 'ahaztuko zaigu', zuek: 'ahaztuko zaizue', haiek: 'ahaztuko zaie',
       },
+      // #164: plural-`NOR` counterpart — this is the pairing the issue's own
+      // worked example uses ("Giltzak ahaztu zaizkit" = "I forgot the
+      // keys"), since `ahaztu` (unlike `gustatu`/`iruditu`) most naturally
+      // takes a concrete, often-plural object in everyday use.
+      presentPlural: {
+        ni: 'ahaztu zaizkit', zu: 'ahaztu zaizkizu', hura: 'ahaztu zaizkio',
+        gu: 'ahaztu zaizkigu', zuek: 'ahaztu zaizkizue', haiek: 'ahaztu zaizkie',
+      },
+      pastPlural: {
+        ni: 'ahaztu zitzaizkidan', zu: 'ahaztu zitzaizkizun', hura: 'ahaztu zitzaizkion',
+        gu: 'ahaztu zitzaizkigun', zuek: 'ahaztu zitzaizkizuen', haiek: 'ahaztu zitzaizkien',
+      },
+      futurePlural: {
+        ni: 'ahaztuko zaizkit', zu: 'ahaztuko zaizkizu', hura: 'ahaztuko zaizkio',
+        gu: 'ahaztuko zaizkigu', zuek: 'ahaztuko zaizkizue', haiek: 'ahaztuko zaizkie',
+      },
     },
     sentences: {
       present: {
@@ -1593,6 +1661,16 @@ export const VERBS = [
         gu: [{ text: 'Guri liburua ___.', validFor: [] }],
         zuek: [{ text: 'Zuei liburua ___.', validFor: [] }],
         haiek: [{ text: 'Haiei liburua ___.', validFor: [] }],
+      },
+      // #164: the issue's own worked example — "Giltzak ahaztu zaizkit" ("I
+      // forgot the keys").
+      presentPlural: {
+        ni: [{ text: 'Niri giltzak ___.', validFor: [] }],
+        zu: [{ text: 'Zuri giltzak ___.', validFor: [] }],
+        hura: [{ text: 'Hari giltzak ___.', validFor: [] }],
+        gu: [{ text: 'Guri giltzak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuei giltzak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiei giltzak ___.', validFor: [] }],
       },
     },
   },
@@ -1656,6 +1734,12 @@ export const TENSE_META = {
   potential: { labelKey: 'tensePotential', basque: 'ahalera' },
   baldintza: { labelKey: 'tenseBaldintza', basque: 'baldintza' },
   conditional: { labelKey: 'tenseConditional', basque: 'ondorioa' },
+  // #164: plural-`NOR` counterparts of present/past/future for NOR-NORI
+  // verbs (`gustatu`/`iruditu`/`ahaztu`) — same tense, `-zki-`-infixed
+  // because the fixed `NOR` argument is `haiek` instead of `hura`.
+  presentPlural: { labelKey: 'tensePresentPlural', basque: 'oraina (anitza)' },
+  pastPlural: { labelKey: 'tensePastPlural', basque: 'lehena (anitza)' },
+  futurePlural: { labelKey: 'tenseFuturePlural', basque: 'geroa (anitza)' },
 }
 
 export const TYPE_META = {

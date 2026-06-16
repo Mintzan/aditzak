@@ -6,6 +6,30 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-16 — #164: plural-NOR (`-zki-`) forms for `gustatu`/`iruditu`/`ahaztu`; forms need native-speaker check
+
+**Decision:** Added `presentPlural`/`pastPlural`/`futurePlural` conjugation
+tables to `gustatu`/`iruditu`/`ahaztu` — the same NORI-suffix family as their
+existing singular-`NOR` tables, but `-zki-`-infixed because the fixed `NOR`
+argument moves from `hura` ("it") to `haiek` ("they"), per
+`docs/CONJUGATIONS.md` §4's `haiek`/`NOR` column. Reused each verb's existing
+participle choice (`gustatu`/`iruditu`'s `-tzen` habitual, `ahaztu`'s bare
+resultative participle) — only the dative auxiliary changes shape between the
+singular and plural tables. Added a `presentPlural` `sentences` table too,
+swapping each verb's singular-object cue ("hau"/"ongi"/"liburua") for a
+genuine plural-or-pluralizable noun phrase ("hauek"/"gauza hauek
+ongi"/"giltzak") — `ahaztu`'s "Niri giltzak ___." directly mirrors the
+`docs/LEARNING_JOURNEY_PROPOSED.md`/#164 worked example ("Giltzak ahaztu
+zaizkit" = "I forgot the keys").
+
+**Flag for native-speaker review:** same standing flag as #146's singular
+tables (still unconfirmed) — these `-zki-` plural forms inherit that
+uncertainty and add their own: in particular `iruditu`'s `presentPlural`
+sentence frame ("Niri gauza hauek ongi ___.") was constructed by analogy
+(`iruditu`'s only existing sentence cue, "ongi", is an adverb rather than a
+NOR-bearing noun phrase, so a plural subject had to be introduced) rather than
+taken from a worked example in the docs.
+
 ## 2026-06-15 — Added `gustatu`/`iruditu`/`ahaztu` (NOR-NORI) as the first dative-subject `VERBS` entries; forms need native-speaker check
 
 **Decision:** #146 added `gustatu` ("to like/please"), `iruditu` ("to seem"),
