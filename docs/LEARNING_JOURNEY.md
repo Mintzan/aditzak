@@ -340,7 +340,7 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 30 | **Commands (Agintera)** — the imperative | "Come!" (`Etorri!`) / "Do the work." (`Egizu lan`) / "Give me water." (`Emadazu ura`) | NOR/NOR-NORK [P]; ditransitive (`iezadazu`) [R] | §16 | pending — distractor-floor fix needed (small tables borrow sibling-verb forms) |
+| 30 | **Commands (Agintera)** — the imperative | "Come here!" (`Hadi hona!`) / "Stay calm." (`Zaitez lasai`) / "Do the work." (`Ezazu lan`) | izan/ukan NOR/NOR-NORK [P]; ditransitive (`iezadazu`) [R] | §16 | available (#171) — izan/ukan only; ditransitive/jussive/hortative/egon-etorri-joan deferred |
 | 31 | **Purpose & Wishing (Subjuntiboa)** — the subjunctive **as a construction** (matrix verb + subordinate clause) | "I want him to come." (`Nahi dut etor dadin`) / "She told him to come." (`Esan dio etor dadila`) / "...so that he sees it." (`...ikus dezan`) | NOR/NOR-NORK 3rd-person in-construction [P]; dative [R] | §16 | pending |
 
 Two different moods with different difficulty profiles get their own units —

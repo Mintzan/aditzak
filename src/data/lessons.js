@@ -749,6 +749,23 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'conditional' },
     ],
   },
+  // Unit 30 (#171 core scope) — Commands (Agintera/imperative), second-person
+  // only. izan/ukan are NOT `agreementsCompatible`, so `unit-30-review`
+  // (pooling both for spaced repetition) gets no cross-verb borrowing —
+  // accepted as-is, same as #167's toka/noka. Ditransitive (`iezadazu`),
+  // jussive/hortative forms, and egon/etorri/joan's imperative (= present
+  // tense — see CONJUGATIONS.md §16.2) are deferred to the issue filed for
+  // #171's remaining scope.
+  { id: 'izan-imperative', verbId: 'izan', tense: 'imperative' },
+  { id: 'ukan-imperative', verbId: 'ukan', tense: 'imperative' },
+  {
+    id: 'unit-30-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'imperative' },
+      { verbId: 'ukan', tense: 'imperative' },
+    ],
+  },
   // Unit 32 (#144) — "Meet hi": `hi` (familiar "you") joins izan/egon/joan/
   // etorri's present and past tables as a 7th person. These four are
   // `nor`-only verbs, so `hi`-as-subject takes a single invariant form in

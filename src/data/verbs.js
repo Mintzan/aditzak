@@ -118,6 +118,13 @@ export const VERBS = [
       presentNoka: { hura: 'dun', haiek: 'ditun' },
       pastToka: { hura: 'zuan', haiek: 'zituan' },
       pastNoka: { hura: 'zunan', haiek: 'zitunan' },
+      // #171 core scope — Agintera (imperative), second-person only (no
+      // ni/hura/gu/haiek cells exist — §9/§16.2). `hi` is invariant (`izan`'s
+      // `hi` is NOR, not NORK, so no allocutive-style gender split here,
+      // unlike `ukan`'s imperative below). 3rd-person jussive (`bedi`/
+      // `bitez`) and 1st-person hortative are out of scope for this table —
+      // see the issue filed for #171's remaining scope.
+      imperative: { hi: 'hadi', zu: 'zaitez', zuek: 'zaitezte' },
     },
     // Every variant here is a predicate-nominal/adjective frame ("Ni
     // irakaslea ___." = "I am a teacher", "Txakurra handia ___." = "The dog is
@@ -338,6 +345,15 @@ export const VERBS = [
       presentNoka: { hura: 'din', haiek: 'diten' },
       pastToka: { hura: 'zian', haiek: 'zitean' },
       pastNoka: { hura: 'zinan', haiek: 'zitenan' },
+      // #171 core scope — NOR-NORK Agintera (imperative, generic "do it!"),
+      // singular-object column only, per CONJUGATIONS.md §16.2. `hi`-m/`hi`-f
+      // split (`ezak`/`ezan`) since `hi` is the grammatical NORK subject
+      // here, matching #167's `hi`-as-NORK convention. 3rd-person jussive
+      // (`beza`/`bitza`), 1st-person hortative (`dezagun`), the plural-object
+      // (`-itz-`) column, and the ditransitive (`iezadazu`) imperative are
+      // out of scope for this table — see the issue filed for #171's
+      // remaining scope.
+      imperative: { 'hi-m': 'ezak', 'hi-f': 'ezan', zu: 'ezazu', zuek: 'ezazue' },
     },
     // #124/#155: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/ownable/
     // visible objects bought by their own (agentive, human) subject (book,
@@ -1853,6 +1869,8 @@ export const TENSE_META = {
   presentNoka: { labelKey: 'tensePresentNoka', basque: 'oraina (noka)' },
   pastToka: { labelKey: 'tensePastToka', basque: 'lehena (toka)' },
   pastNoka: { labelKey: 'tensePastNoka', basque: 'lehena (noka)' },
+  // #171: imperative (agintera) — second-person only, no ni/hura/gu/haiek cells.
+  imperative: { labelKey: 'tenseImperative', basque: 'agintera' },
 }
 
 export const TYPE_META = {

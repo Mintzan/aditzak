@@ -8,6 +8,34 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-17 — #171: Unit 30 imperative (agintera), izan/ukan core scope
+
+#171 is a large follow-up to #148 covering five separate deferred areas
+(dative potential/conditional, sentence frames, imperative, subjunctive,
+causatives). Picked Unit 30's imperative (agintera) as this PR's core scope
+since it's the next `pending` unit in journey order and is directly
+tabulated in `CONJUGATIONS.md` §9/§16.2 — the rest (N-28/29 dative
+paradigms, sentence frames, Unit 31 subjunctive, Units 37-39 causatives)
+moved to a follow-up issue.
+
+- **`imperative` is a new tense key** on `izan`/`ukan`, second-person only
+  (`hi`/`zu`/`zuek` — no `ni`/`hura`/`gu`/`haiek` cells exist for the
+  imperative at all, per §9).
+- **`izan`'s `hi` stays a single invariant key** (`hadi`) — `izan`'s `hi` is
+  a `NOR` argument, not `NORK`, so there's no allocutive-style gender split
+  here (consistent with #144's plain-`hi` convention).
+- **`ukan`'s `hi` splits into `hi-m`/`hi-f`** (`ezak`/`ezan`) — here `hi` is
+  the grammatical `NORK` subject of "do it!", matching #167's `hi`-as-NORK
+  convention exactly.
+- **Deferred**: the ditransitive (`iezadazu`) imperative, 3rd-person jussive
+  (`beza`/`bitza`) and 1st-person hortative (`dezagun`) forms, the
+  plural-object (`-itz-`) column, and `egon`/`etorri`/`joan`'s imperative
+  (which §16.2 notes is identical to their present tense — likely a quick
+  follow-up, but still new lesson/data work). `izan`/`ukan` aren't
+  `agreementsCompatible`, so `unit-30-review` (which pools both) gets no
+  cross-verb distractor borrowing — accepted as-is, same call as #167's
+  toka/noka review lessons.
+
 ## 2026-06-17 — #170: §14 non-finite-form reading items for Unit 36
 
 Added 8 new `kind: 'reading'` items (`reading-nonfinite-*` in

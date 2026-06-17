@@ -437,12 +437,12 @@ export const JOURNEY_TRANSLATIONS = {
     30: {
       title: { es: 'Órdenes (Agintera)', eu: 'Aginduak (Agintera)' },
       focus: {
-        es: 'el imperativo — producción para NOR/NOR-NORK, reconocimiento únicamente para el ditransitivo (iezadazu); las tablas pequeñas toman distractores de verbos hermanos',
-        eu: 'agintera — ekoizpena NOR/NOR-NORK-erako, ezagutza hutsa ditransitiborako (iezadazu); taula txikiek senide-aditzetatik hartzen dituzte distrakzioak',
+        es: 'el imperativo — producción de izan/ukan para NOR/NOR-NORK; el ditransitivo (iezadazu), solo reconocimiento, queda para más adelante',
+        eu: 'agintera — izan/ukan-en ekoizpena NOR/NOR-NORK-erako; ditransitiboa (iezadazu), ezagutza hutsa, geroago dator',
       },
       payload: {
-        es: '"¡Ven!" (Etorri!) · "Haz el trabajo." (Egizu lan) · "Dame agua." (Emadazu ura)',
-        eu: 'Etorri! · Egizu lan. · Emadazu ura.',
+        es: '"¡Ven aquí!" (Hadi hona!) · "Quédate tranquilo." (Zaitez lasai) · "Haz el trabajo." (Ezazu lan)',
+        eu: 'Hadi hona! · Zaitez lasai. · Ezazu lan.',
       },
     },
     31: {
