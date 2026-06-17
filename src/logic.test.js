@@ -2293,6 +2293,36 @@ describe('generateCrossVerbQuestions', () => {
     withExtra.forEach((question) => expect(question.options.length).toBe(2))
     expect(withExtra.length).toBe(withoutExtra.length)
   })
+
+  it('tops up degenerate 2-option questions with a `verbs`-sourced distractor (#202)', () => {
+    // A review with only one compatible sibling in its own `sources` (and no
+    // `extraSiblingSources`) is a real, recurring shape — e.g.
+    // `jakin-suffix-family-review`, where the only other in-scope sibling for
+    // a given sentence gets excluded by `validFor`, leaving a 2-option coin
+    // flip. Passing the full `VERBS` list as `verbs` lets a third,
+    // unrelated-but-compatible verb top the options up to 3.
+    const beste = {
+      id: 'beste',
+      verb: 'beste',
+      agreement: ['nor'],
+      conjugations: { present: { ni: 'bestenaiz', zu: 'bestezara', hura: 'besteda' } },
+    }
+    const sources = [
+      { verb: izan, tense: 'present' },
+      { verb: egon, tense: 'present' },
+    ]
+
+    const withoutVerbs = generateCrossVerbQuestions(sources, { count: 10 })
+    const withVerbs = generateCrossVerbQuestions(sources, { count: 10, verbs: [izan, egon, beste] })
+
+    withoutVerbs.forEach((question) => expect(question.options.length).toBe(2))
+    expect(withVerbs.length).toBeGreaterThan(0)
+    withVerbs.forEach((question) => {
+      expect(question.options).toContain(question.correct)
+      expect(new Set(question.options).size).toBe(question.options.length)
+      expect(question.options.length).toBe(3)
+    })
+  })
 })
 
 describe('generateCaseMixerQuestions', () => {
