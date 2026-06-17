@@ -143,6 +143,16 @@ slices, and `-arazi` are spelled out in full in
   shape for NOR/NORI/NORK role-swaps instead of negation, and is expected to
   reuse this same question-kind machinery with a role-swapped sentence-pair
   source.
+- **`kind: 'word-order'` (#185-#188)** debuts in **both** Phase I and Unit 10,
+  not one or the other: `generateQuestions` adds it to any lesson's roll pool
+  the moment a person's filled sentence (or, under `includeNegation`, negated
+  sentence) clears the 4-token floor — no per-unit opt-in, no new `LESSONS`
+  entries. In Unit 10 it **supplements** rather than replaces
+  `negative`/`type-negative` (the roll pool becomes `[negative,
+  type-negative, word-order]` once eligible), since auxiliary-fronting is
+  exactly the word-order change this kind is best at drilling. See
+  `docs/EXERCISE_ENGINE.md`'s "Word-order question contract" and
+  `docs/DECISIONS.md`.
 - **Score-gating (Units 20, 27, 39)** needs `getUnlockedLessonIds` to check
   `bestStars >= 2` on the gate's review lesson before unlocking the next unit,
   with the gate itself remaining replayable on a sub-threshold attempt (no
