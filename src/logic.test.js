@@ -12,6 +12,7 @@ import {
   exerciseReducer,
   generateCaseMixerQuestions,
   generateCrossVerbQuestions,
+  generateMatchPairsQuestions,
   generateQuestions,
   generateReadingQuestions,
   getActiveStreak,
@@ -31,6 +32,7 @@ import {
   getWeakSpotQuestions,
   isAnswerCorrect,
   isLockedByGateScore,
+  MATCH_PAIRS_QUESTION_COUNT,
   mergeDailyStreak,
   mergeErrorStats,
   mergePoints,
@@ -2300,6 +2302,71 @@ describe('generateCaseMixerQuestions', () => {
   })
 })
 
+describe('generateMatchPairsQuestions', () => {
+  const izan = {
+    id: 'izan',
+    verb: 'izan',
+    agreement: ['nor'],
+    conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' } },
+  }
+  const ariToka = {
+    id: 'ari-toka',
+    verb: 'ari',
+    agreement: ['nor'],
+    conjugations: { present: { hi: 'ari haiz', zu: 'ari zara' } },
+  }
+  const repeated = {
+    id: 'repeated',
+    verb: 'repeated',
+    agreement: ['nor'],
+    conjugations: { present: { ni: 'bera', zu: 'bera', hura: 'bera' } },
+  }
+
+  it('produces one match-pairs question with every in-scope person paired to its form', () => {
+    const sources = [{ verb: izan, tense: 'present' }]
+
+    const questions = generateMatchPairsQuestions(sources, { count: 10 })
+
+    expect(questions).toHaveLength(1)
+    expect(questions[0].kind).toBe('match-pairs')
+    expect(questions[0].verbId).toBe('izan')
+    expect(questions[0].correct).toBe('complete')
+    expect(questions[0].pairs).toEqual(
+      expect.arrayContaining([{ person: 'ni', form: 'naiz' }, { person: 'zu', form: 'zara' }, { person: 'hura', form: 'da' }]),
+    )
+  })
+
+  it('yields no question for a source with fewer than 3 in-scope persons', () => {
+    const sources = [{ verb: ariToka, tense: 'present' }]
+
+    expect(generateMatchPairsQuestions(sources)).toEqual([])
+  })
+
+  it('yields no question for a source whose in-scope forms are not all distinct', () => {
+    const sources = [{ verb: repeated, tense: 'present' }]
+
+    expect(generateMatchPairsQuestions(sources)).toEqual([])
+  })
+
+  it('respects a `persons` filter', () => {
+    const sources = [{ verb: izan, tense: 'present' }]
+
+    const questions = generateMatchPairsQuestions(sources, { persons: ['ni', 'zu', 'hura'] })
+
+    expect(questions[0].pairs).toHaveLength(3)
+  })
+
+  it('caps the number of returned questions at `count`', () => {
+    const sources = [
+      { verb: izan, tense: 'present' },
+      { verb: { ...izan, id: 'izan2' }, tense: 'present' },
+    ]
+
+    expect(generateMatchPairsQuestions(sources, { count: 1 })).toHaveLength(1)
+    expect(generateMatchPairsQuestions(sources)).toHaveLength(MATCH_PAIRS_QUESTION_COUNT)
+  })
+})
+
 // Coverage for collectCrossSourceCandidates' validFor filtering
 // (docs/SENTENCE_FRAMES.md), shared by generateCrossVerbQuestions and
 // generateCaseMixerQuestions: a source's example sentence's `validFor` tag
@@ -2632,6 +2699,14 @@ describe('exerciseReducer', () => {
     const next = exerciseReducer(retryState, { type: 'answer', option: 'haiz' })
 
     expect(next.misses).toEqual([{ verbId: 'izan', tense: 'present', person: 'ni' }])
+  })
+
+  it('does not add a malformed entry to misses for a missed match-pairs question (no `person`)', () => {
+    const matchPairsQuestion = { verbId: 'izan', tense: 'present', kind: 'match-pairs', correct: 'complete' }
+    const state = { ...baseState, queue: [matchPairsQuestion] }
+    const next = exerciseReducer(state, { type: 'answer', option: 'incomplete' })
+
+    expect(next.misses).toEqual([])
   })
 })
 

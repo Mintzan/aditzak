@@ -1136,6 +1136,37 @@ export function generateCaseMixerQuestions(resolvedSources, { persons: personsFi
   )
 }
 
+// Up to this many `kind: 'match-pairs'` questions (see
+// `generateMatchPairsQuestions`) get added to a lesson's queue — kept to a
+// bare minimum (1), since unlike `verb-choice`/`case-mixer` this isn't a
+// review-only special case but applies to ordinary practice lessons too.
+export const MATCH_PAIRS_QUESTION_COUNT = 1
+
+// A `kind: 'match-pairs'` question covers a whole source's table in one
+// round, instead of one grammatical person at a time like every other kind:
+// the learner matches every in-scope person to its conjugated form. Eligible
+// sources are those with at least 3 in-scope persons (`persons` ??
+// `Object.keys(table)`), all with distinct forms — fewer than 3 isn't a
+// matching task, and a repeated form would make a pair ambiguous (no real
+// example today, but `ari`/toka-noka-style 2-person tables already exist, so
+// the guard matters). `correct: 'complete'` is a sentinel string, not a real
+// form — the board itself (see `MatchPairsBoard` in App.jsx) determines
+// success/failure and submits `'complete'`/`'incomplete'`, so
+// `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'` needs no changes.
+export function generateMatchPairsQuestions(resolvedSources, { persons: personsFilter, count = MATCH_PAIRS_QUESTION_COUNT } = {}) {
+  const candidates = []
+  for (const { verb, tense } of resolvedSources) {
+    const table = verb.conjugations[tense]
+    if (!table) continue
+    const persons = personsFilter ?? Object.keys(table)
+    const pairs = persons.map((person) => ({ person, form: table[person] })).filter(({ form }) => Boolean(form))
+    if (pairs.length < 3) continue
+    if (new Set(pairs.map((pair) => pair.form)).size !== pairs.length) continue
+    candidates.push({ verbId: verb.id, tense, kind: 'match-pairs', fixedArgument: getFixedArgument(verb), pairs, correct: 'complete' })
+  }
+  return shuffle(candidates).slice(0, count)
+}
+
 // `kind: 'reading'` questions (Unit 36, see `src/data/readingItems.js`) have
 // no `verbId`/`tense`/`person` of their own — each is just a source sentence
 // plus a comprehension prompt and four candidate sentences, one of which
@@ -1266,7 +1297,7 @@ export function exerciseReducer(state, action) {
       const isFirstAttempt = !question.retry
       const countsTowardScore = isCorrect && isFirstAttempt
       const misses =
-        !isCorrect && isFirstAttempt && question.verbId
+        !isCorrect && isFirstAttempt && question.verbId && question.person
           ? [...(state.misses ?? []), { verbId: question.verbId, tense: question.tense, person: question.person }]
           : state.misses ?? []
       return {
@@ -1319,6 +1350,7 @@ export function buildFlagDiagnostics({ lesson, question, selected, status, langu
       ...(question.options ? { options: question.options } : {}),
       ...(question.items ? { items: question.items } : {}),
       ...(question.source ? { source: question.source } : {}),
+      ...(question.pairs ? { pairs: question.pairs } : {}),
     },
   }
 }
