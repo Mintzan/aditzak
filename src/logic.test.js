@@ -1561,7 +1561,7 @@ describe('generateQuestions', () => {
 
       expect(question.kind).toBe('word-order')
       expect(question.tokens).toHaveLength(4)
-      expect(question.tokens.map((token) => token.text).sort()).toEqual(['Ni', 'gaur', 'hemen', 'naiz.'].sort())
+      expect(question.tokens.map((token) => token.text).sort()).toEqual(['Ni', 'gaur', 'hemen', 'naiz'].sort())
     })
 
     it('keeps duplicate-word tokens distinguishable via a stable, unique id', () => {
@@ -1581,7 +1581,7 @@ describe('generateQuestions', () => {
 
       const [question] = generateQuestions(wordOrderVerb, 'present', { persons: ['ni'] })
 
-      expect(question.correct).toBe('Ni gaur hemen naiz.')
+      expect(question.correct).toBe('Ni gaur hemen naiz')
     })
 
     it('builds a word-order question from a negative sentence, with the fronted auxiliary in the right slot', () => {
@@ -1590,9 +1590,9 @@ describe('generateQuestions', () => {
       const [question] = generateQuestions(wordOrderNegationVerb, 'present', { includeNegation: true, persons: ['ni'] })
 
       expect(question.kind).toBe('word-order')
-      expect(question.correct).toBe('Ni ez naiz irakaslea.')
+      expect(question.correct).toBe('Ni ez naiz irakaslea')
       const reassembled = [...question.tokens].sort((a, b) => a.id - b.id).map((token) => token.text)
-      expect(reassembled).toEqual(['Ni', 'ez', 'naiz', 'irakaslea.'])
+      expect(reassembled).toEqual(['Ni', 'ez', 'naiz', 'irakaslea'])
     })
 
     it(`never offers word-order for a sentence below the ${WORD_ORDER_MIN_WORDS}-word minimum, regardless of roll`, () => {

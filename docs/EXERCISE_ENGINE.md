@@ -174,9 +174,12 @@ words back into order. Resolved per the design questions raised in #185:
 - **Source sentence**: either `sentences[tense][person]` or
   `negativeSentences[tense][person]`, filled the same way `sentence`/
   `negative` already do — `sentence.text.replace('___', table[person])`.
-- **Tokenization**: naive `text.split(' ')`. Trailing punctuation (`.`/`?`)
-  stays attached to whichever word is sentence-final, same as it would read
-  in running text — not worth a separate punctuation chip for v1.
+- **Tokenization**: naive `text.split(' ')`, after stripping a trailing `.`
+  (#214) — without that, the period glues onto the last word and becomes
+  something the learner has to account for when tapping the order, which
+  isn't part of what this exercise tests. A trailing `?` (none of today's
+  example sentences end in one) would still stay attached, same as it would
+  read in running text — not worth generalizing the strip for v1.
 - **Duplicate words**: tokens are built as `{ id, text }` pairs at
   question-build time (`tokens: shuffle(words.map((text, id) => ({ id,
   text })))`), so two instances of the same word stay distinguishable to the

@@ -776,15 +776,18 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, 
 export const WORD_ORDER_MIN_WORDS = 4
 
 // Builds a "reassemble the sentence" question: `sentence`'s blank gets
-// filled with `table[person]` (same as `sentence`/`negative` already do),
+// filled with `table[person]` (same as `sentence`/`negative` already do), a
+// trailing period stripped (#214 — otherwise it glues onto the last word and
+// becomes something the learner has to account for when tapping the order),
 // then split into a shuffled cloud of `{ id, text }` tokens — `id` is the
 // token's position in the *original* sentence, so two instances of the same
 // word stay distinguishable to the UI. `correct` stays the plain filled
-// sentence string: the UI rejoins whichever tokens the learner taps (in tap
-// order) with `' '` and submits that through the existing `submitAnswer`,
-// so `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'` need no changes.
+// sentence string (period-less): the UI rejoins whichever tokens the learner
+// taps (in tap order) with `' '` and submits that through the existing
+// `submitAnswer`, so `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'`
+// need no changes.
 function buildWordOrderQuestion(table, sentence, person) {
-  const text = sentence.text.replace('___', table[person])
+  const text = sentence.text.replace('___', table[person]).replace(/\.$/, '')
   const words = text.split(' ')
   return {
     kind: 'word-order',
