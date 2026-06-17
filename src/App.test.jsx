@@ -2,27 +2,16 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
-import { generateQuestions } from './lessonLogic'
+import { generateMatchPairsQuestions, generateQuestions } from './lessonLogic'
 import { VERBS } from './data/verbs'
 
-// `createExerciseState` doesn't generate `match-pairs` questions yet (that's
-// #192's wiring) — this flag lets the 'match-pairs question' tests below
-// swap in a single fixed match-pairs question for any lesson's queue,
-// without touching production code, so the UI (#191) can be exercised ahead
-// of that wiring.
+// `createExerciseState` always mixes in a real `kind: 'match-pairs'`
+// question for any eligible lesson (see `generateMatchPairsQuestions`,
+// wired in #192) — this flag lets the 'match-pairs question' tests below
+// suppress a practice lesson's normal per-person questions, so the queue
+// they exercise is just that one real match-pairs question (plus an
+// optional controlled followup), rather than 12+ unrelated questions.
 const matchPairsMock = vi.hoisted(() => ({ enabled: false, withFollowup: false }))
-const MATCH_PAIRS_QUESTION = {
-  kind: 'match-pairs',
-  verbId: 'izan',
-  tense: 'present',
-  fixedArgument: null,
-  correct: 'complete',
-  pairs: [
-    { person: 'ni', form: 'naiz' },
-    { person: 'zu', form: 'zara' },
-    { person: 'hura', form: 'da' },
-  ],
-}
 const FOLLOWUP_QUESTION = {
   kind: 'form',
   verbId: 'izan',
@@ -38,7 +27,7 @@ vi.mock('./lessonLogic', async (importOriginal) => {
     ...actual,
     generateQuestions: (...args) => {
       if (!matchPairsMock.enabled) return actual.generateQuestions(...args)
-      return matchPairsMock.withFollowup ? [MATCH_PAIRS_QUESTION, FOLLOWUP_QUESTION] : [MATCH_PAIRS_QUESTION]
+      return matchPairsMock.withFollowup ? [FOLLOWUP_QUESTION] : []
     },
   }
 })
@@ -203,15 +192,31 @@ describe('App', () => {
       vi.unstubAllGlobals()
     })
 
-    // With `Math.random` pinned to 0.99, `generateQuestions` is deterministic
-    // — replicate `createExerciseState`'s call for the "izan-present" lesson
-    // (12 questions: 4 rounds × the ni/zu/hura horizon, no typing on a first
-    // attempt) so each question's `correct` answer is known up front and can
-    // be clicked by its visible button text, regardless of question kind
-    // (form/sentence/pronoun all render `correct` as an option's label).
+    // With `Math.random` pinned to 0.99, `generateQuestions` and
+    // `generateMatchPairsQuestions` are both deterministic — replicate
+    // `createExerciseState`'s calls for the "izan-present" lesson (12 form/
+    // sentence/pronoun questions, plus the one real match-pairs question
+    // appended after them) so each question's `correct` answer — or, for the
+    // match-pairs question, its `pairs` — is known up front.
     function izanPresentQuestions() {
       const verb = VERBS.find((v) => v.id === 'izan')
-      return generateQuestions(verb, 'present', { noTyping: true, rounds: 4, persons: ['ni', 'zu', 'hura'] })
+      const questions = generateQuestions(verb, 'present', { noTyping: true, rounds: 4, persons: ['ni', 'zu', 'hura'] })
+      const matchPairsQuestions = generateMatchPairsQuestions([{ verb, tense: 'present' }], { persons: ['ni', 'zu', 'hura'] })
+      return [...questions, ...matchPairsQuestions]
+    }
+
+    // English labels for the persons used in this lesson, matching
+    // `PERSON_LABEL_KEYS`'s translated button text in `MatchPairsBoard`.
+    const PERSON_LABEL = { ni: 'I', zu: 'you', hura: 'he / she / it' }
+
+    // Plays a single match-pairs question to completion by tapping each
+    // pair's person tile then its matching form tile, in order — mirroring
+    // `MatchPairsBoard`'s own match-then-lock behavior with no mistakes.
+    async function playMatchPairsQuestion(user, question) {
+      for (const { person, form } of question.pairs) {
+        await user.click(screen.getByRole('button', { name: PERSON_LABEL[person] }))
+        await user.click(screen.getByRole('button', { name: form }))
+      }
     }
 
     // Mirrors `exerciseReducer`'s `queue`: an incorrect first attempt is
@@ -229,11 +234,18 @@ describe('App', () => {
       let first = true
       while (queue.length > 0) {
         const question = queue[0]
+        const isLast = queue.length === 1
+        if (question.kind === 'match-pairs') {
+          await playMatchPairsQuestion(user, question)
+          await user.click(await screen.findByRole('button', { name: isLast ? 'Finish' : 'Continue' }))
+          queue.shift()
+          first = false
+          continue
+        }
         const answer = wrongFirst && first ? question.options.find((o) => o !== question.correct) : question.correct
         const isCorrect = answer === question.correct
-        const isLast = queue.length === 1 && isCorrect
         await user.click(screen.getByRole('button', { name: answer }))
-        await user.click(screen.getByRole('button', { name: isLast ? 'Finish' : 'Continue' }))
+        await user.click(screen.getByRole('button', { name: isLast && isCorrect ? 'Finish' : 'Continue' }))
         if (isCorrect) {
           queue.shift()
         } else {
@@ -293,6 +305,12 @@ describe('App', () => {
     })
 
     async function startMatchPairsLesson(user) {
+      // `createExerciseState` now shuffles the real match-pairs question in
+      // alongside the (possibly mocked) `generateQuestions` output, so
+      // pinning `Math.random` keeps that shuffle a no-op — without it, the
+      // followup-question test below would be flaky: the followup and the
+      // match-pairs question could land in either order.
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
       render(<App />)
       await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
       await user.click(screen.getByRole('button', { name: 'Start' }))
@@ -358,11 +376,20 @@ describe('App', () => {
     })
 
     it('gives a retried match-pairs question a fresh board instead of reusing the frozen, fully-matched one', async () => {
+      // `createExerciseState` appends the real match-pairs question after the
+      // lesson's normal questions, so with one followup question injected it
+      // comes first, and the match-pairs question is both last and (once the
+      // followup is done) the queue's sole remaining item — letting a
+      // same-slot retry happen with no further question needed.
       matchPairsMock.withFollowup = true
       const user = userEvent.setup()
       await startMatchPairsLesson(user)
 
-      // Mismatch first, so the question is retried after the followup question.
+      await user.click(screen.getByRole('button', { name: 'gara' }))
+      await user.click(await screen.findByRole('button', { name: 'Continue' }))
+
+      // Mismatch first, then match every pair correctly — the board still
+      // ends up fully matched, but counts as incorrect.
       await user.click(screen.getByRole('button', { name: 'I' }))
       await user.click(screen.getByRole('button', { name: 'zara' }))
       await waitFor(() => expect(screen.getByRole('button', { name: 'I' })).not.toBeDisabled())
@@ -372,11 +399,6 @@ describe('App', () => {
       await user.click(screen.getByRole('button', { name: 'zara' }))
       await user.click(screen.getByRole('button', { name: 'he / she / it' }))
       await user.click(screen.getByRole('button', { name: 'da' }))
-      await user.click(await screen.findByRole('button', { name: 'Continue' }))
-
-      // Answer the followup question correctly, returning to the retried
-      // match-pairs question.
-      await user.click(screen.getByRole('button', { name: 'gara' }))
       await user.click(await screen.findByRole('button', { name: 'Continue' }))
 
       const retriedTile = await screen.findByRole('button', { name: 'I' })

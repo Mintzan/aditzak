@@ -8,6 +8,7 @@ import {
   exerciseReducer,
   generateCaseMixerQuestions,
   generateCrossVerbQuestions,
+  generateMatchPairsQuestions,
   generateQuestions,
   generateReadingQuestions,
   getActiveStreak,
@@ -1440,7 +1441,15 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   const caseMixerQuestions = lesson.review
     ? generateCaseMixerQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources })
     : []
-  const allQuestions = shuffle([...questions, ...extraQuestions, ...crossVerbQuestions, ...caseMixerQuestions])
+  // A whole-table match-the-pairs round (see `generateMatchPairsQuestions`)
+  // — gated off `lesson.negation` lessons (Unit 10's Refresh Gate A and its
+  // `unit-5-review-*` lessons), whose whole point is the `ez`/auxiliary-
+  // fronting drill; a bare person↔form match would dilute that focus.
+  // Otherwise applies automatically to any practice or review lesson whose
+  // sources have an eligible table, per the engine's own person/distinct-
+  // form check.
+  const matchPairsQuestions = lesson.negation ? [] : generateMatchPairsQuestions(resolvedSources, { persons: lesson.persons })
+  const allQuestions = shuffle([...questions, ...extraQuestions, ...crossVerbQuestions, ...caseMixerQuestions, ...matchPairsQuestions])
   return {
     queue: allQuestions,
     total: allQuestions.length,
