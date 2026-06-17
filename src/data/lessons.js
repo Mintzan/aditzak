@@ -769,15 +769,18 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'imperative' },
     ],
   },
-  // Unit 32 (#144) — "Meet hi": `hi` (familiar "you") joins izan/egon/joan/
-  // etorri's present and past tables as a 7th person. These four are
-  // `nor`-only verbs, so `hi`-as-subject takes a single invariant form in
-  // both tenses (`haiz`/`hago`/`hoa`/`hator`, `hintzen`/`hengoen`/`joan
-  // hintzen`/`etorri hintzen`) — no allocutive (toka/noka) gender split here
-  // (see docs/DECISIONS.md for the `hi`/`hi-m`/`hi-f` data-shape convention).
-  // `persons: ['hi']` pools each tense across all four verbs, so every `hi`
-  // question borrows its distractors from the other three verbs' `hi` forms
-  // (#139's borrowing) — exactly 3 siblings, exactly 3 distractors.
+  // Unit 32 (#144, +#180 `ibili`) — "Meet hi": `hi` (familiar "you") joins
+  // izan/egon/joan/etorri/ibili's present and past tables as a 7th person.
+  // These five are `nor`-only verbs, so `hi`-as-subject takes a single
+  // invariant form in both tenses (`haiz`/`hago`/`hoa`/`hator`/`habil`,
+  // `hintzen`/`hengoen`/`joan hintzen`/`etorri hintzen`/`ibili hintzen`) — no
+  // allocutive (toka/noka) gender split here (see docs/DECISIONS.md for the
+  // `hi`/`hi-m`/`hi-f` data-shape convention). `ibili`'s `hi` form was
+  // omitted from the original #144 core scope and only added later (#180) —
+  // see docs/LANGUAGE_DECISIONS.md for why `ibili hintzen` isn't a gap.
+  // `persons: ['hi']` pools each tense across all five verbs, so every `hi`
+  // question borrows its distractors from the other four verbs' `hi` forms
+  // (#139's borrowing, capped at 3 distractors by `buildOptions`).
   {
     id: 'unit-32-hi-present',
     review: true,
@@ -787,6 +790,7 @@ export const LESSONS = [
       { verbId: 'egon', tense: 'present' },
       { verbId: 'joan', tense: 'present' },
       { verbId: 'etorri', tense: 'present' },
+      { verbId: 'ibili', tense: 'present' },
     ],
   },
   {
@@ -798,6 +802,7 @@ export const LESSONS = [
       { verbId: 'egon', tense: 'past' },
       { verbId: 'joan', tense: 'past' },
       { verbId: 'etorri', tense: 'past' },
+      { verbId: 'ibili', tense: 'past' },
     ],
   },
   // #167 — hi-as-NORK's own present-tense gender split (`duk`/`dun`,
