@@ -305,6 +305,12 @@ describe('App', () => {
     })
 
     async function startMatchPairsLesson(user) {
+      // `createExerciseState` now shuffles the real match-pairs question in
+      // alongside the (possibly mocked) `generateQuestions` output, so
+      // pinning `Math.random` keeps that shuffle a no-op — without it, the
+      // followup-question test below would be flaky: the followup and the
+      // match-pairs question could land in either order.
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
       render(<App />)
       await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
       await user.click(screen.getByRole('button', { name: 'Start' }))
