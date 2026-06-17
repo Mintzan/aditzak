@@ -167,6 +167,45 @@ fit `sentences`/`type-verb`. Needs:
   needs Units 20-21's dative verbs, which don't exist yet. See
   `docs/DECISIONS.md` (2026-06-13, Delivery 3).
 
+### Word-order question contract (#185 — resolved)
+`kind: 'word-order'`: the learner taps a shuffled "cloud" of a sentence's
+words back into order. Resolved per the design questions raised in #185:
+
+- **Source sentence**: either `sentences[tense][person]` or
+  `negativeSentences[tense][person]`, filled the same way `sentence`/
+  `negative` already do — `sentence.text.replace('___', table[person])`.
+- **Tokenization**: naive `text.split(' ')`. Trailing punctuation (`.`/`?`)
+  stays attached to whichever word is sentence-final, same as it would read
+  in running text — not worth a separate punctuation chip for v1.
+- **Duplicate words**: tokens are built as `{ id, text }` pairs at
+  question-build time (`tokens: shuffle(words.map((text, id) => ({ id,
+  text })))`), so two instances of the same word stay distinguishable to the
+  UI even though their `text` is identical.
+- **Question shape**: `{ ...source, kind: 'word-order', person, tokens,
+  correct: fullSentenceText }`. `correct` stays a plain string — the UI
+  submits `tappedTokens.map(t => t.text).join(' ')` through the existing
+  `submitAnswer`, so `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'`
+  need **zero changes**.
+- **Retry behavior**: reshuffles. Follows the precedent `MatchPairsBoard`
+  set (#191) — rather than the engine re-shuffling `tokens` on the same
+  queue item, the UI does its own local shuffle keyed off
+  `question.attempt` (the retry counter `exerciseReducer`'s `'next'` case
+  already increments), so a missed word-order question gets a fresh cloud
+  layout on retry instead of showing the exact same wrong arrangement
+  twice — same reasoning as a frozen match-pairs board being a worse retry
+  experience than a reshuffled one.
+- **Kind-pool gating**: competes in the same `rollQuestionKind(availableKinds)`
+  pool as `sentence`/`type-verb`/`spot-error`, gated by a minimum word
+  count — **at least 4 tokens** (post-fill, post-split). Below that a cloud
+  degenerates into trivial trial-and-error (a 3-word sentence has only 6
+  permutations) rather than testing word order.
+- **Negation interaction**: offered for `negativeSentences` only when
+  `includeNegation` is set (same gating `negative`/`type-negative` already
+  use), and it **supplements** rather than replaces them — Unit 10's roll
+  pool becomes `[negative, type-negative, word-order]` once the negated
+  sentence clears the 4-token floor, since auxiliary-fronting is exactly the
+  word-order change this kind is best at drilling.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey
