@@ -1174,6 +1174,96 @@ describe('generateQuestions', () => {
     })
   })
 
+  describe('`sources`-scoped borrowing for kind: "form" questions (#174)', () => {
+    // `smallVerb` has no sentences, so every question is `kind: 'form'` — a
+    // bare "which form is correct?" question with no sentence to make a
+    // sibling verb's same-person form read as wrong. `sibling` shares
+    // `smallVerb`'s gloss closely enough (both "to be") that surfacing its
+    // form unscoped would make the question genuinely ambiguous, exactly
+    // like the `izan`/`egon` repro in #174.
+    const smallVerb = {
+      id: 'small',
+      agreement: ['nor'],
+      conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da' } },
+    }
+    const sibling = {
+      id: 'sibling',
+      agreement: ['nor'],
+      conjugations: { present: { ni: 'nago', zu: 'zaude', hura: 'dago', gu: 'gaude', zuek: 'zaudete', haiek: 'daude' } },
+    }
+    const otherSibling = {
+      id: 'other-sibling',
+      agreement: ['nor'],
+      conjugations: { present: { ni: 'noa', zu: 'zoaz', hura: 'doa', gu: 'goaz', zuek: 'zoazte', haiek: 'doaz' } },
+    }
+
+    it('borrows from any compatible sibling when no `sources` is given (original #139 behaviour)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(smallVerb, 'present', { verbs: [smallVerb, sibling] })
+
+      questions.forEach((question) => {
+        expect(question.kind).toBe('form')
+        expect(question.options.length).toBeGreaterThan(Object.values(smallVerb.conjugations.present).length - 1)
+      })
+    })
+
+    it('borrows from any compatible sibling when `sources` has only this lesson\'s own verb', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(smallVerb, 'present', {
+        verbs: [smallVerb, sibling],
+        sources: [{ verbId: 'small', tense: 'present' }],
+      })
+
+      questions.forEach((question) => {
+        expect(question.kind).toBe('form')
+        expect(question.options.length).toBeGreaterThan(Object.values(smallVerb.conjugations.present).length - 1)
+      })
+    })
+
+    it('never borrows a sibling outside `sources` once `sources` names 2+ verbs', () => {
+      // Mirrors the #174 repro: a review of `izan`+`ukan` (2 declared sources)
+      // must not let `egon` (compatible, but not one of the 2 sources) leak
+      // its own-correct `nago` in as a "wrong answer" for `izan`'s `naiz`.
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(smallVerb, 'present', {
+        verbs: [smallVerb, sibling, otherSibling],
+        sources: [
+          { verbId: 'small', tense: 'present' },
+          { verbId: 'other-sibling', tense: 'present' },
+        ],
+      })
+
+      questions.forEach((question) => {
+        question.options.forEach((option) => {
+          expect(Object.values(sibling.conjugations.present)).not.toContain(option)
+        })
+      })
+    })
+
+    it('still borrows from a sibling that is one of the 2+ declared `sources`', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(smallVerb, 'present', {
+        verbs: [smallVerb, sibling, otherSibling],
+        sources: [
+          { verbId: 'small', tense: 'present' },
+          { verbId: 'sibling', tense: 'present' },
+        ],
+      })
+
+      questions.forEach((question) => {
+        expect(question.kind).toBe('form')
+        expect(question.options.length).toBeGreaterThan(Object.values(smallVerb.conjugations.present).length - 1)
+        question.options.forEach((option) => {
+          expect(Object.values(otherSibling.conjugations.present)).not.toContain(option)
+        })
+      })
+    })
+  })
+
   describe('spot-error questions', () => {
     const verbWithManySentences = {
       ...verb,

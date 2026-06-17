@@ -8,6 +8,40 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-17 — #174: scope `getBorrowedDistractors` to a review's `sources` when there are 2+
+
+**Decision:** `getBorrowedDistractors` (#139's small-table distractor-floor
+top-up) now takes the question's `sources` (a lesson's `{ verbId, tense }[]`)
+and, when `sources.length > 1`, restricts its sibling pool to just those
+verbs instead of scanning all of `VERBS`. With 0 or 1 `sources`, it still
+falls back to the full `verbs` pool — unchanged from before #174.
+
+**Why:** a bare `kind: 'form'` question has no sentence to make a sibling
+verb's same-person form read as "wrong" — #121 already enforced this for
+`extraCandidates`, but `getBorrowedDistractors` (added later, by #139) was a
+separate, still-unscoped path. The repro (#174): `unit-5-review-1` reviews
+only `izan`+`ukan`, but its `ni` question for `izan` could still borrow
+`egon`'s `nago` — `egon` is `agreementsCompatible` but isn't one of the
+review's 2 declared sources, and `egon`/`izan` both gloss as "I am" in
+English, so the question reads as two correct answers instead of one
+correct + distractors.
+
+**Why not scope single-source lessons too:** an ordinary, non-review lesson
+(e.g. `nahi-present`, `jakin-present`) has exactly one declared source — its
+own verb — so scoping to `sources` there would mean scoping to nothing
+(`getBorrowedDistractors` already excludes the anchor verb itself),
+silently dropping the #139 distractor-floor top-up these 3-person tables
+were built to rely on. Single-source lessons keep borrowing from the full
+`verbs` pool, same as pre-#174 — the ambiguity risk #174 describes is
+specific to multi-source reviews where a compatible-but-undeclared sibling
+(like `egon`) can sneak in.
+
+**Why this doesn't regress #144's `hi`-drill:** `unit-32-hi-present`/
+`unit-32-hi-past` declare exactly the 4 intended siblings (`izan`/`egon`/
+`joan`/`etorri`) as `sources`, so scoping to `sources` still yields exactly
+those 4 verbs' `hi` forms — the borrowing #144 designed for is preserved
+because it was already "in scope" by the lesson's own declaration.
+
 ## 2026-06-17 — #171: Unit 30 imperative (agintera), izan/ukan core scope
 
 #171 is a large follow-up to #148 covering five separate deferred areas

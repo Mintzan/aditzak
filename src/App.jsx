@@ -1403,6 +1403,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
       persons: lesson.persons,
       extraCandidates,
       verbs: VERBS,
+      sources,
       mode: lesson.mode,
     })
   })

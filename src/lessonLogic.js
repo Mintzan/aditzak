@@ -900,7 +900,21 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, 
 // number" slot. Future's invented-non-word safety mechanism, hi/hitanoa, and
 // the moods with no data yet remain out of scope — see #165's follow-up
 // issue.
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode } = {}) {
+// `sources` (optional, a lesson's `{ verbId, tense }[]`, only meaningful with
+// 2+ entries) scopes #139's small-table borrowing (`getBorrowedDistractors`)
+// to just those verbs, rather than every `agreementsCompatible` verb in
+// `verbs` (#174): a bare `kind: 'form'` question has no sentence to make a
+// sibling verb's same-person form read as wrong, so borrowing from a verb
+// the learner isn't currently reviewing can surface a genuinely correct
+// sibling form (e.g. `egon`'s `nago`) as if it were wrong for `izan`'s
+// `naiz`. A single-entry `sources` (an ordinary, non-review lesson) falls
+// back to the full `verbs` pool instead of scoping to just itself, which
+// would starve small single-verb tables (e.g. `nahi`/`jakin`'s 3-person
+// `present`) of their #139 distractor-floor top-up entirely. Without
+// `sources` at all, borrowing also falls back to the full `verbs` pool (the
+// original behaviour) — `getWeakSpotQuestions` and existing tests that don't
+// pass `sources` are unaffected.
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, sources, mode } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
@@ -911,13 +925,15 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
   const noProduction = noTyping || mode === 'recognition'
+  const borrowPool =
+    sources && sources.length > 1 ? verbs?.filter((sibling) => sources.some((reviewSource) => reviewSource.verbId === sibling.id)) : verbs
 
   function buildQuestion(person) {
     const sentence = normalizeSentence(pickVariant(sentences[person]))
     const pronounSentence = verb.pronouns && normalizeSentence(pronounSentences[person])
     const negativeSentence = normalizeSentence(pickVariant(negativeSentences[person]))
     const ambiguousTyping = hasAmbiguousTypedForm(verb, tense, person, verbs)
-    const borrowed = getBorrowedDistractors(verbs, verb.agreement, tense, person, verb.id)
+    const borrowed = getBorrowedDistractors(borrowPool, verb.agreement, tense, person, verb.id)
     // #141's case-frame/cross-tense lures: a NOR-NORK verb's present (Slot 3,
     // "naiz for dut") and any verb's past (Slot 2 "nintzen for nuen", Slot 3
     // "naiz for nintzen") get one or two guaranteed "diagnosable mistake"
@@ -1190,7 +1206,7 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
 
   return weakSpots.map(({ verbId, tense, person }) => {
     const verb = verbs.find((v) => v.id === verbId)
-    return generateQuestions(verb, tense, { rounds: 1, verbs }).find((question) => question.person === person)
+    return generateQuestions(verb, tense, { rounds: 1, verbs, sources }).find((question) => question.person === person)
   })
 }
 
