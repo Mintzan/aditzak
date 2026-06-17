@@ -1371,9 +1371,10 @@ export const VERBS = [
     agreement: ['nor'],
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'nabil', zu: 'zabiltza', hura: 'dabil', gu: 'gabiltza', zuek: 'zabiltzate', haiek: 'dabiltza' },
+      present: { ni: 'nabil', hi: 'habil', zu: 'zabiltza', hura: 'dabil', gu: 'gabiltza', zuek: 'zabiltzate', haiek: 'dabiltza' },
       past: {
         ni: 'ibili nintzen',
+        hi: 'ibili hintzen',
         zu: 'ibili zinen',
         hura: 'ibili zen',
         gu: 'ibili ginen',
