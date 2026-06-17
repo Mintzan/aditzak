@@ -467,9 +467,10 @@ export const JOURNEY = [
           {
             number: 30,
             title: 'Commands (Agintera)',
-            focus: 'the imperative — production for NOR/NOR-NORK, ditransitive (iezadazu) recognition-only; small tables borrow distractors from sibling verbs (distractor-floor fix)',
-            payload: 'Etorri! · Egizu lan. · Emadazu ura.',
-            status: 'pending',
+            focus: 'the imperative — izan/ukan production for NOR/NOR-NORK; ditransitive (iezadazu) recognition-only is a future addition',
+            payload: 'Hadi hona! · Zaitez lasai. · Ezazu lan.',
+            status: 'available',
+            lessonIds: ['izan-imperative', 'ukan-imperative', 'unit-30-review'],
           },
           {
             number: 31,

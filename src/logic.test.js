@@ -1822,6 +1822,26 @@ describe('generateQuestions', () => {
       expect(candidates['hi-f']).toEqual(expect.arrayContaining([{ verbId: 'jakin', form: 'dakin' }]))
     })
   })
+
+  describe('#171 imperative (agintera)', () => {
+    const izan = VERBS.find((v) => v.id === 'izan')
+    const ukan = VERBS.find((v) => v.id === 'ukan')
+
+    it('gives izan a second-person-only imperative table, hi unsplit (no allocutive-style gender split)', () => {
+      expect(izan.conjugations.imperative).toEqual({ hi: 'hadi', zu: 'zaitez', zuek: 'zaitezte' })
+    })
+
+    it('gives ukan a hi-m/hi-f imperative split (ezak/ezan), since hi is the grammatical NORK subject', () => {
+      expect(ukan.conjugations.imperative).toEqual({ 'hi-m': 'ezak', 'hi-f': 'ezan', zu: 'ezazu', zuek: 'ezazue' })
+    })
+
+    it('drills izan imperative as multiple-choice over its 3-person table', () => {
+      const question = generateQuestions(izan, 'imperative', { verbs: VERBS })[0]
+
+      expect(question.options).toEqual(expect.arrayContaining(['hadi', 'zaitez', 'zaitezte']))
+      expect(question.options).toContain(question.correct)
+    })
+  })
 })
 
 describe('getCrossVerbCandidates', () => {
