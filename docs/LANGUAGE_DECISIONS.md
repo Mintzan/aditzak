@@ -6,6 +6,32 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-17 — #167: toka/noka and hi-as-NORK gender-split forms; need native-speaker check
+
+**Decision:** Added `izan`/`ukan` toka/noka (`hura`/`haiek` only) and `ukan`/
+`jakin`'s `hi`-as-NORK present gender split, all sourced from
+`docs/CONJUGATIONS.md` §10's synthetic-verb allocutive table (`ukan`'s own
+`hi`-as-NORK row is also used for `jakin`'s, per #144's prior decision that
+§7's blank `hik` row for `jakin` is filled by §10's data).
+
+- `izan` toka/noka: `da`/`dira` are suppletive — they switch to the `du`-stem
+  before the `-k`/`-n` suffix (`duk`/`dun`, `dituk`/`ditun`), rather than the
+  unattested `†dak`/`†dan`. Past inserts `-a-`/`-na-` before the final `-n`:
+  `zen` → `zuan`/`zunan`, `ziren` → `zituan`/`zitunan`.
+- `ukan` toka/noka: `du`/`dute` undergo a `u`→`i` stem shift before the
+  `-k`/`-n` suffix (`dik`/`din`, `ditek`/`diten`), specifically so they stay
+  distinct from `hi`-as-NORK's own `duk`/`dun` on the same verb. Past:
+  `zuen` → `zian`/`zinan`, `zuten` → `zitean`/`zitenan`.
+- `ukan`/`jakin` hi-as-NORK present: `duk`/`dun`, `dakik`/`dakin`. `ukan`'s
+  past stays unsplit (`huen`) — §3 doesn't show a past split here.
+
+**Caveat:** §10 only tabulates `hura`/`haiek` for izan/ukan's toka/noka (no
+full person grid in the source), so the data and the Unit 33/34 lessons are
+deliberately 2-person/binary-choice. These forms — especially the past
+`-a-`/`-na-` insertions and the `u`→`i` stem shift — should be confirmed
+against a native speaker or grammar reference before being treated as
+authoritative beyond this app.
+
 ## 2026-06-16 — #162: plural-object (`-zki-`) forms for `esan`/`eman`'s axis-fixed slices; forms need native-speaker check
 
 **Decision:** Added `presentPlural`/`pastPlural`/`futurePlural` conjugation

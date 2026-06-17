@@ -1162,7 +1162,10 @@ describe('generateQuestions', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0)
 
       const jakin = VERBS.find((v) => v.id === 'jakin')
-      generateQuestions(jakin, 'present', { verbs: VERBS }).forEach((question) => {
+      // #167 added `hi-m`/`hi-f` to this table (no sentence data for them,
+      // since they're covered by their own dedicated review lesson) —
+      // restrict to the original 3 persons this test is about.
+      generateQuestions(jakin, 'present', { verbs: VERBS, persons: ['ni', 'zu', 'hura'] }).forEach((question) => {
         expect(question.kind).toBe('sentence')
         expect(question.options).toHaveLength(4)
         expect(new Set(question.options).size).toBe(4)
@@ -1764,6 +1767,59 @@ describe('generateQuestions', () => {
     it('gives joan/etorri a periphrastic `hi` past, matching their existing `ni`/`zu`/... shape', () => {
       expect(joan.conjugations.past.hi).toBe('joan hintzen')
       expect(etorri.conjugations.past.hi).toBe('etorri hintzen')
+    })
+  })
+
+  describe('#167 toka/noka and hi-as-NORK gender split', () => {
+    const izan = VERBS.find((v) => v.id === 'izan')
+    const ukan = VERBS.find((v) => v.id === 'ukan')
+    const jakin = VERBS.find((v) => v.id === 'jakin')
+
+    it('gives izan/ukan 2-person toka/noka tables (hura/haiek only)', () => {
+      expect(izan.conjugations.presentToka).toEqual({ hura: 'duk', haiek: 'dituk' })
+      expect(izan.conjugations.presentNoka).toEqual({ hura: 'dun', haiek: 'ditun' })
+      expect(izan.conjugations.pastToka).toEqual({ hura: 'zuan', haiek: 'zituan' })
+      expect(izan.conjugations.pastNoka).toEqual({ hura: 'zunan', haiek: 'zitunan' })
+
+      expect(ukan.conjugations.presentToka).toEqual({ hura: 'dik', haiek: 'ditek' })
+      expect(ukan.conjugations.presentNoka).toEqual({ hura: 'din', haiek: 'diten' })
+      expect(ukan.conjugations.pastToka).toEqual({ hura: 'zian', haiek: 'zitean' })
+      expect(ukan.conjugations.pastNoka).toEqual({ hura: 'zinan', haiek: 'zitenan' })
+    })
+
+    it('drills toka as a binary (2-option) choice between hura/haiek', () => {
+      const question = generateQuestions(izan, 'presentToka', { verbs: VERBS })[0]
+
+      expect(question.options).toHaveLength(2)
+      expect(question.options).toEqual(expect.arrayContaining(['duk', 'dituk']))
+    })
+
+    it('keeps ukan\'s hi-as-NORK present (duk/dun) distinct from its own presentToka/presentNoka (dik/din)', () => {
+      expect(ukan.conjugations.present['hi-m']).toBe('duk')
+      expect(ukan.conjugations.present['hi-f']).toBe('dun')
+      expect(ukan.conjugations.presentToka.hura).toBe('dik')
+      expect(ukan.conjugations.presentNoka.hura).toBe('din')
+    })
+
+    it('gives jakin a hi-as-NORK present gender split (dakik/dakin), unsplit past not applicable (no past table)', () => {
+      expect(jakin.conjugations.present['hi-m']).toBe('dakik')
+      expect(jakin.conjugations.present['hi-f']).toBe('dakin')
+      expect(jakin.conjugations.past).toBeUndefined()
+    })
+
+    it('keeps ukan\'s past hi unsplit (huen), unlike its present hi-m/hi-f', () => {
+      expect(ukan.conjugations.past.hi).toBe('huen')
+    })
+
+    it('drills ukan/jakin hi-m/hi-f present pooled, with real cross-verb borrowing (agreementsCompatible)', () => {
+      const sources = [
+        { verbId: 'ukan', tense: 'present' },
+        { verbId: 'jakin', tense: 'present' },
+      ]
+      const candidates = getCrossVerbCandidates(ukan, 'present', sources, VERBS)
+
+      expect(candidates['hi-m']).toEqual(expect.arrayContaining([{ verbId: 'jakin', form: 'dakik' }]))
+      expect(candidates['hi-f']).toEqual(expect.arrayContaining([{ verbId: 'jakin', form: 'dakin' }]))
     })
   })
 })
