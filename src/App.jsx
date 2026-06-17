@@ -1416,6 +1416,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
       verbs: VERBS,
       sources,
       mode: lesson.mode,
+      review: Boolean(lesson.review),
     })
   })
   // Review lessons get up to `EXTRA_REVIEW_EXERCISES` extra questions, drawn

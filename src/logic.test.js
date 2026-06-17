@@ -1271,6 +1271,43 @@ describe('generateQuestions', () => {
         })
       })
     })
+
+    it('never leaks an unanchored case-frame lure into a single-source review\'s bare `kind: "form"` question (#203)', () => {
+      // Mirrors the `ikusi-present-plural-review` repro: a single-source
+      // review (`sources.length === 1`) of a NOR-NORK verb still needs the
+      // same scoping as a 2+-source review — without it, the case-frame
+      // lure (a NOR sibling's same-person form, normally a safe "wrong
+      // subject case" distractor when a sentence shows the marking) leaks
+      // into a bare `form` question with no sentence to make it read as
+      // wrong.
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const norSibling = {
+        id: 'nor-sibling',
+        agreement: ['nor'],
+        conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' } },
+      }
+      const norNorkVerb = {
+        id: 'nor-nork-verb',
+        agreement: ['nor', 'nork'],
+        conjugations: {
+          present: { ni: 'dut-form', zu: 'duzu-form', hura: 'du-form', gu: 'dugu-form', zuek: 'duzue-form', haiek: 'dute-form' },
+        },
+      }
+
+      const questions = generateQuestions(norNorkVerb, 'present', {
+        verbs: [norSibling, norNorkVerb],
+        sources: [{ verbId: 'nor-nork-verb', tense: 'present' }],
+        review: true,
+      })
+
+      questions.forEach((question) => {
+        expect(question.kind).toBe('form')
+        question.options.forEach((option) => {
+          expect(Object.values(norSibling.conjugations.present)).not.toContain(option)
+        })
+      })
+    })
   })
 
   describe('spot-error questions', () => {

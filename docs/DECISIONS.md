@@ -12,6 +12,30 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #203: `generateQuestions`'s review-scoping needs an explicit `review` flag, not just `sources.length > 1`
+
+**Decision:** `generateQuestions` now takes an explicit `review` boolean
+(passed by the App.jsx call site from `lesson.review`), and `reviewScoped`
+is `true` when *either* `review` is set *or* `sources.length > 1`. Reported
+bug: `ikusi-present-plural-review` (a single-source review,
+`sources: [{ verbId: 'ikusi', tense: 'present' }]`) showed a bare `kind:
+'form'` "haiek" question offering `dira` (izan's haiek form) alongside
+ikusi's own `ikusten X` forms — `dira` doesn't even agree with `ikusi`
+(NOR vs NOR-NORK), so with no sentence or verb name shown (review lessons
+hide both for `form` questions) it read as a random, ungrounded option.
+
+**Why it happened:** `reviewScoped` (added by #200) keyed entirely off
+`sources.length > 1`, but a review can legitimately have just one source —
+`ikusi-present-plural-review` only reviews `ikusi` itself, restricted to
+plural persons. With `reviewScoped` false, the code took the ordinary-
+practice-lesson path: `formLures` (the case-frame lure — e.g. izan's `naiz`
+offered for ukan's `dut`, intentionally surfaced as a "wrong subject case"
+distractor when a sentence's marking can disqualify it) got injected into
+`buildOptions` unconditionally, even for the sentence-less `form` kind. The
+fix also gates `formLures`, not just the borrow pool, behind `reviewScoped`
+— both are "diagnosable mistake" distractors that need a sentence to read
+as wrong, not bare ones.
+
 ## 2026-06-17 — #204: `jakin`'s "sekretua" sentence adds `ukan` to `validFor`
 
 **Decision:** `jakin`'s `present`/`negativeSentences` "sekretua" ("a secret")
