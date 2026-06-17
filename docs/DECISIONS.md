@@ -12,6 +12,38 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #188: `word-order` debuts in both Phase I and Unit 10, as a supplement
+
+**Decision:** Both candidates from #188 — early Phase I and Unit 10's negation
+drills — get `kind: 'word-order'`, not just one of them, and in Unit 10 it's
+added to the existing `negative`/`type-negative` roll rather than replacing
+either.
+
+**Why both, not a choice:** #186's engine already gates `word-order`
+generically on "does this person's filled sentence (or negated sentence,
+under `includeNegation`) clear the 4-token floor" — there's no per-unit
+opt-in to write, so restricting it to only one of the two candidates would
+mean adding an artificial exclusion to a mechanism that's already correctly
+scoped. Phase I lessons get it as one more kind alongside `sentence`/
+`type-verb`/`spot-error` the same way `spot-error` itself slots into existing
+lessons without new `LESSONS` entries; Unit 10 gets it for the same reason,
+and because a word-order question over a negated sentence is a more direct
+test of "where does `ez` go" than `spot-error`'s "pick the right sentence"
+framing.
+
+**Why supplement instead of replace in Unit 10:** replacing `negative`/
+`type-negative` would mean a learner could pass through Unit 10 without ever
+producing the negated form by typing or close reading — `word-order`'s
+recognition-by-rearrangement is a different (and easier) skill than
+`type-negative`'s production. Keeping all three in the roll pool means the
+unit still drills production, recognition, and rearrangement rather than
+narrowing to just one.
+
+**No `LESSONS`/`journey.js` changes needed**: kind selection happens inside
+`generateQuestions` per-question, not per-lesson, so this is a documentation-
+only resolution — see `docs/LEARNING_JOURNEY.md`'s Unit 10 entry and
+`docs/EXERCISE_ENGINE.md`'s "Word-order question contract" (#185).
+
 ## 2026-06-17 — #186: `kind: 'word-order'` engine, not gated by `noTyping`/`noProduction`
 
 **Decision:** `generateQuestions` adds `word-order` to the `availableKinds` pool (per #185's contract) gated only by the 4-token minimum and, for negation lessons, `includeNegation` — it is **not** additionally excluded when `noTyping`/`noProduction` (recognition mode) is set, unlike `type-verb`/`type-pronoun`/`type-negative`/`spot-error`.
