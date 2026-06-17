@@ -12,6 +12,17 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #185: word-order question contract resolved
+
+**Decision:** Settled the `kind: 'word-order'` design questions (full writeup in `docs/EXERCISE_ENGINE.md`'s Tier 3, alongside the negation-drills section) before any engine code lands, mirroring how `docs/SENTENCE_FRAMES.md` settled `validFor` before #123's implementation:
+
+- Tokens are `{ id, text }` pairs (handles duplicate words); `correct` stays a plain reassembled-sentence string, so `isAnswerCorrect`/`exerciseReducer` need no changes — the UI just joins tapped tokens with `' '` and calls the existing `submitAnswer`.
+- Retry reshuffles, via a local UI shuffle keyed off `question.attempt` rather than an engine-level reshuffle — the same precedent `MatchPairsBoard` (#191) set, since re-showing an identical wrong cloud is a worse retry experience than #191's frozen-board bug was for matching.
+- Gated by a 4-token minimum (post-fill, post-split) so short sentences (≤3 words, ≤6 permutations) don't roll this kind — too trivial to test real word-order knowledge.
+- Offered for `negativeSentences` only under `includeNegation`, supplementing rather than replacing `negative`/`type-negative` in that lesson's roll pool, since auxiliary-fronting is exactly the word-order change this kind targets.
+
+**Why resolve this before #186 (engine):** the duplicate-word token-id question in particular has a real fork — a token-id-array comparison would force changes to `case 'answer'`, whereas the plain-string-join approach doesn't. Better to settle that before writing `generateWordOrderQuestions`, not discover it mid-implementation.
+
 ## 2026-06-17 — #192: wire `generateMatchPairsQuestions` into `createExerciseState`
 
 **Decision:** `createExerciseState` now calls `generateMatchPairsQuestions(resolvedSources, { persons: lesson.persons })` and appends its result to every lesson's queue, except when `lesson.negation` is set (Unit 10's Refresh Gate A and the `unit-5-review-*` lessons) — there the whole point is the `ez`/auxiliary-fronting drill, and a bare person↔form match would dilute it.
