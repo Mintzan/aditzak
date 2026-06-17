@@ -1,5 +1,7 @@
 # Aditzak — Proposed Learning Journey (reference specification)
 
+**Status: open proposal, not yet implemented.** The currently-shipped journey is `LEARNING_JOURNEY.md`; this spec is being adopted incrementally as units move from `pending` to `available` (see `docs/DECISIONS.md`'s renumbering entries).
+
 > **Status: proposed curriculum spec — not yet implemented in code.** This is a
 > self-contained reference for the intended acquisition order, written to be
 > evaluated against in future. It does not describe the currently-shipped

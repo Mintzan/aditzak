@@ -44,6 +44,16 @@ import { LESSONS } from './data/lessons'
 import { READING_ITEMS } from './data/readingItems'
 
 // =============================================================================
+// Section index (approximate line ranges — grep for the banner text below to
+// jump straight to a section; ranges shift as the file changes):
+//   ~46    Progress persistence (localStorage)
+//   ~256   Small shared bits
+//   ~346   Home screen — lesson selection
+//   ~1336  Exercise screen — multiple choice and typed-answer questions
+//   ~2140  App shell
+// =============================================================================
+
+// =============================================================================
 // Progress persistence (localStorage)
 // =============================================================================
 

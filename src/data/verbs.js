@@ -70,6 +70,9 @@
 // simply have 3-person tables (option (a)) since there's nothing to expand yet.
 // =============================================================================
 
+// Locate a specific verb: grep for `id: 'verbId'` (e.g. `id: 'izan'`) — each
+// verb's whole block starts there.
+
 export const VERBS = [
   {
     id: 'izan',

@@ -1,5 +1,7 @@
 # Aditzak — Learning Journey (acquisition order)
 
+**Status: current/authoritative.** Mirrors what's actually implemented in `journey.js`/`LESSONS`. For the still-pending redesign, see `LEARNING_JOURNEY_PROPOSED.md` (spec) and `LEARNING_JOURNEY_EVALUATION.md` (why).
+
 > **39-unit layout** (renumbered 2026-06-14/15, issues #137/#149/#151 — see
 > `docs/DECISIONS.md`). Unit numbers here are "N-n" in
 > `docs/LEARNING_JOURNEY_PROPOSED.md`, the self-contained reference spec for

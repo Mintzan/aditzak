@@ -37,6 +37,9 @@
 export const PHASE_1_PERSONS = ['ni', 'zu', 'hura']
 export const PHASE_1_PLURAL_PERSONS = ['gu', 'zuek', 'haiek']
 
+// Locate a specific lesson: grep for `id: 'lessonId'` (e.g. `id:
+// 'izan-present'`) — each lesson is a single-line entry.
+
 export const LESSONS = [
   { id: 'izan-present', verbId: 'izan', tense: 'present', persons: PHASE_1_PERSONS },
   { id: 'egon-present', verbId: 'egon', tense: 'present', persons: PHASE_1_PERSONS },
