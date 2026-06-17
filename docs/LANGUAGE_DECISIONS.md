@@ -6,6 +6,26 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-16 — #162: plural-object (`-zki-`) forms for `esan`/`eman`'s axis-fixed slices; forms need native-speaker check
+
+**Decision:** Added `presentPlural`/`pastPlural`/`futurePlural` conjugation
+tables to `esan` (`recipient: 'hura'`, NORK still the varying `person`) and
+`eman` (`agent: 'ni'`, NORI still the varying `person`), reusing the same
+tense-key names as #164's NOR-NORI plural tables since both describe the
+same thing — the absolutive `NOR` argument going from singular to plural.
+Forms are taken directly from `docs/CONJUGATIONS.md` §5's `NOR`=haiek
+present/past grids: for `esan`, the `hari` row across the `NORK` columns
+(`dizkiot`/`dizkiozu`/`dizkio`/`dizkiogu`/`dizkiozue`/`dizkiote` present;
+`nizkion`/`zenizkion`/`zizkion`/`genizkion`/`zenizkioten`/`zizkioten` past);
+for `eman`, the `nik` column across the `NORI` rows (`dizkizut`/`dizkiot`/
+`dizkizuet`/`dizkiet` present; `nizkizun`/`nizkion`/`nizkizuen`/`nizkien`
+past). Future is the `-go` participle + the present-tense plural aux, same
+pattern as the existing singular future tables. Sentence frames use plural
+nouns (`gezurrak` "lies" for `esan`, `liburuak` "the books" for `eman`) so
+the cue itself signals the `-zki-` slot. Flagged here for the same
+native-speaker confirmation #164's plural-NOR forms are pending, since these
+were derived from the grid rather than independently verified by a speaker.
+
 ## 2026-06-16 — #164: plural-NOR (`-zki-`) forms for `gustatu`/`iruditu`/`ahaztu`; forms need native-speaker check
 
 **Decision:** Added `presentPlural`/`pastPlural`/`futurePlural` conjugation

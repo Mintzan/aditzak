@@ -316,8 +316,8 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 25 | **Communication & Giving** — present NOR-NORI-NORK (`esan`, `eman`), axis-scaffolded | "I give it to him" (`ematen diot`) / "You tell it to him" (`esaten diozu`) | §5, §8 | pending — ✅ documented; see `LEARNING_JOURNEY_PROPOSED.md` for the axis-fixed deployment (`recipient`/`agent` metadata) and the four-lesson extra-practice sequence |
-| 26 | **Telling & Giving Across Time** — NOR-NORI-NORK **past + future**, reusing the periphrastic past and `-ko`/`-go` future on Unit 25's axis-fixed slices | "I told him." (`Esan nion`) / "He gave it to me." (`Eman zidan`) / "I'll tell you tomorrow." (`Bihar esango dizut`) | §5; §11 | pending — **new unit** (closes finding F2) |
+| 25 | **Communication & Giving** — present NOR-NORI-NORK (`esan`, `eman`), axis-scaffolded, plus plural-object (`-zki-`) fodder and a four-lesson extra-practice sequence | "I give it to him" (`ematen diot`) / "You tell it to him" (`esaten diozu`) / "I tell him lies." (`Gezurrak esaten dizkiot`) | §5, §8 | available (#147, #162) |
+| 26 | **Telling & Giving Across Time** — NOR-NORI-NORK **past + future**, reusing the periphrastic past and `-ko`/`-go` future on Unit 25's axis-fixed slices | "I told him." (`Esan nion`) / "He gave it to me." (`Eman zidan`) / "I'll tell you tomorrow." (`Bihar esango dizut`) | §5; §11 | available (#147) |
 
 ### 🛡️ Refresh Gate C — The Multi-Argument Audit
 

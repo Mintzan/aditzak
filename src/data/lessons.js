@@ -655,11 +655,63 @@ export const LESSONS = [
   { id: 'ahaztu-future', verbId: 'ahaztu', tense: 'future' },
   // Unit 25 (#147) — axis-scaffolded NOR-NORI-NORK: L1 fixes NORI (`esan`,
   // `recipient: 'hura'`, NORK varies), L2 fixes NORK (`eman`, `agent: 'ni'`,
-  // NORI varies). Object-number (-zki-) fodder and the unit's four
-  // extra-practice lessons are deferred — see the issue filed for #147's
-  // remaining scope.
+  // NORI varies).
   { id: 'esan-present', verbId: 'esan', tense: 'present' },
   { id: 'eman-present', verbId: 'eman', tense: 'present' },
+  // #162: extra-practice lessons. Plural-object (-zki-) production drills,
+  // then four reviews approximating the proposed doc's "fix-NORI / fix-NORK /
+  // object-number / two-axis recombination" set using the existing
+  // review+sources(+recognition mode) machinery rather than new 2D
+  // NORK×NORI table/engine support — see docs/DECISIONS.md.
+  { id: 'esan-present-plural', verbId: 'esan', tense: 'presentPlural' },
+  { id: 'eman-present-plural', verbId: 'eman', tense: 'presentPlural' },
+  {
+    // Reinforces esan's axis (NORI fixed, NORK varies) across all three tenses.
+    id: 'unit-25-fix-nori-review',
+    review: true,
+    sources: [
+      { verbId: 'esan', tense: 'present' },
+      { verbId: 'esan', tense: 'past' },
+      { verbId: 'esan', tense: 'future' },
+    ],
+  },
+  {
+    // Reinforces eman's axis (NORK fixed, NORI varies) across all three tenses.
+    id: 'unit-25-fix-nork-review',
+    review: true,
+    sources: [
+      { verbId: 'eman', tense: 'present' },
+      { verbId: 'eman', tense: 'past' },
+      { verbId: 'eman', tense: 'future' },
+    ],
+  },
+  {
+    // Singular vs. plural object contrast ("diot" vs "dizkiot") — recognition
+    // mode since the point is noticing the -zki- infix, not free production.
+    id: 'unit-25-object-number-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'esan', tense: 'present' },
+      { verbId: 'esan', tense: 'presentPlural' },
+      { verbId: 'eman', tense: 'present' },
+      { verbId: 'eman', tense: 'presentPlural' },
+    ],
+  },
+  {
+    // Two-axis recombination: pools esan's NORK-varying source with eman's
+    // NORI-varying source in one recognition-only review, per the issue's
+    // "last recognition-first" note — each question still varies one axis at
+    // a time (the data model has no 2D NORK×NORI table), but the lesson as a
+    // whole recombines both axes rather than drilling either in isolation.
+    id: 'unit-25-two-axis-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'esan', tense: 'present' },
+      { verbId: 'eman', tense: 'present' },
+    ],
+  },
   // Unit 26 (#147) — past + future on the same axis-fixed slices.
   { id: 'esan-past', verbId: 'esan', tense: 'past' },
   { id: 'esan-future', verbId: 'esan', tense: 'future' },
