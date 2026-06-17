@@ -12,6 +12,12 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #186: `kind: 'word-order'` engine, not gated by `noTyping`/`noProduction`
+
+**Decision:** `generateQuestions` adds `word-order` to the `availableKinds` pool (per #185's contract) gated only by the 4-token minimum and, for negation lessons, `includeNegation` — it is **not** additionally excluded when `noTyping`/`noProduction` (recognition mode) is set, unlike `type-verb`/`type-pronoun`/`type-negative`/`spot-error`.
+
+**Why:** those other kinds are excluded under `noTyping`/recognition mode because they require typing a form from memory. `word-order` never does — the learner only taps pre-given tokens into place, the same interaction model as `match-pairs`. Excluding it under "no typing" settings would be excluding a kind that was never typing in the first place.
+
 ## 2026-06-17 — #185: word-order question contract resolved
 
 **Decision:** Settled the `kind: 'word-order'` design questions (full writeup in `docs/EXERCISE_ENGINE.md`'s Tier 3, alongside the negation-drills section) before any engine code lands, mirroring how `docs/SENTENCE_FRAMES.md` settled `validFor` before #123's implementation:

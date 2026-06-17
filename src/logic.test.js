@@ -47,6 +47,7 @@ import {
   repairStreak,
   shuffle,
   STREAK_REPAIR_COST,
+  WORD_ORDER_MIN_WORDS,
 } from './lessonLogic'
 import { LESSONS } from './data/lessons'
 import { VERBS } from './data/verbs'
@@ -974,8 +975,8 @@ describe('generateQuestions', () => {
     })
 
     it('still allows type-verb when the trailing word only matches an agreement-incompatible verb', () => {
-      // [0, 0.75) / 2 kinds ('sentence', 'type-verb') -> slice 1 (0.375-0.75) is 'type-verb'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.5)
+      // [0, 0.75) / 3 kinds ('sentence', 'type-verb', 'word-order') -> slice 1 (0.25-0.5) is 'type-verb'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.3)
 
       const questions = generateQuestions(compoundVerb, 'present', { verbs: [compoundVerb, incompatibleVerb] })
 
@@ -983,7 +984,7 @@ describe('generateQuestions', () => {
     })
 
     it('still allows type-verb when verbs is not provided (default, unaffected)', () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0.5)
+      vi.spyOn(Math, 'random').mockReturnValue(0.3)
 
       const questions = generateQuestions(compoundVerb, 'present')
 
@@ -1401,9 +1402,9 @@ describe('generateQuestions', () => {
     })
 
     it('frames a question as typing the verb into the negative-sentence blank when the roll favours it', () => {
-      // ['negative', 'type-negative'] split [0, 0.75) into two slices of
-      // 0.375 — 0.5 lands in the second one: 'type-negative'.
-      vi.spyOn(Math, 'random').mockReturnValue(0.5)
+      // ['negative', 'type-negative', 'word-order'] split [0, 0.75) into three
+      // slices of 0.25 — 0.3 lands in the second one: 'type-negative'.
+      vi.spyOn(Math, 'random').mockReturnValue(0.3)
 
       generateQuestions(verbWithNegation, 'present', { includeNegation: true }).forEach((question) => {
         if (negated[question.person]) {
@@ -1418,52 +1419,132 @@ describe('generateQuestions', () => {
       })
     })
 
-    it('only offers negative or type-negative for a person with negativeSentences data, never the usual mix', () => {
+    it('only offers negative, type-negative, or word-order for a person with negativeSentences data, never the usual mix', () => {
       ;[0, 0.2, 0.5, 0.7].forEach((roll) => {
         vi.spyOn(Math, 'random').mockReturnValue(roll)
 
         generateQuestions(verbWithNegation, 'present', { includeNegation: true }).forEach((question) => {
           if (negated[question.person]) {
-            expect(['negative', 'type-negative']).toContain(question.kind)
+            expect(['negative', 'type-negative', 'word-order']).toContain(question.kind)
           }
         })
       })
     })
 
     it('excludes type-negative when noTyping is set, even on rolls that would otherwise favour it', () => {
+      // word-order stays available under noTyping — it's tap-based, not typed.
       ;[0, 0.5, 0.7].forEach((roll) => {
         vi.spyOn(Math, 'random').mockReturnValue(roll)
 
         generateQuestions(verbWithNegation, 'present', { includeNegation: true, noTyping: true }).forEach((question) => {
           expect(question.kind).not.toBe('type-negative')
           if (negated[question.person] && question.kind !== 'form') {
-            expect(question.kind).toBe('negative')
+            expect(['negative', 'word-order']).toContain(question.kind)
           }
         })
       })
     })
 
     it('excludes type-negative when mode is "recognition", even on rolls that would otherwise favour it (#140)', () => {
+      // word-order stays available under recognition mode — it's tap-based, not typed.
       ;[0, 0.5, 0.7].forEach((roll) => {
         vi.spyOn(Math, 'random').mockReturnValue(roll)
 
         generateQuestions(verbWithNegation, 'present', { includeNegation: true, mode: 'recognition' }).forEach((question) => {
           expect(question.kind).not.toBe('type-negative')
           if (negated[question.person] && question.kind !== 'form') {
-            expect(question.kind).toBe('negative')
+            expect(['negative', 'word-order']).toContain(question.kind)
           }
         })
       })
     })
 
-    it('never produces negative or type-negative questions without includeNegation, even with negativeSentences data present', () => {
+    it('never produces negative, type-negative, or word-order questions without includeNegation, even with negativeSentences data present', () => {
       ;[0, 0.2, 0.5, 0.7, 0.99].forEach((roll) => {
         vi.spyOn(Math, 'random').mockReturnValue(roll)
 
         generateQuestions(verbWithNegation, 'present').forEach((question) => {
-          expect(['negative', 'type-negative']).not.toContain(question.kind)
+          expect(['negative', 'type-negative', 'word-order']).not.toContain(question.kind)
         })
       })
+    })
+  })
+
+  describe('word-order questions', () => {
+    const wordOrderVerb = {
+      ...verb,
+      sentences: {
+        present: { ni: 'Ni gaur hemen ___.' },
+      },
+    }
+    const duplicateWordVerb = {
+      ...verb,
+      sentences: {
+        present: { ni: 'Ni oso oso ___.' },
+      },
+    }
+    const tooShortVerb = {
+      ...verb,
+      sentences: {
+        present: { ni: 'Ni irakaslea ___.' },
+      },
+    }
+    const wordOrderNegationVerb = {
+      ...verb,
+      negativeSentences: {
+        present: { ni: 'Ni ez ___ irakaslea.' },
+      },
+    }
+
+    it('builds a token cloud with one token per word, in shuffled (not necessarily source) order', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+
+      const [question] = generateQuestions(wordOrderVerb, 'present', { persons: ['ni'] })
+
+      expect(question.kind).toBe('word-order')
+      expect(question.tokens).toHaveLength(4)
+      expect(question.tokens.map((token) => token.text).sort()).toEqual(['Ni', 'gaur', 'hemen', 'naiz.'].sort())
+    })
+
+    it('keeps duplicate-word tokens distinguishable via a stable, unique id', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+
+      const [question] = generateQuestions(duplicateWordVerb, 'present', { persons: ['ni'] })
+
+      expect(question.kind).toBe('word-order')
+      const ids = question.tokens.map((token) => token.id)
+      expect(new Set(ids).size).toBe(ids.length)
+      const reassembled = [...question.tokens].sort((a, b) => a.id - b.id).map((token) => token.text)
+      expect(reassembled.join(' ')).toBe(question.correct)
+    })
+
+    it('sets `correct` to the exact filled sentence text', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+
+      const [question] = generateQuestions(wordOrderVerb, 'present', { persons: ['ni'] })
+
+      expect(question.correct).toBe('Ni gaur hemen naiz.')
+    })
+
+    it('builds a word-order question from a negative sentence, with the fronted auxiliary in the right slot', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+
+      const [question] = generateQuestions(wordOrderNegationVerb, 'present', { includeNegation: true, persons: ['ni'] })
+
+      expect(question.kind).toBe('word-order')
+      expect(question.correct).toBe('Ni ez naiz irakaslea.')
+      const reassembled = [...question.tokens].sort((a, b) => a.id - b.id).map((token) => token.text)
+      expect(reassembled).toEqual(['Ni', 'ez', 'naiz', 'irakaslea.'])
+    })
+
+    it(`never offers word-order for a sentence below the ${WORD_ORDER_MIN_WORDS}-word minimum, regardless of roll`, () => {
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+        generateQuestions(tooShortVerb, 'present', { persons: ['ni'] }).forEach((question) => {
+          expect(question.kind).not.toBe('word-order')
+        })
+        vi.restoreAllMocks()
+      }
     })
   })
 

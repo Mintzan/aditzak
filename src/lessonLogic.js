@@ -768,6 +768,32 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, 
   }
 }
 
+// Minimum word count (post-fill, post-split) for a sentence to be eligible
+// for `kind: 'word-order'` — see `docs/EXERCISE_ENGINE.md`'s "Word-order
+// question contract (#185)". Below this, a shuffled cloud has too few
+// permutations (a 3-word sentence has only 6) to test real word-order
+// knowledge rather than trial-and-error.
+export const WORD_ORDER_MIN_WORDS = 4
+
+// Builds a "reassemble the sentence" question: `sentence`'s blank gets
+// filled with `table[person]` (same as `sentence`/`negative` already do),
+// then split into a shuffled cloud of `{ id, text }` tokens — `id` is the
+// token's position in the *original* sentence, so two instances of the same
+// word stay distinguishable to the UI. `correct` stays the plain filled
+// sentence string: the UI rejoins whichever tokens the learner taps (in tap
+// order) with `' '` and submits that through the existing `submitAnswer`,
+// so `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'` need no changes.
+function buildWordOrderQuestion(table, sentence, person) {
+  const text = sentence.text.replace('___', table[person])
+  const words = text.split(' ')
+  return {
+    kind: 'word-order',
+    person,
+    tokens: shuffle(words.map((word, id) => ({ id, text: word }))),
+    correct: text,
+  }
+}
+
 // One question per grammatical person, framed one of several ways — most are
 // multiple-choice (an `options` array to pick from), the typed ones ask the
 // learner to type the answer instead (`correct` only, no `options`):
@@ -945,15 +971,24 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
         ? [getCaseFrameLure(verbs, verb, tense, person), getCrossTenseLure(verb, tense, person), getObjectNumberLure(verb, tense, person)]
         : []
     const pronounLures = [getCaseFramePronounLure(verbs, verb, person)]
+    // A sentence only qualifies for `word-order` once its blank is filled in
+    // and it clears `WORD_ORDER_MIN_WORDS` — see `buildWordOrderQuestion`.
+    const meetsWordOrderThreshold = (candidate) =>
+      Boolean(candidate) && candidate.text.replace('___', table[person]).split(' ').length >= WORD_ORDER_MIN_WORDS
     const availableKinds =
       includeNegation && negativeSentence
-        ? [negativeSentence && 'negative', negativeSentence && !noProduction && !ambiguousTyping && 'type-negative'].filter(Boolean)
+        ? [
+            negativeSentence && 'negative',
+            negativeSentence && !noProduction && !ambiguousTyping && 'type-negative',
+            meetsWordOrderThreshold(negativeSentence) && 'word-order',
+          ].filter(Boolean)
         : [
             sentence && 'sentence',
             sentence && !noProduction && !ambiguousTyping && 'type-verb',
             sentence && !noTyping && personsWithSentences.length + borrowedSpotErrorSlots.length >= 4 && 'spot-error',
             pronounSentence && 'pronoun',
             pronounSentence && !noProduction && 'type-pronoun',
+            meetsWordOrderThreshold(sentence) && 'word-order',
           ].filter(Boolean)
 
     let kind = rollQuestionKind(availableKinds)
@@ -988,6 +1023,10 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
       }
       case 'type-negative':
         return { ...source, kind: 'type-negative', person, sentence: negativeSentence.text, correct: table[person] }
+      case 'word-order': {
+        const wordOrderSentence = includeNegation && negativeSentence ? negativeSentence : sentence
+        return { ...source, ...buildWordOrderQuestion(table, wordOrderSentence, person) }
+      }
       default: {
         const { correct, options } = buildOptions(table, persons, person, [], borrowed, formLures)
         return { ...source, kind: 'form', person, correct, options }
@@ -1357,6 +1396,7 @@ export function buildFlagDiagnostics({ lesson, question, selected, status, langu
       ...(question.items ? { items: question.items } : {}),
       ...(question.source ? { source: question.source } : {}),
       ...(question.pairs ? { pairs: question.pairs } : {}),
+      ...(question.tokens ? { tokens: question.tokens } : {}),
     },
   }
 }
