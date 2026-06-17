@@ -1730,6 +1730,84 @@ function MatchPairsBoard({ pairs, disabled, onComplete }) {
   )
 }
 
+const WORD_CHIP_STYLES = {
+  idle: 'border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:bg-gray-50',
+  correct: 'border-green-500 bg-green-50 text-green-700 animate-flash',
+  incorrect: 'border-red-500 bg-red-50 text-red-700 animate-shake',
+}
+
+function WordChip({ text, status, disabled, onSelect }) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      disabled={disabled}
+      style={{ minHeight: 44 }}
+      className={`rounded-2xl border-2 px-4 py-2 text-base font-semibold transition ${WORD_CHIP_STYLES[status]} ${
+        disabled ? 'cursor-default' : 'active:scale-[0.98]'
+      }`}
+    >
+      {text}
+    </button>
+  )
+}
+
+// `kind: 'word-order'` (see `buildWordOrderQuestion`, #185/#186): the learner
+// taps `question.tokens` — a shuffled cloud — back into sentence order.
+// Tapping a cloud chip moves it into the "assembled" row in tap order;
+// tapping an assembled chip undoes that, returning it to the cloud. Unlike
+// every other kind, building an answer here is multi-step, so it doesn't
+// submit on the first tap — `onSubmit` only fires from an explicit Check
+// tap, enabled once the cloud is empty. Retries reshuffle: per
+// `docs/EXERCISE_ENGINE.md`'s word-order contract, the parent keys this
+// component by `question.attempt` (the same `MatchPairsBoard` precedent,
+// #191), so a retry remounts it — re-running the `shuffle` below — instead
+// of reusing the failed layout.
+function WordOrderBoard({ tokens, status, disabled, onSubmit }) {
+  const { t } = useLanguage()
+  const [cloud, setCloud] = useState(() => shuffle(tokens))
+  const [assembled, setAssembled] = useState([])
+  const chipStatus = status === 'active' ? 'idle' : status
+
+  function moveToAssembled(token) {
+    if (disabled) return
+    setCloud((prev) => prev.filter((candidate) => candidate.id !== token.id))
+    setAssembled((prev) => [...prev, token])
+  }
+
+  function moveToCloud(token) {
+    if (disabled) return
+    setAssembled((prev) => prev.filter((candidate) => candidate.id !== token.id))
+    setCloud((prev) => [...prev, token])
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex min-h-12 flex-wrap items-start gap-2 rounded-2xl border-2 border-dashed border-gray-200 p-3">
+        {assembled.map((token) => (
+          <WordChip key={token.id} text={token.text} status={chipStatus} disabled={disabled} onSelect={() => moveToCloud(token)} />
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {cloud.map((token) => (
+          <WordChip key={token.id} text={token.text} status="idle" disabled={disabled} onSelect={() => moveToAssembled(token)} />
+        ))}
+      </div>
+      {!disabled && (
+        <button
+          type="button"
+          onClick={() => onSubmit(assembled.map((token) => token.text).join(' '))}
+          disabled={cloud.length > 0}
+          style={{ minHeight: 48 }}
+          className="w-full rounded-2xl bg-green-500 px-5 py-4 text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {t('check')}
+        </button>
+      )}
+    </div>
+  )
+}
+
 // Renders an example sentence with the conjugated verb redacted — the `___`
 // placeholder in the data becomes a visual blank the learner fills in by
 // picking an option below, rather than a literal "___" in running text.
@@ -1796,7 +1874,7 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
       )}
       {question.sentence ? (
         <SentenceWithBlank sentence={question.sentence} />
-      ) : question.items || question.pairs ? null : (
+      ) : question.items || question.pairs || question.tokens ? null : (
         <>
           <h2 className="mt-2 text-4xl font-extrabold text-gray-900">
             {(verb.pronouns?.[question.person] ?? question.person).toLowerCase()}
@@ -1823,6 +1901,7 @@ const QUESTION_PROMPT_KEYS = {
   'case-mixer': 'questionCaseMixer',
   reading: 'questionReading',
   'match-pairs': 'questionMatchPairs',
+  'word-order': 'questionWordOrder',
 }
 
 // The explanation toggle is its own pill-shaped button above the
@@ -2242,6 +2321,14 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
             pairs={question.pairs}
             disabled={isAnswered}
             onComplete={(success) => submitAnswer(success ? question.correct : 'incomplete')}
+          />
+        ) : question.tokens ? (
+          <WordOrderBoard
+            key={`word-order-${question.verbId}-${question.tense}-${question.person}-${question.attempt ?? 1}`}
+            tokens={question.tokens}
+            status={state.status}
+            disabled={isAnswered}
+            onSubmit={submitAnswer}
           />
         ) : question.options ? (
           <div className="flex flex-col gap-3">

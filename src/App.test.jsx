@@ -21,11 +21,18 @@ const FOLLOWUP_QUESTION = {
   options: ['gara', 'naiz', 'da', 'zarete'],
 }
 
+// Lets the 'word-order question' tests below swap in a single controlled
+// `kind: 'word-order'` question (with a fixed, known `tokens`/`correct`)
+// instead of `izan`'s normal per-person questions — mirroring how
+// `matchPairsMock` substitutes `FOLLOWUP_QUESTION` above.
+const wordOrderMock = vi.hoisted(() => ({ enabled: false, question: null }))
+
 vi.mock('./lessonLogic', async (importOriginal) => {
   const actual = await importOriginal()
   return {
     ...actual,
     generateQuestions: (...args) => {
+      if (wordOrderMock.enabled) return [wordOrderMock.question]
       if (!matchPairsMock.enabled) return actual.generateQuestions(...args)
       return matchPairsMock.withFollowup ? [FOLLOWUP_QUESTION] : []
     },
@@ -413,6 +420,87 @@ describe('App', () => {
 
       await user.click(await screen.findByRole('button', { name: 'Finish' }))
       expect(screen.getByText(/1\/2/)).toBeInTheDocument()
+    })
+  })
+
+  describe('word-order question', () => {
+    afterEach(() => {
+      wordOrderMock.enabled = false
+      wordOrderMock.question = null
+    })
+
+    async function startWordOrderLesson(user, question) {
+      wordOrderMock.enabled = true
+      wordOrderMock.question = question
+      // Pins the lesson's own queue shuffle (mixing in the real, eligible
+      // match-pairs question after our mocked one) and `WordOrderBoard`'s
+      // internal cloud shuffle to a no-op, same trick `startMatchPairsLesson`
+      // above relies on — so the mocked word-order question stays first and
+      // its tokens render in fixture order.
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      render(<App />)
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+    }
+
+    const baseQuestion = {
+      kind: 'word-order',
+      verbId: 'izan',
+      tense: 'present',
+      person: 'ni',
+      tokens: [
+        { id: 0, text: 'Ni' },
+        { id: 1, text: 'irakaslea' },
+        { id: 2, text: 'naiz.' },
+      ],
+      correct: 'Ni irakaslea naiz.',
+    }
+
+    it('disables Check until every token has been tapped into the assembled row, then submits the joined sentence', async () => {
+      const user = userEvent.setup()
+      await startWordOrderLesson(user, baseQuestion)
+
+      expect(screen.getByRole('button', { name: 'Check' })).toBeDisabled()
+
+      await user.click(screen.getByRole('button', { name: 'Ni' }))
+      await user.click(screen.getByRole('button', { name: 'irakaslea' }))
+      expect(screen.getByRole('button', { name: 'Check' })).toBeDisabled()
+
+      await user.click(screen.getByRole('button', { name: 'naiz.' }))
+      expect(screen.getByRole('button', { name: 'Check' })).not.toBeDisabled()
+
+      await user.click(screen.getByRole('button', { name: 'Check' }))
+      expect(await screen.findByText(/Bikain! Great job!/)).toBeInTheDocument()
+    })
+
+    it('marks the question incorrect when the assembled order is wrong', async () => {
+      const user = userEvent.setup()
+      await startWordOrderLesson(user, baseQuestion)
+
+      await user.click(screen.getByRole('button', { name: 'irakaslea' }))
+      await user.click(screen.getByRole('button', { name: 'Ni' }))
+      await user.click(screen.getByRole('button', { name: 'naiz.' }))
+      await user.click(screen.getByRole('button', { name: 'Check' }))
+
+      expect(await screen.findByText("Not quite — you'll see this one again.")).toBeInTheDocument()
+    })
+
+    it('tapping an assembled token returns it to the cloud instead of submitting', async () => {
+      const user = userEvent.setup()
+      await startWordOrderLesson(user, baseQuestion)
+
+      await user.click(screen.getByRole('button', { name: 'Ni' }))
+      await user.click(screen.getByRole('button', { name: 'irakaslea' }))
+      // Undo "irakaslea" — it should return to the cloud, tappable again, and
+      // Check should stay disabled since the cloud isn't empty anymore.
+      await user.click(screen.getByRole('button', { name: 'irakaslea' }))
+      expect(screen.getByRole('button', { name: 'Check' })).toBeDisabled()
+
+      await user.click(screen.getByRole('button', { name: 'irakaslea' }))
+      await user.click(screen.getByRole('button', { name: 'naiz.' }))
+      await user.click(screen.getByRole('button', { name: 'Check' }))
+
+      expect(await screen.findByText(/Bikain! Great job!/)).toBeInTheDocument()
     })
   })
 
