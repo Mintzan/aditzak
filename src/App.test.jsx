@@ -471,9 +471,10 @@ describe('App', () => {
       tokens: [
         { id: 0, text: 'Ni' },
         { id: 1, text: 'irakaslea' },
-        { id: 2, text: 'naiz.' },
+        { id: 2, text: 'naiz' },
       ],
-      correct: 'Ni irakaslea naiz.',
+      correct: 'Ni irakaslea naiz',
+      punctuation: '.',
     }
 
     it('disables Check until every token has been tapped into the assembled row, then submits the joined sentence', async () => {
@@ -486,7 +487,7 @@ describe('App', () => {
       await user.click(screen.getByRole('button', { name: 'irakaslea' }))
       expect(screen.getByRole('button', { name: 'Check' })).toBeDisabled()
 
-      await user.click(screen.getByRole('button', { name: 'naiz.' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
       expect(screen.getByRole('button', { name: 'Check' })).not.toBeDisabled()
 
       await user.click(screen.getByRole('button', { name: 'Check' }))
@@ -499,7 +500,7 @@ describe('App', () => {
 
       await user.click(screen.getByRole('button', { name: 'irakaslea' }))
       await user.click(screen.getByRole('button', { name: 'Ni' }))
-      await user.click(screen.getByRole('button', { name: 'naiz.' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
       await user.click(screen.getByRole('button', { name: 'Check' }))
 
       expect(await screen.findByText("Not quite — you'll see this one again.")).toBeInTheDocument()
@@ -517,7 +518,22 @@ describe('App', () => {
       expect(screen.getByRole('button', { name: 'Check' })).toBeDisabled()
 
       await user.click(screen.getByRole('button', { name: 'irakaslea' }))
-      await user.click(screen.getByRole('button', { name: 'naiz.' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+      await user.click(screen.getByRole('button', { name: 'Check' }))
+
+      expect(await screen.findByText(/Bikain! Great job!/)).toBeInTheDocument()
+    })
+
+    it('renders the trailing punctuation as a fixed mark, not a tappable token', async () => {
+      const user = userEvent.setup()
+      await startWordOrderLesson(user, baseQuestion)
+
+      expect(screen.queryByRole('button', { name: '.' })).not.toBeInTheDocument()
+      expect(screen.getByText('.')).toBeInTheDocument()
+
+      await user.click(screen.getByRole('button', { name: 'Ni' }))
+      await user.click(screen.getByRole('button', { name: 'irakaslea' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
       await user.click(screen.getByRole('button', { name: 'Check' }))
 
       expect(await screen.findByText(/Bikain! Great job!/)).toBeInTheDocument()

@@ -1516,6 +1516,12 @@ describe('generateQuestions', () => {
         present: { ni: 'Ni ez ___ irakaslea.' },
       },
     }
+    const wordOrderQuestionVerb = {
+      ...verb,
+      sentences: {
+        present: { ni: 'Ni gaur hemen ___?' },
+      },
+    }
 
     it('builds a token cloud with one token per word, in shuffled (not necessarily source) order', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0.6)
@@ -1525,6 +1531,18 @@ describe('generateQuestions', () => {
       expect(question.kind).toBe('word-order')
       expect(question.tokens).toHaveLength(4)
       expect(question.tokens.map((token) => token.text).sort()).toEqual(['Ni', 'gaur', 'hemen', 'naiz'].sort())
+      expect(question.punctuation).toBe('.')
+    })
+
+    it('strips a trailing "?" the same way as "." and exposes it as `punctuation`', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.6)
+
+      const [question] = generateQuestions(wordOrderQuestionVerb, 'present', { persons: ['ni'] })
+
+      expect(question.kind).toBe('word-order')
+      expect(question.tokens.map((token) => token.text).sort()).toEqual(['Ni', 'gaur', 'hemen', 'naiz'].sort())
+      expect(question.correct).toBe('Ni gaur hemen naiz')
+      expect(question.punctuation).toBe('?')
     })
 
     it('keeps duplicate-word tokens distinguishable via a stable, unique id', () => {
