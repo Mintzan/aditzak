@@ -548,28 +548,30 @@ export const VERBS = [
       future: { ni: 'jakingo dut', zu: 'jakingo duzu', hura: 'jakingo du' },
     },
     // #124: `validFor` per docs/SENTENCE_FRAMES.md. `jakin`'s candidates are
-    // `ikusi`/`nahi` only (`ukan`/`eduki` are #114's confirmed-wrong pairs for
+    // `ikusi`/`nahi`/`ukan` (`eduki` is #114's confirmed-wrong pair for
     // `jakin`, so never listed). "Erantzuna"/"egia"/"erantzun zuzena" (answer,
-    // truth — things that can be seen written down, or wanted) admit both;
-    // "bidea"/"etxerako bidea" (the way/route — visible but not "wanted" as
-    // such) admit only `ikusi`; "sekretua" (a secret — wantable but not
-    // typically "seen") admits only `nahi`.
+    // truth — things that can be seen written down, or wanted) admit
+    // `ikusi`/`nahi`; "bidea"/"etxerako bidea" (the way/route — visible but
+    // not "wanted" as such) admit only `ikusi`; "sekretua" (a secret — an
+    // abstract thing one can know, want, *or have/own*, #204) admits
+    // `nahi`/`ukan`. "Egia" stays `ikusi`/`nahi`-only — "Zuk egia duzu" reads
+    // as shakier than "Zuk sekretua duzu" and #204 didn't confirm it.
     sentences: {
       present: {
         ni: [
           { text: 'Nik erantzuna ___.', validFor: ['ikusi', 'nahi'] },
           { text: 'Nik egia ___.', validFor: ['ikusi', 'nahi'] },
-          { text: 'Nik sekretua ___.', validFor: ['nahi'] },
+          { text: 'Nik sekretua ___.', validFor: ['nahi', 'ukan'] },
           { text: 'Nik bidea ___.', validFor: ['ikusi'] },
         ],
         zu: [
           { text: 'Zuk egia ___.', validFor: ['ikusi', 'nahi'] },
           { text: 'Zuk erantzuna ___.', validFor: ['ikusi', 'nahi'] },
-          { text: 'Zuk sekretua ___.', validFor: ['nahi'] },
+          { text: 'Zuk sekretua ___.', validFor: ['nahi', 'ukan'] },
           { text: 'Zuk bidea ___.', validFor: ['ikusi'] },
         ],
         hura: [
-          { text: 'Hark sekretua ___.', validFor: ['nahi'] },
+          { text: 'Hark sekretua ___.', validFor: ['nahi', 'ukan'] },
           { text: 'Mikelek erantzuna ___.', validFor: ['ikusi', 'nahi'] },
           { text: 'Irakasleak erantzun zuzena ___.', validFor: ['ikusi', 'nahi'] },
           { text: 'Txakurrak etxerako bidea ___.', validFor: ['ikusi'] },
@@ -588,7 +590,7 @@ export const VERBS = [
       present: {
         ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'] },
         zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'] },
-        hura: { text: 'Hark ez ___ sekretua.', validFor: ['nahi'] },
+        hura: { text: 'Hark ez ___ sekretua.', validFor: ['nahi', 'ukan'] },
       },
     },
   },
