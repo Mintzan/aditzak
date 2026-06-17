@@ -12,6 +12,36 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #218: consolidated distractor/ambiguity strategy in `docs/DISTRACTOR_STRATEGY.md`
+
+**Decision:** Added `docs/DISTRACTOR_STRATEGY.md` as the standing
+full-picture planning doc for distractor selection and ambiguity, restoring
+the institutional-memory role `docs/AMBIGUOUS_DISTRACTORS_AUDIT.md` had before
+#126 deleted it. The `validFor` *schema* stays in `docs/SENTENCE_FRAMES.md`;
+the new doc is the *direction/methodology* layer above it. No runtime change.
+
+**Why:** ~30 issues have touched distractors as if it were one topic; it's
+actually three families (A: false-negative ambiguity → `validFor`; B: leakage
+of borrowed/lure forms into ungrounded `form` questions → the repeatedly-
+patched #139/#174/#200/#203 line; C: lure pedagogy/legibility). Conflating
+them is why fixes to one resurface as regressions in another. #218 is a fresh
+batch spanning all three, so the picture was worth writing down once.
+
+**Calibration evidence (read-only sizing run, this date):** the `validFor`
+completeness-review surface is **structural — driven by agreement-cluster
+size, not recency.** A verb joining the ~16-member `nor-nork` cluster creates
+~300–370 review slots; a dative-cluster verb creates dozens. An *absolute*
+completeness lint is therefore noise (3,969 "gap slots" across 898 tagged
+variants, mostly correct distractors); only a *delta* audit at verb-add time
+is useful. The raw count can't tell bug-density from review-surface (`behar`'s
+293 land on semantically-close sentences and are likely real omissions;
+`jan`/`edan`'s ~370 are mostly correct distractors). Net direction:
+frame-derived `validFor` for the core cluster, manual + delta-audit for the
+dative tail, provenance-typed distractors to retire Family B's accreted gates,
+and legible/targeted lures for Family C. Open decisions enumerated in the doc;
+`behar` flagged as known content debt. **No short-term fixes made** per the
+issue owner's call — this is planning only.
+
 ## 2026-06-17 — #203: `generateQuestions`'s review-scoping needs an explicit `review` flag, not just `sources.length > 1`
 
 **Decision:** `generateQuestions` now takes an explicit `review` boolean
