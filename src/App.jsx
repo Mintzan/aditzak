@@ -1431,7 +1431,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   const resolvedSources = sources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
   const extraSiblingSources = extraSources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
   const crossVerbQuestions = lesson.review
-    ? generateCrossVerbQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources })
+    ? generateCrossVerbQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources, verbs: VERBS })
     : []
   // Reviews whose sources mix `nor` and `nor-nork` verbs also get up to
   // `CASE_MIXER_QUESTION_COUNT` "which form matches this sentence's subject"
@@ -1439,7 +1439,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // image, framed around `-k` ergative-subject marking. Reviews with no such
   // mix simply get none.
   const caseMixerQuestions = lesson.review
-    ? generateCaseMixerQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources })
+    ? generateCaseMixerQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources, verbs: VERBS })
     : []
   // A whole-table match-the-pairs round (see `generateMatchPairsQuestions`)
   // — gated off `lesson.negation` lessons (Unit 10's Refresh Gate A and its

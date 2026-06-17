@@ -1056,7 +1056,19 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
 // variety: merged into the sibling pool (never as new anchors), deduped
 // against `resolvedSources`, and restricted to the same `tense` as the
 // anchor — same rationale as `getCrossVerbCandidates`'s `extraSources`.
-function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementMatches, extraSiblingSources = []) {
+//
+// `verbs` (optional, the full `VERBS` list) is #200's counterpart for this
+// question shape: even with `extraSiblingSources` wired up, a review can
+// have just one compatible-and-not-`validFor`-excluded sibling for a given
+// sentence (e.g. `jakin-suffix-family-review`'s "Zuk sekretua ___." accepts
+// `nahi`'s form too, so `nahi` is excluded as a distractor, leaving only
+// `ukan` — a 2-option question/coin flip). When the sibling pool above
+// yields fewer than 2 distractors, `verbs` tops it up with any other
+// `agreementMatches`-compatible verb's same-person form (still subject to
+// the same `validFor` exclusion and dedup) — this question already shows a
+// sentence, so an unrelated verb's form reads unambiguously as "wrong verb
+// for this sentence", same as `verb-choice`/`case-mixer`'s normal siblings.
+function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementMatches, extraSiblingSources = [], verbs) {
   const candidates = []
   const known = new Set(resolvedSources.map(({ verb, tense }) => `${verb.id}:${tense}`))
   const extras = extraSiblingSources.filter(({ verb, tense }) => !known.has(`${verb.id}:${tense}`))
@@ -1083,7 +1095,20 @@ function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementM
       // ceiling as `buildOptions` — so Delivery 4's broader fallback pool
       // widens *variety* (which siblings show up) without ever showing more
       // options than a regular multiple-choice question.
-      const distractors = shuffle([...new Set(siblingForms)].filter((form) => form !== correct)).slice(0, 3)
+      let distractors = shuffle([...new Set(siblingForms)].filter((form) => form !== correct)).slice(0, 3)
+      if (distractors.length < 2) {
+        const knownSiblingIds = new Set([verb.id, ...siblings.map((sibling) => sibling.verb.id)])
+        const borrowedCandidates = (verbs ?? [])
+          .filter((sibling) => !knownSiblingIds.has(sibling.id) && agreementMatches(sibling.agreement, verb.agreement))
+          .map((sibling) => {
+            const form = sibling.conjugations[tense]?.[person]
+            return form ? { verbId: sibling.id, form } : null
+          })
+          .filter(Boolean)
+        const borrowedForms = filterExtraCandidates(borrowedCandidates, sentence.validFor)
+        const moreDistractors = shuffle([...new Set(borrowedForms)].filter((form) => form !== correct && !distractors.includes(form)))
+        distractors = [...distractors, ...moreDistractors].slice(0, 3)
+      }
       if (distractors.length === 0) continue
       const options = [correct, ...distractors]
       candidates.push({ verbId: verb.id, tense, person, sentence: sentence.text, correct, options })
@@ -1132,14 +1157,19 @@ export const CROSS_VERB_QUESTION_COUNT = 2
 // (optional) restricts which grammatical persons are eligible, mirroring
 // `generateQuestions`'s `persons` filter. `extraSiblingSources` (optional,
 // see `collectCrossSourceCandidates`) widens the sibling pool for reviews
-// with too few sources of their own (Delivery 4). Up to `count` questions are
+// with too few sources of their own (Delivery 4). `verbs` (optional, the
+// full `VERBS` list) is #200's further top-up for when even that's not
+// enough — see `collectCrossSourceCandidates`. Up to `count` questions are
 // returned, picked at random from every eligible (source, person)
 // combination — a review with too few eligible combinations (e.g. a
 // single-source review, where there are no siblings to choose between at
 // all) simply returns fewer, down to none.
-export function generateCrossVerbQuestions(resolvedSources, { persons: personsFilter, count = CROSS_VERB_QUESTION_COUNT, extraSiblingSources = [] } = {}) {
+export function generateCrossVerbQuestions(
+  resolvedSources,
+  { persons: personsFilter, count = CROSS_VERB_QUESTION_COUNT, extraSiblingSources = [], verbs } = {},
+) {
   return pickCrossSourceQuestions(
-    collectCrossSourceCandidates(resolvedSources, personsFilter, agreementsCompatible, extraSiblingSources),
+    collectCrossSourceCandidates(resolvedSources, personsFilter, agreementsCompatible, extraSiblingSources, verbs),
     count,
     'verb-choice',
   )
@@ -1167,9 +1197,12 @@ export const CASE_MIXER_QUESTION_COUNT = 1
 // subject. Reviews with no `nor`/`nor-nork` mix among their sources (or none
 // for the given `persons`) simply yield none, same graceful-degradation
 // pattern as `generateCrossVerbQuestions`.
-export function generateCaseMixerQuestions(resolvedSources, { persons: personsFilter, count = CASE_MIXER_QUESTION_COUNT, extraSiblingSources = [] } = {}) {
+export function generateCaseMixerQuestions(
+  resolvedSources,
+  { persons: personsFilter, count = CASE_MIXER_QUESTION_COUNT, extraSiblingSources = [], verbs } = {},
+) {
   return pickCrossSourceQuestions(
-    collectCrossSourceCandidates(resolvedSources, personsFilter, (a, b) => !agreementsCompatible(a, b), extraSiblingSources),
+    collectCrossSourceCandidates(resolvedSources, personsFilter, (a, b) => !agreementsCompatible(a, b), extraSiblingSources, verbs),
     count,
     'case-mixer',
   )
