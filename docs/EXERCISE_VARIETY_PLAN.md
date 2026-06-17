@@ -1,5 +1,7 @@
 # Exercise Variety Plan — making review questions test "which form" not just "which person"
 
+**Status: open plan/proposal.** Not all of this has shipped — check `EXERCISE_ENGINE.md` and `lessonLogic.js` for which question kinds described here are actually implemented.
+
 This plan captures a gap identified while reviewing the exercise engine: every
 question — including in "mixed review" lessons — is generated from one
 already-known verb's conjugation table (`generateQuestions(verb, tense, ...)`

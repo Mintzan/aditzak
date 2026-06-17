@@ -1,5 +1,7 @@
 # Learning Journey — Evaluation Results
 
+**Status: historical.** Records the findings that motivated `LEARNING_JOURNEY_PROPOSED.md`'s redesign; not itself updated as that proposal is implemented.
+
 Evaluation of the shipped learning journey (`docs/LEARNING_JOURNEY.md` and the
 implemented `journey.js`/`LESSONS`, state of 2026-06-14) against the
 pedagogical criteria below. The redesigned curriculum these findings motivate is
