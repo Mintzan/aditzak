@@ -951,8 +951,17 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
   const noProduction = noTyping || mode === 'recognition'
-  const borrowPool =
-    sources && sources.length > 1 ? verbs?.filter((sibling) => sources.some((reviewSource) => reviewSource.verbId === sibling.id)) : verbs
+  // A 2+-entry `sources` means this is a review lesson (see the App.jsx call
+  // site), where `kind: 'form'` questions render with `showVerb: false` —
+  // no sentence and no visible verb name to anchor correctness. Borrowing
+  // there can surface a sibling's genuinely-correct same-person form as if
+  // it were wrong, even though #174 already scoped the pool to the
+  // review's own declared sources (#200: that in-scope sibling is still
+  // ambiguous with no sentence/verb name to tell them apart). A single- or
+  // no-`sources` call is an ordinary practice lesson, which always shows the
+  // verb name, so borrowing there stays safe and unrestricted (#139).
+  const reviewScoped = Boolean(sources && sources.length > 1)
+  const borrowPool = reviewScoped ? verbs?.filter((sibling) => sources.some((reviewSource) => reviewSource.verbId === sibling.id)) : verbs
 
   function buildQuestion(person) {
     const sentence = normalizeSentence(pickVariant(sentences[person]))
@@ -994,7 +1003,11 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     let kind = rollQuestionKind(availableKinds)
     const used = usedKinds.get(person) ?? new Set()
     if (used.has(kind)) {
-      const unused = ['form', ...availableKinds].filter((candidate) => !used.has(candidate))
+      // `'form'` is always a safe fallback kind (it only needs the
+      // conjugation table), except under `includeNegation`: there,
+      // `availableKinds` is deliberately restricted to negative framings, and
+      // falling back to `'form'` would silently bypass that restriction (#200).
+      const unused = (includeNegation ? availableKinds : ['form', ...availableKinds]).filter((candidate) => !used.has(candidate))
       if (unused.length > 0) kind = unused[Math.floor(Math.random() * unused.length)]
     }
     used.add(kind)
@@ -1028,7 +1041,12 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
         return { ...source, ...buildWordOrderQuestion(table, wordOrderSentence, person) }
       }
       default: {
-        const { correct, options } = buildOptions(table, persons, person, [], borrowed, formLures)
+        // See `reviewScoped` above: a review's bare `kind: 'form'` question
+        // has neither a sentence nor a visible verb name to anchor
+        // correctness, so it never borrows — accept fewer than 3 options
+        // instead of letting an in-scope sibling's correct form read as a
+        // second right answer (#200).
+        const { correct, options } = buildOptions(table, persons, person, [], reviewScoped ? [] : borrowed, formLures)
         return { ...source, kind: 'form', person, correct, options }
       }
     }

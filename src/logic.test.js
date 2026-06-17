@@ -1246,7 +1246,12 @@ describe('generateQuestions', () => {
       })
     })
 
-    it('still borrows from a sibling that is one of the 2+ declared `sources`', () => {
+    it('never borrows for `kind: "form"`, even from a sibling that is one of the 2+ declared `sources` (#200)', () => {
+      // A bare `kind: 'form'` question has no sentence and (in a review
+      // lesson) no visible verb name to anchor correctness, so even an
+      // in-scope sibling's genuinely-correct same-person form reads as a
+      // second right answer rather than a wrong one — accept fewer than 3
+      // options instead of borrowing one in.
       vi.spyOn(Math, 'random').mockReturnValue(0)
 
       const questions = generateQuestions(smallVerb, 'present', {
@@ -1259,8 +1264,9 @@ describe('generateQuestions', () => {
 
       questions.forEach((question) => {
         expect(question.kind).toBe('form')
-        expect(question.options.length).toBeGreaterThan(Object.values(smallVerb.conjugations.present).length - 1)
+        expect(question.options.length).toBe(Object.values(smallVerb.conjugations.present).length)
         question.options.forEach((option) => {
+          expect(Object.values(sibling.conjugations.present)).not.toContain(option)
           expect(Object.values(otherSibling.conjugations.present)).not.toContain(option)
         })
       })
@@ -1466,6 +1472,21 @@ describe('generateQuestions', () => {
         generateQuestions(verbWithNegation, 'present').forEach((question) => {
           expect(['negative', 'type-negative', 'word-order']).not.toContain(question.kind)
         })
+      })
+    })
+
+    it('never falls back to "form" on a repeat roll for a person with negativeSentences data, even across rounds (#200)', () => {
+      // A pinned roll of 0 always lands on the first availableKinds slice
+      // ('negative'), so the second round's repeat-roll fallback kicks in for
+      // every person with negativeSentences data. Pre-#200, that fallback
+      // unconditionally re-added 'form' to the candidate pool, letting a bare
+      // form question bypass includeNegation's intended negative framing.
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      generateQuestions(verbWithNegation, 'present', { includeNegation: true, rounds: 2 }).forEach((question) => {
+        if (negated[question.person]) {
+          expect(['negative', 'type-negative', 'word-order']).toContain(question.kind)
+        }
       })
     })
   })
