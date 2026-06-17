@@ -12,6 +12,16 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #192: wire `generateMatchPairsQuestions` into `createExerciseState`
+
+**Decision:** `createExerciseState` now calls `generateMatchPairsQuestions(resolvedSources, { persons: lesson.persons })` and appends its result to every lesson's queue, except when `lesson.negation` is set (Unit 10's Refresh Gate A and the `unit-5-review-*` lessons) — there the whole point is the `ez`/auxiliary-fronting drill, and a bare person↔form match would dilute it.
+
+**Why automatic rather than a per-lesson flag:** eligibility is already gated inside the generator itself (≥3 in-scope persons, all with distinct forms — see `generateMatchPairsQuestions`'s own guard), so a lesson either has a matchable table or it doesn't; hand-curating a second flag per lesson on top of that would just be a second place the same fact could go stale. The single `lesson.negation` exception is the only case where a table *is* matchable but shouldn't be matched.
+
+**Why mixed into existing lessons instead of a dedicated "match-pairs lesson":** the journey's unit structure (`JOURNEY`/`LESSONS`) is unaffected — no new lesson ids, no `journey.test.js` changes needed. A match-pairs round is one more question *kind* in an existing lesson's queue, like `spot-error` or `pronoun`, not a new unit.
+
+**Scoring:** counts as a single question toward `bestScore`/`totalQuestions`/stars, same as any other kind — no `STORAGE_KEY` bump, since the stored shape (`{ attempts, bestScore, totalQuestions, bestStars, lastPlayed }`) doesn't change.
+
 ## 2026-06-17 — #191: `MatchPairsBoard` UI + retry-remount fix for `kind: 'match-pairs'`
 
 **Decision:** Added `MatchTile`/`MatchPairsBoard` (`App.jsx`) to render

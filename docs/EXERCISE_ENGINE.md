@@ -25,7 +25,14 @@ implementation.
   `form`, `sentence`, `spot-error`, `pronoun`, `type-verb`, `type-pronoun`.
   `spot-error` needs ≥4 persons with sentence data; the multiple-choice kinds
   need ≥4 persons total so `buildOptions` (`lessonLogic.js:135-139`) can pick
-  3 distractors.
+  3 distractors. Two further kinds exist outside `generateQuestions`: `kind:
+  'reading'` (`generateReadingQuestions`, Unit 36 only) and `kind:
+  'match-pairs'` (`generateMatchPairsQuestions`) — a whole-table round, not a
+  per-person one, mixed into a lesson's queue by `createExerciseState`
+  whenever a source has ≥3 in-scope persons with distinct forms, except on
+  `lesson.negation` lessons (Unit 10's Refresh Gate A and the
+  `unit-5-review-*` lessons), where it would dilute the `ez`/auxiliary-
+  fronting drill.
 - **`LESSONS`** is 100% statically derived from `VERBS` (`App.jsx:209-222`):
   one practice lesson per (verb × tense), a verb-review once a verb has 2+
   tenses, and a trailing mixed-review once there's more than one verb.
