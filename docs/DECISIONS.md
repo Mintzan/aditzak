@@ -8,6 +8,23 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-17 — #170: §14 non-finite-form reading items for Unit 36
+
+Added 8 new `kind: 'reading'` items (`reading-nonfinite-*` in
+`src/data/readingItems.js`) covering `CONJUGATIONS.md` §14's verbal-noun
+suffixes (`-tea`/`-teari`/`-teagatik`/`-teko`/`-tean`), the `-tako`
+(attributive) vs. `-a`+`izan` (resultative predicate) participle contrast,
+and the `-z` modal/instrumental adverbial — the content #145 deliberately
+left out of the original 10-item set. To minimize the risk of subtle errors
+in non-finite forms (flagged by #170 itself), every `source` sentence reuses
+one of §14's own worked examples verbatim rather than authoring new ones.
+
+Put the new items in a second lesson (`unit-36-reading-nonfinite`) rather
+than folding them into `unit-36-reading`, since 10+8 items would make a
+single lesson too long — both are added to Unit 36's `lessonIds`. No engine
+changes — `generateReadingQuestions`/`READING_ITEMS` already generalize over
+arbitrary item lists.
+
 ## 2026-06-17 — #167: Hitanoa allocutive register, Units 33/34 + hi-as-NORK gender split (core scope)
 
 Core scope: Units 33 (toka) + 34 (noka) data/lessons, plus item 4 — `ukan`/

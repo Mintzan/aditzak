@@ -17,9 +17,15 @@
 // its agentless `nor`-shifted counterpart (anticausative for change-of-state
 // verbs like `ireki`/`hautsi`/`itzali`/`piztu`/`itxi`, impersonal/passive for
 // `hitz egin`/`erre`/`idatzi`); items 9-10 go the other way, starting from an
-// agentless sentence and asking who's understood to be doing it. §14's
-// non-finite forms are intentionally not covered here — see the issue filed
-// for #145's deferred scope.
+// agentless sentence and asking who's understood to be doing it.
+//
+// Items 11-18 (#170) cover §14 ("Non-finite forms") instead: each `source`
+// and its correct `answer`/distractor set reuse the exact non-finite forms
+// from §14's own worked examples (verbal-noun suffixes `-tea`/`-teari`/
+// `-teagatik`/`-teko`/`-tean`, the `-tako` attributive vs. `-a`+`izan`
+// resultative-predicate contrast, and the `-z` modal adverbial) rather than
+// inventing new sentences, since non-finite forms carry a higher risk of
+// subtle errors without native-speaker review (see `docs/LANGUAGE_DECISIONS.md`).
 export const READING_ITEMS = [
   {
     id: 'reading-nor-shift-ireki',
@@ -190,5 +196,133 @@ export const READING_ITEMS = [
       'Sagarrak xehetuko dira.',
     ],
     answer: 'Norbaitek sagarrak xehetu egiten ditu.',
+  },
+  {
+    id: 'reading-nonfinite-verbalnoun-absolutive',
+    source: 'Filma ikustea gustatzen zait.',
+    gloss: {
+      en: 'I like watching the film.',
+      es: 'Me gusta ver la película.',
+      eu: 'Filma ikustea gustatzen zait.',
+    },
+    prompt: {
+      en: 'What does the speaker like?',
+      es: '¿Qué le gusta al hablante?',
+      eu: 'Zer gustatzen zaio hiztunari?',
+    },
+    options: ['Filma ikustea.', 'Filma ikusi du.', 'Filmak gustatzen dira.', 'Filma ikusiko du.'],
+    answer: 'Filma ikustea.',
+  },
+  {
+    id: 'reading-nonfinite-verbalnoun-dative',
+    source: 'Telebista ikusteari utzi diot.',
+    gloss: {
+      en: "I've given up watching TV.",
+      es: 'He dejado de ver la televisión.',
+      eu: 'Telebista ikusteari utzi diot.',
+    },
+    prompt: {
+      en: 'What has the speaker given up?',
+      es: '¿Qué ha dejado el hablante?',
+      eu: 'Zeri utzi dio hiztunak?',
+    },
+    options: ['Telebista ikusteari.', 'Telebista ikusi dut.', 'Telebista ikusiko dut.', 'Telebistari utzi diot.'],
+    answer: 'Telebista ikusteari.',
+  },
+  {
+    id: 'reading-nonfinite-verbalnoun-causal',
+    source: 'Filma berandu ikusteagatik, amaiera ez zuen ulertu.',
+    gloss: {
+      en: "Because he watched the film late, he didn't understand the ending.",
+      es: 'Porque vio la película tarde, no entendió el final.',
+      eu: 'Filma berandu ikusteagatik, amaiera ez zuen ulertu.',
+    },
+    prompt: {
+      en: "Why didn't he understand the ending?",
+      es: '¿Por qué no entendió el final?',
+      eu: 'Zergatik ez zuen amaiera ulertu?',
+    },
+    options: ['Filma berandu ikusteagatik.', 'Filma berandu ikusiko zuelako.', 'Amaiera ez zuelako ikusi.', 'Filma laster ikusteagatik.'],
+    answer: 'Filma berandu ikusteagatik.',
+  },
+  {
+    id: 'reading-nonfinite-verbalnoun-purposive',
+    source: 'Filma ikusteko etorri naiz.',
+    gloss: {
+      en: 'I came (in order) to watch the film.',
+      es: 'He venido para ver la película.',
+      eu: 'Filma ikusteko etorri naiz.',
+    },
+    prompt: {
+      en: 'Why did the speaker come?',
+      es: '¿Por qué ha venido el hablante?',
+      eu: 'Zergatik etorri da hiztuna?',
+    },
+    options: ['Filma ikusteko.', 'Filma ikustea.', 'Filma ikusi du.', 'Filma ikusiz.'],
+    answer: 'Filma ikusteko.',
+  },
+  {
+    id: 'reading-nonfinite-verbalnoun-temporal',
+    source: 'Filma ikustean, negar egin nuen.',
+    gloss: {
+      en: 'When I saw the film, I cried.',
+      es: 'Al ver la película, llore.',
+      eu: 'Filma ikustean, negar egin nuen.',
+    },
+    prompt: {
+      en: 'When did the speaker cry?',
+      es: '¿Cuándo lloró el hablante?',
+      eu: 'Noiz egin zuen negar hiztunak?',
+    },
+    options: ['Filma ikustean.', 'Filma ikusteagatik.', 'Filma ikusteko.', 'Filma ikusteari.'],
+    answer: 'Filma ikustean.',
+  },
+  {
+    id: 'reading-nonfinite-participle-attributive',
+    source: 'Atzo ikusitako filma oso ona zen.',
+    gloss: {
+      en: 'The film [that was] seen yesterday was very good.',
+      es: 'La película vista ayer era muy buena.',
+      eu: 'Atzo ikusitako filma oso ona zen.',
+    },
+    prompt: {
+      en: "Which phrase describes 'filma' (the film)?",
+      es: "¿Qué frase describe a 'filma' (la película)?",
+      eu: "Zein esapidek deskribatzen du 'filma'?",
+    },
+    options: ['Atzo ikusitako.', 'Atzo ikusia.', 'Atzo ikusten.', 'Atzo ikusiko.'],
+    answer: 'Atzo ikusitako.',
+  },
+  {
+    id: 'reading-nonfinite-participle-resultative',
+    source: 'Etorria da.',
+    gloss: {
+      en: 'He/she has arrived (and is here now).',
+      es: 'Ha llegado (y está aquí ahora).',
+      eu: 'Etorria da.',
+    },
+    prompt: {
+      en: 'Which sentence reports the resulting state (he/she is here now), not just the event of arriving?',
+      es: '¿Qué frase describe el estado resultante (está aquí ahora), no solo el hecho de llegar?',
+      eu: 'Zein esaldik adierazten du ondoriozko egoera (orain hemen dago), etorri izanaren gertaera soilik ez?',
+    },
+    options: ['Etorria da.', 'Etorri da.', 'Etortzen da.', 'Etorriko da.'],
+    answer: 'Etorria da.',
+  },
+  {
+    id: 'reading-nonfinite-modal-z',
+    source: 'Liburuak irakurriz, asko ikasten da.',
+    gloss: {
+      en: 'By reading books, one learns a lot.',
+      es: 'Leyendo libros, se aprende mucho.',
+      eu: 'Liburuak irakurriz, asko ikasten da.',
+    },
+    prompt: {
+      en: 'How does one learn a lot?',
+      es: '¿Cómo se aprende mucho?',
+      eu: 'Nola ikasten da asko?',
+    },
+    options: ['Liburuak irakurriz.', 'Liburuak irakurtzen ditu.', 'Liburuak irakurriko ditu.', 'Liburuak irakurri behar dira.'],
+    answer: 'Liburuak irakurriz.',
   },
 ]
