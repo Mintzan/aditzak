@@ -8,6 +8,53 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-17 — #165: NOR-NORI/NOR-NORI-NORK distractor matrix rows (core scope)
+
+Closes #141's NOR-NORI/NOR-NORI-NORK deferral now that #162/#164 have landed
+the plural-object fodder it needed. Two changes to `src/lessonLogic.js`:
+
+1. **Generalized `getCaseFrameSibling`** — dropped the `agreement.includes
+   ('nori')` exclusion and changed the matching rule from "both lack `nori`,
+   `nork` inverted" to "same `nori` status, `nork` inverted." This is a
+   strict generalization (izan/ukan still match exactly as before) that also
+   pairs gustatu/iruditu/ahaztu (`nor-nori`) with esan/eman (`nor-nori-nork`)
+   — e.g. `gustatzen zait` offered as a "wrong case frame" distractor for
+   `esaten diot`, and vice versa. Person keys line up mechanically the same
+   way they already did for izan/ukan (different grammatical roles share the
+   same person-key space), so no new lookup logic was needed, just a wider
+   net.
+2. **New `getObjectNumberLure(verb, tense, person)`** — returns
+   `verb.conjugations[\`${tense}Plural\`]?.[person]`, i.e. the verb's own
+   plural-object form for the same tense/person where one exists (`esaten
+   dizkiot` offered alongside `esaten diot`). Covers the matrix's "wrong
+   object number" slot for gustatu/iruditu/ahaztu/esan/eman; harmlessly
+   `undefined` for every other verb (no `<tense>Plural` table).
+
+Both lures slot into the existing `formLures` array at the same call site
+#141 added; the gating condition widened from `tense === 'past' ||
+agreement.includes('nork')` to also include `agreement.includes('nori')`, so
+NOR-NORI verbs' present/future tenses get lures too (previously only
+NOR-NORK present and any past tense did).
+
+**What this does *not* cover, and isn't planned to**: the issue's literal
+"Slot 1 = wrong-NORK" / "Slot 2 = wrong-NORI" for NOR-NORI-NORK verbs would
+need a same-verb table with the *other* axis varying (e.g. an "esan to zu"
+table, or a "zuk eman" table) — `esan`/`eman`'s data model only has one
+table each (their axis-fixed slice), so there's no such form to pull from
+without authoring an entirely new table per verb. The generalized
+case-frame lure above offers a related but distinct trap (missing
+NORK-marking entirely, not a same-axis wrong value) as a partial,
+honest-about-its-limits substitute. Filed **#177** for: this literal
+same-verb cross-axis lure (if ever desired), the future-tense
+illegal-voicing non-word safety mechanism, the hi/hitanoa wrong-gender/
+neutral-form rows (blocked on #167's gendered toka/noka data), and the mood
+rows (blocked on #171's dative-paradigm potential/conditional content).
+
+Added `npm test` coverage in `src/logic.test.js` (`#165 NOR-NORI/NOR-NORI-
+NORK distractor matrix rows`) following #141's existing test pattern: direct
+unit tests on the two lure functions, plus `generateQuestions` integration
+tests asserting the new distractors actually appear in `options`.
+
 ## 2026-06-16 — #162: Unit 25 `-zki-` object-number fodder + four extra-practice reviews
 
 Closes #147's deferred scope items 2 and 4. Added `presentPlural`/

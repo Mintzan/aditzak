@@ -24,6 +24,7 @@ import {
   getFixedArgument,
   getIntroducedSources,
   getLocalDateString,
+  getObjectNumberLure,
   getPointsBalance,
   getStreakEncouragement,
   getUnlockedLessonIds,
@@ -1621,15 +1622,31 @@ describe('generateQuestions', () => {
         expect(getCaseFramePronounLure(VERBS, ukan, 'ni')).toBe('Ni')
       })
 
-      it('returns undefined without a `verbs` list, or for NOR-NORI verbs', () => {
+      it('returns undefined without a `verbs` list', () => {
         expect(getCaseFrameLure(undefined, izan, 'present', 'ni')).toBeUndefined()
+      })
+
+      // #165: generalized beyond izan/ukan — a NOR-NORI verb's case-frame-
+      // inverse sibling is the first NOR-NORI-NORK verb (same `nori` status,
+      // opposite `nork` status), and vice versa.
+      it('finds the case-frame-inverse sibling across NOR-NORI <-> NOR-NORI-NORK (gustatu <-> esan)', () => {
         const gustatu = VERBS.find((v) => v.id === 'gustatu')
-        expect(getCaseFrameLure(VERBS, gustatu, 'present', 'ni')).toBeUndefined()
+        const esan = VERBS.find((v) => v.id === 'esan')
+        expect(getCaseFrameLure(VERBS, gustatu, 'present', 'ni')).toBe('esaten diot')
+        expect(getCaseFrameLure(VERBS, esan, 'present', 'ni')).toBe('gustatzen zait')
       })
 
       it('returns the verb\'s own present-tense form for past tense, and undefined otherwise', () => {
         expect(getCrossTenseLure(izan, 'past', 'ni')).toBe('naiz')
         expect(getCrossTenseLure(izan, 'present', 'ni')).toBeUndefined()
+      })
+
+      it('returns the verb\'s own plural-object form for the same tense/person, or undefined with no such table', () => {
+        const gustatu = VERBS.find((v) => v.id === 'gustatu')
+        const esan = VERBS.find((v) => v.id === 'esan')
+        expect(getObjectNumberLure(gustatu, 'present', 'ni')).toBe('gustatzen zaizkit')
+        expect(getObjectNumberLure(esan, 'present', 'ni')).toBe('esaten dizkiot')
+        expect(getObjectNumberLure(izan, 'present', 'ni')).toBeUndefined()
       })
     })
 
@@ -1671,6 +1688,50 @@ describe('generateQuestions', () => {
 
       expect(question.kind).toBe('form')
       expect(question.options).not.toContain('dut')
+    })
+  })
+
+  // #165: extends #141's matrix to NOR-NORI (gustatu/iruditu/ahaztu) and
+  // NOR-NORI-NORK (esan/eman) using #164/#162's plural-object fodder — the
+  // case-frame lure generalizes to this pair (`gustatzen zait` <->
+  // `esaten diot`), and a new `getObjectNumberLure` offers each verb's own
+  // plural-object form as a "wrong object number" distractor.
+  describe('#165 NOR-NORI/NOR-NORI-NORK distractor matrix rows', () => {
+    const gustatu = VERBS.find((v) => v.id === 'gustatu')
+    const esan = VERBS.find((v) => v.id === 'esan')
+    const eman = VERBS.find((v) => v.id === 'eman')
+
+    it('offers the case-frame-inverse sibling\'s present form as a NOR-NORI distractor (`esaten diot` for `gustatzen zait`)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
+
+      const question = generateQuestions(gustatu, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('form')
+      expect(question.correct).toBe('gustatzen zait')
+      expect(question.options).toContain('esaten diot')
+    })
+
+    it('offers the case-frame-inverse sibling\'s present form as a NOR-NORI-NORK distractor (`gustatzen zait` for `esaten diot`)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+
+      const question = generateQuestions(esan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('form')
+      expect(question.correct).toBe('esaten diot')
+      expect(question.options).toContain('gustatzen zait')
+    })
+
+    it('offers the verb\'s own plural-object form as a "wrong object number" distractor (gustatu, esan, eman)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+
+      const gustatuQuestion = generateQuestions(gustatu, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+      expect(gustatuQuestion.options).toContain('gustatzen zaizkit')
+
+      const esanQuestion = generateQuestions(esan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+      expect(esanQuestion.options).toContain('esaten dizkiot')
+
+      const emanQuestion = generateQuestions(eman, 'present', { verbs: VERBS }).find((q) => q.person === 'zu')
+      expect(emanQuestion.options).toContain('ematen dizkizut')
     })
   })
 

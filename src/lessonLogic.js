@@ -500,17 +500,22 @@ export function agreementsCompatible(a, b) {
 
 // Finds the sibling verb whose subject-marking is the *case-frame inverse* of
 // `agreement` — same `nori` status, but the opposite `nork` status (`nor` <->
-// `nor-nork`, e.g. izan <-> ukan). Used by #141's "ergative drift" distractor
-// slot: a verb's case-frame-inverse sibling's same-person form is a
-// plausible-looking but case-mismatched answer (`naiz` offered alongside
-// `dut`, `Nik` offered alongside `Ni`). Returns the first such sibling in
-// `verbs`, or `undefined` if `verbs`/`agreement` is missing or none qualifies.
-// NOR-NORI and NOR-NORI-NORK verbs (#146/#147) have no case-frame-inverse
-// sibling yet — that needs #164/#162's fodder (#141's follow-up issue) — so
-// `agreement.includes('nori')` excludes them both as seekers and as matches.
+// `nor-nork`, e.g. izan <-> ukan; or, since #165 generalized this beyond
+// #141's izan/ukan-only core scope, `nor-nori` <-> `nor-nori-nork`, e.g.
+// gustatu <-> esan). Used by the "ergative drift" distractor slot: a verb's
+// case-frame-inverse sibling's same-person form is a plausible-looking but
+// case-mismatched answer (`naiz` offered alongside `dut`, `gustatzen zait`
+// offered alongside `esaten diot`, `Nik` offered alongside `Ni`). Returns the
+// first such sibling in `verbs`, or `undefined` if `verbs`/`agreement` is
+// missing or none qualifies.
 function getCaseFrameSibling(verbs, agreement) {
-  if (!verbs || !agreement || agreement.includes('nori')) return undefined
-  return verbs.find((sibling) => sibling.agreement && !sibling.agreement.includes('nori') && sibling.agreement.includes('nork') !== agreement.includes('nork'))
+  if (!verbs || !agreement) return undefined
+  return verbs.find(
+    (sibling) =>
+      sibling.agreement &&
+      sibling.agreement.includes('nori') === agreement.includes('nori') &&
+      sibling.agreement.includes('nork') !== agreement.includes('nork'),
+  )
 }
 
 // The case-frame-inverse sibling's (see `getCaseFrameSibling`) same-person/
@@ -535,6 +540,16 @@ export function getCaseFramePronounLure(verbs, verb, person) {
 export function getCrossTenseLure(verb, tense, person) {
   if (tense !== 'past') return undefined
   return verb.conjugations.present?.[person]
+}
+
+// The verb's own plural-object form for the same person/tense (`gustatzen
+// zaizkit` offered alongside `gustatzen zait`, `esaten dizkiot` offered
+// alongside `esaten diot`) — #165's "wrong object number" slot for NOR-NORI
+// and NOR-NORI-NORK verbs, using #164/#162's `<tense>Plural` fodder.
+// `undefined` for any verb/tense with no `<tense>Plural` table (everything
+// else).
+export function getObjectNumberLure(verb, tense, person) {
+  return verb.conjugations[`${tense}Plural`]?.[person]
 }
 
 // For a NOR-NORI-NORK (ditransitive) verb, resolves its axis-fixed metadata
@@ -878,9 +893,13 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, 
 // the verb's own present form alongside its past one), and `pronoun`
 // questions for any non-NOR-NORI verb (`Nik` alongside `Ni`, or vice versa —
 // the "ergative drift" trap). Require `verbs` (for the sibling lookup) and
-// gracefully contribute nothing without it. NOR-NORI/NOR-NORI-NORK, future,
-// hi/hitanoa, and the moods with no data yet are out of scope — see #141's
-// follow-up issue.
+// gracefully contribute nothing without it. #165 generalized the case-frame
+// lure to NOR-NORI/NOR-NORI-NORK (gustatu's "wrong case frame" Slot now
+// pulls esan's form, and vice versa) and added `getObjectNumberLure` (the
+// verb's own plural-object form, where one exists) for the "wrong object
+// number" slot. Future's invented-non-word safety mechanism, hi/hitanoa, and
+// the moods with no data yet remain out of scope — see #165's follow-up
+// issue.
 export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
@@ -905,7 +924,10 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     // distractors on top of the usual same-table ones. NOR present (no
     // `nork`, present tense) is left alone — its matrix row's Slot 3 is the
     // post-Unit-7 plural/near-homophone borrow (#164), not a case-frame lure.
-    const formLures = tense === 'past' || verb.agreement?.includes('nork') ? [getCaseFrameLure(verbs, verb, tense, person), getCrossTenseLure(verb, tense, person)] : []
+    const formLures =
+      tense === 'past' || verb.agreement?.includes('nork') || verb.agreement?.includes('nori')
+        ? [getCaseFrameLure(verbs, verb, tense, person), getCrossTenseLure(verb, tense, person), getObjectNumberLure(verb, tense, person)]
+        : []
     const pronounLures = [getCaseFramePronounLure(verbs, verb, person)]
     const availableKinds =
       includeNegation && negativeSentence
