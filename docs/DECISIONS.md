@@ -12,6 +12,29 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #190: `generateMatchPairsQuestions`/`kind: 'match-pairs'` engine support
+
+**Decision:** Added `generateMatchPairsQuestions(resolvedSources, { persons,
+count })` alongside `generateCaseMixerQuestions`/`generateCrossVerbQuestions`
+— a `kind: 'match-pairs'` question covers a whole source's table at once
+(every in-scope person matched to its form) rather than one person at a
+time like every other kind. Eligibility is automatic by table shape: ≥3
+in-scope persons, all with distinct forms — no per-lesson opt-in flag.
+`correct: 'complete'` is a sentinel string; the UI board itself (landing in
+#191) determines success/failure and submits `'complete'`/`'incomplete'`
+through the existing `submitAnswer` path, so `isAnswerCorrect`/
+`exerciseReducer`'s `case 'answer'` needed no changes.
+
+**Why the `misses`-tracking guard changed from `question.verbId` to
+`question.verbId && question.person`:** a missed `match-pairs` question has
+no single `person` field (it spans every person in its table), so without
+the guard a miss would push a `{ person: undefined }` entry into
+`misses`/`errorStats`, corrupting `getWeakSpotQuestions`' per-person lookup.
+
+This is the engine half of #189's match-pairs epic; #191 (UI) and #192
+(wiring into `createExerciseState` + docs) land separately per the issue
+split.
+
 ## 2026-06-17 — #194: repo structure for agent workability (no behavior change)
 
 **Decision:** Four navigability changes, no logic touched:
