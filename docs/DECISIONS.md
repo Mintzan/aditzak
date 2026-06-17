@@ -8,6 +8,50 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-17 — #167: Hitanoa allocutive register, Units 33/34 + hi-as-NORK gender split (core scope)
+
+Core scope: Units 33 (toka) + 34 (noka) data/lessons, plus item 4 — `ukan`/
+`jakin`'s `hi`-as-NORK present-tense gender split. Deferred to a follow-up
+issue: Unit 35 (recombination + addressee-gender toggle + "when not to use
+hitanoa"), item 5 (wiring a hi/hitanoa row into the distractor matrix — wrong
+gender/neutral-form lures), and item 6 (`ibili`'s `hi`-past gap).
+
+1. **Toka/noka modeled as new tense keys, not person keys** —
+   `presentToka`/`presentNoka`/`pastToka`/`pastNoka` on `izan`/`ukan`, each a
+   `{ hura, haiek }` table. Considered modeling this as gender-suffixed
+   person keys (`hura-m`/`hura-f`) instead, but tense keys both follow the
+   established generic-tense-key precedent (#148/#162/#164 — `tense` is an
+   opaque string key to `generateQuestions`, zero engine changes needed) and
+   correctly reflect that the gender dimension here attaches to the
+   *addressee* of the utterance, not to the statement's own subject (`hura`/
+   `haiek` stays the subject throughout).
+2. **Only `hura`/`haiek` are tabulated** — `docs/CONJUGATIONS.md` §10 itself
+   only gives these two rows for izan/ukan's toka/noka (no full person grid
+   exists in the source), so the data and lessons stay 2-person/binary-choice
+   by design, not as a gap. `options.length === 2` is already a precedented,
+   tested pattern elsewhere in the suite (e.g. `jakin`'s 2-distractor cases).
+3. **No cross-verb borrowing between izan's and ukan's toka/noka** — `izan`
+   (`agreement: ['nor']`) and `ukan` (`agreement: ['nor', 'nork']`) are not
+   `agreementsCompatible`, so `unit-33-review`/`unit-34-review` pool both
+   verbs for spaced repetition but only get within-verb cross-tense
+   borrowing (e.g. izan's `pastToka` can lure on an izan `presentToka`
+   question), not cross-verb borrowing. Accepted as-is rather than
+   engineering a workaround — see item 5 of the follow-up issue for a
+   possible distractor-matrix-level fix.
+4. **hi-as-NORK's own gender split modeled as `hi-m`/`hi-f` person keys** —
+   added to `ukan`'s and `jakin`'s existing `present` tables (`duk`/`dun`,
+   `dakik`/`dakin`), matching #144's established `hi`/`hi-m`/`hi-f`
+   convention exactly: here the addressee genuinely *is* the grammatical
+   NORK argument, unlike toka/noka above. `ukan`'s past stays a single
+   unsplit `hi: 'huen'` (CONJUGATIONS.md §3 doesn't split the past here).
+   `ukan` and `jakin` *are* `agreementsCompatible`, so `unit-32-hi-nork-
+   present` (pooling both) gets real cross-verb distractor borrowing.
+5. Linguistic data (the toka/noka tables, especially the past-tense
+   `-a-`/`-na-` insertions and the `du`→`di`-stem shift distinguishing
+   ukan's toka/noka from hi-as-NORK's own `duk`/`dun`) is flagged in
+   `docs/LANGUAGE_DECISIONS.md` for native-speaker/grammar-reference
+   confirmation before relying on it pedagogically beyond this app.
+
 ## 2026-06-17 — #165: NOR-NORI/NOR-NORI-NORK distractor matrix rows (core scope)
 
 Closes #141's NOR-NORI/NOR-NORI-NORK deferral now that #162/#164 have landed

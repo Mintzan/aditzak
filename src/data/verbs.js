@@ -104,6 +104,20 @@ export const VERBS = [
         zuek: 'zinatekete',
         haiek: 'lirateke',
       },
+      // #167 core scope — Toka/Noka (masculine/feminine allocutive marking):
+      // addressee-agreement layered onto a 3rd-person statement, independent
+      // of the statement's own subject. `da`/`dira` are suppletive here
+      // (switch to the `du`-stem before adding `-k`/`-n`: `duk`/`dun`,
+      // `dituk`/`ditun`, not `†dak`/`†dan`), per CONJUGATIONS.md §10. Only
+      // `hura`/`haiek` are tabulated there — a full grid (every person) isn't
+      // given, so this stays a 2-person table like the doc itself. Past
+      // inserts `-a-`/`-na-` before the final `-n` (`zen` -> `zuan`/`zunan`,
+      // `ziren` -> `zituan`/`zitunan`). Flagged in LANGUAGE_DECISIONS.md for
+      // native-speaker confirmation.
+      presentToka: { hura: 'duk', haiek: 'dituk' },
+      presentNoka: { hura: 'dun', haiek: 'ditun' },
+      pastToka: { hura: 'zuan', haiek: 'zituan' },
+      pastNoka: { hura: 'zunan', haiek: 'zitunan' },
     },
     // Every variant here is a predicate-nominal/adjective frame ("Ni
     // irakaslea ___." = "I am a teacher", "Txakurra handia ___." = "The dog is
@@ -290,8 +304,14 @@ export const VERBS = [
     object: 'hura',
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'dut', zu: 'duzu', hura: 'du', gu: 'dugu', zuek: 'duzue', haiek: 'dute' },
-      past: { ni: 'nuen', zu: 'zenuen', hura: 'zuen', gu: 'genuen', zuek: 'zenuten', haiek: 'zuten' },
+      // #167: `hi-m`/`hi-f` add `hi`-as-`NORK`'s own present-tense gender
+      // split (`duk`/`dun`, "you (m./f.) have it") — distinct from this
+      // verb's `presentToka`/`presentNoka` below, which mark a *different*
+      // statement's addressee while `hura`/`haiek` (not `hi`) stays the
+      // subject. Past stays a single unsplit `huen` (CONJUGATIONS.md §3:
+      // "`hik`'s row isn't gender-split in the past").
+      present: { ni: 'dut', zu: 'duzu', hura: 'du', gu: 'dugu', zuek: 'duzue', haiek: 'dute', 'hi-m': 'duk', 'hi-f': 'dun' },
+      past: { ni: 'nuen', zu: 'zenuen', hura: 'zuen', gu: 'genuen', zuek: 'zenuten', haiek: 'zuten', hi: 'huen' },
       future: {
         ni: 'izango dut',
         zu: 'izango duzu',
@@ -308,6 +328,16 @@ export const VERBS = [
       potential: { ni: 'dezaket', zu: 'dezakezu', hura: 'dezake', gu: 'dezakegu', zuek: 'dezakezue', haiek: 'dezakete' },
       baldintza: { ni: 'banu', zu: 'bazenu', hura: 'balu', gu: 'bagenu', zuek: 'bazenute', haiek: 'balute' },
       conditional: { ni: 'nuke', zu: 'zenuke', hura: 'luke', gu: 'genuke', zuek: 'zenukete', haiek: 'lukete' },
+      // #167 core scope — Toka/Noka, `hark`/`haiek`→`hura` (object) column,
+      // per CONJUGATIONS.md §10. `du`/`dute` undergo a `u`->`i` shift before
+      // adding `-k`/`-n` (`dik`/`din`, `ditek`/`diten`) specifically to stay
+      // distinct from `hi`-as-`NORK`'s own `duk`/`dun` above — same
+      // `-a-`/`-na-` past insertion as `izan`'s. Flagged in
+      // LANGUAGE_DECISIONS.md for native-speaker confirmation.
+      presentToka: { hura: 'dik', haiek: 'ditek' },
+      presentNoka: { hura: 'din', haiek: 'diten' },
+      pastToka: { hura: 'zian', haiek: 'zitean' },
+      pastNoka: { hura: 'zinan', haiek: 'zitenan' },
     },
     // #124/#155: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/ownable/
     // visible objects bought by their own (agentive, human) subject (book,
@@ -491,7 +521,11 @@ export const VERBS = [
     object: 'hura',
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'dakit', zu: 'dakizu', hura: 'daki' },
+      // #167: `hi-m`/`hi-f` add `hi`-as-`NORK`'s own present-tense gender
+      // split (`dakik`/`dakin`), matching `ukan`'s pattern — not tabulated
+      // in CONJUGATIONS.md §7's own grid (blank `hik` row there), but given
+      // in §10's synthetic-verb allocutive table per #144's DECISIONS.md.
+      present: { ni: 'dakit', zu: 'dakizu', hura: 'daki', 'hi-m': 'dakik', 'hi-f': 'dakin' },
       future: { ni: 'jakingo dut', zu: 'jakingo duzu', hura: 'jakingo du' },
     },
     // #124: `validFor` per docs/SENTENCE_FRAMES.md. `jakin`'s candidates are
@@ -1786,6 +1820,12 @@ for (const verb of VERBS) {
 export const PERSON_LABEL_KEYS = {
   ni: 'personNi',
   hi: 'personHi',
+  // #167: `hi`-as-`NORK`'s own present-tense gender split (`duk`/`dun`,
+  // `dakik`/`dakin`) — distinct from toka/noka, which are new tense keys
+  // below rather than person keys, since there the gender marks the
+  // addressee of a *different* statement, not `hi` itself as subject.
+  'hi-m': 'personHiM',
+  'hi-f': 'personHiF',
   zu: 'personZu',
   hura: 'personHura',
   gu: 'personGu',
@@ -1806,6 +1846,13 @@ export const TENSE_META = {
   presentPlural: { labelKey: 'tensePresentPlural', basque: 'oraina (anitza)' },
   pastPlural: { labelKey: 'tensePastPlural', basque: 'lehena (anitza)' },
   futurePlural: { labelKey: 'tenseFuturePlural', basque: 'geroa (anitza)' },
+  // #167: toka/noka (allocutive masculine/feminine register) — addressee
+  // agreement layered onto a 3rd-person statement, modeled as new tense
+  // keys rather than person keys (see PERSON_LABEL_KEYS comment above).
+  presentToka: { labelKey: 'tensePresentToka', basque: 'oraina (toka)' },
+  presentNoka: { labelKey: 'tensePresentNoka', basque: 'oraina (noka)' },
+  pastToka: { labelKey: 'tensePastToka', basque: 'lehena (toka)' },
+  pastNoka: { labelKey: 'tensePastNoka', basque: 'lehena (noka)' },
 }
 
 export const TYPE_META = {

@@ -780,6 +780,62 @@ export const LESSONS = [
       { verbId: 'etorri', tense: 'past' },
     ],
   },
+  // #167 — hi-as-NORK's own present-tense gender split (`duk`/`dun`,
+  // `dakik`/`dakin`): unlike Unit 32's invariant `hi`, here `hi` IS the
+  // grammatical NORK argument, so the form itself splits by addressee
+  // gender (`hi-m`/`hi-f` person keys, not new tense keys — see #144's
+  // DECISIONS.md convention). `ukan` and `jakin` share agreement
+  // (`agreementsCompatible`), so pooling them gives real cross-verb
+  // distractor borrowing in addition to the m/f pairing within each verb.
+  {
+    id: 'unit-32-hi-nork-present',
+    review: true,
+    persons: ['hi-m', 'hi-f'],
+    sources: [
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'jakin', tense: 'present' },
+    ],
+  },
+  // Unit 33 (#167 core scope) — Toka (masculine allocutive): addressee
+  // agreement layered onto a 3rd-person statement, independent of `hi` as a
+  // grammatical argument. izan/ukan are NOT `agreementsCompatible` (differ
+  // on `nork`), so these stay separate per-verb lessons rather than a single
+  // pooled review with cross-verb borrowing — `presentToka`/`pastToka`
+  // tables are 2-person (`hura`/`haiek`), so each lesson is a binary
+  // (2-option) choice per question, a precedented pattern elsewhere in the
+  // suite. `unit-33-review` pools all four for spaced repetition (only
+  // within-verb cross-tense borrowing applies, e.g. izan's `pastToka` can
+  // lure on izan's `presentToka` question).
+  { id: 'izan-present-toka', verbId: 'izan', tense: 'presentToka' },
+  { id: 'ukan-present-toka', verbId: 'ukan', tense: 'presentToka' },
+  { id: 'izan-past-toka', verbId: 'izan', tense: 'pastToka' },
+  { id: 'ukan-past-toka', verbId: 'ukan', tense: 'pastToka' },
+  {
+    id: 'unit-33-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'presentToka' },
+      { verbId: 'ukan', tense: 'presentToka' },
+      { verbId: 'izan', tense: 'pastToka' },
+      { verbId: 'ukan', tense: 'pastToka' },
+    ],
+  },
+  // Unit 34 (#167 core scope) — Noka (feminine allocutive), the `-k` -> `-n`
+  // transform of Unit 33's toka forms. Same structure as Unit 33.
+  { id: 'izan-present-noka', verbId: 'izan', tense: 'presentNoka' },
+  { id: 'ukan-present-noka', verbId: 'ukan', tense: 'presentNoka' },
+  { id: 'izan-past-noka', verbId: 'izan', tense: 'pastNoka' },
+  { id: 'ukan-past-noka', verbId: 'ukan', tense: 'pastNoka' },
+  {
+    id: 'unit-34-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'presentNoka' },
+      { verbId: 'ukan', tense: 'presentNoka' },
+      { verbId: 'izan', tense: 'pastNoka' },
+      { verbId: 'ukan', tense: 'pastNoka' },
+    ],
+  },
   // Unit 36 (#145) — Stage 13, "Passive & Reading Real Text": a new
   // `kind: 'reading'` lesson, comprehension questions over real sentences
   // rather than a conjugation table. `itemIds` resolve into

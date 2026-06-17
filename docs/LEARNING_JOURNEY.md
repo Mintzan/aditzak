@@ -357,9 +357,9 @@ novelties — new person, addressee-agreement, gender — one at a time (see
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 32 | **Meet "hi"** (no allocutivity) — `hi` as a subject in known paradigms | `Hi ikaslea haiz.` / `Hago lasai.` / `Hator hona.` / `Hik badakik?` | §3/§6 | pending |
-| 33 | **Toka (masculine allocutive)** — addressee-agreement on 3rd-person statements, one gender | `Lanean dik.` / `Etorri duk.` / `Ez nauk ondo.` | §10 | pending |
-| 34 | **Noka (feminine allocutive)** — taught as the `-k`→`-n` transform of Unit 33 | `Lanean din.` / `Etorri dun.` / `Ez naun ondo.` | §10 | pending |
+| 32 | **Meet "hi"** (no allocutivity) — `hi` as a subject in known paradigms, plus `hi`-as-NORK's own gender split | `Hi ikaslea haiz.` / `Hago lasai.` / `Hator hona.` / `Hik badakik?` | §3/§6 | available (#144, #167) |
+| 33 | **Toka (masculine allocutive)** — addressee-agreement on 3rd-person statements, one gender | `Lanean dik.` / `Etorri duk.` / `Ez nauk ondo.` | §10 | available (#167) |
+| 34 | **Noka (feminine allocutive)** — taught as the `-k`→`-n` transform of Unit 33 | `Lanean din.` / `Etorri dun.` / `Ez naun ondo.` | §10 | available (#167) |
 | 35 | **Hitanoa Recombined** — mixed toka/noka + *when not to use it* (subordinate clauses, formal `-ke-` moods) | choose register by addressee gender | §10, `LANGUAGE_DECISIONS.md` 2026-06-11 | pending |
 
 #### Stage 13: Reading Real Text

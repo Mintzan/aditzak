@@ -459,12 +459,12 @@ export const JOURNEY_TRANSLATIONS = {
     32: {
       title: { es: 'Conoce a "hi"', eu: '"Hi" ezagutu' },
       focus: {
-        es: 'hi como sujeto en paradigmas ya conocidos — todavía sin alocutividad',
-        eu: 'hi subjektu gisa ezagutzen diren paradigmetan — oraindik alokutibotasunik gabe',
+        es: 'hi como sujeto en paradigmas ya conocidos, más la propia escisión de género de hi como NORK',
+        eu: 'hi subjektu gisa ezagutzen diren paradigmetan, eta hi NORK gisa duen genero-bereizketa',
       },
       payload: {
-        es: '"Tú eres estudiante." (Hi ikaslea haiz) · "Quédate tranquilo." (Hago lasai) · "Ven aquí." (Hator hona)',
-        eu: 'Hi ikaslea haiz. · Hago lasai. · Hator hona.',
+        es: '"Tú eres estudiante." (Hi ikaslea haiz) · "Quédate tranquilo." (Hago lasai) · "Ven aquí." (Hator hona) · "¿Tú sabes?" (Hik badakik?)',
+        eu: 'Hi ikaslea haiz. · Hago lasai. · Hator hona. · Hik badakik?',
       },
     },
     33: {
