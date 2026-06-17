@@ -175,20 +175,22 @@ words back into order. Resolved per the design questions raised in #185:
   `negativeSentences[tense][person]`, filled the same way `sentence`/
   `negative` already do — `sentence.text.replace('___', table[person])`.
 - **Tokenization**: naive `text.split(' ')`, after stripping a trailing `.`
-  (#214) — without that, the period glues onto the last word and becomes
-  something the learner has to account for when tapping the order, which
-  isn't part of what this exercise tests. A trailing `?` (none of today's
-  example sentences end in one) would still stay attached, same as it would
-  read in running text — not worth generalizing the strip for v1.
+  or `?` (#214) and carrying it separately as `punctuation` — without that,
+  it glues onto the last word and becomes something the learner has to
+  account for when tapping the order, which isn't part of what this
+  exercise tests. `WordOrderBoard` (`App.jsx`) renders `punctuation` as a
+  fixed mark right after the assembled tokens rather than dropping it, so
+  the displayed sentence still reads as complete.
 - **Duplicate words**: tokens are built as `{ id, text }` pairs at
   question-build time (`tokens: shuffle(words.map((text, id) => ({ id,
   text })))`), so two instances of the same word stay distinguishable to the
   UI even though their `text` is identical.
 - **Question shape**: `{ ...source, kind: 'word-order', person, tokens,
-  correct: fullSentenceText }`. `correct` stays a plain string — the UI
-  submits `tappedTokens.map(t => t.text).join(' ')` through the existing
-  `submitAnswer`, so `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'`
-  need **zero changes**.
+  correct: fullSentenceText, punctuation }`. `correct` stays a plain,
+  punctuation-less string — the UI submits `tappedTokens.map(t =>
+  t.text).join(' ')` through the existing `submitAnswer`, so
+  `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'` need **zero
+  changes**.
 - **Retry behavior**: reshuffles. Follows the precedent `MatchPairsBoard`
   set (#191) — rather than the engine re-shuffling `tokens` on the same
   queue item, the UI does its own local shuffle keyed off

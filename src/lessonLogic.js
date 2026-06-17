@@ -777,23 +777,30 @@ export const WORD_ORDER_MIN_WORDS = 4
 
 // Builds a "reassemble the sentence" question: `sentence`'s blank gets
 // filled with `table[person]` (same as `sentence`/`negative` already do), a
-// trailing period stripped (#214 — otherwise it glues onto the last word and
-// becomes something the learner has to account for when tapping the order),
-// then split into a shuffled cloud of `{ id, text }` tokens — `id` is the
-// token's position in the *original* sentence, so two instances of the same
-// word stay distinguishable to the UI. `correct` stays the plain filled
-// sentence string (period-less): the UI rejoins whichever tokens the learner
-// taps (in tap order) with `' '` and submits that through the existing
-// `submitAnswer`, so `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'`
-// need no changes.
+// trailing `.` or `?` stripped off and carried separately as `punctuation`
+// (#214) — otherwise it glues onto the last word and becomes something the
+// learner has to account for when tapping the order, even though it's never
+// something the order-of-words drill is meant to test. The UI (see
+// `WordOrderBoard`) renders `punctuation` as a fixed mark after the
+// assembled tokens rather than dropping it, so the displayed sentence still
+// reads as complete. What's left is split into a shuffled cloud of
+// `{ id, text }` tokens — `id` is the token's position in the *original*
+// sentence, so two instances of the same word stay distinguishable to the
+// UI. `correct` stays the plain filled sentence string, punctuation-less:
+// the UI rejoins whichever tokens the learner taps (in tap order) with `' '`
+// and submits that through the existing `submitAnswer`, so
+// `isAnswerCorrect`/`exerciseReducer`'s `case 'answer'` need no changes.
 function buildWordOrderQuestion(table, sentence, person) {
-  const text = sentence.text.replace('___', table[person]).replace(/\.$/, '')
+  const filled = sentence.text.replace('___', table[person])
+  const punctuation = /[.?]$/.test(filled) ? filled.slice(-1) : ''
+  const text = punctuation ? filled.slice(0, -1) : filled
   const words = text.split(' ')
   return {
     kind: 'word-order',
     person,
     tokens: shuffle(words.map((word, id) => ({ id, text: word }))),
     correct: text,
+    punctuation,
   }
 }
 
@@ -1460,7 +1467,7 @@ export function buildFlagDiagnostics({ lesson, question, selected, status, langu
       ...(question.items ? { items: question.items } : {}),
       ...(question.source ? { source: question.source } : {}),
       ...(question.pairs ? { pairs: question.pairs } : {}),
-      ...(question.tokens ? { tokens: question.tokens } : {}),
+      ...(question.tokens ? { tokens: question.tokens, punctuation: question.punctuation } : {}),
     },
   }
 }

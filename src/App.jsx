@@ -1763,8 +1763,11 @@ function WordChip({ text, status, disabled, onSelect }) {
 // `docs/EXERCISE_ENGINE.md`'s word-order contract, the parent keys this
 // component by `question.attempt` (the same `MatchPairsBoard` precedent,
 // #191), so a retry remounts it — re-running the `shuffle` below — instead
-// of reusing the failed layout.
-function WordOrderBoard({ tokens, status, disabled, onSubmit }) {
+// of reusing the failed layout. `punctuation` (#214 — the sentence's
+// trailing `.`/`?`, stripped out of `tokens`/`correct` so it isn't itself
+// something to tap into place) renders as a fixed mark right after the
+// assembled chips, so the sentence still reads as complete.
+function WordOrderBoard({ tokens, punctuation, status, disabled, onSubmit }) {
   const { t } = useLanguage()
   const [cloud, setCloud] = useState(() => shuffle(tokens))
   const [assembled, setAssembled] = useState([])
@@ -1784,10 +1787,11 @@ function WordOrderBoard({ tokens, status, disabled, onSubmit }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex min-h-12 flex-wrap items-start gap-2 rounded-2xl border-2 border-dashed border-gray-200 p-3">
+      <div className="flex min-h-12 flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed border-gray-200 p-3">
         {assembled.map((token) => (
           <WordChip key={token.id} text={token.text} status={chipStatus} disabled={disabled} onSelect={() => moveToCloud(token)} />
         ))}
+        {punctuation && <span className="text-2xl font-extrabold text-gray-400">{punctuation}</span>}
       </div>
       <div className="flex flex-wrap gap-2">
         {cloud.map((token) => (
@@ -2328,6 +2332,7 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
           <WordOrderBoard
             key={`word-order-${question.verbId}-${question.tense}-${question.person}-${question.attempt ?? 1}`}
             tokens={question.tokens}
+            punctuation={question.punctuation}
             status={state.status}
             disabled={isAnswered}
             onSubmit={submitAnswer}
