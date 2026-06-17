@@ -212,9 +212,10 @@ describe('App', () => {
       return [...questions, ...matchPairsQuestions]
     }
 
-    // English labels for the persons used in this lesson, matching
-    // `PERSON_LABEL_KEYS`'s translated button text in `MatchPairsBoard`.
-    const PERSON_LABEL = { ni: 'I', zu: 'you', hura: 'he / she / it' }
+    // `izan`'s own (Basque) pronouns, matching `MatchPairsBoard`'s
+    // `verb.pronouns`-based tile labels (#201) rather than the generic
+    // translated `PERSON_LABEL_KEYS` text.
+    const PERSON_LABEL = { ni: 'ni', zu: 'zu', hura: 'hura' }
 
     // Plays a single match-pairs question to completion by tapping each
     // pair's person tile then its matching form tile, in order — mirroring
@@ -327,11 +328,11 @@ describe('App', () => {
       const user = userEvent.setup()
       await startMatchPairsLesson(user)
 
-      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'ni' }))
       await user.click(screen.getByRole('button', { name: 'naiz' }))
-      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zu' }))
       await user.click(screen.getByRole('button', { name: 'zara' }))
-      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'hura' }))
       await user.click(screen.getByRole('button', { name: 'da' }))
 
       await user.click(await screen.findByRole('button', { name: 'Finish' }))
@@ -343,16 +344,16 @@ describe('App', () => {
       await startMatchPairsLesson(user)
 
       // Mismatch "I" against "zara" (zu's form) first.
-      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'ni' }))
       await user.click(screen.getByRole('button', { name: 'zara' }))
-      await waitFor(() => expect(screen.getByRole('button', { name: 'I' })).not.toBeDisabled())
+      await waitFor(() => expect(screen.getByRole('button', { name: 'ni' })).not.toBeDisabled())
 
       // Then match every pair correctly — the board still ends up fully matched.
-      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'ni' }))
       await user.click(screen.getByRole('button', { name: 'naiz' }))
-      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zu' }))
       await user.click(screen.getByRole('button', { name: 'zara' }))
-      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'hura' }))
       await user.click(screen.getByRole('button', { name: 'da' }))
 
       expect(await screen.findByText("Not quite — you'll see this one again.")).toBeInTheDocument()
@@ -362,9 +363,9 @@ describe('App', () => {
       const user = userEvent.setup()
       await startMatchPairsLesson(user)
 
-      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'ni' }))
       await user.click(screen.getByRole('button', { name: 'naiz' }))
-      const lockedTile = screen.getByRole('button', { name: 'I' })
+      const lockedTile = screen.getByRole('button', { name: 'ni' })
       expect(lockedTile).toBeDisabled()
 
       await user.click(lockedTile)
@@ -373,9 +374,9 @@ describe('App', () => {
       // The earlier no-op tap shouldn't have left a stray selection behind —
       // finishing the remaining pairs correctly still scores the question as
       // correct.
-      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zu' }))
       await user.click(screen.getByRole('button', { name: 'zara' }))
-      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'hura' }))
       await user.click(screen.getByRole('button', { name: 'da' }))
 
       await user.click(await screen.findByRole('button', { name: 'Finish' }))
@@ -397,29 +398,48 @@ describe('App', () => {
 
       // Mismatch first, then match every pair correctly — the board still
       // ends up fully matched, but counts as incorrect.
-      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'ni' }))
       await user.click(screen.getByRole('button', { name: 'zara' }))
-      await waitFor(() => expect(screen.getByRole('button', { name: 'I' })).not.toBeDisabled())
-      await user.click(screen.getByRole('button', { name: 'I' }))
+      await waitFor(() => expect(screen.getByRole('button', { name: 'ni' })).not.toBeDisabled())
+      await user.click(screen.getByRole('button', { name: 'ni' }))
       await user.click(screen.getByRole('button', { name: 'naiz' }))
-      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zu' }))
       await user.click(screen.getByRole('button', { name: 'zara' }))
-      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'hura' }))
       await user.click(screen.getByRole('button', { name: 'da' }))
       await user.click(await screen.findByRole('button', { name: 'Continue' }))
 
-      const retriedTile = await screen.findByRole('button', { name: 'I' })
+      const retriedTile = await screen.findByRole('button', { name: 'ni' })
       expect(retriedTile).not.toBeDisabled()
 
       await user.click(retriedTile)
       await user.click(screen.getByRole('button', { name: 'naiz' }))
-      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zu' }))
       await user.click(screen.getByRole('button', { name: 'zara' }))
-      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'hura' }))
       await user.click(screen.getByRole('button', { name: 'da' }))
 
       await user.click(await screen.findByRole('button', { name: 'Finish' }))
       expect(screen.getByText(/1\/2/)).toBeInTheDocument()
+    })
+
+    // #201: a NORK-agreement verb's match-pairs tiles must show the ergative
+    // pronoun (`nik`/`zuk`/`hark`) `ukan`'s own `pronouns` map declines to,
+    // not the bare absolutive `PERSON_LABEL_KEYS` text (`ni`/`zu`/`hura`) —
+    // `dut`/`duzu`/`du` only make sense paired with the ergative subject.
+    it('labels a NORK-agreement verb\'s tiles with its declined pronouns, not the bare absolutive ones', async () => {
+      window.history.pushState({}, '', '/?dev=unlock-all')
+      const user = userEvent.setup()
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura ukan — to have/i }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+
+      expect(screen.getByRole('button', { name: 'nik' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'zuk' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'hark' })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'ni' })).not.toBeInTheDocument()
     })
   })
 

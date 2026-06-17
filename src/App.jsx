@@ -1649,7 +1649,7 @@ function MatchTile({ label, status, disabled, onSelect }) {
 // round only "fails" in the sense that `onComplete(false)` is reported once
 // every pair is eventually matched, mirroring how a missed multiple-choice
 // question still resolves once an answer is accepted.
-function MatchPairsBoard({ pairs, disabled, onComplete }) {
+function MatchPairsBoard({ pairs, verb, disabled, onComplete }) {
   const { t } = useLanguage()
   const [leftTiles] = useState(() => shuffle(pairs))
   const [rightTiles] = useState(() => shuffle(pairs))
@@ -1708,7 +1708,7 @@ function MatchPairsBoard({ pairs, disabled, onComplete }) {
         {leftTiles.map(({ person }) => (
           <MatchTile
             key={person}
-            label={t(PERSON_LABEL_KEYS[person])}
+            label={(verb.pronouns?.[person] ?? t(PERSON_LABEL_KEYS[person])).toLowerCase()}
             status={tileStatus(person, selectedLeft, 'left')}
             disabled={disabled || Boolean(mistake)}
             onSelect={() => handleSelectLeft(person)}
@@ -2319,6 +2319,7 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
           <MatchPairsBoard
             key={`match-pairs-${question.verbId}-${question.tense}-${question.attempt ?? 1}`}
             pairs={question.pairs}
+            verb={verb}
             disabled={isAnswered}
             onComplete={(success) => submitAnswer(success ? question.correct : 'incomplete')}
           />
