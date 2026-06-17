@@ -12,6 +12,24 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #204: `jakin`'s "sekretua" sentence adds `ukan` to `validFor`
+
+**Decision:** `jakin`'s `present`/`negativeSentences` "sekretua" ("a secret")
+frames now list `'ukan'` alongside `'nahi'` in `validFor` — "Zuk sekretua
+duzu" ("You have the secret") reads as a natural, grammatically valid
+Basque sentence alongside "Zuk sekretua dakizu" ("You know the secret"), so
+`ukan`'s `duzu` shouldn't have been excludable as a definitely-wrong
+distractor there.
+
+**Why this doesn't contradict #114's `jakin`↔`ukan` "confirmed wrong pair"
+verdict:** that backfill pass judged the pair in general, but
+`docs/SENTENCE_FRAMES.md` deliberately scopes `validFor` per sentence, not
+per verb pair — abstract-but-ownable nouns like "sekretua" admit more
+candidates than ones that are only "known" (e.g. "egia"/"the truth", left
+unchanged: "Zuk egia duzu" reads shakier and wasn't confirmed). Don't
+generalize this to other `jakin` sentences without the same per-sentence
+check.
+
 ## 2026-06-17 — #188: `word-order` debuts in both Phase I and Unit 10, as a supplement
 
 **Decision:** Both candidates from #188 — early Phase I and Unit 10's negation
