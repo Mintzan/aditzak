@@ -6,6 +6,28 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-17 — #180: `ibili`'s `hi` isn't a gap — `habil`/`ibili hintzen` by the same rule as `joan`/`etorri`
+
+**Decision:** `ibili` gets `hi: 'habil'` (present) and `hi: 'ibili hintzen'`
+(past) added to `src/data/verbs.js`, and is added as a 5th source in Unit
+32's `unit-32-hi-present`/`unit-32-hi-past` pooled reviews
+(`src/data/lessons.js`) alongside izan/egon/joan/etorri.
+
+**Why this isn't the "irregular verb, may have a gap" research question
+#180 flagged:** `CONJUGATIONS.md` §6 only marks `ibili`'s `hi` cell as `—` in
+the **imperfective/habitual** past column (`nenbilen`-style) — a different
+table from the **simple past** (`Lehenaldi Mugatua`) actually used in
+`conjugations.past` (added per the 2026-06-12 "Simple past" entry below).
+That simple past is compositional: perfective participle + `izan`'s past
+auxiliary, the same formula already used for `joan hintzen`/`etorri
+hintzen`. Since `izan`'s past auxiliary has a non-gapped `hi` cell
+(`hintzen`), `ibili`'s simple past has one too — `ibili hintzen` — by the
+same derivation already trusted for its two siblings. `habil` (present) was
+already tabulated in §6 itself, just never wired into the data or Unit 32's
+pooling. No native-speaker gap exists here; the omission was that `ibili`
+was left out of #144's original four-verb `hi` core scope, not a defect in
+the verb.
+
 ## 2026-06-17 — #170: §14 non-finite-form reading items reuse doc examples verbatim
 
 **Decision:** Rather than author new sentences for the 8 new

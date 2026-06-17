@@ -1984,7 +1984,13 @@ describe('generateQuestions', () => {
 
       expect(question.kind).toBe('form')
       expect(question.correct).toBe('haiz')
-      expect(question.options).toEqual(expect.arrayContaining(['haiz', 'hago', 'hoa', 'hator']))
+      expect(question.options).toContain('haiz')
+      expect(question.options).toHaveLength(4)
+      // 4 candidate `hi`-present siblings (egon/joan/etorri/ibili) but
+      // `buildOptions` caps at 3 distractors, so only 3 of the 4 appear.
+      for (const option of question.options) {
+        expect(['haiz', 'hago', 'hoa', 'hator', 'habil']).toContain(option)
+      }
     })
 
     it('drills `hi` past, with `hi` present (`haiz`) as a #141 cross-tense lure', () => {

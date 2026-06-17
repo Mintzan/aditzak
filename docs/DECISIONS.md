@@ -36,6 +36,32 @@ fix also gates `formLures`, not just the borrow pool, behind `reviewScoped`
 — both are "diagnosable mistake" distractors that need a sentence to read
 as wrong, not bare ones.
 
+## 2026-06-17 — #177: literal NOR-NORI-NORK cross-axis lure closed as "addressed differently"
+
+**Decision:** Won't author new per-verb tables (e.g. an "esan to zu" table,
+or a "zuk eman" table) just to produce a same-verb, same-axis-varying wrong
+form for `esan`/`eman`. The generalized case-frame lure (#165) and
+`getObjectNumberLure` (#165) stay the only NOR-NORI-NORK distractor rows for
+this slot.
+
+**Why:** `esan`'s data is fixed at `recipient: 'hura'` and `eman`'s at
+`agent: 'ni'` — each verb only has the one axis-fixed table its lessons
+actually use. A literal "wrong NORK"/"wrong NORI" same-verb lure needs a
+second full table per verb varying the *other* axis, which has no use
+outside manufacturing this one distractor — six more hand-authored forms per
+verb per tense, for a lure that's only a refinement on one #165 already
+ships (case-frame mismatch: missing/extra ergative marking entirely, a
+coarser but real trap in the same family). That's a weak trade against the
+cost of a new table shape with no pedagogical use of its own. If a
+ditransitive verb is ever added whose lessons *need* a second table for
+other reasons (e.g. varying NORI across persons), revisit then — the lure
+would come for free.
+
+**Scope note:** this resolves only #177's first row. Its other three rows
+(future illegal-voicing non-word safety, the hi/hitanoa wrong-gender/neutral
+lures, and the mood rows) are still blocked on #167's gendered toka/noka
+data and #171/#182's dative-paradigm mood content, respectively.
+
 ## 2026-06-17 — #204: `jakin`'s "sekretua" sentence adds `ukan` to `validFor`
 
 **Decision:** `jakin`'s `present`/`negativeSentences` "sekretua" ("a secret")
