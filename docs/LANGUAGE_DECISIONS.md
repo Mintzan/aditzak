@@ -6,6 +6,19 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-17 — #170: §14 non-finite-form reading items reuse doc examples verbatim
+
+**Decision:** Rather than author new sentences for the 8 new
+`reading-nonfinite-*` items, every `source` sentence is copied verbatim from
+`CONJUGATIONS.md` §14's own worked examples (e.g. `Filma ikusteko etorri
+naiz.`, `Atzo ikusitako filma oso ona zen.`, `Etorria da.`). Distractor
+options swap in other §14 suffixes/forms of the same verb (e.g. `-tako` vs.
+`-a` vs. `-ten` vs. `-ko`) rather than inventing alternate phrasing, so the
+only new judgment call is "is this distractor clearly wrong," not "is this
+new sentence grammatical." Still worth a native-speaker pass before treating
+as authoritative — non-finite forms are exactly where #170 flagged higher
+risk of subtle errors.
+
 ## 2026-06-17 — #167: toka/noka and hi-as-NORK gender-split forms; need native-speaker check
 
 **Decision:** Added `izan`/`ukan` toka/noka (`hura`/`haiek` only) and `ukan`/

@@ -841,8 +841,8 @@ export const LESSONS = [
   // rather than a conjugation table. `itemIds` resolve into
   // `src/data/readingItems.js`'s `READING_ITEMS`; `mode: 'recognition'`
   // marks it recognition-only per the unit's focus (composes with #140's
-  // recognition-mode flag). §14 non-finite-form items are deferred — see the
-  // issue filed for #145's remaining scope.
+  // recognition-mode flag). §14 non-finite-form items (#170) get their own
+  // lesson below rather than being folded into this one.
   {
     id: 'unit-36-reading',
     review: true,
@@ -859,6 +859,25 @@ export const LESSONS = [
       'reading-impersonal-idatzi',
       'reading-impersonal-irakurri',
       'reading-impersonal-sagarrak',
+    ],
+  },
+  // #170 — §14 ("Non-finite forms") reading items: a second Unit 36 lesson
+  // rather than folding into `unit-36-reading` above, since 10+8 items would
+  // make a single lesson too long.
+  {
+    id: 'unit-36-reading-nonfinite',
+    review: true,
+    kind: 'reading',
+    mode: 'recognition',
+    itemIds: [
+      'reading-nonfinite-verbalnoun-absolutive',
+      'reading-nonfinite-verbalnoun-dative',
+      'reading-nonfinite-verbalnoun-causal',
+      'reading-nonfinite-verbalnoun-purposive',
+      'reading-nonfinite-verbalnoun-temporal',
+      'reading-nonfinite-participle-attributive',
+      'reading-nonfinite-participle-resultative',
+      'reading-nonfinite-modal-z',
     ],
   },
 ]
