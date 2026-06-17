@@ -1311,7 +1311,13 @@ export function exerciseReducer(state, action) {
     }
     case 'next': {
       const [current, ...rest] = state.queue
-      const queue = state.status === 'correct' ? rest : [...rest, { ...current, retry: true }]
+      // `attempt` increments on every retry rather than just flipping `retry`
+      // to `true` once — `MatchPairsBoard` (App.jsx) keys its board on it so a
+      // retried match-pairs question remounts with a clean slate instead of
+      // reusing its already-fully-matched, frozen state from the failed
+      // attempt.
+      const queue =
+        state.status === 'correct' ? rest : [...rest, { ...current, retry: true, attempt: (current.attempt ?? 1) + 1 }]
       return { ...state, queue, selected: null, status: 'active' }
     }
     default:

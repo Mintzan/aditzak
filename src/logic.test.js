@@ -2708,6 +2708,17 @@ describe('exerciseReducer', () => {
 
     expect(next.misses).toEqual([])
   })
+
+  it('increments `attempt` on each retry instead of just setting `retry: true` once', () => {
+    const state = { ...baseState, queue: [questionA], total: 1 }
+    const answered = exerciseReducer(state, { type: 'answer', option: 'haiz' })
+    const firstRetry = exerciseReducer(answered, { type: 'next' })
+    expect(firstRetry.queue[0]).toMatchObject({ person: 'ni', retry: true, attempt: 2 })
+
+    const answeredAgain = exerciseReducer(firstRetry, { type: 'answer', option: 'haiz' })
+    const secondRetry = exerciseReducer(answeredAgain, { type: 'next' })
+    expect(secondRetry.queue[0]).toMatchObject({ person: 'ni', retry: true, attempt: 3 })
+  })
 })
 
 describe('buildFlagDiagnostics', () => {
