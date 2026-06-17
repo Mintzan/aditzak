@@ -12,6 +12,35 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-17 — #191: `MatchPairsBoard` UI + retry-remount fix for `kind: 'match-pairs'`
+
+**Decision:** Added `MatchTile`/`MatchPairsBoard` (`App.jsx`) to render
+`kind: 'match-pairs'` questions (#190): two independently-shuffled columns
+(persons, forms) where tapping a left tile then a right tile attempts a
+match — a correct pair locks green, an incorrect one flashes red briefly and
+clears the selection. `ExerciseScreen`'s answer-area branches on
+`question.pairs` ahead of the existing `question.options`/typed-answer
+branches. `onComplete` reports `!hadMistake` once every pair is matched,
+which `ExerciseScreen` submits as `question.correct` (pass) or `'incomplete'`
+(fail) — no changes needed to `isAnswerCorrect`/the generic scoring path.
+
+**Bug found and fixed along the way:** the board originally keyed itself on
+`state.queue.length`, which doesn't change when a question is requeued for a
+retry (`exerciseReducer`'s `'next'` case pushes the same question to the back
+of an unchanged-length queue) — so a retried match-pairs question reused its
+already-fully-matched, frozen component state with no way to interact
+further. Fixed by having `exerciseReducer` increment a new `attempt` field on
+every retry (instead of just setting `retry: true` once) and keying the
+board on `${verbId}-${tense}-${attempt}`, so a retry always remounts fresh.
+
+**Testing:** `createExerciseState` doesn't generate `match-pairs` questions
+yet (that's #192) and `App.jsx` has no named exports for isolated component
+testing, so `App.test.jsx` mocks `generateQuestions` (via `vi.mock` +
+`importOriginal`, gated by a test-local flag) to inject a fixed
+match-pairs question into a real lesson's queue — covering the full
+tap-to-match flow through the actually-rendered app without doing #192's
+production wiring early.
+
 ## 2026-06-17 — #190: `generateMatchPairsQuestions`/`kind: 'match-pairs'` engine support
 
 **Decision:** Added `generateMatchPairsQuestions(resolvedSources, { persons,

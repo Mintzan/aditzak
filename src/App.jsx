@@ -1607,6 +1607,120 @@ function TypedAnswerInput({ value, status, onChange, onSubmit }) {
   )
 }
 
+const MATCH_TILE_STYLES = {
+  idle: 'border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:bg-gray-50',
+  selected: 'border-blue-400 bg-blue-50 text-blue-700',
+  correct: 'border-green-500 bg-green-50 text-green-700',
+  incorrect: 'border-red-500 bg-red-50 text-red-700 animate-shake',
+}
+
+function MatchTile({ label, status, disabled, onSelect }) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      disabled={disabled || status === 'correct'}
+      style={{ minHeight: 48 }}
+      className={`w-full rounded-2xl border-2 px-4 py-3 text-left font-semibold transition ${MATCH_TILE_STYLES[status]} ${
+        disabled || status === 'correct' ? 'cursor-default' : 'active:scale-[0.98]'
+      }`}
+    >
+      {label}
+    </button>
+  )
+}
+
+// `kind: 'match-pairs'` (see `generateMatchPairsQuestions`) covers a whole
+// source's table at once: the learner matches every in-scope person to its
+// conjugated form, rather than answering about one person at a time. Left
+// and right columns are shuffled independently and locally (not relying on
+// the engine's once-shuffled `pairs` order) so a retry of the same question
+// doesn't reuse the exact same layout. A correct tap locks both tiles; an
+// incorrect one flashes both red briefly, then clears the selection — the
+// round only "fails" in the sense that `onComplete(false)` is reported once
+// every pair is eventually matched, mirroring how a missed multiple-choice
+// question still resolves once an answer is accepted.
+function MatchPairsBoard({ pairs, disabled, onComplete }) {
+  const { t } = useLanguage()
+  const [leftTiles] = useState(() => shuffle(pairs))
+  const [rightTiles] = useState(() => shuffle(pairs))
+  const [matched, setMatched] = useState(() => new Set())
+  const [selectedLeft, setSelectedLeft] = useState(null)
+  const [selectedRight, setSelectedRight] = useState(null)
+  const [mistake, setMistake] = useState(null)
+  const hadMistakeRef = useRef(false)
+  const completedRef = useRef(false)
+
+  useEffect(() => {
+    if (!completedRef.current && matched.size === pairs.length) {
+      completedRef.current = true
+      onComplete(!hadMistakeRef.current)
+    }
+  }, [matched, pairs.length, onComplete])
+
+  function attemptMatch(leftPerson, rightPerson) {
+    if (leftPerson === rightPerson) {
+      setMatched((prev) => new Set(prev).add(leftPerson))
+      setSelectedLeft(null)
+      setSelectedRight(null)
+      return
+    }
+    hadMistakeRef.current = true
+    setMistake({ left: leftPerson, right: rightPerson })
+    setTimeout(() => {
+      setMistake(null)
+      setSelectedLeft(null)
+      setSelectedRight(null)
+    }, 600)
+  }
+
+  function handleSelectLeft(person) {
+    if (disabled || matched.has(person) || mistake) return
+    setSelectedLeft(person)
+    if (selectedRight) attemptMatch(person, selectedRight)
+  }
+
+  function handleSelectRight(person) {
+    if (disabled || matched.has(person) || mistake) return
+    setSelectedRight(person)
+    if (selectedLeft) attemptMatch(selectedLeft, person)
+  }
+
+  function tileStatus(person, selected, side) {
+    if (matched.has(person)) return 'correct'
+    if (mistake && mistake[side] === person) return 'incorrect'
+    if (selected === person) return 'selected'
+    return 'idle'
+  }
+
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      <div className="flex flex-col gap-3">
+        {leftTiles.map(({ person }) => (
+          <MatchTile
+            key={person}
+            label={t(PERSON_LABEL_KEYS[person])}
+            status={tileStatus(person, selectedLeft, 'left')}
+            disabled={disabled || Boolean(mistake)}
+            onSelect={() => handleSelectLeft(person)}
+          />
+        ))}
+      </div>
+      <div className="flex flex-col gap-3">
+        {rightTiles.map(({ person, form }) => (
+          <MatchTile
+            key={person}
+            label={form}
+            status={tileStatus(person, selectedRight, 'right')}
+            disabled={disabled || Boolean(mistake)}
+            onSelect={() => handleSelectRight(person)}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // Renders an example sentence with the conjugated verb redacted — the `___`
 // placeholder in the data becomes a visual blank the learner fills in by
 // picking an option below, rather than a literal "___" in running text.
@@ -1673,7 +1787,7 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
       )}
       {question.sentence ? (
         <SentenceWithBlank sentence={question.sentence} />
-      ) : question.items ? null : (
+      ) : question.items || question.pairs ? null : (
         <>
           <h2 className="mt-2 text-4xl font-extrabold text-gray-900">
             {(verb.pronouns?.[question.person] ?? question.person).toLowerCase()}
@@ -1699,6 +1813,7 @@ const QUESTION_PROMPT_KEYS = {
   'verb-choice': 'questionVerbChoice',
   'case-mixer': 'questionCaseMixer',
   reading: 'questionReading',
+  'match-pairs': 'questionMatchPairs',
 }
 
 // The explanation toggle is its own pill-shaped button above the
@@ -2112,7 +2227,14 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
         <QuestionPrompt verb={verb} tenseMeta={tenseMeta} question={question} showVerb={!lesson.review || !question.options} />
 
         <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{t(QUESTION_PROMPT_KEYS[question.kind])}</p>
-        {question.options ? (
+        {question.pairs ? (
+          <MatchPairsBoard
+            key={`match-pairs-${question.verbId}-${question.tense}-${question.attempt ?? 1}`}
+            pairs={question.pairs}
+            disabled={isAnswered}
+            onComplete={(success) => submitAnswer(success ? question.correct : 'incomplete')}
+          />
+        ) : question.options ? (
           <div className="flex flex-col gap-3">
             {question.options.map((option) => (
               <AnswerOption

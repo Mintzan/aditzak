@@ -5,6 +5,44 @@ import App from './App'
 import { generateQuestions } from './lessonLogic'
 import { VERBS } from './data/verbs'
 
+// `createExerciseState` doesn't generate `match-pairs` questions yet (that's
+// #192's wiring) — this flag lets the 'match-pairs question' tests below
+// swap in a single fixed match-pairs question for any lesson's queue,
+// without touching production code, so the UI (#191) can be exercised ahead
+// of that wiring.
+const matchPairsMock = vi.hoisted(() => ({ enabled: false, withFollowup: false }))
+const MATCH_PAIRS_QUESTION = {
+  kind: 'match-pairs',
+  verbId: 'izan',
+  tense: 'present',
+  fixedArgument: null,
+  correct: 'complete',
+  pairs: [
+    { person: 'ni', form: 'naiz' },
+    { person: 'zu', form: 'zara' },
+    { person: 'hura', form: 'da' },
+  ],
+}
+const FOLLOWUP_QUESTION = {
+  kind: 'form',
+  verbId: 'izan',
+  tense: 'present',
+  person: 'gu',
+  correct: 'gara',
+  options: ['gara', 'naiz', 'da', 'zarete'],
+}
+
+vi.mock('./lessonLogic', async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    generateQuestions: (...args) => {
+      if (!matchPairsMock.enabled) return actual.generateQuestions(...args)
+      return matchPairsMock.withFollowup ? [MATCH_PAIRS_QUESTION, FOLLOWUP_QUESTION] : [MATCH_PAIRS_QUESTION]
+    },
+  }
+})
+
 describe('App', () => {
   beforeEach(() => {
     // Bypass the one-time language-onboarding screen for tests that exercise
@@ -241,6 +279,118 @@ describe('App', () => {
 
       expect(await screen.findByRole('button', { name: 'Continue' })).toBeInTheDocument()
       expect(screen.queryByRole('button', { name: 'Share' })).not.toBeInTheDocument()
+    })
+  })
+
+  describe('match-pairs question', () => {
+    beforeEach(() => {
+      matchPairsMock.enabled = true
+    })
+
+    afterEach(() => {
+      matchPairsMock.enabled = false
+      matchPairsMock.withFollowup = false
+    })
+
+    async function startMatchPairsLesson(user) {
+      render(<App />)
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+    }
+
+    it('advances the lesson and counts the question correct once every pair is matched correctly', async () => {
+      const user = userEvent.setup()
+      await startMatchPairsLesson(user)
+
+      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'da' }))
+
+      await user.click(await screen.findByRole('button', { name: 'Finish' }))
+      expect(screen.getByText(/1\/1/)).toBeInTheDocument()
+    })
+
+    it('still counts the question incorrect if any pair was mismatched first, even though the board ends up fully matched', async () => {
+      const user = userEvent.setup()
+      await startMatchPairsLesson(user)
+
+      // Mismatch "I" against "zara" (zu's form) first.
+      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+      await waitFor(() => expect(screen.getByRole('button', { name: 'I' })).not.toBeDisabled())
+
+      // Then match every pair correctly — the board still ends up fully matched.
+      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'da' }))
+
+      expect(await screen.findByText("Not quite — you'll see this one again.")).toBeInTheDocument()
+    })
+
+    it('treats tapping an already-locked tile as a no-op', async () => {
+      const user = userEvent.setup()
+      await startMatchPairsLesson(user)
+
+      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+      const lockedTile = screen.getByRole('button', { name: 'I' })
+      expect(lockedTile).toBeDisabled()
+
+      await user.click(lockedTile)
+      expect(lockedTile).toBeDisabled()
+
+      // The earlier no-op tap shouldn't have left a stray selection behind —
+      // finishing the remaining pairs correctly still scores the question as
+      // correct.
+      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'da' }))
+
+      await user.click(await screen.findByRole('button', { name: 'Finish' }))
+      expect(screen.getByText(/1\/1/)).toBeInTheDocument()
+    })
+
+    it('gives a retried match-pairs question a fresh board instead of reusing the frozen, fully-matched one', async () => {
+      matchPairsMock.withFollowup = true
+      const user = userEvent.setup()
+      await startMatchPairsLesson(user)
+
+      // Mismatch first, so the question is retried after the followup question.
+      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+      await waitFor(() => expect(screen.getByRole('button', { name: 'I' })).not.toBeDisabled())
+      await user.click(screen.getByRole('button', { name: 'I' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'da' }))
+      await user.click(await screen.findByRole('button', { name: 'Continue' }))
+
+      // Answer the followup question correctly, returning to the retried
+      // match-pairs question.
+      await user.click(screen.getByRole('button', { name: 'gara' }))
+      await user.click(await screen.findByRole('button', { name: 'Continue' }))
+
+      const retriedTile = await screen.findByRole('button', { name: 'I' })
+      expect(retriedTile).not.toBeDisabled()
+
+      await user.click(retriedTile)
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+      await user.click(screen.getByRole('button', { name: 'you' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+      await user.click(screen.getByRole('button', { name: 'he / she / it' }))
+      await user.click(screen.getByRole('button', { name: 'da' }))
+
+      await user.click(await screen.findByRole('button', { name: 'Finish' }))
+      expect(screen.getByText(/1\/2/)).toBeInTheDocument()
     })
   })
 
