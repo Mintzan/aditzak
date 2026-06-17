@@ -940,7 +940,7 @@ function buildWordOrderQuestion(table, sentence, person) {
 // `sources` at all, borrowing also falls back to the full `verbs` pool (the
 // original behaviour) — `getWeakSpotQuestions` and existing tests that don't
 // pass `sources` are unaffected.
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, sources, mode } = {}) {
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, sources, mode, review = false } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
@@ -951,16 +951,22 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
   const noProduction = noTyping || mode === 'recognition'
-  // A 2+-entry `sources` means this is a review lesson (see the App.jsx call
-  // site), where `kind: 'form'` questions render with `showVerb: false` —
-  // no sentence and no visible verb name to anchor correctness. Borrowing
-  // there can surface a sibling's genuinely-correct same-person form as if
-  // it were wrong, even though #174 already scoped the pool to the
-  // review's own declared sources (#200: that in-scope sibling is still
-  // ambiguous with no sentence/verb name to tell them apart). A single- or
-  // no-`sources` call is an ordinary practice lesson, which always shows the
+  // A 2+-entry `sources`, or an explicit `review` flag (set by the App.jsx
+  // call site from `lesson.review`), means this is a review lesson, where
+  // `kind: 'form'` questions render with `showVerb: false` — no sentence and
+  // no visible verb name to anchor correctness. Borrowing there can surface
+  // a sibling's genuinely-correct same-person form as if it were wrong,
+  // even though #174 already scoped the pool to the review's own declared
+  // sources (#200: that in-scope sibling is still ambiguous with no
+  // sentence/verb name to tell them apart). #203: a *single*-source review
+  // (e.g. `ikusi-present-plural-review`) still needs this scoping —
+  // `sources.length > 1` alone missed it, letting an unscoped case-frame
+  // lure (e.g. izan's `dira`) leak into a bare, unanchored option for a verb
+  // it doesn't even agree with — hence the explicit `review` flag as a
+  // second, more direct signal. A `review`-less call with a single- or
+  // no-`sources` is an ordinary practice lesson, which always shows the
   // verb name, so borrowing there stays safe and unrestricted (#139).
-  const reviewScoped = Boolean(sources && sources.length > 1)
+  const reviewScoped = Boolean(review || (sources && sources.length > 1))
   const borrowPool = reviewScoped ? verbs?.filter((sibling) => sources.some((reviewSource) => reviewSource.verbId === sibling.id)) : verbs
 
   function buildQuestion(person) {
@@ -1045,8 +1051,12 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
         // has neither a sentence nor a visible verb name to anchor
         // correctness, so it never borrows — accept fewer than 3 options
         // instead of letting an in-scope sibling's correct form read as a
-        // second right answer (#200).
-        const { correct, options } = buildOptions(table, persons, person, [], reviewScoped ? [] : borrowed, formLures)
+        // second right answer (#200). `formLures` (e.g. the case-frame
+        // lure) is gated the same way (#203): it's a "diagnosable mistake"
+        // option that only reads as wrong given a sentence's subject
+        // marking — with no sentence here, it's just an ungrounded foreign
+        // form mixed into the options.
+        const { correct, options } = buildOptions(table, persons, person, [], reviewScoped ? [] : borrowed, reviewScoped ? [] : formLures)
         return { ...source, kind: 'form', person, correct, options }
       }
     }
@@ -1327,7 +1337,7 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
 
   return weakSpots.map(({ verbId, tense, person }) => {
     const verb = verbs.find((v) => v.id === verbId)
-    return generateQuestions(verb, tense, { rounds: 1, verbs, sources }).find((question) => question.person === person)
+    return generateQuestions(verb, tense, { rounds: 1, verbs, sources, review: true }).find((question) => question.person === person)
   })
 }
 
