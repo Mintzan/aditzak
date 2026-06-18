@@ -12,6 +12,35 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [A2] (#224): backfill `behar`'s `validFor` across the nor-nork cluster
+
+**Decision:** Ran `scripts/validfor-delta-audit.mjs --verb behar` (293 gap
+slots across `ukan`/`nahi`/`jakin`/`jan`/`edan`/`erosi`/`hartu`/`ikusi`/
+`eduki`) and added `'behar'` ("need") to every slot where "X behar dut"
+reads naturally, judged against the same naturalness test #155 used for
+`erosi`. Included: all concrete/ownable objects bought by an agentive human
+subject (book, car, ticket, house, etc. in `ukan`/`nahi`/`erosi`'s own
+sentences); all food/drink objects in `jan`/`edan`; all of `erosi`'s and
+`hartu`'s own sentence objects (a bus, an umbrella, a decision are all
+things one can "need"); `ikusi`'s "filma" and "Gurasoek etxea" entries (a
+film/house is something one can need to see). Excluded: kinship objects
+(`ukan`/`nahi`'s "arreba"/"anaia"/"seme" — an indefinite "a sister" isn't
+naturally "needed" any more than "seen" or "bought"); non-agentive subjects
+(the dog-and-bone, house-and-garden, cat-and-milk examples — same reasoning
+as #155's `erosi` exclusions); `jakin`'s fact/answer objects ("erantzuna",
+"egia", "bidea" — you don't "need an answer" the way you "know" one, this
+verb's whole cluster stayed `behar`-free); `eduki`'s "in pocket/hand"
+location-bound frames (`scripts/validfor-delta-audit.mjs --verb behar`'s
+remaining 98 gap slots are entirely `eduki`'s pocket/hand sentences plus
+the above kinship/fact/non-agentive exclusions — left untagged as
+out-of-scope per the issue, matching its explicit "X in pocket" no-example).
+`ikusi`'s landscape ("mendia"/"itsasoa"/"zerua") and generic `"hori"`/`"Mikel"`
+entries were also left untagged, conservatively, since "needing to see the
+sky" or a maximally generic "that thing" didn't clear the same bar as the
+two included `ikusi` cases. Regenerated `scripts/validfor-gap-baseline.json`
+so the A1 CI guard (`src/validfor-audit.test.js`) tracks the new, smaller
+gap count instead of flagging it as drift.
+
 ## 2026-06-18 — [C1] (#228): review `kind:'form'` questions show the verb name
 
 **Decision:** `ExerciseScreen`'s `showVerb` prop to `QuestionPrompt`
