@@ -532,8 +532,7 @@ export const VERBS = [
   },
   // `jakin` ("to know a fact") — fully synthetic, sharing `ukan`'s
   // `-t`/`-zu`/∅ present suffix family (`dakit`/`dakizu`/`daki`), per
-  // `docs/CONJUGATIONS.md` §7. Past has `hik`/`zuk`/`zuek` gaps, irrelevant
-  // here (present-only, `ni`/`zu`/`hura`).
+  // `docs/CONJUGATIONS.md` §7.
   {
     id: 'jakin',
     verb: 'jakin',
@@ -548,6 +547,16 @@ export const VERBS = [
       // in CONJUGATIONS.md §7's own grid (blank `hik` row there), but given
       // in §10's synthetic-verb allocutive table per #144's DECISIONS.md.
       present: { ni: 'dakit', zu: 'dakizu', hura: 'daki', 'hi-m': 'dakik', 'hi-f': 'dakin' },
+      // #245: `hik`/`zuk`/`zuek` were sourced by mapping `ukan`'s past
+      // prefix pattern (`nuen`/`huen`/`zenuen`/`zenuten`, per CONJUGATIONS.md
+      // §3) onto `jakin`'s already-attested `-ekien`/`-ekiten` stem
+      // (`nekien`/`zekien`/`genekien`/`zekiten`) — same prefix consonant,
+      // `ukan`'s `-uen`/`-uten` swapped for `jakin`'s `-ekien`/`-ekiten`.
+      // `hik` stays unsplit (`hekien`), matching `ukan`'s own "past stays
+      // unsplit" precedent (#167) rather than the present's gender split.
+      // See docs/LANGUAGE_DECISIONS.md for the full derivation; flagged for
+      // native-speaker confirmation per that entry.
+      past: { ni: 'nekien', hi: 'hekien', zu: 'zenekien', hura: 'zekien', gu: 'genekien', zuek: 'zenekiten', haiek: 'zekiten' },
       future: { ni: 'jakingo dut', zu: 'jakingo duzu', hura: 'jakingo du' },
     },
     // #124: `validFor` per docs/SENTENCE_FRAMES.md. `jakin`'s candidates are
@@ -836,10 +845,15 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
+    // #244: `zu` rides `egiten` (pairing with the unit's own "Zer egiten ari
+    // zara?" payload question) rather than the non-participle "lanean", so
+    // the three fixed pronoun examples cover three distinct imperfective
+    // participles (jaten/egiten/irakurtzen) instead of leaning on `jaten`
+    // alone.
     pronounSentences: {
       present: {
         ni: '___ jaten ari naiz.',
-        zu: '___ lanean ari zara.',
+        zu: '___ zer egiten ari zara?',
         hura: '___ irakurtzen ari da.',
       },
     },
@@ -1844,10 +1858,10 @@ for (const verb of VERBS) {
 }
 
 // "Looking Back" units (8/9/12/13) give `izan`/`egon`/`ukan`/`joan`/`etorri`/
-// `ikusi`/`jan`/`edan`/`erosi`/`eduki`/`ibili` a `conjugations.past` table —
-// same sentence-reuse rationale as the future loop above: the blank doesn't
-// depend on tense, so verbs with a `past` table reuse their `present`
-// sentences/pronounSentences by reference.
+// `ikusi`/`jan`/`edan`/`erosi`/`eduki`/`ibili`/`jakin` (#245) a
+// `conjugations.past` table — same sentence-reuse rationale as the future
+// loop above: the blank doesn't depend on tense, so verbs with a `past`
+// table reuse their `present` sentences/pronounSentences by reference.
 for (const verb of VERBS) {
   if (!verb.conjugations.past) continue
   if (verb.sentences?.present) verb.sentences.past = verb.sentences.present
@@ -1860,7 +1874,7 @@ for (const verb of VERBS) {
 // (`joan nintzen`, `ikusi nuen`, ...), and negation fronts the auxiliary
 // with different word order, same reason those verbs lack
 // `negativeSentences` for the present.
-const SINGLE_WORD_PAST_NEGATION = ['izan', 'egon', 'ukan', 'eduki']
+const SINGLE_WORD_PAST_NEGATION = ['izan', 'egon', 'ukan', 'eduki', 'jakin']
 for (const verb of VERBS) {
   if (!verb.conjugations.past || !SINGLE_WORD_PAST_NEGATION.includes(verb.id)) continue
   if (verb.negativeSentences?.present) verb.negativeSentences.past = verb.negativeSentences.present

@@ -160,7 +160,8 @@ export const JOURNEY = [
             number: 9,
             title: 'The Immediate Continuous',
             focus: 'ari + izan',
-            payload: '"What are you doing?" (Zer ari zara?) · "I\'m eating." (Jaten ari naiz)',
+            payload:
+              '"What are you doing?" (Zer egiten ari zara?) · "I\'m eating." (Jaten ari naiz) · "I\'m studying." (Ikasten ari naiz)',
             status: 'available',
             lessonIds: ['ari-present', 'unit-4-review'],
           },
@@ -216,8 +217,9 @@ export const JOURNEY = [
           {
             number: 13,
             title: 'Looking Back I — The "ukan" Past Pool',
-            focus: 'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi',
-            payload: '"I had a car." · "I ate the apple." · "You drank coffee." · "We bought a house." · "She saw the film."',
+            focus: 'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi, jakin',
+            payload:
+              '"I had a car." · "I ate the apple." · "You drank coffee." · "We bought a house." · "She saw the film." · "I knew the answer." (Erantzuna nekien)',
             status: 'available',
             lessonIds: ['ukan-past-pool', 'ukan-past-pool-plural'],
           },

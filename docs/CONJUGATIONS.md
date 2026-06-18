@@ -1209,12 +1209,18 @@ nintzen`, etc. — and needs no separate table.
 | Person | Present | Past |
 |---|---|---|
 | nik | dakit | nekien |
-| hik | — | — |
+| hik | — | hekien |
 | hark | daki | zekien |
 | guk | dakigu | genekien |
-| zuk | dakizu | — |
-| zuek | dakizue | — |
+| zuk | dakizu | zenekien |
+| zuek | dakizue | zenekiten |
 | haiek | dakite | zekiten |
+
+`hik`'s past (`hekien`) and the `zuk`/`zuek` rows (`zenekien`/`zenekiten`) were
+sourced per #245 — see `docs/LANGUAGE_DECISIONS.md` for the derivation.
+`hik`'s present stays `—`: `jakin` rides `ukan`'s suffix family, and `ukan`
+itself has no plain `hik`-as-`NORK` present cell either (only the §10
+hitanoa-register `dakik`/`dakin` split, already tabulated in `VERBS`).
 
 ### `ekarri` — "to bring" — nor-nork
 

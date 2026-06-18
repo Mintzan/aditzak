@@ -222,8 +222,8 @@ export const JOURNEY_TRANSLATIONS = {
       title: { es: 'El continuo inmediato', eu: 'Oraingo jarduera (ari + izan)' },
       focus: { es: 'ari + izan', eu: 'ari + izan' },
       payload: {
-        es: '"¿Qué estás haciendo?" (Zer ari zara?) · "Estoy comiendo." (Jaten ari naiz)',
-        eu: '"Zer ari zara?" (¿Qué estás haciendo?) · "Jaten ari naiz" (Estoy comiendo)',
+        es: '"¿Qué estás haciendo?" (Zer egiten ari zara?) · "Estoy comiendo." (Jaten ari naiz) · "Estoy estudiando." (Ikasten ari naiz)',
+        eu: '"Zer egiten ari zara?" (¿Qué estás haciendo?) · "Jaten ari naiz" (Estoy comiendo) · "Ikasten ari naiz" (Estoy estudiando)',
       },
     },
     10: {
@@ -258,12 +258,12 @@ export const JOURNEY_TRANSLATIONS = {
     13: {
       title: { es: 'Mirando atrás I — El grupo del pasado de "ukan"', eu: 'Atzera begira I — "ukan"-en iraganeko taldea' },
       focus: {
-        es: 'el auxiliar de pasado de ukan (nuen/zenuen/zuen/genuen/zenuten/zuten), combinado entre ukan, jan, edan, erosi, ikusi',
-        eu: 'ukan-en iraganeko laguntzailea (nuen/zenuen/zuen/genuen/zenuten/zuten), ukan, jan, edan, erosi eta ikusi artean nahasturik',
+        es: 'el auxiliar de pasado de ukan (nuen/zenuen/zuen/genuen/zenuten/zuten), combinado entre ukan, jan, edan, erosi, ikusi, jakin',
+        eu: 'ukan-en iraganeko laguntzailea (nuen/zenuen/zuen/genuen/zenuten/zuten), ukan, jan, edan, erosi, ikusi eta jakin artean nahasturik',
       },
       payload: {
-        es: '"Tenía un coche." · "Comí la manzana." · "Bebiste café." · "Compramos una casa." · "Ella vio la película."',
-        eu: '"Autoa nuen" (Tenía un coche) · "Sagarra jan nuen" (Comí la manzana) · "Kafea edan zenuen" (Bebiste café) · "Etxea erosi genuen" (Compramos una casa) · "Filma ikusi zuen" (Ella vio la película)',
+        es: '"Tenía un coche." · "Comí la manzana." · "Bebiste café." · "Compramos una casa." · "Ella vio la película." · "Sabía la respuesta." (Erantzuna nekien)',
+        eu: '"Autoa nuen" (Tenía un coche) · "Sagarra jan nuen" (Comí la manzana) · "Kafea edan zenuen" (Bebiste café) · "Etxea erosi genuen" (Compramos una casa) · "Filma ikusi zuen" (Ella vio la película) · "Erantzuna nekien" (Sabía la respuesta)',
       },
     },
     14: {

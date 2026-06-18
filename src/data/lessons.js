@@ -361,7 +361,11 @@ export const LESSONS = [
   // (Unit 12) is taught before its past (this unit) —
   // docs/LEARNING_JOURNEY_EVALUATION.md F8. `joan`/`etorri`/`ibili`'s past is
   // distinct from §6's *imperfective* `nindoan`/`zetorren`/`nenbilen` forms,
-  // which stay reserved for Phase III's "Motion in Progress (Past)" unit. See
+  // which stay reserved for Phase III's "Motion in Progress (Past)" unit.
+  // `jakin` (#245) joins this pool once its own past gap (`hik`/`zuk`/`zuek`)
+  // was sourced — its present already rides `ukan`'s suffix family (Unit 4),
+  // and its past (`nekien`/`zekien`/...) follows the same `-ekien`/`-ekiten`
+  // stem alternation on top of `ukan`'s prefix pattern. See
   // `docs/LANGUAGE_DECISIONS.md` for sourcing.
   {
     id: 'ukan-past-pool',
@@ -372,6 +376,7 @@ export const LESSONS = [
       { verbId: 'edan', tense: 'past' },
       { verbId: 'erosi', tense: 'past' },
       { verbId: 'ikusi', tense: 'past' },
+      { verbId: 'jakin', tense: 'past' },
     ],
   },
   {
@@ -383,6 +388,7 @@ export const LESSONS = [
       { verbId: 'edan', tense: 'past' },
       { verbId: 'erosi', tense: 'past' },
       { verbId: 'ikusi', tense: 'past' },
+      { verbId: 'jakin', tense: 'past' },
     ],
   },
   // Unit 14 ("Physical States & Possessions", Phase II) — `eduki` (nor-nork)

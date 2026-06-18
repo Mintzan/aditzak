@@ -2115,10 +2115,10 @@ describe('generateQuestions', () => {
       expect(ukan.conjugations.presentNoka.hura).toBe('din')
     })
 
-    it('gives jakin a hi-as-NORK present gender split (dakik/dakin), unsplit past not applicable (no past table)', () => {
+    it('gives jakin a hi-as-NORK present gender split (dakik/dakin), unsplit past (hekien, #245)', () => {
       expect(jakin.conjugations.present['hi-m']).toBe('dakik')
       expect(jakin.conjugations.present['hi-f']).toBe('dakin')
-      expect(jakin.conjugations.past).toBeUndefined()
+      expect(jakin.conjugations.past.hi).toBe('hekien')
     })
 
     it('keeps ukan\'s past hi unsplit (huen), unlike its present hi-m/hi-f', () => {
