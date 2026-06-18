@@ -12,6 +12,27 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [A5] (#240): jan/edan/erosi's food-drink validFor symmetry fix, keeping the jan↔edan exclusion
+
+**Decision:** Added `ukan`/`nahi`/`eduki`/`ikusi` to `jan`/`edan`/`erosi`'s
+food-object `sentences` (present, reused by reference for past/future) per
+the [A3] spike's finding #1 — these verbs' own food sentences were
+under-tagged relative to the symmetric `nahi`/`ukan`-hosted food sentences.
+Deliberately did **not** add `jan` to `edan`'s validFor or `edan` to `jan`'s,
+even though the class model's `food-drink` admission set includes both and
+flags it as a candidate `add` — "I drink an apple"/"I eat water" aren't
+natural completions; the class model can't distinguish solid food from
+drink, this is exactly the kind of edge case the [A3] spike's finding #3
+warned needs human judgment. `edan`'s `'Katuak esnea ___.'` (cat subject)
+got `ukan`/`nahi`/`eduki`/`ikusi` (it can plausibly have/want/hold/see milk)
+but not `erosi`/`behar` (a cat can't buy or need it) — same reasoning `ukan`'s
+parallel `'Txakurrak hezur bat ___.'` already uses. Regenerated
+`scripts/validfor-gap-baseline.json` for the [A1] CI guard.
+
+**Why:** This was the one real content bug the [A3] spike's diff surfaced
+(104 `adds`, concentrated in `jan`/`edan`/`erosi`) rather than a class-model
+artifact — closes out Epic #220's last open child.
+
 ## 2026-06-18 — [A4] (#239): class-model validFor audit adopted as tooling only, layered onto [A1]'s CLI
 
 **Decision:** Refactored the [A3]/#225 spike's class model (`CLASS_ADMISSION`,
