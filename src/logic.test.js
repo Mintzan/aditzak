@@ -1039,6 +1039,12 @@ describe('generateQuestions', () => {
     // beyond `smallVerb`'s `ni`/`zu`/`hura`, so it can top up both the
     // distractor pool (`getBorrowedDistractors`) and, via its own sentenced
     // `gu`, the spot-error slot pool (`getBorrowedSpotErrorSlots`).
+    // #227/[B2]: borrowed forms are now also narrowed by `validFor` (see
+    // `filterExtraCandidates`), and an untagged (plain-string) sentence's
+    // implicit `validFor: undefined` excludes *every* sibling, including
+    // borrowed ones — these sentences are explicitly tagged `validFor: []`
+    // (vetted, excludes nothing) so this describe block still exercises
+    // #139's borrowing behaviour rather than #227's exclusion-by-default.
     const smallVerb = {
       id: 'small',
       agreement: ['nor', 'nork'],
@@ -1047,9 +1053,9 @@ describe('generateQuestions', () => {
       },
       sentences: {
         present: {
-          ni: 'Nik liburua ___.',
-          zu: 'Zuk liburua ___.',
-          hura: 'Hark liburua ___.',
+          ni: { text: 'Nik liburua ___.', validFor: [] },
+          zu: { text: 'Zuk liburua ___.', validFor: [] },
+          hura: { text: 'Hark liburua ___.', validFor: [] },
         },
       },
     }
@@ -1061,8 +1067,8 @@ describe('generateQuestions', () => {
       },
       sentences: {
         present: {
-          ni: 'Nik egia ___.',
-          gu: 'Guk egia ___.',
+          ni: { text: 'Nik egia ___.', validFor: [] },
+          gu: { text: 'Guk egia ___.', validFor: [] },
         },
       },
     }
@@ -1199,13 +1205,16 @@ describe('generateQuestions', () => {
     })
   })
 
-  describe('`sources`-scoped borrowing for kind: "form" questions (#174)', () => {
+  describe('the grounding invariant for kind: "form" questions (#174/#200/#203, unified by [B2]/#227)', () => {
     // `smallVerb` has no sentences, so every question is `kind: 'form'` — a
     // bare "which form is correct?" question with no sentence to make a
     // sibling verb's same-person form read as wrong. `sibling` shares
     // `smallVerb`'s gloss closely enough (both "to be") that surfacing its
-    // form unscoped would make the question genuinely ambiguous, exactly
-    // like the `izan`/`egon` repro in #174.
+    // form would make the question genuinely ambiguous, exactly like the
+    // `izan`/`egon` repro in #174. #227 retired the old `sources`/`review`-
+    // based scoping in favour of one rule: a `kind: 'form'` question is
+    // never grounded (no sentence, no visible verb name), so it never
+    // borrows another verb's form at all, regardless of `sources`/`review`.
     const smallVerb = {
       id: 'small',
       agreement: ['nor'],
@@ -1222,46 +1231,14 @@ describe('generateQuestions', () => {
       conjugations: { present: { ni: 'noa', zu: 'zoaz', hura: 'doa', gu: 'goaz', zuek: 'zoazte', haiek: 'doaz' } },
     }
 
-    it('borrows from any compatible sibling when no `sources` is given (original #139 behaviour)', () => {
+    it('never borrows for `kind: "form"`, even with no `sources`/`review` at all (#139\'s small-table top-up no longer applies to bare form questions)', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0)
 
       const questions = generateQuestions(smallVerb, 'present', { verbs: [smallVerb, sibling] })
 
       questions.forEach((question) => {
         expect(question.kind).toBe('form')
-        expect(question.options.length).toBeGreaterThan(Object.values(smallVerb.conjugations.present).length - 1)
-      })
-    })
-
-    it('borrows from any compatible sibling when `sources` has only this lesson\'s own verb', () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0)
-
-      const questions = generateQuestions(smallVerb, 'present', {
-        verbs: [smallVerb, sibling],
-        sources: [{ verbId: 'small', tense: 'present' }],
-      })
-
-      questions.forEach((question) => {
-        expect(question.kind).toBe('form')
-        expect(question.options.length).toBeGreaterThan(Object.values(smallVerb.conjugations.present).length - 1)
-      })
-    })
-
-    it('never borrows a sibling outside `sources` once `sources` names 2+ verbs', () => {
-      // Mirrors the #174 repro: a review of `izan`+`ukan` (2 declared sources)
-      // must not let `egon` (compatible, but not one of the 2 sources) leak
-      // its own-correct `nago` in as a "wrong answer" for `izan`'s `naiz`.
-      vi.spyOn(Math, 'random').mockReturnValue(0)
-
-      const questions = generateQuestions(smallVerb, 'present', {
-        verbs: [smallVerb, sibling, otherSibling],
-        sources: [
-          { verbId: 'small', tense: 'present' },
-          { verbId: 'other-sibling', tense: 'present' },
-        ],
-      })
-
-      questions.forEach((question) => {
+        expect(question.options.length).toBe(Object.values(smallVerb.conjugations.present).length)
         question.options.forEach((option) => {
           expect(Object.values(sibling.conjugations.present)).not.toContain(option)
         })
@@ -1269,11 +1246,6 @@ describe('generateQuestions', () => {
     })
 
     it('never borrows for `kind: "form"`, even from a sibling that is one of the 2+ declared `sources` (#200)', () => {
-      // A bare `kind: 'form'` question has no sentence and (in a review
-      // lesson) no visible verb name to anchor correctness, so even an
-      // in-scope sibling's genuinely-correct same-person form reads as a
-      // second right answer rather than a wrong one — accept fewer than 3
-      // options instead of borrowing one in.
       vi.spyOn(Math, 'random').mockReturnValue(0)
 
       const questions = generateQuestions(smallVerb, 'present', {
@@ -1295,13 +1267,11 @@ describe('generateQuestions', () => {
     })
 
     it('never leaks an unanchored case-frame lure into a single-source review\'s bare `kind: "form"` question (#203)', () => {
-      // Mirrors the `ikusi-present-plural-review` repro: a single-source
-      // review (`sources.length === 1`) of a NOR-NORK verb still needs the
-      // same scoping as a 2+-source review — without it, the case-frame
-      // lure (a NOR sibling's same-person form, normally a safe "wrong
-      // subject case" distractor when a sentence shows the marking) leaks
-      // into a bare `form` question with no sentence to make it read as
-      // wrong.
+      // Mirrors the `ikusi-present-plural-review` repro: a NOR-NORK verb's
+      // case-frame lure (a NOR sibling's same-person form, normally a safe
+      // "wrong subject case" distractor when a sentence shows the marking)
+      // must not leak into a bare `form` question with no sentence to make
+      // it read as wrong.
       vi.spyOn(Math, 'random').mockReturnValue(0)
 
       const norSibling = {
@@ -1328,6 +1298,44 @@ describe('generateQuestions', () => {
         question.options.forEach((option) => {
           expect(Object.values(norSibling.conjugations.present)).not.toContain(option)
         })
+      })
+    })
+
+    it('`buildTaggedOptions` with `grounded: false` never includes a sibling or lure form', () => {
+      const threePersonTable = { ni: 'naiz', hi: 'haiz', hura: 'da' }
+      const { distractors } = buildTaggedOptions(threePersonTable, ['ni', 'hi', 'hura'], 'ni', ['nago'], ['dut'], ['gara'], false)
+      expect(distractors.every((candidate) => candidate.source === 'same-table')).toBe(true)
+    })
+  })
+
+  describe('the `validFor` grounding rule applies to borrowed forms too ([B2]/#227)', () => {
+    // Before #227, a `sentence`/`negative` question's `borrowed` pool
+    // (`getBorrowedDistractors`) bypassed `validFor` filtering entirely —
+    // only `extraCandidates` was narrowed by `filterExtraCandidates`. A
+    // sibling whose form is borrowed *and* also genuinely fits the sentence
+    // (i.e. is listed in the sentence's `validFor`) must still be excluded.
+    const verbWithSentence = {
+      id: 'host',
+      agreement: ['nor'],
+      conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da' } },
+      sentences: { present: { ni: { text: 'Ni ___.', validFor: ['sibling'] } } },
+    }
+    const groundingSibling = {
+      id: 'sibling',
+      agreement: ['nor'],
+      conjugations: { present: { ni: 'sibling-form', zu: 'sibling-zu', hura: 'sibling-hura' } },
+    }
+
+    it('excludes a borrowed sibling form once that sibling is listed in the sentence\'s `validFor`', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(verbWithSentence, 'present', {
+        verbs: [verbWithSentence, groundingSibling],
+      })
+
+      questions.forEach((question) => {
+        if (question.kind !== 'sentence') return
+        expect(question.options).not.toContain('sibling-form')
       })
     })
   })
@@ -1925,23 +1933,44 @@ describe('generateQuestions', () => {
     })
 
     it('offers the case-frame-inverse sibling\'s present form as a NOR-NORK distractor (`naiz` for `dut`)', () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
+      // #227/[B2]: `formLures` (incl. the case-frame lure) are only grounded
+      // for kinds with a sentence/verb name to anchor them — a bare `form`
+      // question never gets one (see the grounding-invariant describe block
+      // below), so this now exercises the `sentence` kind instead.
+      vi.spyOn(Math, 'random').mockReturnValue(0) // -> 'sentence' (first available kind)
 
       const question = generateQuestions(ukan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
 
-      expect(question.kind).toBe('form')
+      expect(question.kind).toBe('sentence')
       expect(question.options).toContain('naiz')
     })
 
     it('offers cross-pool aux and own-present-tense forms as past-tense distractors (`nuen`/`naiz` for `nintzen`)', () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
+      // No verb currently has past-tense `sentences`, so this lure can't be
+      // exercised through real data's `past` tense (#227/[B2]: it would
+      // never reach a learner there anyway, since an ungrounded `form`
+      // question can't show it) — a small synthetic verb pair with past
+      // sentence data stands in instead.
+      vi.spyOn(Math, 'random').mockReturnValue(0) // -> 'sentence' (first available kind)
 
-      const question = generateQuestions(izan, 'past', { verbs: VERBS }).find((q) => q.person === 'ni')
+      const norVerb = {
+        id: 'past-nor',
+        agreement: ['nor'],
+        conjugations: { present: { ni: 'a-present' }, past: { ni: 'a-past' } },
+        sentences: { past: { ni: { text: 'Nor past ___.', validFor: [] } } },
+      }
+      const norNorkVerb = {
+        id: 'past-nor-nork',
+        agreement: ['nor', 'nork'],
+        conjugations: { past: { ni: 'b-past' } },
+      }
 
-      expect(question.kind).toBe('form')
-      expect(question.correct).toBe('nintzen')
-      expect(question.options).toContain('nuen')
-      expect(question.options).toContain('naiz')
+      const question = generateQuestions(norVerb, 'past', { verbs: [norVerb, norNorkVerb], persons: ['ni'] }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('sentence')
+      expect(question.correct).toBe('a-past')
+      expect(question.options).toContain('b-past')
+      expect(question.options).toContain('a-present')
     })
 
     it('offers the case-frame-inverse sibling\'s pronoun as a distractor (`Nik` for `Ni`)', () => {
@@ -1976,35 +2005,40 @@ describe('generateQuestions', () => {
     const eman = VERBS.find((v) => v.id === 'eman')
 
     it('offers the case-frame-inverse sibling\'s present form as a NOR-NORI distractor (`esaten diot` for `gustatzen zait`)', () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
+      // #227/[B2]: ungrounded `form` questions never show `formLures`
+      // anymore — this now exercises the `sentence` kind instead.
+      vi.spyOn(Math, 'random').mockReturnValue(0) // -> 'sentence' (first available kind)
 
       const question = generateQuestions(gustatu, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
 
-      expect(question.kind).toBe('form')
+      expect(question.kind).toBe('sentence')
       expect(question.correct).toBe('gustatzen zait')
       expect(question.options).toContain('esaten diot')
     })
 
     it('offers the case-frame-inverse sibling\'s present form as a NOR-NORI-NORK distractor (`gustatzen zait` for `esaten diot`)', () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      vi.spyOn(Math, 'random').mockReturnValue(0)
 
       const question = generateQuestions(esan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
 
-      expect(question.kind).toBe('form')
+      expect(question.kind).toBe('sentence')
       expect(question.correct).toBe('esaten diot')
       expect(question.options).toContain('gustatzen zait')
     })
 
     it('offers the verb\'s own plural-object form as a "wrong object number" distractor (gustatu, esan, eman)', () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      vi.spyOn(Math, 'random').mockReturnValue(0)
 
       const gustatuQuestion = generateQuestions(gustatu, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+      expect(gustatuQuestion.kind).toBe('sentence')
       expect(gustatuQuestion.options).toContain('gustatzen zaizkit')
 
       const esanQuestion = generateQuestions(esan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+      expect(esanQuestion.kind).toBe('sentence')
       expect(esanQuestion.options).toContain('esaten dizkiot')
 
       const emanQuestion = generateQuestions(eman, 'present', { verbs: VERBS }).find((q) => q.person === 'zu')
+      expect(emanQuestion.kind).toBe('sentence')
       expect(emanQuestion.options).toContain('ematen dizkizut')
     })
   })
@@ -2013,32 +2047,30 @@ describe('generateQuestions', () => {
   // present and past tables (Unit 32, "Meet hi" — no allocutivity yet, see
   // docs/DECISIONS.md). With no `sentences`/`pronounSentences` for `hi`,
   // `availableKinds` is always empty, so `hi` questions are always `kind:
-  // 'form'` regardless of `Math.random`.
+  // 'form'` regardless of `Math.random`. #227/[B2]: a `kind: 'form'`
+  // question is never grounded, so `hi`-restricted questions (own-table
+  // candidates filtered out by the `persons: ['hi']` restriction itself)
+  // get no distractors from borrowing or lures either — just the bare
+  // correct answer.
   describe('#144 `hi` as a new person (izan/egon/joan/etorri)', () => {
     const izan = VERBS.find((v) => v.id === 'izan')
     const joan = VERBS.find((v) => v.id === 'joan')
     const etorri = VERBS.find((v) => v.id === 'etorri')
 
-    it('drills `hi` present with the other nor verbs\' `hi` forms as distractors', () => {
+    it('drills `hi` present with no distractors, since an ungrounded `form` question never borrows', () => {
       const question = generateQuestions(izan, 'present', { persons: ['hi'], verbs: VERBS })[0]
 
       expect(question.kind).toBe('form')
       expect(question.correct).toBe('haiz')
-      expect(question.options).toContain('haiz')
-      expect(question.options).toHaveLength(4)
-      // 4 candidate `hi`-present siblings (egon/joan/etorri/ibili) but
-      // `buildOptions` caps at 3 distractors, so only 3 of the 4 appear.
-      for (const option of question.options) {
-        expect(['haiz', 'hago', 'hoa', 'hator', 'habil']).toContain(option)
-      }
+      expect(question.options).toEqual(['haiz'])
     })
 
-    it('drills `hi` past, with `hi` present (`haiz`) as a #141 cross-tense lure', () => {
+    it('drills `hi` past with no #141 cross-tense lure, since an ungrounded `form` question never gets one', () => {
       const question = generateQuestions(izan, 'past', { persons: ['hi'], verbs: VERBS })[0]
 
       expect(question.kind).toBe('form')
       expect(question.correct).toBe('hintzen')
-      expect(question.options).toContain('haiz')
+      expect(question.options).not.toContain('haiz')
     })
 
     it('gives joan/etorri a periphrastic `hi` past, matching their existing `ni`/`zu`/... shape', () => {

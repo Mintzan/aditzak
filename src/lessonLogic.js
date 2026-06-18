@@ -474,10 +474,20 @@ function rollQuestionKind(availableKinds) {
 // Every candidate is tagged with its provenance — `'same-table'` (the other
 // persons' forms from `table`), `'sibling'` (`extraCandidates`/`borrowPool`,
 // i.e. another verb's form), or `'lure'` (`priorityCandidates`) — so callers
-// (and B2's grounding rule) can reason about *where* a distractor came from.
-// This tagging is purely internal bookkeeping: `options` is still the same
-// flat array of form strings it always was, in the same order, for a given
-// RNG seed (see [B1]/#226).
+// can reason about *where* a distractor came from. This tagging is purely
+// internal bookkeeping: `options` is still the same flat array of form
+// strings it always was, in the same order, for a given RNG seed (see
+// [B1]/#226).
+//
+// `grounded` (default `true`, see [B2]/#227) is the single invariant that
+// decides whether a question may show another verb's form at all: a bare
+// `kind: 'form'` question has no sentence and no visible verb name to anchor
+// correctness, so for it `grounded` is passed as `false`, which drops
+// `extraCandidates`/`borrowPool`/`priorityCandidates` entirely and builds
+// distractors only from `sameTable` — the only forms a learner can tell
+// apart from the correct answer without any grounding context. Every other
+// question kind (`sentence`/`negative`/`pronoun`) has that context and stays
+// `grounded: true`.
 function dedupeBySourceForm(candidates) {
   const seen = new Set()
   const deduped = []
@@ -493,11 +503,15 @@ function dedupeBySourceForm(candidates) {
 // with their provenance (`{ form, source }`) instead of collapsing them to
 // plain strings — exported only so tests can lock the tagging contract B2
 // relies on; `buildOptions` itself is the one production call sites use.
-export function buildTaggedOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = []) {
+export function buildTaggedOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = [], grounded = true) {
   const correct = table[person]
   const sameTable = persons
     .filter((candidate) => candidate !== person)
     .map((candidate) => ({ form: table[candidate], source: 'same-table' }))
+  if (!grounded) {
+    const distractors = shuffle(dedupeBySourceForm(sameTable).filter((candidate) => candidate.form !== correct)).slice(0, 3)
+    return { correct, distractors }
+  }
   const sibling = extraCandidates.map((form) => ({ form, source: 'sibling' }))
   const pool = [...sameTable, ...sibling].filter((candidate) => candidate.form !== correct)
   const priority = dedupeBySourceForm(priorityCandidates.map((form) => ({ form, source: 'lure' }))).filter(
@@ -515,8 +529,8 @@ export function buildTaggedOptions(table, persons, person, extraCandidates = [],
   return { correct, distractors }
 }
 
-function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = []) {
-  const { correct, distractors } = buildTaggedOptions(table, persons, person, extraCandidates, borrowPool, priorityCandidates)
+function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = [], grounded = true) {
+  const { correct, distractors } = buildTaggedOptions(table, persons, person, extraCandidates, borrowPool, priorityCandidates, grounded)
   return { correct, options: shuffle([correct, ...distractors.map((candidate) => candidate.form)]) }
 }
 
@@ -671,12 +685,20 @@ export function getCrossVerbCandidates(verb, tense, sources, verbs, extraSources
 // paradigm) to supply 3 distractors on its own — `buildOptions` dedupes and
 // caps the combined pool, so no capping happens here. Returns `[]` without
 // `verbs` (the original same-table-only behaviour).
+//
+// Returns `Array<{ verbId, form }>`, not plain strings (see [B2]/#227): a
+// borrowed form is exactly as much a "sibling form" as an
+// `extraCandidates`/`getCrossVerbCandidates` one, so it needs the same
+// `verbId` tag to be narrowed by `filterExtraCandidates` against a
+// sentence's `validFor` before it's shown — without that, a sentence whose
+// `validFor` lists a sibling could still surface that sibling's form via
+// borrowing, bypassing the very check `validFor` exists to enforce.
 function getBorrowedDistractors(verbs, agreement, tense, person, excludeVerbId) {
   if (!verbs || !agreement) return []
   return verbs
     .filter((sibling) => sibling.id !== excludeVerbId && agreementsCompatible(sibling.agreement, agreement))
-    .map((sibling) => sibling.conjugations[tense]?.[person])
-    .filter(Boolean)
+    .map((sibling) => ({ verbId: sibling.id, form: sibling.conjugations[tense]?.[person] }))
+    .filter((candidate) => candidate.form)
 }
 
 // Last-resort slot top-up for `buildSpotErrorQuestion` (see #139): when the
@@ -971,21 +993,7 @@ function buildWordOrderQuestion(table, sentence, person) {
 // number" slot. Future's invented-non-word safety mechanism, hi/hitanoa, and
 // the moods with no data yet remain out of scope — see #165's follow-up
 // issue.
-// `sources` (optional, a lesson's `{ verbId, tense }[]`, only meaningful with
-// 2+ entries) scopes #139's small-table borrowing (`getBorrowedDistractors`)
-// to just those verbs, rather than every `agreementsCompatible` verb in
-// `verbs` (#174): a bare `kind: 'form'` question has no sentence to make a
-// sibling verb's same-person form read as wrong, so borrowing from a verb
-// the learner isn't currently reviewing can surface a genuinely correct
-// sibling form (e.g. `egon`'s `nago`) as if it were wrong for `izan`'s
-// `naiz`. A single-entry `sources` (an ordinary, non-review lesson) falls
-// back to the full `verbs` pool instead of scoping to just itself, which
-// would starve small single-verb tables (e.g. `nahi`/`jakin`'s 3-person
-// `present`) of their #139 distractor-floor top-up entirely. Without
-// `sources` at all, borrowing also falls back to the full `verbs` pool (the
-// original behaviour) — `getWeakSpotQuestions` and existing tests that don't
-// pass `sources` are unaffected.
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, sources, mode, review = false } = {}) {
+export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
@@ -996,30 +1004,24 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
   const noProduction = noTyping || mode === 'recognition'
-  // A 2+-entry `sources`, or an explicit `review` flag (set by the App.jsx
-  // call site from `lesson.review`), means this is a review lesson, where
-  // `kind: 'form'` questions render with `showVerb: false` — no sentence and
-  // no visible verb name to anchor correctness. Borrowing there can surface
-  // a sibling's genuinely-correct same-person form as if it were wrong,
-  // even though #174 already scoped the pool to the review's own declared
-  // sources (#200: that in-scope sibling is still ambiguous with no
-  // sentence/verb name to tell them apart). #203: a *single*-source review
-  // (e.g. `ikusi-present-plural-review`) still needs this scoping —
-  // `sources.length > 1` alone missed it, letting an unscoped case-frame
-  // lure (e.g. izan's `dira`) leak into a bare, unanchored option for a verb
-  // it doesn't even agree with — hence the explicit `review` flag as a
-  // second, more direct signal. A `review`-less call with a single- or
-  // no-`sources` is an ordinary practice lesson, which always shows the
-  // verb name, so borrowing there stays safe and unrestricted (#139).
-  const reviewScoped = Boolean(review || (sources && sources.length > 1))
-  const borrowPool = reviewScoped ? verbs?.filter((sibling) => sources.some((reviewSource) => reviewSource.verbId === sibling.id)) : verbs
 
   function buildQuestion(person) {
     const sentence = normalizeSentence(pickVariant(sentences[person]))
     const pronounSentence = verb.pronouns && normalizeSentence(pronounSentences[person])
     const negativeSentence = normalizeSentence(pickVariant(negativeSentences[person]))
     const ambiguousTyping = hasAmbiguousTypedForm(verb, tense, person, verbs)
-    const borrowed = getBorrowedDistractors(borrowPool, verb.agreement, tense, person, verb.id)
+    // `borrowed` (see `getBorrowedDistractors`) is `Array<{ verbId, form }>` —
+    // every sibling-verb candidate for this slot, unscoped (#227/[B2]
+    // retired the old `reviewScoped`/`sources`-based gating). The single
+    // invariant that now decides whether any of it is shown is `grounded`
+    // (see `buildTaggedOptions`): a `sentence`/`negative` question narrows
+    // `borrowed` through `filterExtraCandidates`'s `validFor` check before
+    // passing it on grounded, a `pronoun` question is grounded with no
+    // sibling pool at all, and the bare `kind: 'form'` case passes
+    // `grounded: false` so `borrowed` (along with `formLures`) is dropped
+    // entirely — no sentence or visible verb name means no way to tell a
+    // genuinely correct sibling form from a wrong one.
+    const borrowed = getBorrowedDistractors(verbs, verb.agreement, tense, person, verb.id)
     // #141's case-frame/cross-tense lures: a NOR-NORK verb's present (Slot 3,
     // "naiz for dut") and any verb's past (Slot 2 "nintzen for nuen", Slot 3
     // "naiz for nintzen") get one or two guaranteed "diagnosable mistake"
@@ -1067,7 +1069,8 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     switch (kind) {
       case 'sentence': {
         const extra = filterExtraCandidates(extraCandidates?.[person], sentence.validFor)
-        const { correct, options } = buildOptions(table, persons, person, extra, borrowed, formLures)
+        const borrowedForms = filterExtraCandidates(borrowed, sentence.validFor)
+        const { correct, options } = buildOptions(table, persons, person, extra, borrowedForms, formLures, true)
         return { ...source, kind: 'sentence', person, sentence: sentence.text, correct, options }
       }
       case 'type-verb':
@@ -1075,14 +1078,15 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
       case 'spot-error':
         return { ...source, ...buildSpotErrorQuestion(table, sentences, personsWithSentences, person, borrowedSpotErrorSlots) }
       case 'pronoun': {
-        const { correct, options } = buildOptions(verb.pronouns, persons, person, [], [], pronounLures)
+        const { correct, options } = buildOptions(verb.pronouns, persons, person, [], [], pronounLures, true)
         return { ...source, kind: 'pronoun', person, sentence: pronounSentence.text, correct, options }
       }
       case 'type-pronoun':
         return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence.text, correct: verb.pronouns[person] }
       case 'negative': {
         const extra = filterExtraCandidates(extraCandidates?.[person], negativeSentence.validFor)
-        const { correct, options } = buildOptions(table, persons, person, extra, borrowed, formLures)
+        const borrowedForms = filterExtraCandidates(borrowed, negativeSentence.validFor)
+        const { correct, options } = buildOptions(table, persons, person, extra, borrowedForms, formLures, true)
         return { ...source, kind: 'negative', person, sentence: negativeSentence.text, correct, options }
       }
       case 'type-negative':
@@ -1092,16 +1096,15 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
         return { ...source, ...buildWordOrderQuestion(table, wordOrderSentence, person) }
       }
       default: {
-        // See `reviewScoped` above: a review's bare `kind: 'form'` question
-        // has neither a sentence nor a visible verb name to anchor
-        // correctness, so it never borrows — accept fewer than 3 options
-        // instead of letting an in-scope sibling's correct form read as a
-        // second right answer (#200). `formLures` (e.g. the case-frame
-        // lure) is gated the same way (#203): it's a "diagnosable mistake"
-        // option that only reads as wrong given a sentence's subject
-        // marking — with no sentence here, it's just an ungrounded foreign
-        // form mixed into the options.
-        const { correct, options } = buildOptions(table, persons, person, [], reviewScoped ? [] : borrowed, reviewScoped ? [] : formLures)
+        // A bare `kind: 'form'` question has neither a sentence nor a
+        // visible verb name to anchor correctness, so it's never grounded
+        // (see `buildTaggedOptions`): `borrowed` and `formLures` are passed
+        // but ignored, leaving only the verb's own table to draw
+        // distractors from — accept fewer than 3 options rather than let a
+        // sibling's genuinely correct form, or a lure that only reads as
+        // wrong given a sentence's subject marking, surface as an
+        // ungrounded option here.
+        const { correct, options } = buildOptions(table, persons, person, [], borrowed, formLures, false)
         return { ...source, kind: 'form', person, correct, options }
       }
     }
