@@ -12,6 +12,14 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — Added Phase VII roadmap structure (Units 40/41), `pending`, no `VERBS`/`LESSONS` yet
+
+**Decision:** Added two new `pending` units to `journey.js`/`LEARNING_JOURNEY.md` (structure only, per explicit request — no `VERBS` data, no `LESSONS` entries, no `lessonIds`): Unit 40 ("Synthetic Curiosities" — `jario`/`etzan`/`irudi`, recognition-only) and Unit 41 ("Talking About Weather" — `ari`+`ukan` weather idioms plus `izan`/`egon` weather vocabulary, fixed 3rd-person-only). Both sit in a new Phase VII ("Bonus: Curiosities & Color"), after Phase VI's causatives, since they're explicitly optional flavor content rather than core curriculum.
+
+**Why these don't unlock new agreement coverage (and why that's fine):** `VERB_COVERAGE.md` originally pitched `jario` as the cheapest route to `nor-nori` agreement and `etzan` as a `nor` example — both now moot, since `nor-nori` shipped via `gustatu`/`iruditu`/`ahaztu` (Units 23-24) and `nor`/`nor-nork` are thoroughly covered already. Their remaining value is narrower: genuine native-synthetic morphology curiosities (`jario`/`etzan`/`irudi` conjugate with no auxiliary at all) and a teachable false-friend pair (`irudi` vs. the already-taught `iruditu`). The weather unit reuses `ari`/`izan`/`egon`'s *existing* conjugation tables verbatim (same "costs nothing in new conjugation data" shape as §5's `nahi`/`behar`/`ari`) — its only new content is sentence frames, restricted to 3rd person since weather nouns have no `ni`/`hi`/`gu` form. `ari` here is doing a third job beyond the already-modeled progressive-marker (`ari` + `izan`) and engaged-in (`jardun`-adjacent) senses — `ari` + `ukan` with the weather noun as `nork` subject — worth flagging as a distinct argument structure under the same surface word.
+
+**Why `pending`/structure-only:** explicit user request to scope this session to roadmap visibility (`CLAUDE.md`'s "rendered as a locked 'coming soon' roadmap card from its `title`/`focus`/payload alone") rather than full data+lesson authoring. Follow-up work to move either unit to `available` needs: `VERBS` entries (form-only, no `sentences`, for Unit 40; new `sentences` layered onto existing `ari`/`izan`/`egon` entries for Unit 41), `LESSONS` entries (`review: true`, `mode: 'recognition'` for Unit 40 per the `#140` precedent; `persons: ['hura', 'haiek']`-restricted for Unit 41, mirroring the imperative's person-restricted lesson precedent), and `lessonIds` wiring.
+
 ## 2026-06-18 — Implemented Unit 20 (Refresh Gate B — cumulative tense mixer)
 
 **Decision:** Implemented Unit 20, zero new `VERBS` data — purely `LESSONS`/

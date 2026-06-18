@@ -42,6 +42,13 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Gauzak gertarazten (Kausatiboak)',
       },
     },
+    'phase-7': {
+      title: { es: 'Fase VII', eu: 'VII. fasea' },
+      subtitle: {
+        es: 'Bonus: Curiosidades y color',
+        eu: 'Bonusa: Bitxikeriak eta kolorea',
+      },
+    },
   },
   stages: {
     'phase-1-stage-1': {
@@ -129,6 +136,18 @@ export const JOURNEY_TRANSLATIONS = {
       title: {
         es: 'Puerta de Repaso D — La recombinación causativa',
         eu: 'D Berrikuspen Atea — Kausatiboen berrelkarketa',
+      },
+    },
+    'phase-7-stage-15': {
+      title: {
+        es: 'Etapa 15 — Verbos que no necesitan auxiliar',
+        eu: '15. atala — Laguntzailerik behar ez duten aditzak',
+      },
+    },
+    'phase-7-stage-16': {
+      title: {
+        es: 'Etapa 16 — Hablando del tiempo',
+        eu: '16. atala — Eguraldiari buruz hizketan',
       },
     },
   },
@@ -540,6 +559,28 @@ export const JOURNEY_TRANSLATIONS = {
       focus: {
         es: 'Recombina las unidades 37–38 con el futuro, el condicional y el imperativo — sin verbos nuevos, con gating por puntuación',
         eu: '37-38 unitateak geroaldiarekin, baldintzarekin eta agintera moduarekin berrelkartzen ditu — aditz berririk gabe, puntuazioaren arabera blokeatuta',
+      },
+    },
+    40: {
+      title: { es: 'Curiosidades sintéticas', eu: 'Bitxikeria sintetikoak' },
+      focus: {
+        es: 'jario (nor-nori, "dario"/"zerion"), etzan (nor, "datza"), irudi (nor-nork, "dirudi") — verbos sintéticos nativos poco frecuentes, solo reconocimiento',
+        eu: 'jario (nor-nori, "dario"/"zerion"), etzan (nor, "datza"), irudi (nor-nork, "dirudi") — aditz trinko bakanak, ezagutzeko soilik',
+      },
+      payload: {
+        es: '"Le caen lágrimas." · "¿En qué consiste el ejercicio?" · "Pareces cansado."',
+        eu: '"Malkoak dario." · "Zertan datza ariketa?" · "Nekatuta zaude, dirudizu."',
+      },
+    },
+    41: {
+      title: { es: 'Hablando del tiempo', eu: 'Eguraldiari buruz hizketan' },
+      focus: {
+        es: 'ari + ukan ("euria ari du"), modismos del tiempo con izan/egon — solo 3ª persona, sin tablas de conjugación nuevas',
+        eu: 'ari + ukan ("euria ari du"), izan/egon eguraldi-esamoldeak — hirugarren pertsona soilik, jokaera-taula berririk gabe',
+      },
+      payload: {
+        es: '"Está lloviendo." · "Hace frío." · "Hace sol."',
+        eu: '"Euria ari du." · "Hotz da." · "Eguzkia dago."',
       },
     },
   },

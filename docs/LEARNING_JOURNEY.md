@@ -403,6 +403,22 @@ recombines already exists.
 |---|---|---|---|
 | 39 | **REFRESH — Causatives Across Tenses & Moods** | zero new verbs; **score-gated** | Recombines Units 37-38's `-arazi` forms with future (Units 17-18), conditional (Unit 29), and imperative (Unit 30) — "makes/made/will make/would make/make (someone do X)". |
 
+### Phase VII — Bonus: Curiosities & Color
+
+Optional flavor content layered on top of the already-complete core curriculum (Units 1-39) — neither unit unlocks new agreement coverage that isn't already taught elsewhere; see `docs/DECISIONS.md` for why each was scoped this way.
+
+#### Stage 15: Verbs That Don't Need an Auxiliary
+
+| Unit | Focus | Payload | Coverage | Ref | Data status |
+|---|---|---|---|---|---|
+| 40 | **Synthetic Curiosities** — `jario` (`nor-nori`, "dario"/"zerion"), `etzan` (`nor`, "datza"), `irudi` (`nor-nork`, "dirudi"); recognition-only | "Tears flow from him." (`Malkoak dario`) / "What does the exercise consist of?" (`Zertan datza ariketa?`) / "You look tired." (`Nekatuta zaude, dirudizu`) | VERB_COVERAGE §4a; CONJUGATIONS §8 | pending |
+
+#### Stage 16: Talking About Weather
+
+| Unit | Focus | Payload | Coverage | Ref | Data status |
+|---|---|---|---|---|---|
+| 41 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | pending |
+
 ---
 
 ## App engine logic — design notes (not part of the content sequence)
