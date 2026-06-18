@@ -575,6 +575,46 @@ describe('App', () => {
     })
   })
 
+  describe('lure feedback ([C2]/#229)', () => {
+    afterEach(() => {
+      formQuestionMock.enabled = false
+      formQuestionMock.byVerbId = {}
+    })
+
+    // Picking a tagged lure (here, `dut` — a case-frame lure from #141) shows
+    // its "why this was wrong" explanation; a plain same-table distractor has
+    // no `optionRationale` entry and shows none (no regression on existing
+    // incorrect-answer feedback).
+    it('shows the lure rationale when a learner picks a tagged lure distractor', async () => {
+      // Keeps `shuffle`'s Fisher-Yates swaps a no-op (see the preview-screen
+      // test above) so the mocked question — the only entry in `questions`,
+      // ahead of the lesson's real match-pairs question in `createExerciseState`'s
+      // queue-building order — stays first in the queue.
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      formQuestionMock.enabled = true
+      formQuestionMock.byVerbId = {
+        izan: {
+          kind: 'sentence',
+          verbId: 'izan',
+          tense: 'present',
+          person: 'ni',
+          sentence: 'Ni irakaslea ___.',
+          correct: 'naiz',
+          options: ['naiz', 'zara', 'da', 'dut'],
+          optionRationale: { dut: { errorType: 'case-frame', whyKey: 'lureRationaleCaseFrame' } },
+        },
+      }
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+      await user.click(screen.getByRole('button', { name: 'dut' }))
+
+      expect(await screen.findByText(/marks a different subject case/)).toBeInTheDocument()
+    })
+  })
+
   describe('question flagging', () => {
     async function startLessonAndAnswer(user) {
       vi.spyOn(Math, 'random').mockReturnValue(0.99)

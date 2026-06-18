@@ -12,6 +12,45 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [C2] (#229): per-question "why this was wrong" feedback for lure distractors
+
+**Decision:** Extended the `{ form, source }` provenance tagging from
+[B1]/#226 with an optional `errorType` on `'lure'` candidates
+(`priorityCandidates` is now `Array<{ form, errorType }>` rather than bare
+strings — `getCaseFrameLure`/`getCrossTenseLure`/`getObjectNumberLure`'s call
+sites in `buildQuestion` wrap each lure's form with its `errorType`:
+`'case-frame'`, `'tense'`, `'object-number'`). `buildOptions` turns any
+`'lure'` distractor that survives into the question's `optionRationale: {
+[form]: { errorType, whyKey } }`, where `whyKey` is looked up from a small
+`errorType` → i18n-key table (`LURE_WHY_KEYS`). `options` itself is
+unchanged — still a plain array of form strings — so grading
+(`isAnswerCorrect`/`exerciseReducer`) needed no changes at all.
+
+A new `getLureRationale(question, selected, t)` (parallel to `getExplanation`)
+looks up `question.optionRationale?.[selected]` and returns the localized
+"why" line, or `null` if the wrong pick wasn't a tagged lure (a plain
+same-table distractor, or any question kind without `optionRationale` at
+all — `form` questions never get one, since [B2]/#227's `grounded: false`
+already drops lures from them).
+
+`FeedbackBar` (`App.jsx`) renders this rationale immediately — unlike the
+existing "why is this correct?" `ExplanationToggle`, it's *not* behind a tap.
+Rationale: that toggle explains a general fact about the correct answer and
+competes with the main feedback if shown by default; this explains the
+specific wrong answer just picked, which is the one piece of feedback that
+particular incorrect attempt needs, so hiding it behind an extra tap would
+bury it.
+
+Added three i18n keys (`lureRationaleCaseFrame`/`lureRationaleTense`/
+`lureRationaleObjectNumber`) in en/es/eu, each interpolating `{form}` (the
+wrong pick) and `{correct}` (the right answer) — same `{placeholder}`
+pattern as the existing `explanation*` keys.
+
+Out of scope per the issue: rolling cross-question error-pattern detection
+and remedial mini-lessons (`docs/EXERCISE_ENGINE.md`'s Tier-4 note) — this is
+per-question feedback only, ticked as the "per-question half" of that Tier-4
+item.
+
 ## 2026-06-18 — [B2] (#227): unify Family B's distractor-leak gates into one `grounded` invariant
 
 **Decision:** Replaced `generateQuestions`'s accreting pile of context gates

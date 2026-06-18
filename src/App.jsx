@@ -19,6 +19,7 @@ import {
   getIntroducedSources,
   getLastPlayedLessonId,
   getLocalDateString,
+  getLureRationale,
   getPointsBalance,
   pickEncouragementVariantIndex,
   getStreakEncouragement,
@@ -1946,7 +1947,20 @@ function ExplanationToggle({ explanation, expanded, onToggle }) {
   )
 }
 
-function FeedbackBar({ status, isLast, streakEncouragement, explanation, showExplanation, onToggleExplanation, onContinue, lesson, question, verb, selected }) {
+function FeedbackBar({
+  status,
+  isLast,
+  streakEncouragement,
+  explanation,
+  lureRationale,
+  showExplanation,
+  onToggleExplanation,
+  onContinue,
+  lesson,
+  question,
+  verb,
+  selected,
+}) {
   const { t } = useLanguage()
   const [showFlagModal, setShowFlagModal] = useState(false)
   const [flagged, setFlagged] = useState(false)
@@ -1983,6 +1997,14 @@ function FeedbackBar({ status, isLast, streakEncouragement, explanation, showExp
       </div>
       {isCorrect && explanation && (
         <ExplanationToggle explanation={explanation} expanded={showExplanation} onToggle={onToggleExplanation} />
+      )}
+      {/* [C2]/#229: shown immediately rather than behind a toggle (unlike
+          `ExplanationToggle` above) — it explains the *specific wrong answer
+          just picked*, not a general "why is this correct" aside, so hiding
+          it behind a tap would bury the one piece of feedback this answer
+          needs. */}
+      {!isCorrect && lureRationale && (
+        <p className="mb-3 rounded-2xl bg-white px-4 py-3 text-sm leading-relaxed text-gray-700">{lureRationale}</p>
       )}
       <button
         type="button"
@@ -2371,6 +2393,7 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
         isLast={isLast}
         streakEncouragement={streakEncouragement}
         explanation={state.status === 'correct' ? getExplanation(verb, question, t) : null}
+        lureRationale={state.status === 'incorrect' ? getLureRationale(question, state.selected, t) : null}
         showExplanation={showExplanation}
         onToggleExplanation={() => setShowExplanation((expanded) => !expanded)}
         onContinue={handleContinue}
