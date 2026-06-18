@@ -638,6 +638,92 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'future' },
     ],
   },
+  // Unit 20 ("REFRESH — Cumulative Present/Past/Future Mixer", Refresh Gate
+  // B) — zero new verbs. Mixes synthetic (`izan`) + periphrastic (`ukan`/
+  // `joan`/`ikusi`) sources across present/past/future (the full tense range
+  // Units 1-19 introduced), then revisits negation (Gate A's `unit-5-review-*`
+  // pattern) — first extending it to the two verbs that debuted after Gate A
+  // (`eduki`/`ibili`, present-only negation data) and then to past tense,
+  // which `negativeSentences.past`'s auto-extend (see the
+  // `SINGLE_WORD_PAST_NEGATION` loop above) makes possible for the first time.
+  // `unit-20-review-6` is this unit's `gate: true` checkpoint in `journey.js`
+  // — `bestStars >= 2` there gates Unit 21.
+  {
+    id: 'unit-20-review-1',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'ukan', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-20-review-2',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'joan', tense: 'present' },
+      { verbId: 'joan', tense: 'past' },
+      { verbId: 'joan', tense: 'future' },
+      { verbId: 'ikusi', tense: 'present' },
+      { verbId: 'ikusi', tense: 'past' },
+      { verbId: 'ikusi', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-20-review-3',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'ukan', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-20-review-4',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'joan', tense: 'present' },
+      { verbId: 'joan', tense: 'past' },
+      { verbId: 'joan', tense: 'future' },
+      { verbId: 'ikusi', tense: 'present' },
+      { verbId: 'ikusi', tense: 'past' },
+      { verbId: 'ikusi', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-20-review-5',
+    review: true,
+    negation: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'eduki', tense: 'present' },
+      { verbId: 'ibili', tense: 'present' },
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'jakin', tense: 'past' },
+    ],
+  },
+  {
+    id: 'unit-20-review-6',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'joan', tense: 'present' },
+      { verbId: 'ikusi', tense: 'past' },
+    ],
+  },
   // Unit 21 — the imperfective/habitual past (participle + past auxiliary,
   // e.g. `etortzen nintzen`, `ikusten nuen`), taught on a small two-verb
   // core spanning both auxiliary-selection patterns: `etorri` (NOR, izan)
