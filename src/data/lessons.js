@@ -638,6 +638,58 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'future' },
     ],
   },
+  // Unit 21 — the imperfective/habitual past (participle + past auxiliary,
+  // e.g. `etortzen nintzen`, `ikusten nuen`), taught on a small two-verb
+  // core spanning both auxiliary-selection patterns: `etorri` (NOR, izan)
+  // and `ikusi` (NOR-NORK, ukan) — mirrors Unit 17/18's future-rule design.
+  // Form-only (no `sentences`) — see `src/data/verbs.js`'s `behar` precedent.
+  { id: 'etorri-habitual-past', verbId: 'etorri', tense: 'habitualPast', persons: PHASE_1_PERSONS },
+  {
+    id: 'etorri-habitual-past-plural',
+    verbId: 'etorri',
+    tense: 'habitualPast',
+    persons: PHASE_1_PLURAL_PERSONS,
+  },
+  { id: 'ikusi-habitual-past', verbId: 'ikusi', tense: 'habitualPast', persons: PHASE_1_PERSONS },
+  {
+    id: 'ikusi-habitual-past-plural',
+    verbId: 'ikusi',
+    tense: 'habitualPast',
+    persons: PHASE_1_PLURAL_PERSONS,
+  },
+  {
+    id: 'unit-21-review',
+    review: true,
+    sources: [
+      { verbId: 'etorri', tense: 'habitualPast' },
+      { verbId: 'ikusi', tense: 'habitualPast' },
+    ],
+  },
+  // Unit 22 — `joan`/`etorri`/`ibili`'s native synthetic imperfective-past
+  // forms (`nindoan`, `zetorren`, `nenbilen`) — a motion-verb-specific
+  // exception to Unit 21's general periphrastic rule, pooled across all
+  // three verbs since they share no suffix family (mirrors Unit 11's
+  // izan-past-pool pattern). `ibili` has no `hi` form (documented gap).
+  {
+    id: 'motion-imperfective-past-pool',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'joan', tense: 'imperfectivePast' },
+      { verbId: 'etorri', tense: 'imperfectivePast' },
+      { verbId: 'ibili', tense: 'imperfectivePast' },
+    ],
+  },
+  {
+    id: 'motion-imperfective-past-pool-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'joan', tense: 'imperfectivePast' },
+      { verbId: 'etorri', tense: 'imperfectivePast' },
+      { verbId: 'ibili', tense: 'imperfectivePast' },
+    ],
+  },
   // Unit 23 (#146) — present NOR-NORI: `gustatu`/`iruditu`/`ahaztu`, `person`
   // ranges over NORI (object: 'hura' fixes NOR = "it").
   { id: 'gustatu-present', verbId: 'gustatu', tense: 'present' },
