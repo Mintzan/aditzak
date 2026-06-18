@@ -27,13 +27,20 @@ const FOLLOWUP_QUESTION = {
 // `matchPairsMock` substitutes `FOLLOWUP_QUESTION` above.
 const wordOrderMock = vi.hoisted(() => ({ enabled: false, question: null }))
 
+// Lets the [C1]/#228 'review form question' test below force `generateQuestions`
+// (called once per review source — see `createExerciseState`) to return a
+// single controlled `kind: 'form'` question for the given verb/tense, instead
+// of the lesson's normal cross-section.
+const formQuestionMock = vi.hoisted(() => ({ enabled: false, byVerbId: {} }))
+
 vi.mock('./lessonLogic', async (importOriginal) => {
   const actual = await importOriginal()
   return {
     ...actual,
-    generateQuestions: (...args) => {
+    generateQuestions: (verb, tense, options) => {
+      if (formQuestionMock.enabled) return formQuestionMock.byVerbId[verb.id] ? [formQuestionMock.byVerbId[verb.id]] : []
       if (wordOrderMock.enabled) return [wordOrderMock.question]
-      if (!matchPairsMock.enabled) return actual.generateQuestions(...args)
+      if (!matchPairsMock.enabled) return actual.generateQuestions(verb, tense, options)
       return matchPairsMock.withFollowup ? [FOLLOWUP_QUESTION] : []
     },
   }
@@ -537,6 +544,34 @@ describe('App', () => {
       await user.click(screen.getByRole('button', { name: 'Check' }))
 
       expect(await screen.findByText(/Bikain! Great job!/)).toBeInTheDocument()
+    })
+  })
+
+  describe('review form question', () => {
+    afterEach(() => {
+      formQuestionMock.enabled = false
+      formQuestionMock.byVerbId = {}
+    })
+
+    // [C1]/#228: a review's bare `kind: 'form'` question has no sentence to
+    // anchor it, so unlike practice lessons (which hide the verb name when a
+    // question's options could include a cross-verb distractor) it must show
+    // the verb name — otherwise a player sees only a pronoun and four
+    // conjugated forms with no way to tell which verb is under test.
+    it('shows the verb name on a review’s bare form question', async () => {
+      window.history.pushState({}, '', '/?dev=unlock-all')
+      formQuestionMock.enabled = true
+      formQuestionMock.byVerbId = {
+        izan: { kind: 'form', verbId: 'izan', tense: 'present', person: 'haiek', correct: 'dira', options: ['dira', 'gara', 'naiz', 'zarete'] },
+      }
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /izan & egon — mixed practice/i }))
+
+      expect(await screen.findByText(/izan — to be/)).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'dira' })).toBeInTheDocument()
     })
   })
 

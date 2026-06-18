@@ -12,6 +12,23 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [C1] (#228): review `kind:'form'` questions show the verb name
+
+**Decision:** `ExerciseScreen`'s `showVerb` prop to `QuestionPrompt`
+(`src/App.jsx`) now also shows the verb name for `kind: 'form'` questions,
+even in review mode — `showVerb={!lesson.review || !question.options ||
+question.kind === 'form'}`. Took the issue's recommended option (show the
+verb) over the alternative (drop bare `form` questions from reviews
+entirely): a review's `form` question has no sentence, so with the verb name
+hidden too there's no way to tell *which verb* is under test, making a
+deliberately-hard lure (e.g. `izan`'s `dira` offered for `ikusi`'s `haiek`
+form) indistinguishable from a broken question. Other review MC kinds
+(`sentence`/`negative`/`pronoun`) keep the verb name hidden — their sentence
+already grounds the question, and naming the verb there would trivialize any
+cross-verb distractor (`getCrossVerbCandidates`). Added an `App.test.jsx`
+test (`'review form question'`) asserting a review's bare form question
+renders the verb name.
+
 ## 2026-06-18 — [B1] (#226): provenance-typed distractor candidates, no behaviour change
 
 **Decision:** Split `buildOptions` (`src/lessonLogic.js`) into a new exported
