@@ -221,6 +221,8 @@ export const TRANSLATIONS = {
       "'{form}' is the present-tense form, but this question is in the past. The correct form here is '{correct}'.",
     lureRationaleObjectNumber:
       "'{form}' marks a plural object, but the object here is singular. The correct form here is '{correct}'.",
+    lureRationaleProgressiveVsPlain:
+      "'{form}' is the plain present ('I eat') — the progressive ('I am eating') is '{correct}'.",
   },
   es: {
     navLearn: 'Aprender',
@@ -413,6 +415,8 @@ export const TRANSLATIONS = {
       "'{form}' es la forma de presente, pero esta pregunta está en pasado. La forma correcta aquí es '{correct}'.",
     lureRationaleObjectNumber:
       "'{form}' marca un objeto plural, pero aquí el objeto es singular. La forma correcta aquí es '{correct}'.",
+    lureRationaleProgressiveVsPlain:
+      "'{form}' es el presente simple ('como') — el progresivo ('estoy comiendo') es '{correct}'.",
   },
   eu: {
     navLearn: 'Ikasi',
@@ -605,5 +609,7 @@ export const TRANSLATIONS = {
       "'{form}' oraindiko forma da, baina galdera hau iraganean dago. Forma zuzena hemen '{correct}' da.",
     lureRationaleObjectNumber:
       "'{form}' objektu plural bat markatzen du, baina hemen objektua singularra da. Forma zuzena hemen '{correct}' da.",
+    lureRationaleProgressiveVsPlain:
+      "'{form}' oraina soila da ('jaten dut') — forma jarraitua ('ari naiz') '{correct}' da.",
   },
 }

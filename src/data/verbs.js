@@ -814,11 +814,18 @@ export const VERBS = [
     },
     sentences: {
       present: {
-        ni: ['Ni jaten ___.', 'Ni lan egiten ___.', 'Ni ikasten ___.', 'Ni idazten ___.'],
+        // #230: `baseVerb` resolves "jaten" -> `jan` deterministically (the
+        // engine never parses the participle string itself) so
+        // `getProgressiveBaseLure` can offer `jan`'s plain present
+        // ("jaten dut") as a distractor alongside "ari naiz". The other
+        // variants' embedded verbs (egin/ikasi/idatzi/irakurri/jolastu)
+        // aren't in `VERBS` yet, so they stay untagged — no lure for them
+        // until/unless those verbs are added.
+        ni: ['Ni lan egiten ___.', 'Ni ikasten ___.', 'Ni idazten ___.', { text: 'Ni jaten ___.', baseVerb: 'jan' }],
         zu: ['Zu zer ___?', 'Zu zer egiten ___?', 'Zu irakurtzen ___?'],
         hura: [
           'Hura irakurtzen ___.',
-          'Hura jaten ___.',
+          { text: 'Hura jaten ___.', baseVerb: 'jan' },
           'Hura lan egiten ___.',
           'Mikel ikasten ___.',
           'Ane idazten ___.',

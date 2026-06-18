@@ -12,6 +12,32 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [C3] (#230): `baseVerb` sentence tag + dedicated lure bypasses agreement-compatibility for ari's progressive-vs-plain distractor
+
+**Decision:** `ari izan` ("ari naiz jaten" = "I am eating") never offered the
+real-world confusion distractor — the base verb's plain present ("jaten dut" =
+"I eat") — because the existing borrow-pool mechanism is gated by
+`agreementsCompatible`, and `ari`'s agreement (`['nor']`) structurally excludes
+`jan`'s (`['nor', 'nork']`). Added an optional `baseVerb` tag to a sentence
+variant (`{ text, baseVerb }`, read transparently by the existing
+`normalizeSentence`), tagged `ari`'s two "jaten" sentences with `baseVerb:
+'jan'`, and added `getProgressiveBaseLure(verbs, baseVerbId, person)` — a
+helper that resolves the tag straight to `jan.conjugations.present[person]`,
+bypassing `agreementsCompatible` entirely rather than trying to special-case it.
+Wired into `buildQuestion`'s `formLures` only when `sentence.baseVerb` is set,
+and added `LURE_WHY_KEYS['progressive-vs-plain']` plus its 3-locale
+explanation string.
+
+**Why:** Generalizing `agreementsCompatible` itself to admit this one case
+risked loosening it for unrelated lure slots; a sentence-level tag that
+deterministically names the embedded verb (instead of string-parsing the
+participle) keeps the fix scoped to exactly the sentences a human has vetted.
+Only `ari`'s `jan`-based sentences are tagged for now — the other variants'
+embedded verbs (`egin`/`ikasi`/`idatzi`/`irakurri`/`jolastu`) aren't in `VERBS`
+yet, so they stay untagged until those verbs exist. The grounding invariant
+from [B2]/#227 means this lure can never leak into an ungrounded bare-`form`
+question, with no extra guard needed.
+
 ## 2026-06-18 — [A3] (#225): object-class `validFor` derivation spike — adopt with changes, no code shipped
 
 **Decision:** Investigated whether `validFor` could be derived from a small

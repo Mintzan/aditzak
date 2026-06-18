@@ -29,6 +29,7 @@ import {
   getLureRationale,
   getObjectNumberLure,
   getPointsBalance,
+  getProgressiveBaseLure,
   getStreakEncouragement,
   getUnlockedLessonIds,
   getWeakSpotQuestions,
@@ -2153,6 +2154,31 @@ describe('generateQuestions', () => {
 
       expect(question.options).toEqual(expect.arrayContaining(['hadi', 'zaitez', 'zaitezte']))
       expect(question.options).toContain(question.correct)
+    })
+  })
+
+  describe('#230 progressive-vs-plain lure (ari <-> baseVerb)', () => {
+    const jan = VERBS.find((v) => v.id === 'jan')
+    const ari = VERBS.find((v) => v.id === 'ari')
+
+    it('getProgressiveBaseLure resolves a base verb id to its present-tense form for that person', () => {
+      expect(getProgressiveBaseLure(VERBS, 'jan', 'ni')).toBe('jaten dut')
+      expect(getProgressiveBaseLure(VERBS, 'jan', 'hura')).toBe('jaten du')
+    })
+
+    it('getProgressiveBaseLure returns undefined without a baseVerbId, or for an unknown verb id', () => {
+      expect(getProgressiveBaseLure(VERBS, undefined, 'ni')).toBeUndefined()
+      expect(getProgressiveBaseLure(VERBS, 'not-a-real-verb', 'ni')).toBeUndefined()
+    })
+
+    it('offers jan\'s plain present as a distractor for an ari sentence question tagged with baseVerb: jan', () => {
+      const questions = generateQuestions(ari, 'present', { verbs: VERBS, rounds: 30 })
+      const sentenceQuestion = questions.find(
+        (q) => q.kind === 'sentence' && q.person === 'ni' && q.sentence?.includes('jaten')
+      )
+
+      expect(sentenceQuestion).toBeDefined()
+      expect(sentenceQuestion.options).toContain(jan.conjugations.present.ni)
     })
   })
 })
