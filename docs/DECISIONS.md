@@ -12,6 +12,27 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [A4] (#239): class-model validFor audit adopted as tooling only, layered onto [A1]'s CLI
+
+**Decision:** Refactored the [A3]/#225 spike's class model (`CLASS_ADMISSION`,
+the derive/diff logic) out of `scripts/frame-derive-diff.mjs` into a shared
+`scripts/frameClasses.mjs` module, and added a `--classes` mode to
+`scripts/validfor-delta-audit.mjs` that prints class-derived candidate
+`validFor` additions (optionally scoped with `--verb <id>`), clearly labeled
+as a second pass for human review. `frame-derive-diff.mjs` now imports from
+the shared module too, with no change to its own output. No runtime
+derivation, no `class` field on `verbs.js`, no edits to `verbs.js` from this
+tooling — matches the spike's explicit "reject auto-derivation" recommendation.
+
+**Why:** The spike found a real class of `validFor` gap (object semantics,
+e.g. food vs. furniture) the agreement-only [A1] audit structurally can't
+catch, but also found edge cases (the spike's finding #3) where a human still needs
+to sign off before a class-predicted addition lands in `verbs.js`. A CLI mode
+that surfaces candidates without writing them gets the detection benefit
+without the auto-derivation risk. Shared module exists so the diff script and
+the new CLI mode can't drift out of sync the way two copy-pasted
+implementations eventually would.
+
 ## 2026-06-18 — [C3] (#230): `baseVerb` sentence tag + dedicated lure bypasses agreement-compatibility for ari's progressive-vs-plain distractor
 
 **Decision:** `ari izan` ("ari naiz jaten" = "I am eating") never offered the
