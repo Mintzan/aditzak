@@ -538,6 +538,7 @@ const LURE_WHY_KEYS = {
   'case-frame': 'lureRationaleCaseFrame',
   tense: 'lureRationaleTense',
   'object-number': 'lureRationaleObjectNumber',
+  'progressive-vs-plain': 'lureRationaleProgressiveVsPlain',
 }
 
 function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = [], grounded = true) {
@@ -616,6 +617,18 @@ export function getCrossTenseLure(verb, tense, person) {
 // else).
 export function getObjectNumberLure(verb, tense, person) {
   return verb.conjugations[`${tense}Plural`]?.[person]
+}
+
+// The embedded base verb's plain present, for the same person — #230's
+// targeted `ari izan` progressive-vs-plain lure ("jaten dut" offered
+// alongside "ari naiz", for "Ni jaten ___."). `baseVerbId` comes from a
+// sentence variant's `baseVerb` tag (see `ari`'s `sentences` in
+// `verbs.js`) rather than parsing the participle string, so it's a no-op —
+// returns `undefined` — for any sentence without one, i.e. every verb but
+// `ari` today.
+export function getProgressiveBaseLure(verbs, baseVerbId, person) {
+  if (!baseVerbId) return undefined
+  return verbs?.find((candidate) => candidate.id === baseVerbId)?.conjugations.present?.[person]
 }
 
 // For a NOR-NORI-NORK (ditransitive) verb, resolves its axis-fixed metadata
@@ -1045,7 +1058,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     // distractors on top of the usual same-table ones. NOR present (no
     // `nork`, present tense) is left alone — its matrix row's Slot 3 is the
     // post-Unit-7 plural/near-homophone borrow (#164), not a case-frame lure.
-    const formLures =
+    const baseFormLures =
       tense === 'past' || verb.agreement?.includes('nork') || verb.agreement?.includes('nori')
         ? [
             { form: getCaseFrameLure(verbs, verb, tense, person), errorType: 'case-frame' },
@@ -1053,6 +1066,12 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
             { form: getObjectNumberLure(verb, tense, person), errorType: 'object-number' },
           ]
         : []
+    // #230: a sentence whose embedded participle is tagged with its base
+    // verb (`ari`'s sentences only, today) gets one further "progressive vs.
+    // plain present" lure on top of whichever matrix-row lures already apply.
+    const formLures = sentence?.baseVerb
+      ? [...baseFormLures, { form: getProgressiveBaseLure(verbs, sentence.baseVerb, person), errorType: 'progressive-vs-plain' }]
+      : baseFormLures
     const pronounLures = [{ form: getCaseFramePronounLure(verbs, verb, person), errorType: 'case-frame' }]
     // A sentence only qualifies for `word-order` once its blank is filled in
     // and it clears `WORD_ORDER_MIN_WORDS` — see `buildWordOrderQuestion`.
