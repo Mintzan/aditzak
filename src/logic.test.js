@@ -3,6 +3,7 @@ import {
   addPoints,
   agreementsCompatible,
   buildFlagDiagnostics,
+  buildTaggedOptions,
   canRepairStreak,
   computeLessonPoints,
   CASE_MIXER_QUESTION_COUNT,
@@ -602,6 +603,27 @@ describe('getIntroducedSources', () => {
       { verbId: 'egon', tense: 'present' },
       { verbId: 'izan', tense: 'past' },
     ])
+  })
+})
+
+describe('buildTaggedOptions', () => {
+  it('tags same-table, sibling, and lure candidates by their source', () => {
+    // A two-person table plus exactly one extra and one priority candidate
+    // fills the 3-distractor cap exactly, so every candidate is guaranteed
+    // to land in `distractors` regardless of shuffle order.
+    const twoPersonTable = { ni: 'naiz', hi: 'haiz' }
+    const { distractors } = buildTaggedOptions(twoPersonTable, ['ni', 'hi'], 'ni', ['nago'], [], ['dut'])
+    expect(distractors).toHaveLength(3)
+    expect(distractors).toContainEqual({ form: 'dut', source: 'lure' })
+    expect(distractors).toContainEqual({ form: 'nago', source: 'sibling' })
+    expect(distractors).toContainEqual({ form: 'haiz', source: 'same-table' })
+  })
+
+  it('tags borrowed (last-resort) candidates as sibling', () => {
+    const threePersonTable = { ni: 'naiz', hi: 'haiz', hura: 'da' }
+    const { distractors } = buildTaggedOptions(threePersonTable, ['ni', 'hi', 'hura'], 'ni', [], ['gara', 'zarete', 'dira'])
+    expect(distractors.length).toBe(3)
+    expect(distractors.filter((candidate) => candidate.source === 'sibling').length).toBeGreaterThan(0)
   })
 })
 

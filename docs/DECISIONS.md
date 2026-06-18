@@ -12,6 +12,28 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [B1] (#226): provenance-typed distractor candidates, no behaviour change
+
+**Decision:** Split `buildOptions` (`src/lessonLogic.js`) into a new exported
+`buildTaggedOptions`, which builds the same priority/pool/borrow-pool
+distractor selection but keeps each candidate as `{ form, source }` with
+`source ∈ 'same-table' | 'sibling' | 'lure'` throughout, and a thin
+`buildOptions` wrapper that flattens `distractors` to plain form strings for
+the existing `{ correct, options }` return shape. Same-table forms (the
+other persons' table entries) are tagged `'same-table'`; `extraCandidates`
+and the last-resort `borrowPool` are both tagged `'sibling'` (both are
+"another verb's form," whether pulled in via a review's declared sources or
+the broader borrow pool); `priorityCandidates` (case-frame/cross-tense/
+object-number/pronoun lures) are tagged `'lure'`. Dedup-by-form, the
+3-distractor cap, and priority-slot ordering are unchanged — `buildOptions`'s
+call sites in `generateQuestions` needed no changes, since the wrapping
+happens entirely inside `buildOptions`/`buildTaggedOptions`. `npm test`
+passes with zero changes to any existing fixture or assertion, proving no
+behaviour change; two new `buildTaggedOptions`-specific tests in
+`logic.test.js` lock the tagging contract. This is pure plumbing for [B2]
+(#227), which will use the tags to collapse the `reviewScoped`/`borrowPool`
+gates into a single grounding invariant.
+
 ## 2026-06-18 — [A1] (#223): validFor delta-audit script + CI guard
 
 **Decision:** Added `scripts/validforGapAudit.mjs` (the shared

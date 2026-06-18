@@ -470,19 +470,54 @@ function rollQuestionKind(availableKinds) {
 // (ergative drift, cross-pool aux, wrong tense). Each still counts toward the
 // 3-distractor cap, so a table with few own-person candidates yields fewer
 // random ones, not more options overall.
-function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = []) {
+//
+// Every candidate is tagged with its provenance — `'same-table'` (the other
+// persons' forms from `table`), `'sibling'` (`extraCandidates`/`borrowPool`,
+// i.e. another verb's form), or `'lure'` (`priorityCandidates`) — so callers
+// (and B2's grounding rule) can reason about *where* a distractor came from.
+// This tagging is purely internal bookkeeping: `options` is still the same
+// flat array of form strings it always was, in the same order, for a given
+// RNG seed (see [B1]/#226).
+function dedupeBySourceForm(candidates) {
+  const seen = new Set()
+  const deduped = []
+  for (const candidate of candidates) {
+    if (seen.has(candidate.form)) continue
+    seen.add(candidate.form)
+    deduped.push(candidate)
+  }
+  return deduped
+}
+
+// Same as `buildOptions`, but returns the chosen distractors still tagged
+// with their provenance (`{ form, source }`) instead of collapsing them to
+// plain strings — exported only so tests can lock the tagging contract B2
+// relies on; `buildOptions` itself is the one production call sites use.
+export function buildTaggedOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = []) {
   const correct = table[person]
-  const pool = [...persons.filter((candidate) => candidate !== person).map((candidate) => table[candidate]), ...extraCandidates].filter(
-    (form) => form !== correct,
+  const sameTable = persons
+    .filter((candidate) => candidate !== person)
+    .map((candidate) => ({ form: table[candidate], source: 'same-table' }))
+  const sibling = extraCandidates.map((form) => ({ form, source: 'sibling' }))
+  const pool = [...sameTable, ...sibling].filter((candidate) => candidate.form !== correct)
+  const priority = dedupeBySourceForm(priorityCandidates.map((form) => ({ form, source: 'lure' }))).filter(
+    (candidate) => candidate.form && candidate.form !== correct,
   )
-  const priority = [...new Set(priorityCandidates)].filter((form) => form && form !== correct)
-  const rest = shuffle([...new Set(pool)].filter((form) => !priority.includes(form)))
+  const priorityForms = new Set(priority.map((candidate) => candidate.form))
+  const rest = shuffle(dedupeBySourceForm(pool).filter((candidate) => !priorityForms.has(candidate.form)))
   let distractors = [...priority, ...rest].slice(0, 3)
   if (distractors.length < 3 && borrowPool.length > 0) {
-    const borrowed = shuffle([...new Set(borrowPool)].filter((form) => form !== correct && !distractors.includes(form)))
+    const distractorForms = new Set(distractors.map((candidate) => candidate.form))
+    const borrowedCandidates = borrowPool.map((form) => ({ form, source: 'sibling' }))
+    const borrowed = shuffle(dedupeBySourceForm(borrowedCandidates).filter((candidate) => candidate.form !== correct && !distractorForms.has(candidate.form)))
     distractors = [...distractors, ...borrowed].slice(0, 3)
   }
-  return { correct, options: shuffle([correct, ...distractors]) }
+  return { correct, distractors }
+}
+
+function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = []) {
+  const { correct, distractors } = buildTaggedOptions(table, persons, person, extraCandidates, borrowPool, priorityCandidates)
+  return { correct, options: shuffle([correct, ...distractors.map((candidate) => candidate.form)]) }
 }
 
 // Whether two verbs' subject-marking is compatible enough that one's
