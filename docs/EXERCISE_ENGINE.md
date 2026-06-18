@@ -291,6 +291,14 @@ concrete touch points so they're not lost:
   suggests this becomes relevant once Phase IV/Gate C makes NOR/NORK/NORI
   confusion a live issue — i.e. not before Unit 20/21 content exists to
   generate that confusion.
+  - ✅ **Per-question half done ([C2]/#229).** `buildOptions` now tags lure
+    distractors with `{ form, errorType }` and surfaces an
+    `optionRationale: { [form]: { errorType, whyKey } }` map on the question;
+    `FeedbackBar` shows the matching localized "why this was wrong" line when
+    the learner's wrong pick is a tagged lure. The rolling *cross-question*
+    error-pattern history and remedial-mini-lesson injection described above
+    are still open — #229 was deliberately scoped to per-question feedback
+    only (see `docs/DISTRACTOR_STRATEGY.md` §4.4).
 
 ## Suggested build order
 

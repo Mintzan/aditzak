@@ -215,6 +215,12 @@ export const TRANSLATIONS = {
       "'{form}' is right because this sentence's subject takes the '-k' ending (Nik, Zuk...) — '{verb}' marks its subject that way. The other option(s) belong to a verb whose subject takes no '-k', so they wouldn't fit this sentence.",
     explanationCaseMixerAbsolutive:
       "'{form}' is right because this sentence's subject takes no '-k' ending (Ni, Zu...) — '{verb}' doesn't mark its subject that way. The other option(s) belong to a verb whose subject takes '-k', so they wouldn't fit this sentence.",
+    lureRationaleCaseFrame:
+      "'{form}' marks a different subject case than this question needs (NOR vs NOR-NORK) — it's borrowed from a verb whose subject works the opposite way. The correct form here is '{correct}'.",
+    lureRationaleTense:
+      "'{form}' is the present-tense form, but this question is in the past. The correct form here is '{correct}'.",
+    lureRationaleObjectNumber:
+      "'{form}' marks a plural object, but the object here is singular. The correct form here is '{correct}'.",
   },
   es: {
     navLearn: 'Aprender',
@@ -401,6 +407,12 @@ export const TRANSLATIONS = {
       "'{form}' es correcto porque el sujeto de esta frase lleva la terminación '-k' (Nik, Zuk...) — '{verb}' marca así su sujeto. La(s) otra(s) opción(es) pertenecen a un verbo cuyo sujeto no lleva '-k', así que no encajarían en esta frase.",
     explanationCaseMixerAbsolutive:
       "'{form}' es correcto porque el sujeto de esta frase no lleva la terminación '-k' (Ni, Zu...) — '{verb}' no marca así su sujeto. La(s) otra(s) opción(es) pertenecen a un verbo cuyo sujeto lleva '-k', así que no encajarían en esta frase.",
+    lureRationaleCaseFrame:
+      "'{form}' marca un sujeto de otro tipo (NOR vs NOR-NORK) — viene de un verbo cuyo sujeto funciona al revés. La forma correcta aquí es '{correct}'.",
+    lureRationaleTense:
+      "'{form}' es la forma de presente, pero esta pregunta está en pasado. La forma correcta aquí es '{correct}'.",
+    lureRationaleObjectNumber:
+      "'{form}' marca un objeto plural, pero aquí el objeto es singular. La forma correcta aquí es '{correct}'.",
   },
   eu: {
     navLearn: 'Ikasi',
@@ -587,5 +599,11 @@ export const TRANSLATIONS = {
       "'{form}' zuzena da, esaldi honetako subjektuak '-k' atzizkia hartzen duelako (Nik, Zuk...) — '{verb}'-ek horrela markatzen du bere subjektua. Beste aukera(k) '-k' gabeko subjektua duen aditz batenak dira, eta ez dute esaldi honetan tokirik.",
     explanationCaseMixerAbsolutive:
       "'{form}' zuzena da, esaldi honetako subjektuak '-k' atzizkirik ez duelako (Ni, Zu...) — '{verb}'-ek ez du horrela markatzen bere subjektua. Beste aukera(k) '-k' atzizkia duen subjektua eskatzen duen aditz batenak dira, eta ez dute esaldi honetan tokirik.",
+    lureRationaleCaseFrame:
+      "'{form}' beste motako subjektu bat markatzen du (NOR vs NOR-NORK) — alderantziz funtzionatzen duen aditz batetik dator. Forma zuzena hemen '{correct}' da.",
+    lureRationaleTense:
+      "'{form}' oraindiko forma da, baina galdera hau iraganean dago. Forma zuzena hemen '{correct}' da.",
+    lureRationaleObjectNumber:
+      "'{form}' objektu plural bat markatzen du, baina hemen objektua singularra da. Forma zuzena hemen '{correct}' da.",
   },
 }

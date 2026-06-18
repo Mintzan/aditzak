@@ -464,12 +464,14 @@ function rollQuestionKind(availableKinds) {
 // for them.
 //
 // `priorityCandidates` (optional, see `getCaseFrameLure`/`getCaseFramePronounLure`/
-// `getCrossTenseLure`) are forms guaranteed a distractor slot (ahead of the
-// random `pool` sample) when present, distinct from `correct`, and not
-// already in `pool` — #141's matrix-row-specific "diagnosable mistake" slots
-// (ergative drift, cross-pool aux, wrong tense). Each still counts toward the
-// 3-distractor cap, so a table with few own-person candidates yields fewer
-// random ones, not more options overall.
+// `getCrossTenseLure`) are `{ form, errorType }` pairs guaranteed a distractor
+// slot (ahead of the random `pool` sample) when `form` is present, distinct
+// from `correct`, and not already in `pool` — #141's matrix-row-specific
+// "diagnosable mistake" slots (ergative drift, cross-pool aux, wrong tense).
+// Each still counts toward the 3-distractor cap, so a table with few
+// own-person candidates yields fewer random ones, not more options overall.
+// `errorType` is carried through to `buildOptions`'s `optionRationale` (see
+// [C2]/#229) so a lure that's picked can be explained after the fact.
 //
 // Every candidate is tagged with its provenance — `'same-table'` (the other
 // persons' forms from `table`), `'sibling'` (`extraCandidates`/`borrowPool`,
@@ -514,9 +516,9 @@ export function buildTaggedOptions(table, persons, person, extraCandidates = [],
   }
   const sibling = extraCandidates.map((form) => ({ form, source: 'sibling' }))
   const pool = [...sameTable, ...sibling].filter((candidate) => candidate.form !== correct)
-  const priority = dedupeBySourceForm(priorityCandidates.map((form) => ({ form, source: 'lure' }))).filter(
-    (candidate) => candidate.form && candidate.form !== correct,
-  )
+  const priority = dedupeBySourceForm(
+    priorityCandidates.map((candidate) => ({ form: candidate.form, errorType: candidate.errorType, source: 'lure' })),
+  ).filter((candidate) => candidate.form && candidate.form !== correct)
   const priorityForms = new Set(priority.map((candidate) => candidate.form))
   const rest = shuffle(dedupeBySourceForm(pool).filter((candidate) => !priorityForms.has(candidate.form)))
   let distractors = [...priority, ...rest].slice(0, 3)
@@ -529,9 +531,24 @@ export function buildTaggedOptions(table, persons, person, extraCandidates = [],
   return { correct, distractors }
 }
 
+// [C2]/#229: which i18n key explains a given lure `errorType` — see
+// `getCaseFrameLure`/`getCrossTenseLure`/`getObjectNumberLure`'s doc comments
+// for what each one means.
+const LURE_WHY_KEYS = {
+  'case-frame': 'lureRationaleCaseFrame',
+  tense: 'lureRationaleTense',
+  'object-number': 'lureRationaleObjectNumber',
+}
+
 function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = [], grounded = true) {
   const { correct, distractors } = buildTaggedOptions(table, persons, person, extraCandidates, borrowPool, priorityCandidates, grounded)
-  return { correct, options: shuffle([correct, ...distractors.map((candidate) => candidate.form)]) }
+  const optionRationale = {}
+  for (const candidate of distractors) {
+    if (candidate.source === 'lure' && LURE_WHY_KEYS[candidate.errorType]) {
+      optionRationale[candidate.form] = { errorType: candidate.errorType, whyKey: LURE_WHY_KEYS[candidate.errorType] }
+    }
+  }
+  return { correct, options: shuffle([correct, ...distractors.map((candidate) => candidate.form)]), optionRationale }
 }
 
 // Whether two verbs' subject-marking is compatible enough that one's
@@ -1030,9 +1047,13 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     // post-Unit-7 plural/near-homophone borrow (#164), not a case-frame lure.
     const formLures =
       tense === 'past' || verb.agreement?.includes('nork') || verb.agreement?.includes('nori')
-        ? [getCaseFrameLure(verbs, verb, tense, person), getCrossTenseLure(verb, tense, person), getObjectNumberLure(verb, tense, person)]
+        ? [
+            { form: getCaseFrameLure(verbs, verb, tense, person), errorType: 'case-frame' },
+            { form: getCrossTenseLure(verb, tense, person), errorType: 'tense' },
+            { form: getObjectNumberLure(verb, tense, person), errorType: 'object-number' },
+          ]
         : []
-    const pronounLures = [getCaseFramePronounLure(verbs, verb, person)]
+    const pronounLures = [{ form: getCaseFramePronounLure(verbs, verb, person), errorType: 'case-frame' }]
     // A sentence only qualifies for `word-order` once its blank is filled in
     // and it clears `WORD_ORDER_MIN_WORDS` — see `buildWordOrderQuestion`.
     const meetsWordOrderThreshold = (candidate) =>
@@ -1070,24 +1091,24 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
       case 'sentence': {
         const extra = filterExtraCandidates(extraCandidates?.[person], sentence.validFor)
         const borrowedForms = filterExtraCandidates(borrowed, sentence.validFor)
-        const { correct, options } = buildOptions(table, persons, person, extra, borrowedForms, formLures, true)
-        return { ...source, kind: 'sentence', person, sentence: sentence.text, correct, options }
+        const { correct, options, optionRationale } = buildOptions(table, persons, person, extra, borrowedForms, formLures, true)
+        return { ...source, kind: 'sentence', person, sentence: sentence.text, correct, options, optionRationale }
       }
       case 'type-verb':
         return { ...source, kind: 'type-verb', person, sentence: sentence.text, correct: table[person] }
       case 'spot-error':
         return { ...source, ...buildSpotErrorQuestion(table, sentences, personsWithSentences, person, borrowedSpotErrorSlots) }
       case 'pronoun': {
-        const { correct, options } = buildOptions(verb.pronouns, persons, person, [], [], pronounLures, true)
-        return { ...source, kind: 'pronoun', person, sentence: pronounSentence.text, correct, options }
+        const { correct, options, optionRationale } = buildOptions(verb.pronouns, persons, person, [], [], pronounLures, true)
+        return { ...source, kind: 'pronoun', person, sentence: pronounSentence.text, correct, options, optionRationale }
       }
       case 'type-pronoun':
         return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence.text, correct: verb.pronouns[person] }
       case 'negative': {
         const extra = filterExtraCandidates(extraCandidates?.[person], negativeSentence.validFor)
         const borrowedForms = filterExtraCandidates(borrowed, negativeSentence.validFor)
-        const { correct, options } = buildOptions(table, persons, person, extra, borrowedForms, formLures, true)
-        return { ...source, kind: 'negative', person, sentence: negativeSentence.text, correct, options }
+        const { correct, options, optionRationale } = buildOptions(table, persons, person, extra, borrowedForms, formLures, true)
+        return { ...source, kind: 'negative', person, sentence: negativeSentence.text, correct, options, optionRationale }
       }
       case 'type-negative':
         return { ...source, kind: 'type-negative', person, sentence: negativeSentence.text, correct: table[person] }
@@ -1427,6 +1448,21 @@ export function getExplanation(verb, question, t) {
   if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
   const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'
   return t(key, { pronoun: question.correct, verb: verb.verb, form: verb.conjugations[question.tense][question.person] })
+}
+
+// [C2]/#229: makes a wrong-but-deliberate distractor ("lure", see
+// `getCaseFrameLure`/`getCrossTenseLure`/`getObjectNumberLure`) legible after
+// the fact, rather than reading as an arbitrary wrong answer — only a `kind:
+// 'sentence'`/`'negative'`/`'pronoun'` question carries `optionRationale`
+// (see `buildOptions`), since those are the only kinds with a sentence/visible
+// verb name to anchor the explanation against (the `grounded` invariant from
+// [B2]/#227). Returns `null` when `selected` wasn't a tagged lure — a plain
+// same-table distractor has no "why" beyond "wrong person", same as
+// `getExplanation`'s `null` cases.
+export function getLureRationale(question, selected, t) {
+  const rationale = question.optionRationale?.[selected]
+  if (!rationale) return null
+  return t(rationale.whyKey, { form: selected, correct: question.correct })
 }
 
 // The exercise works through a queue rather than a fixed list: a question

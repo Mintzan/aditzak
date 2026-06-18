@@ -26,6 +26,7 @@ import {
   getFixedArgument,
   getIntroducedSources,
   getLocalDateString,
+  getLureRationale,
   getObjectNumberLure,
   getPointsBalance,
   getStreakEncouragement,
@@ -612,9 +613,9 @@ describe('buildTaggedOptions', () => {
     // fills the 3-distractor cap exactly, so every candidate is guaranteed
     // to land in `distractors` regardless of shuffle order.
     const twoPersonTable = { ni: 'naiz', hi: 'haiz' }
-    const { distractors } = buildTaggedOptions(twoPersonTable, ['ni', 'hi'], 'ni', ['nago'], [], ['dut'])
+    const { distractors } = buildTaggedOptions(twoPersonTable, ['ni', 'hi'], 'ni', ['nago'], [], [{ form: 'dut', errorType: 'case-frame' }])
     expect(distractors).toHaveLength(3)
-    expect(distractors).toContainEqual({ form: 'dut', source: 'lure' })
+    expect(distractors).toContainEqual({ form: 'dut', source: 'lure', errorType: 'case-frame' })
     expect(distractors).toContainEqual({ form: 'nago', source: 'sibling' })
     expect(distractors).toContainEqual({ form: 'haiz', source: 'same-table' })
   })
@@ -1943,6 +1944,9 @@ describe('generateQuestions', () => {
 
       expect(question.kind).toBe('sentence')
       expect(question.options).toContain('naiz')
+      // [C2]/#229: the lure carries its `errorType` through to `optionRationale`
+      // so it can be explained after the fact if picked.
+      expect(question.optionRationale.naiz).toEqual({ errorType: 'case-frame', whyKey: 'lureRationaleCaseFrame' })
     })
 
     it('offers cross-pool aux and own-present-tense forms as past-tense distractors (`nuen`/`naiz` for `nintzen`)', () => {
@@ -2851,6 +2855,27 @@ describe('getExplanation', () => {
 
     expect(getExplanation(verbAbsolutive, question, t)).toBe('explanationCaseMixerAbsolutive:{"verb":"izan","form":"naiz"}')
     expect(getExplanation(verbErgative, { ...question, correct: 'dut' }, t)).toBe('explanationCaseMixerErgative:{"verb":"ukan","form":"dut"}')
+  })
+})
+
+describe('getLureRationale ([C2]/#229)', () => {
+  const t = (key, vars) => `${key}:${JSON.stringify(vars)}`
+  const question = {
+    kind: 'sentence',
+    correct: 'dut',
+    optionRationale: { naiz: { errorType: 'case-frame', whyKey: 'lureRationaleCaseFrame' } },
+  }
+
+  it('explains a selected lure option using its tagged whyKey', () => {
+    expect(getLureRationale(question, 'naiz', t)).toBe('lureRationaleCaseFrame:{"form":"naiz","correct":"dut"}')
+  })
+
+  it('returns null for a same-table distractor with no rationale entry', () => {
+    expect(getLureRationale(question, 'duzu', t)).toBeNull()
+  })
+
+  it('returns null when the question has no optionRationale at all (e.g. a bare `form` question)', () => {
+    expect(getLureRationale({ kind: 'form', correct: 'naiz' }, 'da', t)).toBeNull()
   })
 })
 
