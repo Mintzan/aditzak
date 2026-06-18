@@ -358,57 +358,59 @@ export const VERBS = [
       // remaining scope.
       imperative: { 'hi-m': 'ezak', 'hi-f': 'ezan', zu: 'ezazu', zuek: 'ezazue' },
     },
-    // #124/#155: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/ownable/
-    // visible objects bought by their own (agentive, human) subject (book,
-    // car, pencil, ticket, passport, map, house) admit `nahi`/`eduki`/
-    // `ikusi`/`erosi` per the worked "book" example — #155 closed the
-    // residual gap where `erosi` ("buy") had been omitted from this set;
-    // kinship objects (sister/brother/son) admit `nahi`/`eduki` but not
-    // `ikusi`/`erosi` (an indefinite "a sister" isn't naturally "seen" or
-    // "bought"); non-agentive subjects (a dog with a bone) or abstract
-    // objects (a meeting, a house "having" a garden) keep `erosi` excluded
-    // too — the dog isn't the one buying the bone.
+    // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
+    // ownable/visible objects bought by their own (agentive, human) subject
+    // (book, car, pencil, ticket, passport, map, house) admit `nahi`/`eduki`/
+    // `ikusi`/`erosi`/`behar` per the worked "book" example — #155 closed the
+    // residual gap where `erosi` ("buy") had been omitted from this set,
+    // #224 did the same for `behar` ("need"), which also extends to abstract
+    // objects one can naturally "need" (a meeting); kinship objects (sister/
+    // brother/son) admit `nahi`/`eduki` but not `ikusi`/`erosi`/`behar` (an
+    // indefinite "a sister" isn't naturally "seen", "bought", or "needed"
+    // this way); non-agentive subjects (a dog with a bone) or a house
+    // "having" a garden keep `erosi`/`behar` excluded too — the dog isn't the
+    // one buying or needing the bone.
     sentences: {
       present: {
         ni: [
-          { text: 'Nik liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Nik liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Nik arreba bat ___.', validFor: ['nahi', 'eduki'] },
-          { text: 'Nik txartel bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Nik bilera bat ___.', validFor: ['eduki'] },
+          { text: 'Nik txartel bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik bilera bat ___.', validFor: ['eduki', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Zuk koaderno bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Zuk auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuk koaderno bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Zuk anaia bat ___.', validFor: ['nahi', 'eduki'] },
-          { text: 'Zuk mapa bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Zuk mapa bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         hura: [
-          { text: 'Berak etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Hark arkatz bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Berak etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Hark arkatz bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Berak seme bat ___.', validFor: ['nahi', 'eduki'] },
-          { text: 'Hark pasaporte bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Mikelek liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Anek auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Hark pasaporte bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Mikelek liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Anek auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Txakurrak hezur bat ___.', validFor: ['nahi', 'eduki', 'ikusi'] },
           { text: 'Etxeak lorategi bat ___.', validFor: ['eduki'] },
         ],
         gu: [
-          { text: 'Guk etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Guk auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Guk bilera bat ___.', validFor: ['eduki'] },
-          { text: 'Guk txartel bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Guk etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk bilera bat ___.', validFor: ['eduki', 'behar'] },
+          { text: 'Guk txartel bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Zuek mapa bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Zuek koaderno bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Zuek arkatz bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Zuek liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek mapa bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek koaderno bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek arkatz bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         haiek: [
           { text: 'Haiek seme bat ___.', validFor: ['nahi', 'eduki'] },
-          { text: 'Haiek pasaporte bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Gurasoek etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Ikasleek liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Haiek pasaporte bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Gurasoek etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Ikasleek liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
       },
     },
@@ -425,9 +427,9 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Nik ez ___ liburu bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-        zu: { text: 'Zuk ez ___ auto bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
-        hura: { text: 'Berak ez ___ etxe bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi'] },
+        ni: { text: 'Nik ez ___ liburu bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+        zu: { text: 'Zuk ez ___ auto bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+        hura: { text: 'Berak ez ___ etxe bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
       },
     },
   },
@@ -450,33 +452,34 @@ export const VERBS = [
       present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du' },
       future: { ni: 'nahiko dut', zu: 'nahiko duzu', hura: 'nahiko du' },
     },
-    // #124/#155: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/ownable/
-    // visible objects bought by an agentive human subject (coffee, water,
-    // book, gift, apple) admit `ukan`/`eduki`/`ikusi`/`erosi` — same "book"
-    // cluster as `ukan`'s worked example; #155 added `erosi` (you can buy a
-    // coffee). `'Katuak esne pixka bat ___.'` keeps `erosi` excluded — the
-    // cat isn't the one buying the milk — same reasoning as `ukan`'s bone/
-    // garden cases. `'Zuk etorri ___?'` ("do you want to come?") takes an
+    // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
+    // ownable/visible objects bought by an agentive human subject (coffee,
+    // water, book, gift, apple) admit `ukan`/`eduki`/`ikusi`/`erosi`/`behar`
+    // — same "book" cluster as `ukan`'s worked example; #155 added `erosi`
+    // (you can buy a coffee), #224 added `behar` (you can need a coffee).
+    // `'Katuak esne pixka bat ___.'` keeps `erosi`/`behar` excluded — the
+    // cat isn't the one buying or needing the milk — same reasoning as
+    // `ukan`'s bone/garden cases. `'Zuk etorri ___?'` ("do you want to come?") takes an
     // infinitive complement, not an object noun — no `nor-nork` sibling's
     // form fits, so `validFor: []`.
     sentences: {
       present: {
         ni: [
-          { text: 'Nik kafe bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Nik ur bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Nik liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Nik opari bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Nik kafe bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik ur bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik opari bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         zu: [
           { text: 'Zuk etorri ___?', validFor: [] },
-          { text: 'Zuk kafe bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Zuk liburu bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Zuk sagar bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Zuk kafe bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuk liburu bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuk sagar bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         hura: [
-          { text: 'Hark opari bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Mikelek kafe bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
-          { text: 'Anek liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi'] },
+          { text: 'Hark opari bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Mikelek kafe bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Anek liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Katuak esne pixka bat ___.', validFor: ['ukan', 'eduki', 'ikusi'] },
         ],
       },
@@ -879,39 +882,40 @@ export const VERBS = [
         haiek: 'jango dute',
       },
     },
-    // #124: `validFor` per docs/SENTENCE_FRAMES.md. Every object here is a
-    // concrete food/dish, naturally also something one could *buy* —
-    // `erosi`'s same-person form is a natural "buy X" alternative for all of
-    // them (#114's confirmed `jan`↔`erosi` pair); `edan` stays untagged
+    // #124/#224: `validFor` per docs/SENTENCE_FRAMES.md. Every object here is
+    // a concrete food/dish, naturally also something one could *buy* or
+    // *need* — `erosi`'s same-person form is a natural "buy X" alternative
+    // for all of them (#114's confirmed `jan`↔`erosi` pair), and #224 added
+    // `behar` ("need X") on the same reasoning; `edan` stays untagged
     // (#114's confirmed-wrong `jan`↔`edan` pair).
     sentences: {
       present: {
         ni: [
-          { text: 'Nik sagarra ___.', validFor: ['erosi'] },
-          { text: 'Nik ogia ___.', validFor: ['erosi'] },
-          { text: 'Nik tortilla ___.', validFor: ['erosi'] },
+          { text: 'Nik sagarra ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Nik ogia ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Nik tortilla ___.', validFor: ['erosi', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk fruta ___?', validFor: ['erosi'] },
-          { text: 'Zuk arroza ___.', validFor: ['erosi'] },
+          { text: 'Zuk fruta ___?', validFor: ['erosi', 'behar'] },
+          { text: 'Zuk arroza ___.', validFor: ['erosi', 'behar'] },
         ],
         hura: [
-          { text: 'Hark taloa ___.', validFor: ['erosi'] },
-          { text: 'Mikelek pizza ___.', validFor: ['erosi'] },
-          { text: 'Anek entsalada ___.', validFor: ['erosi'] },
-          { text: 'Umeak gaztaina ___.', validFor: ['erosi'] },
+          { text: 'Hark taloa ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Mikelek pizza ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Anek entsalada ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Umeak gaztaina ___.', validFor: ['erosi', 'behar'] },
         ],
         gu: [
-          { text: 'Guk arroza ___.', validFor: ['erosi'] },
-          { text: 'Guk ogitartekoa ___.', validFor: ['erosi'] },
+          { text: 'Guk arroza ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Guk ogitartekoa ___.', validFor: ['erosi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek fruta ___?', validFor: ['erosi'] },
-          { text: 'Zuek taloa ___.', validFor: ['erosi'] },
+          { text: 'Zuek fruta ___?', validFor: ['erosi', 'behar'] },
+          { text: 'Zuek taloa ___.', validFor: ['erosi', 'behar'] },
         ],
         haiek: [
-          { text: 'Haiek pastela ___.', validFor: ['erosi'] },
-          { text: 'Gurasoek arroza ___.', validFor: ['erosi'] },
+          { text: 'Haiek pastela ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Gurasoek arroza ___.', validFor: ['erosi', 'behar'] },
         ],
       },
     },
@@ -961,39 +965,40 @@ export const VERBS = [
         haiek: 'edango dute',
       },
     },
-    // #124: `validFor` per docs/SENTENCE_FRAMES.md. Every drink here is also
-    // naturally something one could *buy* — `erosi`'s same-person form fits
-    // (#114's confirmed `edan`↔`erosi` pair) — except `'Katuak esnea ___.'`,
-    // where the subject (a cat) couldn't plausibly be the one buying it, so
-    // it stays untagged.
+    // #124/#224: `validFor` per docs/SENTENCE_FRAMES.md. Every drink here is
+    // also naturally something one could *buy* or *need* — `erosi`'s
+    // same-person form fits (#114's confirmed `edan`↔`erosi` pair), and #224
+    // added `behar` on the same reasoning — except `'Katuak esnea ___.'`,
+    // where the subject (a cat) couldn't plausibly be the one buying or
+    // needing it, so it stays untagged.
     sentences: {
       present: {
         ni: [
-          { text: 'Nik ura ___.', validFor: ['erosi'] },
-          { text: 'Nik esnea ___.', validFor: ['erosi'] },
-          { text: 'Nik zukua ___.', validFor: ['erosi'] },
+          { text: 'Nik ura ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Nik esnea ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Nik zukua ___.', validFor: ['erosi', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk ardoa ___?', validFor: ['erosi'] },
-          { text: 'Zuk kafea ___.', validFor: ['erosi'] },
+          { text: 'Zuk ardoa ___?', validFor: ['erosi', 'behar'] },
+          { text: 'Zuk kafea ___.', validFor: ['erosi', 'behar'] },
         ],
         hura: [
-          { text: 'Hark sagardoa ___.', validFor: ['erosi'] },
-          { text: 'Mikelek tea ___.', validFor: ['erosi'] },
-          { text: 'Anek ura ___.', validFor: ['erosi'] },
+          { text: 'Hark sagardoa ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Mikelek tea ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Anek ura ___.', validFor: ['erosi', 'behar'] },
           { text: 'Katuak esnea ___.', validFor: [] },
         ],
         gu: [
-          { text: 'Guk ura ___.', validFor: ['erosi'] },
-          { text: 'Guk kafea ___.', validFor: ['erosi'] },
+          { text: 'Guk ura ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Guk kafea ___.', validFor: ['erosi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek zukua ___?', validFor: ['erosi'] },
-          { text: 'Zuek ardoa ___.', validFor: ['erosi'] },
+          { text: 'Zuek zukua ___?', validFor: ['erosi', 'behar'] },
+          { text: 'Zuek ardoa ___.', validFor: ['erosi', 'behar'] },
         ],
         haiek: [
-          { text: 'Haiek garagardoa ___.', validFor: ['erosi'] },
-          { text: 'Lagunek sagardoa ___.', validFor: ['erosi'] },
+          { text: 'Haiek garagardoa ___.', validFor: ['erosi', 'behar'] },
+          { text: 'Lagunek sagardoa ___.', validFor: ['erosi', 'behar'] },
         ],
       },
     },
@@ -1043,43 +1048,45 @@ export const VERBS = [
         haiek: 'erosiko dute',
       },
     },
-    // #124/#155: `validFor` per docs/SENTENCE_FRAMES.md. Edible/drinkable
-    // objects ("ogia", "sagarrak", "fruta") admit only `jan` (#114's
-    // confirmed pair; `edan` doesn't appear among `erosi`'s own sentences).
-    // #155 found the reverse gap for `erosi`'s *other* objects: every
-    // non-food, concrete/ownable/visible object bought by an agentive human
-    // subject (book, jacket, car, house, ticket, gift, record) symmetrically
-    // admits `ukan`/`nahi`/`eduki`/`ikusi` — the same "X erosten dut" ↔
-    // "X dut/nahi dut/daukat/ikusten dut" equivalence already applied to
-    // those siblings' own sentences, just missing here before this audit.
+    // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Edible/
+    // drinkable objects ("ogia", "sagarrak", "fruta") admit `jan` (#114's
+    // confirmed pair; `edan` doesn't appear among `erosi`'s own sentences)
+    // plus `behar` (#224 — you can also "need" food). #155 found the reverse
+    // gap for `erosi`'s *other* objects: every non-food, concrete/ownable/
+    // visible object bought by an agentive human subject (book, jacket, car,
+    // house, ticket, gift, record) symmetrically admits `ukan`/`nahi`/
+    // `eduki`/`ikusi` — the same "X erosten dut" ↔ "X dut/nahi dut/daukat/
+    // ikusten dut" equivalence already applied to those siblings' own
+    // sentences, just missing here before that audit; #224 added `behar` on
+    // the same reasoning ("X behar dut").
     sentences: {
       present: {
         ni: [
-          { text: 'Nik liburu bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
-          { text: 'Nik ogia ___.', validFor: ['jan'] },
-          { text: 'Nik jaka berri bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
+          { text: 'Nik liburu bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Nik ogia ___.', validFor: ['jan', 'behar'] },
+          { text: 'Nik jaka berri bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk sagarrak ___?', validFor: ['jan'] },
-          { text: 'Zuk diskoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
+          { text: 'Zuk sagarrak ___?', validFor: ['jan', 'behar'] },
+          { text: 'Zuk diskoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         hura: [
-          { text: 'Hark autoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
-          { text: 'Mikelek opari bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
-          { text: 'Anek etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
-          { text: 'Saltzaileak fruta ___.', validFor: ['jan'] },
+          { text: 'Hark autoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Mikelek opari bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Anek etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Saltzaileak fruta ___.', validFor: ['jan', 'behar'] },
         ],
         gu: [
-          { text: 'Guk etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
-          { text: 'Guk txartelak ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
+          { text: 'Guk etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Guk txartelak ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek opariak ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
-          { text: 'Zuek liburuak ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
+          { text: 'Zuek opariak ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Zuek liburuak ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         haiek: [
-          { text: 'Haiek autoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
-          { text: 'Gurasoek etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
+          { text: 'Haiek autoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Gurasoek etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
       },
     },
@@ -1132,37 +1139,39 @@ export const VERBS = [
     // #143: `hartu` added to the Unit 12 "daily routine" pool to stage the
     // `jaten`(-ten)/`hartzen`(-tzen) minimal pair. Sentence objects
     // (autobusa/trena/taxia/aterkia/katua/erabakia/txanda) are chosen so that
-    // none of the pool's other verbs (jan/edan/erosi/ikusi) would also fit —
-    // hence `validFor: []` throughout. Flagged in docs/LANGUAGE_DECISIONS.md
-    // for a native-speaker check of these forms/sentences.
+    // none of the pool's other verbs (jan/edan/erosi/ikusi) would also fit.
+    // Flagged in docs/LANGUAGE_DECISIONS.md for a native-speaker check of
+    // these forms/sentences. #224 added `behar` ("need X") to every entry —
+    // these are all agentive human subjects wanting/needing the object, so
+    // "X behar dut" fits each frame.
     sentences: {
       present: {
         ni: [
-          { text: 'Nik autobusa ___.', validFor: [] },
-          { text: 'Nik aterkia ___.', validFor: [] },
-          { text: 'Nik erabaki bat ___.', validFor: [] },
+          { text: 'Nik autobusa ___.', validFor: ['behar'] },
+          { text: 'Nik aterkia ___.', validFor: ['behar'] },
+          { text: 'Nik erabaki bat ___.', validFor: ['behar'] },
         ],
         zu: [
-          { text: 'Zuk taxia ___?', validFor: [] },
-          { text: 'Zuk telefonoa ___.', validFor: [] },
+          { text: 'Zuk taxia ___?', validFor: ['behar'] },
+          { text: 'Zuk telefonoa ___.', validFor: ['behar'] },
         ],
         hura: [
-          { text: 'Hark trena ___.', validFor: [] },
-          { text: 'Mikelek katua ___.', validFor: [] },
-          { text: 'Anek txanda ___.', validFor: [] },
-          { text: 'Gidariak autobusa ___.', validFor: [] },
+          { text: 'Hark trena ___.', validFor: ['behar'] },
+          { text: 'Mikelek katua ___.', validFor: ['behar'] },
+          { text: 'Anek txanda ___.', validFor: ['behar'] },
+          { text: 'Gidariak autobusa ___.', validFor: ['behar'] },
         ],
         gu: [
-          { text: 'Guk taxia ___.', validFor: [] },
-          { text: 'Guk erabaki garrantzitsu bat ___.', validFor: [] },
+          { text: 'Guk taxia ___.', validFor: ['behar'] },
+          { text: 'Guk erabaki garrantzitsu bat ___.', validFor: ['behar'] },
         ],
         zuek: [
-          { text: 'Zuek autobusa ___?', validFor: [] },
-          { text: 'Zuek aterkiak ___.', validFor: [] },
+          { text: 'Zuek autobusa ___?', validFor: ['behar'] },
+          { text: 'Zuek aterkiak ___.', validFor: ['behar'] },
         ],
         haiek: [
-          { text: 'Haiek trena ___.', validFor: [] },
-          { text: 'Gurasoek erabakia ___.', validFor: [] },
+          { text: 'Haiek trena ___.', validFor: ['behar'] },
+          { text: 'Gurasoek erabakia ___.', validFor: ['behar'] },
         ],
       },
     },
@@ -1212,23 +1221,28 @@ export const VERBS = [
         haiek: 'ikusiko dute',
       },
     },
-    // #124/#155: `validFor` per docs/SENTENCE_FRAMES.md. `ikusi`'s candidates
-    // are `ukan`/`eduki`/`jakin`/`nahi`/`erosi` (the four confirmed #114
-    // pairs, plus `erosi` per #155's purchasable-object re-audit). "Filma" (a
-    // film — ownable, wantable, buyable, not "known" as a fact) admits
-    // `ukan`/`eduki`/`nahi`/`erosi`; "mendia"/"itsasoa"/"zerua" (mountain/
-    // sea/sky — can't be owned, held, known, wanted, or bought in this
-    // frame) admit nothing; `'Zuk/Zuek hori ___?'` ("that [thing]") is
-    // maximally generic — every candidate fits, including `erosi`.
-    // "Irakasleak ikasleak ___." (teacher has/wants students — not
+    // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. `ikusi`'s
+    // candidates are `ukan`/`eduki`/`jakin`/`nahi`/`erosi` (the four
+    // confirmed #114 pairs, plus `erosi` per #155's purchasable-object
+    // re-audit). "Filma" (a film — ownable, wantable, buyable, not "known"
+    // as a fact) admits `ukan`/`eduki`/`nahi`/`erosi`; "mendia"/"itsasoa"/
+    // "zerua" (mountain/sea/sky — can't be owned, held, known, wanted, or
+    // bought in this frame) admit nothing; `'Zuk/Zuek hori ___?'` ("that
+    // [thing]") is maximally generic — every candidate fits, including
+    // `erosi`. "Irakasleak ikasleak ___." (teacher has/wants students — not
     // purchasable) admits `ukan`/`nahi` only; "Gurasoek etxea ___." (parents
     // have/want/buy the house) admits `ukan`/`nahi`/`eduki`/`erosi`;
     // "Txakurrak katua ___." (the dog [sees/has/wants] the cat — the dog
-    // isn't the one buying it) admits `eduki`/`nahi`, no `erosi`.
+    // isn't the one buying it) admits `eduki`/`nahi`, no `erosi`. #224 added
+    // `behar` ("need") only to "filma" and "Gurasoek etxea" — a film and a
+    // house are things one can naturally "need to see"; the kinship/animal/
+    // landscape/generic-"hori" entries above were judged not to extend
+    // naturally to "need" and were left as-is per #224's exclude-by-default
+    // guidance.
     sentences: {
       present: {
         ni: [
-          { text: 'Nik filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi'] },
+          { text: 'Nik filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
           { text: 'Nik mendia ___.', validFor: [] },
           { text: 'Nik zerua ___.', validFor: [] },
         ],
@@ -1238,21 +1252,21 @@ export const VERBS = [
         ],
         hura: [
           { text: 'Hark itsasoa ___.', validFor: [] },
-          { text: 'Anek filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi'] },
+          { text: 'Anek filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
           { text: 'Irakasleak ikasleak ___.', validFor: ['ukan', 'nahi'] },
           { text: 'Txakurrak katua ___.', validFor: ['eduki', 'nahi'] },
         ],
         gu: [
           { text: 'Guk itsasoa ___.', validFor: [] },
-          { text: 'Guk filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi'] },
+          { text: 'Guk filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
         ],
         zuek: [
           { text: 'Zuek hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] },
           { text: 'Zuek mendia ___?', validFor: [] },
         ],
         haiek: [
-          { text: 'Haiek filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi'] },
-          { text: 'Gurasoek etxea ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi'] },
+          { text: 'Haiek filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
+          { text: 'Gurasoek etxea ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
         ],
       },
     },
