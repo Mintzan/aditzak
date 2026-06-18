@@ -1848,6 +1848,12 @@ function SentenceWithBlank({ sentence }) {
 // fitting the blank (e.g. "Irakasleak erantzun zuzena ___." fits both
 // `jakin`'s `daki` and `edun`'s `du`), making the question unanswerable
 // rather than just harder. The tense label alone is still shown either way.
+// `kind: 'form'` review questions are the same exception, for a different
+// reason (#228): they have no sentence either, so with the verb name hidden
+// too a player sees only a pronoun and four conjugated forms with no way to
+// tell which verb is under test — a deliberately-hard lure becomes
+// indistinguishable from a broken question. So `form` always shows the verb,
+// review or not.
 function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
   const { t, language } = useLanguage()
   if (question.kind === 'reading') {
@@ -2317,7 +2323,12 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
           </div>
         )}
 
-        <QuestionPrompt verb={verb} tenseMeta={tenseMeta} question={question} showVerb={!lesson.review || !question.options} />
+        <QuestionPrompt
+          verb={verb}
+          tenseMeta={tenseMeta}
+          question={question}
+          showVerb={!lesson.review || !question.options || question.kind === 'form'}
+        />
 
         <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{t(QUESTION_PROMPT_KEYS[question.kind])}</p>
         {question.pairs ? (
