@@ -11,13 +11,11 @@
 > `docs/LEARNING_JOURNEY_EVALUATION.md` records *why* — the findings that
 > motivated this layout and the old (O-n) → new (N-n) mapping.
 >
-> Units 1–19 and 21–22 are implemented (Unit 8 included) — see `journey.js`'s
+> Units 1–22 are implemented (Unit 8 included) — see `journey.js`'s
 > `available` units and `LESSONS` in `src/data/lessons.js` for the
-> up-to-date picture of which later units are also implemented. Unit 20
-> (score-gated) remains content design only — no exercises, no `VERBS`
-> data yet. Units are ordered
-> by communicative goal rather than grammatical category, and prioritize
-> usefulness over implementation-ease where the two trade off.
+> up-to-date picture of which later units are also implemented. Units are
+> ordered by communicative goal rather than grammatical category, and
+> prioritize usefulness over implementation-ease where the two trade off.
 
 ## Core pedagogical realignment
 
@@ -294,7 +292,7 @@ stage").
 
 | Unit | Focus | Constraint | Notes |
 |---|---|---|---|
-| 20 | **REFRESH — Cumulative Present/Past/Future Mixer** | zero new verbs; **score-gated** (`bestStars >= 2`) | Mixes synthetic + periphrastic, positive + negative (reuses Gate A's negation pattern), and present + past + future — the full tense range Units 1-19 introduced. |
+| 20 | **REFRESH — Cumulative Present/Past/Future Mixer** | zero new verbs; **score-gated** (`bestStars >= 2`) | Mixes synthetic + periphrastic, positive + negative (reuses Gate A's negation pattern), and present + past + future — the full tense range Units 1-19 introduced. ✅ implemented — `unit-20-review-1..4` mix `izan`/`ukan`/`joan`/`ikusi` across present/past/future (singular then plural); `unit-20-review-5` extends negation to `eduki`/`ibili` (present) and, for the first time, past tense (`izan`/`ukan`/`jakin`, via `negativeSentences.past`'s auto-extend); `unit-20-review-6` is the gate-checked capstone. |
 
 ---
 

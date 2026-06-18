@@ -36,8 +36,12 @@ implementation.
 - **`LESSONS`** is 100% statically derived from `VERBS` (`App.jsx:209-222`):
   one practice lesson per (verb × tense), a verb-review once a verb has 2+
   tenses, and a trailing mixed-review once there's more than one verb.
-- **Unlocking** (`getUnlockedLessonIds`, `lessonLogic.js:77-86`) is "previous
-  lesson has ≥1 attempt" — no score check.
+- **Unlocking** (`getUnlockedLessonIds`, `lessonLogic.js`) is "previous lesson
+  has ≥1 attempt" — *except* when the previous lesson is a `gate: true` unit's
+  final lesson (`journey.js`'s `GATE_LESSON_IDS`), which additionally needs
+  `bestStars >= GATE_PASS_STARS` (2). Score-gating (see "Tier 2" below) is
+  implemented and generic — any unit just needs `gate: true` plus
+  `lessonIds`.
 - **Progress** (`STORAGE_KEY = 'aditzak:progress:v1'`) stores
   `{ attempts, bestScore, totalQuestions, bestStars, lastPlayed }` per lesson
   id — aggregate, not per-question.
@@ -120,21 +124,16 @@ applied to just those lessons to restore the 3-person horizon where the
 journey still calls for it — see `docs/DECISIONS.md`, "Restored Phase I's
 3-person pacing" (2026-06-12).
 
-### Score-gating Refresh Gates B and beyond (Units 17, 22, 30, Phase V wrap)
-`getUnlockedLessonIds` only checks `attempts > 0`. The journey doc's "must
-pass with high accuracy" framing for Unit 17 needs it to also check
-`bestScore / totalQuestions` (or `bestStars`) against a threshold for lessons
-flagged e.g. `gate: true`. Two product decisions, deliberately left open by
-the journey doc:
-
-1. **Threshold** — e.g. `bestStars >= 2` (≥80%, per `computeStars`)?
-2. **Retry behavior on fail** — does the next lesson simply stay locked until
-   a passing attempt (learner can keep retrying the gate), or is there an
-   explicit "you need Xpct to continue" message state?
-
-No stored-shape change either way — `bestStars`/`bestScore`/`totalQuestions`
-are already recorded per lesson; `getUnlockedLessonIds` just reads them with a
-different predicate for gate lessons.
+### Score-gating Refresh Gates B and beyond — ✅ implemented
+`getUnlockedLessonIds` checks `bestStars >= GATE_PASS_STARS` (2, ≥80% per
+`computeStars`) for any lesson whose previous lesson is in `GATE_LESSON_IDS`
+(every `gate: true` unit's last `lessonIds` entry) — generic, no per-unit
+code. Retry behavior: the gate stays a "soft wall" — already-unlocked lessons
+never re-lock, the gate lesson itself stays replayable, and the next lesson
+just shows a "needs 80% to continue" prompt until a passing attempt. No
+stored-shape change was needed — `bestStars`/`bestScore`/`totalQuestions` were
+already recorded per lesson. First used for Gate A (Units 5/6) and Gate B
+(Unit 20).
 
 ## Tier 3 — new data shapes / new question kinds
 

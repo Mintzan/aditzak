@@ -12,6 +12,35 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — Implemented Unit 20 (Refresh Gate B — cumulative tense mixer)
+
+**Decision:** Implemented Unit 20, zero new `VERBS` data — purely `LESSONS`/
+`journey.js` wiring, since score-gating (`GATE_PASS_STARS`/`GATE_LESSON_IDS`
+in `lessonLogic.js`/`journey.js`) turned out to already be implemented
+generically (Gate A already uses it); `docs/EXERCISE_ENGINE.md`'s "Tier 2 —
+score-gating still needed" section was stale and has been updated to ✅.
+Six `review: true` lessons (`unit-20-review-1..6`): `-1`/`-2` mix `izan`/
+`ukan`/`joan`/`ikusi` across present/past/future (`PHASE_1_PERSONS`), `-3`/
+`-4` repeat that same split for `PHASE_1_PLURAL_PERSONS`, `-5` is a
+`negation: true` lesson extending Gate A's negation drill to `eduki`/`ibili`
+(present, the two verbs introduced after Gate A) and — for the first time —
+to past tense (`izan`/`ukan`/`jakin`, made possible by the
+`SINGLE_WORD_PAST_NEGATION` auto-extend in `verbs.js`), and `-6` is the
+gate-checked capstone (`bestStars >= 2` required to unlock Unit 21).
+
+**Why split singular/plural into separate review pairs rather than one mixed
+lesson:** mirrors the existing `ukan-past-pool`/`-plural` precedent (6-source
+pools are an established size) and keeps each lesson's `targetPerSource` from
+collapsing too thin if all 12 (verb × tense) combinations were pooled into a
+single lesson.
+
+**Why no future-tense negation:** no verb has `negativeSentences.future` —
+the future is periphrastic everywhere (`izango naiz`, etc.) and nothing in
+the existing data extends negation to it, unlike past tense's
+`SINGLE_WORD_PAST_NEGATION` shortcut. Left out of scope rather than inventing
+new sentence data for a Refresh Gate that's supposed to introduce zero new
+content.
+
 ## 2026-06-18 — Implemented Units 21/22 (imperfective/habitual past)
 
 **Decision:** Implemented Unit 21 ("I Used To..." — The Imperfective Past)

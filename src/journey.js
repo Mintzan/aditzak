@@ -320,8 +320,16 @@ export const JOURNEY = [
             title: 'REFRESH — Cumulative Present/Past/Future Mixer',
             focus:
               'Synthetic + periphrastic, positive + negative, present + past + future — zero new verbs, score-gated (bestStars >= 2 to continue)',
-            status: 'pending',
+            status: 'available',
             gate: true,
+            lessonIds: [
+              'unit-20-review-1',
+              'unit-20-review-2',
+              'unit-20-review-3',
+              'unit-20-review-4',
+              'unit-20-review-5',
+              'unit-20-review-6',
+            ],
           },
         ],
       },
