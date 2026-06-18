@@ -8,9 +8,12 @@ the same questions don't get re-opened one bug report at a time. Supersedes
 methodology reference; the per-sentence `validFor` *schema* still lives in
 `docs/SENTENCE_FRAMES.md` and is unchanged by this doc.
 
-This doc records a **direction and the evidence for it**, not yet-implemented
-mechanisms. Nothing here changes runtime behaviour on its own; it's the map
-for the decisions listed in "Open decisions" at the bottom.
+This doc records a **direction and the evidence for it**. The direction has
+now been implemented end-to-end — Epics #220 (Family A), #221 (Family B), and
+#222 (Family C) are all closed; see "Decisions (resolved)" at the bottom for
+the per-fork outcomes and the issues that landed them. It remains the standing
+record so the families and their rationale don't have to be reconstructed from
+scratch next time.
 
 ---
 
@@ -202,30 +205,39 @@ pre-empts the next variant of the same leak.
 
 ---
 
-## 5. Open decisions
+## 5. Decisions (resolved)
 
-These are the forks future sessions should resolve deliberately, in roughly
-dependency order:
+The four forks from §4, with their outcomes:
 
-1. **Frame-derived tagging for the core cluster (4.1)** — resolved by the
-   [A3]/#225 spike (`docs/OBJECT_FRAME_TAGGING.md`): adopted **with changes**
-   as a second-pass *audit* tool ([A4]/#239, `--classes` mode below), not as
-   automatic `validFor` derivation — some sentences need human judgment a
-   fixed object class can't express.
-2. **Delta audit (4.2)** — build as a CI script / test that runs on verb
-   addition. Cheap, independent of #1, worth doing regardless.
-3. **Provenance-typed distractors (4.3)** — an engine refactor of
-   `buildOptions`/`generateQuestions`; behaviour-preserving, removes accreted
-   gates. Sequence before adding any further Family-B context.
-4. **Lure legibility + targeted lures (4.4)** — product/UI work
-   (review `form`-question rendering, post-answer feedback) plus a small Matrix
-   extension; can proceed independently.
+1. **Frame-derived tagging for the core cluster (4.1)** — resolved by the [A3]
+   spike (`docs/OBJECT_FRAME_TAGGING.md` / `scripts/frame-classes.json`):
+   adopted **with changes** as a second-pass *audit* tool ([A4]/#239,
+   `--classes` mode below), not as automatic `validFor` derivation — some
+   sentences need human judgment a fixed object class can't express. The spike
+   also surfaced a real bug — food-drink under-tagging on `jan`/`edan`/`erosi`
+   (#240 [A5]).
+2. **Delta audit (4.2)** — **done (#231):** `scripts/validfor-delta-audit.mjs`
+   + `validforGapAudit.mjs` + the CI guard `src/validfor-audit.test.js`. See
+   the "Tooling" section for the verb-add workflow.
+3. **Provenance-typed distractors (4.3)** — **done (#232 [B1] + #235 [B2]):**
+   the accreted `reviewScoped`/`borrowPool`/gated-`formLures` conditionals are
+   replaced by the single `grounded` invariant in `buildTaggedOptions`. See §1
+   Family B for the mechanism.
+4. **Lure legibility + targeted lures (4.4)** — **done:** review `form`
+   questions show the verb name (#233 [C1]); post-answer "why this was wrong"
+   feedback for lures (#229 [C2]); and the targeted `ari izan` progressive-vs-
+   plain lure via `baseVerb`-tagged sentences (#238 [C3]).
 
-## 6. Known content debt (not yet actioned)
+## 6. Known content debt
 
-- **`behar` is broadly under-tagged** (§3): #218.1 is the tip. A targeted
-  `behar` `validFor` pass across the `nor-nork` cluster's ownable-object
-  sentences is owed regardless of whether 4.1 lands.
+- **`behar` under-tagging** — **actioned (#224 [A2]):** `behar` backfilled
+  across the `nor-nork` cluster's ownable-object sentences (incl. #218.1's
+  "Gurasoek etxea ___.").
+- **food-drink under-tagging on `jan`/`edan`/`erosi`** — surfaced by the #237
+  spike (finding #1); tracked in **#240 [A5]**.
+- Remaining distractor work outside this strategy: **#213** (hi/hitanoa
+  wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
+  on native-speaker confirmation of #167's toka/noka data, not on engineering.
 
 ## Tooling
 
