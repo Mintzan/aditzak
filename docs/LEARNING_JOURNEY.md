@@ -11,12 +11,11 @@
 > `docs/LEARNING_JOURNEY_EVALUATION.md` records *why* — the findings that
 > motivated this layout and the old (O-n) → new (N-n) mapping.
 >
-> Units 1–18 are implemented — see `journey.js`'s `available` units and
-> `LESSONS` in `src/data/lessons.js`. Unit 8, 19+ remain content design only —
-> no exercises, no `VERBS` data yet (Unit 8 is a new split-off of the old
-> Expansion unit; its content currently still lives inside Unit 7, see below).
-> Units are ordered by communicative goal rather than grammatical category, and
-> prioritize usefulness over implementation-ease where the two trade off.
+> Units 1–19 are implemented (Unit 8 included) — see `journey.js`'s
+> `available` units and `LESSONS` in `src/data/lessons.js`. Units 20+ remain
+> content design only — no exercises, no `VERBS` data yet. Units are ordered
+> by communicative goal rather than grammatical category, and prioritize
+> usefulness over implementation-ease where the two trade off.
 
 ## Core pedagogical realignment
 
@@ -50,9 +49,11 @@
    `joan`, `etorri`), Unit 8 the **ergative** plural (`dugu`/`dute` — a suffix
    on the fixed `du-` stem: `ukan`, `ikusi`). Splitting them prevents
    `†dugara`-type blending (`LEARNING_JOURNEY_EVALUATION.md` finding F4).
-   **Current status**: Unit 7's shipped lessons (`unit-6-review-*`,
-   `ikusi-present-plural*`) still mix both paradigms — issue #143 will
-   redistribute the `ukan`/`ikusi` lessons into Unit 8. From Unit 11
+   **Current status**: both units are implemented — Unit 7 keeps its
+   original `unit-6-review-1` `izan`+`ukan` pairing (a small absolutive/
+   ergative mix left as-is, see `docs/DECISIONS.md`), while `ikusi`'s plural
+   lessons and a dedicated `ukan-present-plural` practice lesson live under
+   Unit 8. From Unit 11
    onward, **every new verb is taught with its full 6-person grid**
    (`ni`/`zu`/`hura`/`gu`/`zuek`/`haiek`) — but per the app-wide "max 3 persons
    per exercise" rule (`docs/DECISIONS.md`, 2026-06-12), that grid is split
@@ -201,8 +202,8 @@ arrive at Units 7–8). Pronoun stage: **A (explicit)**.
 |---|---|---|---|---|---|
 | 5 | **Seeing** — `ikusi` present (ni/zu/hura), Phase I's first periphrastic verb | "I see the mountain." / "Do you see it?" / "She sees the film." | ni/zu/hura: `ikusten dut`/`ikusten duzu`/`ikusten du` | §7 (ikusi) | ✅ implemented — reuses `ikusi`'s existing 6-person `present` table via `persons: PHASE_1_PERSONS` |
 | 6 | **Moving Around** — `joan` + `etorri` + `ibili` present | "I'm going to the beach." / "She's coming tomorrow." / "She wanders around town." | ni/zu/hura: `noa`/`zoaz`/`doa`, `nator`/`zatoz`/`dator`, `nabil`/`zabiltza`/`dabil` | §6 | ✅ implemented — `ibili`'s present moved here from Unit 14 (#143) so it precedes its past (Unit 11's `izan`-past pool); its plural forms still arrive in Unit 14 |
-| 7 | 🛡️ **Expansion: Absolutive Plurals** | "We are teachers." (`Irakasleak gara.`) / "You all are at home." (`Etxean zaudete.`) / "We're going to the beach." (`Hondartzara goaz.`) | gu/zuek/haiek (`nor`): `izan`, `egon`, `joan`, `etorri` | §1/§6 | ✅ implemented — currently still carries the `ukan`/`ikusi` (ergative) lessons too; #143 redistributes those into Unit 8 |
-| 8 | 🛡️ **Expansion: Ergative Plurals** | "We have a car." (`Auto bat dugu.`) / "They watch the film." (`Filma ikusten dute.`) | gu/zuek/haiek (`nor-nork`): `ukan`, `ikusi` | §3/§7 | pending — content currently lives inside Unit 7's lessons (`unit-6-review-1`, `ikusi-present-plural*`); #143 splits it out |
+| 7 | 🛡️ **Expansion: Absolutive Plurals** | "We are teachers." (`Irakasleak gara.`) / "You all are at home." (`Etxean zaudete.`) / "We're going to the beach." (`Hondartzara goaz.`) | gu/zuek/haiek (`nor`): `izan`, `egon`, `joan`, `etorri` | §1/§6 | ✅ implemented — `unit-6-review-1` keeps its original `izan`+`ukan` pairing, a small absolutive/ergative mix left as-is |
+| 8 | 🛡️ **Expansion: Ergative Plurals** | "We have a car." (`Auto bat dugu.`) / "They watch the film." (`Filma ikusten dute.`) | gu/zuek/haiek (`nor-nork`): `ukan`, `ikusi` | §3/§7 | ✅ implemented — `ukan-present-plural` (new dedicated practice) plus `ikusi-present-plural*` (moved from Unit 7) and a `unit-8-ergative-review` |
 | 9 | **The Immediate Continuous** — `ari` + `izan` | "What are you doing?" (`Zer egiten ari zara?`) / "I'm eating." (`Jaten ari naiz`) / "I'm studying." (`Ikasten ari naiz`) | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ implemented — `jaten`/`egiten`/`ikasten` (#244) cover three imperfective participles rather than `jaten` alone; `jaten` (`jan`'s participle, Unit 12's verb) remains the anchor example |
 
 ### 🛡️ Refresh Gate A — The "Ez" Trap

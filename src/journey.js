@@ -127,10 +127,14 @@ export const JOURNEY = [
           // marked on the stem) and the ergative plural (dugu/dute, a suffix
           // on the fixed du- stem) are different paradigms, and bundling them
           // invites †dugara-type blending (docs/LEARNING_JOURNEY_EVALUATION.md
-          // F4). This renumber (#137) keeps O-5's existing lessons — which mix
-          // both paradigms (izan/egon/joan/etorri absolutive plus ukan/ikusi
-          // ergative) — under Unit 7 for now; #143 does the actual content
-          // split (redistributing the ukan/ikusi lessons into Unit 8).
+          // F4). `ikusi`'s plural practice/review (nor-nork, ergative) now
+          // live under Unit 8 rather than Unit 7, alongside `ukan`'s own
+          // dedicated plural practice — see `docs/DECISIONS.md`, "Split Unit
+          // 7's ergative-plural lessons into Unit 8". `unit-6-review-1` keeps
+          // mixing `izan`+`ukan` present-plural as a cross-verb review (its
+          // original pairing, predating this split) rather than being
+          // re-balanced — a small absolutive/ergative mix in one review
+          // lesson, left as-is.
           {
             number: 7,
             title: 'Expansion: Absolutive Plurals',
@@ -140,13 +144,7 @@ export const JOURNEY = [
               '"We are teachers." (Irakasleak gara) · "You all are at home." (Etxean zaudete) · "We\'re going to the beach." (Hondartzara goaz)',
             status: 'available',
             gate: true,
-            lessonIds: [
-              'unit-6-review-1',
-              'unit-6-review-2',
-              'unit-6-review-3',
-              'ikusi-present-plural',
-              'ikusi-present-plural-review',
-            ],
+            lessonIds: ['unit-6-review-1', 'unit-6-review-2', 'unit-6-review-3'],
           },
           {
             number: 8,
@@ -154,7 +152,8 @@ export const JOURNEY = [
             focus:
               'ukan + ikusi — adds gu/zuek/haiek to the ergative ("nor-nork") paradigm, framed as "the plural moved — now it\'s a suffix"',
             payload: '"We have a car." (Auto bat dugu) · "They watch the film." (Filma ikusten dute)',
-            status: 'pending',
+            status: 'available',
+            lessonIds: ['ukan-present-plural', 'ikusi-present-plural', 'ikusi-present-plural-review', 'unit-8-ergative-review'],
           },
           {
             number: 9,
