@@ -12,6 +12,23 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — Split Unit 7's ergative-plural lessons into Unit 8
+
+**Decision:** Implemented Unit 8 ("Expansion: Ergative Plurals"), which had
+sat `pending` since the #137 renumber even though the `gu`/`zuek`/`haiek`
+data it needed (`ukan`/`ikusi`'s present tables) already existed — no `VERBS`
+changes required, only `LESSONS`/`journey.js` wiring. Moved `ikusi-present-
+plural`/`ikusi-present-plural-review` out of Unit 7's `lessonIds` into
+Unit 8's (Unit 7's title is "Absolutive Plurals", and `ikusi` is `nor-nork`/
+ergative — it never belonged there), and added a new dedicated
+`ukan-present-plural` practice lesson plus a `unit-8-ergative-review`
+(`ukan`+`ikusi`) to round out the unit. Deliberately left `unit-6-review-1`
+(Unit 7) mixing `izan`+`ukan` present-plural as-is rather than rebalancing
+it — that pairing predates this split, and `ukan`'s now-explicit Unit 8
+practice lesson makes the leftover absolutive/ergative mix in one review
+harmless rather than worth the churn of resplitting Unit 7's three-way
+review balance.
+
 ## 2026-06-18 — [A5] (#240): jan/edan/erosi's food-drink validFor symmetry fix, keeping the jan↔edan exclusion
 
 **Decision:** Added `ukan`/`nahi`/`eduki`/`ikusi` to `jan`/`edan`/`erosi`'s

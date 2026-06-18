@@ -171,8 +171,8 @@ export const LESSONS = [
       { verbId: 'ibili', tense: 'present' },
     ],
   },
-  // Unit 7 ("Expansion — Bringing in the Plural") — zero new verbs for
-  // `izan`/`egon`/`ukan`/`joan`/`etorri`. Their `conjugations.present`
+  // Unit 7 ("Expansion: Absolutive Plurals") — zero new verbs for
+  // `izan`/`egon`/`joan`/`etorri`. Their `conjugations.present`
   // (plus their `sentences`/`pronouns`/`pronounSentences`) gained `gu`/`zuek`/
   // `haiek` rows directly (see `docs/DECISIONS.md`). Their own lessons above
   // stay on the 3-person horizon via `PHASE_1_PERSONS`, so this unit's own
@@ -183,14 +183,15 @@ export const LESSONS = [
   // own consolidation pass is split into three reviews, using the same
   // cross-unit pairing as Unit 10 below (Unit 1: izan/egon, Unit 2: ukan, Unit
   // 6: joan/etorri all paired across origins) — a single five-source review
-  // landed at 30 questions; each of these three lands at exactly 12. `ikusi`
-  // (Unit 5) also expands to `gu`/`zuek`/`haiek` here via its own
-  // `-plural`/review pair, mirroring Units 12-13's singular/plural split.
-  // Positioned right after Unit 6 ("Moving Around") rather than after the
-  // negation gate — every verb this unit expands (`izan`/`egon`/`ukan`/
-  // `joan`/`etorri`/`ikusi`) is introduced by Unit 6, so this is the earliest
-  // point in the journey `zuek`/`gu`/`haiek` forms (e.g. `zarete`) can appear
-  // — see `docs/DECISIONS.md`, "Moved the Expansion gate earlier".
+  // landed at 30 questions; each of these three lands at exactly 12.
+  // `unit-6-review-1` keeps its original `izan`+`ukan` pairing even though
+  // `ukan`'s plural is technically the ergative paradigm Unit 8 is named
+  // for — see `docs/DECISIONS.md`, "Split Unit 7's ergative-plural lessons
+  // into Unit 8". Positioned right after Unit 6 ("Moving Around") rather than
+  // after the negation gate — every verb this unit expands (`izan`/`egon`/
+  // `joan`/`etorri`) is introduced by Unit 6, so this is the earliest point in
+  // the journey `zuek`/`gu`/`haiek` forms (e.g. `zarete`) can appear — see
+  // `docs/DECISIONS.md`, "Moved the Expansion gate earlier".
   {
     id: 'unit-6-review-1',
     review: true,
@@ -215,12 +216,32 @@ export const LESSONS = [
     persons: PHASE_1_PLURAL_PERSONS,
     sources: [{ verbId: 'etorri', tense: 'present' }],
   },
+  // Unit 8 ("Expansion: Ergative Plurals") — zero new verbs, the same
+  // `gu`/`zuek`/`haiek` rows `ukan`/`ikusi`'s present tables already carry,
+  // framed on its own (rather than folded into Unit 7's absolutive-paradigm
+  // reviews) so the lesson contrasts a *suffix* on the fixed `du-`/`ikusten
+  // du-` stem (`dugu`/`ikusten dute`) against Unit 7's *stem* change (`naiz`
+  // → `gara`) — "the plural moved: now it's a suffix". `ikusi-present-plural`
+  // mirrors Units 12-13's singular/plural split; `ukan` gets its own
+  // dedicated practice lesson (it was previously drilled plural only as part
+  // of `unit-6-review-1`'s mixed izan/ukan pairing, which stays in Unit 7 —
+  // see that unit's comment above).
   { id: 'ikusi-present-plural', verbId: 'ikusi', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
   {
     id: 'ikusi-present-plural-review',
     review: true,
     persons: PHASE_1_PLURAL_PERSONS,
     sources: [{ verbId: 'ikusi', tense: 'present' }],
+  },
+  { id: 'ukan-present-plural', verbId: 'ukan', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  {
+    id: 'unit-8-ergative-review',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'ikusi', tense: 'present' },
+    ],
   },
   // Unit 9 ("The Immediate Continuous") — `ari`, riding `izan`'s present
   // table.
