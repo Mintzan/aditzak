@@ -1,6 +1,11 @@
 # Object-frame tagging: a class-based alternative to hand-tagged `validFor`
 
-**Status: proposal (research spike, [A3]/#225). Not adopted — no `src/data/verbs.js` or runtime changes accompany this document.**
+**Status: adopted as a second-pass audit ([A4]/#239) — tooling only.** The class
+model is wired into `node scripts/validfor-delta-audit.mjs --classes` as a
+read-only candidate-fix report layered on top of [A1]'s agreement-based audit;
+it still does **not** touch `src/data/verbs.js` or any runtime `validFor`
+consumption — see "Recommendation: adopt with changes" below for why
+auto-derivation itself was rejected.
 
 ## Why
 
@@ -103,7 +108,9 @@ Concretely, if a future issue wants to act on this:
 ## Artifacts
 
 - `scripts/frame-classes.json` — sentence-text → class mapping for all tagged core-cluster sentences.
-- `scripts/frame-derive-diff.mjs` — read-only diff tool; `CLASS_ADMISSION` is the canonical per-class admitted-verb-set.
+- `scripts/frameClasses.mjs` — the shared class model (`CLASS_ADMISSION`, `deriveValidFor`, `computeClassDiff`, `computeClassCandidateSlots`); both tools below import from here rather than duplicating the logic.
+- `scripts/frame-derive-diff.mjs` — read-only diff tool (the spike's original per-verb summary/sample report).
+- `scripts/validfor-delta-audit.mjs --classes` — [A4]/#239's second-pass audit mode: candidate `validFor` additions for human review, supplementing the agreement-based audit. Run `--classes --verb <id>` to scope to one host verb.
 - This document.
 
-None of these are wired into the app, the CLI delta-audit script, or any test — they're standalone research artifacts for this spike.
+None of these write `verbs.js` or affect runtime `validFor` consumption — they're tooling for human review only.

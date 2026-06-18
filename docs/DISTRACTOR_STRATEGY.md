@@ -207,11 +207,11 @@ pre-empts the next variant of the same leak.
 These are the forks future sessions should resolve deliberately, in roughly
 dependency order:
 
-1. **Frame-derived tagging for the core cluster (4.1)** — adopt or not? If yes,
-   design the object-class vocabulary and the verb × class admission table, and
-   decide migration (derive-and-diff against current hand-tagged `validFor` so
-   no existing decision silently flips). This is the highest-leverage call and
-   reopens a `SENTENCE_FRAMES.md` rejection on new evidence.
+1. **Frame-derived tagging for the core cluster (4.1)** — resolved by the
+   [A3]/#225 spike (`docs/OBJECT_FRAME_TAGGING.md`): adopted **with changes**
+   as a second-pass *audit* tool ([A4]/#239, `--classes` mode below), not as
+   automatic `validFor` derivation — some sentences need human judgment a
+   fixed object class can't express.
 2. **Delta audit (4.2)** — build as a CI script / test that runs on verb
    addition. Cheap, independent of #1, worth doing regardless.
 3. **Provenance-typed distractors (4.3)** — an engine refactor of
@@ -240,3 +240,12 @@ and rerun `npm test` (`src/validfor-audit.test.js` fails on any unreviewed
 change to the gap surface, by design — see §4.2). Running the script with
 no flags prints a per-verb gap-count table, useful for spotting which verb
 is most under-tagged.
+
+**Class-model second-pass audit (issue [A4]):** `node scripts/validfor-delta-audit.mjs --classes`
+(optionally `--verb <id>` to scope to one host verb) supplements the
+agreement-based output above with object-class candidate fixes — `validFor`
+additions the agreement-only audit can't see, because it has no model of
+object semantics (e.g. "an apple" and "a meeting" are different classes; see
+`docs/OBJECT_FRAME_TAGGING.md`). It's read-only and never edits `verbs.js`;
+treat its output as a worklist for human review, the same as [A1]'s gap
+slots.
