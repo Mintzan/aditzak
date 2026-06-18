@@ -12,6 +12,51 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [B2] (#227): unify Family B's distractor-leak gates into one `grounded` invariant
+
+**Decision:** Replaced `generateQuestions`'s accreting pile of context gates
+(`reviewScoped`, `borrowPool`, the `sources`/`review`-keyed scoping added
+across #139 → #174 → #200 → #203) with a single boolean, `grounded`, added to
+`buildTaggedOptions`/`buildOptions`. A question kind with a sentence or
+visible verb name to anchor correctness (`sentence`, `negative`, `pronoun`)
+passes `grounded: true`; the bare `kind: 'form'` case — which never has
+either — always passes `grounded: false`. When `false`,
+`buildTaggedOptions` ignores `extraCandidates`/`borrowPool`/
+`priorityCandidates` entirely and draws distractors only from the verb's own
+table, accepting fewer than 3 distractors rather than showing an ungrounded
+cross-verb form or lure. This replaces *every* prior gate uniformly — a bare
+`form` question never borrows or gets a lure now, full stop, regardless of
+`sources`/review-vs-practice — rather than each new context rediscovering
+the same leak with its own conditional.
+
+`getBorrowedDistractors` is unscoped again (borrows from every
+`agreementsCompatible` sibling in `verbs`, #139's original behaviour) since
+`grounded` is now the only gate that matters, and it returns
+`Array<{ verbId, form }>` instead of bare strings so a grounded
+`sentence`/`negative` question can narrow its borrowed pool through
+`filterExtraCandidates`'s `validFor` check exactly like `extraCandidates`
+already was — this closes a real leak: pre-#227, a borrowed sibling form
+bypassed `validFor` filtering even when that sibling was explicitly listed
+in the sentence's `validFor` (i.e. genuinely also correct for that exact
+sentence, and so doubly wrong to show as a "wrong answer").
+
+One observable behavior change from unifying onto `grounded` rather than
+keeping `sources`-scoping for non-`form` kinds: an untagged (plain-string,
+pre-`validFor`-migration) sentence's implicit `validFor: undefined` already
+meant `filterExtraCandidates` excluded every `extraCandidates` sibling (the
+"not yet vetted" safe default, see `docs/SENTENCE_FRAMES.md`) — borrowed
+forms are now held to that same default, so an untagged sentence's
+`sentence`/`negative` question no longer gets a borrowed top-up either.
+Every verb currently in `VERBS` has migrated its `sentences`/
+`negativeSentences` to the tagged `{ text, validFor }` shape, so this has no
+production impact today; `src/logic.test.js`'s synthetic small-table
+fixtures were updated to use `validFor: []` (vetted, excludes nothing)
+rather than bare strings so they still exercise #139's borrowing behaviour
+under the new rule.
+
+`docs/DISTRACTOR_STRATEGY.md` §1 Family B updated to describe the retired
+gates and the new invariant.
+
 ## 2026-06-18 — [A2] (#224): backfill `behar`'s `validFor` across the nor-nork cluster
 
 **Decision:** Ran `scripts/validfor-delta-audit.mjs --verb behar` (293 gap

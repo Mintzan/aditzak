@@ -43,20 +43,37 @@ Future work should name which family it's in.
 *A borrowed sibling form or a deliberate lure appears where there is no
 sentence (or no visible verb name) to make it read as wrong.*
 
-- Issues: #121 → #139 → #174 → #200 → #203, and **#218.2** is the next sighting.
-- This is essentially **one bug fixed repeatedly.** Each fix added another
-  *context gate* rather than fixing the abstraction:
+- Issues: #121 → #139 → #174 → #200 → #203 → **#227 ([B2]), which retired the
+  gates below.**
+- This was **one bug fixed repeatedly**, each fix adding another *context
+  gate* rather than fixing the abstraction:
   - #139 added small-table borrowing (`getBorrowedDistractors`).
   - #174 scoped borrowing to a review's `sources`.
   - #200 introduced `reviewScoped`, keyed on `sources.length > 1`.
   - #203 added an explicit `review` flag because `sources.length > 1` missed
     single-source reviews, and also gated `formLures` the same way.
-- Root cause: once a borrowed form or a lure lands in `options`, it is a bare
-  string — indistinguishable from a safe same-table distractor. So every
-  context (`form` vs `sentence`, review vs practice, single vs multi-source)
-  must *re-derive* "is a cross-verb form safe here?" via an accreting pile of
-  conditionals (`reviewScoped`, `borrowPool`, `sources`, gated `formLures` in
-  `generateQuestions`). The abstraction boundary is in the wrong place.
+  - Root cause (pre-#227): once a borrowed form or a lure landed in
+    `options`, it was a bare string — indistinguishable from a safe
+    same-table distractor. Every context (`form` vs `sentence`, review vs
+    practice, single vs multi-source) had to *re-derive* "is a cross-verb
+    form safe here?" via an accreting pile of conditionals (`reviewScoped`,
+    `borrowPool`, `sources`, gated `formLures`).
+- **#227 fix:** replaced all of the above with one invariant — `grounded`
+  (`buildTaggedOptions`/`buildOptions`'s new boolean param). A question kind
+  with a sentence or visible verb name to anchor correctness (`sentence`,
+  `negative`, `pronoun`) is `grounded: true`; a bare `kind: 'form'` question
+  (no sentence, no visible verb name under any caller) is always
+  `grounded: false`, regardless of `sources`/review-vs-practice — when
+  `false`, `buildTaggedOptions` ignores `extraCandidates`/`borrowPool`/
+  `priorityCandidates` entirely and draws distractors only from the verb's
+  own table. `sources`-based scoping is gone; `getBorrowedDistractors` itself
+  is also unscoped again (borrows from every `agreementsCompatible` sibling,
+  #139's original behaviour) since grounding is now the only gate that
+  matters. As a side effect, `getBorrowedDistractors` now returns
+  `{ verbId, form }` (not bare strings) so a `sentence`/`negative` question's
+  borrowed pool can be narrowed by `filterExtraCandidates`'s `validFor` check
+  exactly like `extraCandidates` already was — closing the leak where a
+  borrowed form bypassed `validFor` even though `extraCandidates` didn't.
 
 ### Family C — Lure quality / pedagogy
 *The deliberate-trap side: case-frame, cross-tense, object-number lures.*
