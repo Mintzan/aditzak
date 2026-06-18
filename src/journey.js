@@ -590,6 +590,39 @@ export const JOURNEY = [
       },
     ],
   },
+  {
+    id: 'phase-7',
+    title: 'Phase VII',
+    subtitle: 'Bonus: Curiosities & Color',
+    stages: [
+      {
+        id: 'phase-7-stage-15',
+        title: 'Stage 15 — Verbs That Don\'t Need an Auxiliary',
+        units: [
+          {
+            number: 40,
+            title: 'Synthetic Curiosities',
+            focus: 'jario (nor-nori, "dario"/"zerion"), etzan (nor, "datza"), irudi (nor-nork, "dirudi") — rare native-synthetic verbs, recognition-only',
+            payload: 'Malkoak dario. · Zertan datza ariketa? · Nekatuta zaude, dirudizu.',
+            status: 'pending',
+          },
+        ],
+      },
+      {
+        id: 'phase-7-stage-16',
+        title: 'Stage 16 — Talking About Weather',
+        units: [
+          {
+            number: 41,
+            title: 'Talking About Weather',
+            focus: 'ari + ukan ("euria ari du"), izan/egon weather idioms — fixed 3rd person only, zero new conjugation tables',
+            payload: 'Euria ari du. · Hotz da. · Eguzkia dago.',
+            status: 'pending',
+          },
+        ],
+      },
+    ],
+  },
 ]
 
 // The last `lessonIds` entry of every `available`, `gate: true` unit (N-10,
