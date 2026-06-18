@@ -167,17 +167,17 @@ slices, and `-arazi` are spelled out in full in
   forms — `docs/SAMPLE_SENTENCES.md`'s causative bank is the starting
   material. The `-arazi`/`-erazi` conditioning rule is specified in
   `LEARNING_JOURNEY_PROPOSED.md`.
-- **`jakin`'s past tense (`CONJUGATIONS.md` §7) has gaps** (`hik`/`zuk`/`zuek`
-  are `—`) — irrelevant to Unit 4 (present-only, `ni`/`zu`/`hura`, all three
-  present forms already documented). This is why `jakin` was left out of Unit
-  12 ("Looking Back I — The 'ukan' Past Pool") despite riding `ukan`'s suffix
-  family there too — see `docs/LANGUAGE_DECISIONS.md` for the deferral. Revisit
-  if `jakin`'s past gap gets sourced.
-- **Unit 9's `ari` examples need at least one verb's imperfective participle
-  as vocabulary** before any concrete "I am doing X" sentence can be written —
-  `jaten` (`jan`'s participle, Unit 13's verb) is the natural choice, since
-  Unit 13 will teach `jan`'s full table anyway, so introducing its participle
-  here costs nothing extra later and gives Unit 13 a head start.
+- **`jakin`'s past tense (`CONJUGATIONS.md` §7) had gaps** (`hik`/`zuk`/`zuek`
+  were `—`), which is why `jakin` had been left out of Unit 13 ("Looking Back
+  I — The 'ukan' Past Pool") despite riding `ukan`'s suffix family there too.
+  #245 sourced the missing rows (`hekien`/`zenekien`/`zenekiten`) and added
+  `jakin` to Unit 13's past pool — see `docs/LANGUAGE_DECISIONS.md`.
+- **Unit 9's `ari` examples cover three imperfective participles** (`jaten`,
+  `egiten`, `irakurtzen`/`ikasten`) rather than resting on `jaten` alone — see
+  `docs/LANGUAGE_DECISIONS.md` (#244). `jaten` (`jan`'s participle, Unit 13's
+  verb) remains the anchor example, since Unit 13 teaches `jan`'s full table
+  anyway, so introducing its participle here costs nothing extra later and
+  gives Unit 13 a head start.
 
 ## The journey
 
@@ -203,7 +203,7 @@ arrive at Units 7–8). Pronoun stage: **A (explicit)**.
 | 6 | **Moving Around** — `joan` + `etorri` + `ibili` present | "I'm going to the beach." / "She's coming tomorrow." / "She wanders around town." | ni/zu/hura: `noa`/`zoaz`/`doa`, `nator`/`zatoz`/`dator`, `nabil`/`zabiltza`/`dabil` | §6 | ✅ implemented — `ibili`'s present moved here from Unit 14 (#143) so it precedes its past (Unit 11's `izan`-past pool); its plural forms still arrive in Unit 14 |
 | 7 | 🛡️ **Expansion: Absolutive Plurals** | "We are teachers." (`Irakasleak gara.`) / "You all are at home." (`Etxean zaudete.`) / "We're going to the beach." (`Hondartzara goaz.`) | gu/zuek/haiek (`nor`): `izan`, `egon`, `joan`, `etorri` | §1/§6 | ✅ implemented — currently still carries the `ukan`/`ikusi` (ergative) lessons too; #143 redistributes those into Unit 8 |
 | 8 | 🛡️ **Expansion: Ergative Plurals** | "We have a car." (`Auto bat dugu.`) / "They watch the film." (`Filma ikusten dute.`) | gu/zuek/haiek (`nor-nork`): `ukan`, `ikusi` | §3/§7 | pending — content currently lives inside Unit 7's lessons (`unit-6-review-1`, `ikusi-present-plural*`); #143 splits it out |
-| 9 | **The Immediate Continuous** — `ari` + `izan` | "What are you doing?" (`Zer ari zara?`) / "I'm eating." (`Jaten ari naiz`) | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ implemented — `jaten` (`jan`'s imperfective participle, Unit 12's verb) introduced here as a single fixed vocabulary item |
+| 9 | **The Immediate Continuous** — `ari` + `izan` | "What are you doing?" (`Zer egiten ari zara?`) / "I'm eating." (`Jaten ari naiz`) / "I'm studying." (`Ikasten ari naiz`) | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ implemented — `jaten`/`egiten`/`ikasten` (#244) cover three imperfective participles rather than `jaten` alone; `jaten` (`jan`'s participle, Unit 12's verb) remains the anchor example |
 
 ### 🛡️ Refresh Gate A — The "Ez" Trap
 
@@ -245,7 +245,7 @@ after 10+ units of present-only drilling.
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
 | 12 | **Daily Routine (Transitive)** — the `ukan` present auxiliary (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), drilled across a pool of verbs (`jan`, `edan`, `erosi`, `ikusi`, `hartu`) rather than one lesson per verb. **MP**: first `-tzen`/`-ten` minimal pair (`jaten` vs. `hartzen`). | "I eat." / "You drink water." / "I buy a book." / "Do you see it?" / "I take the bus." | §7 (jan/edan/erosi/ikusi); VERB_COVERAGE §4b-bis (`hartu`) | ✅ implemented |
-| 13 | **Looking Back I — The "ukan" Past Pool** — the `ukan` past auxiliary (`nuen`/`zenuen`/`zuen`/`genuen`/`zenuten`/`zuten`), mixed across `ukan`, `jan`, `edan`, `erosi`, `ikusi` | "I had a car." / "I ate the apple." / "You drank coffee." / "We bought a house." / "She saw the film." | `ukan`: §3; `jan`/`edan`/`erosi`/`ikusi`: §7 (periphrastic, participle + `ukan` past auxiliary) | ✅ implemented |
+| 13 | **Looking Back I — The "ukan" Past Pool** — the `ukan` past auxiliary (`nuen`/`zenuen`/`zuen`/`genuen`/`zenuten`/`zuten`), mixed across `ukan`, `jan`, `edan`, `erosi`, `ikusi`, `jakin` | "I had a car." / "I ate the apple." / "You drank coffee." / "We bought a house." / "She saw the film." / "I knew the answer." (`Erantzuna nekien`) | `ukan`: §3; `jan`/`edan`/`erosi`/`ikusi`: §7 (periphrastic, participle + `ukan` past auxiliary); `jakin`: §7 (synthetic, #245) | ✅ implemented |
 
 `ikusi` moved to Unit 5 as Phase I's first periphrastic verb, but rejoins
 Unit 12's verb pool here — it already has full present-tense

@@ -6,6 +6,59 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-18 — #245: Sourced `jakin`'s past `hik`/`zuk`/`zuek` gaps; added it to Unit 13's "ukan" past pool
+
+**Decision:** `CONJUGATIONS.md` §7's `jakin` past grid had `hik`/`zuk`/`zuek`
+rows marked `—`. Filled them by mapping `ukan`'s past prefix pattern (§3:
+`nuen`/`huen`/`zenuen`/`zenuten`, i.e. `n-`/`h-`/`zen-`+`-uen`, `zen-`+
+`-uten`) onto `jakin`'s already-attested `-ekien`/`-ekiten` stem alternation
+(`nekien`/`zekien`/`genekien`/`zekiten`, all pre-existing, non-gapped cells):
+swap `ukan`'s `-uen`/`-uten` suffix for `jakin`'s `-ekien`/`-ekiten`, keeping
+the same prefix consonant. Gives `hik` → `hekien`, `zuk` → `zenekien`, `zuek`
+→ `zenekiten`. `hik` stays **unsplit** (no `-k`/`-n` gender split) — matching
+`ukan`'s own past, which #167 already established "stays unsplit (`huen`)"
+despite the present-tense split existing for both verbs.
+
+With the grid complete, added `jakin`'s `conjugations.past` to `VERBS`
+(`src/data/verbs.js`) and folded it into Unit 13's `ukan-past-pool`/
+`ukan-past-pool-plural` (`src/data/lessons.js`) alongside `ukan`/`jan`/`edan`/
+`erosi`/`ikusi` — the same past-auxiliary family `jakin`'s present already
+rides in Unit 4. `sentences.past`/`pronounSentences.past` pick up the existing
+`present` arrays via the same by-reference reuse loop already used for the
+pool's other verbs (the sentence blank doesn't depend on tense); `jakin`
+joins `SINGLE_WORD_PAST_NEGATION` (`izan`/`egon`/`ukan`/`eduki`) since its
+past, like its present, is a single synthetic word that stays intact under
+`ez`-negation.
+
+**Flag for native-speaker review:** the `hik`/`zuk`/`zuek` forms are derived
+by pattern, not independently attested in either doc's source material —
+same standing caveat as other pattern-derived cells in this log (e.g. #180's
+`ibili hintzen`). `nahi`/`ari`'s deferred past (periphrastic `nahi izan
+nuen`/`ari izan nintzen`) remains out of scope, unaffected by this entry.
+
+## 2026-06-18 — #244: Broadened Unit 9's `ari` examples beyond `jaten`
+
+**Decision:** Unit 9 ("The Immediate Continuous") had already accumulated
+`egiten`/`ikasten`/`idazten`/etc. as distractor-sentence vocabulary in
+`ari`'s `sentences.present` array (#238's progressive-vs-plain lure work),
+but the unit's *fixed* anchor examples — the journey roadmap's `payload`
+copy and `ari`'s `pronounSentences` (one deterministic example per person,
+used by the `pronoun`/`type-pronoun` question kinds) — still read on `jaten`
+alone for `zu` (`'___ lanean ari zara.'`, not even a participle). Changed
+`zu`'s `pronounSentence` to `'___ zer egiten ari zara?'`, pairing `egiten`
+with the unit's own headline question ("Zer ari zara?" → "Zer egiten ari
+zara?"), while keeping `ni`/`hura` on `jaten`/`irakurtzen` — three distinct
+participles across the three fixed examples. Updated `journey.js`'s Unit 9
+`payload` (and its `es`/`eu` translations in `journeyTranslations.js`) to
+show all three: `Zer egiten ari zara?` / `Jaten ari naiz` / `Ikasten ari
+naiz`.
+
+**Why not touch `hura`:** `irakurtzen` ("reading") was already a genuine
+imperfective participle, not a placeholder needing replacement — only `zu`'s
+`lanean` (a locative idiom, not a participle) needed fixing to actually meet
+the "at least three imperfective participles" bar literally, not just inside
+the randomized distractor pool.
+
 ## 2026-06-17 — #180: `ibili`'s `hi` isn't a gap — `habil`/`ibili hintzen` by the same rule as `joan`/`etorri`
 
 **Decision:** `ibili` gets `hi: 'habil'` (present) and `hi: 'ibili hintzen'`
