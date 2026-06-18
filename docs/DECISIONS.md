@@ -12,6 +12,21 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [A1] (#223): validFor delta-audit script + CI guard
+
+**Decision:** Added `scripts/validforGapAudit.mjs` (the shared
+`computeGapSlots`/`computeGapCounts` core), `scripts/validfor-delta-audit.mjs`
+(the CLI: per-verb table by default, `--verb <id>` for the worklist, `--json`
+for the baseline), `scripts/validfor-gap-baseline.json` (checked-in baseline,
+matches the §3 sizing run's counts exactly), and `src/validfor-audit.test.js`
+(fails with an actionable message whenever the gap surface changes).
+Deliberately **not** an absolute lint — per `docs/DISTRACTOR_STRATEGY.md` §3
+that would be ~all noise; this only forces a human look when the surface
+*changes*, e.g. a new verb/tense being added. No `validFor` data was touched
+in this issue — the baseline reflects the current (gappy, `behar`-under-tagged)
+state as-is; closing those gaps is [A2]'s job, using this tool's `--verb behar`
+output as its worklist.
+
 ## 2026-06-17 — #218: consolidated distractor/ambiguity strategy in `docs/DISTRACTOR_STRATEGY.md`
 
 **Decision:** Added `docs/DISTRACTOR_STRATEGY.md` as the standing
