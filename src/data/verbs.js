@@ -635,6 +635,20 @@ export const VERBS = [
         zuek: 'joango zarete',
         haiek: 'joango dira',
       },
+      // Unit 22 ("Motion in Progress (Past)") — `joan`'s own *imperfective*
+      // past (ongoing/habitual "I was going"), distinct from `past` above
+      // (the periphrastic *simple* past "I went", taught in Unit 11). Per
+      // `docs/CONJUGATIONS.md` §6. Form-only (no `sentences`), same as
+      // `behar`'s tenses — see `docs/LANGUAGE_DECISIONS.md`.
+      imperfectivePast: {
+        ni: 'nindoan',
+        hi: 'hindoan',
+        zu: 'zindoazen',
+        hura: 'zihoan',
+        gu: 'gindoazen',
+        zuek: 'zindoazten',
+        haiek: 'zihoazen',
+      },
     },
     // Every variant here is an allative `-ra` frame ("Ni hondartzara ___." =
     // "I go to the beach"). `etorri`'s same-person form ("Ni hondartzara
@@ -731,6 +745,35 @@ export const VERBS = [
         gu: 'etorriko gara',
         zuek: 'etorriko zarete',
         haiek: 'etorriko dira',
+      },
+      // Unit 21 ("I Used To..." — the general periphrastic imperfective/
+      // habitual past) — imperfective participle `etortzen` + `izan`'s past
+      // auxiliary (`docs/CONJUGATIONS.md` §11's "Ondorio Orokorra" formula:
+      // stem + `-t(z)en` + past aux). Distinct from `imperfectivePast` below
+      // (Unit 22), `etorri`'s own *native synthetic* imperfective ("I was
+      // coming") — Basque has both a periphrastic and a synthetic way to say
+      // this for motion verbs; this unit teaches the periphrastic rule that
+      // generalizes to every other verb, Unit 22 the synthetic exception.
+      // Form-only (no `sentences`), same as `behar`'s tenses.
+      habitualPast: {
+        ni: 'etortzen nintzen',
+        zu: 'etortzen zinen',
+        hura: 'etortzen zen',
+        gu: 'etortzen ginen',
+        zuek: 'etortzen zineten',
+        haiek: 'etortzen ziren',
+      },
+      // Unit 22 ("Motion in Progress (Past)") — `etorri`'s own *imperfective*
+      // past (ongoing/habitual "I was coming"), per `docs/CONJUGATIONS.md`
+      // §6.
+      imperfectivePast: {
+        ni: 'nentorren',
+        hi: 'hentorren',
+        zu: 'zentozen',
+        hura: 'zetorren',
+        gu: 'gentozen',
+        zuek: 'zentozten',
+        haiek: 'zetozen',
       },
     },
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
@@ -1252,6 +1295,20 @@ export const VERBS = [
         zuek: 'ikusiko duzue',
         haiek: 'ikusiko dute',
       },
+      // Unit 21 ("I Used To..." — periphrastic imperfective/habitual past) —
+      // imperfective participle `ikusten` + `ukan`'s past auxiliary, per
+      // `docs/CONJUGATIONS.md` §11's "Ondorio Orokorra" formula. Pairs with
+      // `etorri`'s `habitualPast` as the unit's NOR/NOR-NORK auxiliary-pattern
+      // pair, same pairing precedent as `izan`/`ukan` elsewhere. Form-only
+      // (no `sentences`).
+      habitualPast: {
+        ni: 'ikusten nuen',
+        zu: 'ikusten zenuen',
+        hura: 'ikusten zuen',
+        gu: 'ikusten genuen',
+        zuek: 'ikusten zenuten',
+        haiek: 'ikusten zuten',
+      },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. `ikusi`'s
     // candidates are `ukan`/`eduki`/`jakin`/`nahi`/`erosi` (the four
@@ -1434,6 +1491,18 @@ export const VERBS = [
         gu: 'ibiliko gara',
         zuek: 'ibiliko zarete',
         haiek: 'ibiliko dira',
+      },
+      // Unit 22 ("Motion in Progress (Past)") — `ibili`'s own *imperfective*
+      // past, per `docs/CONJUGATIONS.md` §6. No `hi` row — §6 marks it `—`
+      // (unattested/not in regular use), same gap noted for `ibili hintzen`
+      // in #180 (see `docs/LANGUAGE_DECISIONS.md`).
+      imperfectivePast: {
+        ni: 'nenbilen',
+        zu: 'zenbiltzan',
+        hura: 'zebilen',
+        gu: 'genbiltzan',
+        zuek: 'zenbiltzaten',
+        haiek: 'zebiltzan',
       },
     },
     sentences: {
@@ -1923,6 +1992,12 @@ export const TENSE_META = {
   pastNoka: { labelKey: 'tensePastNoka', basque: 'lehena (noka)' },
   // #171: imperative (agintera) — second-person only, no ni/hura/gu/haiek cells.
   imperative: { labelKey: 'tenseImperative', basque: 'agintera' },
+  // Unit 21/22: imperfective/habitual past — `habitualPast` is the general
+  // periphrastic rule (participle + past auxiliary, e.g. `ikusten nuen`);
+  // `imperfectivePast` is the native synthetic exception specific to
+  // motion verbs (`nindoan`, `zetorren`, `nenbilen`).
+  habitualPast: { labelKey: 'tenseHabitualPast', basque: 'lehen burutugabea' },
+  imperfectivePast: { labelKey: 'tenseImperfectivePast', basque: 'lehen burutugabea (mugimendua)' },
 }
 
 export const TYPE_META = {

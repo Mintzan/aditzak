@@ -12,6 +12,28 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — Implemented Units 21/22 (imperfective/habitual past)
+
+**Decision:** Implemented Unit 21 ("I Used To..." — The Imperfective Past)
+and Unit 22 (Motion in Progress (Past)), both Tier 1/data-only per
+`docs/EXERCISE_ENGINE.md`. Added four new `VERBS` tense tables sourced from
+`docs/CONJUGATIONS.md` §6/§11: `etorri.habitualPast`/`ikusi.habitualPast`
+(general periphrastic rule — imperfective participle + past auxiliary, e.g.
+`etortzen nintzen`, `ikusten nuen`) for Unit 21, and `joan.imperfectivePast`/
+`etorri.imperfectivePast`/`ibili.imperfectivePast` (the native synthetic
+exception specific to motion verbs — `nindoan`, `zetorren`, `nenbilen`) for
+Unit 22. All four are form-only (no `sentences`), following `behar`'s
+precedent. Unit 21 teaches the periphrastic rule on a small two-verb core —
+`etorri` (NOR, izan-auxiliary) + `ikusi` (NOR-NORK, ukan-auxiliary) — mirroring
+Unit 17/18's future-rule design, rather than rolling out the rule across
+every known verb immediately. Unit 22 pools all three motion verbs into one
+review-style lesson pair (split by `PHASE_1_PERSONS`/`PHASE_1_PLURAL_PERSONS`)
+since they share no suffix family to drill individually, mirroring Unit 11's
+`izan`-past-pool pattern. Also added `TENSE_META`/i18n entries for both new
+tense keys (`tenseHabitualPast`/`tenseImperfectivePast`) across all three
+languages — these were missing and broke `describeLesson`/`LessonNode`
+rendering until added.
+
 ## 2026-06-18 — Split Unit 7's ergative-plural lessons into Unit 8
 
 **Decision:** Implemented Unit 8 ("Expansion: Ergative Plurals"), which had

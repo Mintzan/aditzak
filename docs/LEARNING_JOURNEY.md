@@ -11,9 +11,11 @@
 > `docs/LEARNING_JOURNEY_EVALUATION.md` records *why* — the findings that
 > motivated this layout and the old (O-n) → new (N-n) mapping.
 >
-> Units 1–19 are implemented (Unit 8 included) — see `journey.js`'s
-> `available` units and `LESSONS` in `src/data/lessons.js`. Units 20+ remain
-> content design only — no exercises, no `VERBS` data yet. Units are ordered
+> Units 1–19 and 21–22 are implemented (Unit 8 included) — see `journey.js`'s
+> `available` units and `LESSONS` in `src/data/lessons.js` for the
+> up-to-date picture of which later units are also implemented. Unit 20
+> (score-gated) remains content design only — no exercises, no `VERBS`
+> data yet. Units are ordered
 > by communicative goal rather than grammatical category, and prioritize
 > usefulness over implementation-ease where the two trade off.
 
@@ -123,8 +125,8 @@ slices, and `-arazi` are spelled out in full in
   (`joan nintzen`, `etorri nintzen`, `ibili nintzen`) was implemented in Units
   11 and 15 ("Looking Back I/II") via the periphrastic Lehenaldi Mugatua
   pattern (§11: perfective participle + `izan`'s past auxiliary, §1) — see
-  `docs/LANGUAGE_DECISIONS.md`. Unit 22 ("Motion in Progress (Past)") remains
-  pending for §6's distinct imperfective forms (`nindoan`/`zetorren`/
+  `docs/LANGUAGE_DECISIONS.md`. Unit 22 ("Motion in Progress (Past)") has now
+  implemented §6's distinct imperfective forms (`nindoan`/`zetorren`/
   `nenbilen`).
 - **Restricting a lesson to `ni`/`zu`/`hura`** isn't something the current
   `generateQuestions`/`conjugations` shape distinguishes by default.
@@ -304,8 +306,8 @@ Pronoun stage: **C (pro-drop default)**.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 21 | **"I Used To..." — The Imperfective Past** | "I used to come here every day." / "I was working when she called." | imperfective/habitual past (`etortzen nintzen`, "I used to come / I was coming") — distinct from the simple past taught in Units 11/12/15/16 | pending |
-| 22 | **Motion in Progress (Past)** — `joan`/`etorri`/`ibili`'s native imperfective past forms (`nindoan`, `zetorren`) | "I was on my way (when...)." / "He was coming (and then...)." | §6 | pending — ✅ already in §6's tables; framed explicitly as imperfective/progressive, contrasted with Units 11/15's `joan nintzen`/`ibili nintzen` |
+| 21 | **"I Used To..." — The Imperfective Past** | "I used to come here every day." / "I was working when she called." | imperfective/habitual past (`etortzen nintzen`, "I used to come / I was coming") — distinct from the simple past taught in Units 11/12/15/16 | implemented (`etorri`/`ikusi`'s `habitualPast`) |
+| 22 | **Motion in Progress (Past)** — `joan`/`etorri`/`ibili`'s native imperfective past forms (`nindoan`, `zetorren`) | "I was on my way (when...)." / "He was coming (and then...)." | §6 | implemented (`joan`/`etorri`/`ibili`'s `imperfectivePast`) — framed explicitly as imperfective/progressive, contrasted with Units 11/15's `joan nintzen`/`ibili nintzen` |
 
 This phase is narrower than the surrounding ones — completed simple past
 ("I went", "I saw", "I ate", "I had") moved to Units 11/12/15/16, so Phase III's
