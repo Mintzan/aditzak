@@ -12,6 +12,35 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-18 — [A3] (#225): object-class `validFor` derivation spike — adopt with changes, no code shipped
+
+**Decision:** Investigated whether `validFor` could be derived from a small
+vocabulary of object semantic classes (`concrete-ownable`, `food-drink`,
+`kinship`, etc.) instead of hand-tagged per-sentence, as a follow-up to
+[A1]/[A2]'s gap-audit tooling. Wrote a read-only research spike —
+`docs/OBJECT_FRAME_TAGGING.md` (the proposal), `scripts/frame-classes.json`
+(sentence → class mapping), and `scripts/frame-derive-diff.mjs` (derives
+`validFor` from the class model and diffs against the real hand-tagged data)
+— with **no changes to `src/data/verbs.js` or any runtime code**, per the
+issue's explicit scope.
+
+**Why:** The diff surfaced a real, systematic bug invisible to the existing
+agreement-only gap audit: `jan`/`edan`/`erosi`'s own food-object sentences are
+under-tagged relative to the same objects' tagging under `nahi` (missing
+`ukan`/`nahi`/`eduki`/`ikusi`). But it also showed classes can't fully
+replace human judgment — a few hand-tagged sentences are deliberately
+narrower than their class predicts (e.g. `ikusi`'s "Txakurrak katua ___."),
+and two verbs' incomplete conjugation tables (`nahi` has no `gu/zuek/haiek`;
+`behar` has no `past`) produce expected diff noise unrelated to the class
+model's correctness.
+
+**Outcome — recommend adopt with changes, not adopted yet:** layer the class
+vocabulary into the existing delta-audit CLI as a second-pass, human-reviewed
+suggestion mode (not an auto-apply), and file a dedicated follow-up issue for
+the concrete `jan`/`edan`/`erosi` under-tagging finding. Neither of those
+follow-ups is in scope for this spike; see `docs/OBJECT_FRAME_TAGGING.md` for
+the full vocabulary, admission table, and diff numbers.
+
 ## 2026-06-18 — [C2] (#229): per-question "why this was wrong" feedback for lure distractors
 
 **Decision:** Extended the `{ form, source }` provenance tagging from
