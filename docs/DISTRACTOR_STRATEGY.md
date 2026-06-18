@@ -209,3 +209,17 @@ dependency order:
 - **`behar` is broadly under-tagged** (§3): #218.1 is the tip. A targeted
   `behar` `validFor` pass across the `nor-nork` cluster's ownable-object
   sentences is owed regardless of whether 4.1 lands.
+
+## Tooling
+
+**Verb-add workflow (issue [A1]):** after adding a verb/tense, run
+`node scripts/validfor-delta-audit.mjs --verb <newVerbId>` to list every
+gap slot it creates (a tagged sibling sentence where the new verb's
+same-person form isn't in that sentence's `validFor`). For each, judge
+naturalness and add the new verb id to `validFor` where its form is
+genuinely an also-correct completion. Then regenerate the CI-guarded
+baseline with `node scripts/validfor-delta-audit.mjs --json > scripts/validfor-gap-baseline.json`
+and rerun `npm test` (`src/validfor-audit.test.js` fails on any unreviewed
+change to the gap surface, by design — see §4.2). Running the script with
+no flags prints a per-verb gap-count table, useful for spotting which verb
+is most under-tagged.
