@@ -2172,10 +2172,14 @@ describe('generateQuestions', () => {
     })
 
     it('offers jan\'s plain present as a distractor for an ari sentence question tagged with baseVerb: jan', () => {
-      const questions = generateQuestions(ari, 'present', { verbs: VERBS, rounds: 30 })
-      const sentenceQuestion = questions.find(
-        (q) => q.kind === 'sentence' && q.person === 'ni' && q.sentence?.includes('jaten')
-      )
+      // `pickVariant`/`rollQuestionKind` are randomized, and the tagged "Ni
+      // jaten ___." sentence is only 1 of 4 `ni` variants — generating a
+      // large round count makes hitting it (and the `sentence`-kind roll)
+      // overwhelmingly likely without pinning exact `Math.random` call
+      // indices, which depend on how many other verbs' borrowed-slot
+      // candidates happen to consume random calls first.
+      const questions = generateQuestions(ari, 'present', { verbs: VERBS, persons: ['ni'], rounds: 300 })
+      const sentenceQuestion = questions.find((q) => q.kind === 'sentence' && q.sentence === 'Ni jaten ___.')
 
       expect(sentenceQuestion).toBeDefined()
       expect(sentenceQuestion.options).toContain(jan.conjugations.present.ni)

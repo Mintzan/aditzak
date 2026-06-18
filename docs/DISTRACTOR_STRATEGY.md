@@ -209,14 +209,13 @@ pre-empts the next variant of the same leak.
 
 The four forks from §4, with their outcomes:
 
-1. **Frame-derived tagging for the core cluster (4.1)** — **spiked (#237) and
-   rejected as runtime derivation; adopted as a second-pass audit instead.**
-   The class vocabulary + verb × class admission table live in
-   `docs/OBJECT_FRAME_TAGGING.md` / `scripts/frame-classes.json`. The spike's
-   finding #3 (irreducible per-sentence edge cases) ruled out deriving
-   `validFor` unattended; the class model is instead a `--classes` candidate-fix
-   audit (#239), not a replacement for hand-tagging. It also surfaced a real
-   bug — food-drink under-tagging on `jan`/`edan`/`erosi` (#240).
+1. **Frame-derived tagging for the core cluster (4.1)** — resolved by the [A3]
+   spike (`docs/OBJECT_FRAME_TAGGING.md` / `scripts/frame-classes.json`):
+   adopted **with changes** as a second-pass *audit* tool ([A4]/#239,
+   `--classes` mode below), not as automatic `validFor` derivation — some
+   sentences need human judgment a fixed object class can't express. The spike
+   also surfaced a real bug — food-drink under-tagging on `jan`/`edan`/`erosi`
+   (#240 [A5]).
 2. **Delta audit (4.2)** — **done (#231):** `scripts/validfor-delta-audit.mjs`
    + `validforGapAudit.mjs` + the CI guard `src/validfor-audit.test.js`. See
    the "Tooling" section for the verb-add workflow.
@@ -253,3 +252,12 @@ and rerun `npm test` (`src/validfor-audit.test.js` fails on any unreviewed
 change to the gap surface, by design — see §4.2). Running the script with
 no flags prints a per-verb gap-count table, useful for spotting which verb
 is most under-tagged.
+
+**Class-model second-pass audit (issue [A4]):** `node scripts/validfor-delta-audit.mjs --classes`
+(optionally `--verb <id>` to scope to one host verb) supplements the
+agreement-based output above with object-class candidate fixes — `validFor`
+additions the agreement-only audit can't see, because it has no model of
+object semantics (e.g. "an apple" and "a meeting" are different classes; see
+`docs/OBJECT_FRAME_TAGGING.md`). It's read-only and never edits `verbs.js`;
+treat its output as a worklist for human review, the same as [A1]'s gap
+slots.
