@@ -204,9 +204,7 @@ export const JOURNEY = [
           // that the `atzo`-only past-frame fix had to sidestep. Inserted
           // here per the present-perfect placement analysis (shifts every
           // later unit +1; gates are now B-21, C-28, D-40) — see
-          // `docs/DECISIONS.md`. `pending` until its data tables/lessons land
-          // (tracked by the implementation issues); rendered as a roadmap
-          // card meanwhile.
+          // `docs/DECISIONS.md`. Data tables landed in #281; lessons in #282.
           {
             number: 11,
             title: 'What Just Happened — The Recent Past (Present Perfect)',
@@ -214,7 +212,14 @@ export const JOURNEY = [
               'Lehenaldiko Burutua — perfective participle + present auxiliary (etorri naiz / ikusi dut), taught on a known core (izan/etorri + ikusi); the recency contrast gaur ... da vs. atzo ... zen',
             payload:
               '"I have come / I came today." (Gaur etorri naiz) · "I have seen it." (Ikusi dut) · "She has gone." (Joan da)',
-            status: 'pending',
+            status: 'available',
+            lessonIds: [
+              'izan-present-perfect-pool',
+              'izan-present-perfect-pool-plural',
+              'ikusi-present-perfect',
+              'ikusi-present-perfect-plural',
+              'unit-11-review',
+            ],
           },
           {
             number: 12,

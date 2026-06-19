@@ -3018,6 +3018,7 @@ export const TENSE_META = {
   pastNoka: { labelKey: 'tensePastNoka', basque: 'lehena (noka)' },
   // #171: imperative (agintera) — second-person only, no ni/hura/gu/haiek cells.
   imperative: { labelKey: 'tenseImperative', basque: 'agintera' },
+  presentPerfect: { labelKey: 'tensePresentPerfect', basque: 'lehenaldiko burutua' },
   // Unit 21/22: imperfective/habitual past — `habitualPast` is the general
   // periphrastic rule (participle + past auxiliary, e.g. `ikusten nuen`);
   // `imperfectivePast` is the native synthetic exception specific to

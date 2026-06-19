@@ -15,12 +15,9 @@
 > the findings that motivated this layout and the old (O-n) → new (N-n)
 > mapping.
 >
-> Implemented: Units 1–10 and 12–23 (Unit 8 included) — see `journey.js`'s
+> Implemented: Units 1–23 (Unit 8 included) — see `journey.js`'s
 > `available` units and `LESSONS` in `src/data/lessons.js` for the
-> up-to-date picture of which later units are also implemented. **Unit 11
-> (present perfect) is `pending`**: its placement and rationale are settled
-> (this document + `journey.js`), but its conjugation data and lessons are
-> still to be built (tracked by dedicated implementation issues). Units are
+> up-to-date picture of which later units are also implemented. Units are
 > ordered by communicative goal rather than grammatical category, and
 > prioritize usefulness over implementation-ease where the two trade off.
 
@@ -231,7 +228,7 @@ grid, every verb, from each verb's first lesson. Pronoun stage: **B
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 11 | **What Just Happened — The Recent Past (Present Perfect)** — *Lehenaldiko Burutua*: perfective participle + **present** auxiliary (`etorri naiz`, `ikusi dut`), taught on an already-known core (`izan`/`etorri` on the `izan` branch, `ikusi` on the `ukan` branch); the recency contrast `gaur ... da` vs. `atzo ... zen` | "I have come / I came today." (`Gaur etorri naiz`) / "I have seen it." (`Ikusi dut`) / "She has gone." (`Joan da`) | §11 (periphrastic tense matrix, *Lehenaldiko Burutua* row) | ⏳ pending — placement settled; conjugation tables + lessons to be built (see implementation issues) |
+| 11 | **What Just Happened — The Recent Past (Present Perfect)** — *Lehenaldiko Burutua*: perfective participle + **present** auxiliary (`etorri naiz`, `ikusi dut`), taught on an already-known core (`izan`/`joan`/`etorri` on the `izan` branch, `ikusi` on the `ukan` branch); the recency contrast `gaur ... da` vs. `atzo ... zen` | "I have come / I came today." (`Gaur etorri naiz`) / "I have seen it." (`Ikusi dut`) / "She has gone." (`Joan da`) | §11 (periphrastic tense matrix, *Lehenaldiko Burutua* row) | ✅ implemented — `izan-present-perfect-pool*` (`izan`/`joan`/`etorri`) + `ikusi-present-perfect*` + `unit-11-review`; recency-contrast distractors are a separate follow-up (#283) |
 | 12 | **Looking Back I — The "izan" Past Pool** — the `izan` past auxiliary (`nintzen`/`zinen`/`zen`/`ginen`/`zineten`/`ziren`), mixed across `izan`, `joan`, `etorri`, `ibili` | "I was young." / "I went to the beach." / "She came yesterday." / "We wandered around town." | `izan`: §1; `joan`/`etorri`/`ibili`: §11 (periphrastic Lehenaldi Mugatua) + §1 (`izan` past auxiliary) | ✅ implemented |
 
 **Why Unit 11 comes first in this stage.** The present perfect is the journey's
