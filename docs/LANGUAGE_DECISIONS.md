@@ -6,6 +6,37 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-19 — #281: `presentPerfect` (*Lehenaldiko Burutua*) tables for Unit 11's core verbs
+
+**Decision:** added a `presentPerfect` conjugation table to `izan`, `joan`,
+`etorri` (the `izan`-auxiliary branch) and `ikusi` (the `ukan`-auxiliary
+branch) — `docs/CONJUGATIONS.md` §11's formula (perfective participle +
+*present* auxiliary) applied to each verb's own already-tabulated participle
+and present aux, the same swap `past`'s table already does with the past
+aux (`etorri naiz`/`joan naiz`/`ikusi dut`, all directly attested in §11's
+worked examples). `izan`'s own `presentPerfect` (`izan naiz`, "I have been")
+uses its own form as the participle, mirroring how its `past` table already
+pairs `izan`+past-aux.
+
+Added `sentences`/`pronounSentences` for `etorri` and `ikusi` only — the two
+verbs Unit 11's recency-contrast lesson (#283) actually drills against a
+time adverb — reusing each verb's existing frames with `gaur`/`gaurkoan`
+("today") swapped in for `past`'s `atzo`/`herenegun`, per #268's precedent
+for keeping recency adverbs out of `past`'s own frames. `izan`/`joan` stay
+form-only for now (no new sentences), same treatment as their other
+non-core tenses (`potential`/`conditional`/etc.) — `izan`'s `validFor: []`
+predicate-nominal frames don't have a natural recency reading, and `joan`'s
+allative frames already work via `etorri`'s `validFor: ['joan']`
+cross-reference.
+
+The `gaur`-frame distractor audit confirms `etorri`'s new `presentPerfect`
+frames correctly exclude `izan` from `validFor` (`izan naiz` doesn't fit the
+allative "etxera" frame), the same exclusion already accepted for `etorri`'s
+existing `present`/`past` frames — not a new gap, just the established
+pattern extended to the new tense. Forms themselves are directly attested in
+§11 rather than derived/extrapolated, so no native-speaker-check flag is
+needed here (unlike #284's plural-object forms below).
+
 ## 2026-06-19 — #284: plural-object (`dit-`/`dauzka-`) forms for the core NOR-NORK verbs; forms need native-speaker check
 
 **Decision:** Added `presentPlural`/`pastPlural`/`futurePlural` conjugation

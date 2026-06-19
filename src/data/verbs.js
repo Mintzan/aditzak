@@ -121,6 +121,19 @@ export const VERBS = [
       presentNoka: { hura: 'dun', haiek: 'ditun' },
       pastToka: { hura: 'zuan', haiek: 'zituan' },
       pastNoka: { hura: 'zunan', haiek: 'zitunan' },
+      // #281/Unit 11 — Lehenaldiko Burutua (present perfect): `izan`'s own
+      // participle (`izan`) + its own present auxiliary, per
+      // CONJUGATIONS.md §11/§1 ("izan naiz", "I have been"). Same shape as
+      // `past` above, just swapping the past aux for the present one.
+      presentPerfect: {
+        ni: 'izan naiz',
+        hi: 'izan haiz',
+        zu: 'izan zara',
+        hura: 'izan da',
+        gu: 'izan gara',
+        zuek: 'izan zarete',
+        haiek: 'izan dira',
+      },
       // #171 core scope — Agintera (imperative), second-person only (no
       // ni/hura/gu/haiek cells exist — §9/§16.2). `hi` is invariant (`izan`'s
       // `hi` is NOR, not NORK, so no allocutive-style gender split here,
@@ -917,6 +930,18 @@ export const VERBS = [
         zuek: 'zindoazten',
         haiek: 'zihoazen',
       },
+      // #281/Unit 11 — present perfect: `joan`'s participle (`joan`) + the
+      // present `izan` auxiliary, same shape as `past` above with the past
+      // aux swapped for the present one.
+      presentPerfect: {
+        ni: 'joan naiz',
+        hi: 'joan haiz',
+        zu: 'joan zara',
+        hura: 'joan da',
+        gu: 'joan gara',
+        zuek: 'joan zarete',
+        haiek: 'joan dira',
+      },
     },
     // Every variant here is an allative `-ra` frame ("Ni hondartzara ___." =
     // "I go to the beach"). `etorri`'s same-person form ("Ni hondartzara
@@ -1083,6 +1108,18 @@ export const VERBS = [
         zuek: 'zentozten',
         haiek: 'zetozen',
       },
+      // #281/Unit 11 — present perfect: `etorri`'s participle (`etorri`) +
+      // the present `izan` auxiliary, same shape as `past` above with the
+      // past aux swapped for the present one.
+      presentPerfect: {
+        ni: 'etorri naiz',
+        hi: 'etorri haiz',
+        zu: 'etorri zara',
+        hura: 'etorri da',
+        gu: 'etorri gara',
+        zuek: 'etorri zarete',
+        haiek: 'etorri dira',
+      },
     },
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
     // `validFor: ['joan']` — joan's same-person form ("Ni etxera noa" = "I'm
@@ -1188,6 +1225,38 @@ export const VERBS = [
           { text: 'Mikel eta Ane iaz liburutegira ___.', validFor: ['joan'] },
         ],
       },
+      // #281/Unit 11 — present perfect, the recency-marked counterpart to
+      // `past` above: same allative frames, `gaur`/`gaurkoan` ("today")
+      // instead of `atzo`/`herenegun`, so the adverb cues `presentPerfect`
+      // (`etorri da`) over `past` (`etorri zen`) per #283's recency framing.
+      presentPerfect: {
+        ni: [
+          { text: 'Ni gaur etxera ___.', validFor: ['joan'] },
+          { text: 'Ni gaur eskolara ___.', validFor: ['joan'] },
+          { text: 'Ni gaurkoan hondartzara ___.', validFor: ['joan'] },
+        ],
+        zu: [
+          { text: 'Zu gaur dendara ___.', validFor: ['joan'] },
+          { text: 'Zu gaurkoan etxera ___.', validFor: ['joan'] },
+        ],
+        hura: [
+          { text: 'Hura gaur ikastolara ___.', validFor: ['joan'] },
+          { text: 'Mikel gaur liburutegira ___.', validFor: ['joan'] },
+          { text: 'Ane gaurkoan etxera ___.', validFor: ['joan'] },
+        ],
+        gu: [
+          { text: 'Gu gaur etxera ___.', validFor: ['joan'] },
+          { text: 'Gu gaurkoan liburutegira ___.', validFor: ['joan'] },
+        ],
+        zuek: [
+          { text: 'Zuek gaur dendara ___.', validFor: ['joan'] },
+          { text: 'Zuek gaurkoan etxera ___.', validFor: ['joan'] },
+        ],
+        haiek: [
+          { text: 'Haiek gaur auzora ___.', validFor: ['joan'] },
+          { text: 'Mikel eta Ane gaurkoan liburutegira ___.', validFor: ['joan'] },
+        ],
+      },
     },
     pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
@@ -1211,6 +1280,17 @@ export const VERBS = [
         gu: '___ etxera etorri ginen.',
         zuek: '___ atzo etorri zineten.',
         haiek: '___ atzo etorri ziren.',
+      },
+      // #281/Unit 11 — present perfect, the `gaur` recency counterpart to
+      // `past` above (same embedded forms as the `presentPerfect`
+      // conjugation table).
+      presentPerfect: {
+        ni: '___ gaur etxera etorri naiz.',
+        zu: '___ gaur etorri zara.',
+        hura: '___ gaur etorri da.',
+        gu: '___ gaur etxera etorri gara.',
+        zuek: '___ gaur etorri zarete.',
+        haiek: '___ gaur etorri dira.',
       },
     },
     negativeSentences: {
@@ -1899,6 +1979,18 @@ export const VERBS = [
         zuek: 'ikusten zenuten',
         haiek: 'ikusten zuten',
       },
+      // #281/Unit 11 — present perfect: `ikusi`'s participle (`ikusi`) +
+      // `ukan`'s present auxiliary, same shape as `present`'s table but
+      // without the imperfective `-ten` marker — `ikusi dut` ("I have seen
+      // it"), per CONJUGATIONS.md §11/§3.
+      presentPerfect: {
+        ni: 'ikusi dut',
+        zu: 'ikusi duzu',
+        hura: 'ikusi du',
+        gu: 'ikusi dugu',
+        zuek: 'ikusi duzue',
+        haiek: 'ikusi dute',
+      },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. `ikusi`'s
     // candidates are `ukan`/`eduki`/`jakin`/`nahi`/`erosi` (the four
@@ -1977,6 +2069,17 @@ export const VERBS = [
           { text: 'Gurasoek herenegun etxea ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
         ],
       },
+      // #281/Unit 11 — present perfect, the `gaur` recency counterpart to
+      // `past` above (same nouns/`validFor`, present perfect aux instead of
+      // simple past).
+      presentPerfect: {
+        ni: [{ text: 'Nik gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
+        zu: [{ text: 'Zuk gaur hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] }],
+        hura: [{ text: 'Anek gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
+        gu: [{ text: 'Guk gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
+        zuek: [{ text: 'Zuek gaur hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] }],
+        haiek: [{ text: 'Haiek gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
+      },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
@@ -1987,6 +2090,15 @@ export const VERBS = [
         gu: '___ itsasoa ikusten dugu.',
         zuek: '___ mendia ikusten duzue?',
         haiek: '___ filma ikusten dute.',
+      },
+      // #281/Unit 11 — present perfect.
+      presentPerfect: {
+        ni: '___ gaur filma ikusi dut.',
+        zu: '___ gaur hori ikusi duzu?',
+        hura: '___ gaur itsasoa ikusi du.',
+        gu: '___ gaur itsasoa ikusi dugu.',
+        zuek: '___ gaur mendia ikusi duzue?',
+        haiek: '___ gaur filma ikusi dute.',
       },
     },
   },
