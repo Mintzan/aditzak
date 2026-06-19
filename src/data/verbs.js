@@ -413,6 +413,53 @@ export const VERBS = [
           { text: 'Ikasleek liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
       },
+      // #259: past, adapted from `docs/SAMPLE_SENTENCES.md`'s `ukan` past
+      // table (Eskola/Familia eta etxea/Bidaiak/Eguneroko bizitza columns).
+      // validFor judged per the same `nahi`/`eduki`/`ikusi`/`erosi`/`behar`
+      // standard as present: concrete ownable/visible/buyable/needable
+      // objects (book, house, map, passport, ticket, plane) get the full set;
+      // kinship nouns (brother/son) stay `nahi`/`eduki` only; abstract
+      // event-like nouns one can "have"/"need" but not "buy" (an exam, a
+      // meeting, a job, money, time, a reason) get a narrower set, judged
+      // per-noun rather than assuming uniform substitution.
+      past: {
+        ni: [
+          { text: 'Nik diru asko ___.', validFor: ['nahi', 'eduki', 'behar'] },
+          { text: 'Nik azterketa bat ___.', validFor: ['eduki', 'behar'] },
+          { text: 'Nik arazo bat ___.', validFor: ['eduki', 'ikusi'] },
+          { text: 'Nik txartel bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+        ],
+        hi: [
+          { text: 'Hik liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Hik etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Hik mapa bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Hik lan bat ___.', validFor: ['nahi', 'eduki', 'behar'] },
+        ],
+        hura: [
+          { text: 'Hark ideia on bat ___.', validFor: ['nahi', 'eduki', 'behar'] },
+          { text: 'Berak seme bat ___.', validFor: ['nahi', 'eduki'] },
+          { text: 'Hark pasaporte bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Berak auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+        ],
+        gu: [
+          { text: 'Guk arrazoi ___.', validFor: ['nahi', 'eduki', 'behar'] },
+          { text: 'Guk azterketa bat ___.', validFor: ['eduki', 'behar'] },
+          { text: 'Guk etxe handi bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk maleta bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+        ],
+        zuek: [
+          { text: 'Zuek galdera bat ___.', validFor: ['eduki', 'ikusi'] },
+          { text: 'Zuek anaia bat ___.', validFor: ['nahi', 'eduki'] },
+          { text: 'Zuek hotel bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek lan asko ___.', validFor: ['nahi', 'eduki', 'behar'] },
+        ],
+        haiek: [
+          { text: 'Haiek denbora gutxi ___.', validFor: ['nahi', 'eduki', 'behar'] },
+          { text: 'Haiek azterketa bat ___.', validFor: ['eduki', 'behar'] },
+          { text: 'Haiek anaia bat ___.', validFor: ['nahi', 'eduki'] },
+          { text: 'Haiek hegazkin bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+        ],
+      },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
