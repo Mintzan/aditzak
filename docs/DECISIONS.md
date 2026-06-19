@@ -12,6 +12,38 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #261: added `eraman`/`ekarri` sentences + `validFor` tagging
+
+**Decision:** added `sentences.present/past`, `pronouns`, and
+`pronounSentences.present` for `eraman` ("to carry/take") and `ekarri` ("to
+bring") — adapted from `docs/SAMPLE_SENTENCES.md`'s `ERAMAN`/`EKARRI` banks
+(fishermen carrying tuna to port, hikers' cheese/bread, a dog taken to see
+sheep, dancers driven to a festival; a drum/sack/bottle gifted, Basque
+pastries from the bakery, mountain-spring water). The source sentences
+mostly use plural-object forms (`daramatzate`, `zeramatzaten`,
+`zekartzan`...); since #260 only tabulated the singular-object conjugation
+alternant (matching `eduki`/`jakin`'s precedent), every sentence here was
+singularized to one fish/cheese-and-bread bundle/dog/dancer/drum/sack/
+bottle/pastry/jug rather than picking a different, unmatched plural form.
+
+`validFor`: `ukan`/`eduki` read as natural alternates throughout (carrying
+or bringing something is close enough to "having" it on you that swapping
+in "Nik ... daramat" → "Nik ... dut/daukat" still reads as a sensible, if
+flatter, sentence). `hartu` ("to take") was added per-sentence rather than
+uniformly — it fits literal hand-it-over/carry-along sentences (gifting a
+drum, carrying a dancer along) but not routine-sourcing ones (carrying
+cheese *for* the mountain, bringing water from a spring, bread from the
+oven) where "took" reads oddly against the destination/purpose framing.
+`ikusi`/`erosi`/`nahi`/`behar` never fit either verb — none of them mean
+"carry" or "bring."
+
+`scripts/validfor-delta-audit.mjs`'s gap counts rose further for both verbs
+and several siblings (`ukan`, `jakin`, etc.) — confirmed these are, again,
+the expected pattern: pre-existing gap slots on other verbs' sentences that
+simply became newly auditable now that `eraman`/`ekarri` have their own
+`validFor`-tagged sentences to check against. Baseline regenerated
+accordingly.
+
 ## 2026-06-19 — #260: added `eraman`/`ekarri` conjugation tables (no sentences yet)
 
 **Decision:** added `VERBS` entries for `eraman` ("to carry/take") and
