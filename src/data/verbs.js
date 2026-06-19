@@ -1106,6 +1106,18 @@ export const VERBS = [
           { text: 'Mikel eta Ane gaur liburutegira ___.', validFor: ['joan'] },
         ],
       },
+      // #268: `present`'s frames lean on `orain`/`gaur`/`bihar` ("now"/
+      // "today"/"tomorrow") — fine for `present`'s own `dator`-type forms,
+      // but those adverbs contradict the *completed, non-recent* reading
+      // `etorri zen` (Lehenaldi Mugatua, "she came [that time]") carries; a
+      // native speaker would say `gaur etorri da` (present-perfect-style,
+      // not yet in the curriculum — see `docs/LANGUAGE_DECISIONS.md`) for a
+      // same-day arrival, not `gaur etorri zen`. So `past` isn't aliased from
+      // `present` (unlike every other reused-past verb — see the alias loop
+      // below) — same frames/destinations, but `orain`/`gaur`/`bihar` swapped
+      // for a varied past-time adverb (`atzo`/`herenegun`/`lehengo egunean`/
+      // `iaz`/`duela bi egun`), which `zen` narrates naturally, matching
+      // `docs/LEARNING_JOURNEY.md` Unit 11's own example ("Atzo etorri zen").
       past: {
         ni: [
           { text: 'Ni atzo etxera ___.', validFor: ['joan'] },
@@ -1156,6 +1168,19 @@ export const VERBS = [
         gu: '___ etxera gatoz.',
         zuek: '___ bihar zatozte.',
         haiek: '___ orain datoz.',
+      },
+      // Same `atzo`-for-`orain`/`bihar` swap as `sentences.past` above, with
+      // the embedded form updated to `etorri`'s past table (`present`'s
+      // `nator`/`zatoz`/... would otherwise leak a present-tense form into a
+      // past-tense lesson, unrelated to but just as misleading as the
+      // adverb mismatch).
+      past: {
+        ni: '___ etxera etorri nintzen.',
+        zu: '___ atzo etorri zinen.',
+        hura: '___ atzo etorri zen.',
+        gu: '___ etxera etorri ginen.',
+        zuek: '___ atzo etorri zineten.',
+        haiek: '___ atzo etorri ziren.',
       },
     },
     negativeSentences: {
@@ -2610,8 +2635,6 @@ for (const verb of VERBS) {
   if (verb.pronounSentences?.present) verb.pronounSentences.future = verb.pronounSentences.present
 }
 
-// "Looking Back" units (8/9/12/13) give `izan`/`egon`/`ukan`/`joan`/`etorri`/
-// `ikusi`/`jan`/`edan`/`erosi`/`eduki`/`ibili`/`jakin` (#245) a
 // `conjugations.past` table. Unlike the future loop above, `sentences.past`
 // is *not* reused-by-reference from `present` here (#267) — a past-tense
 // question reusing a present-tense frame verbatim reads as tense-ambiguous
@@ -2619,15 +2642,18 @@ for (const verb of VERBS) {
 // zen`), so every verb in this list now carries its own hand-written
 // `sentences.past` with a past-time adverb inserted. This loop only fills in
 // `sentences.past` by reference as a fallback for a verb that doesn't have
-// one yet (none currently — kept so a future verb added to this list without
-// an explicit past table degrades gracefully instead of ending up with no
-// sentence at all). `pronounSentences.past` keeps the reuse-by-reference
-// behavior — `pronoun`/`type-pronoun` questions don't display a sentence
-// frame's tense the same way, so they're out of scope for this change.
+// one yet (kept so a future verb added to this list without an explicit past
+// table degrades gracefully instead of ending up with no sentence at all).
+// `pronounSentences.past` mostly keeps the reuse-by-reference behavior —
+// `pronoun`/`type-pronoun` questions don't display a sentence frame's tense
+// the same way, so they're mostly out of scope for this change — except
+// `etorri` (#268), whose embedded present forms (`nator`/`zatoz`/...) would
+// otherwise leak into a past-tense lesson; it defines its own
+// `pronounSentences.past`, which this loop must not clobber.
 for (const verb of VERBS) {
   if (!verb.conjugations.past) continue
   if (!verb.sentences?.past && verb.sentences?.present) verb.sentences.past = verb.sentences.present
-  if (verb.pronounSentences?.present) verb.pronounSentences.past = verb.pronounSentences.present
+  if (!verb.pronounSentences?.past && verb.pronounSentences?.present) verb.pronounSentences.past = verb.pronounSentences.present
 }
 
 // Only single-word past forms (`nintzen`, `zegoen`, `zuen`, `zeukan`, ...)

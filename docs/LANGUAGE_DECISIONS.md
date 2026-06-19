@@ -6,6 +6,49 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-19 — #268: `etorri` past sentences shouldn't lean on recency adverbs; fixed an alias-loop bug that was silently discarding hand-authored `past` sentences
+
+**Decision:** a user-reported word-order exercise produced "Mikel gaur
+liburutegira etorri zen." ("Mikel went to the library today *[simple
+past]*") — grammatically parseable, but non-idiomatic: Basque marks recency
+via the present-perfect-like construction (*Lehenaldiko Burutua*, e.g.
+"gaur etorri da") for same-day events, reserving simple past (*Lehenaldi
+Mugatua*, "zen") for narrated/distant past ("atzo etorri zen"). Mixing a
+same-day adverb (`gaur`/`orain`/`bihar`) with `zen` contradicts that
+distinction. `etorri`'s `past` sentences were never independently authored
+— they were aliased by reference from `present` (`verbs.js`'s "Looking
+Back" loop, see 2026-06-12 below), which still carries `present`'s
+`gaur`/`orain`/`bihar` adverbs verbatim.
+
+**Fix:** gave `etorri` its own explicit `sentences.past`/
+`pronounSentences.past` (swapping `gaur`/`orain`/`bihar` for `atzo`,
+matching Unit 11's own documented "Atzo etorri zen" example), and tightened
+the alias loop to skip verbs that already define their own `past` arrays
+(`if (verb.sentences?.present && !verb.sentences.past) ...`).
+
+That guard surfaced a separate, pre-existing bug: `ukan`, `behar`,
+`eraman`, and `ekarri` each already had hand-authored, semantically-distinct
+`sentences.past` blocks (e.g. `ukan`'s "#259" block sourced from
+`SAMPLE_SENTENCES.md`) that the unguarded loop was silently overwriting
+with `present`'s sentences on every module load — so that authored content
+had never actually been served to learners. The guard restores it. This
+shifted gap-slot counts for `ukan`/`behar`/`eraman`/`ekarri` and their
+NOR-NORK-compatible siblings (`jakin`/`jan`/`edan`/`erosi`/`hartu`/`ikusi`)
+in `scripts/validfor-gap-baseline.json`; reviewed the diff and the new gaps
+are genuine (e.g. `erosi`'s "to buy" sense doesn't fit `behar`'s restored
+"had to wake up early" sentence, correctly `validFor: []`), so the baseline
+was regenerated rather than patched around.
+
+**Scope note — present-perfect/recency is still entirely absent from the
+curriculum:** `CONJUGATIONS.md` §11 documents *Lehenaldiko Burutua* as a
+real, distinct paradigm, but no verb has a `conjugations` table for it and
+no `journey.js` unit teaches it. The `atzo`-based fix above sidesteps the
+gap (past-tense frames now avoid recency adverbs entirely rather than
+teaching the present-perfect form), which is the right scope for a data
+bug fix; adding present-perfect as a taught tense would be a substantial
+curriculum addition (new conjugation tables, new unit(s), new lessons) and
+is left as a separate, deliberate decision rather than folded into this fix.
+
 ## 2026-06-19 — #246: Researched `atxiki`/`iharduki`; concluded documentation-only, no `VERBS` entry
 
 **Decision:** `VERB_COVERAGE.md` §4a flagged `atxiki` (misspelled "atxeki"
