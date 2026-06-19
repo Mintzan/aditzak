@@ -12,6 +12,42 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — Present perfect (*Lehenaldiko Burutua*) added to the journey as Unit 11; later units renumbered +1
+
+**Decision:** inserted a present-perfect unit ("What Just Happened — The Recent
+Past") into `JOURNEY` as **Unit 11**, the first unit of Phase II's Stage 3
+("Looking Back I"), immediately before the `izan` past pool. Every existing
+unit numbered ≥ 11 shifted up by one (old 11–42 → 12–43); the score-gated
+Refresh Gates are now **B = Unit 21, C = Unit 28, D = Unit 40** (Gate A stays
+Unit 10). The unit is `pending` — placement is settled, but its conjugation
+tables and lessons are not built yet (tracked by dedicated implementation
+issues).
+
+**Why here, and why a real unit (not 11a/11b):** the present perfect is the
+perfective participle + a *present* auxiliary (`etorri naiz`, `ikusi dut`) — the
+*same* participle the "Looking Back" past pools use, but with the present
+auxiliary already mastered in Units 1–2. So it's the natural **on-ramp into the
+past system**: it introduces the participle with **zero new auxiliary**, then
+Units 12/14 swap that known participle onto the *past* auxiliary, letting them
+foreground the **recency contrast** (`gaur etorri da` vs. `atzo etorri zen`)
+that `LANGUAGE_DECISIONS.md`'s present-perfect scope note (the `atzo`-only
+past-frame fix) had to sidestep. This honours the journey's "don't introduce two
+novelties at once" principle (cf. the ergative leap's 3-unit on-ramp, the
+Expansion split into Units 7–8). It is deliberately **not** a late Phase III
+"aspect" unit: the form is foundational and high-frequency (Gate A's Unit 10
+negation drills already manipulate it implicitly in `Mutila ez da etorri`).
+
+**What this touched:** `src/journey.js` (new pending unit + `number:` bumps +
+gate-reference comments), `src/i18n/journeyTranslations.js` (new Unit 11 entry +
+unit-key renumber; `npm test`'s `journey.test.js` enforces a translation entry
+per unit number), and `docs/LEARNING_JOURNEY.md` (new row + renumber + banner).
+Lesson ids are unaffected (none added; the unit is pending). The design specs
+keep their own numbering: `LEARNING_JOURNEY_PROPOSED.md` got a note that live
+Unit N = its N-n − 1 for N ≥ 12, and `LEARNING_JOURNEY_EVALUATION.md` is frozen
+historical. Data/lesson work (a `presentPerfect` tense table per core verb,
+mirroring the existing `past` pool tables, plus the lessons and the recency
+distractor) is deferred to the implementation issues rather than folded in here.
+
 ## 2026-06-19 — #267: `behar` gets `sentences` (infinitive-complement) + a `past` table
 
 **Decision:** added `behar`'s first `sentences` data (`present`/`past`/
