@@ -238,6 +238,11 @@ The four forks from §4, with their outcomes:
 - Remaining distractor work outside this strategy: **#213** (hi/hitanoa
   wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
   on native-speaker confirmation of #167's toka/noka data, not on engineering.
+- **Done (#283):** Unit 11's present-perfect <-> simple-past "recency
+  contrast" lure (`getRecencyContrastLure`, `etorri naiz` <-> `etorri
+  nintzen`) — a Matrix extension in the same vein as #141/#165/#238, gated on
+  `tense === 'presentPerfect' || tense === 'past'` alongside the existing
+  case-frame/cross-tense/object-number lures.
 
 ## Tooling
 
