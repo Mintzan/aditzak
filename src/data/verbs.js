@@ -441,6 +441,22 @@ export const VERBS = [
       presentNoka: { hura: 'din', haiek: 'diten' },
       pastToka: { hura: 'zian', haiek: 'zitean' },
       pastNoka: { hura: 'zinan', haiek: 'zitenan' },
+      // #284: plural-object (`NOR` = `haiek`) forms, per CONJUGATIONS.md §3's
+      // "`NOR` = 1st/2nd person" grid's `haiek` column — the same `dit-`-stem
+      // pattern already used for `esan`/`eman`/`gustatu`'s `<tense>Plural`
+      // tables (#162/#164). `hi`'s past stays unsplit (`hituen`), mirroring
+      // the singular `past.hi: 'huen'` above. Flagged in
+      // docs/LANGUAGE_DECISIONS.md for native-speaker confirmation.
+      presentPlural: { ni: 'ditut', zu: 'dituzu', hura: 'ditu', gu: 'ditugu', zuek: 'dituzue', haiek: 'dituzte', 'hi-m': 'dituk', 'hi-f': 'ditun' },
+      pastPlural: { ni: 'nituen', zu: 'zenituen', hura: 'zituen', gu: 'genituen', zuek: 'zenituzten', haiek: 'zituzten', hi: 'hituen' },
+      futurePlural: {
+        ni: 'izango ditut',
+        zu: 'izango dituzu',
+        hura: 'izango ditu',
+        gu: 'izango ditugu',
+        zuek: 'izango dituzue',
+        haiek: 'izango dituzte',
+      },
       // #171 core scope — NOR-NORK Agintera (imperative, generic "do it!"),
       // singular-object column only, per CONJUGATIONS.md §16.2. `hi`-m/`hi`-f
       // split (`ezak`/`ezan`) since `hi` is the grammatical NORK subject
@@ -595,6 +611,12 @@ export const VERBS = [
       // `hura` above.
       present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du', gu: 'nahi dugu', zuek: 'nahi duzue', haiek: 'nahi dute' },
       future: { ni: 'nahiko dut', zu: 'nahiko duzu', hura: 'nahiko du', gu: 'nahiko dugu', zuek: 'nahiko duzue', haiek: 'nahiko dute' },
+      // #284: plural-object (`NOR` = `haiek`) forms, riding `ukan`'s own
+      // `presentPlural`/`futurePlural` suffixes the same way the singular
+      // tables above ride its `present`/`future` suffixes. No `pastPlural` —
+      // `nahi` has no `past` table to mirror.
+      presentPlural: { ni: 'nahi ditut', zu: 'nahi dituzu', hura: 'nahi ditu', gu: 'nahi ditugu', zuek: 'nahi dituzue', haiek: 'nahi dituzte' },
+      futurePlural: { ni: 'nahiko ditut', zu: 'nahiko dituzu', hura: 'nahiko ditu', gu: 'nahiko ditugu', zuek: 'nahiko dituzue', haiek: 'nahiko dituzte' },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by an agentive human subject (coffee,
@@ -1288,6 +1310,32 @@ export const VERBS = [
         zuek: 'jango duzue',
         haiek: 'jango dute',
       },
+      // #284: plural-object (`NOR` = `haiek`) forms — same participle, `dit-`
+      // stem auxiliary, per CONJUGATIONS.md §3.
+      presentPlural: {
+        ni: 'jaten ditut',
+        zu: 'jaten dituzu',
+        hura: 'jaten ditu',
+        gu: 'jaten ditugu',
+        zuek: 'jaten dituzue',
+        haiek: 'jaten dituzte',
+      },
+      pastPlural: {
+        ni: 'jan nituen',
+        zu: 'jan zenituen',
+        hura: 'jan zituen',
+        gu: 'jan genituen',
+        zuek: 'jan zenituzten',
+        haiek: 'jan zituzten',
+      },
+      futurePlural: {
+        ni: 'jango ditut',
+        zu: 'jango dituzu',
+        hura: 'jango ditu',
+        gu: 'jango ditugu',
+        zuek: 'jango dituzue',
+        haiek: 'jango dituzte',
+      },
     },
     // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every object
     // here is a concrete food/dish, naturally also something one could
@@ -1402,6 +1450,32 @@ export const VERBS = [
         gu: 'edango dugu',
         zuek: 'edango duzue',
         haiek: 'edango dute',
+      },
+      // #284: plural-object (`NOR` = `haiek`) forms — same participle, `dit-`
+      // stem auxiliary, per CONJUGATIONS.md §3.
+      presentPlural: {
+        ni: 'edaten ditut',
+        zu: 'edaten dituzu',
+        hura: 'edaten ditu',
+        gu: 'edaten ditugu',
+        zuek: 'edaten dituzue',
+        haiek: 'edaten dituzte',
+      },
+      pastPlural: {
+        ni: 'edan nituen',
+        zu: 'edan zenituen',
+        hura: 'edan zituen',
+        gu: 'edan genituen',
+        zuek: 'edan zenituzten',
+        haiek: 'edan zituzten',
+      },
+      futurePlural: {
+        ni: 'edango ditut',
+        zu: 'edango dituzu',
+        hura: 'edango ditu',
+        gu: 'edango ditugu',
+        zuek: 'edango dituzue',
+        haiek: 'edango dituzte',
       },
     },
     // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every drink
@@ -1520,6 +1594,32 @@ export const VERBS = [
         gu: 'erosiko dugu',
         zuek: 'erosiko duzue',
         haiek: 'erosiko dute',
+      },
+      // #284: plural-object (`NOR` = `haiek`) forms — same participle, `dit-`
+      // stem auxiliary, per CONJUGATIONS.md §3.
+      presentPlural: {
+        ni: 'erosten ditut',
+        zu: 'erosten dituzu',
+        hura: 'erosten ditu',
+        gu: 'erosten ditugu',
+        zuek: 'erosten dituzue',
+        haiek: 'erosten dituzte',
+      },
+      pastPlural: {
+        ni: 'erosi nituen',
+        zu: 'erosi zenituen',
+        hura: 'erosi zituen',
+        gu: 'erosi genituen',
+        zuek: 'erosi zenituzten',
+        haiek: 'erosi zituzten',
+      },
+      futurePlural: {
+        ni: 'erosiko ditut',
+        zu: 'erosiko dituzu',
+        hura: 'erosiko ditu',
+        gu: 'erosiko ditugu',
+        zuek: 'erosiko dituzue',
+        haiek: 'erosiko dituzte',
       },
     },
     // #124/#155/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Edible/
@@ -1640,6 +1740,32 @@ export const VERBS = [
         zuek: 'hartuko duzue',
         haiek: 'hartuko dute',
       },
+      // #284: plural-object (`NOR` = `haiek`) forms — same participle, `dit-`
+      // stem auxiliary, per CONJUGATIONS.md §3.
+      presentPlural: {
+        ni: 'hartzen ditut',
+        zu: 'hartzen dituzu',
+        hura: 'hartzen ditu',
+        gu: 'hartzen ditugu',
+        zuek: 'hartzen dituzue',
+        haiek: 'hartzen dituzte',
+      },
+      pastPlural: {
+        ni: 'hartu nituen',
+        zu: 'hartu zenituen',
+        hura: 'hartu zituen',
+        gu: 'hartu genituen',
+        zuek: 'hartu zenituzten',
+        haiek: 'hartu zituzten',
+      },
+      futurePlural: {
+        ni: 'hartuko ditut',
+        zu: 'hartuko dituzu',
+        hura: 'hartuko ditu',
+        gu: 'hartuko ditugu',
+        zuek: 'hartuko dituzue',
+        haiek: 'hartuko dituzte',
+      },
     },
     // #143: `hartu` added to the Unit 12 "daily routine" pool to stage the
     // `jaten`(-ten)/`hartzen`(-tzen) minimal pair. Sentence objects
@@ -1724,6 +1850,32 @@ export const VERBS = [
         gu: 'ikusiko dugu',
         zuek: 'ikusiko duzue',
         haiek: 'ikusiko dute',
+      },
+      // #284: plural-object (`NOR` = `haiek`) forms — same participle, `dit-`
+      // stem auxiliary, per CONJUGATIONS.md §3.
+      presentPlural: {
+        ni: 'ikusten ditut',
+        zu: 'ikusten dituzu',
+        hura: 'ikusten ditu',
+        gu: 'ikusten ditugu',
+        zuek: 'ikusten dituzue',
+        haiek: 'ikusten dituzte',
+      },
+      pastPlural: {
+        ni: 'ikusi nituen',
+        zu: 'ikusi zenituen',
+        hura: 'ikusi zituen',
+        gu: 'ikusi genituen',
+        zuek: 'ikusi zenituzten',
+        haiek: 'ikusi zituzten',
+      },
+      futurePlural: {
+        ni: 'ikusiko ditut',
+        zu: 'ikusiko dituzu',
+        hura: 'ikusiko ditu',
+        gu: 'ikusiko ditugu',
+        zuek: 'ikusiko dituzue',
+        haiek: 'ikusiko dituzte',
       },
       // Unit 21 ("I Used To..." — periphrastic imperfective/habitual past) —
       // imperfective participle `ikusten` + `ukan`'s past auxiliary, per
@@ -1865,6 +2017,30 @@ export const VERBS = [
         gu: 'edukiko dugu',
         zuek: 'edukiko duzue',
         haiek: 'edukiko dute',
+      },
+      // #284: plural-object forms — unlike the periphrastic verbs above,
+      // `eduki` is its own synthetic stem (`dauka-`, not `ukan`'s `du-`), so
+      // its plural-object alternant is the `-zk-`-infixed `dauzka-` stem
+      // rather than a `dit-` swap, per CONJUGATIONS.md §7's `eduki` table
+      // ("(sg./pl. obj.)" column). Future still rides `ukan`'s own
+      // `futurePlural` suffixes, same as the singular future above rides its
+      // `present` suffixes.
+      presentPlural: { ni: 'dauzkat', zu: 'dauzkazu', hura: 'dauzka', gu: 'dauzkagu', zuek: 'dauzkazue', haiek: 'dauzkate' },
+      pastPlural: {
+        ni: 'neuzkan',
+        zu: 'zeneuzkan',
+        hura: 'zeuzkan',
+        gu: 'geneuzkan',
+        zuek: 'zeneuzkaten',
+        haiek: 'zeuzkaten',
+      },
+      futurePlural: {
+        ni: 'edukiko ditut',
+        zu: 'edukiko dituzu',
+        hura: 'edukiko ditu',
+        gu: 'edukiko ditugu',
+        zuek: 'edukiko dituzue',
+        haiek: 'edukiko dituzte',
       },
     },
     // #124: `validFor` per docs/SENTENCE_FRAMES.md. `eduki`'s candidates are

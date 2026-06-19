@@ -6,6 +6,41 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-19 — #284: plural-object (`dit-`/`dauzka-`) forms for the core NOR-NORK verbs; forms need native-speaker check
+
+**Decision:** Added `presentPlural`/`pastPlural`/`futurePlural` conjugation
+tables to `ukan`, `jan`, `edan`, `erosi`, `hartu`, `ikusi`, `eduki`, and `nahi`
+— the everyday transitive verbs that previously only stored the
+singular-object (`NOR` = `hura`) auxiliary forms (`dut`/`duzu`/`du`/…), with
+no way to express "we have/saw/bought/took *them*" (`ditugu`/`ikusten
+ditugu`/`erosi genituen`/…). Reuses the same `<tense>Plural` naming as #162/
+#164's NOR-NORI(-NORK) plural tables, since both describe the same thing —
+the absolutive `NOR` argument going from singular to plural.
+
+For the periphrastic verbs riding `ukan` (`jan`/`edan`/`erosi`/`hartu`/
+`ikusi`/`nahi`), forms are the participle + `docs/CONJUGATIONS.md` §3's
+`NOR` = `haiek` column (`ditut`/`dituk`/`ditun`/`ditu`/`ditugu`/`dituzu`/
+`dituzue`/`dituzte` present; `nituen`/`hituen`/`zituen`/`genituen`/
+`zenituen`/`zenituzten`/`zituzten` past); future is each verb's `-ko`/`-go`
+participle + the new plural present aux, same pattern as the existing
+singular future tables. `nahi` has no `pastPlural` since it has no `past`
+table to mirror. `ukan` itself keeps `hi`'s past unsplit (`hituen`), mirroring
+its existing singular `past.hi: 'huen'`.
+
+`eduki` is a separate synthetic stem (`dauka-`, not `ukan`'s `du-`), so its
+`presentPlural`/`pastPlural` use the `-zk-`-infixed `dauzka-`/`-zeuzka-`
+forms straight from CONJUGATIONS.md §7's `eduki` "(sg./pl. obj.)" table
+instead of a `dit-` swap; its `futurePlural` still rides `ukan`'s plural aux
+(`edukiko ditut`, etc.), same as its existing singular future does.
+
+`jakin` is excluded from this round — it's synthetic and not covered by
+either grid above; its plural-object form needs independent sourcing/
+verification (tracked separately).
+
+Like #162/#164, these forms are derived from the grids rather than
+independently confirmed by a speaker — flagged here for the same
+native-speaker check before being treated as authoritative.
+
 ## 2026-06-19 — #268: `etorri` past sentences shouldn't lean on recency adverbs; fixed an alias-loop bug that was silently discarding hand-authored `past` sentences
 
 **Decision:** a user-reported word-order exercise produced "Mikel gaur
