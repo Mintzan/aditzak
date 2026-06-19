@@ -12,6 +12,27 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #285: plural-object nouns paired with singular-object auxiliaries fixed by singularizing the noun, not by moving the sentence to a plural table
+
+**Decision:** audited every NOR-NORK verb's `sentences`/`pronounSentences` for
+a noun/auxiliary number mismatch (e.g. `erosi`'s `'Zuk sagarrak ___?'` reads
+plural "apples" but its `present` table only conjugates the singular-object
+`du`-stem, not the plural-object `ditu`-stem). Found and fixed 12 instances
+across `erosi` (8), `hartu` (1), `ikusi` (2), and `eraman` (1) — `ukan`,
+`eduki`, `jan`, `edan`, `nahi`, `jakin`, and `ekarri` were already clean.
+For `sentences` entries (blank-fill, conjugated form substituted at question
+time) the fix is to singularize the noun (`sagarrak` → `sagar bat`) rather
+than move the sentence into `presentPlural`/`pastPlural`, since #286's
+dedicated plural-object lessons don't exist yet and an unreachable sentence
+fixes nothing. For `pronounSentences` (fully literal strings, no
+substitution) the fix is the opposite — correct the auxiliary to its plural
+form in place (`erosi`'s `zuek` cell: `duzue` → `dituzue`, keeping
+"liburuak" plural) — since there's no noun/conjugation pairing to break.
+`eraman`'s `haiek`-past cell was singularized rather than aux-pluralized
+because `eraman` has no plural-object conjugation table at all (per its own
+code comment), so a plural noun there has no correct aux to pair it with
+either way.
+
 ## 2026-06-19 — Present perfect (*Lehenaldiko Burutua*) added to the journey as Unit 11; later units renumbered +1
 
 **Decision:** inserted a present-perfect unit ("What Just Happened — The Recent
