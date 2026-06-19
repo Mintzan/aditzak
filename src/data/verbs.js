@@ -953,6 +953,57 @@ export const VERBS = [
           { text: 'Mikel eta Ane gaur liburutegira ___.', validFor: ['joan'] },
         ],
       },
+      // #268: `present`'s frames lean on `orain`/`gaur`/`bihar` ("now"/
+      // "today"/"tomorrow") — fine for `present`'s own `dator`-type forms,
+      // but those adverbs contradict the *completed, non-recent* reading
+      // `etorri zen` (Lehenaldi Mugatua, "she came [that time]") carries; a
+      // native speaker would say `gaur etorri da` (present-perfect-style,
+      // not yet in the curriculum — see `docs/LANGUAGE_DECISIONS.md`) for a
+      // same-day arrival, not `gaur etorri zen`. So `past` isn't aliased from
+      // `present` (unlike every other reused-past verb — see the alias loop
+      // below) — same frames/destinations, but `orain`/`gaur`/`bihar` swapped
+      // for `atzo` ("yesterday"), which `zen` narrates naturally, matching
+      // `docs/LEARNING_JOURNEY.md` Unit 11's own example ("Atzo etorri zen").
+      past: {
+        ni: [
+          { text: 'Ni etxera ___.', validFor: ['joan'] },
+          { text: 'Ni eskolara ___.', validFor: ['joan'] },
+          { text: 'Ni atzo hondartzara ___.', validFor: ['joan'] },
+          { text: 'Ni atzo parkera ___.', validFor: ['joan'] },
+        ],
+        zu: [
+          { text: 'Zu atzo dendara ___.', validFor: ['joan'] },
+          { text: 'Zu etxera ___.', validFor: ['joan'] },
+          { text: 'Zu atzo etxera ___.', validFor: ['joan'] },
+          { text: 'Zu atzo unibertsitatera ___.', validFor: ['joan'] },
+        ],
+        hura: [
+          { text: 'Hura atzo ikastolara ___.', validFor: ['joan'] },
+          { text: 'Hura etxera ___.', validFor: ['joan'] },
+          { text: 'Hura atzo etxera ___.', validFor: ['joan'] },
+          { text: 'Mikel atzo liburutegira ___.', validFor: ['joan'] },
+          { text: 'Ane etxera ___.', validFor: ['joan'] },
+          { text: 'Txakurra atzo kalera ___.', validFor: ['joan'] },
+        ],
+        gu: [
+          { text: 'Gu etxera ___.', validFor: ['joan'] },
+          { text: 'Gu atzo etxera ___.', validFor: ['joan'] },
+          { text: 'Gu atzo liburutegira ___.', validFor: ['joan'] },
+          { text: 'Gu atzo parkera ___.', validFor: ['joan'] },
+        ],
+        zuek: [
+          { text: 'Zuek atzo dendara ___.', validFor: ['joan'] },
+          { text: 'Zuek etxera ___.', validFor: ['joan'] },
+          { text: 'Zuek atzo etxera ___.', validFor: ['joan'] },
+          { text: 'Zuek atzo liburutegira ___.', validFor: ['joan'] },
+        ],
+        haiek: [
+          { text: 'Haiek atzo auzora ___.', validFor: ['joan'] },
+          { text: 'Haiek etxera ___.', validFor: ['joan'] },
+          { text: 'Haiek atzo etxera ___.', validFor: ['joan'] },
+          { text: 'Mikel eta Ane atzo liburutegira ___.', validFor: ['joan'] },
+        ],
+      },
     },
     pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
@@ -963,6 +1014,19 @@ export const VERBS = [
         gu: '___ etxera gatoz.',
         zuek: '___ bihar zatozte.',
         haiek: '___ orain datoz.',
+      },
+      // Same `atzo`-for-`orain`/`bihar` swap as `sentences.past` above, with
+      // the embedded form updated to `etorri`'s past table (`present`'s
+      // `nator`/`zatoz`/... would otherwise leak a present-tense form into a
+      // past-tense lesson, unrelated to but just as misleading as the
+      // adverb mismatch).
+      past: {
+        ni: '___ etxera etorri nintzen.',
+        zu: '___ atzo etorri zinen.',
+        hura: '___ atzo etorri zen.',
+        gu: '___ etxera etorri ginen.',
+        zuek: '___ atzo etorri zineten.',
+        haiek: '___ atzo etorri ziren.',
       },
     },
     negativeSentences: {
@@ -2240,10 +2304,14 @@ for (const verb of VERBS) {
 // `conjugations.past` table — same sentence-reuse rationale as the future
 // loop above: the blank doesn't depend on tense, so verbs with a `past`
 // table reuse their `present` sentences/pronounSentences by reference.
+// `etorri` opts out (see #268's comment on its own `sentences.past`/
+// `pronounSentences.past` above) — its `present` frames lean on
+// recency adverbs (`orain`/`gaur`/`bihar`) that contradict simple past, so it
+// defines its own `past` arrays instead of reusing `present`'s by reference.
 for (const verb of VERBS) {
   if (!verb.conjugations.past) continue
-  if (verb.sentences?.present) verb.sentences.past = verb.sentences.present
-  if (verb.pronounSentences?.present) verb.pronounSentences.past = verb.pronounSentences.present
+  if (verb.sentences?.present && !verb.sentences.past) verb.sentences.past = verb.sentences.present
+  if (verb.pronounSentences?.present && !verb.pronounSentences.past) verb.pronounSentences.past = verb.pronounSentences.present
 }
 
 // Only single-word past forms (`nintzen`, `zegoen`, `zuen`, `zeukan`, ...)
