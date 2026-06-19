@@ -420,6 +420,38 @@ export const LESSONS = [
       { verbId: 'hartu', tense: 'present' },
     ],
   },
+  // #286 — the NOR-number axis (`dut` vs `ditut`, plural *object*, not
+  // plural NORK subject) for the core transitive verbs, pooled the same way
+  // as `unit-10-present` above. `eduki` doesn't debut its singular-object
+  // present until Unit 15, but its `presentPlural` table (#284) shares the
+  // same `ditut`-family suffix as the rest of this pool, so it's included
+  // here per #286's scope rather than waiting for its own unit.
+  {
+    id: 'nor-nork-present-plural-pool',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'ukan', tense: 'presentPlural' },
+      { verbId: 'jan', tense: 'presentPlural' },
+      { verbId: 'edan', tense: 'presentPlural' },
+      { verbId: 'erosi', tense: 'presentPlural' },
+      { verbId: 'hartu', tense: 'presentPlural' },
+      { verbId: 'ikusi', tense: 'presentPlural' },
+      { verbId: 'eduki', tense: 'presentPlural' },
+    ],
+  },
+  {
+    id: 'nor-nork-present-plural-pool-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'ukan', tense: 'presentPlural' },
+      { verbId: 'jan', tense: 'presentPlural' },
+      { verbId: 'edan', tense: 'presentPlural' },
+      { verbId: 'erosi', tense: 'presentPlural' },
+      { verbId: 'hartu', tense: 'presentPlural' },
+      { verbId: 'ikusi', tense: 'presentPlural' },
+      { verbId: 'eduki', tense: 'presentPlural' },
+    ],
+  },
   // Unit 13 ("Looking Back I — The "ukan" Past Pool", Phase II) — `ukan`'s
   // past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten) is shared *exactly*
   // by `ukan` itself (synthetic) and by `jan`/`edan`/`erosi`/`ikusi`
@@ -457,6 +489,35 @@ export const LESSONS = [
       { verbId: 'erosi', tense: 'past' },
       { verbId: 'ikusi', tense: 'past' },
       { verbId: 'jakin', tense: 'past' },
+    ],
+  },
+  // #286 — `pastPlural` counterpart to `nor-nork-present-plural-pool` above
+  // (`zenituen` vs `zenuten`), same pool of verbs minus `jakin` (no
+  // `pastPlural` table) plus `eduki`, mirroring `ukan-past-pool`'s shape.
+  {
+    id: 'nor-nork-past-plural-pool',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'ukan', tense: 'pastPlural' },
+      { verbId: 'jan', tense: 'pastPlural' },
+      { verbId: 'edan', tense: 'pastPlural' },
+      { verbId: 'erosi', tense: 'pastPlural' },
+      { verbId: 'hartu', tense: 'pastPlural' },
+      { verbId: 'ikusi', tense: 'pastPlural' },
+      { verbId: 'eduki', tense: 'pastPlural' },
+    ],
+  },
+  {
+    id: 'nor-nork-past-plural-pool-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'ukan', tense: 'pastPlural' },
+      { verbId: 'jan', tense: 'pastPlural' },
+      { verbId: 'edan', tense: 'pastPlural' },
+      { verbId: 'erosi', tense: 'pastPlural' },
+      { verbId: 'hartu', tense: 'pastPlural' },
+      { verbId: 'ikusi', tense: 'pastPlural' },
+      { verbId: 'eduki', tense: 'pastPlural' },
     ],
   },
   // Unit 14 ("Physical States & Possessions", Phase II) — `eduki` (nor-nork)
