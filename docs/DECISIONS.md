@@ -12,6 +12,44 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #265: `esan`/`eman`'s `validFor` stays empty — confirmed, not just left over
+
+**Decision:** no `validFor` tags added between `esan` and `eman` (`src/data/
+verbs.js`'s only two `nor-nori-nork` verbs) — every variant keeps `validFor:
+[]`, across `present`/`presentPlural` and (via the `sentences.future =
+sentences.present`/`sentences.past = sentences.present` reference-sharing
+loops also covered in #264) `past`/`future` too. `node scripts/
+validfor-delta-audit.mjs --verb esan`/`--verb eman` confirms exactly 16 gap
+slots each, one per `{tense, person}` cell where the other verb has a
+same-person form — and all 16 are correctly left untagged.
+
+**Why no substitution works, for any of them:** `agreementsCompatible`
+returns `true` for two `nor-nori-nork` verbs (same agreement-array shape), so
+the engine would happily offer `eman`'s forms as `esan` distractors (and vice
+versa) if `validFor` invited it. Two independent reasons block it:
+
+1. **Fixed-argument mismatch.** `esan`'s `recipient: 'hura'` fixes NORI, so
+   its varying `person` tracks NORK ("Zuk egia esan**diozu**" — *you* tell
+   him). `eman`'s `agent: 'ni'` fixes NORK, so its varying `person` tracks
+   NORI ("Nik liburua zuri ema**ten dizut**" — I give it to *you*). The same
+   `person` key (`zu`, `hura`, `zuek`, `haiek`) therefore names a different
+   grammatical role in each verb's conjugated form — dropping `eman`'s
+   `zu`-form into `esan`'s "Zuk egia ___." sentence isn't "wrong verb, right
+   shape," it's a subject/object agreement mismatch baked into the
+   morphology, the same class of break the per-sentence `validFor` schema
+   (`docs/SENTENCE_FRAMES.md`) was built to keep out.
+2. **No idiomatic overlap.** Even where the morphology lined up, "egia eman"
+   ("give the truth") and "liburua esan" ("tell the book") aren't natural
+   Basque the way "egia esan"/"liburua eman" are — the verbs' own cue nouns
+   (truth vs. book) were chosen because they don't cross over.
+
+Added explanatory comments at both verbs' `sentences` blocks (replacing a
+stale comment on `esan` that claimed `agreementsCompatible` itself excludes
+nor-nori-nork cross-borrowing — it doesn't; `esan`/`eman` *are* mutually
+`agreementsCompatible`, they're just not substitutable for the reasons
+above). No third `nor-nori-nork` verb exists yet, so this is necessarily
+within-pair only — re-examine if one is added.
+
 ## 2026-06-19 — #264: `gustatu`/`iruditu`/`ahaztu`'s past/future `validFor` — no-op, confirmed via reference
 
 **Decision:** no `src/data/verbs.js` edits needed beyond #263. Confirmed via
