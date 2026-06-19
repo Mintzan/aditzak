@@ -12,6 +12,10 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #282: Unit 11 lessons split izan/ukan-branch, single `unit-11-review`, no recency-contrast questions yet
+
+Unit 11 (`presentPerfect`, #281's data) flips to `available` with five lessons: an `izan`-branch pool (`izan`/`joan`/`etorri`, mirroring `izan-past-pool`'s shape) + its `-plural` sibling, an `ukan`-branch single-verb lesson (`ikusi` — the only Unit 13 verb with a `presentPerfect` table) + its `-plural` sibling, and one `unit-11-review`. The review only sources `presentPerfect` material (not `past`), even though the unit's whole point is the `gaur ... da` vs. `atzo ... zen` recency contrast — `past` for these verbs is taught in Unit 12, which comes *after* Unit 11 in the strictly-linear lesson order, so a Unit 11 review can't yet draw on it without jumping ahead. Added a missing `TENSE_META.presentPerfect` entry (and `tensePresentPerfect` i18n keys) that `describeLesson` needed to render these lessons at all — `#281` added the conjugation data but not this UI metadata, since it only touched `verbs.js`'s data, not lesson-facing labels.
+
 ## 2026-06-19 — #285: plural-object nouns paired with singular-object auxiliaries fixed by singularizing the noun, not by moving the sentence to a plural table
 
 **Decision:** audited every NOR-NORK verb's `sentences`/`pronounSentences` for

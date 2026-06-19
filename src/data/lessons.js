@@ -301,7 +301,54 @@ export const LESSONS = [
       { verbId: 'etorri', tense: 'present' },
     ],
   },
-  // Unit 11 ("Looking Back I — The izan-Past Pool") — `izan`'s past auxiliary
+  // Unit 11 ("What Just Happened — The Recent Past (Present Perfect)",
+  // Phase II) — the present perfect (Lehenaldiko Burutua) is the perfective
+  // participle + a *present* auxiliary (`etorri naiz` / `ikusi dut`), so it
+  // teaches the participle while reusing already-known present auxiliaries
+  // (Units 1/2/13) — zero new auxiliary forms. Split along the same
+  // izan/ukan branch lines as the past pools that follow it: an
+  // `izan`-branch pool (`izan`/`joan`/`etorri`) and an `ukan`-branch lesson
+  // (`ikusi` — the only Unit 13 verb with a `presentPerfect` table so far,
+  // see #281). `unit-11-review` folds both branches together; the
+  // `gaur ... da` vs. `atzo ... zen` recency contrast itself waits for
+  // Unit 12's past forms to exist (#283 tracks dedicated recency-contrast
+  // distractors) — see `docs/LANGUAGE_DECISIONS.md`.
+  {
+    id: 'izan-present-perfect-pool',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'presentPerfect' },
+      { verbId: 'joan', tense: 'presentPerfect' },
+      { verbId: 'etorri', tense: 'presentPerfect' },
+    ],
+  },
+  {
+    id: 'izan-present-perfect-pool-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'presentPerfect' },
+      { verbId: 'joan', tense: 'presentPerfect' },
+      { verbId: 'etorri', tense: 'presentPerfect' },
+    ],
+  },
+  { id: 'ikusi-present-perfect', verbId: 'ikusi', tense: 'presentPerfect', persons: PHASE_1_PERSONS },
+  {
+    id: 'ikusi-present-perfect-plural',
+    verbId: 'ikusi',
+    tense: 'presentPerfect',
+    persons: PHASE_1_PLURAL_PERSONS,
+  },
+  {
+    id: 'unit-11-review',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'izan', tense: 'presentPerfect' },
+      { verbId: 'etorri', tense: 'presentPerfect' },
+      { verbId: 'ikusi', tense: 'presentPerfect' },
+    ],
+  },
+  // Unit 12 ("Looking Back I — The izan-Past Pool") — `izan`'s past auxiliary
   // (nintzen/zinen/zen/ginen/zineten/ziren) is shared *exactly* by `izan`
   // itself (synthetic — it *is* these forms) and by `joan`/`etorri`/`ibili`
   // (periphrastic simple past — "joan/etorri/ibili" + these forms). Pooled
