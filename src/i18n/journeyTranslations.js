@@ -150,6 +150,12 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '16. atala — Eguraldiari buruz hizketan',
       },
     },
+    'phase-7-stage-17': {
+      title: {
+        es: 'Etapa 17 — Llevar y traer',
+        eu: '17. atala — Eraman eta ekarri',
+      },
+    },
   },
   units: {
     1: {
@@ -581,6 +587,17 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Está lloviendo." · "Hace frío." · "Hace sol."',
         eu: '"Euria ari du." · "Hotz da." · "Eguzkia dago."',
+      },
+    },
+    42: {
+      title: { es: 'Llevar y traer', eu: 'Eraman eta ekarri' },
+      focus: {
+        es: 'eraman ("llevar") + ekarri ("traer") — verbos sintéticos nor-nork en el patrón ya aprendido de eduki/jakin, presente + pasado',
+        eu: 'eraman + ekarri — eduki/jakin-en jadanik ikasitako nor-nork eredu sintetikoko aditzak, oraina + lehenaldia',
+      },
+      payload: {
+        es: '"Llevo mi perro al monte." · "El amigo trae un tamborcito desde la Tamborrada donostiarra."',
+        eu: '"Nire txakurra daramat mendira." · "Lagunak danbor txiki bat dakar Donostiako Danborradatik."',
       },
     },
   },

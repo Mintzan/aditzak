@@ -12,6 +12,27 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #262: wired `eraman`/`ekarri` into `LESSONS`/`journey.js`
+
+**Decision:** placed `eraman`/`ekarri` as a brand-new **Unit 42 ("Carrying &
+Bringing"), Phase VII Stage 17**, rather than folding them into any existing
+`pending` unit or inserting them earlier in the renumbered core sequence
+(Units 1-39). Surveyed every currently-`pending` unit (27, 31, 35, 37-39, 40,
+41) and none thematically fit "carry/bring" — but both verbs are plain
+nor-nork synthetic verbs in the *already-taught* `eduki`/`jakin` shape, with
+no new grammatical relation to introduce. That's exactly Phase VII's stated
+criterion ("optional flavor content... neither unit unlocks new agreement
+coverage that isn't already taught elsewhere") — the same reasoning that
+placed Unit 40's `jario`/`etzan`/`irudi` and Unit 41's weather idioms there.
+Appending rather than inserting also avoids renumbering every downstream
+unit, a much larger and riskier change than this issue's data-wiring scope.
+
+Added `eraman-present(-plural)`, `ekarri-present(-plural)`,
+`eraman-past(-plural)`, `ekarri-past(-plural)`, and a present+past unit
+review (singular + plural) to `LESSONS`; added the unit to `journey.js` as
+`available` with those `lessonIds`; added matching `journeyTranslations.js`
+entries (`phase-7-stage-17`, unit 42) — `journey.test.js` cross-checks both.
+
 ## 2026-06-19 — #261: added `eraman`/`ekarri` sentences + `validFor` tagging
 
 **Decision:** added `sentences.present/past`, `pronouns`, and
