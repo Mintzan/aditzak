@@ -6,6 +6,35 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-19 — #287: resolved `jakin`'s plural-object (`dakizki-`) forms; still needs native-speaker check
+
+**Decision:** #284 deferred `jakin`'s plural-object forms because it's its
+own synthetic stem, not covered by either the `ukan` (`dit-` swap) or
+`eduki` (`-z-` infix) pattern those other verbs use. Rather than guess
+blindly, found that `docs/CONJUGATIONS.md` already has direct internal
+evidence for this exact stem: its NOR-NORI subjunctive grid tabulates
+`jakin`'s own `daki-`/`zeki-` root taking a `-zki-` infix right before the
+person suffix (`dakidan`→`dakizkidan`, `zekidan`→`zekizkidan`, etc.).
+Applying that same insertion point to the indicative present/past tables
+gives `presentPlural`/`pastPlural` (e.g. `dakit`→`dakizkit`,
+`nekien`→`nekizkien`) — added to `VERBS`'s `jakin` entry and to
+`CONJUGATIONS.md`'s `jakin` table as a "(sg./pl. obj.)" column, matching
+`ekarri`/`eduki`'s existing format.
+
+`presentPlural` only covers the persons `jakin`'s `present` table already
+has (`ni`/`zu`/`hura`/`hi-m`/`hi-f`) — `present` itself is missing
+`guk`/`zuek`/`haiek` cells in `VERBS` despite `CONJUGATIONS.md` documenting
+them, a pre-existing gap predating #287, left untouched here. No
+`futurePlural`: `future` itself only has 3 persons, the same omission
+`nahi`'s missing `pastPlural` already established as acceptable.
+
+This derivation is by analogy from the same stem's attested infix
+position in a different paradigm (NOR-NORI subjunctive), not an
+independent indicative-paradigm source — so it carries the same
+native-speaker-check caveat as #284's other plural-object forms below; it
+narrows the gap (a sourced derivation instead of an unsourced one) but
+doesn't remove the need for a speaker check.
+
 ## 2026-06-19 — #281: `presentPerfect` (*Lehenaldiko Burutua*) tables for Unit 11's core verbs
 
 **Decision:** added a `presentPerfect` conjugation table to `izan`, `joan`,
