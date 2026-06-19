@@ -609,6 +609,22 @@ export function getCrossTenseLure(verb, tense, person) {
   return verb.conjugations.present?.[person]
 }
 
+// #283's "recency contrast" lure: present perfect and simple past share the
+// same participle and differ only in the auxiliary's own tense (`etorri
+// naiz` vs. `etorri nintzen`, `ikusi dut` vs. `ikusi nuen`) — the exact
+// confusion Unit 11 teaches (`gaur ... da` vs. `atzo ... zen`). Returns the
+// verb's own form in the *other* of these two tenses, same person; separate
+// from `getCrossTenseLure` above (which only covers past <-> present) so
+// both can surface as distinct guaranteed distractors on a past-tense
+// question. `undefined` for any tense but `presentPerfect`/`past`, or
+// without a table for the other tense (every verb except `izan`/`joan`/
+// `etorri`/`ikusi` today, see #281).
+export function getRecencyContrastLure(verb, tense, person) {
+  if (tense === 'presentPerfect') return verb.conjugations.past?.[person]
+  if (tense === 'past') return verb.conjugations.presentPerfect?.[person]
+  return undefined
+}
+
 // The verb's own plural-object form for the same person/tense (`gustatzen
 // zaizkit` offered alongside `gustatzen zait`, `esaten dizkiot` offered
 // alongside `esaten diot`) — #165's "wrong object number" slot for NOR-NORI
@@ -1022,7 +1038,10 @@ function buildWordOrderQuestion(table, sentence, person) {
 // verb's own plural-object form, where one exists) for the "wrong object
 // number" slot. Future's invented-non-word safety mechanism, hi/hitanoa, and
 // the moods with no data yet remain out of scope — see #165's follow-up
-// issue.
+// issue. #283 added `getRecencyContrastLure` (`presentPerfect` <-> `past`,
+// same participle/different auxiliary tense — `etorri naiz` alongside
+// `etorri nintzen`) and extended this gate to `tense === 'presentPerfect'`
+// so it actually fires.
 export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
@@ -1058,11 +1077,14 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
     // distractors on top of the usual same-table ones. NOR present (no
     // `nork`, present tense) is left alone — its matrix row's Slot 3 is the
     // post-Unit-7 plural/near-homophone borrow (#164), not a case-frame lure.
+    // #283: `presentPerfect` joins this gate too, for the `getRecencyContrastLure`
+    // past<->presentPerfect contrast Unit 11 teaches.
     const baseFormLures =
-      tense === 'past' || verb.agreement?.includes('nork') || verb.agreement?.includes('nori')
+      tense === 'past' || tense === 'presentPerfect' || verb.agreement?.includes('nork') || verb.agreement?.includes('nori')
         ? [
             { form: getCaseFrameLure(verbs, verb, tense, person), errorType: 'case-frame' },
             { form: getCrossTenseLure(verb, tense, person), errorType: 'tense' },
+            { form: getRecencyContrastLure(verb, tense, person), errorType: 'tense' },
             { form: getObjectNumberLure(verb, tense, person), errorType: 'object-number' },
           ]
         : []

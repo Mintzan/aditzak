@@ -30,6 +30,7 @@ import {
   getObjectNumberLure,
   getPointsBalance,
   getProgressiveBaseLure,
+  getRecencyContrastLure,
   getStreakEncouragement,
   getUnlockedLessonIds,
   getWeakSpotQuestions,
@@ -1893,6 +1894,7 @@ describe('generateQuestions', () => {
   describe('#141 case-frame/cross-tense lures', () => {
     const izan = VERBS.find((v) => v.id === 'izan')
     const ukan = VERBS.find((v) => v.id === 'ukan')
+    const etorri = VERBS.find((v) => v.id === 'etorri')
 
     describe('getCaseFrameLure/getCaseFramePronounLure/getCrossTenseLure', () => {
       it('finds the case-frame-inverse sibling\'s same-person form (izan <-> ukan)', () => {
@@ -1931,6 +1933,28 @@ describe('generateQuestions', () => {
         expect(getObjectNumberLure(gustatu, 'present', 'ni')).toBe('gustatzen zaizkit')
         expect(getObjectNumberLure(esan, 'present', 'ni')).toBe('esaten dizkiot')
         expect(getObjectNumberLure(izan, 'present', 'ni')).toBeUndefined()
+      })
+    })
+
+    // #283: the present-perfect <-> simple-past "recency contrast" lure
+    // (`etorri naiz` vs. `etorri nintzen`) — distinct from `getCrossTenseLure`
+    // above, which only covers past <-> present.
+    describe('getRecencyContrastLure', () => {
+      const etorri = VERBS.find((v) => v.id === 'etorri')
+      const ikusi = VERBS.find((v) => v.id === 'ikusi')
+
+      it('returns the past form for a presentPerfect question, and vice versa', () => {
+        expect(getRecencyContrastLure(etorri, 'presentPerfect', 'ni')).toBe(etorri.conjugations.past.ni)
+        expect(getRecencyContrastLure(etorri, 'past', 'ni')).toBe(etorri.conjugations.presentPerfect.ni)
+        expect(getRecencyContrastLure(ikusi, 'presentPerfect', 'hura')).toBe(ikusi.conjugations.past.hura)
+        expect(getRecencyContrastLure(ikusi, 'past', 'hura')).toBe(ikusi.conjugations.presentPerfect.hura)
+        expect(getRecencyContrastLure(izan, 'past', 'ni')).toBe(izan.conjugations.presentPerfect.ni)
+      })
+
+      it('returns undefined for any tense but presentPerfect/past, or without a table for the other tense', () => {
+        expect(getRecencyContrastLure(etorri, 'present', 'ni')).toBeUndefined()
+        const ukan = VERBS.find((v) => v.id === 'ukan')
+        expect(getRecencyContrastLure(ukan, 'past', 'ni')).toBeUndefined()
       })
     })
 
@@ -1976,6 +2000,30 @@ describe('generateQuestions', () => {
       expect(question.correct).toBe('a-past')
       expect(question.options).toContain('b-past')
       expect(question.options).toContain('a-present')
+    })
+
+    // #283: Unit 11's recency-contrast lure — `etorri`/`ikusi` both have real
+    // `presentPerfect` *and* `past` sentence data (gaur/atzo framed, see
+    // verbs.js), so this exercises `getRecencyContrastLure` end-to-end rather
+    // than through a synthetic verb pair.
+    it('offers the past-tense sibling form as a presentPerfect distractor, and vice versa (`etorri zen`/`etorri da`)', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0) // -> 'sentence' (first available kind)
+
+      const presentPerfectQuestion = generateQuestions(etorri, 'presentPerfect', { verbs: VERBS, persons: ['ni'] }).find(
+        (q) => q.person === 'ni',
+      )
+      expect(presentPerfectQuestion.kind).toBe('sentence')
+      expect(presentPerfectQuestion.correct).toBe(etorri.conjugations.presentPerfect.ni)
+      expect(presentPerfectQuestion.options).toContain(etorri.conjugations.past.ni)
+      expect(presentPerfectQuestion.optionRationale[etorri.conjugations.past.ni]).toEqual({
+        errorType: 'tense',
+        whyKey: 'lureRationaleTense',
+      })
+
+      const pastQuestion = generateQuestions(etorri, 'past', { verbs: VERBS, persons: ['ni'] }).find((q) => q.person === 'ni')
+      expect(pastQuestion.kind).toBe('sentence')
+      expect(pastQuestion.correct).toBe(etorri.conjugations.past.ni)
+      expect(pastQuestion.options).toContain(etorri.conjugations.presentPerfect.ni)
     })
 
     it('offers the case-frame-inverse sibling\'s pronoun as a distractor (`Nik` for `Ni`)', () => {

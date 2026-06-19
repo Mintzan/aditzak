@@ -221,7 +221,7 @@ export const TRANSLATIONS = {
     lureRationaleCaseFrame:
       "'{form}' marks a different subject case than this question needs (NOR vs NOR-NORK) — it's borrowed from a verb whose subject works the opposite way. The correct form here is '{correct}'.",
     lureRationaleTense:
-      "'{form}' is the present-tense form, but this question is in the past. The correct form here is '{correct}'.",
+      "'{form}' is a different tense of this verb — it doesn't fit this sentence's tense. The correct form here is '{correct}'.",
     lureRationaleObjectNumber:
       "'{form}' marks a plural object, but the object here is singular. The correct form here is '{correct}'.",
     lureRationaleProgressiveVsPlain:
@@ -418,7 +418,7 @@ export const TRANSLATIONS = {
     lureRationaleCaseFrame:
       "'{form}' marca un sujeto de otro tipo (NOR vs NOR-NORK) — viene de un verbo cuyo sujeto funciona al revés. La forma correcta aquí es '{correct}'.",
     lureRationaleTense:
-      "'{form}' es la forma de presente, pero esta pregunta está en pasado. La forma correcta aquí es '{correct}'.",
+      "'{form}' es la forma de otro tiempo verbal — no encaja con el tiempo de esta frase. La forma correcta aquí es '{correct}'.",
     lureRationaleObjectNumber:
       "'{form}' marca un objeto plural, pero aquí el objeto es singular. La forma correcta aquí es '{correct}'.",
     lureRationaleProgressiveVsPlain:
@@ -615,7 +615,7 @@ export const TRANSLATIONS = {
     lureRationaleCaseFrame:
       "'{form}' beste motako subjektu bat markatzen du (NOR vs NOR-NORK) — alderantziz funtzionatzen duen aditz batetik dator. Forma zuzena hemen '{correct}' da.",
     lureRationaleTense:
-      "'{form}' oraindiko forma da, baina galdera hau iraganean dago. Forma zuzena hemen '{correct}' da.",
+      "'{form}' aditz honen beste denbora bateko forma da — ez dator bat esaldi honen denborarekin. Forma zuzena hemen '{correct}' da.",
     lureRationaleObjectNumber:
       "'{form}' objektu plural bat markatzen du, baina hemen objektua singularra da. Forma zuzena hemen '{correct}' da.",
     lureRationaleProgressiveVsPlain:
