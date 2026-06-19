@@ -171,12 +171,27 @@ cleanest route to `nor-nori`, `esan` to `nor-nori-nork`:
 | jardun | to be engaged in / at it ("zertan dihardu?" = "what's he up to?") | nor-nork | 🔲 a curiosity worth knowing about rather than prioritising: it expresses the *same* "ongoing action" meaning as `ari`/`ibili` (§5), but — unlike them — conjugates in the transitive `du`-pattern (`dihardut` "I'm at it" ~ `dut`) despite being semantically intransitive. One more data point for "the form doesn't follow the lexical verb's transitivity," alongside `nahi`/`behar`/`ari` |
 | etzan | (corrected — not "to lie/recline"; that example was my fabrication) the source's actual gloss is narrower: either the static position of a body/corpse, or — its real teaching use — the abstract "to consist of / for the essence of something to lie in [something]," as in "Zertan datza ariketa? Paragrafo bat irakurtzean datza." ("What does the exercise consist of? It consists of reading a paragraph.") | nor | 🔲 full `nor` paradigm (present + past, all seven persons) now sourced and in `CONJUGATIONS.md` §9 — confirms `datza` (3sg) and fills in the rest. But the original source remains blunt about it: "oso erabilpen mugatua du" (it has very limited usage) and "egon eta izan aditzen bidez erraz saihes liteke" (it can easily be avoided by using `egon`/`izan` instead). In other words, native teaching materials actively steer learners away from it. Keep it on the radar as a genuine `nor` form, but `egon` remains the far better everyday `nor` pick — `etzan` is more a "recognise it when you see it" item than a core lesson candidate |
 
-`atxeki` ("to adhere/cling [to]") and `iharduki` ("to converse, hold forth" —
-a relative of `jardun`) are also genuinely synthetic, but rare/dialectal
-enough that I couldn't pin down their argument structure or how alive their
-paradigms are in modern Batua from the sources at hand — worth a revisit with
-a proper grammar reference if either seems promising, rather than guessing at
-their forms here.
+**`atxiki`** (corrected spelling — not "atxeki"; "to adhere/cling [to],
+hold fast") and **`iharduki`** ("to converse, hold forth" — a relative of
+`jardun`) are also genuinely synthetic and listed in EGLU-II alongside the
+verbs above, but a closer pass (EGLU-II + OEH, June 2026) shows the original
+caution above wasn't a research gap — both are *historically* defective,
+not just under-researched:
+
+- **`atxiki`**: only a single synthetic form is independently attested —
+  3sg present `datxika`/`datxeka` (nor-nori). No past paradigm is attested
+  at all, and no other person is attested or even safely pattern-derivable
+  from the sources at hand. Effectively a one-cell paradigm — too defective
+  to support a per-person lesson table; documentation-only.
+- **`iharduki`** (nor-nork, like `jardun`/`irudi`): present has 3 directly
+  attested persons — `dihardu` (hura), `dihardu(zu)` (zu), `dihardukite`
+  (haiek) — plus 2 more that are pattern-derived/rare rather than directly
+  attested; `hi`/`zuek` present are unattested. Past has exactly 1 attested
+  form (3sg). Archaic and restricted to classical Lapurdian/Zuberoan
+  literary register — its attested forms trace to Leiçarraga's 1571 Basque
+  New Testament translation. Richer than `atxiki` but still too partial and
+  too archaic/regional for a standard lesson table; documentation-only for
+  now. See `LANGUAGE_DECISIONS.md` #246 for the full sourcing writeup.
 
 ### 4b. Representative periphrastic verbs (aditz perifrastikoak)
 None yet — `TYPE_META.periphrastic` exists but no verb actually conjugates as

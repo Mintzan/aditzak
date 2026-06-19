@@ -6,6 +6,46 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-19 — #246: Researched `atxiki`/`iharduki`; concluded documentation-only, no `VERBS` entry
+
+**Decision:** `VERB_COVERAGE.md` §4a flagged `atxiki` (misspelled "atxeki"
+in the original draft) and `iharduki` as "genuinely synthetic, but rare/
+dialectal enough that I couldn't pin down their argument structure" —
+listed in EGLU-II alongside the app's other synthetic-verb candidates, so
+worth a proper grammar-reference pass before either ruling them in or out.
+WebFetch was blocked (403) on every direct source (euskaltzaindia.eus,
+Wikipedia), so the research was relayed through an external model
+(Gemini) with a prompt asking specifically for EGLU-II/OEH-sourced
+present+past paradigms, with each cell marked directly-attested vs.
+pattern-derived/rare vs. unattested — matching this log's own sourcing
+standard (e.g. #245's caveat above).
+
+The result: both verbs are *historically* defective, not just
+under-researched — the original "couldn't pin down" caution turns out to
+have been substantively correct, for a more specific reason than "needs
+more digging."
+
+- **`atxiki`** (nor-nori, "to adhere/cling [to]"): only one form is
+  attested anywhere — 3sg present `datxika`/`datxeka`. No attested past,
+  no other attested or safely-derivable persons. A one-cell paradigm.
+- **`iharduki`** (nor-nork, sibling of `jardun`/`irudi`): present has 3
+  directly-attested persons (hura/zu/haiek), 2 more pattern-derived/rare,
+  `hi`/`zuek` unattested; past has exactly 1 attested form (3sg). Archaic,
+  restricted to classical Lapurdian/Zuberoan literary register — its
+  attested forms trace to Leiçarraga's 1571 Basque New Testament
+  translation.
+
+**Why documentation-only, no `VERBS`/`LESSONS` entry:** the app's lesson
+format is built around a full or near-full person-by-person table per tense
+(`generateQuestions` needs enough sibling forms in the same table to serve
+as distractors). `atxiki`'s single attested cell can't support that at
+all; `iharduki`'s partial, archaic paradigm is richer but still has 2 of 7
+present persons and 6 of 7 past persons missing or unattested — filling
+the gaps would mean inventing forms with no source backing, which this
+project's sourcing standard rules out. Updated `VERB_COVERAGE.md` §4a with
+the corrected spelling (`atxeki` → `atxiki`) and this summary in place of
+the earlier "couldn't pin down" note.
+
 ## 2026-06-18 — #245: Sourced `jakin`'s past `hik`/`zuk`/`zuek` gaps; added it to Unit 13's "ukan" past pool
 
 **Decision:** `CONJUGATIONS.md` §7's `jakin` past grid had `hik`/`zuk`/`zuek`
