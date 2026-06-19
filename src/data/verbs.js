@@ -742,30 +742,34 @@ export const VERBS = [
     // form for the same person/tense (`dut`, `zuen`, ...) — allowing `ukan`
     // as a candidate would offer a same-text "duplicate correct" option
     // rather than a real wrong-answer distractor.
+    // #288: the blank sits directly after the infinitive, with no literal
+    // `behar`/`beharko` before it — the conjugated form (`behar dut`,
+    // `beharko zuen`, ...) already supplies the modal word, so writing it
+    // again in the template doubled it (`... behar behar dute.`).
     sentences: {
       present: {
-        ni: [{ text: 'Nik gaur arratsaldean etxera joan behar ___.', validFor: [] }],
-        zu: [{ text: 'Zuk bihar goizean garaiz esnatu behar ___?', validFor: [] }],
-        hura: [{ text: 'Sukaldariak legatz freskoa garbitu behar ___.', validFor: [] }],
-        gu: [{ text: 'Guk aplikazio berria instalatu behar ___.', validFor: [] }],
-        zuek: [{ text: 'Zuek sarrera bat erosi behar ___?', validFor: [] }],
-        haiek: [{ text: 'Herritarrek dantza ondo entrenatu behar ___.', validFor: [] }],
+        ni: [{ text: 'Nik gaur arratsaldean etxera joan ___.', validFor: [] }],
+        zu: [{ text: 'Zuk bihar goizean garaiz esnatu ___?', validFor: [] }],
+        hura: [{ text: 'Sukaldariak legatz freskoa garbitu ___.', validFor: [] }],
+        gu: [{ text: 'Guk aplikazio berria instalatu ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek sarrera bat erosi ___?', validFor: [] }],
+        haiek: [{ text: 'Herritarrek dantza ondo entrenatu ___.', validFor: [] }],
       },
       past: {
-        ni: [{ text: 'Nik atzo etxera joan behar ___.', validFor: [] }],
-        zu: [{ text: 'Zuk atzo goiz esnatu behar ___?', validFor: [] }],
-        hura: [{ text: 'Sukaldariak legatza garbitu behar ___.', validFor: [] }],
-        gu: [{ text: 'Guk aplikazioa instalatu behar ___.', validFor: [] }],
-        zuek: [{ text: 'Zuek sarrera erosi behar ___?', validFor: [] }],
-        haiek: [{ text: 'Herritarrek dantza entrenatu behar ___.', validFor: [] }],
+        ni: [{ text: 'Nik atzo etxera joan ___.', validFor: [] }],
+        zu: [{ text: 'Zuk atzo goiz esnatu ___?', validFor: [] }],
+        hura: [{ text: 'Sukaldariak legatza garbitu ___.', validFor: [] }],
+        gu: [{ text: 'Guk aplikazioa instalatu ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek sarrera erosi ___?', validFor: [] }],
+        haiek: [{ text: 'Herritarrek dantza entrenatu ___.', validFor: [] }],
       },
       future: {
-        ni: [{ text: 'Nik bihar lana bukatu beharko ___.', validFor: [] }],
-        zu: [{ text: 'Zuk trena goiz hartu beharko ___?', validFor: [] }],
-        hura: [{ text: 'Mendizaleak mapa bat eraman beharko ___.', validFor: [] }],
-        gu: [{ text: 'Guk etxe berria garbitu beharko ___.', validFor: [] }],
-        zuek: [{ text: 'Zuek txartel berria erosi beharko ___?', validFor: [] }],
-        haiek: [{ text: 'Sukaldariek txuleta erre beharko ___.', validFor: [] }],
+        ni: [{ text: 'Nik bihar lana bukatu ___.', validFor: [] }],
+        zu: [{ text: 'Zuk trena goiz hartu ___?', validFor: [] }],
+        hura: [{ text: 'Mendizaleak mapa bat eraman ___.', validFor: [] }],
+        gu: [{ text: 'Guk etxe berria garbitu ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek txartel berria erosi ___?', validFor: [] }],
+        haiek: [{ text: 'Sukaldariek txuleta erre ___.', validFor: [] }],
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
