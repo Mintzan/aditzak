@@ -624,8 +624,10 @@ export const LESSONS = [
     ],
   },
   // Unit 19 (#148) — `behar` ("need to / have to"), riding `ukan`'s present/
-  // future suffixes (`behar dut` / `beharko dut`). Form-only (no
-  // `sentences`) — see `src/data/verbs.js`'s `behar` entry comment.
+  // future suffixes (`behar dut` / `beharko dut`). #267 later added
+  // `sentences` (infinitive-complement frames) and a `past` table to
+  // `verbs.js`'s `behar` entry, but this unit's own present/future scope is
+  // unchanged — `past` isn't drilled until/unless a future unit adds it.
   { id: 'behar-present', verbId: 'behar', tense: 'present' },
   { id: 'behar-future', verbId: 'behar', tense: 'future' },
   {
