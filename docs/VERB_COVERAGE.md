@@ -160,8 +160,8 @@ cleanest route to `nor-nori`, `esan` to `nor-nori-nork`:
 | etorri | to come | nor | 🔲 |
 | ibili | to walk around / be doing | nor | 🔲 |
 | eduki | to hold / keep / have | nor-nork | 🔲 |
-| eraman | to carry / take | nor-nork | 🔲 — `eroan`/`eruan` is the western/Bizkaian dialectal variant; a `dialectVariants` candidate (see §4c) |
-| ekarri | to bring | nor-nork | 🔲 |
+| eraman | to carry / take | nor-nork | ✅ (#260) — `eroan`/`eruan` is the western/Bizkaian dialectal variant; a `dialectVariants` candidate (see §4c) |
+| ekarri | to bring | nor-nork | ✅ (#260) |
 | erabili | to use | nor-nork | 🔲 |
 | jakin | to know (a fact) | nor-nork | 🔲 — pairs naturally with periphrastic `ezagutu` ("to know/recognise *people*, places") for the classic savoir/connaître-style contrast, see §4b |
 | egin | to do / make | nor-nork | 🔲 — like `iraun`, a genuine synthetic/periphrastic overlap: rare synthetic forms exist (e.g. `dakit` "I do it", `egizu` as an hitano imperative in some dialects), mostly preserved in Western/Central dialects and literary Basque, but everyday Batua uses the periphrastic `egiten dut`/`egin nuen` (§4b-bis) — also Basque's classic transitive "light verb" for compound verbs (`lo egin` "to sleep", `dantza egin` "to dance", `barre egin` "to laugh") |
