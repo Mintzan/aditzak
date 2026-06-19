@@ -12,6 +12,34 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #263: tagged `gustatu`/`iruditu`/`ahaztu`'s present `validFor`
+
+**Decision:** replaced the empty `validFor: []` placeholders in
+`gustatu`/`iruditu`/`ahaztu`'s `sentences.present`/`presentPlural` with real
+cross-verb tags, judged per-sentence rather than assuming full mutual
+substitution among the three `agreementsCompatible` siblings:
+
+- `gustatu` ("X pleases me") ↔ `ahaztu` ("X got forgotten to me") tag each
+  other: both take a bare object + dative auxiliary with no further
+  complement, so "Niri liburua gustatzen zait" / "...ahaztu zait" are each
+  fully natural, self-contained sentences either way.
+- `iruditu` ("X seems [to be some way] to me") tags neither direction, and
+  isn't tagged onto by either sibling: its sentences need a predicate/adverb
+  telling *how* something seems (`"Niri ongi ___."` — "ongi" is the
+  predicate `iruditu` requires), and that adverb doesn't combine naturally
+  with `gustatu` ("ongi gustatzen zait" reads oddly) or `ahaztu` ("ongi
+  ahaztu zait" doesn't parse). Conversely, bare "Niri hau/liburua iruditzen
+  zait" (no predicate) reads as incomplete, so `iruditu`'s form doesn't
+  substitute into `gustatu`'s/`ahaztu`'s bare-object sentences either.
+
+Regenerated `scripts/validfor-gap-baseline.json` — gap counts for `gustatu`/
+`ahaztu` *dropped* (48 → 24 each) rather than rose, since closing previously
+-unclaimed `validFor: []` slots closes gaps instead of opening new ones (the
+inverse of the usual "new verb/sentence" pattern, but the same underlying
+mechanism). The remaining 24 gaps on each are `iruditu`'s present-tense
+sentences, explicitly left untagged per the judgment above — `#264` covers
+`past`/`future`/`pastPlural`/`futurePlural`.
+
 ## 2026-06-19 — #262: wired `eraman`/`ekarri` into `LESSONS`/`journey.js`
 
 **Decision:** placed `eraman`/`ekarri` as a brand-new **Unit 42 ("Carrying &

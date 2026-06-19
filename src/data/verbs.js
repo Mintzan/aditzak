@@ -1995,29 +1995,33 @@ export const VERBS = [
       },
     },
     // NORI is the varying slot here, so each sentence leads with the dative
-    // pronoun ("Niri"/"Zuri"/...). `validFor: []`: gustatu/iruditu/ahaztu are
-    // `agreementsCompatible` (mutual nor-nori distractor donors for
-    // bare-form questions), but whether each sibling's same-person form would
-    // *also* grammatically complete this exact sentence text hasn't been
-    // reviewed — left unclaimed pending the native-speaker check above.
+    // pronoun ("Niri"/"Zuri"/...). #263: `validFor: ['ahaztu']` — "Niri hau
+    // ahaztu zait" ("I forgot this") is a fully natural, self-contained
+    // sentence with the same bare-object + dative-aux shape, so `ahaztu`'s
+    // same-person form substitutes cleanly. `iruditu` does not: bare "Niri
+    // hau iruditzen zait" reads as incomplete without a predicate/adverb
+    // telling *how* it seems (cf. `iruditu`'s own "Niri ongi ___." sentence
+    // below) — excluded.
     sentences: {
       present: {
-        ni: [{ text: 'Niri hau ___.', validFor: [] }],
-        zu: [{ text: 'Zuri hau ___.', validFor: [] }],
-        hura: [{ text: 'Hari hau ___.', validFor: [] }],
-        gu: [{ text: 'Guri hau ___.', validFor: [] }],
-        zuek: [{ text: 'Zuei hau ___.', validFor: [] }],
-        haiek: [{ text: 'Haiei hau ___.', validFor: [] }],
+        ni: [{ text: 'Niri hau ___.', validFor: ['ahaztu'] }],
+        zu: [{ text: 'Zuri hau ___.', validFor: ['ahaztu'] }],
+        hura: [{ text: 'Hari hau ___.', validFor: ['ahaztu'] }],
+        gu: [{ text: 'Guri hau ___.', validFor: ['ahaztu'] }],
+        zuek: [{ text: 'Zuei hau ___.', validFor: ['ahaztu'] }],
+        haiek: [{ text: 'Haiei hau ___.', validFor: ['ahaztu'] }],
       },
       // #164: plural-object counterpart of the table above ("these please
       // me", not "it pleases me") — `hau` ("this") becomes `hauek` ("these").
+      // #263: same `ahaztu`-only judgment as the singular table above
+      // ("Niri hauek ahaztu zaizkit" = "I forgot these").
       presentPlural: {
-        ni: [{ text: 'Niri hauek ___.', validFor: [] }],
-        zu: [{ text: 'Zuri hauek ___.', validFor: [] }],
-        hura: [{ text: 'Hari hauek ___.', validFor: [] }],
-        gu: [{ text: 'Guri hauek ___.', validFor: [] }],
-        zuek: [{ text: 'Zuei hauek ___.', validFor: [] }],
-        haiek: [{ text: 'Haiei hauek ___.', validFor: [] }],
+        ni: [{ text: 'Niri hauek ___.', validFor: ['ahaztu'] }],
+        zu: [{ text: 'Zuri hauek ___.', validFor: ['ahaztu'] }],
+        hura: [{ text: 'Hari hauek ___.', validFor: ['ahaztu'] }],
+        gu: [{ text: 'Guri hauek ___.', validFor: ['ahaztu'] }],
+        zuek: [{ text: 'Zuei hauek ___.', validFor: ['ahaztu'] }],
+        haiek: [{ text: 'Haiei hauek ___.', validFor: ['ahaztu'] }],
       },
     },
   },
@@ -2057,6 +2061,11 @@ export const VERBS = [
         gu: 'irudituko zaizkigu', zuek: 'irudituko zaizkizue', haiek: 'irudituko zaizkie',
       },
     },
+    // #263: `validFor: []` throughout — "ongi" ("well") modifies *how*
+    // something seems, and neither `gustatu` ("ongi gustatzen zait", "it
+    // pleases me well") nor `ahaztu` ("ongi ahaztu zait", "it well-forgot to
+    // me") combines naturally with that adverb, so no sibling substitutes
+    // into either sentence here.
     sentences: {
       present: {
         ni: [{ text: 'Niri ongi ___.', validFor: [] }],
@@ -2123,24 +2132,31 @@ export const VERBS = [
         gu: 'ahaztuko zaizkigu', zuek: 'ahaztuko zaizkizue', haiek: 'ahaztuko zaizkie',
       },
     },
+    // #263: `validFor: ['gustatu']` — "Niri liburua gustatzen zait" ("I like
+    // the book") is a fully natural, self-contained substitution, the mirror
+    // of `gustatu`'s own judgment above. `iruditu` excluded for the same
+    // "needs a predicate" reason ("liburua iruditzen zait" alone is
+    // incomplete).
     sentences: {
       present: {
-        ni: [{ text: 'Niri liburua ___.', validFor: [] }],
-        zu: [{ text: 'Zuri liburua ___.', validFor: [] }],
-        hura: [{ text: 'Hari liburua ___.', validFor: [] }],
-        gu: [{ text: 'Guri liburua ___.', validFor: [] }],
-        zuek: [{ text: 'Zuei liburua ___.', validFor: [] }],
-        haiek: [{ text: 'Haiei liburua ___.', validFor: [] }],
+        ni: [{ text: 'Niri liburua ___.', validFor: ['gustatu'] }],
+        zu: [{ text: 'Zuri liburua ___.', validFor: ['gustatu'] }],
+        hura: [{ text: 'Hari liburua ___.', validFor: ['gustatu'] }],
+        gu: [{ text: 'Guri liburua ___.', validFor: ['gustatu'] }],
+        zuek: [{ text: 'Zuei liburua ___.', validFor: ['gustatu'] }],
+        haiek: [{ text: 'Haiei liburua ___.', validFor: ['gustatu'] }],
       },
       // #164: the issue's own worked example — "Giltzak ahaztu zaizkit" ("I
-      // forgot the keys").
+      // forgot the keys"). #263: same `gustatu`-only judgment as the
+      // singular table above ("Niri giltzak gustatzen zaizkit" = "I like
+      // the keys").
       presentPlural: {
-        ni: [{ text: 'Niri giltzak ___.', validFor: [] }],
-        zu: [{ text: 'Zuri giltzak ___.', validFor: [] }],
-        hura: [{ text: 'Hari giltzak ___.', validFor: [] }],
-        gu: [{ text: 'Guri giltzak ___.', validFor: [] }],
-        zuek: [{ text: 'Zuei giltzak ___.', validFor: [] }],
-        haiek: [{ text: 'Haiei giltzak ___.', validFor: [] }],
+        ni: [{ text: 'Niri giltzak ___.', validFor: ['gustatu'] }],
+        zu: [{ text: 'Zuri giltzak ___.', validFor: ['gustatu'] }],
+        hura: [{ text: 'Hari giltzak ___.', validFor: ['gustatu'] }],
+        gu: [{ text: 'Guri giltzak ___.', validFor: ['gustatu'] }],
+        zuek: [{ text: 'Zuei giltzak ___.', validFor: ['gustatu'] }],
+        haiek: [{ text: 'Haiei giltzak ___.', validFor: ['gustatu'] }],
       },
     },
   },
