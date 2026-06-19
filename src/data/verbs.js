@@ -854,7 +854,11 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark' },
+    // #289: `gu`/`zuek`/`haiek` added — `jakin`'s `past` table conjugates
+    // these persons (NORK, ergative) but `pronouns` previously stopped at
+    // `hura`, so the plain-drill heading fell back to the raw key (`gu`)
+    // instead of the declined form (`Guk`) for `jakin-past`-family lessons.
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ erantzuna dakit.',
@@ -2482,6 +2486,11 @@ export const VERBS = [
         haiek: [{ text: 'Haiek gezurrak ___.', validFor: [] }],
       },
     },
+    // #289: `esan`'s varying `person` axis is NORK (ergative; NORI is fixed
+    // to `hura`), so the plain-drill heading needs `ukan`'s ergative
+    // pronoun forms — previously missing entirely, so the heading fell back
+    // to the raw person key for every `esan-past`/`esan-future` question.
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
   {
     id: 'eman',
@@ -2557,6 +2566,12 @@ export const VERBS = [
         haiek: [{ text: 'Nik liburuak haiei ___.', validFor: [] }],
       },
     },
+    // #289: `eman`'s varying `person` axis is NORI (dative; NORK is fixed
+    // to `ni`), so the plain-drill heading needs dative forms, not `ukan`'s
+    // ergative ones — previously missing entirely, so the heading fell back
+    // to the raw person key for every `eman-past`/`eman-future` question.
+    // `ni`/`gu` stay absent (reflexive-only, no conjugated forms to label).
+    pronouns: { zu: 'Zuri', hura: 'Hari', zuek: 'Zuei', haiek: 'Haiei' },
   },
   // #146: the first NOR-NORI (dative-subject / "psych") verbs — `gustatu`,
   // `iruditu`, `ahaztu`. `agreement: ['nor', 'nori']` with `object: 'hura'`
