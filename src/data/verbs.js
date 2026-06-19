@@ -573,13 +573,10 @@ export const VERBS = [
   },
   // `behar` ("need to / have to") — #148 (N-19), the same invariant-particle
   // + `ukan` shape as `nahi` (see above), riding `ukan`'s exact 6-person
-  // `dut`/`duzu`/`du`/`dugu`/`duzue`/`dute` suffixes for both `present`
-  // ("behar dut") and `future` ("beharko dut"). Unlike `nahi`/`jakin`,
-  // `behar`'s complement is an infinitive ("Joan behar dut" = "I have to
-  // go"), not an object noun, so no `sentences`/`pronounSentences` frame is a
-  // natural fit for #124's `validFor` machinery — core scope is form-only
-  // (multiple-choice over the conjugated `behar`/`beharko` forms); a
-  // sentence-frame pass is deferred — see `docs/DECISIONS.md`.
+  // `dut`/`duzu`/`du`/`dugu`/`duzue`/`dute` suffixes for `present`
+  // ("behar dut"), `future` ("beharko dut"), and (#267) `past` — `ukan`'s
+  // exact past suffixes again, no `-ko` (`behar nuen`/`zenuen`/`zuen`/
+  // `genuen`/`zenuten`/`zuten`, CONJUGATIONS.md §3).
   {
     id: 'behar',
     verb: 'behar izan',
@@ -597,6 +594,14 @@ export const VERBS = [
         zuek: 'behar duzue',
         haiek: 'behar dute',
       },
+      past: {
+        ni: 'behar nuen',
+        zu: 'behar zenuen',
+        hura: 'behar zuen',
+        gu: 'behar genuen',
+        zuek: 'behar zenuten',
+        haiek: 'behar zuten',
+      },
       future: {
         ni: 'beharko dut',
         zu: 'beharko duzu',
@@ -604,6 +609,48 @@ export const VERBS = [
         gu: 'beharko dugu',
         zuek: 'beharko duzue',
         haiek: 'beharko dute',
+      },
+    },
+    // #267: unlike `nahi`/`jakin`, `behar`'s complement is an infinitive
+    // ("Joan behar dut" = "I have to go"), not an object noun — so each
+    // sentence here blanks only the trailing `ukan` auxiliary after an
+    // infinitive-complement clause (adapted from `docs/SAMPLE_SENTENCES.md`'s
+    // modal-verb bank, paraphrased to a singular complement object where the
+    // bank's original used a plural one, since `behar` only has a
+    // singular-object table — see `docs/DECISIONS.md`). `lessonLogic.js`'s
+    // blank-filling needs no changes: the blank is still a single trailing
+    // token, same as every `nor-nork` object-noun sentence.
+    // `validFor: []` throughout, same reasoning as `nahi`'s own
+    // infinitive-complement variants above: an infinitive complement has no
+    // `nor-nork` object-noun sibling whose form actually fits the sentence,
+    // and `behar`'s own trailing auxiliary is identical to `ukan`'s bare
+    // form for the same person/tense (`dut`, `zuen`, ...) — allowing `ukan`
+    // as a candidate would offer a same-text "duplicate correct" option
+    // rather than a real wrong-answer distractor.
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik gaur arratsaldean etxera joan behar ___.', validFor: [] }],
+        zu: [{ text: 'Zuk bihar goizean garaiz esnatu behar ___?', validFor: [] }],
+        hura: [{ text: 'Sukaldariak legatz freskoa garbitu behar ___.', validFor: [] }],
+        gu: [{ text: 'Guk aplikazio berria instalatu behar ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek sarrera bat erosi behar ___?', validFor: [] }],
+        haiek: [{ text: 'Herritarrek dantza ondo entrenatu behar ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo etxera joan behar ___.', validFor: [] }],
+        zu: [{ text: 'Zuk atzo goiz esnatu behar ___?', validFor: [] }],
+        hura: [{ text: 'Sukaldariak legatza garbitu behar ___.', validFor: [] }],
+        gu: [{ text: 'Guk aplikazioa instalatu behar ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek sarrera erosi behar ___?', validFor: [] }],
+        haiek: [{ text: 'Herritarrek dantza entrenatu behar ___.', validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar lana bukatu beharko ___.', validFor: [] }],
+        zu: [{ text: 'Zuk trena goiz hartu beharko ___?', validFor: [] }],
+        hura: [{ text: 'Mendizaleak mapa bat eraman beharko ___.', validFor: [] }],
+        gu: [{ text: 'Guk etxe berria garbitu beharko ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek txartel berria erosi beharko ___?', validFor: [] }],
+        haiek: [{ text: 'Sukaldariek txuleta erre beharko ___.', validFor: [] }],
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },

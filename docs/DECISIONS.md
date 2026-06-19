@@ -12,6 +12,46 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #267: `behar` gets `sentences` (infinitive-complement) + a `past` table
+
+**Decision:** added `behar`'s first `sentences` data (`present`/`past`/
+`future`, one variant per person, all `validFor: []`) and a `past`
+conjugation table (`behar nuen`/`zenuen`/`zuen`/`genuen`/`zenuten`/`zuten` —
+`ukan`'s exact past suffixes, no `-ko`, mirroring how `present`/`future`
+already ride `ukan`'s suffixes), closing the "behar has no past tense or any
+sentences data" gap from epic #256/2026-06-18's deferral note.
+
+**Sentence shape:** unlike the `nor-nork` cluster's "[subject] [object noun]
+___" frames, `behar`'s complement is an infinitive ("Joan behar dut"), so
+each sentence blanks only the trailing `ukan` auxiliary after an
+infinitive-complement clause (e.g. "Sukaldariak legatz freskoa garbitu behar
+___."). This needed no `lessonLogic.js` changes — the blank is still a single
+trailing token, the same shape the object-noun sentences already use.
+Sentences are adapted (not copied verbatim) from `docs/SAMPLE_SENTENCES.md`'s
+modal-verb bank: several of the bank's drafted `behar` sentences use a
+plural complement object (e.g. "ura eta mapak" → `dituzte`), which doesn't
+match `behar`'s singular-object-only table (`object: 'hura'`, no
+`*Plural` conjugations) — those were paraphrased to a singular object
+instead of adding a parallel plural-object table, which felt like scope
+creep for this issue. Revisit if `behar` ever gets `presentPlural`/etc.
+
+**`validFor`:** left empty throughout, same reasoning already established
+for `nahi`'s own infinitive-complement variants (`'Zuk etorri ___?'` etc.):
+an infinitive complement has no `nor-nork` object-noun sibling whose form
+actually fits the sentence, and `behar`'s trailing auxiliary is identical to
+`ukan`'s bare form for the same person/tense (`dut`, `zuen`, ...) — tagging
+`ukan` would surface a same-text "duplicate correct" option, not a real
+distractor.
+
+**Baseline note:** adding `behar`'s `past` table newly exposes ~62
+`validfor-delta-audit.mjs` gap slots on *other* verbs' `past`/`future`
+sentences (`eduki`/`ekarri`/`eraman`/`edan`/...) that already had `behar`-
+shaped present/future gaps unaddressed before this change (128 → 190 total
+gaps for `behar` as audit *host* target) — these are pre-existing, *other*
+verbs' validFor decisions, out of scope for this issue; regenerated
+`scripts/validfor-gap-baseline.json` to reflect the new count rather than
+tagging them here.
+
 ## 2026-06-19 — #265: `esan`/`eman`'s `validFor` stays empty — confirmed, not just left over
 
 **Decision:** no `validFor` tags added between `esan` and `eman` (`src/data/
