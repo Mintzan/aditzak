@@ -1070,4 +1070,43 @@ export const LESSONS = [
       'reading-nonfinite-modal-z',
     ],
   },
+  // Unit 42 (#262, Phase VII Stage 17 — "Carrying & Bringing") — `eraman`/
+  // `ekarri`, both nor-nork synthetic verbs in the same already-taught shape
+  // as `eduki`/`jakin` (Units 14/4). No new grammatical relation, so — like
+  // Unit 40's `jario`/`etzan`/`irudi` and Unit 41's weather idioms — this
+  // slots into Phase VII rather than the renumbered core sequence (Units
+  // 1-39): "optional flavor content... neither unit unlocks new agreement
+  // coverage that isn't already taught elsewhere" (docs/LEARNING_JOURNEY.md).
+  // Present + past, full 6-person grid, singular/plural split per the
+  // app-wide 3-persons-per-exercise rule.
+  { id: 'eraman-present', verbId: 'eraman', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'eraman-present-plural', verbId: 'eraman', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ekarri-present', verbId: 'ekarri', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'ekarri-present-plural', verbId: 'ekarri', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'eraman-past', verbId: 'eraman', tense: 'past', persons: PHASE_1_PERSONS },
+  { id: 'eraman-past-plural', verbId: 'eraman', tense: 'past', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ekarri-past', verbId: 'ekarri', tense: 'past', persons: PHASE_1_PERSONS },
+  { id: 'ekarri-past-plural', verbId: 'ekarri', tense: 'past', persons: PHASE_1_PLURAL_PERSONS },
+  {
+    id: 'unit-42-review',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'eraman', tense: 'present' },
+      { verbId: 'ekarri', tense: 'present' },
+      { verbId: 'eraman', tense: 'past' },
+      { verbId: 'ekarri', tense: 'past' },
+    ],
+  },
+  {
+    id: 'unit-42-review-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'eraman', tense: 'present' },
+      { verbId: 'ekarri', tense: 'present' },
+      { verbId: 'eraman', tense: 'past' },
+      { verbId: 'ekarri', tense: 'past' },
+    ],
+  },
 ]

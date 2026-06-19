@@ -621,6 +621,31 @@ export const JOURNEY = [
           },
         ],
       },
+      {
+        id: 'phase-7-stage-17',
+        title: 'Stage 17 — Carrying & Bringing',
+        units: [
+          {
+            number: 42,
+            title: 'Carrying & Bringing',
+            focus: 'eraman ("to carry/take") + ekarri ("to bring") — nor-nork synthetic verbs in the already-taught eduki/jakin shape, present + past',
+            payload: 'Nik nire txakurra daramat mendira. · Lagunak danbor txiki bat dakar Donostiako Danborradatik.',
+            status: 'available',
+            lessonIds: [
+              'eraman-present',
+              'eraman-present-plural',
+              'ekarri-present',
+              'ekarri-present-plural',
+              'eraman-past',
+              'eraman-past-plural',
+              'ekarri-past',
+              'ekarri-past-plural',
+              'unit-42-review',
+              'unit-42-review-plural',
+            ],
+          },
+        ],
+      },
     ],
   },
 ]
