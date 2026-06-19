@@ -12,6 +12,30 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #264: `gustatu`/`iruditu`/`ahaztu`'s past/future `validFor` — no-op, confirmed via reference
+
+**Decision:** no `src/data/verbs.js` edits needed beyond #263. Confirmed via
+`scripts/validfor-delta-audit.mjs --verb <id>` and reading `verbs.js`'s
+post-`VERBS`-array loops:
+
+- `sentences.future = sentences.present` and `sentences.past =
+  sentences.present` (object-reference assignment, not a copy) already run
+  for every verb with a `future`/`past` conjugation table — including
+  `gustatu`/`iruditu`/`ahaztu`. So #263's present-tense `validFor` judgments
+  (`gustatu`↔`ahaztu` substitute, `iruditu` substitutes with neither)
+  automatically apply to `past`/`future` too, with zero duplication needed —
+  the delta-audit tool confirms identical gap entries (same sentence text,
+  same `validFor: []` on `iruditu`'s host slots) showing up under `past`/
+  `future` exactly mirroring `present`.
+- `pastPlural`/`futurePlural` have **no `sentences` sub-table at all** for
+  any of the three verbs (only `presentPlural` does) — confirmed there's no
+  analogous reuse loop for the plural variants, and the delta-audit tool
+  reports zero gap slots under either key. Per `verb.sentences?.[tense] ??
+  {}`'s fallback (`lessonLogic.js`), lessons drilling these tenses simply
+  fall back to plain conjugation-table questions — the same "form-only, no
+  sentence frames" shape already established for `behar` (`docs/
+  LEARNING_JOURNEY.md`, Unit 19). Nothing to tag.
+
 ## 2026-06-19 — #263: tagged `gustatu`/`iruditu`/`ahaztu`'s present `validFor`
 
 **Decision:** replaced the empty `validFor: []` placeholders in
