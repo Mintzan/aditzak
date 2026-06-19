@@ -1,11 +1,10 @@
 # Sync worker (Cloudflare Workers + D1)
 
 `sync-worker/` is a standalone Cloudflare Worker, backed by
-[Cloudflare D1](https://developers.cloudflare.com/d1/), that will back the
-Profile tab's account/sync feature: magic-link auth and cross-device
-progress sync (see issue #86 and its sub-issues). This doc covers
-provisioning D1, running migrations, and deploying the worker. The `/sync`
-endpoints land in a follow-up issue.
+[Cloudflare D1](https://developers.cloudflare.com/d1/), backing the Profile
+tab's account/sync feature: magic-link auth and cross-device progress sync
+(see issue #86 and its sub-issues). This doc covers provisioning D1, running
+migrations, and deploying the worker.
 
 ## How it works (so far)
 
@@ -154,7 +153,22 @@ Edit** (the "Edit Cloudflare Workers" template doesn't include D1 by
 default; use a custom token with both **Workers Scripts: Edit** and **D1:
 Edit**).
 
+## Frontend integration
+
+The Profile tab's `AccountSection` (`src/App.jsx`) shows signed-in/out
+state and opens `AccountModal` for sign-in: it `fetch()`s
+`POST {SYNC_API_URL}/auth/request-link` with the entered email. When the
+learner clicks the emailed magic link, the app loads with `?authToken=...`
+in the URL; an effect in `App.jsx` calls `POST /auth/verify`, stores the
+returned `sessionToken`/`email` (`accountSessionStorage`), and then syncs
+progress (`pushSnapshot`/`fetchSyncSnapshot` against `GET`/`PUT /sync`). The
+deployed worker's URL (`https://aditzak-sync.inakiibarrola.workers.dev`) is
+hardcoded as `SYNC_API_URL`'s default in `src/App.jsx` — not a secret, since
+the worker's CORS is locked to `ALLOWED_ORIGIN` regardless of who knows the
+URL. Override it with the `VITE_SYNC_API_URL` env var if you deploy your own
+worker — e.g. for a fork, or to point at a local `wrangler dev` instance.
+
 ## Next steps (not yet done)
 
-- Frontend wiring (`AccountModal`/`AccountSection`, background sync) —
-  separate follow-up issues.
+- First-sync merge of local vs. cloud progress when both exist, and
+  background sync after the initial pull — separate follow-up issues.
