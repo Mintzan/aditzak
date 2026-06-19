@@ -52,6 +52,58 @@ verbs' validFor decisions, out of scope for this issue; regenerated
 `scripts/validfor-gap-baseline.json` to reflect the new count rather than
 tagging them here.
 
+## 2026-06-19 — #268: past-tense sentences no longer reuse present-tense text by reference
+
+**Decision:** the post-`VERBS`-array loop that filled in `sentences.past`
+used to run `verb.sentences.past = verb.sentences.present` unconditionally
+for every verb with a `conjugations.past` table — reusing the exact same
+sentence object (by reference) for both tenses. That reads as tense-
+ambiguous: "Hura kalean ___." gives no cue whether the blank wants `dabil`
+(present) or `ibili zen` (past), since nothing in the sentence marks *when*.
+Gave `izan`/`egon`/`jakin`/`joan`/`etorri`/`jan`/`edan`/`erosi`/`ikusi`/
+`eduki`/`ibili` their own hand-written `sentences.past`, each variant
+derived from its present-tense counterpart by inserting a past-time adverb
+(rotating through `atzo`/`herenegun`/`joan den astean`/`lehengo egunean`/
+`duela bi egun`/`aurreko igandean`/`iaz` for variety within a verb — reuse
+across *different* verbs is fine) right after the subject noun phrase (or
+after the fronted dative phrase for nor-nori verbs). `etorri`'s present
+sentences already baked in present/future time words (`orain`/`bihar`/
+`gaur`); those got swapped for past equivalents rather than having a second
+time word appended. Every `{text, validFor}` variant keeps its exact
+original `validFor` array; bare-string variants stay bare in the past
+version (no new `validFor` key invented for them).
+
+Also extended the same treatment to `gustatu`/`iruditu`/`ahaztu` even
+though #264 concluded no changes were needed there — #264's reasoning was
+specific to *closing the gap-surface delta*, but the underlying ambiguity
+this issue is about applies just as much to them (their present sentences
+carry no time-marking at all, e.g. "Niri hau ___." for `gustatu`), so they
+now also get explicit `sentences.past` with a time word inserted after the
+fronted dative phrase. This doesn't reopen #264 — it's a different axis
+(naturalness of the frame, not `validFor` coverage) addressed here.
+
+The loop itself changed from unconditional reuse to a fallback: `if
+(!verb.sentences?.past && verb.sentences?.present) verb.sentences.past =
+verb.sentences.present`. That fallback turned out to matter beyond just
+guarding future additions — it surfaced a pre-existing bug where the old
+unconditional version was silently clobbering `ukan` (#259), `eraman`, and
+`ekarri` (#260/#261)'s own hand-written `sentences.past` tables with their
+`sentences.present` object on every module load. Those three verbs' data
+was untouched by this change; only the loop logic fix was needed for their
+real past sentences to actually take effect.
+
+`pronounSentences.past` keeps the reuse-by-reference behavior unchanged —
+`pronoun`/`type-pronoun` questions don't surface a sentence frame's tense
+the same way, so they're out of scope here, as is the separate
+`negativeSentences.past` loop gated by `SINGLE_WORD_PAST_NEGATION`.
+
+Regenerated `scripts/validfor-gap-baseline.json`: `jakin`/`jan`/`edan`/
+`hartu`/`eraman`/`ekarri` gap counts dropped (new past sentences/restored
+real past sentences close some previously-shared present/past gap slots),
+`erosi`/`ikusi` rose slightly (new past variants add genuinely new gap
+slots not present in the old reused-by-reference present text); all other
+verbs' counts are unchanged.
+
 ## 2026-06-19 — #265: `esan`/`eman`'s `validFor` stays empty — confirmed, not just left over
 
 **Decision:** no `validFor` tags added between `esan` and `eman` (`src/data/
