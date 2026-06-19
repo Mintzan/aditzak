@@ -496,8 +496,12 @@ export const VERBS = [
     object: 'hura',
     dialect: 'batua',
     conjugations: {
-      present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du' },
-      future: { ni: 'nahiko dut', zu: 'nahiko duzu', hura: 'nahiko du' },
+      // #266: `gu`/`zuek`/`haiek` added, riding `ukan`'s exact `dugu`/`duzue`/
+      // `dute` present suffixes and `nahiko` + the same suffixes for future —
+      // same "costs nothing in new suffix patterns" rationale as `ni`/`zu`/
+      // `hura` above.
+      present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du', gu: 'nahi dugu', zuek: 'nahi duzue', haiek: 'nahi dute' },
+      future: { ni: 'nahiko dut', zu: 'nahiko duzu', hura: 'nahiko du', gu: 'nahiko dugu', zuek: 'nahiko duzue', haiek: 'nahiko dute' },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by an agentive human subject (coffee,
@@ -529,14 +533,41 @@ export const VERBS = [
           { text: 'Anek liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Katuak esne pixka bat ___.', validFor: ['ukan', 'eduki', 'ikusi'] },
         ],
+        // #266: `gu`/`zuek`/`haiek` added — object-noun variants tagged the
+        // same as `ni`/`zu`/`hura`'s, plus one infinitive-complement variant
+        // per person adapted from `docs/SAMPLE_SENTENCES.md`'s modal-verb
+        // bank (`validFor: []`, same reasoning as `'Zuk etorri ___?'` above —
+        // an infinitive complement has no `nor-nork` object-noun sibling that
+        // fits).
+        gu: [
+          { text: 'Guk kafe bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk ur bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk udan Euskal Herriko kosta osoa zeharkatu ___ txalupaz.', validFor: [] },
+        ],
+        zuek: [
+          { text: 'Zuek kafe bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek liburu bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek opari bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek Korrika festan euskararen alde korrika egin ___?', validFor: [] },
+        ],
+        haiek: [
+          { text: 'Haiek kafe bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Haiek liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Haiek opari bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Gure lagunek Donostiako Danborrada hurbiletik ikusi ___.', validFor: [] },
+        ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark' },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ kafe bat nahi dut.',
         zu: '___ etorri nahi duzu?',
         hura: '___ opari bat nahi du.',
+        gu: '___ kafe bat nahi dugu.',
+        zuek: '___ kafe bat nahi duzue.',
+        haiek: '___ kafe bat nahi dute.',
       },
     },
   },

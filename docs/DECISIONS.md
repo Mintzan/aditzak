@@ -12,6 +12,32 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #266: `nahi` extended to all 6 persons (`gu`/`zuek`/`haiek`)
+
+**Decision:** `nahi.conjugations.present/future` previously only covered
+`ni`/`zu`/`hura`. Added `gu`/`zuek`/`haiek`, riding `ukan`'s existing
+`dugu`/`duzue`/`dute` present suffixes and `nahiko` + the same suffixes for
+future — no new suffix pattern, same rationale already used for `ni`/`zu`/
+`hura`. Added matching `sentences.present`, `pronouns`, and
+`pronounSentences.present` entries for the 3 new persons (object-noun
+variants tagged like the existing persons', plus one infinitive-complement
+variant per person sourced from `docs/SAMPLE_SENTENCES.md`'s modal-verb
+bank, `validFor: []` since an infinitive complement has no `nor-nork`
+object-noun sibling that fits).
+
+No `lessonLogic.js` change needed: `buildOptions`'s 3-person-table
+`borrowPool` fallback is documented as a no-op once a table has 4+ persons,
+which `nahi` now does.
+
+`scripts/validfor-delta-audit.mjs --verb nahi`'s gap count rose from 57 to
+87 after this change — confirmed by diffing the before/after output that
+every new gap slot is a `gu`/`zuek`/`haiek` slot on *another* verb's
+sentence (`ukan`/`hartu`/`ikusi`/`eduki`) that simply wasn't auditable for
+`nahi` before (since `nahi` lacked those persons), not a tagging problem
+introduced by this change. The checked-in `scripts/validfor-gap-baseline.json`
+was regenerated accordingly so `validfor-audit.test.js` reflects the new,
+reviewed baseline.
+
 ## 2026-06-19 — #259: added `ukan`'s missing past `sentences`
 
 **Decision:** `ukan.sentences` previously only had a `present` key — `past`
