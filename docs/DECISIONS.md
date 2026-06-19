@@ -12,6 +12,12 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — Loosened `/auth/request-link` per-minute rate limit to 3, surfaced `retryAfterSeconds`
+
+**Decision:** Bumped the `email:m`/`ip:m` rate-limit checks in `sync-worker/src/routes/auth.js` from 1/minute to 3/minute (hourly limits unchanged at 5/hour). `checkRateLimit` (`src/rateLimit.js`) now returns `{ allowed, retryAfterMs }` instead of a bare boolean, so a `429` response can include `retryAfterSeconds` (and a matching `Retry-After` header) — `AccountModal` (`src/App.jsx`) shows it via a new pluralized `accountErrorRateLimitedSeconds` key when present, falling back to the generic `accountErrorRateLimited` copy if the response body is unparsable (defensive — Resend/network edge cases, also needed for an existing test that mocks a bare `{ ok: false, status: 429 }` object with no `.json()`).
+
+**Why:** the original 1/minute limit meant a real first-time user who mistyped their email or didn't see the link land had to wait a full minute before retrying, which surfaced as a confusing Basque/English/Spanish "too many attempts" error after literally one extra click. 3/minute absorbs that without weakening abuse protection — the 5/hour ceiling (unchanged) still caps sustained abuse from either dimension (per-email harassment, per-IP spam), and the checks still short-circuit on first failure (same `0002_rate_limits.sql`-era reasoning archived in `docs/DECISIONS_ARCHIVE.md`'s 2026-06-13 entry) so a rejected request doesn't increment counters it never reached.
+
 ## 2026-06-18 — Added Phase VII roadmap structure (Units 40/41), `pending`, no `VERBS`/`LESSONS` yet
 
 **Decision:** Added two new `pending` units to `journey.js`/`LEARNING_JOURNEY.md` (structure only, per explicit request — no `VERBS` data, no `LESSONS` entries, no `lessonIds`): Unit 40 ("Synthetic Curiosities" — `jario`/`etzan`/`irudi`, recognition-only) and Unit 41 ("Talking About Weather" — `ari`+`ukan` weather idioms plus `izan`/`egon` weather vocabulary, fixed 3rd-person-only). Both sit in a new Phase VII ("Bonus: Curiosities & Color"), after Phase VI's causatives, since they're explicitly optional flavor content rather than core curriculum.

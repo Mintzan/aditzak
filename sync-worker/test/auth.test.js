@@ -47,23 +47,35 @@ describe('POST /auth/request-link', () => {
     expect(sentBody.text).toContain('authToken=')
   })
 
-  it('rate limits repeated requests for the same email', async () => {
+  it('allows a few quick retries before rate limiting the same email', async () => {
     const env = createTestEnv()
-    const first = await worker.fetch(postJson('/auth/request-link', { email: 'learner@example.com' }, { 'CF-Connecting-IP': '1.2.3.4' }), env)
-    const second = await worker.fetch(postJson('/auth/request-link', { email: 'learner@example.com' }, { 'CF-Connecting-IP': '1.2.3.4' }), env)
+    const headers = { 'CF-Connecting-IP': '1.2.3.4' }
+    const first = await worker.fetch(postJson('/auth/request-link', { email: 'learner@example.com' }, headers), env)
+    const second = await worker.fetch(postJson('/auth/request-link', { email: 'learner@example.com' }, headers), env)
+    const third = await worker.fetch(postJson('/auth/request-link', { email: 'learner@example.com' }, headers), env)
+    const fourth = await worker.fetch(postJson('/auth/request-link', { email: 'learner@example.com' }, headers), env)
 
     expect(first.status).toBe(200)
-    expect(second.status).toBe(429)
-    expect(globalThis.fetch).toHaveBeenCalledTimes(1)
+    expect(second.status).toBe(200)
+    expect(third.status).toBe(200)
+    expect(fourth.status).toBe(429)
+    expect(globalThis.fetch).toHaveBeenCalledTimes(3)
+
+    const body = await fourth.json()
+    expect(body.retryAfterSeconds).toBeGreaterThan(0)
+    expect(fourth.headers.get('Retry-After')).toBe(String(body.retryAfterSeconds))
   })
 
   it('rate limits repeated requests from the same IP across different emails', async () => {
     const env = createTestEnv()
-    const first = await worker.fetch(postJson('/auth/request-link', { email: 'one@example.com' }, { 'CF-Connecting-IP': '9.9.9.9' }), env)
-    const second = await worker.fetch(postJson('/auth/request-link', { email: 'two@example.com' }, { 'CF-Connecting-IP': '9.9.9.9' }), env)
+    const headers = { 'CF-Connecting-IP': '9.9.9.9' }
+    await worker.fetch(postJson('/auth/request-link', { email: 'one@example.com' }, headers), env)
+    await worker.fetch(postJson('/auth/request-link', { email: 'two@example.com' }, headers), env)
+    const third = await worker.fetch(postJson('/auth/request-link', { email: 'three@example.com' }, headers), env)
+    const fourth = await worker.fetch(postJson('/auth/request-link', { email: 'four@example.com' }, headers), env)
 
-    expect(first.status).toBe(200)
-    expect(second.status).toBe(429)
+    expect(third.status).toBe(200)
+    expect(fourth.status).toBe(429)
   })
 
   it('returns 502 without sending another email if Resend fails', async () => {

@@ -872,11 +872,12 @@ function FlagQuestionModal({ lesson, question, verb, selected, status, onClose, 
 // the learner clicks the emailed link (handled by `AppShell` on load), so
 // this modal's job ends at "check your email".
 function AccountModal({ onClose }) {
-  const { t } = useLanguage()
+  const { t, tCount } = useLanguage()
   const [email, setEmail] = useState('')
   const [step, setStep] = useState('email') // email | sent
   const [status, setStatus] = useState('idle') // idle | sending | error
   const [errorKey, setErrorKey] = useState('')
+  const [retryAfterSeconds, setRetryAfterSeconds] = useState(null)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -884,6 +885,7 @@ function AccountModal({ onClose }) {
     if (!trimmedEmail || status === 'sending') return
     setStatus('sending')
     setErrorKey('')
+    setRetryAfterSeconds(null)
     try {
       const response = await fetch(`${SYNC_API_URL}/auth/request-link`, {
         method: 'POST',
@@ -891,8 +893,15 @@ function AccountModal({ onClose }) {
         body: JSON.stringify({ email: trimmedEmail }),
       })
       if (response.status === 429) {
+        let body = null
+        try {
+          body = await response.json()
+        } catch {
+          body = null
+        }
         setStatus('error')
         setErrorKey('accountErrorRateLimited')
+        setRetryAfterSeconds(typeof body?.retryAfterSeconds === 'number' ? body.retryAfterSeconds : null)
         return
       }
       if (response.status === 400) {
@@ -947,7 +956,13 @@ function AccountModal({ onClose }) {
                 className="w-full rounded-2xl border border-gray-200 p-3 text-sm text-gray-900 focus:border-green-500 focus:outline-none"
               />
             </div>
-            {status === 'error' && <p className="text-sm text-red-500">{t(errorKey)}</p>}
+            {status === 'error' && (
+              <p className="text-sm text-red-500">
+                {errorKey === 'accountErrorRateLimited' && retryAfterSeconds
+                  ? tCount('accountErrorRateLimitedSeconds', retryAfterSeconds)
+                  : t(errorKey)}
+              </p>
+            )}
             <button
               type="submit"
               disabled={!email.trim() || status === 'sending'}

@@ -12,11 +12,13 @@ migrations, and deploying the worker.
 
 ### Magic-link auth
 
-- `POST /auth/request-link {email}` — validates `email`, rate limits (1/min
-  and 5/hour, per email and per IP — `429` if exceeded), creates a
-  single-use token (only its SHA-256 hash is stored, ~15 min expiry in
-  `magic_links`), and emails a sign-in link
-  (`${APP_URL}?authToken=<token>`) via Resend. Returns `200 { "ok": true }`.
+- `POST /auth/request-link {email}` — validates `email`, rate limits (3/min
+  and 5/hour, per email and per IP — `429 { error, retryAfterSeconds }` with
+  a matching `Retry-After` header if exceeded; the frontend's error message
+  surfaces `retryAfterSeconds` once it's known), creates a single-use token
+  (only its SHA-256 hash is stored, ~15 min expiry in `magic_links`), and
+  emails a sign-in link (`${APP_URL}?authToken=<token>`) via Resend. Returns
+  `200 { "ok": true }`.
 - `POST /auth/verify {token}` — looks up the token by hash; `400` if
   unknown, already used, or expired. On success, marks it used,
   finds-or-creates the `users` row by email, issues a new session token

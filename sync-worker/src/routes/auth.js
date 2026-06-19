@@ -30,15 +30,26 @@ export async function handleRequestLink(request, env, cors) {
   const now = Date.now()
   const ip = request.headers.get('CF-Connecting-IP') || 'unknown'
 
-  // 1/minute and 5/hour, per email and per IP.
-  const withinLimit =
-    (await checkRateLimit(db, `email:m:${email}`, 60_000, 1, now)) &&
-    (await checkRateLimit(db, `email:h:${email}`, 3_600_000, 5, now)) &&
-    (await checkRateLimit(db, `ip:m:${ip}`, 60_000, 1, now)) &&
-    (await checkRateLimit(db, `ip:h:${ip}`, 3_600_000, 5, now))
+  // 3/minute and 5/hour, per email and per IP — the per-minute limit allows a
+  // few quick retries (typo'd email, resend) without the hourly ceiling
+  // giving up on real abuse protection.
+  const checks = [
+    [`email:m:${email}`, 60_000, 3],
+    [`email:h:${email}`, 3_600_000, 5],
+    [`ip:m:${ip}`, 60_000, 3],
+    [`ip:h:${ip}`, 3_600_000, 5],
+  ]
 
-  if (!withinLimit) {
-    return jsonResponse({ error: 'Too many requests, please try again later' }, 429, cors)
+  for (const [key, windowMs, limit] of checks) {
+    const result = await checkRateLimit(db, key, windowMs, limit, now)
+    if (!result.allowed) {
+      const retryAfterSeconds = Math.ceil(result.retryAfterMs / 1000)
+      return jsonResponse(
+        { error: 'Too many requests, please try again later', retryAfterSeconds },
+        429,
+        { ...cors, 'Retry-After': String(retryAfterSeconds) },
+      )
+    }
   }
 
   const token = generateToken()
