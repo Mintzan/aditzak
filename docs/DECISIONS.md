@@ -12,6 +12,32 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #259: added `ukan`'s missing past `sentences`
+
+**Decision:** `ukan.sentences` previously only had a `present` key — `past`
+lessons/reviews had no sentence-completion frames at all. Added a `past`
+block (all 6 persons, `ni`/`hi`/`hura`/`gu`/`zuek`/`haiek`) adapted from
+`docs/SAMPLE_SENTENCES.md`'s `ukan` past table (Eskola/Familia eta etxea/
+Bidaiak/Eguneroko bizitza columns, deduplicated per person).
+
+`validFor` was judged per-noun rather than copying present's full
+`['nahi', 'eduki', 'ikusi', 'erosi', 'behar']` set uniformly: concrete
+ownable/visible/buyable/needable objects (book, house, map, passport,
+ticket, plane) keep the full set; kinship nouns (brother/son) stay
+`['nahi', 'eduki']` only, consistent with present's existing kinship
+judgment; abstract event-like or mass nouns one can "have"/"need" but not
+sensibly "buy" or always "see" (money, an exam, a problem, a job, time, a
+reason, a question) got a narrower, per-noun set (e.g. `'Nik arazo bat
+___.'` → `['eduki', 'ikusi']`, `'Guk arrazoi ___.'` →
+`['nahi', 'eduki', 'behar']`) — same judgment approach as the present-tense
+"bilera bat" → `['eduki', 'behar']` precedent.
+
+`present`'s sentences don't cover the `hi` person (no `hi` key exists
+there), but `past`'s conjugation table does have an unsplit `hi: 'huen'`
+(per #167, past doesn't get the present's `hi-m`/`hi-f` gender split) — so
+`past.sentences.hi` was added even though `present.sentences` has no `hi`
+counterpart to mirror.
+
 ## 2026-06-18 — Added Phase VII roadmap structure (Units 40/41), `pending`, no `VERBS`/`LESSONS` yet
 
 **Decision:** Added two new `pending` units to `journey.js`/`LEARNING_JOURNEY.md` (structure only, per explicit request — no `VERBS` data, no `LESSONS` entries, no `lessonIds`): Unit 40 ("Synthetic Curiosities" — `jario`/`etzan`/`irudi`, recognition-only) and Unit 41 ("Talking About Weather" — `ari`+`ukan` weather idioms plus `izan`/`egon` weather vocabulary, fixed 3rd-person-only). Both sit in a new Phase VII ("Bonus: Curiosities & Color"), after Phase VI's causatives, since they're explicitly optional flavor content rather than core curriculum.
