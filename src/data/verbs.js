@@ -1545,6 +1545,75 @@ export const VERBS = [
     },
   },
   {
+    id: 'eraman',
+    verb: 'eraman',
+    meaning: { en: 'to carry / take (something somewhere)', es: 'llevar (algo a algún lugar)', eu: 'eraman' },
+    type: 'synthetic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    // #260: present/past sourced from docs/CONJUGATIONS.md §7 (`eraman` —
+    // singular-object alternant; the table's `/daramatza`-style plural-object
+    // forms aren't used here, matching `eduki`/`jakin`'s precedent of only
+    // tabulating the singular-object form). `hi` omitted — CONJUGATIONS.md's
+    // table has no `hik` row for `eraman`, unlike `jakin`'s sourced
+    // hitanoa split (#144/#245). `future` derived the same way as
+    // `eduki`/`jakin`'s (`-n`-final root + `-go` + ukan suffixes, mirroring
+    // `jakin` → `jakingo`).
+    conjugations: {
+      present: { ni: 'daramat', zu: 'daramazu', hura: 'darama', gu: 'daramagu', zuek: 'daramazue', haiek: 'daramate' },
+      past: {
+        ni: 'neraman',
+        zu: 'zeneraman',
+        hura: 'zeraman',
+        gu: 'generaman',
+        zuek: 'zeneramaten',
+        haiek: 'zeramaten',
+      },
+      future: {
+        ni: 'eramango dut',
+        zu: 'eramango duzu',
+        hura: 'eramango du',
+        gu: 'eramango dugu',
+        zuek: 'eramango duzue',
+        haiek: 'eramango dute',
+      },
+    },
+  },
+  {
+    id: 'ekarri',
+    verb: 'ekarri',
+    meaning: { en: 'to bring', es: 'traer', eu: 'ekarri' },
+    type: 'synthetic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    // #260: present/past sourced from docs/CONJUGATIONS.md §7 (`ekarri` —
+    // singular-object alternant, same convention as `eraman` above). `hi`
+    // omitted for the same reason (no `hik` row sourced in CONJUGATIONS.md).
+    // `future` derived the same way as `eduki`'s (`-i`-final root + `-ko` +
+    // ukan suffixes, mirroring `eduki` → `edukiko`).
+    conjugations: {
+      present: { ni: 'dakart', zu: 'dakarzu', hura: 'dakar', gu: 'dakargu', zuek: 'dakarzue', haiek: 'dakarte' },
+      past: {
+        ni: 'nekarren',
+        zu: 'zenekarren',
+        hura: 'zekarren',
+        gu: 'genekarren',
+        zuek: 'zenekarten',
+        haiek: 'zekarten',
+      },
+      future: {
+        ni: 'ekarriko dut',
+        zu: 'ekarriko duzu',
+        hura: 'ekarriko du',
+        gu: 'ekarriko dugu',
+        zuek: 'ekarriko duzue',
+        haiek: 'ekarriko dute',
+      },
+    },
+  },
+  {
     id: 'ibili',
     verb: 'ibili',
     meaning: { en: 'to walk around / be doing', es: 'andar / estar haciendo', eu: 'ibili' },

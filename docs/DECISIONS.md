@@ -12,6 +12,32 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-19 — #260: added `eraman`/`ekarri` conjugation tables (no sentences yet)
+
+**Decision:** added `VERBS` entries for `eraman` ("to carry/take") and
+`ekarri` ("to bring") — `type: 'synthetic'`, `agreement: ['nor', 'nork']`,
+`present`/`past`/`future` conjugations only, no `sentences` yet (that's a
+separate, later issue). Present/past forms come straight from
+`docs/CONJUGATIONS.md` §7's already-sourced tables (singular-object
+alternant, matching `eduki`/`jakin`'s precedent of only tabulating the
+singular-object form — the `/daramatza`-, `/dakartza`-style plural-object
+alternants aren't used in `VERBS`). `hi` is omitted for both: unlike
+`jakin`'s sourced hitanoa present split (#144/#245), CONJUGATIONS.md's
+`eraman`/`ekarri` tables have no `hik` row at all to begin with. `future`
+was derived rather than independently sourced — `eraman` (root ends in
+`-n`) takes `-go` the same way `jakin` → `jakingo` does; `ekarri` (root ends
+in `-i`) takes `-ko` the same way `eduki` → `edukiko` does — both just
+`root + suffix + ukan`'s present suffixes, the standard periphrastic future
+shape already used throughout `VERBS`.
+
+`scripts/validfor-delta-audit.mjs`'s gap count jumped sharply for both new
+verbs (456 each) purely because they have no `sentences` of their own yet —
+every slot is "some other verb's existing sentence, where this new verb's
+form hasn't been reviewed for fit," which is expected and deferred (along
+with `eraman`/`ekarri`'s own sentence-completion content) to a later issue
+rather than blocking this one. Baseline regenerated to reflect the
+intentional, reviewed increase.
+
 ## 2026-06-19 — #266: `nahi` extended to all 6 persons (`gu`/`zuek`/`haiek`)
 
 **Decision:** `nahi.conjugations.present/future` previously only covered
