@@ -1845,10 +1845,20 @@ export const VERBS = [
         haiek: 'esango dizkiote',
       },
     },
-    // Ditransitive sentences are structurally unlike every other verb's
-    // (NORI is fixed, not the varying slot), so `validFor: []` throughout —
-    // `agreementsCompatible` already excludes cross-verb borrowing for
-    // nor-nori-nork verbs, but this documents the call explicitly.
+    // #265: `validFor: []` throughout, confirmed rather than assumed.
+    // `agreementsCompatible(['nor','nori','nork'], ['nor','nori','nork'])` is
+    // `true` (`eman` is the only other nor-nori-nork verb), so the engine
+    // *would* offer `eman`'s same-person forms here if tagged — but every
+    // such substitution is doubly broken: (1) the fixed argument differs
+    // (`esan`'s NORI is fixed to `hura`, varying `person` over NORK; `eman`'s
+    // NORK is fixed to `ni`, varying `person` over NORI), so a shared
+    // `person` label names a different grammatical role in each verb's form —
+    // dropping `eman`'s `zu`-form ("ematen dizut", NORK=ni baked in) into
+    // `esan`'s "Zuk egia ___." (subject NORK=zu) is a subject/verb agreement
+    // mismatch, not just a meaning mismatch; (2) "egia eman" ("give the
+    // truth") isn't an idiom the way "egia esan" ("tell the truth") is, so
+    // even where the morphology lined up the sentence would read oddly. Same
+    // reasoning applies to `eman`'s sentences below.
     sentences: {
       present: {
         ni: [{ text: 'Nik egia ___.', validFor: [] }],
@@ -1926,6 +1936,9 @@ export const VERBS = [
         haiek: 'emango dizkiet',
       },
     },
+    // #265: `validFor: []` throughout — see `esan`'s sentences above for the
+    // full reasoning (fixed-argument mismatch + "liburua esan" not being a
+    // natural substitute for "liburua eman" any more than the reverse is).
     sentences: {
       present: {
         zu: [{ text: 'Nik liburua zuri ___.', validFor: [] }],
