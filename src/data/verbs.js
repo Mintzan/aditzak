@@ -1579,6 +1579,51 @@ export const VERBS = [
         haiek: 'eramango dute',
       },
     },
+    // #261: adapted from docs/SAMPLE_SENTENCES.md's `ERAMAN` bank
+    // (Bidaiak/Eguneroko bizitza columns — fishermen carrying tuna to port,
+    // hikers' cheese/bread for the mountain, a dog taken to see sheep,
+    // dancers driven to a festival). The source's plural-object forms
+    // (`daramatzate`/`zeramatzaten`, etc.) were singularized to match the
+    // singular-object conjugations actually tabulated in #260 (one fish, one
+    // cheese-and-bread bundle, one dog, one dancer) — same convention
+    // `eduki`/`jakin`'s sentences already use.
+    // `validFor`: `ukan`/`eduki` (physically carrying something is close
+    // enough to "having" it on you) read as natural alternates throughout;
+    // `hartu` ("to take") fits only the literal carry-along sentences, not
+    // ones where the destination/purpose makes "take" read oddly (e.g.
+    // "Guk gazta daramagu mendirako" → "Guk gazta hartzen dugu mendirako"
+    // reads slightly off as "we take cheese for the mountain" vs natural
+    // "we're bringing/carrying cheese for the mountain"). `ikusi`/`erosi`/
+    // `nahi`/`behar` never fit — none of them mean "carry."
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik nire txakurra ___ mendira, ardiak ikustera.', validFor: ['ukan', 'eduki'] }],
+        zu: [{ text: 'Zuk Idiazabal gazta zaharra ___ motxilan, afaltzeko.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        hura: [{ text: 'Arrantzaleak hegaluze freskoa ___ Getariako portura.', validFor: ['ukan', 'eduki'] }],
+        gu: [{ text: 'Guk Idiazabal gazta eta ogia ___ mendirako.', validFor: ['ukan', 'eduki'] }],
+        zuek: [{ text: 'Zuek dantzaria autoan ___ herriko jaietara.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        haiek: [{ text: 'Arrantzaleek hegaluze freskoa ___ Getariako portura.', validFor: ['ukan', 'eduki'] }],
+      },
+      past: {
+        ni: [{ text: 'Nik nire txakurra ___ mendira, ardi latxak ikustera.', validFor: ['ukan', 'eduki'] }],
+        zu: [{ text: 'Zuk zurezko soka gogorra ___ herri kiroletarako.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        hura: [{ text: 'Sukaldariak txuleta handia ___ txosnatik mahaira.', validFor: ['ukan', 'eduki'] }],
+        gu: [{ text: 'Guk Idiazabal gazta eta ogia ___ mendirako.', validFor: ['ukan', 'eduki'] }],
+        zuek: [{ text: 'Zuek dantzaria autoan ___ herriko jaietara.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        haiek: [{ text: 'Sukaldariek txuleta handiak ___ txosnatik mahaira.', validFor: ['ukan', 'eduki'] }],
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    pronounSentences: {
+      present: {
+        ni: '___ nire txakurra daramat mendira.',
+        zu: '___ Idiazabal gazta zaharra daramazu motxilan.',
+        hura: '___ hegaluze freskoa darama Getariako portura.',
+        gu: '___ Idiazabal gazta eta ogia daramagu mendirako.',
+        zuek: '___ dantzaria autoan daramazue herriko jaietara.',
+        haiek: '___ hegaluze freskoa daramate Getariako portura.',
+      },
+    },
   },
   {
     id: 'ekarri',
@@ -1610,6 +1655,47 @@ export const VERBS = [
         gu: 'ekarriko dugu',
         zuek: 'ekarriko duzue',
         haiek: 'ekarriko dute',
+      },
+    },
+    // #261: adapted from docs/SAMPLE_SENTENCES.md's `EKARRI` bank
+    // (Bidaiak/Familia eta etxea columns — a drum brought as a gift, Txakoli
+    // bottles, Basque pastries from the bakery, a sack of Tolosa beans,
+    // mountain-spring water). Singularized the same way as `eraman` above to
+    // match #260's singular-object conjugations (one drum, one bottle, one
+    // pastry, one sack, one jug of water).
+    // `validFor`: same `ukan`/`eduki`/`hartu` judgment as `eraman` — bringing
+    // something is close enough to "having" it on you throughout; `hartu`
+    // fits the literal hand-it-over sentences (gifting a drum/sack) but not
+    // ones about routine sourcing (bringing water from a spring, bread from
+    // the oven — "hartu" there reads as "picked up" rather than "brought,"
+    // a narrower fit). `ikusi`/`erosi`/`nahi`/`behar` never fit.
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik zuri Tolosako babarrun gorri zaku bat ___ oparitzeko.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        zu: [{ text: 'Zuk niri opari polit bat ___ Baionako denda txikitik.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        hura: [{ text: 'Lagunak danbor txiki bat ___ Donostiako Danborradatik, oparitzeko.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        gu: [{ text: 'Guk baserriko ur berria ___ mendiko iturritik.', validFor: ['ukan', 'eduki'] }],
+        zuek: [{ text: 'Zuek opari polit bat ___ Baionako denda txikitik.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        haiek: [{ text: 'Lagunek danbor txiki bat ___ Donostiako Danborradatik, oparitzeko.', validFor: ['ukan', 'eduki', 'hartu'] }],
+      },
+      past: {
+        ni: [{ text: 'Nik zuri Tolosako babarrun gorri zaku bat ___ oparitzeko.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        zu: [{ text: 'Zuk niri opari polit bat ___ Baionako denda txikitik.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        hura: [{ text: 'Okinak euskal pastel gozoa ___ labetik atera berritan.', validFor: ['ukan', 'eduki'] }],
+        gu: [{ text: 'Guk baserriko ur berria ___ mendiko iturritik.', validFor: ['ukan', 'eduki'] }],
+        zuek: [{ text: 'Zuek opari polit bat ___ Baionako denda txikitik.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        haiek: [{ text: 'Lagunek danbor txiki bat ___ Donostiako Danborradatik, oparitzeko.', validFor: ['ukan', 'eduki', 'hartu'] }],
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    pronounSentences: {
+      present: {
+        ni: '___ zuri Tolosako babarrun gorri zaku bat dakart.',
+        zu: '___ niri opari polit bat dakarzu.',
+        hura: '___ danbor txiki bat dakar Donostiako Danborradatik.',
+        gu: '___ baserriko ur berria dakargu mendiko iturritik.',
+        zuek: '___ opari polit bat dakarzue Baionako denda txikitik.',
+        haiek: '___ danbor txiki bat dakarte Donostiako Danborradatik.',
       },
     },
   },
