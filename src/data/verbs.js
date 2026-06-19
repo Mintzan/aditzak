@@ -1651,7 +1651,7 @@ export const VERBS = [
           { text: 'Nik jaka berri bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk sagarrak ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
+          { text: 'Zuk sagar bat ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
           { text: 'Zuk diskoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         hura: [
@@ -1662,11 +1662,11 @@ export const VERBS = [
         ],
         gu: [
           { text: 'Guk etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
-          { text: 'Guk txartelak ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Guk txartel bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek opariak ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
-          { text: 'Zuek liburuak ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Zuek opari bat ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Zuek liburu bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         haiek: [
           { text: 'Haiek autoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
@@ -1680,7 +1680,7 @@ export const VERBS = [
           { text: 'Nik lehengo egunean jaka berri bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk atzo sagarrak ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
+          { text: 'Zuk atzo sagar bat ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
           { text: 'Zuk herenegun diskoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         hura: [
@@ -1691,11 +1691,11 @@ export const VERBS = [
         ],
         gu: [
           { text: 'Guk atzo etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
-          { text: 'Guk herenegun txartelak ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Guk herenegun txartel bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek atzo opariak ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
-          { text: 'Zuek herenegun liburuak ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Zuek atzo opari bat ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Zuek herenegun liburu bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         haiek: [
           { text: 'Haiek atzo autoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
@@ -1710,7 +1710,7 @@ export const VERBS = [
         zu: '___ diskoa erosten duzu.',
         hura: '___ autoa erosten du.',
         gu: '___ etxe bat erosten dugu.',
-        zuek: '___ liburuak erosten duzue.',
+        zuek: '___ liburuak erosten dituzue.',
         haiek: '___ autoa erosten dute.',
       },
     },
@@ -1806,7 +1806,7 @@ export const VERBS = [
         ],
         zuek: [
           { text: 'Zuek autobusa ___?', validFor: ['behar'] },
-          { text: 'Zuek aterkiak ___.', validFor: ['behar'] },
+          { text: 'Zuek aterkia ___.', validFor: ['behar'] },
         ],
         haiek: [
           { text: 'Haiek trena ___.', validFor: ['behar'] },
@@ -1932,7 +1932,7 @@ export const VERBS = [
         hura: [
           { text: 'Hark itsasoa ___.', validFor: [] },
           { text: 'Anek filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
-          { text: 'Irakasleak ikasleak ___.', validFor: ['ukan', 'nahi'] },
+          { text: 'Irakasleak ikaslea ___.', validFor: ['ukan', 'nahi'] },
           { text: 'Txakurrak katua ___.', validFor: ['eduki', 'nahi'] },
         ],
         gu: [
@@ -1961,7 +1961,7 @@ export const VERBS = [
         hura: [
           { text: 'Hark atzo itsasoa ___.', validFor: [] },
           { text: 'Anek herenegun filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
-          { text: 'Irakasleak lehengo egunean ikasleak ___.', validFor: ['ukan', 'nahi'] },
+          { text: 'Irakasleak lehengo egunean ikaslea ___.', validFor: ['ukan', 'nahi'] },
           { text: 'Txakurrak duela bi egun katua ___.', validFor: ['eduki', 'nahi'] },
         ],
         gu: [
@@ -2204,7 +2204,7 @@ export const VERBS = [
         hura: [{ text: 'Sukaldariak txuleta handia ___ txosnatik mahaira.', validFor: ['ukan', 'eduki'] }],
         gu: [{ text: 'Guk Idiazabal gazta eta ogia ___ mendirako.', validFor: ['ukan', 'eduki'] }],
         zuek: [{ text: 'Zuek dantzaria autoan ___ herriko jaietara.', validFor: ['ukan', 'eduki', 'hartu'] }],
-        haiek: [{ text: 'Sukaldariek txuleta handiak ___ txosnatik mahaira.', validFor: ['ukan', 'eduki'] }],
+        haiek: [{ text: 'Sukaldariek txuleta handia ___ txosnatik mahaira.', validFor: ['ukan', 'eduki'] }],
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
