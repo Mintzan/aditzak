@@ -238,19 +238,32 @@ export const JOURNEY = [
           {
             number: 13,
             title: 'Daily Routine (Transitive)',
-            focus: 'the ukan present auxiliary (dut/duzu/du/dugu/duzue/dute), mixed across jan, edan, erosi, ikusi, hartu — first -tzen/-ten minimal pair (jaten vs. hartzen)',
-            payload: '"I ate." · "You drink water." · "I bought a book." · "Do you see it?" · "I take the bus."',
+            focus:
+              'the ukan present auxiliary (dut/duzu/du/dugu/duzue/dute), mixed across jan, edan, erosi, ikusi, hartu — first -tzen/-ten minimal pair (jaten vs. hartzen); plus the NOR-number axis (dut vs. ditut) across ukan, jan, edan, erosi, hartu, ikusi, eduki',
+            payload:
+              '"I ate." · "You drink water." · "I bought a book." · "Do you see it?" · "I take the bus." · "I have them." (ditut, not dut)',
             status: 'available',
-            lessonIds: ['unit-10-present', 'unit-10-present-plural'],
+            lessonIds: [
+              'unit-10-present',
+              'unit-10-present-plural',
+              'nor-nork-present-plural-pool',
+              'nor-nork-present-plural-pool-plural',
+            ],
           },
           {
             number: 14,
             title: 'Looking Back I — The "ukan" Past Pool',
-            focus: 'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi, jakin',
+            focus:
+              'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi, jakin; plus the NOR-number axis in the past (zenuen vs. zenituen) across ukan, jan, edan, erosi, hartu, ikusi, eduki',
             payload:
-              '"I had a car." · "I ate the apple." · "You drank coffee." · "We bought a house." · "She saw the film." · "I knew the answer." (Erantzuna nekien)',
+              '"I had a car." · "I ate the apple." · "You drank coffee." · "We bought a house." · "She saw the film." · "I knew the answer." (Erantzuna nekien) · "You had them." (zenituen, not zenuen)',
             status: 'available',
-            lessonIds: ['ukan-past-pool', 'ukan-past-pool-plural'],
+            lessonIds: [
+              'ukan-past-pool',
+              'ukan-past-pool-plural',
+              'nor-nork-past-plural-pool',
+              'nor-nork-past-plural-pool-plural',
+            ],
           },
         ],
       },

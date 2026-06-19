@@ -286,23 +286,23 @@ export const JOURNEY_TRANSLATIONS = {
     13: {
       title: { es: 'Rutina diaria (transitiva)', eu: 'Eguneroko ohitura (iragankorra)' },
       focus: {
-        es: 'el auxiliar de presente de ukan (dut/duzu/du/dugu/duzue/dute), combinado entre jan, edan, erosi, ikusi, hartu — primer par mínimo -tzen/-ten (jaten frente a hartzen)',
-        eu: 'ukan-en oraineko laguntzailea (dut/duzu/du/dugu/duzue/dute), jan, edan, erosi, ikusi eta hartu artean nahasturik — lehen -tzen/-ten bikote minimoa (jaten vs hartzen)',
+        es: 'el auxiliar de presente de ukan (dut/duzu/du/dugu/duzue/dute), combinado entre jan, edan, erosi, ikusi, hartu — primer par mínimo -tzen/-ten (jaten frente a hartzen); además el eje de número de NOR (dut frente a ditut) entre ukan, jan, edan, erosi, hartu, ikusi, eduki',
+        eu: 'ukan-en oraineko laguntzailea (dut/duzu/du/dugu/duzue/dute), jan, edan, erosi, ikusi eta hartu artean nahasturik — lehen -tzen/-ten bikote minimoa (jaten vs hartzen); gainera NOR-ren kopuru-ardatza (dut vs ditut) ukan, jan, edan, erosi, hartu, ikusi eta eduki artean',
       },
       payload: {
-        es: '"Comí." · "Bebes agua." · "Compré un libro." · "¿Lo ves?" · "Tomo el autobús."',
-        eu: '"Jan dut" (Comí) · "Ura edaten duzu" (Bebes agua) · "Liburu bat erosi dut" (Compré un libro) · "Ikusten duzu?" (¿Lo ves?) · "Autobusa hartzen dut" (Tomo el autobús)',
+        es: '"Comí." · "Bebes agua." · "Compré un libro." · "¿Lo ves?" · "Tomo el autobús." · "Los tengo." (ditut, no dut)',
+        eu: '"Jan dut" (Comí) · "Ura edaten duzu" (Bebes agua) · "Liburu bat erosi dut" (Compré un libro) · "Ikusten duzu?" (¿Lo ves?) · "Autobusa hartzen dut" (Tomo el autobús) · "Ditut" (Los tengo, ditut eta ez dut)',
       },
     },
     14: {
       title: { es: 'Mirando atrás I — El grupo del pasado de "ukan"', eu: 'Atzera begira I — "ukan"-en iraganeko taldea' },
       focus: {
-        es: 'el auxiliar de pasado de ukan (nuen/zenuen/zuen/genuen/zenuten/zuten), combinado entre ukan, jan, edan, erosi, ikusi, jakin',
-        eu: 'ukan-en iraganeko laguntzailea (nuen/zenuen/zuen/genuen/zenuten/zuten), ukan, jan, edan, erosi, ikusi eta jakin artean nahasturik',
+        es: 'el auxiliar de pasado de ukan (nuen/zenuen/zuen/genuen/zenuten/zuten), combinado entre ukan, jan, edan, erosi, ikusi, jakin; además el eje de número de NOR en pasado (zenuen frente a zenituen) entre ukan, jan, edan, erosi, hartu, ikusi, eduki',
+        eu: 'ukan-en iraganeko laguntzailea (nuen/zenuen/zuen/genuen/zenuten/zuten), ukan, jan, edan, erosi, ikusi eta jakin artean nahasturik; gainera NOR-ren kopuru-ardatza iraganean (zenuen vs zenituen) ukan, jan, edan, erosi, hartu, ikusi eta eduki artean',
       },
       payload: {
-        es: '"Tenía un coche." · "Comí la manzana." · "Bebiste café." · "Compramos una casa." · "Ella vio la película." · "Sabía la respuesta." (Erantzuna nekien)',
-        eu: '"Autoa nuen" (Tenía un coche) · "Sagarra jan nuen" (Comí la manzana) · "Kafea edan zenuen" (Bebiste café) · "Etxea erosi genuen" (Compramos una casa) · "Filma ikusi zuen" (Ella vio la película) · "Erantzuna nekien" (Sabía la respuesta)',
+        es: '"Tenía un coche." · "Comí la manzana." · "Bebiste café." · "Compramos una casa." · "Ella vio la película." · "Sabía la respuesta." (Erantzuna nekien) · "Los tenías." (zenituen, no zenuen)',
+        eu: '"Autoa nuen" (Tenía un coche) · "Sagarra jan nuen" (Comí la manzana) · "Kafea edan zenuen" (Bebiste café) · "Etxea erosi genuen" (Compramos una casa) · "Filma ikusi zuen" (Ella vio la película) · "Erantzuna nekien" (Sabía la respuesta) · "Zenituen" (Los tenías, zenituen eta ez zenuen)',
       },
     },
     15: {
