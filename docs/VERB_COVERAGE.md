@@ -338,6 +338,15 @@ that has to stay in sync with `izan`/`ukan`")? Either is far cheaper than
 standing up a periphrastic verb from scratch — worth resolving *before*
 reaching for §4b, not after.
 
+**Resolved (#306):** dedicated `VERBS`-shaped entries, not `sentences`
+layered onto `izan`/`ukan`/`egon` — extended to a broader family of fixed
+noun(/particle)+verb expressions beyond just `nahi`/`behar`/`ari`: `hitz`/
+`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`, `arreta eman`, `ados
+egon`, `arriskuan jarri`. Each gets its own gloss and lesson identity
+(Unit 44, "The 'egin' Construction") since the meaning is opaque from the
+base verb (`egin`/`hartu`/`eman`/`egon`/`jarri`) alone — see
+`docs/DECISIONS.md`.
+
 ## 6. Valency-changing morphology — the causative (`-arazi`/`-erazi`)
 
 🔲 Not represented anywhere in `VERBS` yet — flagged here, and given a home in
@@ -420,3 +429,7 @@ Not a commitment — just a way to see how much runway sits past the current
       data shapes (just another `periphrastic` entry) but does need the
       `-arazi`/`-erazi` conditioning rule sourced before writing `VERBS`
       entries
+- [x] **fixed noun(/particle)+verb expressions beyond `nahi`/`behar`/`ari`**
+      — `hitz`/`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`,
+      `arreta eman`, `ados egon`, `arriskuan jarri` (per §5's resolved open
+      question, Unit 44)

@@ -6,6 +6,53 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-20 — #306: nine `egin`-construction fixed expressions — morphology sourcing
+
+**Decision:** added `hitz-egin`, `lan-egin`, `lo-egin`, `ahaleginak-egin`,
+`parte-hartu`, `kontuan-hartu`, `arreta-eman`, `ados-egon`,
+`arriskuan-jarri` to `VERBS`. Each rides an already-sourced base verb's
+exact paradigm with an invariant noun/particle prefixed onto every form:
+
+- `hitz`/`lan`/`lo`/`ahaleginak egin` ride `egin`'s own present
+  (`egiten dut/duzu/du/dugu/duzue/dute`) and past
+  (`egin nuen/zenuen/zuen/genuen/zenuten/zuten`) tables verbatim —
+  CONJUGATIONS.md's existing `egin` entry, prefixed.
+- `parte`/`kontuan hartu` ride `hartu`'s present
+  (`hartzen dut/duzu/du/dugu/duzue/dute`) and past
+  (`hartu nuen/zenuen/zuen/genuen/zenuten/zuten`) tables verbatim.
+- `arreta eman` rides `eman`'s imperfective-participle shape
+  (`ematen`) but **not** `eman`'s own ditransitive (`nor-nori-nork`)
+  conjugation table — "to pay attention" is used transitively
+  (`nor-nork`, `ukan`'s plain suffixes), not "give attention to
+  someone" in the dative sense `eman`'s own entry models. Present:
+  `arreta ematen dut/duzu/du/dugu/duzue/dute`; past:
+  `arreta eman nuen/zenuen/zuen/genuen/zenuten/zuten`.
+- `ados egon` rides `egon`'s full synthetic present/past/future tables
+  (including `hi`, omitted from `future` — same shape as `egon`'s own
+  entry) verbatim, prefixed with `ados`.
+- `arriskuan jarri` is the one expression with no precedent base-verb
+  entry to ride — `jarri` itself isn't in `VERBS`. Modeled as a
+  standalone `agreement: ['nor']` periphrastic entry on `izan`'s
+  suffixes (`naiz/zara/da/gara/zarete/dira` present-tense pattern,
+  `nintzen/zinen/zen/ginen/zineten/ziren` past), with `jarri`'s own
+  non-finite forms derived the same way #320/#321 derived others:
+  imperfective participle `jartzen` (drop trailing `-i`, add `-tzen` to
+  the `jar-` stem — same rule as `gaitzetsi`→`gaitzesten`'s family, just
+  without the coronal-obstruent `-ten` allomorph since `jar-` doesn't end
+  in one), future `jarriko` (vowel-final stem + `-ko`, same rule as
+  `hartu`→`hartuko`). This is a deliberate one-off — `jarri` doesn't get
+  its own base `VERBS` entry, since nothing else in the curriculum needs
+  it yet (see `docs/DECISIONS.md`).
+
+**Sentence variety is deliberately minimal** — one frame per person per
+tense, same rationale as #321: these are recognition/production pool
+lessons with one source-verb form drilled at a time, not the richer
+pronoun/negative variant sets given to higher-frequency core verbs.
+`validFor: []` throughout — every sentence frame is built around an
+expression-specific object/context (`euskaraz`, `zortzi ordu`,
+`zure iritzia`, `klasean`...) with no plausible cross-verb distractor
+overlap among these nine siblings or any existing `nor-nork`/`nor` verb.
+
 ## 2026-06-20 — #321: academic/rare tier — 12 regular nor-nork verbs, recognition-only sentence variety
 
 **Decision:** added `hausnartu`, `argudiatu`, `ondorioztatu`, `gaitzetsi`, `aldarrikatu`, `plazaratu`, `sustatu`, `bultzatu`, `bermatu`, `babestu`, `ziurtatu`, `borobildu` (all `nor-nork`) to `VERBS`, completing #304's split. Morphology follows the same `-tzen`/`-ten`/`-ko` rules established in #319/#320: imperfective participle = stem + `-tzen` for the common case (`hausnartzen`, `argudiatzen`, `ondorioztatzen`, `aldarrikatzen`, `plazaratzen`, `sustatzen`, `bultzatzen`, `bermatzen`, `ziurtatzen`), or `-ten` for stems ending in the established coronal-obstruent set (`gaitzetsi`→`gaitzesten`, `babestu`→`babesten`, both `s`-final stems, same pattern as `idatzi`→`idazten`/`bereiztu`→`bereizten`). `borobildu`→`borobiltzen` follows `bildu`→`biltzen`'s `l`-final `-du`-allomorph pattern rather than a literal `borobildu`+`tzen` concatenation. Future = perfective participle + `-ko` throughout (all 12 end in a vowel, so no `-go` cases).
