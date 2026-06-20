@@ -171,9 +171,9 @@ export const LESSONS = [
       { verbId: 'ibili', tense: 'present' },
     ],
   },
-  // #319 — `nor-fodder-present`/`-plural`: the regular-`nor` fodder pool #318
-  // reserved (`sartu`/`atera`/`hasi`/`bizi izan` here; `erori`/`jaiki` to be
-  // added by #320, under the 6-source cap until then). `joan-present`/
+  // `nor-fodder-present`/`-plural`: the regular-`nor` fodder pool #318
+  // reserved (`sartu`/`atera`/`hasi`/`bizi izan` from #319; `erori`/`jaiki`
+  // from #320 complete it to the 6-source cap). `joan-present`/
   // `etorri-present`/`ibili-present` above stay single-verb lessons — they're
   // synthetic-paradigm introducers (#309), not fodder.
   {
@@ -184,6 +184,8 @@ export const LESSONS = [
       { verbId: 'atera', tense: 'present' },
       { verbId: 'hasi', tense: 'present' },
       { verbId: 'bizi-izan', tense: 'present' },
+      { verbId: 'erori', tense: 'present' },
+      { verbId: 'jaiki', tense: 'present' },
     ],
   },
   {
@@ -194,6 +196,8 @@ export const LESSONS = [
       { verbId: 'atera', tense: 'present' },
       { verbId: 'hasi', tense: 'present' },
       { verbId: 'bizi-izan', tense: 'present' },
+      { verbId: 'erori', tense: 'present' },
+      { verbId: 'jaiki', tense: 'present' },
     ],
   },
   // Unit 7 ("Expansion: Absolutive Plurals") — zero new verbs for
@@ -411,15 +415,17 @@ export const LESSONS = [
       { verbId: 'atera', tense: 'past' },
     ],
   },
-  // #319 — `izan-past-pool-2`/`-plural`: the rest of #318's regular-`nor`
-  // fodder past pool (`hasi`, `bizi izan` here; `erori`/`jaiki` to be added by
-  // #320 once it lands, per #318's plan — under the 6-source cap until then).
+  // `izan-past-pool-2`/`-plural`: the rest of #318's regular-`nor` fodder
+  // past pool (`hasi`, `bizi izan` from #319; `erori`/`jaiki` from #320
+  // complete it to the 6-source cap).
   {
     id: 'izan-past-pool-2',
     persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'hasi', tense: 'past' },
       { verbId: 'bizi-izan', tense: 'past' },
+      { verbId: 'erori', tense: 'past' },
+      { verbId: 'jaiki', tense: 'past' },
     ],
   },
   {
@@ -428,6 +434,8 @@ export const LESSONS = [
     sources: [
       { verbId: 'hasi', tense: 'past' },
       { verbId: 'bizi-izan', tense: 'past' },
+      { verbId: 'erori', tense: 'past' },
+      { verbId: 'jaiki', tense: 'past' },
     ],
   },
   // Unit 12 ("Daily Routine (Transitive)", Phase II) — the `ukan`-present
@@ -522,6 +530,76 @@ export const LESSONS = [
       { verbId: 'jaso', tense: 'present' },
       { verbId: 'saldu', tense: 'present' },
       { verbId: 'itxaron', tense: 'present' },
+    ],
+  },
+  // #320 (fodder, mid/low tier, per #318's reserved plan): `unit-10-present-4`
+  // / `-5` / `-6` — same shape as `unit-10-present-2`/`-3` above.
+  {
+    id: 'unit-10-present-4',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'eskatu', tense: 'present' },
+      { verbId: 'galdetu', tense: 'present' },
+      { verbId: 'adierazi', tense: 'present' },
+      { verbId: 'bukatu', tense: 'present' },
+      { verbId: 'amaitu', tense: 'present' },
+      { verbId: 'gainditu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-4-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'eskatu', tense: 'present' },
+      { verbId: 'galdetu', tense: 'present' },
+      { verbId: 'adierazi', tense: 'present' },
+      { verbId: 'bukatu', tense: 'present' },
+      { verbId: 'amaitu', tense: 'present' },
+      { verbId: 'gainditu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-5',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'bereiztu', tense: 'present' },
+      { verbId: 'ezagutu', tense: 'present' },
+      { verbId: 'sentitu', tense: 'present' },
+      { verbId: 'pentsatu', tense: 'present' },
+      { verbId: 'sumatu', tense: 'present' },
+      { verbId: 'ulertu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-5-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'bereiztu', tense: 'present' },
+      { verbId: 'ezagutu', tense: 'present' },
+      { verbId: 'sentitu', tense: 'present' },
+      { verbId: 'pentsatu', tense: 'present' },
+      { verbId: 'sumatu', tense: 'present' },
+      { verbId: 'ulertu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-6',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'aztertu', tense: 'present' },
+      { verbId: 'ukatu', tense: 'present' },
+      { verbId: 'batu', tense: 'present' },
+      { verbId: 'planteatu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-6-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'aztertu', tense: 'present' },
+      { verbId: 'ukatu', tense: 'present' },
+      { verbId: 'batu', tense: 'present' },
+      { verbId: 'planteatu', tense: 'present' },
     ],
   },
   // #286 — the NOR-number axis (`dut` vs `ditut`, plural *object*, not
@@ -646,6 +724,76 @@ export const LESSONS = [
       { verbId: 'jaso', tense: 'past' },
       { verbId: 'saldu', tense: 'past' },
       { verbId: 'itxaron', tense: 'past' },
+    ],
+  },
+  // #320 (fodder, mid/low tier, per #318's reserved plan): `ukan-past-pool-4`
+  // / `-5` / `-6`, mirroring `unit-10-present-4`/`-5`/`-6`'s verb groupings.
+  {
+    id: 'ukan-past-pool-4',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'eskatu', tense: 'past' },
+      { verbId: 'galdetu', tense: 'past' },
+      { verbId: 'adierazi', tense: 'past' },
+      { verbId: 'bukatu', tense: 'past' },
+      { verbId: 'amaitu', tense: 'past' },
+      { verbId: 'gainditu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-4-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'eskatu', tense: 'past' },
+      { verbId: 'galdetu', tense: 'past' },
+      { verbId: 'adierazi', tense: 'past' },
+      { verbId: 'bukatu', tense: 'past' },
+      { verbId: 'amaitu', tense: 'past' },
+      { verbId: 'gainditu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-5',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'bereiztu', tense: 'past' },
+      { verbId: 'ezagutu', tense: 'past' },
+      { verbId: 'sentitu', tense: 'past' },
+      { verbId: 'pentsatu', tense: 'past' },
+      { verbId: 'sumatu', tense: 'past' },
+      { verbId: 'ulertu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-5-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'bereiztu', tense: 'past' },
+      { verbId: 'ezagutu', tense: 'past' },
+      { verbId: 'sentitu', tense: 'past' },
+      { verbId: 'pentsatu', tense: 'past' },
+      { verbId: 'sumatu', tense: 'past' },
+      { verbId: 'ulertu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-6',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'aztertu', tense: 'past' },
+      { verbId: 'ukatu', tense: 'past' },
+      { verbId: 'batu', tense: 'past' },
+      { verbId: 'planteatu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-6-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'aztertu', tense: 'past' },
+      { verbId: 'ukatu', tense: 'past' },
+      { verbId: 'batu', tense: 'past' },
+      { verbId: 'planteatu', tense: 'past' },
     ],
   },
   // #286 — `pastPlural` counterpart to `nor-nork-present-plural-pool` above

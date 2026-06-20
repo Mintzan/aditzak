@@ -6,6 +6,16 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-20 — #320: mid/low fodder tier + #304's unassigned verbs — 18 regular verbs, same rules as #319
+
+**Decision:** added `eskatu`, `galdetu`, `adierazi`, `bukatu`, `amaitu`, `gainditu`, `bereiztu`, `ezagutu`, `sentitu`, `pentsatu`, `sumatu`, `ulertu`, `aztertu`, `ukatu`, `batu`, `planteatu` (`nor-nork`) and `erori`, `jaiki` (`nor`) to `VERBS`. All 18 are regular `-tu`/`-i`-final periphrastic verbs sourced by the same #319-documented rules: imperfective participle = stem + `-tzen` (the common case — `eskatu`→`eskatzen`, `ulertu`→`ulertzen`, `aztertu`→`aztertzen`, despite their `r`-final stems, since `-ten` is reserved for the narrower coronal-obstruent set `idatzi`/`utzi`/`gal`/`sal` already established, not `r`/`l` generally) or `-ten` for stems ending in that coronal-obstruent set (`adierazi`→`adierazten`, `bereiztu`→`bereizten`, both `z`-final stems, same pattern as `idatzi`→`idazten`/`utzi`→`uzten`); future = perfective participle + `-ko` (all 18 end in a vowel, so no `-go` cases this tier — unlike #319's `egin`/`entzun`/`itxaron`, which are `n`-final).
+
+**`erori`/`jaiki` land as plain intransitive `nor`** (izan auxiliary), the same shape as #319's `sartu`/`atera`/`hasi` — `erori`'s imperfective participle is `erortzen` (stem `eror` + `tzen`, the attested form, not a regular vowel-final derivation since the perfective participle's own final `-i` is dropped along with the preceding `o` retained as `eror-`). `jaiki`'s is the regular `jaikitzen`.
+
+**`eskatu`/`galdetu`/`adierazi` land plain-`nor-nork`-only here**, same #307-deferral as #319's `itxaron`/`saldu`/`utzi` — their optionally-ditransitive dative reading (`eskatu diot`, etc.) stays #307's scope.
+
+**Sentences carry empty `validFor: []` on every `present` variant** for the 16 `nor-nork` verbs, same rationale as #319 (cross-verb naturalness review deferred). `scripts/validfor-gap-baseline.json` regenerated to reflect the larger gap surface.
+
 ## 2026-06-20 — #319: high-frequency fodder tier — 16 regular verbs, plain participle/aspect/future rules
 
 **Decision:** added `egin`, `irakurri`, `idatzi`, `ikasi`, `entzun`, `utzi`, `aurkitu`, `bilatu`, `galdu`, `jaso`, `saldu`, `itxaron` (`nor-nork`) and `sartu`, `atera`, `hasi`, `bizi izan` (`nor`) to `VERBS` — all fully regular, sourced by the standard rules already documented in `CONJUGATIONS.md` §11/§14: imperfective participle = perfective participle minus its final vowel/`-tu`/`-i`, plus `-tzen` after a consonant-final stem or `-ten` after a stem ending in a coronal (`s/z/ts/tz/n/l/r`-ish set — e.g. `irakur`+`tzen`→`irakurtzen`, but `idatz`+`ten`→`idazten`, `gal`+`tzen`→`galtzen`, `sal`+`tzen`→`saltzen`, `uz`+`ten`→`uzten`); future = perfective participle + `-go` after a stem ending in `n`/`l` (`egingo`, `entzungo`, `itxarongo`) or `-ko` otherwise (`irakurriko`, `idatziko`, `ikasiko`, `utziko`, `aurkituko`, `bilatuko`, `galduko`, `jasoko`, `salduko`, `sartuko`, `hasiko`). No native-speaker-check caveat needed here — every form is a direct application of an already-attested rule, not a by-analogy derivation like #287's.
