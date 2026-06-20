@@ -12,6 +12,31 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #311: curated the cultural sentence bank for adoption-readiness
+
+**Decision:** Added an "Adoption-readiness curation (#311)" section to
+`docs/SAMPLE_SENTENCES.md` classifying every sentence in its cultural banks
+(by-argument-structure, advanced-tenses, extended-set, modal, continuous-aspect,
+synthetic-verbs) as `ready`/`needs-rewrite`/`defer`, with a target
+`verbId`/`tense`/`person`, a #285 plural-object-agreement flag, and a draft
+`validFor`. Doc-only — no `VERBS` changes, per #311's scope; #312–314 do the
+actual adoption.
+
+**Why `defer` so often:** two structural gaps drive most verdicts: (1) most
+verbs only have `present`/`past`/`future` tables — `conditional`/`potential`/
+`imperative` only exist for `izan`/`ukan`, so advanced-tense-bank sentences
+mostly can't be adopted yet; (2) `ari` is `present`-only and only has
+`ni`/`zu`/`hura`, gutting the continuous-aspect bank. The causative and `ahal`
+banks are deferred wholesale per the epic body rather than re-litigated
+per-sentence, since both are explicitly pending their own future units.
+
+**Surfaced but not previously documented:** the doc had gone stale relative to
+`verbs.js` — `eraman`/`ekarri`'s synthetic-bank sentences and most of
+`behar`'s and three of `nahi`'s modal-bank sentences were already adopted
+under #260/#261/#266/#267, but the doc still framed itself as "none of this is
+in `VERBS` yet." Flagged inline so #312–314 don't re-author already-shipped
+content.
+
 ## 2026-06-20 — #332: theme-unit audit — front-loaded every available unit's title with its conjugation target
 
 **Decision:** Reframed every `available` unit's `title` (`journey.js`, mirrored

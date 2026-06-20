@@ -1058,9 +1058,237 @@ Past (Lehena):
 
 ---
 
+## Adoption-readiness curation (#311)
+
+A readiness pass over every sentence in the cultural banks above, per #311's
+checklist (naturalness, clean blank, #285 plural-object flag, target
+`verbId`/`tense`/`person`, draft `validFor`, classification). **Doc-only —
+nothing here has been written into `VERBS` yet**; that's #312 (existing
+verbs' present/past), #313 (advanced tenses + landable construction banks),
+and #314 (new fodder verbs).
+
+Important context this pass surfaced: `VERBS` has grown substantially since
+these banks were drafted — `joan`/`etorri`/`ibili`/`eduki`/`gustatu`/
+`iruditu`/`ahaztu`/`nahi`/`behar`/`eraman`/`ekarri`/`jakin`/`ukan` are now all
+implemented (most weren't when "future units" was written), and `eraman`'s
+and `ekarri`'s synthetic-bank sentences plus most of `behar`'s and three of
+`nahi`'s modal-bank sentences have **already been adopted** (`#260`/`#261`/
+`#266`/`#267` in `src/data/verbs.js`) — flagged below so #312–314 don't
+re-author them. Two structural facts drive most `defer` verdicts below:
+
+- **Tense-table gating** — only `izan`/`ukan` have `conditional`/`potential`/
+  `imperative` tables; only `izan`/`egon`/`ukan` have `futurePlural`/
+  `pastPlural` *and* `future` together with the rest. Most other verbs have
+  `present`/`past`/`future` only. `ahal`'s bank and the causative bank are
+  deferred wholesale per the epic body (pending the `ahal` unit and the
+  Phase VI causative units, respectively) — not re-litigated per-sentence
+  here.
+- **`ari`'s table is minimal** — `present` only, and only `ni`/`zu`/`hura`
+  (no `gu`/`zuek`/`haiek`, no `past`/`future` at all). This guts most of the
+  "continuous aspect" bank until `ari` is extended.
+
+Classification legend: **ready** (clean blank, target table exists, drop-in
+candidate for #312/313/314) · **needs-rewrite** (fixable issue noted) ·
+**defer** (blocked on a verb or tense table that doesn't exist yet).
+`validFor` drafts here are a starting point for #312–314, not a final
+ruling — final sign-off is #316's native-speaker review, per the epic's own
+framing of *why* that review exists.
+
+### 1. NOR (by argument structure)
+
+| Sentence | Target | #285 | `validFor` draft | Status |
+|---|---|---|---|---|
+| Zuberoako dantzariak... etortzen dira | `etorri`/present/haiek | n/a | `['joan']` | **needs-rewrite** — uses the periphrastic habitual `etortzen dira`, not `etorri`'s synthetic present (`datoz`); no tense table backs the literal text. Rewrite to "...gure herrira datoz." |
+| Gaur goizean mendizaleak... igotzen ari dira | `igo` (not in `VERBS`) | n/a | — | **defer** — base verb missing. Once added, this is itself an `ari`-continuous sentence (target `ari`, not `igo`'s own table). |
+| Iaz, nire lagunak... ibili ziren | `ibili`/past/haiek | n/a | `['egon']`? | **ready**, validFor uncertain — "ibili ziren" (were busy/around) vs `egon`'s "zeuden" (were present) both plausibly fit "Danborradan"; flag for #316. |
+| Gaur gurasoak... museora doaz | `joan`/present/haiek | n/a | `['etorri']` | **ready** — allative `-ra`, symmetric to `etorri`'s existing convention. |
+
+### 2. NOR-NORK (by argument structure)
+
+| Sentence | Target | #285 | `validFor` draft | Status |
+|---|---|---|---|---|
+| Sustraik eta Uxuek... abesten dituzte | `abestu` (not in `VERBS`) | plural object ("bertso politak") — will need a `presentPlural`-style table | — | **defer** |
+| Amonak marmitako epela prestatu du... | `prestatu` (not in `VERBS`) | singular object, fine | — | **defer** — this is the doc's own worked mapping example (see "Mapping to `VERBS`'s shape" above); keep as-is. |
+| Atzo arratsaldean, pilotariek... jokatu zuten | `jokatu` (not in `VERBS`) | singular object, `zuten` is correctly the singular-object form | — | **defer** |
+| Zuk udan... bisitatuko duzu | `bisitatu` (not in `VERBS`) | singular object, fine | — | **defer** |
+
+### 3. NOR-NORI (by argument structure)
+
+| Sentence | Target | #285 | `validFor` draft | Status |
+|---|---|---|---|---|
+| Niri asko gustatzen zaizkit Tolosako babarrun gorriak | `gustatu`/presentPlural/ni | plural subject ("babarrun gorriak") correctly drives the `-zki-` plural table (`zaizkit`) | `['ahaztu']` (per `gustatu`'s existing convention) | **ready** |
+| Umeei beldurra zaie... Basajaun | no matching verb — bare noun (`beldurra`) + `izan`-dative isn't any current `VERBS` entry's shape (not `gustatu`/`iruditu`/`ahaztu`, which all pair a verbal participle with the dative aux) | — | — | **needs-rewrite** — recast with an existing nor-nori-nork verb (e.g. `eman`: "...Basajaunek umeei beldurra ematen die") or defer until a dedicated entry exists. |
+| Zuri ahaztu zitzaizkizun etxeko giltzak... | `ahaztu`/pastPlural/zu | plural object ("etxeko giltzak") correctly drives `-zki-` plural (`zitzaizkizun`) | `['gustatu']` (per `ahaztu`'s existing convention) | **ready** |
+
+### 4. NOR-NORI-NORK (by argument structure)
+
+| Sentence | Target | #285 | `validFor` draft | Status |
+|---|---|---|---|---|
+| Nik zuri gaztelerazko liburua euskaratu dizut | `euskaratu` (not in `VERBS`) | singular object, fine | — | **defer** |
+| Goizanek lagunei opari politak ekarri dizkie... | `ekarri` — but `ekarri`'s `VERBS` entry only models the 2-argument `nor-nork` synthetic forms (`dakar`-root); it has no `nor-nori-nork` (dative-recipient) variant, so `dizkie` doesn't fit its table at all | plural object ("opari politak"), but moot until the gap below is closed | — | **defer** — needs a `nor-nori-nork` `ekarri` variant (cf. the `-dative` pattern used for `itxaron`/`saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`) before this can be adopted. |
+| Gurasoek niri... kontatzen zizkidaten | `kontatu` (not in `VERBS`) | plural object ("ipuinak") | — | **defer** — also note the periphrastic habitual `-tzen` form (same `etorri`-style mismatch risk as item 1) for whoever adds `kontatu`. |
+| Arrantzaleek jatetxeari... saldu zioten | `saldu-dative`/past | singular object, `zioten` correctly singular | `[]` (specific combo: fresh hake sold to a restaurant — no sibling `-dative` verb plausibly substitutes) | **ready** — verify `saldu-dative`'s past table covers this person before adopting. |
+
+### Advanced-tenses bank (future/conditional/potential/imperative/continuous)
+
+Of the 12 sentences here, only two are adoptable today; the rest are
+**deferred on tense-table gating** (see above) rather than rejected on
+content grounds — re-evaluate once #313 lands the relevant table.
+
+| Sentence | Target | #285 | `validFor` draft | Status |
+|---|---|---|---|---|
+| Datorren astean, baserritarrak... joango dira | `joan`/future/haiek | n/a | `['etorri']` | **ready** |
+| Dirurik banu... joango nintzateke | conditional — no table | — | — | **defer** |
+| Zuek gaur gauean... afal zaitezkete | `ahal` bank | — | — | **defer** (epic-level) |
+| Une honetan, okinak... sartzen ari dira | `ari`/present/haiek | — | — | **defer** — `ari`'s table has no `haiek`; also the embedded `sartu` is used transitively here, but `VERBS`' `sartu` only models the intransitive `nor` sense — flag for whoever extends `ari`. |
+| Guk denbora gehiago izan bagenu... txuleta jango genuen | `jan`? — actually the drilled form `genuen` is plain past, but `jan` doesn't appear; re-read: verb is `ukan`'s/host pattern — **clarify against source verb before adopting**; if literally `ukan`'s past, target `ukan`/past/gu | n/a | `[]` (tentative) | **needs-rewrite** — confirm which verb's past table this is meant to drill; as written it's ambiguous between a real `past` form and an unmodeled future-in-past conditional shape. |
+| Ekar itzazu gazta eta Idiazabalgo ardoa... | imperative — no table outside `izan`/`ukan` | plural objects correctly drive `itzazu` | — | **defer** |
+| Uda honetan, bidaiariei... gustatuko zaie Mundakako ezker olatua | `gustatu`/future/haiek | singular subject, correct singular table | `['ahaztu']` | **ready** |
+| Guri txikitan... zekiokeen... | potential — no table | — | — | **defer** (also reads awkwardly; flag for rewrite regardless once potential exists) |
+| Etxekoek niri txakolin botila bat irekiko didate... | `ireki` (not in `VERBS`) | singular object, fine | — | **defer** |
+| Nik zuei istorio hau kontatuko nizueke... | conditional — no table; `kontatu` also not in `VERBS` | — | — | **defer** |
+| Zizurkildarrek elizari kanpai berriak jartzen zizkioten... | `jarri` (not in `VERBS`); also past-continuous `ari` not modeled | plural object ("kanpai berriak") | — | **defer** |
+
+### Extended-set bank (second NOR/NOR-NORK/NOR-NORI/NOR-NORI-NORK pass)
+
+Same gating pattern as the advanced-tenses bank — almost everything here is
+future/conditional/potential/imperative/continuous on a verb that either
+doesn't exist yet or doesn't have that tense's table. Two items are ready
+now; the rest defer for the reasons in each row.
+
+| Sentence | Target | #285 | `validFor` draft | Status |
+|---|---|---|---|---|
+| Bihar goizean korrikalariak... lehiatuko dira | `lehiatu` (not in `VERBS`) | — | — | **defer** |
+| Haurrak Korrika festan... jantziko dira | `jantzi` (not in `VERBS`) | — | — | **defer** |
+| Gazteak gaur gauean... egon daitezke / Turistak... igo daitezke | potential — no table outside `izan`/`ukan` | — | — | **defer** |
+| Atera argituko balitz... joango ginateke / Zuek pilotari profesionalak bazinete... | conditional — no table | — | — | **defer** |
+| Sukaldariak... garbitzen ari dira / Neska-mutilak... ikasten ari dira | `ari`/present, but person is `haiek` (not yet in `ari`'s table); embedded verbs (`garbitu`, `ikasi`'s habitual) need checking too | — | — | **defer** |
+| Guk sarrerak lortu bagenitu... ikusiko genuen / Zuk... erosi bazenu... egingo zenuen | future-in-past conditional apodosis (`ikusiko genuen`, `egingo zenuen`) — distinct from any modeled tense; no verb's table covers this shape | — | — | **defer** |
+| Eman iezaiozu... / Idatzi ezazue... | imperative — no table outside `izan`/`ukan` | `idatzi` plural object via `ezazue` (verify against an imperative table once one exists) | — | **defer** |
+| Atzerriko ikasleei... irudituko zaie euskal kultura zaharra | `iruditu`/future/haiek | singular subject, correct singular table | `[]` (per `iruditu`'s established "needs a predicate" judgment) | **ready** |
+| Zuri bihar... hurbilduko zaizu | `hurbildu` (not in `VERBS`) | — | — | **defer** |
+| Niri pintxo merkeak... bururatu dakizkit / Gurasoei umeak... | potential — no table | plural subject ("pintxo merkeak") | — | **defer** |
+| Zuei katu beltzak... balitzaizkizue... | conditional — no table | — | — | **defer** |
+| Etxekoandreak bisitariei... zerbitzatzen die / Lagunek niri... oparitzen didate | `zerbitzatu`/`oparitu` (not in `VERBS`) | — | — | **defer** |
+| Nik zuri... kontatuko dizkizut / Arrantzaleek herritarrei... ekarriko diote | `kontatu` not in `VERBS`; `ekarri` lacks a `nor-nori-nork` variant (same gap as the by-argument-structure bank above) | plural object ("sekretuak") for the first | — | **defer** |
+| Guk zuei... esango bagenizue... / Sustraik epaimahaiari... kantatu balizkio... | conditional — no table | — | — | **defer** |
+
+### Modal-verb bank (`nahi`, `behar`, `ahal`)
+
+`behar`'s entire 11-sentence set is **already adopted** (`#267`,
+paraphrased to `behar`'s singular-object table). `nahi`'s set is **partly
+adopted**: 3 of 11 (`gu`/`zuek`/`haiek` infinitive-complement variants,
+`#266`) are already in `src/data/verbs.js`; the rest are below. `ahal`'s
+11 sentences stay **deferred wholesale** per the epic body (pending the
+`ahal` unit) — not re-evaluated per-sentence.
+
+| Sentence | Target | #285 | `validFor` draft | Status |
+|---|---|---|---|---|
+| Nik gaur gauean sagardotegira joan nahi dut | `nahi`/present/ni | n/a (infinitive complement) | `[]` | **ready** — not yet adopted (the `ni` slot currently only has the kafe/ur/liburu/opari-bat variants). |
+| Gure lagunek... ikusi nahi dute | — | — | — | **✅ already adopted** (`nahi.sentences.present.haiek`) |
+| Zuk Idiazabal gazta... erosi nahi zenuen atzoko azokan | `nahi` — no `past` table | — | — | **defer** |
+| Guk udan... zeharkatu nahi dugu txalupaz | — | — | — | **✅ already adopted** (`nahi.sentences.present.gu`) |
+| Arrantzaleek gaur gauean... itzuli nahi dute | `nahi`/present/haiek | n/a | `[]` | **ready** |
+| Turistek... hartu nahi dituzte | `nahi`/presentPlural/haiek | plural object ("itsaslabarrak") correctly needs the plural table | `[]` | **ready** |
+| Nik baserriko sukaldean... egiten ikasi nahi dut | `nahi`/present/ni | n/a (infinitive complement) | `[]` | **ready** |
+| Zuek bertsolarien saioa... entzun nahi zenuten | `nahi` — no `past` table | — | — | **defer** |
+| Guk gure aplikazioan... sartu nahi ditugu | `nahi`/presentPlural/gu | plural object ("aditz guztiak") correctly needs the plural table | `[]` | **ready** |
+| Zuek Korrika festan... korrika egin nahi duzue | — | — | — | **✅ already adopted** (`nahi.sentences.present.zuek`) |
+| Nik Baionako dendan... erosi nahi nituen | `nahi` — no `past` table | plural object ("jantzi tradizionalak") would also need the plural table once `past` exists | — | **defer** |
+
+### Continuous aspect (`ari izan`) bank
+
+`ari`'s table is `present`-only, `ni`/`zu`/`hura` (no `gu`/`zuek`/`haiek`,
+no `past`/`future` at all — see above). Of the 15 sentences, exactly one
+uses a person `ari` already supports.
+
+| Sentence | Target | Status |
+|---|---|---|
+| Une honetan, sukaldariak... / Arrantzaleak... / Gu aplikazio eder bat garatzen ari gara / Dantzariak... / Gu Zumaia Flysch-eko... ibiltzen ari gara | `ari`/present/`haiek` or `gu` | **defer** — `ari` has no `gu`/`haiek` present cells yet. |
+| Zu Idiazabal gazta eta txakolina dasten ari zara plazako azokan | `ari`/present/zu | **ready** — `validFor: []`. |
+| All 6 past-continuous sentences | `ari`/past/* | **defer** — no `past` table at all. |
+| All 3 future-continuous sentences | `ari`/future/* | **defer** — no `future` table at all. |
+
+### Synthetic verbs (`aditz trinkoak`) bank
+
+All eight verbs here (`egon`, `joan`, `etorri`, `ibili`, `ukan`/`edun`,
+`jakin`, `eraman`, `ekarri`) are now in `VERBS` — a big change from this
+bank's "none of these are yet in `VERBS`" framing (see top-of-section
+note in the bank itself, now stale). `eraman`'s and `ekarri`'s sentences
+here are **already adopted** (`#260`/`#261`, singularized to match their
+singular-object tables) — #312/313 don't need to re-author those two.
+
+**EGON** (5 present + 5 past) — all map cleanly onto `egon`'s existing
+`present`/`past` tables, one sentence per person already used (`ni`/`hura`/
+`gu`/`zuek` present, `hura`×2/`gu`×2 past — see bank text for the
+person-to-sentence mapping). All **ready**, `validFor: []` throughout (same
+locative-only judgment as `egon`'s existing `'Ni etxean ___.'` sentences —
+no `nor`-cluster sibling takes a bare locative the way `egon` does).
+
+**JOAN** (4 present + 5 past) — all **ready** except one. Allative/
+directional sentences (`-ra`/`-rantz`) get `validFor: ['etorri']`,
+symmetric to `etorri`'s own convention. One past sentence — "Ni bakarrik
+nindoan basoan Basajaun ikusi nuenean" — uses the *locative* `-an`
+("in the forest") rather than an allative, which is closer to `ibili`'s
+territory ("I was wandering in the forest") than `joan`'s typical
+directional sense; flag `validFor: ['ibili']` (tentative) for #316 rather
+than the usual `['etorri']`.
+
+**ETORRI** (4 present + 5 past) — mixed. Sentences with an explicit
+allative (`'...plazara!'`, `'...etxera.'`) are **ready**, `validFor:
+['joan']`. Sentences with only an ablative source (`'...frontonetik...'`,
+`'...museotik...'`, `'...baserritik...'`, `'...partidatik...'`,
+`'...janketatik...'`) are tentatively **ready** with `validFor: []` (no
+sibling shares etorri's "coming from X, deictically toward here" reading
+without also needing a destination) — flag for #316 confirmation. Two
+sentences are frameless in the same way #125 already fixed for `etorri`'s
+own table (no destination *or* source — "Zuberoako dantzariak... datoz"
+above, and "Zuek korrika zentozten Korrika festan...", which has only a
+bare locative `-an` with no directional cue): **needs-rewrite**, add a
+destination per #125's existing pattern (e.g. "...datoz plazara").
+
+**IBILI** (5 present + 5 past) — all **ready**. Most get `validFor: []`
+(locative + purpose clause, e.g. "...bila" — "looking for X" — reads
+oddly with static `egon`). Two locative-only sentences without a purpose
+clause ("Surflariak... Mundakako olatuetan dabiltza.") are tentatively
+`validFor: ['egon']` — flag for #316, since "they were in the waves"
+(`egon`) is a plausible static alternate to "they were hanging around in
+the waves" (`ibili`).
+
+**UKAN/EDUN** (1 present + 1 past) — both **ready**. "Baserritarrek ardi
+latxak dituzte mendian" needs the `presentPlural` table (plural object,
+already correctly conjugated as `dituzte`); the past sentence is singular
+and targets `past`/`gu` directly. `validFor` draft for both: `['nahi',
+'eduki', 'ikusi', 'erosi', 'behar']`, per `ukan`'s established
+concrete-object convention (sheep/wine bottle are both ownable/visible/
+wantable/buyable/needable, same as the "book" worked example).
+
+**JAKIN** (5 present + 5 past) — present sentences are all **ready**,
+`validFor: []` (infinitive- or subordinate-clause complements, the same
+shape as `nahi`'s "Zuk etorri ___?" exclusion — no `nor-nork` object-noun
+sibling fits). Past sentences need individual handling:
+- Two ("Gure gurasoek ez zekiten...", "Aitonak ez zekien...") are negated
+  — categorize as `negativeSentences` entries, not plain `sentences`, when
+  adopted.
+- Two ("Guk bagenekien...", "Zuk bazenekien...") use the `ba-` prefix in
+  its **emphatic-affirmative** sense (not the conditional "if" sense) —
+  grammatical, but easy to misread as a conditional in a drill context;
+  **needs-rewrite** to the plain form (`genekien`/`zenekien`) for
+  learnability unless a future "emphatic ba-" unit wants this register
+  deliberately.
+- One ("Zuk bertsotan... bazenekien, zergatik...") is a genuine conditional
+  question — **needs-rewrite**: the blank would have to isolate `zenekien`
+  from its `ba-` prefix, which the current single-trailing-token blank
+  convention doesn't support cleanly.
+
+---
+
 ## Next steps (not yet done)
 
-1. Review/edit these for naturalness and any missing vocabulary gaps.
+1. ~~Review/edit these for naturalness and any missing vocabulary gaps.~~ Done
+   — see "Adoption-readiness curation (#311)" above for the per-sentence
+   classification (`ready`/`needs-rewrite`/`defer`), `validFor` drafts, and
+   #285 plural-object flags.
 2. ~~Turn each `sentences[tense][person]` cell into an array of these
    variants in `src/App.jsx`'s `VERBS`, and update `generateQuestions`/
    `buildSpotErrorQuestion` (`src/lessonLogic.js`) to pick one variant at
