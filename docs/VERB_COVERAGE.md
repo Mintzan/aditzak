@@ -229,17 +229,17 @@ extending Unit 10's pooled drill or seeding later units:
 
 | Verb | Meaning | Present (nor-nork) | Past (nor-nork) | Notes |
 |---|---|---|---|---|
-| hartu | to take / receive | Hartzen dut | Hartu nuen | |
-| saldu | to sell | Saltzen dut | Saldu nuen | also §2's `nor-nori-nork` example ("saldu dio") — usable as a plain `nor-nork` verb too |
-| irakurri | to read | Irakurtzen dut | Irakurri nuen | pairs naturally with `idatzi` (read/write) |
-| idatzi | to write | Idazten dut | Idatzi nuen | already a §6 causative candidate (`idatzarazi`) |
-| ikasi | to learn / study | Ikasten dut | Ikasi nuen | |
-| utzi | to leave / let | Uzten dut | Utzi nuen | |
-| bilatu | to search / look for | Bilatzen dut | Bilatu nuen | pairs with `aurkitu` (search/find) |
-| aurkitu | to find | Aurkitzen dut | Aurkitu nuen | |
-| zabaldu | to open / spread | Zabaltzen dut | Zabaldu nuen | |
-| itxi | to close | Ixten dut | Itxi nuen | |
-| egin | to do / make | Egiten dut | Egin nuen | the everyday Batua form — §4a's `egin` entry covers its rarer synthetic/dialectal forms; also Basque's common transitive "light verb" (`lo egin`, `dantza egin`, `barre egin`...) |
+| hartu | to take / receive | Hartzen dut | Hartu nuen | ✅ in `VERBS` |
+| saldu | to sell | Saltzen dut | Saldu nuen | ✅ in `VERBS` (#319, plain `nor-nork` reading only — the `nor-nori-nork`/"saldu dio" reading is #307's scope) |
+| irakurri | to read | Irakurtzen dut | Irakurri nuen | ✅ in `VERBS` (#319) |
+| idatzi | to write | Idazten dut | Idatzi nuen | ✅ in `VERBS` (#319); still a §6 causative candidate (`idatzarazi`) |
+| ikasi | to learn / study | Ikasten dut | Ikasi nuen | ✅ in `VERBS` (#319) |
+| utzi | to leave / let | Uzten dut | Utzi nuen | ✅ in `VERBS` (#319, plain reading only — see `saldu`'s note) |
+| bilatu | to search / look for | Bilatzen dut | Bilatu nuen | ✅ in `VERBS` (#319); pairs with `aurkitu` (search/find) |
+| aurkitu | to find | Aurkitzen dut | Aurkitu nuen | ✅ in `VERBS` (#319) |
+| zabaldu | to open / spread | Zabaltzen dut | Zabaldu nuen | 🔲 not yet added |
+| itxi | to close | Ixten dut | Itxi nuen | 🔲 not yet added |
+| egin | to do / make | Egiten dut | Egin nuen | ✅ in `VERBS` (#319) — the everyday Batua form; also Basque's common transitive "light verb" (`lo egin`, `dantza egin`, `barre egin`...) |
 
 `maite izan` ("to love", lit. "to hold dear") doesn't fit this table:
 "Maite dut"/"Maite nuen" are `maite` + `ukan`, the same fixed-expression-plus-

@@ -123,7 +123,14 @@ export const JOURNEY = [
             focus: 'joan + etorri + ibili, present tense',
             payload: "\"I'm going to the beach.\" · \"She's coming tomorrow.\" · \"She wanders around town.\"",
             status: 'available',
-            lessonIds: ['joan-present', 'etorri-present', 'ibili-present', 'unit-3-review'],
+            lessonIds: [
+              'joan-present',
+              'etorri-present',
+              'ibili-present',
+              'unit-3-review',
+              'nor-fodder-present',
+              'nor-fodder-present-plural',
+            ],
           },
           // Unit 7 ("Expansion: Absolutive Plurals") and Unit 8 ("Expansion:
           // Ergative Plurals") split O-5's single "Expansion" gate into two
@@ -231,7 +238,7 @@ export const JOURNEY = [
             focus: 'the izan past auxiliary (nintzen/zinen/zen/ginen/zineten/ziren), mixed across izan, joan, etorri, ibili',
             payload: '"I was young." · "I went to the beach." · "She came yesterday." · "We wandered around town."',
             status: 'available',
-            lessonIds: ['izan-past-pool', 'izan-past-pool-plural'],
+            lessonIds: ['izan-past-pool', 'izan-past-pool-plural', 'izan-past-pool-2', 'izan-past-pool-2-plural'],
           },
         ],
       },
@@ -250,6 +257,10 @@ export const JOURNEY = [
             lessonIds: [
               'unit-10-present',
               'unit-10-present-plural',
+              'unit-10-present-2',
+              'unit-10-present-2-plural',
+              'unit-10-present-3',
+              'unit-10-present-3-plural',
               'nor-nork-present-plural-pool',
               'nor-nork-present-plural-pool-plural',
             ],
@@ -265,6 +276,10 @@ export const JOURNEY = [
             lessonIds: [
               'ukan-past-pool',
               'ukan-past-pool-plural',
+              'ukan-past-pool-2',
+              'ukan-past-pool-2-plural',
+              'ukan-past-pool-3',
+              'ukan-past-pool-3-plural',
               'nor-nork-past-plural-pool',
               'nor-nork-past-plural-pool-plural',
             ],

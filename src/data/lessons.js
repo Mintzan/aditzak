@@ -171,6 +171,31 @@ export const LESSONS = [
       { verbId: 'ibili', tense: 'present' },
     ],
   },
+  // #319 — `nor-fodder-present`/`-plural`: the regular-`nor` fodder pool #318
+  // reserved (`sartu`/`atera`/`hasi`/`bizi izan` here; `erori`/`jaiki` to be
+  // added by #320, under the 6-source cap until then). `joan-present`/
+  // `etorri-present`/`ibili-present` above stay single-verb lessons — they're
+  // synthetic-paradigm introducers (#309), not fodder.
+  {
+    id: 'nor-fodder-present',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'sartu', tense: 'present' },
+      { verbId: 'atera', tense: 'present' },
+      { verbId: 'hasi', tense: 'present' },
+      { verbId: 'bizi-izan', tense: 'present' },
+    ],
+  },
+  {
+    id: 'nor-fodder-present-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'sartu', tense: 'present' },
+      { verbId: 'atera', tense: 'present' },
+      { verbId: 'hasi', tense: 'present' },
+      { verbId: 'bizi-izan', tense: 'present' },
+    ],
+  },
   // Unit 7 ("Expansion: Absolutive Plurals") — zero new verbs for
   // `izan`/`egon`/`joan`/`etorri`. Their `conjugations.present`
   // (plus their `sentences`/`pronouns`/`pronounSentences`) gained `gu`/`zuek`/
@@ -368,6 +393,10 @@ export const LESSONS = [
       { verbId: 'joan', tense: 'past' },
       { verbId: 'etorri', tense: 'past' },
       { verbId: 'ibili', tense: 'past' },
+      // #319 — fills this pool's 2 remaining slots to the 6-source cap, per
+      // #318's reserved plan (`docs/DECISIONS.md`).
+      { verbId: 'sartu', tense: 'past' },
+      { verbId: 'atera', tense: 'past' },
     ],
   },
   {
@@ -378,6 +407,27 @@ export const LESSONS = [
       { verbId: 'joan', tense: 'past' },
       { verbId: 'etorri', tense: 'past' },
       { verbId: 'ibili', tense: 'past' },
+      { verbId: 'sartu', tense: 'past' },
+      { verbId: 'atera', tense: 'past' },
+    ],
+  },
+  // #319 — `izan-past-pool-2`/`-plural`: the rest of #318's regular-`nor`
+  // fodder past pool (`hasi`, `bizi izan` here; `erori`/`jaiki` to be added by
+  // #320 once it lands, per #318's plan — under the 6-source cap until then).
+  {
+    id: 'izan-past-pool-2',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'hasi', tense: 'past' },
+      { verbId: 'bizi-izan', tense: 'past' },
+    ],
+  },
+  {
+    id: 'izan-past-pool-2-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'hasi', tense: 'past' },
+      { verbId: 'bizi-izan', tense: 'past' },
     ],
   },
   // Unit 12 ("Daily Routine (Transitive)", Phase II) — the `ukan`-present
@@ -407,6 +457,7 @@ export const LESSONS = [
       { verbId: 'erosi', tense: 'present' },
       { verbId: 'ikusi', tense: 'present' },
       { verbId: 'hartu', tense: 'present' },
+      { verbId: 'egin', tense: 'present' },
     ],
   },
   {
@@ -418,6 +469,59 @@ export const LESSONS = [
       { verbId: 'erosi', tense: 'present' },
       { verbId: 'ikusi', tense: 'present' },
       { verbId: 'hartu', tense: 'present' },
+      { verbId: 'egin', tense: 'present' },
+    ],
+  },
+  // #319 (fodder, high-freq tier, per #318's reserved pool plan):
+  // `unit-10-present-2`/`ukan-past-pool-2` — same shape as `unit-10-present`/
+  // `ukan-past-pool` above, but for verbs that have no free slot in those
+  // (`ukan-past-pool` was already at the 6-source cap, so `egin`'s past also
+  // lands here rather than blocking on a slot that didn't exist — 7 sources,
+  // matching the already-accepted `nor-nork-*-plural-pool` precedent).
+  {
+    id: 'unit-10-present-2',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'irakurri', tense: 'present' },
+      { verbId: 'idatzi', tense: 'present' },
+      { verbId: 'ikasi', tense: 'present' },
+      { verbId: 'entzun', tense: 'present' },
+      { verbId: 'utzi', tense: 'present' },
+      { verbId: 'aurkitu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-2-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'irakurri', tense: 'present' },
+      { verbId: 'idatzi', tense: 'present' },
+      { verbId: 'ikasi', tense: 'present' },
+      { verbId: 'entzun', tense: 'present' },
+      { verbId: 'utzi', tense: 'present' },
+      { verbId: 'aurkitu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-3',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'bilatu', tense: 'present' },
+      { verbId: 'galdu', tense: 'present' },
+      { verbId: 'jaso', tense: 'present' },
+      { verbId: 'saldu', tense: 'present' },
+      { verbId: 'itxaron', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-3-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'bilatu', tense: 'present' },
+      { verbId: 'galdu', tense: 'present' },
+      { verbId: 'jaso', tense: 'present' },
+      { verbId: 'saldu', tense: 'present' },
+      { verbId: 'itxaron', tense: 'present' },
     ],
   },
   // #286 — the NOR-number axis (`dut` vs `ditut`, plural *object*, not
@@ -489,6 +593,59 @@ export const LESSONS = [
       { verbId: 'erosi', tense: 'past' },
       { verbId: 'ikusi', tense: 'past' },
       { verbId: 'jakin', tense: 'past' },
+    ],
+  },
+  // #319 — `ukan-past-pool-2`/`-3`, mirroring `unit-10-present-2`/`-3`'s
+  // verb groupings (see #318's reserved plan in `docs/DECISIONS.md`).
+  // `ukan-past-pool` was already at the 6-source cap when `egin` landed, so
+  // `egin`'s past joins pool-2 instead — 7 sources, the same exception the
+  // `nor-nork-*-plural-pool`s already established.
+  {
+    id: 'ukan-past-pool-2',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'egin', tense: 'past' },
+      { verbId: 'irakurri', tense: 'past' },
+      { verbId: 'idatzi', tense: 'past' },
+      { verbId: 'ikasi', tense: 'past' },
+      { verbId: 'entzun', tense: 'past' },
+      { verbId: 'utzi', tense: 'past' },
+      { verbId: 'aurkitu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-2-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'egin', tense: 'past' },
+      { verbId: 'irakurri', tense: 'past' },
+      { verbId: 'idatzi', tense: 'past' },
+      { verbId: 'ikasi', tense: 'past' },
+      { verbId: 'entzun', tense: 'past' },
+      { verbId: 'utzi', tense: 'past' },
+      { verbId: 'aurkitu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-3',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'bilatu', tense: 'past' },
+      { verbId: 'galdu', tense: 'past' },
+      { verbId: 'jaso', tense: 'past' },
+      { verbId: 'saldu', tense: 'past' },
+      { verbId: 'itxaron', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-3-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'bilatu', tense: 'past' },
+      { verbId: 'galdu', tense: 'past' },
+      { verbId: 'jaso', tense: 'past' },
+      { verbId: 'saldu', tense: 'past' },
+      { verbId: 'itxaron', tense: 'past' },
     ],
   },
   // #286 — `pastPlural` counterpart to `nor-nork-present-plural-pool` above
