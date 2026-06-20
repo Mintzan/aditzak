@@ -6,6 +6,18 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-20 — #319: high-frequency fodder tier — 16 regular verbs, plain participle/aspect/future rules
+
+**Decision:** added `egin`, `irakurri`, `idatzi`, `ikasi`, `entzun`, `utzi`, `aurkitu`, `bilatu`, `galdu`, `jaso`, `saldu`, `itxaron` (`nor-nork`) and `sartu`, `atera`, `hasi`, `bizi izan` (`nor`) to `VERBS` — all fully regular, sourced by the standard rules already documented in `CONJUGATIONS.md` §11/§14: imperfective participle = perfective participle minus its final vowel/`-tu`/`-i`, plus `-tzen` after a consonant-final stem or `-ten` after a stem ending in a coronal (`s/z/ts/tz/n/l/r`-ish set — e.g. `irakur`+`tzen`→`irakurtzen`, but `idatz`+`ten`→`idazten`, `gal`+`tzen`→`galtzen`, `sal`+`tzen`→`saltzen`, `uz`+`ten`→`uzten`); future = perfective participle + `-go` after a stem ending in `n`/`l` (`egingo`, `entzungo`, `itxarongo`) or `-ko` otherwise (`irakurriko`, `idatziko`, `ikasiko`, `utziko`, `aurkituko`, `bilatuko`, `galduko`, `jasoko`, `salduko`, `sartuko`, `hasiko`). No native-speaker-check caveat needed here — every form is a direct application of an already-attested rule, not a by-analogy derivation like #287's.
+
+**`atera`'s perfective participle is the bare citation form** (`atera`, not `*ateratu`) — one of a small set of `-a`-final verbs whose perfective participle doesn't take `-tu`. Its future contracts the same way `joan`'s does (`joan`+`-ko`→`joango`... actually `atera`+`-ko`→`aterako`, vowel-final + `-ko` with no epenthesis), confirmed against the attested form `aterako naiz`.
+
+**`bizi izan`** ("to live") mirrors `ari izan`'s invariant-participle shape (#244/#230) — `bizi` never inflects; only the `izan` auxiliary conjugates across present/past/future. Unlike `ari` (which has no attested future use in this app and so only carries a `present` table), `bizi` is a regular `-i`-final participle and takes the ordinary `-ko` future (`biziko naiz`), no special-casing needed. Landed as fodder (`id: 'bizi-izan'`) per #304/#319's own resolution of the open question (default to fodder unless #306 says otherwise).
+
+**`itxaron`/`saldu`/`utzi` land plain-`nor-nork`-only here** — their optionally-ditransitive dative reading (`itxaron diot`, etc.) is explicitly #307's scope, not this tier's; only the `nor-nork` present/past/future tables were added.
+
+**Sentences carry empty `validFor: []` on every `present` variant** (required by `src/logic.test.js`'s nor-nork-cluster coverage check, since all 12 new verbs have `nork` in `agreement`) rather than populated cross-verb arrays — establishing genuine cross-verb sentence equivalence for 12 new verbs is its own research pass, out of scope for landing the verb data itself. `scripts/validfor-gap-baseline.json` was regenerated to reflect the larger (legitimate) gap surface these additions create; no naturalness review was done against `scripts/validfor-delta-audit.mjs --classes` for this batch — left as a follow-up if/when these verbs' sentences need richer distractor pools.
+
 ## 2026-06-19 — #287: resolved `jakin`'s plural-object (`dakizki-`) forms; still needs native-speaker check
 
 **Decision:** #284 deferred `jakin`'s plural-object forms because it's its

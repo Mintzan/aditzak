@@ -12,6 +12,12 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #319: high-frequency fodder tier landed; one deviation from #318's reserved plan
+
+Implemented #318's reserved pool plan for the 16 high-frequency verbs: extended `unit-10-present`/`-plural` with `egin` (filling its last slot to the 6-source cap); added `unit-10-present-2`/`-3` (+`-plural` siblings) and the regular-`nor` `nor-fodder-present`/`-plural` pool (Unit 6); added `izan-past-pool-2`/`-plural` (Unit 12, partial — `hasi`/`bizi izan` only, 2 of #318's eventual 4, since the other 2 (`erori`/`jaiki`) belong to #320's tier) and filled `izan-past-pool`'s 2 free slots with `sartu`/`atera`.
+
+**One deviation:** #318's table paired `unit-10-present`'s `egin` extension with no past-side counterpart, but `ukan-past-pool` was already at the 6-source cap with no free slot. Rather than leave `egin`'s past unpooled, it joins `ukan-past-pool-2` alongside the pool-2 present-side verbs — 7 sources, matching the already-accepted `nor-nork-*-plural-pool` precedent (not a new cap-busting exception, just reusing the one that already exists). `unit-10-present-2` itself stays at 6 (no `egin`) since its present-side slot was already used by the cap-1 extension above.
+
 ## 2026-06-20 — #318: fodder pool capacity plan — cap at 6 sources, chain into `-2`/`-3`/… siblings, new pools for regular `nor` fodder
 
 **The cap.** `TARGET_EXERCISE_COUNT`'s rounding floor (see the #309 entry below) means a 3-person pool's question count is `3 × sources × max(1, round(4/sources))` — flat at 12-15 up to 5 sources, then growing by +3 per source past that. Capping every fodder pool at **6 sources** (18 questions) keeps new pools close to today's existing ceiling (the live `nor-nork-present-plural-pool`/`nor-nork-past-plural-pool` already sit at 7 sources/21 questions — accepted, but not exceeded further). When a tier's verb list would overflow a pool's remaining capacity, the overflow starts a new sibling pool suffixed `-2`, `-3`, etc., rather than growing one array without bound — same shape `unit-10-present`/`unit-10-present-plural` already use.
