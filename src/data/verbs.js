@@ -31,6 +31,17 @@
 // e.g. `dialectVariants: { bizkaiera: { conjugations: {...} } }` overrides
 // without changing this shape.
 //
+// `dativeOvergeneration` (#293, optional, NOR-NORK verbs only) flags verbs
+// that are "optionally ditransitive" in real usage — they're modeled here
+// with a fixed `object` and no `nori`, but commonly take an extra "to/for
+// someone" dative in natural sentences (`eraman`/`ekarri`/`erosi`/`hartu`:
+// carrying/bringing/buying/taking something *to/for* someone). Learners
+// over-extend a phantom dative and reach for the NOR-NORI-NORK auxiliary
+// family (`eramango diot`) instead of the correct NOR-NORK one (`eramango
+// dut`) — see `getDativeOvergenerationLure` (`lessonLogic.js`). Deliberately
+// not set on every NOR-NORK verb — `jan`/`edan` rarely take a natural dative
+// in basic sentences, so the same lure there wouldn't reflect a real error.
+//
 // `sentences` (optional, by tense → person) gives an example sentence with
 // `___` marking where the conjugated form belongs. It powers the
 // "complete the sentence" question style — `generateQuestions` mixes those
@@ -1672,6 +1683,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    dativeOvergeneration: true,
     conjugations: {
       present: {
         ni: 'erosten dut',
@@ -1817,6 +1829,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    dativeOvergeneration: true,
     conjugations: {
       present: {
         ni: 'hartzen dut',
@@ -2272,6 +2285,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    dativeOvergeneration: true,
     // #260: present/past sourced from docs/CONJUGATIONS.md §7 (`eraman` —
     // singular-object alternant; the table's `/daramatza`-style plural-object
     // forms aren't used here, matching `eduki`/`jakin`'s precedent of only
@@ -2353,6 +2367,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    dativeOvergeneration: true,
     // #260: present/past sourced from docs/CONJUGATIONS.md §7 (`ekarri` —
     // singular-object alternant, same convention as `eraman` above). `hi`
     // omitted for the same reason (no `hik` row sourced in CONJUGATIONS.md).

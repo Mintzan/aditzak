@@ -226,6 +226,8 @@ export const TRANSLATIONS = {
       "'{form}' marks a plural object, but the object here is singular. The correct form here is '{correct}'.",
     lureRationaleProgressiveVsPlain:
       "'{form}' is the plain present ('I eat') — the progressive ('I am eating') is '{correct}'.",
+    lureRationaleDativeOvergeneration:
+      "'{form}' uses the auxiliary for 'to/for someone' (NOR-NORI-NORK) — but there's no one being given/told/brought anything in this sentence. The correct form here is '{correct}'.",
   },
   es: {
     navLearn: 'Aprender',
@@ -423,6 +425,8 @@ export const TRANSLATIONS = {
       "'{form}' marca un objeto plural, pero aquí el objeto es singular. La forma correcta aquí es '{correct}'.",
     lureRationaleProgressiveVsPlain:
       "'{form}' es el presente simple ('como') — el progresivo ('estoy comiendo') es '{correct}'.",
+    lureRationaleDativeOvergeneration:
+      "'{form}' usa el auxiliar de 'a/para alguien' (NOR-NORI-NORK) — pero en esta frase no hay nadie a quien se le dé/diga/lleve algo. La forma correcta aquí es '{correct}'.",
   },
   eu: {
     navLearn: 'Ikasi',
@@ -620,5 +624,7 @@ export const TRANSLATIONS = {
       "'{form}' objektu plural bat markatzen du, baina hemen objektua singularra da. Forma zuzena hemen '{correct}' da.",
     lureRationaleProgressiveVsPlain:
       "'{form}' oraina soila da ('jaten dut') — forma jarraitua ('ari naiz') '{correct}' da.",
+    lureRationaleDativeOvergeneration:
+      "'{form}' formak 'norbaiti' adierazteko laguntzailea darabil (NOR-NORI-NORK) — baina esaldi honetan ez dago zerbait eman/esan/eramaten dion inor. Forma zuzena hemen '{correct}' da.",
   },
 }
