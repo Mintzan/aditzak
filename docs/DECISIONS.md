@@ -12,6 +12,24 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #325: repositioned Unit 44 ("The egin Construction") to Unit 29
+
+Moved the egin-construction unit out of the appended-at-the-end Phase
+VIII/Stage 17 wrapper (#306's placeholder spot) into its natural position as
+a 4th unit inside the existing `phase-4-stage-9` (Communication & Giving),
+immediately after Unit 28. That's the earliest point where all four base
+verbs the construction draws on (`egin`, `hartu`, `eman`, `egon`) are fully
+taught: `egon` lands in Units 2/18, `egin`/`hartu` in Units 13-14 (pool-only
+fodder since #331's collapse), and `eman` — the last to complete — in Units
+27-28's dedicated NOR-NORI-NORK lessons. Units 29-44 renumbered to 30-45 to
+make room (`journey.js`, `journeyTranslations.js`'s `units` keys,
+`docs/LEARNING_JOURNEY.md`'s table); the unit's 6 lessons moved within
+`lessons.js`'s array (which drives unlock order, independent of `journey.js`'s
+`number`) to sit right after `eman-future`. Added the new unit inside the
+existing stage rather than a new stage to avoid renumbering stage ids
+10-17, following the same precedent #307 set for the same reason. The empty
+Phase VIII/Stage 17 wrapper was removed entirely now that it has no content.
+
 ## 2026-06-20 — #331: collapsed fodder pool chains into one canonical lesson per pattern
 
 Folded every `-2/-3/…`/`recognition-{1,2}` fodder sibling lesson back into its
