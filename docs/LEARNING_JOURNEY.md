@@ -143,7 +143,9 @@
    vocabulary variety, never as its own lesson id. See `docs/DECISIONS.md`'s
    2026-06-20 `#309` entry for the audit confirming the current `LESSONS`
    conforms to this rule, and its pool-size caveat for future fodder
-   additions (#304).
+   additions (#304); the `#333` entry re-confirms this against the final
+   19-verb dedicated-lesson set after #331's fodder collapse, including
+   `ari`'s placement in bucket 3 alongside `nahi`/`behar`.
 
 ## Data & architecture implications (read before building)
 

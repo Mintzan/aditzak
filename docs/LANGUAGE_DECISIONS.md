@@ -6,6 +6,25 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-20 — #333: `eraman`/`ekarri`'s synthetic forms are the higher-register choice
+
+**Note:** `eraman`/`ekarri` (Unit 42, "Carrying & Bringing") are taught on
+their synthetic NOR-NORK present/past tables (`daramat`/`dakarte`, etc.) —
+correct and the form CONJUGATIONS.md documents, but worth flagging that
+everyday spoken Basque leans periphrastic for these two more than for most
+other synthetic verbs in the curriculum (`eraman dut`/`ekarri dut` are
+common, especially outside formal registers), unlike e.g. `izan`/`egon`
+whose synthetic forms are the only forms in any register. No data change
+follows from this — the synthetic drill is still the right thing to teach
+first (it's the form `VERB_COVERAGE.md` §4a commits to, and it's what makes
+these two count as "irregular synthetic morphology" rather than regular
+pool verbs per #329/#333's particularity audit) — but a future
+`docs/LEARNING_JOURNEY.md` gloss or in-app note could mention the
+periphrastic alternative as a "you'll also hear..." aside, the way
+`dativeOvergeneration` (#293) already flags real-usage variance on these
+same two verbs from the other direction (covert dative, not auxiliary
+choice).
+
 ## 2026-06-20 — #307: nine "covert dative" agentive verbs — morphology sourcing
 
 **Decision:** added `lagundu`, `ekin`, `erantzun`, `deitu`, `eragin`,
