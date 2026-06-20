@@ -234,20 +234,20 @@ arrive at Units 7–8). Pronoun stage: **A (explicit)**.
 
 | Unit | Focus | Payload | Persons | Ref | Data status |
 |---|---|---|---|---|---|
-| 1 | **Who and Where** — `izan` + `egon` present | "I am a student." / "Where are you?" / "He is at home." | ni/zu/hura: `naiz`/`zara`/`da`, `nago`/`zaude`/`dago` | §1 (izan), §6 (egon) | ✅ implemented |
-| 2 | **The Ergative Leap** — `ukan` present (object fixed `hura`), taught alone | "I have a car." (`Nik auto bat dut.`) / "Do you have coffee?" (`Kafea duzu?`) / "He has a house." (`Hark etxe bat du.`) | ni/zu/hura: `dut`/`duzu`/`du` | §3 (ukan) | ✅ implemented — extra practice isolating the absolutive→ergative `ni`→`nik` shift (`LEARNING_JOURNEY_EVALUATION.md` finding F6) |
+| 1 | **izan & egon** — Who and Where, present | "I am a student." / "Where are you?" / "He is at home." | ni/zu/hura: `naiz`/`zara`/`da`, `nago`/`zaude`/`dago` | §1 (izan), §6 (egon) | ✅ implemented |
+| 2 | **ukan — The Ergative Leap** — present (object fixed `hura`), taught alone | "I have a car." (`Nik auto bat dut.`) / "Do you have coffee?" (`Kafea duzu?`) / "He has a house." (`Hark etxe bat du.`) | ni/zu/hura: `dut`/`duzu`/`du` | §3 (ukan) | ✅ implemented — extra practice isolating the absolutive→ergative `ni`→`nik` shift (`LEARNING_JOURNEY_EVALUATION.md` finding F6) |
 | 3 | **"Ni" vs. "Nik" — The Case-Marking Checkpoint** — zero new verbs | `Ni ikaslea naiz` vs. `Nik liburua dut.` / `Zu etxean zaude` vs. `Zuk kafea duzu.` | ni/zu/hura: contrasts bare (`izan`/`egon`) vs. ergative (`ukan`) subjects | §1/§3/§6 | ✅ implemented — drills ergative `-k` drift, the most common beginner error, at its source (finding F7); the "spot the drift" framing reuses today's case-mixer/verb-choice primitives, see `docs/DECISIONS.md` |
-| 4 | **Knowing & Wanting** — `jakin` (synthetic, same ergative suffixes as `ukan`) + `nahi` | "I don't know." (`Ez dakit.`) / "Do you want to come?" (`Etorri nahi duzu?`) | ni/zu/hura: `dakit`/`dakizu`/`daki`, `nahi dut`/`nahi duzu`/`nahi du` | §7 (jakin), VERB_COVERAGE §5 (`nahi`) | ✅ implemented |
+| 4 | **jakin & nahi** — Knowing & Wanting, `jakin` (synthetic, same ergative suffixes as `ukan`) | "I don't know." (`Ez dakit.`) / "Do you want to come?" (`Etorri nahi duzu?`) | ni/zu/hura: `dakit`/`dakizu`/`daki`, `nahi dut`/`nahi duzu`/`nahi du` | §7 (jakin), VERB_COVERAGE §5 (`nahi`) | ✅ implemented |
 
 #### Stage 2: Seeing & Moving
 
 | Unit | Focus | Payload | Persons | Ref | Data status |
 |---|---|---|---|---|---|
-| 5 | **Seeing** — `ikusi` present (ni/zu/hura), Phase I's first periphrastic verb | "I see the mountain." / "Do you see it?" / "She sees the film." | ni/zu/hura: `ikusten dut`/`ikusten duzu`/`ikusten du` | §7 (ikusi) | ✅ implemented — reuses `ikusi`'s existing 6-person `present` table via `persons: PHASE_1_PERSONS` |
-| 6 | **Moving Around** — `joan` + `etorri` + `ibili` present | "I'm going to the beach." / "She's coming tomorrow." / "She wanders around town." | ni/zu/hura: `noa`/`zoaz`/`doa`, `nator`/`zatoz`/`dator`, `nabil`/`zabiltza`/`dabil` | §6 | ✅ implemented — `ibili`'s present moved here from Unit 16 (#143) so it precedes its past (Unit 12's `izan`-past pool); its plural forms still arrive in Unit 16 |
+| 5 | **ikusi — First Periphrastic Verb (-tzen dut)** — present (ni/zu/hura), Phase I's first periphrastic verb | "I see the mountain." / "Do you see it?" / "She sees the film." | ni/zu/hura: `ikusten dut`/`ikusten duzu`/`ikusten du` | §7 (ikusi) | ✅ implemented — reuses `ikusi`'s existing 6-person `present` table via `persons: PHASE_1_PERSONS` |
+| 6 | **joan/etorri/ibili — The NOR Present** | "I'm going to the beach." / "She's coming tomorrow." / "She wanders around town." | ni/zu/hura: `noa`/`zoaz`/`doa`, `nator`/`zatoz`/`dator`, `nabil`/`zabiltza`/`dabil` | §6 | ✅ implemented — `ibili`'s present moved here from Unit 16 (#143) so it precedes its past (Unit 12's `izan`-past pool); its plural forms still arrive in Unit 16 |
 | 7 | 🛡️ **Expansion: Absolutive Plurals** | "We are teachers." (`Irakasleak gara.`) / "You all are at home." (`Etxean zaudete.`) / "We're going to the beach." (`Hondartzara goaz.`) | gu/zuek/haiek (`nor`): `izan`, `egon`, `joan`, `etorri` | §1/§6 | ✅ implemented — `unit-6-review-1` keeps its original `izan`+`ukan` pairing, a small absolutive/ergative mix left as-is |
 | 8 | 🛡️ **Expansion: Ergative Plurals** | "We have a car." (`Auto bat dugu.`) / "They watch the film." (`Filma ikusten dute.`) | gu/zuek/haiek (`nor-nork`): `ukan`, `ikusi` | §3/§7 | ✅ implemented — `ukan-present-plural` (new dedicated practice) plus `ikusi-present-plural*` (moved from Unit 7) and a `unit-8-ergative-review` |
-| 9 | **The Immediate Continuous** — `ari` + `izan` | "What are you doing?" (`Zer egiten ari zara?`) / "I'm eating." (`Jaten ari naiz`) / "I'm studying." (`Ikasten ari naiz`) | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ implemented — `jaten`/`egiten`/`ikasten` (#244) cover three imperfective participles rather than `jaten` alone; `jaten` (`jan`'s participle, Unit 13's verb) remains the anchor example |
+| 9 | **ari + izan — The Immediate Continuous** | "What are you doing?" (`Zer egiten ari zara?`) / "I'm eating." (`Jaten ari naiz`) / "I'm studying." (`Ikasten ari naiz`) | reuses Unit 1's `izan` present table under `ari` | VERB_COVERAGE §5 | ✅ implemented — `jaten`/`egiten`/`ikasten` (#244) cover three imperfective participles rather than `jaten` alone; `jaten` (`jan`'s participle, Unit 13's verb) remains the anchor example |
 
 ### 🛡️ Refresh Gate A — The "Ez" Trap
 
@@ -267,8 +267,8 @@ grid, every verb, from each verb's first lesson. Pronoun stage: **B
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 11 | **What Just Happened — The Recent Past (Present Perfect)** — *Lehenaldiko Burutua*: perfective participle + **present** auxiliary (`etorri naiz`, `ikusi dut`), taught on an already-known core (`izan`/`joan`/`etorri` on the `izan` branch, `ikusi` on the `ukan` branch); the recency contrast `gaur ... da` vs. `atzo ... zen` | "I have come / I came today." (`Gaur etorri naiz`) / "I have seen it." (`Ikusi dut`) / "She has gone." (`Joan da`) | §11 (periphrastic tense matrix, *Lehenaldiko Burutua* row) | ✅ implemented — `izan-present-perfect-pool*` (`izan`/`joan`/`etorri`) + `ikusi-present-perfect*` + `unit-11-review`; the `gaur ... da` vs. `atzo ... zen` recency-contrast distractor (#283) is wired into the engine via `getRecencyContrastLure` |
-| 12 | **Looking Back I — The "izan" Past Pool** — the `izan` past auxiliary (`nintzen`/`zinen`/`zen`/`ginen`/`zineten`/`ziren`), mixed across `izan`, `joan`, `etorri`, `ibili` | "I was young." / "I went to the beach." / "She came yesterday." / "We wandered around town." | `izan`: §1; `joan`/`etorri`/`ibili`: §11 (periphrastic Lehenaldi Mugatua) + §1 (`izan` past auxiliary) | ✅ implemented |
+| 11 | **The Present Perfect (Lehenaldiko Burutua) — What Just Happened** — perfective participle + **present** auxiliary (`etorri naiz`, `ikusi dut`), taught on an already-known core (`izan`/`joan`/`etorri` on the `izan` branch, `ikusi` on the `ukan` branch); the recency contrast `gaur ... da` vs. `atzo ... zen` | "I have come / I came today." (`Gaur etorri naiz`) / "I have seen it." (`Ikusi dut`) / "She has gone." (`Joan da`) | §11 (periphrastic tense matrix, *Lehenaldiko Burutua* row) | ✅ implemented — `izan-present-perfect-pool*` (`izan`/`joan`/`etorri`) + `ikusi-present-perfect*` + `unit-11-review`; the `gaur ... da` vs. `atzo ... zen` recency-contrast distractor (#283) is wired into the engine via `getRecencyContrastLure` |
+| 12 | **The "izan" Past Pool — Looking Back I** — the `izan` past auxiliary (`nintzen`/`zinen`/`zen`/`ginen`/`zineten`/`ziren`), mixed across `izan`, `joan`, `etorri`, `ibili` | "I was young." / "I went to the beach." / "She came yesterday." / "We wandered around town." | `izan`: §1; `joan`/`etorri`/`ibili`: §11 (periphrastic Lehenaldi Mugatua) + §1 (`izan` past auxiliary) | ✅ implemented |
 
 **Why Unit 11 comes first in this stage.** The present perfect is the journey's
 **on-ramp into the past system**, and it's the cheapest tense to add: it's the
@@ -306,9 +306,9 @@ after 10+ units of present-only drilling.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 13 | **Daily Routine (Transitive)** — the `ukan` present auxiliary (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), drilled across a pool of verbs (`jan`, `edan`, `erosi`, `ikusi`, `hartu`) rather than one lesson per verb. **MP**: first `-tzen`/`-ten` minimal pair (`jaten` vs. `hartzen`). Also drills the NOR-number axis (`dut` vs. `ditut`) across `ukan`, `jan`, `edan`, `erosi`, `hartu`, `ikusi`, `eduki` (#286). | "I eat." / "You drink water." / "I buy a book." / "Do you see it?" / "I take the bus." / "I have them." (`ditut`, not `dut`) | §7 (jan/edan/erosi/ikusi); VERB_COVERAGE §4b-bis (`hartu`) | ✅ implemented |
-| 14 | **Looking Back I — The "ukan" Past Pool** — the `ukan` past auxiliary (`nuen`/`zenuen`/`zuen`/`genuen`/`zenuten`/`zuten`), mixed across `ukan`, `jan`, `edan`, `erosi`, `ikusi`, `jakin`. Also drills the NOR-number axis in the past (`zenuen` vs. `zenituen`) across `ukan`, `jan`, `edan`, `erosi`, `hartu`, `ikusi`, `eduki` (#286). | "I had a car." / "I ate the apple." / "You drank coffee." / "We bought a house." / "She saw the film." / "I knew the answer." (`Erantzuna nekien`) / "You had them." (`zenituen`, not `zenuen`) | `ukan`: §3; `jan`/`edan`/`erosi`/`ikusi`: §7 (periphrastic, participle + `ukan` past auxiliary); `jakin`: §7 (synthetic, #245) | ✅ implemented |
-| 15 | **Carrying & Bringing** — `eraman` ("to carry/take") + `ekarri` ("to bring"), plain `nor-nork` synthetic verbs in the already-taught `eduki`/`jakin` shape, present + past | "I carry my dog to the mountain." (`Nik nire txakurra daramat mendira.`) / "A friend brings a small drum from the Donostia Tamborrada." (`Lagunak danbor txiki bat dakar Donostiako Danborradatik.`) | VERB_COVERAGE §4b-bis | ✅ implemented — moved here from the Phase VII bonus tail (formerly Unit 43); see `docs/DECISIONS.md` (#296) |
+| 13 | **The NOR-NORK Present — dut/duzu/du** — the `ukan` present auxiliary (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), drilled across a pool of verbs (`jan`, `edan`, `erosi`, `ikusi`, `hartu`) rather than one lesson per verb. **MP**: first `-tzen`/`-ten` minimal pair (`jaten` vs. `hartzen`). Also drills the NOR-number axis (`dut` vs. `ditut`) across `ukan`, `jan`, `edan`, `erosi`, `hartu`, `ikusi`, `eduki` (#286). | "I eat." / "You drink water." / "I buy a book." / "Do you see it?" / "I take the bus." / "I have them." (`ditut`, not `dut`) | §7 (jan/edan/erosi/ikusi); VERB_COVERAGE §4b-bis (`hartu`) | ✅ implemented |
+| 14 | **The NOR-NORK Past — nuen/zenuen/zuen** — the `ukan` past auxiliary (`nuen`/`zenuen`/`zuen`/`genuen`/`zenuten`/`zuten`), mixed across `ukan`, `jan`, `edan`, `erosi`, `ikusi`, `jakin`. Also drills the NOR-number axis in the past (`zenuen` vs. `zenituen`) across `ukan`, `jan`, `edan`, `erosi`, `hartu`, `ikusi`, `eduki` (#286). | "I had a car." / "I ate the apple." / "You drank coffee." / "We bought a house." / "She saw the film." / "I knew the answer." (`Erantzuna nekien`) / "You had them." (`zenituen`, not `zenuen`) | `ukan`: §3; `jan`/`edan`/`erosi`/`ikusi`: §7 (periphrastic, participle + `ukan` past auxiliary); `jakin`: §7 (synthetic, #245) | ✅ implemented |
+| 15 | **eraman/ekarri — More NOR-NORK Synthetics** — `eraman` ("to carry/take") + `ekarri` ("to bring"), plain `nor-nork` synthetic verbs in the already-taught `eduki`/`jakin` shape, present + past | "I carry my dog to the mountain." (`Nik nire txakurra daramat mendira.`) / "A friend brings a small drum from the Donostia Tamborrada." (`Lagunak danbor txiki bat dakar Donostiako Danborradatik.`) | VERB_COVERAGE §4b-bis | ✅ implemented — moved here from the Phase VII bonus tail (formerly Unit 43); see `docs/DECISIONS.md` (#296) |
 
 `ikusi` moved to Unit 5 as Phase I's first periphrastic verb, but rejoins
 Unit 13's verb pool here — it already has full present-tense
@@ -326,9 +326,9 @@ Phase VII bonus tail.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 16 | **Physical States & Possessions** — `eduki` full 6-person grid; `ibili` gains `gu`/`zuek`/`haiek` (its present debuted in Unit 6) | "I have the keys in my pocket." / "They are wandering around town." | §7 (eduki), §6 (ibili) | ✅ implemented |
-| 17 | **"I Had It"** — `eduki` simple past, its own synthetic paradigm (`neukan`/`zeneukan`/`zeukan`/`geneukan`/`zeneukaten`/`zeukaten`), full 6-person grid | "I had the keys." / "We had time." | §7 | ✅ implemented |
-| 18 | **"I Was There"** — `egon` simple past, its own synthetic paradigm (`nengoen`/`zeunden`/`zegoen`/`geunden`/`zeundeten`/`zeuden`), full 6-person grid | "I was at home." / "We were at the beach." | §6 | ✅ implemented |
+| 16 | **eduki — Physical States & Possessions** — full 6-person grid; `ibili` gains `gu`/`zuek`/`haiek` (its present debuted in Unit 6) | "I have the keys in my pocket." / "They are wandering around town." | §7 (eduki), §6 (ibili) | ✅ implemented |
+| 17 | **eduki — "I Had It" (Simple Past)** — its own synthetic paradigm (`neukan`/`zeneukan`/`zeukan`/`geneukan`/`zeneukaten`/`zeukaten`), full 6-person grid | "I had the keys." / "We had time." | §7 | ✅ implemented |
+| 18 | **egon — "I Was There" (Simple Past)** — its own synthetic paradigm (`nengoen`/`zeunden`/`zegoen`/`geunden`/`zeundeten`/`zeuden`), full 6-person grid | "I was at home." / "We were at the beach." | §6 | ✅ implemented |
 
 `ibili`'s present moved to Unit 6 (#143), so only its plural forms arrive
 here, alongside `eduki`'s full present grid. `eduki` and `egon` are the two
@@ -342,9 +342,9 @@ with `egon`'s own past following in Unit 18.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 19 | **The Future Rule** — forming the future with `-ko`/`-go` + present auxiliaries, taught on a three-verb core (`izan`, `ukan`, `joan`) spanning both auxiliary patterns (`nor`/`naiz` and `nor-nork`/`dut`). **MP**: first `-ko`/`-go` minimal pair (`izango` vs. `etorriko`). | "I will be a teacher" (`irakasle izango naiz`) / "We will have a car" (`autoa izango dugu`) / "I will go tomorrow" (`bihar joango naiz`) | §11 (periphrastic tense matrix) | ✅ implemented |
+| 19 | **izan/ukan/joan — The Future Rule** — forming the future with `-ko`/`-go` + present auxiliaries, taught on a three-verb core spanning both auxiliary patterns (`nor`/`naiz` and `nor-nork`/`dut`). **MP**: first `-ko`/`-go` minimal pair (`izango` vs. `etorriko`). | "I will be a teacher" (`irakasle izango naiz`) / "We will have a car" (`autoa izango dugu`) / "I will go tomorrow" (`bihar joango naiz`) | §11 (periphrastic tense matrix) | ✅ implemented |
 | 20 | **The Future, Across Every Verb** — the same `-ko`/`-go` rule applied across all remaining known verbs (`egon`, `etorri`, `ibili`, `jan`, `edan`, `erosi`, `ikusi`, `eduki`, `nahi`, `jakin`), drilled as cross-verb mixer reviews rather than per-verb tables | "You will see it" (`ikusiko duzu`) / "We will buy a house" (`etxe bat erosiko dugu`) / "Will you know?" (`jakingo duzu?`) | §11 | ✅ implemented |
-| 21 | **Requirements & Obligations** — `behar` + `ukan`, present and future | "I have to go." (`Joan behar dut`) / "You'll have to come." (`Etorri beharko duzu`) | VERB_COVERAGE §5 (point 2 — the construction's head, not the lexical verb, picks the auxiliary) | available (#148) — reuses `ukan`'s suffixes exactly like Unit 4's `nahi`; form-only (no sentence frames — `behar`'s complement is an infinitive, not an object noun) |
+| 21 | **behar — Requirements & Obligations** — `behar` + `ukan`, present and future | "I have to go." (`Joan behar dut`) / "You'll have to come." (`Etorri beharko duzu`) | VERB_COVERAGE §5 (point 2 — the construction's head, not the lexical verb, picks the auxiliary) | available (#148) — reuses `ukan`'s suffixes exactly like Unit 4's `nahi`; form-only (no sentence frames — `behar`'s complement is an infinitive, not an object noun) |
 
 The Basque future is morphologically trivial — one participle rule (`-ko`/`-go`)
 layered onto auxiliaries already mastered in Units 1-18 — so Stage 6 teaches
@@ -369,8 +369,8 @@ Pronoun stage: **C (pro-drop default)**.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 23 | **"I Used To..." — The Imperfective Past** | "I used to come here every day." / "I was working when she called." | imperfective/habitual past (`etortzen nintzen`, "I used to come / I was coming") — distinct from the simple past taught in Units 12/14/17/18 | implemented (`etorri`/`ikusi`'s `habitualPast`) |
-| 24 | **Motion in Progress (Past)** — `joan`/`etorri`/`ibili`'s native imperfective past forms (`nindoan`, `zetorren`) | "I was on my way (when...)." / "He was coming (and then...)." | §6 | implemented (`joan`/`etorri`/`ibili`'s `imperfectivePast`) — framed explicitly as imperfective/progressive, contrasted with Units 12/17's `joan nintzen`/`ibili nintzen` |
+| 23 | **The Imperfective Past — "I Used To..."** | "I used to come here every day." / "I was working when she called." | imperfective/habitual past (`etortzen nintzen`, "I used to come / I was coming") — distinct from the simple past taught in Units 12/14/17/18 | implemented (`etorri`/`ikusi`'s `habitualPast`) |
+| 24 | **joan/etorri/ibili — Motion in Progress (Past)** — native imperfective past forms (`nindoan`, `zetorren`) | "I was on my way (when...)." / "He was coming (and then...)." | §6 | implemented (`joan`/`etorri`/`ibili`'s `imperfectivePast`) — framed explicitly as imperfective/progressive, contrasted with Units 12/17's `joan nintzen`/`ibili nintzen` |
 
 This phase is narrower than the surrounding ones — completed simple past
 ("I went", "I saw", "I ate", "I had") moved to Units 12/14/17/18, so Phase III's
@@ -387,17 +387,17 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 25 | **Pleasures, Opinions, Feelings** — present NOR-NORI, 3rd-person subjects (`zait`/`zaizu`/`zaio`/`zaigu`/`zaizue`/`zaie`) | "I like it." / "It seems good to me." / "I forgot (it slipped my mind)." | §4 (gustatu, iruditu, ahaztu) | available (#146, #164) — singular-NOR present (#146) plus plural-NOR (`-zki-`) production drills, a number-split review, and a case-frame buffer review (#164) |
-| 26 | **Dative Across Time** — NOR-NORI **past + future**, recombining Unit 25's grid with the periphrastic past and `-ko`/`-go` future | "I liked it yesterday." (`Atzo gustatu zitzaidan`) / "I'll forget the keys." (`Giltzak ahaztuko zaizkit`) | §4; §11 | pending — **new unit** (closes `LEARNING_JOURNEY_EVALUATION.md` finding F2) |
+| 25 | **The NOR-NORI Present — zait/zaizu/zaio** — 3rd-person subjects (`zaigu`/`zaizue`/`zaie` too) | "I like it." / "It seems good to me." / "I forgot (it slipped my mind)." | §4 (gustatu, iruditu, ahaztu) | available (#146, #164) — singular-NOR present (#146) plus plural-NOR (`-zki-`) production drills, a number-split review, and a case-frame buffer review (#164) |
+| 26 | **NOR-NORI Past & Future — Dative Across Time** — recombining Unit 25's grid with the periphrastic past and `-ko`/`-go` future | "I liked it yesterday." (`Atzo gustatu zitzaidan`) / "I'll forget the keys." (`Giltzak ahaztuko zaizkit`) | §4; §11 | pending — **new unit** (closes `LEARNING_JOURNEY_EVALUATION.md` finding F2) |
 
 #### Stage 9: Communication & Giving (NOR-NORI-NORK)
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 27 | **Communication & Giving** — present NOR-NORI-NORK (`esan`, `eman`), axis-scaffolded, plus plural-object (`-zki-`) fodder and a four-lesson extra-practice sequence | "I give it to him" (`ematen diot`) / "You tell it to him" (`esaten diozu`) / "I tell him lies." (`Gezurrak esaten dizkiot`) | §5, §8 | available (#147, #162) |
-| 28 | **Telling & Giving Across Time** — NOR-NORI-NORK **past + future**, reusing the periphrastic past and `-ko`/`-go` future on Unit 27's axis-fixed slices | "I told him." (`Esan nion`) / "He gave it to me." (`Eman zidan`) / "I'll tell you tomorrow." (`Bihar esango dizut`) | §5; §11 | available (#147) |
-| 29 | **The "egin" Construction** — `hitz`/`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`, `arreta eman`, `ados egon`, `arriskuan jarri`; invariant noun/particle + conjugated auxiliary, same shape as `nahi`/`behar izan`; placed here, the first point where `egin`/`hartu` (Units 13-14) and `eman` (Units 27-28) are all individually taught | "I speak Basque." (`Euskaraz hitz egiten dut`) / "I work." (`Lan egiten dut`) / "I take part." (`Parte hartzen dut`) / "I agree." (`Ados nago`) | VERB_COVERAGE §7 | available (#306, repositioned by #325) |
-| 30 | **Agentive Verbs with a Covert Dative** — `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman` + the dative `egin` compounds (`mesede`/`kalte`/`aurre egin`), pooled present/past, reusing the `diot`-family paradigm from Units 27-28 — but with no overt direct object signaling NORI, drilling the exact "covert dative" confusion #293 targets | "I help him." (`Laguntzen diot`) / "I answer the question." (`Galderari erantzuten diot`) / "I called him yesterday." (`Atzo deitu nion`) | §4, §5; VERB_COVERAGE §2/§4 | available (#307) |
+| 27 | **The NOR-NORI-NORK Present — diot/diozu/dio** — (`esan`, `eman`), axis-scaffolded, plus plural-object (`-zki-`) fodder and a four-lesson extra-practice sequence | "I give it to him" (`ematen diot`) / "You tell it to him" (`esaten diozu`) / "I tell him lies." (`Gezurrak esaten dizkiot`) | §5, §8 | available (#147, #162) |
+| 28 | **NOR-NORI-NORK Past & Future — Telling & Giving Across Time** — reusing the periphrastic past and `-ko`/`-go` future on Unit 27's axis-fixed slices | "I told him." (`Esan nion`) / "He gave it to me." (`Eman zidan`) / "I'll tell you tomorrow." (`Bihar esango dizut`) | §5; §11 | available (#147) |
+| 29 | **The "egin" Construction** — `hitz`/`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`, `arreta eman`, `ados egon`, `arriskuan jarri`; invariant noun/particle + conjugated auxiliary, same shape as `nahi`/`behar izan`; placed here, the first point where `egin`/`hartu` (Units 13-14) and `eman` (Units 27-28) are all individually taught | "I speak Basque." (`Euskaraz hitz egiten dut`) | VERB_COVERAGE §7 | available (#306, repositioned by #325) |
+| 30 | **Covert-Dative NOR-NORI-NORK — Agentive Verbs** — `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman` + the dative `egin` compounds (`mesede`/`kalte`/`aurre egin`), pooled present/past, reusing the `diot`-family paradigm from Units 27-28 — but with no overt direct object signaling NORI, drilling the exact "covert dative" confusion #293 targets | "I help him." (`Laguntzen diot`) | §4, §5; VERB_COVERAGE §2/§4 | available (#307) |
 
 ### 🛡️ Refresh Gate C — The Multi-Argument Audit
 
@@ -413,14 +413,14 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 32 | **Permissions & Capability (Ahalera)** — `dezaket`/`naiteke` contrasted with periphrastic `ahal izan` | "I can come." / "I could (have) ..." | NOR/NOR-NORK [P]; dative [R] | §2, §3, VERB_COVERAGE §5 (`ahal`/`ezin`) | available (#148) — `izan`/`ukan` potential, form-only; dative [R] paradigms deferred |
-| 33 | **Conditionals (Baldintza & Ondorioa)** — `ba-` protasis + `-ke` apodosis | "If I had money, I would buy that" (`Dirua banu, hori erosiko nuke`) | NOR/NOR-NORK [P]; dative [R] | §2, §3 | available (#148) — `izan`/`ukan` baldintza + ondorioa-present, form-only; dative [R] paradigms deferred |
+| 32 | **Ahalera — Permissions & Capability** — `dezaket`/`naiteke` contrasted with periphrastic `ahal izan` | "I can come." / "I could (have) ..." | NOR/NOR-NORK [P]; dative [R] | §2, §3, VERB_COVERAGE §5 (`ahal`/`ezin`) | available (#148) — `izan`/`ukan` potential, form-only; dative [R] paradigms deferred |
+| 33 | **Baldintza & Ondorioa — Conditionals** — `ba-` protasis + `-ke` apodosis | "If I had money, I would buy that" (`Dirua banu, hori erosiko nuke`) | NOR/NOR-NORK [P]; dative [R] | §2, §3 | available (#148) — `izan`/`ukan` baldintza + ondorioa-present, form-only; dative [R] paradigms deferred |
 
 #### Stage 11: Directives & Wishes
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 34 | **Commands (Agintera)** — the imperative | "Come here!" (`Hadi hona!`) / "Stay calm." (`Zaitez lasai`) / "Do the work." (`Ezazu lan`) | izan/ukan NOR/NOR-NORK [P]; ditransitive (`iezadazu`) [R] | §16 | available (#171) — izan/ukan only; ditransitive/jussive/hortative/egon-etorri-joan deferred |
+| 34 | **Agintera — Commands** — the imperative | "Come here!" (`Hadi hona!`) | izan/ukan NOR/NOR-NORK [P]; ditransitive (`iezadazu`) [R] | §16 | available (#171) — izan/ukan only; ditransitive/jussive/hortative/egon-etorri-joan deferred |
 | 35 | **Purpose & Wishing (Subjuntiboa)** — the subjunctive **as a construction** (matrix verb + subordinate clause) | "I want him to come." (`Nahi dut etor dadin`) / "She told him to come." (`Esan dio etor dadila`) / "...so that he sees it." (`...ikus dezan`) | NOR/NOR-NORK 3rd-person in-construction [P]; dative [R] | §16 | pending |
 
 Two different moods with different difficulty profiles get their own units —
@@ -437,7 +437,7 @@ novelties — new person, addressee-agreement, gender — one at a time (see
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 36 | **Meet "hi"** (no allocutivity) — `hi` as a subject in known paradigms, plus `hi`-as-NORK's own gender split | `Hi ikaslea haiz.` / `Hago lasai.` / `Hator hona.` / `Hik badakik?` | §3/§6 | available (#144, #167) |
+| 36 | **hi — Meet "hi"** (no allocutivity) — as a subject in known paradigms, plus `hi`-as-NORK's own gender split | `Hi ikaslea haiz.` / `Hago lasai.` / `Hator hona.` / `Hik badakik?` | §3/§6 | available (#144, #167) |
 | 37 | **Toka (masculine allocutive)** — addressee-agreement on 3rd-person statements, one gender | `Lanean dik.` / `Etorri duk.` / `Ez nauk ondo.` | §10 | available (#167) |
 | 38 | **Noka (feminine allocutive)** — taught as the `-k`→`-n` transform of Unit 37 | `Lanean din.` / `Etorri dun.` / `Ez naun ondo.` | §10 | available (#167) |
 | 39 | **Hitanoa Recombined** — mixed toka/noka + *when not to use it* (subordinate clauses, formal `-ke-` moods) | choose register by addressee gender | §10, `LANGUAGE_DECISIONS.md` 2026-06-11 | pending |
@@ -446,7 +446,7 @@ novelties — new person, addressee-agreement, gender — one at a time (see
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 40 | **Passive & Reading Real Text** — non-finite forms, nor-shift (`ireki dut` → `ireki da`) | comprehension over real sentences | [R] throughout | §14/§15 | available (#145, #170) — `kind: 'reading'`, §15 nor-shift + §14 non-finite forms |
+| 40 | **The Passive nor-shift — Reading Real Text** — non-finite forms, nor-shift (`ireki dut` → `ireki da`) | comprehension over real sentences | [R] throughout | §14/§15 | available (#145, #170) — `kind: 'reading'`, §15 nor-shift + §14 non-finite forms |
 
 ---
 

@@ -12,6 +12,31 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #332: theme-unit audit — front-loaded every available unit's title with its conjugation target
+
+**Decision:** Reframed every `available` unit's `title` (`journey.js`, mirrored
+in `journeyTranslations.js`'s es/eu and `docs/LEARNING_JOURNEY.md`) so the
+*conjugation/grammar target* leads, with any semantic theme demoted to a
+trailing clause — per #332's framing, a unit's identity should be the pattern
+it teaches, not a life-theme the pattern happens to illustrate. Also trimmed
+every multi-sentence `payload` down to its first example, per #332's "one
+example sentence retained" criterion (uniformly across en/es/eu).
+
+**Audit (keep/reframe/merge), by unit:**
+
+| Unit(s) | Verdict | Why |
+|---|---|---|
+| 1, 2, 4, 5, 6, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 23, 24, 25, 26, 27, 28, 30, 32, 33, 34, 36, 40 | **Reframe** | Title reordered to front-load the verb/grammar term already present in the title or `focus` (e.g. `'Who and Where'` → `'izan & egon — Who and Where'`; `'Daily Routine (Transitive)'` → `'The NOR-NORK Present — dut/duzu/du'`). No new prose invented beyond reordering existing terms, except the 7 units #332 itself proposed wording for (5, 6, 13, 14, 15, 25, 27), which follow the issue's suggested phrasing closely. |
+| 3, 7, 8, 10 (gate), 20, 22 (gate), 29, 37, 38 | **Keep** | Title already leads with a grammatical/pattern term (case-marking, "Expansion," a gate's REFRESH name, a construction name, an allocutive-register name) rather than a semantic theme — nothing to reframe. Payload trimmed where it had multiple sentences. |
+| 31, 35, 39, 41–45 | **N/A (pending)** | #332's acceptance criteria apply only to `available` units; these have no lesson content yet, so their `pending`-card titles are out of scope for this pass. |
+| (none) | **Merge** | No two available units' titles were found to be redundant theme-restatements of the same conjugation target — each maps to a distinct pattern, so no merges were warranted. |
+
+**Why reorder rather than rewrite:** composing new prose carries real risk for
+the `eu` (Basque) column in a learner-facing app — this session isn't a native
+speaker, so titles were built by rearranging vocabulary/grammar terms already
+verified correct elsewhere in the same file, rather than inventing new
+phrasing. The `eu` wording was shown to the user for a spot-check before merge.
+
 ## 2026-06-20 — #333: audited the dedicated-lesson set against #329's particularity test
 
 **Decision:** Confirmed every remaining single-verb (non-pooled) practice

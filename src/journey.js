@@ -55,9 +55,9 @@ export const JOURNEY = [
         units: [
           {
             number: 1,
-            title: 'Who and Where',
+            title: 'izan & egon — Who and Where',
             focus: 'izan + egon, present tense',
-            payload: '"I am a student." · "Where are you?" · "He is at home."',
+            payload: '"I am a student."',
             status: 'available',
             lessonIds: ['izan-present', 'egon-present', 'unit-1-review'],
           },
@@ -71,10 +71,9 @@ export const JOURNEY = [
           // ergative restructure".
           {
             number: 2,
-            title: 'The Ergative Leap',
+            title: 'ukan — The Ergative Leap',
             focus: 'ukan present (object fixed to hura), taught alone — ni/zu/hura',
-            payload:
-              '"I have a car." (Nik auto bat dut.) · "Do you have coffee?" (Kafea duzu?) · "He has a house." (Hark etxe bat du.)',
+            payload: '"I have a car." (Nik auto bat dut.)',
             status: 'available',
             lessonIds: ['ukan-present', 'ukan-ni-nik-shift-review', 'unit-2-review'],
           },
@@ -88,8 +87,7 @@ export const JOURNEY = [
             title: '"Ni" vs. "Nik" — The Case-Marking Checkpoint',
             focus:
               'zero new verbs — bare izan/egon subjects vs. ergative ukan subjects, ni/zu/hura',
-            payload:
-              '"Ni ikaslea naiz" vs. "Nik liburua dut." · "Zu etxean zaude" vs. "Zuk kafea duzu."',
+            payload: '"Ni ikaslea naiz" vs. "Nik liburua dut."',
             status: 'available',
             lessonIds: [
               'case-marking-sort-review',
@@ -99,9 +97,9 @@ export const JOURNEY = [
           },
           {
             number: 4,
-            title: 'Knowing & Wanting',
+            title: 'jakin & nahi — Knowing & Wanting',
             focus: 'jakin (synthetic, same ergative suffixes as ukan) + nahi + ukan',
-            payload: '"I don\'t know." (Ez dakit.) · "Do you want to come?" (Etorri nahi duzu?)',
+            payload: '"I don\'t know." (Ez dakit.)',
             status: 'available',
             lessonIds: ['jakin-present', 'nahi-present', 'jakin-suffix-family-review', 'knowing-wanting-review'],
           },
@@ -113,17 +111,17 @@ export const JOURNEY = [
         units: [
           {
             number: 5,
-            title: 'Seeing',
+            title: 'ikusi — First Periphrastic Verb (-tzen dut)',
             focus: 'ikusi present (ni/zu/hura) — Phase I\'s first periphrastic verb',
-            payload: '"I see the mountain." · "Do you see it?" · "She sees the film."',
+            payload: '"I see the mountain."',
             status: 'available',
             lessonIds: ['ikusi-present', 'ikusi-present-review'],
           },
           {
             number: 6,
-            title: 'Moving Around',
+            title: 'joan/etorri/ibili — The NOR Present',
             focus: 'joan + etorri + ibili, present tense',
-            payload: "\"I'm going to the beach.\" · \"She's coming tomorrow.\" · \"She wanders around town.\"",
+            payload: "\"I'm going to the beach.\"",
             status: 'available',
             lessonIds: [
               'joan-present',
@@ -153,8 +151,7 @@ export const JOURNEY = [
             title: 'Expansion: Absolutive Plurals',
             focus:
               'Adds gu/zuek/haiek to izan, egon, ukan, joan, etorri, and ikusi — zero new verbs',
-            payload:
-              '"We are teachers." (Irakasleak gara) · "You all are at home." (Etxean zaudete) · "We\'re going to the beach." (Hondartzara goaz)',
+            payload: '"We are teachers." (Irakasleak gara)',
             status: 'available',
             gate: true,
             lessonIds: ['unit-6-review-1', 'unit-6-review-2', 'unit-6-review-3'],
@@ -164,16 +161,15 @@ export const JOURNEY = [
             title: 'Expansion: Ergative Plurals',
             focus:
               'ukan + ikusi — adds gu/zuek/haiek to the ergative ("nor-nork") paradigm, framed as "the plural moved — now it\'s a suffix"',
-            payload: '"We have a car." (Auto bat dugu) · "They watch the film." (Filma ikusten dute)',
+            payload: '"We have a car." (Auto bat dugu)',
             status: 'available',
             lessonIds: ['ukan-present-plural', 'ikusi-present-plural', 'ikusi-present-plural-review', 'unit-8-ergative-review'],
           },
           {
             number: 9,
-            title: 'The Immediate Continuous',
+            title: 'ari + izan — The Immediate Continuous',
             focus: 'ari + izan',
-            payload:
-              '"What are you doing?" (Zer egiten ari zara?) · "I\'m eating." (Jaten ari naiz) · "I\'m studying." (Ikasten ari naiz)',
+            payload: '"What are you doing?" (Zer egiten ari zara?)',
             status: 'available',
             lessonIds: ['ari-present', 'unit-4-review'],
           },
@@ -220,11 +216,10 @@ export const JOURNEY = [
           // in #281; lessons in #282.
           {
             number: 11,
-            title: 'What Just Happened — The Recent Past (Present Perfect)',
+            title: 'The Present Perfect (Lehenaldiko Burutua) — What Just Happened',
             focus:
               'Lehenaldiko Burutua — perfective participle + present auxiliary (etorri naiz / ikusi dut), taught on a known core (izan/etorri + ikusi); the recency contrast gaur ... da vs. atzo ... zen',
-            payload:
-              '"I have come / I came today." (Gaur etorri naiz) · "I have seen it." (Ikusi dut) · "She has gone." (Joan da)',
+            payload: '"I have come / I came today." (Gaur etorri naiz)',
             status: 'available',
             lessonIds: [
               'izan-present-perfect-pool',
@@ -236,9 +231,9 @@ export const JOURNEY = [
           },
           {
             number: 12,
-            title: 'Looking Back I — The "izan" Past Pool',
+            title: 'The "izan" Past Pool — Looking Back I',
             focus: 'the izan past auxiliary (nintzen/zinen/zen/ginen/zineten/ziren), mixed across izan, joan, etorri, ibili',
-            payload: '"I was young." · "I went to the beach." · "She came yesterday." · "We wandered around town."',
+            payload: '"I was young."',
             status: 'available',
             lessonIds: ['izan-past-pool', 'izan-past-pool-plural'],
           },
@@ -250,11 +245,10 @@ export const JOURNEY = [
         units: [
           {
             number: 13,
-            title: 'Daily Routine (Transitive)',
+            title: 'The NOR-NORK Present — dut/duzu/du',
             focus:
               'the ukan present auxiliary (dut/duzu/du/dugu/duzue/dute), mixed across jan, edan, erosi, ikusi, hartu — first -tzen/-ten minimal pair (jaten vs. hartzen); plus the NOR-number axis (dut vs. ditut) across ukan, jan, edan, erosi, hartu, ikusi, eduki',
-            payload:
-              '"I ate." · "You drink water." · "I bought a book." · "Do you see it?" · "I take the bus." · "I have them." (ditut, not dut)',
+            payload: '"I ate."',
             status: 'available',
             lessonIds: [
               'unit-10-present',
@@ -265,11 +259,10 @@ export const JOURNEY = [
           },
           {
             number: 14,
-            title: 'Looking Back I — The "ukan" Past Pool',
+            title: 'The NOR-NORK Past — nuen/zenuen/zuen',
             focus:
               'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi, jakin; plus the NOR-number axis in the past (zenuen vs. zenituen) across ukan, jan, edan, erosi, hartu, ikusi, eduki',
-            payload:
-              '"I had a car." · "I ate the apple." · "You drank coffee." · "We bought a house." · "She saw the film." · "I knew the answer." (Erantzuna nekien) · "You had them." (zenituen, not zenuen)',
+            payload: '"I had a car."',
             status: 'available',
             lessonIds: [
               'ukan-past-pool',
@@ -290,9 +283,9 @@ export const JOURNEY = [
           // precedent (#137).
           {
             number: 15,
-            title: 'Carrying & Bringing',
+            title: 'eraman/ekarri — More NOR-NORK Synthetics',
             focus: 'eraman ("to carry/take") + ekarri ("to bring") — nor-nork synthetic verbs in the already-taught eduki/jakin shape, present + past',
-            payload: 'Nik nire txakurra daramat mendira. · Lagunak danbor txiki bat dakar Donostiako Danborradatik.',
+            payload: 'Nik nire txakurra daramat mendira.',
             status: 'available',
             lessonIds: [
               'eraman-present',
@@ -315,9 +308,9 @@ export const JOURNEY = [
         units: [
           {
             number: 16,
-            title: 'Physical States & Possessions',
+            title: 'eduki — Physical States & Possessions',
             focus: 'eduki — full 6-person grid; ibili gains gu/zuek/haiek (present introduced in Unit 6)',
-            payload: '"I have the keys in my pocket." · "They are wandering around town."',
+            payload: '"I have the keys in my pocket."',
             status: 'available',
             lessonIds: [
               'eduki-present',
@@ -329,17 +322,17 @@ export const JOURNEY = [
           },
           {
             number: 17,
-            title: '"I Had It"',
+            title: 'eduki — "I Had It" (Simple Past)',
             focus: 'eduki — simple past, its own synthetic paradigm (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
-            payload: '"I had the keys." · "We had time."',
+            payload: '"I had the keys."',
             status: 'available',
             lessonIds: ['eduki-past', 'eduki-past-review', 'eduki-past-plural', 'eduki-past-plural-review'],
           },
           {
             number: 18,
-            title: '"I Was There"',
+            title: 'egon — "I Was There" (Simple Past)',
             focus: 'egon — simple past, its own synthetic paradigm (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden)',
-            payload: '"I was at home." · "We were at the beach."',
+            payload: '"I was at home."',
             status: 'available',
             lessonIds: ['egon-past', 'egon-past-review', 'egon-past-plural', 'egon-past-plural-review'],
           },
@@ -351,10 +344,9 @@ export const JOURNEY = [
         units: [
           {
             number: 19,
-            title: 'The Future Rule',
+            title: 'izan/ukan/joan — The Future Rule',
             focus: 'forming the future with -ko/-go + present auxiliaries (izan, ukan, joan) — first -ko/-go minimal pair (izango vs. etorriko)',
-            payload:
-              '"I will be a teacher" (irakasle izango naiz) · "We will have a car" (autoa izango dugu) · "I will go tomorrow" (bihar joango naiz)',
+            payload: '"I will be a teacher" (irakasle izango naiz)',
             status: 'available',
             lessonIds: [
               'izan-future',
@@ -371,8 +363,7 @@ export const JOURNEY = [
             number: 20,
             title: 'The Future, Across Every Verb',
             focus: 'the same -ko/-go rule applied across all known verbs, drilled as cross-verb mixers',
-            payload:
-              '"You will see it" (ikusiko duzu) · "We will buy a house" (etxe bat erosiko dugu) · "Will you know?" (jakingo duzu?)',
+            payload: '"You will see it" (ikusiko duzu)',
             status: 'available',
             lessonIds: [
               'future-mixer-being-going',
@@ -387,10 +378,9 @@ export const JOURNEY = [
           },
           {
             number: 21,
-            title: 'Requirements & Obligations',
+            title: 'behar — Requirements & Obligations',
             focus: 'behar + ukan, present and future',
-            payload:
-              '"I have to go." (Joan behar dut) · "You\'ll have to come." (Etorri beharko duzu)',
+            payload: '"I have to go." (Joan behar dut)',
             status: 'available',
             lessonIds: ['behar-present', 'behar-future', 'unit-19-review'],
           },
@@ -431,10 +421,10 @@ export const JOURNEY = [
         units: [
           {
             number: 23,
-            title: '"I Used To..." — The Imperfective Past',
+            title: 'The Imperfective Past — "I Used To..."',
             focus:
               'imperfective/habitual past (etortzen nintzen, "I used to come / I was coming") — distinct from the simple past taught in Units 12/14/16/17',
-            payload: '"I used to come here every day." · "I was working when she called."',
+            payload: '"I used to come here every day."',
             status: 'available',
             lessonIds: [
               'etorri-habitual-past',
@@ -446,9 +436,9 @@ export const JOURNEY = [
           },
           {
             number: 24,
-            title: 'Motion in Progress (Past)',
+            title: 'joan/etorri/ibili — Motion in Progress (Past)',
             focus: "joan/etorri/ibili's native imperfective past forms (nindoan, zetorren)",
-            payload: '"I was on my way (when...)." · "He was coming (and then...)."',
+            payload: '"I was on my way (when...)."',
             status: 'available',
             lessonIds: ['motion-imperfective-past-pool', 'motion-imperfective-past-pool-plural'],
           },
@@ -467,10 +457,10 @@ export const JOURNEY = [
         units: [
           {
             number: 25,
-            title: 'Pleasures, Opinions, Feelings',
+            title: 'The NOR-NORI Present — zait/zaizu/zaio',
             focus:
               'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; ends with a case-frame buffer lesson ahead of Unit 25\'s ditransitive jump',
-            payload: '"I like this." (Hau gustatzen zait) · "It seems good to him/her." (Ongi iruditzen zaio) · "I forgot the book." (Liburua ahaztu zait) · "I forgot the keys." (Giltzak ahaztu zaizkit)',
+            payload: '"I like this." (Hau gustatzen zait)',
             status: 'available',
             lessonIds: [
               'gustatu-present',
@@ -485,9 +475,9 @@ export const JOURNEY = [
           },
           {
             number: 26,
-            title: 'Dative Across Time',
+            title: 'NOR-NORI Past & Future — Dative Across Time',
             focus: 'NOR-NORI past + future — recombines Unit 23\'s dative grid with the periphrastic past and -ko/-go future',
-            payload: '"I liked it yesterday." (Atzo gustatu zitzaidan) · "I forgot the keys." (Giltzak ahaztu zitzaizkidan) · "You\'ll like it for sure." (Ziur gustatuko zaizu)',
+            payload: '"I liked it yesterday." (Atzo gustatu zitzaidan)',
             status: 'available',
             lessonIds: ['gustatu-past', 'gustatu-future', 'iruditu-past', 'iruditu-future', 'ahaztu-past', 'ahaztu-future'],
           },
@@ -499,9 +489,9 @@ export const JOURNEY = [
         units: [
           {
             number: 27,
-            title: 'Communication & Giving',
+            title: 'The NOR-NORI-NORK Present — diot/diozu/dio',
             focus: 'present NOR-NORI-NORK (esan, eman), axis-scaffolded — each lesson fixes one axis (NORK or NORI) before recombining both, plus plural-object (-zki-) fodder and extra-practice reviews',
-            payload: '"I give it to him." (Ematen diot) · "You tell it to him." (Esaten diozu) · "I tell him lies." (Gezurrak esaten dizkiot)',
+            payload: '"I give it to him." (Ematen diot)',
             status: 'available',
             lessonIds: [
               'esan-present', 'eman-present',
@@ -512,9 +502,9 @@ export const JOURNEY = [
           },
           {
             number: 28,
-            title: 'Telling & Giving Across Time',
+            title: 'NOR-NORI-NORK Past & Future — Telling & Giving Across Time',
             focus: 'NOR-NORI-NORK past + future — reuses the periphrastic past and -ko/-go future on the axis-fixed slices from Unit 25',
-            payload: '"I told him." (Esan nion) · "He gave it to me." (Eman zidan) · "I\'ll tell you tomorrow." (Bihar esango dizut)',
+            payload: '"I told him." (Esan nion)',
             status: 'available',
             lessonIds: ['esan-past', 'esan-future', 'eman-past', 'eman-future'],
           },
@@ -522,7 +512,7 @@ export const JOURNEY = [
             number: 29,
             title: 'The "egin" Construction',
             focus: 'hitz/lan/lo/ahaleginak egin, parte/kontuan hartu, arreta eman, ados egon, arriskuan jarri — invariant noun/particle + conjugated auxiliary, same shape as nahi/behar izan; placed here as the first unit after egin/hartu (Units 13-14) and eman (Units 27-28) are all individually taught, since this construction draws on all four',
-            payload: 'Euskaraz hitz egiten dut. · Lan egiten dut. · Parte hartzen dut. · Ados nago.',
+            payload: 'Euskaraz hitz egiten dut.',
             status: 'available',
             lessonIds: [
               'egin-construction-present',
@@ -535,10 +525,10 @@ export const JOURNEY = [
           },
           {
             number: 30,
-            title: 'Agentive Verbs with a Covert Dative',
+            title: 'Covert-Dative NOR-NORI-NORK — Agentive Verbs',
             focus:
               '#307 — pooled present/past for lagundu/ekin/erantzun/deitu/eragin/antzeman plus the dative egin compounds (mesede/kalte/aurre egin); reuses the diot-family paradigm from Units 27-28, but with no overt direct object to hint NORI — drilling the exact "covert dative" confusion #293 targets',
-            payload: '"I help him." (Laguntzen diot) · "I answer the question." (Galderari erantzuten diot) · "I called him yesterday." (Atzo deitu nion)',
+            payload: '"I help him." (Laguntzen diot)',
             status: 'available',
             lessonIds: [
               'dative-verb-present', 'dative-verb-present-plural',
@@ -574,15 +564,15 @@ export const JOURNEY = [
         units: [
           {
             number: 32,
-            title: 'Permissions & Capability (Ahalera)',
+            title: 'Ahalera — Permissions & Capability',
             focus: 'dezaket/naiteke contrasted with periphrastic ahal izan — production for NOR/NOR-NORK, recognition-only for the dative paradigms',
-            payload: '"I can come." · "I could (have)..."',
+            payload: '"I can come."',
             status: 'available',
             lessonIds: ['izan-potential', 'ukan-potential', 'unit-28-review'],
           },
           {
             number: 33,
-            title: 'Conditionals (Baldintza & Ondorioa)',
+            title: 'Baldintza & Ondorioa — Conditionals',
             focus: 'ba- protasis + -ke apodosis — production for NOR/NOR-NORK, recognition-only for the dative paradigms',
             payload: '"If I had money, I would buy that" (Dirua banu, hori erosiko nuke)',
             status: 'available',
@@ -596,9 +586,9 @@ export const JOURNEY = [
         units: [
           {
             number: 34,
-            title: 'Commands (Agintera)',
+            title: 'Agintera — Commands',
             focus: 'the imperative — izan/ukan production for NOR/NOR-NORK; ditransitive (iezadazu) recognition-only is a future addition',
-            payload: 'Hadi hona! · Zaitez lasai. · Ezazu lan.',
+            payload: 'Hadi hona!',
             status: 'available',
             lessonIds: ['izan-imperative', 'ukan-imperative', 'unit-30-review'],
           },
@@ -617,9 +607,9 @@ export const JOURNEY = [
         units: [
           {
             number: 36,
-            title: 'Meet "hi"',
+            title: 'hi — Meet "hi"',
             focus: 'hi as a subject in known paradigms, plus hi-as-NORK\'s own gender split',
-            payload: 'Hi ikaslea haiz. · Hago lasai. · Hator hona. · Hik badakik?',
+            payload: 'Hi ikaslea haiz.',
             status: 'available',
             lessonIds: ['unit-32-hi-present', 'unit-32-hi-past', 'unit-32-hi-nork-present'],
           },
@@ -627,7 +617,7 @@ export const JOURNEY = [
             number: 37,
             title: 'Toka (Masculine Allocutive)',
             focus: 'addressee-agreement on 3rd-person statements, masculine register',
-            payload: 'Lanean dik. · Etorri duk. · Ez nauk ondo.',
+            payload: 'Lanean dik.',
             status: 'available',
             lessonIds: ['izan-present-toka', 'ukan-present-toka', 'izan-past-toka', 'ukan-past-toka', 'unit-33-review'],
           },
@@ -635,7 +625,7 @@ export const JOURNEY = [
             number: 38,
             title: 'Noka (Feminine Allocutive)',
             focus: 'taught as the -k → -n transform of Unit 33\'s toka forms, feminine register',
-            payload: 'Lanean din. · Etorri dun. · Ez naun ondo.',
+            payload: 'Lanean din.',
             status: 'available',
             lessonIds: ['izan-present-noka', 'ukan-present-noka', 'izan-past-noka', 'ukan-past-noka', 'unit-34-review'],
           },
@@ -653,9 +643,9 @@ export const JOURNEY = [
         units: [
           {
             number: 40,
-            title: 'Passive & Reading Real Text',
+            title: 'The Passive nor-shift — Reading Real Text',
             focus: 'non-finite forms, nor-shift (ireki dut → ireki da) — comprehension over real sentences, recognition-only throughout',
-            payload: 'Nik atea ireki dut. → Atea ireki da. · Filma ikusteko etorri naiz.',
+            payload: 'Nik atea ireki dut. → Atea ireki da.',
             status: 'available',
             lessonIds: ['unit-36-reading', 'unit-36-reading-nonfinite'],
           },
