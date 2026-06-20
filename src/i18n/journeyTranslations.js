@@ -430,8 +430,8 @@ export const JOURNEY_TRANSLATIONS = {
     27: {
       title: { es: 'El presente NOR-NORI-NORK — diot/diozu/dio', eu: 'NOR-NORI-NORK oraina — diot/diozu/dio' },
       focus: {
-        es: 'presente NOR-NORI-NORK (esan, eman), con andamiaje por ejes — cada lección fija un eje (NORK o NORI) antes de combinar ambos',
-        eu: 'oraina NOR-NORI-NORK (esan, eman), ardatzka aurkeztuta — saio bakoitzak ardatz bat (NORK edo NORI) finkatzen du biak konbinatu aurretik',
+        es: 'presente NOR-NORI-NORK (esan, eman), con andamiaje por ejes — cada lección fija un eje (NORK o NORI) antes de combinar ambos; el #334 añade un grupo de presente para el fodder ditransitivo opcionalmente dativo (saldu/utzi/adierazi/eskatu/galdetu)',
+        eu: 'oraina NOR-NORI-NORK (esan, eman), ardatzka aurkeztuta — saio bakoitzak ardatz bat (NORK edo NORI) finkatzen du biak konbinatu aurretik; #334-k oraineko talde bat gehitzen du aukerako datibo ditransitiboko fodder-arentzat (saldu/utzi/adierazi/eskatu/galdetu)',
       },
       payload: {
         es: '"Se lo doy (a él)." (Ematen diot)',
@@ -441,8 +441,8 @@ export const JOURNEY_TRANSLATIONS = {
     28: {
       title: { es: 'NOR-NORI-NORK pasado y futuro — Contar y dar a través del tiempo', eu: 'NOR-NORI-NORK iragana eta geroa — Esan eta eman denboran zehar' },
       focus: {
-        es: 'NOR-NORI-NORK en pasado y futuro — reutiliza el pasado perifrástico y el futuro -ko/-go sobre los recortes de eje fijo de la unidad 25',
-        eu: 'NOR-NORI-NORK iraganean eta geroan — 25. unitateko ardatz finkoko zatiei iragan perifrastikoa eta -ko/-go geroaldia aplikatzen die',
+        es: 'NOR-NORI-NORK en pasado y futuro — reutiliza el pasado perifrástico y el futuro -ko/-go sobre los recortes de eje fijo de la unidad 25; el #334 añade los grupos de pasado/futuro/repaso para el mismo fodder ditransitivo',
+        eu: 'NOR-NORI-NORK iraganean eta geroan — 25. unitateko ardatz finkoko zatiei iragan perifrastikoa eta -ko/-go geroaldia aplikatzen die; #334-k iragan/gero/berrikuspen taldeak gehitzen ditu fodder ditransitibo berarentzat',
       },
       payload: {
         es: '"Se lo dije." (Esan nion)',
@@ -463,8 +463,8 @@ export const JOURNEY_TRANSLATIONS = {
     30: {
       title: { es: 'NOR-NORI-NORK con dativo encubierto — Verbos agentivos', eu: 'Datibo ezkutuko NOR-NORI-NORK — Aditz agentiboak' },
       focus: {
-        es: 'presente/pasado agrupados de lagundu/ekin/erantzun/deitu/eragin/antzeman y los compuestos dativos de egin (mesede/kalte/aurre egin) — reutiliza el paradigma diot de las unidades 27-28, pero sin objeto directo visible que delate el NORI',
-        eu: 'lagundu/ekin/erantzun/deitu/eragin/antzeman eta egin-en datibo-konposatuen (mesede/kalte/aurre egin) oraina/iragana, taldekatuta — 27-28 unitateetako diot paradigma berrerabiltzen du, baina NORIa salatuko lukeen objektu zuzen ikusgairik gabe',
+        es: 'presente/pasado/futuro agrupados de lagundu/ekin/erantzun/deitu/eragin/antzeman y los compuestos dativos de egin (mesede/kalte/aurre egin), más la lectura dativa de itxaron (#334) — reutiliza el paradigma diot de las unidades 27-28, pero sin objeto directo visible que delate el NORI',
+        eu: 'lagundu/ekin/erantzun/deitu/eragin/antzeman eta egin-en datibo-konposatuen (mesede/kalte/aurre egin) oraina/iragana/geroa, taldekatuta, gehi itxaron-en irakurketa datiboa (#334) — 27-28 unitateetako diot paradigma berrerabiltzen du, baina NORIa salatuko lukeen objektu zuzen ikusgairik gabe',
       },
       payload: {
         es: '"Le ayudo." (Laguntzen diot)',

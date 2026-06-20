@@ -40,7 +40,7 @@ combinations occur in the language:
 | `nor` | absolutive only — intransitive subject | izan, egon, joan, etorri, ibili | ✅ `izan` |
 | `nor + nork` | absolutive object + ergative subject — transitive | ukan, eduki, eraman, ekarri, erabili, egin, ikusi | ✅ `ukan` |
 | `nor + nori` | absolutive stimulus + dative experiencer — "psych" verbs | gustatu ("gustatzen zait" = I like it, lit. "it pleases to-me"), iruditu, interesatu, ahaztu, gertatu | 🔲 no example yet — produces some of Basque's most distinctive sentence patterns and is worth prioritizing |
-| `nor + nori + nork` | all three arguments marked — ditransitive | eman, esan, erakutsi, saldu, bidali, eskaini; also the covert-dative batch `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman` + dative `egin` compounds (#307) | ✅ `esan`/`eman` (§4a/§4b), extended by #307 (§4b-ter) |
+| `nor + nori + nork` | all three arguments marked — ditransitive | eman, esan, erakutsi, saldu, bidali, eskaini; also the covert-dative batch `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman` + dative `egin` compounds (#307), `itxaron`'s dative reading (#334), and the ditransitive-dative readings of `saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu` (#334) | ✅ `esan`/`eman` (§4a/§4b), extended by #307 (§4b-ter) and #334 (§4b-ter/§4b-quater) |
 
 `AGREEMENT_META` already has copy and a badge style for `nori` — only the verb
 data is missing to exercise it.
@@ -230,19 +230,19 @@ extending Unit 10's pooled drill or seeding later units:
 | Verb | Meaning | Present (nor-nork) | Past (nor-nork) | Notes |
 |---|---|---|---|---|
 | hartu | to take / receive | Hartzen dut | Hartu nuen | ✅ in `VERBS` |
-| saldu | to sell | Saltzen dut | Saldu nuen | ✅ in `VERBS` (#319, plain `nor-nork` reading only — the `nor-nori-nork`/"saldu dio" reading is #307's scope) |
+| saldu | to sell | Saltzen dut | Saldu nuen | ✅ in `VERBS` (#319, plain `nor-nork` reading; the `nor-nori-nork`/"saldu dio" reading is `saldu-dative`, §4b-quater, #334) |
 | irakurri | to read | Irakurtzen dut | Irakurri nuen | ✅ in `VERBS` (#319) |
 | idatzi | to write | Idazten dut | Idatzi nuen | ✅ in `VERBS` (#319); still a §6 causative candidate (`idatzarazi`) |
 | ikasi | to learn / study | Ikasten dut | Ikasi nuen | ✅ in `VERBS` (#319) |
-| utzi | to leave / let | Uzten dut | Utzi nuen | ✅ in `VERBS` (#319, plain reading only — see `saldu`'s note) |
+| utzi | to leave / let | Uzten dut | Utzi nuen | ✅ in `VERBS` (#319, plain reading; the dative reading is `utzi-dative`, §4b-quater, #334) |
 | bilatu | to search / look for | Bilatzen dut | Bilatu nuen | ✅ in `VERBS` (#319); pairs with `aurkitu` (search/find) |
 | aurkitu | to find | Aurkitzen dut | Aurkitu nuen | ✅ in `VERBS` (#319) |
 | zabaldu | to open / spread | Zabaltzen dut | Zabaldu nuen | 🔲 not yet added |
 | itxi | to close | Ixten dut | Itxi nuen | 🔲 not yet added |
 | egin | to do / make | Egiten dut | Egin nuen | ✅ in `VERBS` (#319) — the everyday Batua form; also Basque's common transitive "light verb" (`lo egin`, `dantza egin`, `barre egin`...) |
-| eskatu | to ask for / request | Eskatzen dut | Eskatu nuen | ✅ in `VERBS` (#320) |
-| galdetu | to ask (a question) | Galdetzen dut | Galdetu nuen | ✅ in `VERBS` (#320) |
-| adierazi | to express / indicate | Adierazten dut | Adierazi nuen | ✅ in `VERBS` (#320) |
+| eskatu | to ask for / request | Eskatzen dut | Eskatu nuen | ✅ in `VERBS` (#320); dative reading is `eskatu-dative`, §4b-quater, #334 |
+| galdetu | to ask (a question) | Galdetzen dut | Galdetu nuen | ✅ in `VERBS` (#320); dative reading is `galdetu-dative`, §4b-quater, #334 |
+| adierazi | to express / indicate | Adierazten dut | Adierazi nuen | ✅ in `VERBS` (#320); dative reading is `adierazi-dative`, §4b-quater, #334 |
 | bukatu | to finish | Bukatzen dut | Bukatu nuen | ✅ in `VERBS` (#320) |
 | amaitu | to finish / end | Amaitzen dut | Amaitu nuen | ✅ in `VERBS` (#320) |
 | gainditu | to pass / overcome | Gainditzen dut | Gainditu nuen | ✅ in `VERBS` (#320) |
@@ -281,12 +281,22 @@ visible object signals the dative the way "egia esan" does) — the exact
 | mesede egin | to do a favor (for someone) | Mesede egiten diot | Mesede egin nion | ✅ in `VERBS` (#307) — dative `egin` compound, deferred from #306 |
 | kalte egin | to harm (someone) | Kalte egiten diot | Kalte egin nion | ✅ in `VERBS` (#307) — dative `egin` compound, deferred from #306 |
 | aurre egin | to face/confront (something) | Aurre egiten diot | Aurre egin nion | ✅ in `VERBS` (#307) — dative `egin` compound, deferred from #306 |
+| itxaron-dative | to wait for (someone) | Itxaroten diot | Itxaron nion | ✅ in `VERBS` (#334) — `itxaron`'s dative reading, same covert-dative shape as the rest of this table (no overt object); carrier in this pool's present/past/future |
 
-The issue's "optionally-dative" set (`itxaron`, plus the #304 optionally-
-ditransitive `saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`) is deferred to a
-follow-up issue — each needs its own sourcing pass to resolve which of its
-two readings (plain vs. dative) is natural enough to drill, which is a
-different kind of work from this batch's already-unambiguous dative verbs.
+`itxaron` joins this table's shape exactly (no overt object the way "lagunari laguntzen diot" has none either), so its dative reading (`itxaron-dative`) was added as this pool's 10th carrier rather than a new pool. `saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`'s dative readings are genuinely ditransitive instead (overt accusative object + dative recipient — the `esan`/`eman` shape, not this table's covert-dative shape), so they got their own pool family (`ditransitive-dative-*`) wired into Units 27-28 alongside `esan`/`eman` — see §4b-quater and `docs/LANGUAGE_DECISIONS.md`'s #334 entry.
+
+### 4b-quater. Optionally-dative ditransitive fodder (#334)
+`saldu`, `utzi`, `adierazi`, `eskatu`, `galdetu` each carry two readings: a plain `nor-nork` reading already in `VERBS` (#319, table above) and a ditransitive `nor-nori-nork` reading ("saldu diot" — "I sold it to him") with an overt accusative object plus a dative recipient, the `esan`/`eman` shape (§4a/§4b) rather than §4b-ter's covert-dative shape. Sourced as separate `<verb>-dative` `VERBS` entries (`recipient: 'hura'`, `person` varies over NORK) since no existing convention lets one verb id carry two simultaneous agreement-frame readings:
+
+| Verb | Meaning (dative reading) | Present (nor-nori-nork) | Past (nor-nori-nork) | Notes |
+|---|---|---|---|---|
+| saldu-dative | to sell (to someone) | Saltzen diot | Saldu nion | ✅ in `VERBS` (#334) |
+| utzi-dative | to leave / lend (to someone) | Uzten diot | Utzi nion | ✅ in `VERBS` (#334) |
+| adierazi-dative | to express / indicate (to someone) | Adierazten diot | Adierazi nion | ✅ in `VERBS` (#334) |
+| eskatu-dative | to ask / request (of someone) | Eskatzen diot | Eskatu nion | ✅ in `VERBS` (#334) |
+| galdetu-dative | to ask (someone a question) | Galdetzen diot | Galdetu nion | ✅ in `VERBS` (#334) |
+
+All five are carriers (present/past/future) in the new `ditransitive-dative-*` pool family, wired into Unit 27 (present) and Unit 28 (past/future/review) alongside `esan`/`eman`'s individual lessons — not a new pool in §4b-ter's Unit 30, since mixing an overt-object reading into that pool's specifically "no-overt-object" carriers would muddy the #293 covert-dative confusion it's built to drill.
 
 ### 4c. A natural cluster for `dialectVariants`
 Three East/West dialectal pairs turned up while surveying §4a/§4b — exactly

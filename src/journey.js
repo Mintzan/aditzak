@@ -490,7 +490,7 @@ export const JOURNEY = [
           {
             number: 27,
             title: 'The NOR-NORI-NORK Present — diot/diozu/dio',
-            focus: 'present NOR-NORI-NORK (esan, eman), axis-scaffolded — each lesson fixes one axis (NORK or NORI) before recombining both, plus plural-object (-zki-) fodder and extra-practice reviews',
+            focus: 'present NOR-NORI-NORK (esan, eman), axis-scaffolded — each lesson fixes one axis (NORK or NORI) before recombining both, plus plural-object (-zki-) fodder and extra-practice reviews; #334 adds a pooled present carrier for the ditransitive optionally-dative fodder (saldu/utzi/adierazi/eskatu/galdetu)',
             payload: '"I give it to him." (Ematen diot)',
             status: 'available',
             lessonIds: [
@@ -498,15 +498,21 @@ export const JOURNEY = [
               'esan-present-plural', 'eman-present-plural',
               'unit-25-fix-nori-review', 'unit-25-fix-nork-review',
               'unit-25-object-number-review', 'unit-25-two-axis-review',
+              'ditransitive-dative-present', 'ditransitive-dative-present-plural',
             ],
           },
           {
             number: 28,
             title: 'NOR-NORI-NORK Past & Future — Telling & Giving Across Time',
-            focus: 'NOR-NORI-NORK past + future — reuses the periphrastic past and -ko/-go future on the axis-fixed slices from Unit 25',
+            focus: 'NOR-NORI-NORK past + future — reuses the periphrastic past and -ko/-go future on the axis-fixed slices from Unit 25; #334 adds pooled past/future/review carriers for the same ditransitive fodder',
             payload: '"I told him." (Esan nion)',
             status: 'available',
-            lessonIds: ['esan-past', 'esan-future', 'eman-past', 'eman-future'],
+            lessonIds: [
+              'esan-past', 'esan-future', 'eman-past', 'eman-future',
+              'ditransitive-dative-past', 'ditransitive-dative-past-plural',
+              'ditransitive-dative-future', 'ditransitive-dative-future-plural',
+              'ditransitive-dative-review', 'ditransitive-dative-review-plural',
+            ],
           },
           {
             number: 29,
@@ -519,6 +525,8 @@ export const JOURNEY = [
               'egin-construction-present-plural',
               'egin-construction-past',
               'egin-construction-past-plural',
+              'egin-construction-future',
+              'egin-construction-future-plural',
               'unit-44-review',
               'unit-44-review-plural',
             ],
@@ -527,12 +535,13 @@ export const JOURNEY = [
             number: 30,
             title: 'Covert-Dative NOR-NORI-NORK — Agentive Verbs',
             focus:
-              '#307 — pooled present/past for lagundu/ekin/erantzun/deitu/eragin/antzeman plus the dative egin compounds (mesede/kalte/aurre egin); reuses the diot-family paradigm from Units 27-28, but with no overt direct object to hint NORI — drilling the exact "covert dative" confusion #293 targets',
+              '#307 — pooled present/past/future for lagundu/ekin/erantzun/deitu/eragin/antzeman plus the dative egin compounds (mesede/kalte/aurre egin), plus itxaron\'s dative reading (#334); reuses the diot-family paradigm from Units 27-28, but with no overt direct object to hint NORI — drilling the exact "covert dative" confusion #293 targets',
             payload: '"I help him." (Laguntzen diot)',
             status: 'available',
             lessonIds: [
               'dative-verb-present', 'dative-verb-present-plural',
               'dative-verb-past', 'dative-verb-past-plural',
+              'dative-verb-future', 'dative-verb-future-plural',
               'dative-verb-review', 'dative-verb-review-plural',
             ],
           },

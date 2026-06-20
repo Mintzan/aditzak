@@ -3619,6 +3619,242 @@ export const VERBS = [
     },
   },
   {
+    // #334 — itxaron's dative reading ("wait *for* someone", recipient as
+    // NORI, no overt accusative object) per docs/LANGUAGE_DECISIONS.md's
+    // #334 entry. Same recipient:'hura'/diot-family shape as the Unit 30
+    // covert-dative family (lagundu/ekin/...), since itxaron-dative also has
+    // no overt object to hint NORI — wired in as that pool's 10th carrier
+    // rather than a separate lesson.
+    id: 'itxaron-dative',
+    verb: 'itxaron',
+    meaning: { en: 'to wait for (someone)', es: 'esperar (a alguien)', eu: 'itxaron (norbaiti)' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    recipient: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'itxaroten diot',
+        zu: 'itxaroten diozu',
+        hura: 'itxaroten dio',
+        gu: 'itxaroten diogu',
+        zuek: 'itxaroten diozue',
+        haiek: 'itxaroten diote',
+      },
+      past: {
+        ni: 'itxaron nion',
+        zu: 'itxaron zenion',
+        hura: 'itxaron zion',
+        gu: 'itxaron genion',
+        zuek: 'itxaron zenioten',
+        haiek: 'itxaron zioten',
+      },
+      future: {
+        ni: 'itxarongo diot',
+        zu: 'itxarongo diozu',
+        hura: 'itxarongo dio',
+        gu: 'itxarongo diogu',
+        zuek: 'itxarongo diozue',
+        haiek: 'itxarongo diote',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
+    // #334 — saldu's dative reading ("sell *to* someone"), ditransitive with
+    // an overt accusative object plus a dative recipient — the esan/eman
+    // shape, not the covert-dative shape (see #334's LANGUAGE_DECISIONS
+    // entry for why this and the next four verbs get a new pool instead of
+    // joining Unit 30's dative-verb-* family).
+    id: 'saldu-dative',
+    verb: 'saldu',
+    meaning: { en: 'to sell (to someone)', es: 'vender (a alguien)', eu: 'saldu (norbaiti)' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    recipient: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'saltzen diot',
+        zu: 'saltzen diozu',
+        hura: 'saltzen dio',
+        gu: 'saltzen diogu',
+        zuek: 'saltzen diozue',
+        haiek: 'saltzen diote',
+      },
+      past: {
+        ni: 'saldu nion',
+        zu: 'saldu zenion',
+        hura: 'saldu zion',
+        gu: 'saldu genion',
+        zuek: 'saldu zenioten',
+        haiek: 'saldu zioten',
+      },
+      future: {
+        ni: 'salduko diot',
+        zu: 'salduko diozu',
+        hura: 'salduko dio',
+        gu: 'salduko diogu',
+        zuek: 'salduko diozue',
+        haiek: 'salduko diote',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
+    // #334 — utzi's dative reading ("leave/lend *to* someone"), same
+    // esan/eman ditransitive shape as saldu-dative above.
+    id: 'utzi-dative',
+    verb: 'utzi',
+    meaning: { en: 'to leave / lend (to someone)', es: 'dejar (a alguien)', eu: 'utzi (norbaiti)' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    recipient: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'uzten diot',
+        zu: 'uzten diozu',
+        hura: 'uzten dio',
+        gu: 'uzten diogu',
+        zuek: 'uzten diozue',
+        haiek: 'uzten diote',
+      },
+      past: {
+        ni: 'utzi nion',
+        zu: 'utzi zenion',
+        hura: 'utzi zion',
+        gu: 'utzi genion',
+        zuek: 'utzi zenioten',
+        haiek: 'utzi zioten',
+      },
+      future: {
+        ni: 'utziko diot',
+        zu: 'utziko diozu',
+        hura: 'utziko dio',
+        gu: 'utziko diogu',
+        zuek: 'utziko diozue',
+        haiek: 'utziko diote',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
+    // #334 — adierazi's dative reading ("express/indicate *to* someone").
+    id: 'adierazi-dative',
+    verb: 'adierazi',
+    meaning: {
+      en: 'to express / indicate (to someone)',
+      es: 'expresar / indicar (a alguien)',
+      eu: 'adierazi (norbaiti)',
+    },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    recipient: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'adierazten diot',
+        zu: 'adierazten diozu',
+        hura: 'adierazten dio',
+        gu: 'adierazten diogu',
+        zuek: 'adierazten diozue',
+        haiek: 'adierazten diote',
+      },
+      past: {
+        ni: 'adierazi nion',
+        zu: 'adierazi zenion',
+        hura: 'adierazi zion',
+        gu: 'adierazi genion',
+        zuek: 'adierazi zenioten',
+        haiek: 'adierazi zioten',
+      },
+      future: {
+        ni: 'adieraziko diot',
+        zu: 'adieraziko diozu',
+        hura: 'adieraziko dio',
+        gu: 'adieraziko diogu',
+        zuek: 'adieraziko diozue',
+        haiek: 'adieraziko diote',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
+    // #334 — eskatu's dative reading ("ask/request something *of* someone").
+    id: 'eskatu-dative',
+    verb: 'eskatu',
+    meaning: { en: 'to ask / request (of someone)', es: 'pedir (a alguien)', eu: 'eskatu (norbaiti)' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    recipient: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'eskatzen diot',
+        zu: 'eskatzen diozu',
+        hura: 'eskatzen dio',
+        gu: 'eskatzen diogu',
+        zuek: 'eskatzen diozue',
+        haiek: 'eskatzen diote',
+      },
+      past: {
+        ni: 'eskatu nion',
+        zu: 'eskatu zenion',
+        hura: 'eskatu zion',
+        gu: 'eskatu genion',
+        zuek: 'eskatu zenioten',
+        haiek: 'eskatu zioten',
+      },
+      future: {
+        ni: 'eskatuko diot',
+        zu: 'eskatuko diozu',
+        hura: 'eskatuko dio',
+        gu: 'eskatuko diogu',
+        zuek: 'eskatuko diozue',
+        haiek: 'eskatuko diote',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
+    // #334 — galdetu's dative reading ("ask (a question) *of* someone").
+    id: 'galdetu-dative',
+    verb: 'galdetu',
+    meaning: { en: 'to ask (someone a question)', es: 'preguntar (a alguien)', eu: 'galdetu (norbaiti)' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    recipient: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'galdetzen diot',
+        zu: 'galdetzen diozu',
+        hura: 'galdetzen dio',
+        gu: 'galdetzen diogu',
+        zuek: 'galdetzen diozue',
+        haiek: 'galdetzen diote',
+      },
+      past: {
+        ni: 'galdetu nion',
+        zu: 'galdetu zenion',
+        hura: 'galdetu zion',
+        gu: 'galdetu genion',
+        zuek: 'galdetu zenioten',
+        haiek: 'galdetu zioten',
+      },
+      future: {
+        ni: 'galdetuko diot',
+        zu: 'galdetuko diozu',
+        hura: 'galdetuko dio',
+        gu: 'galdetuko diogu',
+        zuek: 'galdetuko diozue',
+        haiek: 'galdetuko diote',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
     id: 'sartu',
     verb: 'sartu',
     meaning: { en: 'to enter / to go in', es: 'entrar', eu: 'sartu' },
@@ -5498,6 +5734,14 @@ export const VERBS = [
         zuek: 'hitz egin zenuten',
         haiek: 'hitz egin zuten',
       },
+      future: {
+        ni: 'hitz egingo dut',
+        zu: 'hitz egingo duzu',
+        hura: 'hitz egingo du',
+        gu: 'hitz egingo dugu',
+        zuek: 'hitz egingo duzue',
+        haiek: 'hitz egingo dute',
+      },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
@@ -5543,6 +5787,14 @@ export const VERBS = [
         gu: 'lan egin genuen',
         zuek: 'lan egin zenuten',
         haiek: 'lan egin zuten',
+      },
+      future: {
+        ni: 'lan egingo dut',
+        zu: 'lan egingo duzu',
+        hura: 'lan egingo du',
+        gu: 'lan egingo dugu',
+        zuek: 'lan egingo duzue',
+        haiek: 'lan egingo dute',
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -5590,6 +5842,14 @@ export const VERBS = [
         zuek: 'lo egin zenuten',
         haiek: 'lo egin zuten',
       },
+      future: {
+        ni: 'lo egingo dut',
+        zu: 'lo egingo duzu',
+        hura: 'lo egingo du',
+        gu: 'lo egingo dugu',
+        zuek: 'lo egingo duzue',
+        haiek: 'lo egingo dute',
+      },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
@@ -5635,6 +5895,14 @@ export const VERBS = [
         gu: 'ahaleginak egin genuen',
         zuek: 'ahaleginak egin zenuten',
         haiek: 'ahaleginak egin zuten',
+      },
+      future: {
+        ni: 'ahaleginak egingo dut',
+        zu: 'ahaleginak egingo duzu',
+        hura: 'ahaleginak egingo du',
+        gu: 'ahaleginak egingo dugu',
+        zuek: 'ahaleginak egingo duzue',
+        haiek: 'ahaleginak egingo dute',
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -5682,6 +5950,14 @@ export const VERBS = [
         zuek: 'parte hartu zenuten',
         haiek: 'parte hartu zuten',
       },
+      future: {
+        ni: 'parte hartuko dut',
+        zu: 'parte hartuko duzu',
+        hura: 'parte hartuko du',
+        gu: 'parte hartuko dugu',
+        zuek: 'parte hartuko duzue',
+        haiek: 'parte hartuko dute',
+      },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
@@ -5728,6 +6004,14 @@ export const VERBS = [
         zuek: 'kontuan hartu zenuten',
         haiek: 'kontuan hartu zuten',
       },
+      future: {
+        ni: 'kontuan hartuko dut',
+        zu: 'kontuan hartuko duzu',
+        hura: 'kontuan hartuko du',
+        gu: 'kontuan hartuko dugu',
+        zuek: 'kontuan hartuko duzue',
+        haiek: 'kontuan hartuko dute',
+      },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
@@ -5773,6 +6057,14 @@ export const VERBS = [
         gu: 'arreta eman genuen',
         zuek: 'arreta eman zenuten',
         haiek: 'arreta eman zuten',
+      },
+      future: {
+        ni: 'arreta emango dut',
+        zu: 'arreta emango duzu',
+        hura: 'arreta emango du',
+        gu: 'arreta emango dugu',
+        zuek: 'arreta emango duzue',
+        haiek: 'arreta emango dute',
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -5932,6 +6224,14 @@ export const VERBS = [
         zuek: 'lagundu zenioten',
         haiek: 'lagundu zioten',
       },
+      future: {
+        ni: 'lagunduko diot',
+        zu: 'lagunduko diozu',
+        hura: 'lagunduko dio',
+        gu: 'lagunduko diogu',
+        zuek: 'lagunduko diozue',
+        haiek: 'lagunduko diote',
+      },
     },
     sentences: {
       present: {
@@ -5977,6 +6277,14 @@ export const VERBS = [
         gu: 'ekin genion',
         zuek: 'ekin zenioten',
         haiek: 'ekin zioten',
+      },
+      future: {
+        ni: 'ekingo diot',
+        zu: 'ekingo diozu',
+        hura: 'ekingo dio',
+        gu: 'ekingo diogu',
+        zuek: 'ekingo diozue',
+        haiek: 'ekingo diote',
       },
     },
     sentences: {
@@ -6024,6 +6332,14 @@ export const VERBS = [
         zuek: 'erantzun zenioten',
         haiek: 'erantzun zioten',
       },
+      future: {
+        ni: 'erantzungo diot',
+        zu: 'erantzungo diozu',
+        hura: 'erantzungo dio',
+        gu: 'erantzungo diogu',
+        zuek: 'erantzungo diozue',
+        haiek: 'erantzungo diote',
+      },
     },
     sentences: {
       present: {
@@ -6069,6 +6385,14 @@ export const VERBS = [
         gu: 'deitu genion',
         zuek: 'deitu zenioten',
         haiek: 'deitu zioten',
+      },
+      future: {
+        ni: 'deituko diot',
+        zu: 'deituko diozu',
+        hura: 'deituko dio',
+        gu: 'deituko diogu',
+        zuek: 'deituko diozue',
+        haiek: 'deituko diote',
       },
     },
     sentences: {
@@ -6116,6 +6440,14 @@ export const VERBS = [
         zuek: 'eragin zenioten',
         haiek: 'eragin zioten',
       },
+      future: {
+        ni: 'eragingo diot',
+        zu: 'eragingo diozu',
+        hura: 'eragingo dio',
+        gu: 'eragingo diogu',
+        zuek: 'eragingo diozue',
+        haiek: 'eragingo diote',
+      },
     },
     sentences: {
       present: {
@@ -6161,6 +6493,14 @@ export const VERBS = [
         gu: 'antzeman genion',
         zuek: 'antzeman zenioten',
         haiek: 'antzeman zioten',
+      },
+      future: {
+        ni: 'antzemango diot',
+        zu: 'antzemango diozu',
+        hura: 'antzemango dio',
+        gu: 'antzemango diogu',
+        zuek: 'antzemango diozue',
+        haiek: 'antzemango diote',
       },
     },
     sentences: {
@@ -6211,6 +6551,14 @@ export const VERBS = [
         zuek: 'mesede egin zenioten',
         haiek: 'mesede egin zioten',
       },
+      future: {
+        ni: 'mesede egingo diot',
+        zu: 'mesede egingo diozu',
+        hura: 'mesede egingo dio',
+        gu: 'mesede egingo diogu',
+        zuek: 'mesede egingo diozue',
+        haiek: 'mesede egingo diote',
+      },
     },
     sentences: {
       present: {
@@ -6257,6 +6605,14 @@ export const VERBS = [
         zuek: 'kalte egin zenioten',
         haiek: 'kalte egin zioten',
       },
+      future: {
+        ni: 'kalte egingo diot',
+        zu: 'kalte egingo diozu',
+        hura: 'kalte egingo dio',
+        gu: 'kalte egingo diogu',
+        zuek: 'kalte egingo diozue',
+        haiek: 'kalte egingo diote',
+      },
     },
     sentences: {
       present: {
@@ -6302,6 +6658,14 @@ export const VERBS = [
         gu: 'aurre egin genion',
         zuek: 'aurre egin zenioten',
         haiek: 'aurre egin zioten',
+      },
+      future: {
+        ni: 'aurre egingo diot',
+        zu: 'aurre egingo diozu',
+        hura: 'aurre egingo dio',
+        gu: 'aurre egingo diogu',
+        zuek: 'aurre egingo diozue',
+        haiek: 'aurre egingo diote',
       },
     },
     sentences: {
