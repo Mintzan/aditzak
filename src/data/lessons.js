@@ -1416,6 +1416,116 @@ export const LESSONS = [
   { id: 'esan-future', verbId: 'esan', tense: 'future' },
   { id: 'eman-past', verbId: 'eman', tense: 'past' },
   { id: 'eman-future', verbId: 'eman', tense: 'future' },
+  // New Unit (#307) — agentive verbs with a covert dative (lagundu/ekin/
+  // erantzun/deitu/eragin/antzeman + the dative `egin` compounds mesede/
+  // kalte/aurre egin): inserted here, after esan/eman teach the `diot`-family
+  // paradigm explicitly, rather than right after Unit 26 as the issue's own
+  // older unit numbers suggested — see docs/DECISIONS.md's #307 entry. Named
+  // descriptively (not `unit-NN-*`) since "unit-29-review" etc. are already
+  // taken by stale ids further down whose journey.js `number` has since moved
+  // (#137's "ids stay stable" convention, applied here in reverse).
+  { id: 'dative-verb-present', persons: PHASE_1_PERSONS, sources: [
+    { verbId: 'lagundu', tense: 'present' },
+    { verbId: 'ekin', tense: 'present' },
+    { verbId: 'erantzun', tense: 'present' },
+    { verbId: 'deitu', tense: 'present' },
+    { verbId: 'eragin', tense: 'present' },
+    { verbId: 'antzeman', tense: 'present' },
+  ] },
+  { id: 'dative-verb-present-plural', persons: PHASE_1_PLURAL_PERSONS, sources: [
+    { verbId: 'lagundu', tense: 'present' },
+    { verbId: 'ekin', tense: 'present' },
+    { verbId: 'erantzun', tense: 'present' },
+    { verbId: 'deitu', tense: 'present' },
+    { verbId: 'eragin', tense: 'present' },
+    { verbId: 'antzeman', tense: 'present' },
+  ] },
+  { id: 'dative-verb-present-2', persons: PHASE_1_PERSONS, sources: [
+    { verbId: 'mesede-egin', tense: 'present' },
+    { verbId: 'kalte-egin', tense: 'present' },
+    { verbId: 'aurre-egin', tense: 'present' },
+  ] },
+  { id: 'dative-verb-present-2-plural', persons: PHASE_1_PLURAL_PERSONS, sources: [
+    { verbId: 'mesede-egin', tense: 'present' },
+    { verbId: 'kalte-egin', tense: 'present' },
+    { verbId: 'aurre-egin', tense: 'present' },
+  ] },
+  { id: 'dative-verb-past', persons: PHASE_1_PERSONS, sources: [
+    { verbId: 'lagundu', tense: 'past' },
+    { verbId: 'ekin', tense: 'past' },
+    { verbId: 'erantzun', tense: 'past' },
+    { verbId: 'deitu', tense: 'past' },
+    { verbId: 'eragin', tense: 'past' },
+    { verbId: 'antzeman', tense: 'past' },
+  ] },
+  { id: 'dative-verb-past-plural', persons: PHASE_1_PLURAL_PERSONS, sources: [
+    { verbId: 'lagundu', tense: 'past' },
+    { verbId: 'ekin', tense: 'past' },
+    { verbId: 'erantzun', tense: 'past' },
+    { verbId: 'deitu', tense: 'past' },
+    { verbId: 'eragin', tense: 'past' },
+    { verbId: 'antzeman', tense: 'past' },
+  ] },
+  { id: 'dative-verb-past-2', persons: PHASE_1_PERSONS, sources: [
+    { verbId: 'mesede-egin', tense: 'past' },
+    { verbId: 'kalte-egin', tense: 'past' },
+    { verbId: 'aurre-egin', tense: 'past' },
+  ] },
+  { id: 'dative-verb-past-2-plural', persons: PHASE_1_PLURAL_PERSONS, sources: [
+    { verbId: 'mesede-egin', tense: 'past' },
+    { verbId: 'kalte-egin', tense: 'past' },
+    { verbId: 'aurre-egin', tense: 'past' },
+  ] },
+  {
+    id: 'dative-verb-review',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'lagundu', tense: 'present' },
+      { verbId: 'ekin', tense: 'present' },
+      { verbId: 'erantzun', tense: 'present' },
+      { verbId: 'deitu', tense: 'present' },
+      { verbId: 'eragin', tense: 'present' },
+      { verbId: 'antzeman', tense: 'present' },
+      { verbId: 'mesede-egin', tense: 'present' },
+      { verbId: 'kalte-egin', tense: 'present' },
+      { verbId: 'aurre-egin', tense: 'present' },
+      { verbId: 'lagundu', tense: 'past' },
+      { verbId: 'ekin', tense: 'past' },
+      { verbId: 'erantzun', tense: 'past' },
+      { verbId: 'deitu', tense: 'past' },
+      { verbId: 'eragin', tense: 'past' },
+      { verbId: 'antzeman', tense: 'past' },
+      { verbId: 'mesede-egin', tense: 'past' },
+      { verbId: 'kalte-egin', tense: 'past' },
+      { verbId: 'aurre-egin', tense: 'past' },
+    ],
+  },
+  {
+    id: 'dative-verb-review-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'lagundu', tense: 'present' },
+      { verbId: 'ekin', tense: 'present' },
+      { verbId: 'erantzun', tense: 'present' },
+      { verbId: 'deitu', tense: 'present' },
+      { verbId: 'eragin', tense: 'present' },
+      { verbId: 'antzeman', tense: 'present' },
+      { verbId: 'mesede-egin', tense: 'present' },
+      { verbId: 'kalte-egin', tense: 'present' },
+      { verbId: 'aurre-egin', tense: 'present' },
+      { verbId: 'lagundu', tense: 'past' },
+      { verbId: 'ekin', tense: 'past' },
+      { verbId: 'erantzun', tense: 'past' },
+      { verbId: 'deitu', tense: 'past' },
+      { verbId: 'eragin', tense: 'past' },
+      { verbId: 'antzeman', tense: 'past' },
+      { verbId: 'mesede-egin', tense: 'past' },
+      { verbId: 'kalte-egin', tense: 'past' },
+      { verbId: 'aurre-egin', tense: 'past' },
+    ],
+  },
   // Unit 28 (#148) — Ahalera (potential): `izan`/`ukan` production for
   // NOR/NOR-NORK. Dative-paradigm (gustatu/iruditu/ahaztu/esan/eman)
   // recognition-only potential is deferred — see the issue filed for #148's

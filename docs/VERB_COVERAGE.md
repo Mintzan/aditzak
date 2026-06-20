@@ -40,7 +40,7 @@ combinations occur in the language:
 | `nor` | absolutive only — intransitive subject | izan, egon, joan, etorri, ibili | ✅ `izan` |
 | `nor + nork` | absolutive object + ergative subject — transitive | ukan, eduki, eraman, ekarri, erabili, egin, ikusi | ✅ `ukan` |
 | `nor + nori` | absolutive stimulus + dative experiencer — "psych" verbs | gustatu ("gustatzen zait" = I like it, lit. "it pleases to-me"), iruditu, interesatu, ahaztu, gertatu | 🔲 no example yet — produces some of Basque's most distinctive sentence patterns and is worth prioritizing |
-| `nor + nori + nork` | all three arguments marked — ditransitive | eman, esan, erakutsi, saldu, bidali, eskaini | 🔲 the fullest expression of the system; good payoff once `nori` exists at all |
+| `nor + nori + nork` | all three arguments marked — ditransitive | eman, esan, erakutsi, saldu, bidali, eskaini; also the covert-dative batch `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman` + dative `egin` compounds (#307) | ✅ `esan`/`eman` (§4a/§4b), extended by #307 (§4b-ter) |
 
 `AGREEMENT_META` already has copy and a badge style for `nori` — only the verb
 data is missing to exercise it.
@@ -261,6 +261,33 @@ extending Unit 10's pooled drill or seeding later units:
 auxiliary shape as §5's `nahi`/`behar` rather than a participle+auxiliary
 periphrastic verb — a §5-style candidate, not a §4b one.
 
+### 4b-ter. Agentive verbs with a covert dative (#307)
+A distinct pattern from §4a/§4b's `esan`/`eman`: plain-looking verbs with no
+overt direct object the way `esan`'s "egia" or `eman`'s gift is, that still
+select the `diot`-family auxiliary because their NORI argument is the
+person/thing helped, called, answered, etc. ("Mireni lagundu diot" — no
+visible object signals the dative the way "egia esan" does) — the exact
+"covert dative" trigger #293's lure mechanism targets. All ride `esan`'s
+`recipient: 'hura'` shape (NORI fixed, `person` varies over NORK):
+
+| Verb | Meaning | Present (nor-nori-nork) | Past (nor-nori-nork) | Notes |
+|---|---|---|---|---|
+| lagundu | to help (someone) | Laguntzen diot | Lagundu nion | ✅ in `VERBS` (#307) |
+| ekin | to set about / get down to (something) | Ekiten diot | Ekin nion | ✅ in `VERBS` (#307) |
+| erantzun | to answer (someone/something) | Erantzuten diot | Erantzun nion | ✅ in `VERBS` (#307) |
+| deitu | to call (someone) | Deitzen diot | Deitu nion | ✅ in `VERBS` (#307) |
+| eragin | to cause/induce (something) in (someone) | Eragiten diot | Eragin nion | ✅ in `VERBS` (#307) |
+| antzeman | to notice/perceive (something) | Antzematen diot | Antzeman nion | ✅ in `VERBS` (#307) |
+| mesede egin | to do a favor (for someone) | Mesede egiten diot | Mesede egin nion | ✅ in `VERBS` (#307) — dative `egin` compound, deferred from #306 |
+| kalte egin | to harm (someone) | Kalte egiten diot | Kalte egin nion | ✅ in `VERBS` (#307) — dative `egin` compound, deferred from #306 |
+| aurre egin | to face/confront (something) | Aurre egiten diot | Aurre egin nion | ✅ in `VERBS` (#307) — dative `egin` compound, deferred from #306 |
+
+The issue's "optionally-dative" set (`itxaron`, plus the #304 optionally-
+ditransitive `saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`) is deferred to a
+follow-up issue — each needs its own sourcing pass to resolve which of its
+two readings (plain vs. dative) is natural enough to drill, which is a
+different kind of work from this batch's already-unambiguous dative verbs.
+
 ### 4c. A natural cluster for `dialectVariants`
 Three East/West dialectal pairs turned up while surveying §4a/§4b — exactly
 the shape `dialectVariants: { bizkaiera: { conjugations: {...} } }` in
@@ -417,10 +444,10 @@ Not a commitment — just a way to see how much runway sits past the current
 - [ ] future tense, any verb/agreement — reuses existing auxiliary forms
 - [ ] a first periphrastic verb (participle + auxiliary) — `gustatu`/`iruditu`
       double as *another*, auxiliary-driven route into `nor-nori` (per §4b)
-- [ ] `nor-nori-nork` agreement — `esan` is the standout pick: native
-      synthetic, everyday, and its `dio`-paradigm *is* the same root `ukan`
-      borrows for ditransitive auxiliary use (per §4a; `eman` remains the
-      periphrastic/auxiliary-driven alternative, per §4b)
+- [x] `nor-nori-nork` agreement — `esan`/`eman` (per §4a/§4b), extended by
+      #307's "agentive verbs with a covert dative" batch (`lagundu`/`ekin`/
+      `erantzun`/`deitu`/`eragin`/`antzeman` + the dative `egin` compounds,
+      per §4b-ter)
 - [ ] `zu` modeled as a person, alongside or instead of `hi`
 - [ ] conditional / potential / subjunctive / imperative — stretch goals;
       imperative in particular needs its own lesson shape (no `ni`/`hura`/etc.)
