@@ -12,6 +12,33 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #318: fodder pool capacity plan — cap at 6 sources, chain into `-2`/`-3`/… siblings, new pools for regular `nor` fodder
+
+**The cap.** `TARGET_EXERCISE_COUNT`'s rounding floor (see the #309 entry below) means a 3-person pool's question count is `3 × sources × max(1, round(4/sources))` — flat at 12-15 up to 5 sources, then growing by +3 per source past that. Capping every fodder pool at **6 sources** (18 questions) keeps new pools close to today's existing ceiling (the live `nor-nork-present-plural-pool`/`nor-nork-past-plural-pool` already sit at 7 sources/21 questions — accepted, but not exceeded further). When a tier's verb list would overflow a pool's remaining capacity, the overflow starts a new sibling pool suffixed `-2`, `-3`, etc., rather than growing one array without bound — same shape `unit-10-present`/`unit-10-present-plural` already use.
+
+**`nor-nork` side — chain off the existing ukan-present/ukan-past pools.** `unit-10-present`/`-plural` (5 sources today) has one slot free before the cap; `ukan-past-pool`/`-plural` (6 sources) is already at cap, so its chain starts fresh at `-2`. Reserved plan, by #304's tiers (verbs assigned to the *same-numbered* pool in both chains, so a verb's present and past always travel together):
+
+| Pool pair | Verbs | Tier |
+|---|---|---|
+| `unit-10-present(+plural)` (extend, +1 slot) | `egin` | high-freq |
+| `unit-10-present-2(+plural)` / `ukan-past-pool-2(+plural)` | `irakurri, idatzi, ikasi, entzun, utzi, aurkitu` | high-freq |
+| `unit-10-present-3(+plural)` / `ukan-past-pool-3(+plural)` | `bilatu, galdu, jaso, saldu, itxaron` | high-freq (5 — completes the 12-verb tier with `egin`+pool-2) |
+| `unit-10-present-4(+plural)` / `ukan-past-pool-4(+plural)` | `eskatu, galdetu, adierazi, bukatu, amaitu, gainditu` | mid/low |
+| `unit-10-present-5(+plural)` / `ukan-past-pool-5(+plural)` | `bereiztu, ezagutu, sentitu, pentsatu, sumatu, ulertu` | mid/low |
+| `unit-10-present-6(+plural)` / `ukan-past-pool-6(+plural)` | `aztertu, ukatu, batu, planteatu` | mid/low (4 — completes the 16-verb tier with pools 4+5) |
+| `unit-10-present-recognition-1(+plural)` / `ukan-past-pool-recognition-1(+plural)` | `hausnartu, argudiatu, ondorioztatu, gaitzetsi, aldarrikatu, plazaratu` | academic/rare, `mode: 'recognition'` |
+| `unit-10-present-recognition-2(+plural)` / `ukan-past-pool-recognition-2(+plural)` | `sustatu, bultzatu, bermatu, babestu, ziurtatu, borobildu` | academic/rare, `mode: 'recognition'` (completes the 12-verb tier) |
+
+Recognition pools still respect the 6-source cap — `mode` doesn't change the rounding math, only the question style.
+
+**`nor` side — no pool exists yet, so these are new lesson ids.** Unit 6 ("Moving Around") and Unit 12 ("izan Past Pool") today hold `joan-present`/`etorri-present`/`ibili-present` (single-verb, not pooled) and `izan-past-pool` (pooled: `izan, joan, etorri, ibili` — 4 sources, 2 slots free) respectively. Per #304's 6 regular-`nor` fodder verbs (`sartu, atera, hasi, bizi izan, erori, jaiki` — no academic/rare tier on this side):
+- **Present:** brand-new pool `nor-fodder-present`/`nor-fodder-present-plural`, all 6 verbs (fits the cap exactly) — attaches to Unit 6's `lessonIds`, after `unit-3-review`. `joan-present`/`etorri-present`/`ibili-present` are left untouched (they're synthetic-paradigm introducer lessons per #309, not fodder).
+- **Past:** extend `izan-past-pool`/`-plural` with its 2 free slots (`sartu, atera` — the highest-frequency two), reaching cap (6); the remaining 4 (`hasi, bizi izan, erori, jaiki`) go to a new `izan-past-pool-2`/`-plural`, attached to Unit 12's `lessonIds`.
+
+**Future tense is out of scope for now.** Per the `behar`/`nahi` precedent ("past isn't drilled until/unless a future unit adds it" — `lessons.js`), a fodder verb's `-ko`/`-go` future can be sourced into `verbs.js` without a dedicated lesson; wiring it into a future-mixer-style review (Unit 18's pattern) is deferred until/unless a future issue picks it up.
+
+**Open question from #318 resolved: don't land empty-`sources` placeholder lessons now.** `journey.test.js` requires every `lessonIds` entry to resolve into `LESSONS` and vice versa, and `generateQuestions` can't run against an empty `sources` array — so the pool ids above are *reserved names*, not yet-created entries. Each tier issue (#319 high-freq, #320 mid/low, #321 academic/rare) wires its own pools into `lessons.js`/`journey.js` atomically with its verb data landing in `verbs.js`, using exactly the pool ids/groupings reserved here so the three issues don't collide or re-decide pool shape.
+
 ## 2026-06-20 — #309: codified "pattern-first" as the journey's organizing rule; audit found the journey already conforms
 
 **Decision:** wrote the pattern-first principle (a verb earns a dedicated lesson only for irregular synthetic morphology, a distinct agreement frame, a special construction, or a specific known error to drill — everything else is interchangeable pool fodder) into `docs/LEARNING_JOURNEY.md`'s "Core pedagogical realignment" as item 7, including the **introducer carve-out**: a pattern's first appearance may use one clean carrier verb even if that verb is otherwise regular (`ikusi-present`, Unit 5, introducing the `-tzen dut` pattern, keeps its slot on this basis — it's not redundant verb-drilling).
