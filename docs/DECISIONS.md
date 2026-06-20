@@ -12,6 +12,10 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #320: mid/low fodder tier landed exactly per #318's reserved plan; completes the regular-`nor` pools #319 left partial
+
+Implemented #318's reserved pool plan for the 18 mid/low-tier (+ #304's seven previously-unassigned) verbs: added `unit-10-present-4`/`-5`/`-6` (+`ukan-past-pool-4`/`-5`/`-6`, +`-plural` siblings) for the 16 `nor-nork` verbs, split 6/6/4 exactly as #318's table specified, and wired them into Unit 13/14's `lessonIds`. For the 2 regular-`nor` verbs (`erori`, `jaiki`), filled `nor-fodder-present`/`-plural`'s and `izan-past-pool-2`/`-plural`'s remaining slots — both pools now sit at #318's 6-source cap, completing the pools #319 had explicitly left at partial capacity (4 and 2 sources respectively) pending this issue. No cap deviations needed this time — every pool lands at or under 6 sources.
+
 ## 2026-06-20 — #319: high-frequency fodder tier landed; one deviation from #318's reserved plan
 
 Implemented #318's reserved pool plan for the 16 high-frequency verbs: extended `unit-10-present`/`-plural` with `egin` (filling its last slot to the 6-source cap); added `unit-10-present-2`/`-3` (+`-plural` siblings) and the regular-`nor` `nor-fodder-present`/`-plural` pool (Unit 6); added `izan-past-pool-2`/`-plural` (Unit 12, partial — `hasi`/`bizi izan` only, 2 of #318's eventual 4, since the other 2 (`erori`/`jaiki`) belong to #320's tier) and filled `izan-past-pool`'s 2 free slots with `sartu`/`atera`.

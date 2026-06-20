@@ -215,7 +215,7 @@ auxiliary-driven route alongside the native-synthetic one in §4a:
 - **other `-tu` verbs**: erosi (to buy), **ezagutu** (to know/recognise
   *people, places* — pairs with synthetic `jakin`, "to know *facts*", for the
   classic savoir/connaître-style contrast that's a great teaching moment in
-  its own right)
+  its own right; ✅ in `VERBS` as of #320, plain `nor-nork` reading)
 - **`-i` verbs**: jan (to eat), edan (to drink), **ikusi** (to see)
 - **`-n` verbs**: **entzun** (to hear/listen)
 - **`etorri`** is a natural bridge case: synthetic in present/past, but
@@ -240,6 +240,21 @@ extending Unit 10's pooled drill or seeding later units:
 | zabaldu | to open / spread | Zabaltzen dut | Zabaldu nuen | 🔲 not yet added |
 | itxi | to close | Ixten dut | Itxi nuen | 🔲 not yet added |
 | egin | to do / make | Egiten dut | Egin nuen | ✅ in `VERBS` (#319) — the everyday Batua form; also Basque's common transitive "light verb" (`lo egin`, `dantza egin`, `barre egin`...) |
+| eskatu | to ask for / request | Eskatzen dut | Eskatu nuen | ✅ in `VERBS` (#320) |
+| galdetu | to ask (a question) | Galdetzen dut | Galdetu nuen | ✅ in `VERBS` (#320) |
+| adierazi | to express / indicate | Adierazten dut | Adierazi nuen | ✅ in `VERBS` (#320) |
+| bukatu | to finish | Bukatzen dut | Bukatu nuen | ✅ in `VERBS` (#320) |
+| amaitu | to finish / end | Amaitzen dut | Amaitu nuen | ✅ in `VERBS` (#320) |
+| gainditu | to pass / overcome | Gainditzen dut | Gainditu nuen | ✅ in `VERBS` (#320) |
+| bereiztu | to distinguish / separate | Bereizten dut | Bereiztu nuen | ✅ in `VERBS` (#320) |
+| sentitu | to feel | Sentitzen dut | Sentitu nuen | ✅ in `VERBS` (#320) |
+| pentsatu | to think | Pentsatzen dut | Pentsatu nuen | ✅ in `VERBS` (#320) |
+| sumatu | to sense / perceive | Sumatzen dut | Sumatu nuen | ✅ in `VERBS` (#320) |
+| ulertu | to understand | Ulertzen dut | Ulertu nuen | ✅ in `VERBS` (#320) |
+| aztertu | to examine / analyze | Aztertzen dut | Aztertu nuen | ✅ in `VERBS` (#320) |
+| ukatu | to deny | Ukatzen dut | Ukatu nuen | ✅ in `VERBS` (#320) |
+| batu | to gather / join / add | Batzen dut | Batu nuen | ✅ in `VERBS` (#320) |
+| planteatu | to pose / raise (an issue) | Planteatzen dut | Planteatu nuen | ✅ in `VERBS` (#320) |
 
 `maite izan` ("to love", lit. "to hold dear") doesn't fit this table:
 "Maite dut"/"Maite nuen" are `maite` + `ukan`, the same fixed-expression-plus-
