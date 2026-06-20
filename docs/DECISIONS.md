@@ -12,6 +12,41 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #306: `egin`-construction expressions get dedicated `VERBS` entries, appended at the end of the journey
+
+Modeled `hitz`/`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`,
+`arreta eman`, `ados egon`, `arriskuan jarri` as nine dedicated `VERBS`
+entries (Unit 44, "The 'egin' Construction") rather than `sentences` layered
+onto the existing `egin`/`hartu`/`eman`/`egon` entries. Each conjugation
+string includes the invariant noun/particle (`hitz egiten dut`, `ados
+nago`) — same shape as `nahi`/`behar` (`nahi dut`, `behar dut`), not `ari`
+(`ari naiz` + a separately-varying participle), because here the invariant
+word is genuinely fixed per expression rather than varying per sentence.
+Dedicated entries win over layering because each expression's meaning ("to
+talk", "to pay attention", "to agree") is opaque from the base verb's gloss
+alone — a learner drilling `egin`'s own table never discovers "hitz egin"
+exists unless it has its own lesson identity. This also resolves §5's open
+design question in `docs/VERB_COVERAGE.md`, left open since `nahi`/`behar`/
+`ari` first landed.
+
+`jarri` itself does **not** get a standalone `VERBS` entry — per #306's own
+suggested fallback, `arriskuan-jarri` is modeled as one self-contained
+phrase entry (`agreement: ['nor']`, riding `izan`'s suffixes + `jarri`'s
+derived `jartzen`/`-ko` non-finite forms) instead of standing up a base
+`jarri` paradigm that nothing else in the curriculum currently needs.
+
+Unit 44 is **appended at the end of `journey.js`** (a new Phase VIII)
+rather than inserted at its "natural" curricular spot, right after `egin`/
+`hartu`/`eman`/`egon` are first taught. Lesson unlocking
+(`getUnlockedLessonIds`) keys off `LESSONS`' array order, not `journey.js`'s
+unit `number` field, so inserting mid-sequence would force re-numbering
+~30 subsequent units (Phases V-VII) just to keep the displayed numbers
+contiguous — pure churn with no functional benefit, since the unlock chain
+itself doesn't care about `number`. A follow-up issue tracks doing that
+renumber deliberately and moving Unit 44 to wherever it best fits once
+the curriculum is reorganized on purpose, rather than as a side effect of
+this change.
+
 ## 2026-06-20 — #321: academic/rare fodder tier landed as `mode: 'recognition'` pools, completing #304's split
 
 The last of #304's split-out tiers. 12 regular nor-nork verbs

@@ -482,6 +482,16 @@ Optional flavor content layered on top of the already-complete core curriculum (
 |---|---|---|---|---|---|
 | 43 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | pending |
 
+### Phase VIII — Saying What You Do
+
+Appended at the end of the journey rather than inserted at its natural spot (right after the core verbs that feed it land) — see `docs/DECISIONS.md` (#306) for why; a follow-up issue tracks repositioning this content once the curriculum is deliberately renumbered.
+
+#### Stage 17: Fixed Noun+Verb Expressions
+
+| Unit | Focus | Payload | Coverage | Ref | Data status |
+|---|---|---|---|---|---|
+| 44 | **The "egin" Construction** — `hitz`/`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`, `arreta eman`, `ados egon`, `arriskuan jarri`; invariant noun/particle + conjugated auxiliary, same shape as `nahi`/`behar izan` | "I speak Basque." (`Euskaraz hitz egiten dut`) / "I work." (`Lan egiten dut`) / "I take part." (`Parte hartzen dut`) / "I agree." (`Ados nago`) | VERB_COVERAGE §7 | available |
+
 ---
 
 ## App engine logic — design notes (not part of the content sequence)

@@ -734,6 +734,44 @@ export const JOURNEY = [
       },
     ],
   },
+  // #306 — appended at the end rather than inserted at its natural spot
+  // (right after the core verbs that feed it land). Lesson unlocking keys
+  // off `LESSONS`' array order, not this unit's `number`, so inserting
+  // mid-sequence here would force a ~30-unit renumber across all of Phases
+  // V-VII. A follow-up issue tracks doing that renumber deliberately and
+  // moving this unit to its proper place.
+  {
+    id: 'phase-8',
+    title: 'Phase VIII',
+    subtitle: 'Saying What You Do',
+    stages: [
+      {
+        id: 'phase-8-stage-17',
+        title: 'Stage 17 — Fixed Noun+Verb Expressions',
+        units: [
+          {
+            number: 44,
+            title: 'The "egin" Construction',
+            focus: 'hitz/lan/lo/ahaleginak egin, parte/kontuan hartu, arreta eman, ados egon, arriskuan jarri — invariant noun/particle + conjugated auxiliary, same shape as nahi/behar izan',
+            payload: 'Euskaraz hitz egiten dut. · Lan egiten dut. · Parte hartzen dut. · Ados nago.',
+            status: 'available',
+            lessonIds: [
+              'egin-construction-present',
+              'egin-construction-present-plural',
+              'egin-construction-present-2',
+              'egin-construction-present-2-plural',
+              'egin-construction-past',
+              'egin-construction-past-plural',
+              'egin-construction-past-2',
+              'egin-construction-past-2-plural',
+              'unit-44-review',
+              'unit-44-review-plural',
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ]
 
 // The last `lessonIds` entry of every `available`, `gate: true` unit (Units

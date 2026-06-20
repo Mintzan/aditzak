@@ -49,6 +49,13 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Bonusa: Bitxikeriak eta kolorea',
       },
     },
+    'phase-8': {
+      title: { es: 'Fase VIII', eu: 'VIII. fasea' },
+      subtitle: {
+        es: 'Decir lo que haces',
+        eu: 'Zer egiten duzun esatea',
+      },
+    },
   },
   stages: {
     'phase-1-stage-1': {
@@ -148,6 +155,12 @@ export const JOURNEY_TRANSLATIONS = {
       title: {
         es: 'Etapa 16 — Hablando del tiempo',
         eu: '16. atala — Eguraldiari buruz hizketan',
+      },
+    },
+    'phase-8-stage-17': {
+      title: {
+        es: 'Etapa 17 — Expresiones fijas de nombre+verbo',
+        eu: '17. atala — Izen+aditz esamolde finkoak',
       },
     },
   },
@@ -606,6 +619,17 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Está lloviendo." · "Hace frío." · "Hace sol."',
         eu: '"Euria ari du." · "Hotz da." · "Eguzkia dago."',
+      },
+    },
+    44: {
+      title: { es: 'La construcción con "egin"', eu: '"egin" eraikuntza' },
+      focus: {
+        es: 'hitz/lan/lo/ahaleginak egin, parte/kontuan hartu, arreta eman, ados egon, arriskuan jarri — nombre/partícula invariable + auxiliar conjugado, misma forma que nahi/behar izan',
+        eu: 'hitz/lan/lo/ahaleginak egin, parte/kontuan hartu, arreta eman, ados egon, arriskuan jarri — izen/partikula aldaezina + laguntzaile jokatua, nahi/behar izanen forma berdina',
+      },
+      payload: {
+        es: '"Hablo euskera." · "Trabajo." · "Participo." · "Estoy de acuerdo."',
+        eu: '"Euskaraz hitz egiten dut." · "Lan egiten dut." · "Parte hartzen dut." · "Ados nago."',
       },
     },
   },
