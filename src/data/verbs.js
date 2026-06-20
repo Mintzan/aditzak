@@ -2995,6 +2995,7 @@ export const VERBS = [
         haiek: 'egingo dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik lana ___.', validFor: [] },
@@ -3048,6 +3049,7 @@ export const VERBS = [
         haiek: 'irakurriko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik liburua ___.', validFor: [] },
@@ -3101,6 +3103,7 @@ export const VERBS = [
         haiek: 'idatziko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik gutuna ___.', validFor: [] },
@@ -3154,6 +3157,7 @@ export const VERBS = [
         haiek: 'ikasiko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik euskara ___.', validFor: [] },
@@ -3207,6 +3211,7 @@ export const VERBS = [
         haiek: 'entzungo dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik musika ___.', validFor: [] },
@@ -3260,6 +3265,7 @@ export const VERBS = [
         haiek: 'utziko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik kotxea etxe aurrean ___.', validFor: [] },
@@ -3313,6 +3319,7 @@ export const VERBS = [
         haiek: 'aurkituko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik giltza ___.', validFor: [] },
@@ -3366,6 +3373,7 @@ export const VERBS = [
         haiek: 'bilatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik lana ___.', validFor: [] },
@@ -3419,6 +3427,7 @@ export const VERBS = [
         haiek: 'galduko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik giltza ___.', validFor: [] },
@@ -3472,6 +3481,7 @@ export const VERBS = [
         haiek: 'jasoko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik gutuna ___.', validFor: [] },
@@ -3525,6 +3535,7 @@ export const VERBS = [
         haiek: 'salduko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik etxea ___.', validFor: [] },
@@ -3578,6 +3589,7 @@ export const VERBS = [
         haiek: 'itxarongo dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik autobusa ___.', validFor: [] },
@@ -3846,6 +3858,7 @@ export const VERBS = [
         haiek: 'eskatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik laguntza ___.', validFor: [] },
@@ -3899,6 +3912,7 @@ export const VERBS = [
         haiek: 'galdetuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik galdera bat ___.', validFor: [] },
@@ -3952,6 +3966,7 @@ export const VERBS = [
         haiek: 'adieraziko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik nire iritzia ___.', validFor: [] },
@@ -4005,6 +4020,7 @@ export const VERBS = [
         haiek: 'bukatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik lana ___.', validFor: [] },
@@ -4058,6 +4074,7 @@ export const VERBS = [
         haiek: 'amaituko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik ikasketak ___.', validFor: [] },
@@ -4111,6 +4128,7 @@ export const VERBS = [
         haiek: 'gaindituko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik azterketa ___.', validFor: [] },
@@ -4164,6 +4182,7 @@ export const VERBS = [
         haiek: 'bereiztuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik hondakinak ___.', validFor: [] },
@@ -4217,6 +4236,7 @@ export const VERBS = [
         haiek: 'ezagutuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik herri hau ___.', validFor: [] },
@@ -4270,6 +4290,7 @@ export const VERBS = [
         haiek: 'sentituko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik beldurra ___.', validFor: [] },
@@ -4323,6 +4344,7 @@ export const VERBS = [
         haiek: 'pentsatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik horretan ___.', validFor: [] },
@@ -4376,6 +4398,7 @@ export const VERBS = [
         haiek: 'sumatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik arriskua ___.', validFor: [] },
@@ -4429,6 +4452,7 @@ export const VERBS = [
         haiek: 'ulertuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik azalpena ___.', validFor: [] },
@@ -4482,6 +4506,7 @@ export const VERBS = [
         haiek: 'aztertuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik datuak ___.', validFor: [] },
@@ -4535,6 +4560,7 @@ export const VERBS = [
         haiek: 'ukatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik egia ___.', validFor: [] },
@@ -4588,6 +4614,7 @@ export const VERBS = [
         haiek: 'batuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik zenbakiak ___.', validFor: [] },
@@ -4641,6 +4668,7 @@ export const VERBS = [
         haiek: 'planteatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik arazoa ___.', validFor: [] },
@@ -4803,6 +4831,7 @@ export const VERBS = [
         haiek: 'hausnartuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik gaiari buruz ___.', validFor: [] },
@@ -4856,6 +4885,7 @@ export const VERBS = [
         haiek: 'argudiatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik nire jarrera ___.', validFor: [] },
@@ -4909,6 +4939,7 @@ export const VERBS = [
         haiek: 'ondorioztatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik ikerketatik ondorio bat ___.', validFor: [] },
@@ -4962,6 +4993,7 @@ export const VERBS = [
         haiek: 'gaitzetsiko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik indarkeria ___.', validFor: [] },
@@ -5015,6 +5047,7 @@ export const VERBS = [
         haiek: 'aldarrikatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik nire eskubideak ___.', validFor: [] },
@@ -5068,6 +5101,7 @@ export const VERBS = [
         haiek: 'plazaratuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik txostena ___.', validFor: [] },
@@ -5121,6 +5155,7 @@ export const VERBS = [
         haiek: 'sustatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik tokiko ekonomia ___.', validFor: [] },
@@ -5174,6 +5209,7 @@ export const VERBS = [
         haiek: 'bultzatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik proiektua ___.', validFor: [] },
@@ -5227,6 +5263,7 @@ export const VERBS = [
         haiek: 'bermatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik segurtasuna ___.', validFor: [] },
@@ -5280,6 +5317,7 @@ export const VERBS = [
         haiek: 'babestuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik natura ___.', validFor: [] },
@@ -5333,6 +5371,7 @@ export const VERBS = [
         haiek: 'ziurtatuko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik informazioa ___.', validFor: [] },
@@ -5386,6 +5425,7 @@ export const VERBS = [
         haiek: 'borobilduko dute',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik akordioa ___.', validFor: [] },
@@ -5438,6 +5478,7 @@ export const VERBS = [
         haiek: 'hitz egin zuten',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik euskaraz ___.', validFor: [] },
@@ -5483,6 +5524,7 @@ export const VERBS = [
         haiek: 'lan egin zuten',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik etxetik ___.', validFor: [] },
@@ -5528,6 +5570,7 @@ export const VERBS = [
         haiek: 'lo egin zuten',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik zortzi ordu ___.', validFor: [] },
@@ -5573,6 +5616,7 @@ export const VERBS = [
         haiek: 'ahaleginak egin zuten',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik azterketan ___.', validFor: [] },
@@ -5618,6 +5662,7 @@ export const VERBS = [
         haiek: 'parte hartu zuten',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik lehiaketan ___.', validFor: [] },
@@ -5663,6 +5708,7 @@ export const VERBS = [
         haiek: 'kontuan hartu zuten',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik zure iritzia ___.', validFor: [] },
@@ -5708,6 +5754,7 @@ export const VERBS = [
         haiek: 'arreta eman zuten',
       },
     },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
         ni: { text: 'Nik klasean ___.', validFor: [] },
