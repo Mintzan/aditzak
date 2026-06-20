@@ -815,6 +815,20 @@ export const VERBS = [
       // native-speaker confirmation per that entry.
       past: { ni: 'nekien', hi: 'hekien', zu: 'zenekien', hura: 'zekien', gu: 'genekien', zuek: 'zenekiten', haiek: 'zekiten' },
       future: { ni: 'jakingo dut', zu: 'jakingo duzu', hura: 'jakingo du' },
+      // #287: plural-object forms, deferred by #284 since `jakin` is its own
+      // synthetic stem (not `ukan`'s `dit-` swap, nor `eduki`'s `-z-` infix).
+      // Derived by analogy from CONJUGATIONS.md's own NOR-NORI subjunctive
+      // grid, which independently attests this exact `daki-`/`zeki-` stem
+      // taking a `-zki-` infix right before its person suffix
+      // (`dakidan`→`dakizkidan`, `zekidan`→`zekizkidan`, etc.) — applying the
+      // same insertion point to the indicative present/past tables above.
+      // `presentPlural` only covers the persons already present in `present`
+      // (no `gu`/`zuek`/`haiek` there yet, a pre-existing gap, not new here).
+      // No `futurePlural`: `future` itself only has 3 persons, same omission
+      // precedent as `nahi`'s missing `pastPlural`. Same native-speaker-check
+      // caveat as #284 — see docs/LANGUAGE_DECISIONS.md.
+      presentPlural: { ni: 'dakizkit', zu: 'dakizkizu', hura: 'dakizki', 'hi-m': 'dakizkik', 'hi-f': 'dakizkin' },
+      pastPlural: { ni: 'nekizkien', hi: 'hekizkien', zu: 'zenekizkien', hura: 'zekizkien', gu: 'genekizkien', zuek: 'zenekizkiten', haiek: 'zekizkiten' },
     },
     // #124: `validFor` per docs/SENTENCE_FRAMES.md. `jakin`'s candidates are
     // `ikusi`/`nahi`/`ukan` (`eduki` is #114's confirmed-wrong pair for

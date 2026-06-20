@@ -492,8 +492,13 @@ export const LESSONS = [
     ],
   },
   // #286 — `pastPlural` counterpart to `nor-nork-present-plural-pool` above
-  // (`zenituen` vs `zenuten`), same pool of verbs minus `jakin` (no
-  // `pastPlural` table) plus `eduki`, mirroring `ukan-past-pool`'s shape.
+  // (`zenituen` vs `zenuten`), same pool of verbs plus `eduki`, mirroring
+  // `ukan-past-pool`'s shape. `jakin` gained a `pastPlural` table in #287,
+  // but stays out of this pool for now: its sibling `presentPlural` table
+  // only covers `ni`/`zu`/`hura` (its own `present` is still missing
+  // `guk`/`zuek`/`haiek` cells, a pre-existing gap), so adding `jakin` here
+  // but not to the present-plural pools above would be an inconsistent
+  // half-integration — left for a follow-up once that gap is closed.
   {
     id: 'nor-nork-past-plural-pool',
     persons: PHASE_1_PERSONS,

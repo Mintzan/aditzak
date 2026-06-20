@@ -1206,21 +1206,32 @@ nintzen`, etc. — and needs no separate table.
 
 ### `jakin` — "to know (a fact)" — nor-nork
 
-| Person | Present | Past |
+| Person | Present (sg./pl. obj.) | Past (sg./pl. obj.) |
 |---|---|---|
-| nik | dakit | nekien |
-| hik | — | hekien |
-| hark | daki | zekien |
-| guk | dakigu | genekien |
-| zuk | dakizu | zenekien |
-| zuek | dakizue | zenekiten |
-| haiek | dakite | zekiten |
+| nik | dakit / dakizkit | nekien / nekizkien |
+| hik | — / — | hekien / hekizkien |
+| hark | daki / dakizki | zekien / zekizkien |
+| guk | dakigu / dakizkigu | genekien / genekizkien |
+| zuk | dakizu / dakizkizu | zenekien / zenekizkien |
+| zuek | dakizue / dakizkizue | zenekiten / zenekizkiten |
+| haiek | dakite / dakizkite | zekiten / zekizkiten |
 
 `hik`'s past (`hekien`) and the `zuk`/`zuek` rows (`zenekien`/`zenekiten`) were
 sourced per #245 — see `docs/LANGUAGE_DECISIONS.md` for the derivation.
 `hik`'s present stays `—`: `jakin` rides `ukan`'s suffix family, and `ukan`
 itself has no plain `hik`-as-`NORK` present cell either (only the §10
 hitanoa-register `dakik`/`dakin` split, already tabulated in `VERBS`).
+
+The plural-object (`-zki-`) column was added per #287, derived by analogy
+from this same `daki-`/`zeki-` stem's attested `-zki-` infix in the
+NOR-NORI subjunctive grid below (`dakidan`→`dakizkidan`,
+`zekidan`→`zekizkidan`) — the infix lands in the same position (right
+before the person suffix) in both paradigms. `VERBS`' `jakin.conjugations`
+only tabulates `presentPlural` for the persons `present` itself already
+has (`ni`/`zu`/`hura`/`hi-m`/`hi-f`) — `present` is missing `guk`/`zuek`/
+`haiek` cells in the data despite them being documented here; that gap
+predates #287 and is left untouched. Like #284's plural-object forms,
+these are grid-derived, not independently speaker-confirmed.
 
 ### `ekarri` — "to bring" — nor-nork
 
