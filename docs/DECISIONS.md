@@ -12,6 +12,27 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #331: collapsed fodder pool chains into one canonical lesson per pattern
+
+Folded every `-2/-3/…`/`recognition-{1,2}` fodder sibling lesson back into its
+canonical pattern lesson, now that #330's carrier sampling bounds session
+length regardless of pool size: `unit-10-present`(+`-plural`) absorbed
+`-2`…`-6` and `-recognition-1`/`-2` (now 45 sources), `ukan-past-pool`
+absorbed the same shape (46 sources, one more than the present pool because
+`egin`'s past landed in `-2` rather than `-1`), `izan-past-pool` absorbed
+`-2` (10 sources), `dative-verb-present`/`-past` absorbed `-2` (9 sources
+each), and `egin-construction-present`/`-past` absorbed `-2` (9 sources
+each). The 12 former `recognition-*` pool members (`hausnartu`, `argudiatu`,
+`ondorioztatu`, `gaitzetsi`, `aldarrikatu`, `plazaratu`, `sustatu`,
+`bultzatu`, `bermatu`, `babestu`, `ziurtatu`, `borobildu`) now carry
+`recognitionOnly: true` on their `VERBS` entry instead of living in a
+separate `mode: 'recognition'` lesson, so they stay exposure-only even
+mixed into a production pool. Removed the 24 deleted ids from `journey.js`'s
+`lessonIds` (`nor-fodder-present` was already canonical — never had `-2/-3/…`
+siblings — so it needed no change). No `STORAGE_KEY` bump: dropped lesson ids
+just leave inert orphan progress entries (`loadProgress` tolerates unknown
+keys). Supersedes #318's chaining, per #329's conjugation-first restructure.
+
 ## 2026-06-20 — #330: per-session carrier sampling (`CARRIERS_PER_SESSION = 4`)
 
 `createExerciseState` now shuffles and samples up to `CARRIERS_PER_SESSION`

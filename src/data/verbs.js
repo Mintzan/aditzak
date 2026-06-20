@@ -4814,6 +4814,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'hausnartzen dut',
@@ -4868,6 +4869,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'argudiatzen dut',
@@ -4922,6 +4924,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'ondorioztatzen dut',
@@ -4976,6 +4979,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'gaitzesten dut',
@@ -5030,6 +5034,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'aldarrikatzen dut',
@@ -5084,6 +5089,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'plazaratzen dut',
@@ -5138,6 +5144,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'sustatzen dut',
@@ -5192,6 +5199,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'bultzatzen dut',
@@ -5246,6 +5254,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'bermatzen dut',
@@ -5300,6 +5309,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'babesten dut',
@@ -5354,6 +5364,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'ziurtatzen dut',
@@ -5408,6 +5419,7 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    recognitionOnly: true,
     conjugations: {
       present: {
         ni: 'borobiltzen dut',

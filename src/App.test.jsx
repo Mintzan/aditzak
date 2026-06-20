@@ -460,15 +460,25 @@ describe('App', () => {
     })
   })
 
-  // #330: `unit-10-present` is a real fixture with more sources (6: jan,
-  // edan, erosi, ikusi, hartu, egin) than `CARRIERS_PER_SESSION` (4) — proof
+  // #330/#331: `unit-10-present` is a real fixture with far more sources
+  // (45, after #331 collapsed the former `-2/-3/…`/`recognition` siblings
+  // into this single canonical pool) than `CARRIERS_PER_SESSION` (4) — proof
   // that `createExerciseState` samples rather than drilling every source
   // every play, the mechanism that lets a pool lesson grow past 4 carriers
   // without the session ballooning past `TARGET_EXERCISE_COUNT` (12) or
   // needing a `-2/-3/…` sibling lesson (#318's now-superseded approach).
-  describe('carrier sampling for large pools (#330)', () => {
-    const POOL_VERB_IDS = ['jan', 'edan', 'erosi', 'ikusi', 'hartu', 'egin']
-    // `unit-10-present` and `unit-10-present-plural` share the same six
+  describe('carrier sampling for large pools (#330/#331)', () => {
+    const POOL_VERB_IDS = [
+      'jan', 'edan', 'erosi', 'ikusi', 'hartu', 'egin',
+      'irakurri', 'idatzi', 'ikasi', 'entzun', 'utzi', 'aurkitu',
+      'bilatu', 'galdu', 'jaso', 'saldu', 'itxaron',
+      'eskatu', 'galdetu', 'adierazi', 'bukatu', 'amaitu', 'gainditu',
+      'bereiztu', 'ezagutu', 'sentitu', 'pentsatu', 'sumatu', 'ulertu',
+      'aztertu', 'ukatu', 'batu', 'planteatu',
+      'hausnartu', 'argudiatu', 'ondorioztatu', 'gaitzetsi', 'aldarrikatu', 'plazaratu',
+      'sustatu', 'bultzatu', 'bermatu', 'babestu', 'ziurtatu', 'borobildu',
+    ]
+    // `unit-10-present` and `unit-10-present-plural` share the same
     // sources/subtitle text, differing only in which persons they drill —
     // matching on the singular `ni/zu/hura` persons label too disambiguates
     // the singular lesson's button from its plural sibling.

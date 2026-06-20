@@ -389,6 +389,8 @@ export const LESSONS = [
   // app-wide "max 3 persons per exercise" rule, split into a `PHASE_1_PERSONS`
   // lesson and a `-plural` `PHASE_1_PLURAL_PERSONS` lesson, mirroring
   // `unit-10-present`/`unit-10-present-plural`.
+  // #331 — collapsed the former `izan-past-pool-2`/`-plural` sibling (#318's
+  // remaining regular-`nor` fodder, from #319/#320) into this canonical pool.
   {
     id: 'izan-past-pool',
     persons: PHASE_1_PERSONS,
@@ -397,10 +399,12 @@ export const LESSONS = [
       { verbId: 'joan', tense: 'past' },
       { verbId: 'etorri', tense: 'past' },
       { verbId: 'ibili', tense: 'past' },
-      // #319 — fills this pool's 2 remaining slots to the 6-source cap, per
-      // #318's reserved plan (`docs/DECISIONS.md`).
       { verbId: 'sartu', tense: 'past' },
       { verbId: 'atera', tense: 'past' },
+      { verbId: 'hasi', tense: 'past' },
+      { verbId: 'bizi-izan', tense: 'past' },
+      { verbId: 'erori', tense: 'past' },
+      { verbId: 'jaiki', tense: 'past' },
     ],
   },
   {
@@ -413,25 +417,6 @@ export const LESSONS = [
       { verbId: 'ibili', tense: 'past' },
       { verbId: 'sartu', tense: 'past' },
       { verbId: 'atera', tense: 'past' },
-    ],
-  },
-  // `izan-past-pool-2`/`-plural`: the rest of #318's regular-`nor` fodder
-  // past pool (`hasi`, `bizi izan` from #319; `erori`/`jaiki` from #320
-  // complete it to the 6-source cap).
-  {
-    id: 'izan-past-pool-2',
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'hasi', tense: 'past' },
-      { verbId: 'bizi-izan', tense: 'past' },
-      { verbId: 'erori', tense: 'past' },
-      { verbId: 'jaiki', tense: 'past' },
-    ],
-  },
-  {
-    id: 'izan-past-pool-2-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
       { verbId: 'hasi', tense: 'past' },
       { verbId: 'bizi-izan', tense: 'past' },
       { verbId: 'erori', tense: 'past' },
@@ -456,6 +441,14 @@ export const LESSONS = [
   // `PHASE_1_PLURAL_PERSONS` lesson (gu/zuek/haiek). Adding another
   // present-tense verb to this pattern later is just appending it to both
   // `sources` arrays (plus its own `VERBS` table) — no new lesson ids needed.
+  // #331 — collapsed from the former `unit-10-present-{2,3,4,5,6}` +
+  // `-recognition-{1,2}` chain (#318/#319/#320/#321) into this single
+  // canonical pool, now that #330's per-session carrier sampling
+  // (`CARRIERS_PER_SESSION`) bounds session length regardless of pool size.
+  // The academic-tier verbs (formerly `-recognition-{1,2}`) carry
+  // `recognitionOnly` on their `VERBS` entry instead of living in a
+  // separate `mode: 'recognition'` lesson, so they stay exposure-only even
+  // sampled alongside production carriers.
   {
     id: 'unit-10-present',
     persons: PHASE_1_PERSONS,
@@ -466,6 +459,45 @@ export const LESSONS = [
       { verbId: 'ikusi', tense: 'present' },
       { verbId: 'hartu', tense: 'present' },
       { verbId: 'egin', tense: 'present' },
+      { verbId: 'irakurri', tense: 'present' },
+      { verbId: 'idatzi', tense: 'present' },
+      { verbId: 'ikasi', tense: 'present' },
+      { verbId: 'entzun', tense: 'present' },
+      { verbId: 'utzi', tense: 'present' },
+      { verbId: 'aurkitu', tense: 'present' },
+      { verbId: 'bilatu', tense: 'present' },
+      { verbId: 'galdu', tense: 'present' },
+      { verbId: 'jaso', tense: 'present' },
+      { verbId: 'saldu', tense: 'present' },
+      { verbId: 'itxaron', tense: 'present' },
+      { verbId: 'eskatu', tense: 'present' },
+      { verbId: 'galdetu', tense: 'present' },
+      { verbId: 'adierazi', tense: 'present' },
+      { verbId: 'bukatu', tense: 'present' },
+      { verbId: 'amaitu', tense: 'present' },
+      { verbId: 'gainditu', tense: 'present' },
+      { verbId: 'bereiztu', tense: 'present' },
+      { verbId: 'ezagutu', tense: 'present' },
+      { verbId: 'sentitu', tense: 'present' },
+      { verbId: 'pentsatu', tense: 'present' },
+      { verbId: 'sumatu', tense: 'present' },
+      { verbId: 'ulertu', tense: 'present' },
+      { verbId: 'aztertu', tense: 'present' },
+      { verbId: 'ukatu', tense: 'present' },
+      { verbId: 'batu', tense: 'present' },
+      { verbId: 'planteatu', tense: 'present' },
+      { verbId: 'hausnartu', tense: 'present' },
+      { verbId: 'argudiatu', tense: 'present' },
+      { verbId: 'ondorioztatu', tense: 'present' },
+      { verbId: 'gaitzetsi', tense: 'present' },
+      { verbId: 'aldarrikatu', tense: 'present' },
+      { verbId: 'plazaratu', tense: 'present' },
+      { verbId: 'sustatu', tense: 'present' },
+      { verbId: 'bultzatu', tense: 'present' },
+      { verbId: 'bermatu', tense: 'present' },
+      { verbId: 'babestu', tense: 'present' },
+      { verbId: 'ziurtatu', tense: 'present' },
+      { verbId: 'borobildu', tense: 'present' },
     ],
   },
   {
@@ -478,178 +510,39 @@ export const LESSONS = [
       { verbId: 'ikusi', tense: 'present' },
       { verbId: 'hartu', tense: 'present' },
       { verbId: 'egin', tense: 'present' },
-    ],
-  },
-  // #319 (fodder, high-freq tier, per #318's reserved pool plan):
-  // `unit-10-present-2`/`ukan-past-pool-2` — same shape as `unit-10-present`/
-  // `ukan-past-pool` above, but for verbs that have no free slot in those
-  // (`ukan-past-pool` was already at the 6-source cap, so `egin`'s past also
-  // lands here rather than blocking on a slot that didn't exist — 7 sources,
-  // matching the already-accepted `nor-nork-*-plural-pool` precedent).
-  {
-    id: 'unit-10-present-2',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'irakurri', tense: 'present' },
       { verbId: 'idatzi', tense: 'present' },
       { verbId: 'ikasi', tense: 'present' },
       { verbId: 'entzun', tense: 'present' },
       { verbId: 'utzi', tense: 'present' },
       { verbId: 'aurkitu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-2-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'irakurri', tense: 'present' },
-      { verbId: 'idatzi', tense: 'present' },
-      { verbId: 'ikasi', tense: 'present' },
-      { verbId: 'entzun', tense: 'present' },
-      { verbId: 'utzi', tense: 'present' },
-      { verbId: 'aurkitu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-3',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'bilatu', tense: 'present' },
       { verbId: 'galdu', tense: 'present' },
       { verbId: 'jaso', tense: 'present' },
       { verbId: 'saldu', tense: 'present' },
       { verbId: 'itxaron', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-3-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'bilatu', tense: 'present' },
-      { verbId: 'galdu', tense: 'present' },
-      { verbId: 'jaso', tense: 'present' },
-      { verbId: 'saldu', tense: 'present' },
-      { verbId: 'itxaron', tense: 'present' },
-    ],
-  },
-  // #320 (fodder, mid/low tier, per #318's reserved plan): `unit-10-present-4`
-  // / `-5` / `-6` — same shape as `unit-10-present-2`/`-3` above.
-  {
-    id: 'unit-10-present-4',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'eskatu', tense: 'present' },
       { verbId: 'galdetu', tense: 'present' },
       { verbId: 'adierazi', tense: 'present' },
       { verbId: 'bukatu', tense: 'present' },
       { verbId: 'amaitu', tense: 'present' },
       { verbId: 'gainditu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-4-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'eskatu', tense: 'present' },
-      { verbId: 'galdetu', tense: 'present' },
-      { verbId: 'adierazi', tense: 'present' },
-      { verbId: 'bukatu', tense: 'present' },
-      { verbId: 'amaitu', tense: 'present' },
-      { verbId: 'gainditu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-5',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'bereiztu', tense: 'present' },
       { verbId: 'ezagutu', tense: 'present' },
       { verbId: 'sentitu', tense: 'present' },
       { verbId: 'pentsatu', tense: 'present' },
       { verbId: 'sumatu', tense: 'present' },
       { verbId: 'ulertu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-5-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'bereiztu', tense: 'present' },
-      { verbId: 'ezagutu', tense: 'present' },
-      { verbId: 'sentitu', tense: 'present' },
-      { verbId: 'pentsatu', tense: 'present' },
-      { verbId: 'sumatu', tense: 'present' },
-      { verbId: 'ulertu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-6',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'aztertu', tense: 'present' },
       { verbId: 'ukatu', tense: 'present' },
       { verbId: 'batu', tense: 'present' },
       { verbId: 'planteatu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-6-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'aztertu', tense: 'present' },
-      { verbId: 'ukatu', tense: 'present' },
-      { verbId: 'batu', tense: 'present' },
-      { verbId: 'planteatu', tense: 'present' },
-    ],
-  },
-  // #321 (fodder, academic/rare tier, per #318's reserved plan):
-  // `unit-10-present-recognition-1`/`-2`, `mode: 'recognition'` — these 12
-  // verbs are exposure-only (no typed/production framings), so they're kept
-  // in their own pools rather than mixed into `unit-10-present-4/5/6`.
-  {
-    id: 'unit-10-present-recognition-1',
-    mode: 'recognition',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'hausnartu', tense: 'present' },
       { verbId: 'argudiatu', tense: 'present' },
       { verbId: 'ondorioztatu', tense: 'present' },
       { verbId: 'gaitzetsi', tense: 'present' },
       { verbId: 'aldarrikatu', tense: 'present' },
       { verbId: 'plazaratu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-recognition-1-plural',
-    mode: 'recognition',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'hausnartu', tense: 'present' },
-      { verbId: 'argudiatu', tense: 'present' },
-      { verbId: 'ondorioztatu', tense: 'present' },
-      { verbId: 'gaitzetsi', tense: 'present' },
-      { verbId: 'aldarrikatu', tense: 'present' },
-      { verbId: 'plazaratu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-recognition-2',
-    mode: 'recognition',
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'sustatu', tense: 'present' },
-      { verbId: 'bultzatu', tense: 'present' },
-      { verbId: 'bermatu', tense: 'present' },
-      { verbId: 'babestu', tense: 'present' },
-      { verbId: 'ziurtatu', tense: 'present' },
-      { verbId: 'borobildu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'unit-10-present-recognition-2-plural',
-    mode: 'recognition',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
       { verbId: 'sustatu', tense: 'present' },
       { verbId: 'bultzatu', tense: 'present' },
       { verbId: 'bermatu', tense: 'present' },
@@ -705,6 +598,11 @@ export const LESSONS = [
   // and its past (`nekien`/`zekien`/...) follows the same `-ekien`/`-ekiten`
   // stem alternation on top of `ukan`'s prefix pattern. See
   // `docs/LANGUAGE_DECISIONS.md` for sourcing.
+  // #331 — collapsed from the former `ukan-past-pool-{2,3,4,5,6}` +
+  // `-recognition-{1,2}` chain (#318/#319/#320/#321) into this single
+  // canonical pool (mirrors `unit-10-present`'s collapse). Academic-tier
+  // verbs carry `recognitionOnly` on their `VERBS` entry instead of a
+  // separate `mode: 'recognition'` lesson.
   {
     id: 'ukan-past-pool',
     persons: PHASE_1_PERSONS,
@@ -715,6 +613,46 @@ export const LESSONS = [
       { verbId: 'erosi', tense: 'past' },
       { verbId: 'ikusi', tense: 'past' },
       { verbId: 'jakin', tense: 'past' },
+      { verbId: 'egin', tense: 'past' },
+      { verbId: 'irakurri', tense: 'past' },
+      { verbId: 'idatzi', tense: 'past' },
+      { verbId: 'ikasi', tense: 'past' },
+      { verbId: 'entzun', tense: 'past' },
+      { verbId: 'utzi', tense: 'past' },
+      { verbId: 'aurkitu', tense: 'past' },
+      { verbId: 'bilatu', tense: 'past' },
+      { verbId: 'galdu', tense: 'past' },
+      { verbId: 'jaso', tense: 'past' },
+      { verbId: 'saldu', tense: 'past' },
+      { verbId: 'itxaron', tense: 'past' },
+      { verbId: 'eskatu', tense: 'past' },
+      { verbId: 'galdetu', tense: 'past' },
+      { verbId: 'adierazi', tense: 'past' },
+      { verbId: 'bukatu', tense: 'past' },
+      { verbId: 'amaitu', tense: 'past' },
+      { verbId: 'gainditu', tense: 'past' },
+      { verbId: 'bereiztu', tense: 'past' },
+      { verbId: 'ezagutu', tense: 'past' },
+      { verbId: 'sentitu', tense: 'past' },
+      { verbId: 'pentsatu', tense: 'past' },
+      { verbId: 'sumatu', tense: 'past' },
+      { verbId: 'ulertu', tense: 'past' },
+      { verbId: 'aztertu', tense: 'past' },
+      { verbId: 'ukatu', tense: 'past' },
+      { verbId: 'batu', tense: 'past' },
+      { verbId: 'planteatu', tense: 'past' },
+      { verbId: 'hausnartu', tense: 'past' },
+      { verbId: 'argudiatu', tense: 'past' },
+      { verbId: 'ondorioztatu', tense: 'past' },
+      { verbId: 'gaitzetsi', tense: 'past' },
+      { verbId: 'aldarrikatu', tense: 'past' },
+      { verbId: 'plazaratu', tense: 'past' },
+      { verbId: 'sustatu', tense: 'past' },
+      { verbId: 'bultzatu', tense: 'past' },
+      { verbId: 'bermatu', tense: 'past' },
+      { verbId: 'babestu', tense: 'past' },
+      { verbId: 'ziurtatu', tense: 'past' },
+      { verbId: 'borobildu', tense: 'past' },
     ],
   },
   {
@@ -727,17 +665,6 @@ export const LESSONS = [
       { verbId: 'erosi', tense: 'past' },
       { verbId: 'ikusi', tense: 'past' },
       { verbId: 'jakin', tense: 'past' },
-    ],
-  },
-  // #319 — `ukan-past-pool-2`/`-3`, mirroring `unit-10-present-2`/`-3`'s
-  // verb groupings (see #318's reserved plan in `docs/DECISIONS.md`).
-  // `ukan-past-pool` was already at the 6-source cap when `egin` landed, so
-  // `egin`'s past joins pool-2 instead — 7 sources, the same exception the
-  // `nor-nork-*-plural-pool`s already established.
-  {
-    id: 'ukan-past-pool-2',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'egin', tense: 'past' },
       { verbId: 'irakurri', tense: 'past' },
       { verbId: 'idatzi', tense: 'past' },
@@ -745,160 +672,33 @@ export const LESSONS = [
       { verbId: 'entzun', tense: 'past' },
       { verbId: 'utzi', tense: 'past' },
       { verbId: 'aurkitu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-2-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'egin', tense: 'past' },
-      { verbId: 'irakurri', tense: 'past' },
-      { verbId: 'idatzi', tense: 'past' },
-      { verbId: 'ikasi', tense: 'past' },
-      { verbId: 'entzun', tense: 'past' },
-      { verbId: 'utzi', tense: 'past' },
-      { verbId: 'aurkitu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-3',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'bilatu', tense: 'past' },
       { verbId: 'galdu', tense: 'past' },
       { verbId: 'jaso', tense: 'past' },
       { verbId: 'saldu', tense: 'past' },
       { verbId: 'itxaron', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-3-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'bilatu', tense: 'past' },
-      { verbId: 'galdu', tense: 'past' },
-      { verbId: 'jaso', tense: 'past' },
-      { verbId: 'saldu', tense: 'past' },
-      { verbId: 'itxaron', tense: 'past' },
-    ],
-  },
-  // #320 (fodder, mid/low tier, per #318's reserved plan): `ukan-past-pool-4`
-  // / `-5` / `-6`, mirroring `unit-10-present-4`/`-5`/`-6`'s verb groupings.
-  {
-    id: 'ukan-past-pool-4',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'eskatu', tense: 'past' },
       { verbId: 'galdetu', tense: 'past' },
       { verbId: 'adierazi', tense: 'past' },
       { verbId: 'bukatu', tense: 'past' },
       { verbId: 'amaitu', tense: 'past' },
       { verbId: 'gainditu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-4-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'eskatu', tense: 'past' },
-      { verbId: 'galdetu', tense: 'past' },
-      { verbId: 'adierazi', tense: 'past' },
-      { verbId: 'bukatu', tense: 'past' },
-      { verbId: 'amaitu', tense: 'past' },
-      { verbId: 'gainditu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-5',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'bereiztu', tense: 'past' },
       { verbId: 'ezagutu', tense: 'past' },
       { verbId: 'sentitu', tense: 'past' },
       { verbId: 'pentsatu', tense: 'past' },
       { verbId: 'sumatu', tense: 'past' },
       { verbId: 'ulertu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-5-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'bereiztu', tense: 'past' },
-      { verbId: 'ezagutu', tense: 'past' },
-      { verbId: 'sentitu', tense: 'past' },
-      { verbId: 'pentsatu', tense: 'past' },
-      { verbId: 'sumatu', tense: 'past' },
-      { verbId: 'ulertu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-6',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'aztertu', tense: 'past' },
       { verbId: 'ukatu', tense: 'past' },
       { verbId: 'batu', tense: 'past' },
       { verbId: 'planteatu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-6-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'aztertu', tense: 'past' },
-      { verbId: 'ukatu', tense: 'past' },
-      { verbId: 'batu', tense: 'past' },
-      { verbId: 'planteatu', tense: 'past' },
-    ],
-  },
-  // #321 (fodder, academic/rare tier): `ukan-past-pool-recognition-1`/`-2`,
-  // mirroring `unit-10-present-recognition-1`/`-2`'s verb groupings —
-  // completes the 12-verb tier.
-  {
-    id: 'ukan-past-pool-recognition-1',
-    mode: 'recognition',
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'hausnartu', tense: 'past' },
       { verbId: 'argudiatu', tense: 'past' },
       { verbId: 'ondorioztatu', tense: 'past' },
       { verbId: 'gaitzetsi', tense: 'past' },
       { verbId: 'aldarrikatu', tense: 'past' },
       { verbId: 'plazaratu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-recognition-1-plural',
-    mode: 'recognition',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'hausnartu', tense: 'past' },
-      { verbId: 'argudiatu', tense: 'past' },
-      { verbId: 'ondorioztatu', tense: 'past' },
-      { verbId: 'gaitzetsi', tense: 'past' },
-      { verbId: 'aldarrikatu', tense: 'past' },
-      { verbId: 'plazaratu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-recognition-2',
-    mode: 'recognition',
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'sustatu', tense: 'past' },
-      { verbId: 'bultzatu', tense: 'past' },
-      { verbId: 'bermatu', tense: 'past' },
-      { verbId: 'babestu', tense: 'past' },
-      { verbId: 'ziurtatu', tense: 'past' },
-      { verbId: 'borobildu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'ukan-past-pool-recognition-2-plural',
-    mode: 'recognition',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
       { verbId: 'sustatu', tense: 'past' },
       { verbId: 'bultzatu', tense: 'past' },
       { verbId: 'bermatu', tense: 'past' },
@@ -1424,6 +1224,8 @@ export const LESSONS = [
   // descriptively (not `unit-NN-*`) since "unit-29-review" etc. are already
   // taken by stale ids further down whose journey.js `number` has since moved
   // (#137's "ids stay stable" convention, applied here in reverse).
+  // #331 — collapsed the former `dative-verb-{present,past}-2`/`-plural`
+  // siblings (mesede-egin/kalte-egin/aurre-egin) into these canonical pools.
   { id: 'dative-verb-present', persons: PHASE_1_PERSONS, sources: [
     { verbId: 'lagundu', tense: 'present' },
     { verbId: 'ekin', tense: 'present' },
@@ -1431,6 +1233,9 @@ export const LESSONS = [
     { verbId: 'deitu', tense: 'present' },
     { verbId: 'eragin', tense: 'present' },
     { verbId: 'antzeman', tense: 'present' },
+    { verbId: 'mesede-egin', tense: 'present' },
+    { verbId: 'kalte-egin', tense: 'present' },
+    { verbId: 'aurre-egin', tense: 'present' },
   ] },
   { id: 'dative-verb-present-plural', persons: PHASE_1_PLURAL_PERSONS, sources: [
     { verbId: 'lagundu', tense: 'present' },
@@ -1439,13 +1244,6 @@ export const LESSONS = [
     { verbId: 'deitu', tense: 'present' },
     { verbId: 'eragin', tense: 'present' },
     { verbId: 'antzeman', tense: 'present' },
-  ] },
-  { id: 'dative-verb-present-2', persons: PHASE_1_PERSONS, sources: [
-    { verbId: 'mesede-egin', tense: 'present' },
-    { verbId: 'kalte-egin', tense: 'present' },
-    { verbId: 'aurre-egin', tense: 'present' },
-  ] },
-  { id: 'dative-verb-present-2-plural', persons: PHASE_1_PLURAL_PERSONS, sources: [
     { verbId: 'mesede-egin', tense: 'present' },
     { verbId: 'kalte-egin', tense: 'present' },
     { verbId: 'aurre-egin', tense: 'present' },
@@ -1457,6 +1255,9 @@ export const LESSONS = [
     { verbId: 'deitu', tense: 'past' },
     { verbId: 'eragin', tense: 'past' },
     { verbId: 'antzeman', tense: 'past' },
+    { verbId: 'mesede-egin', tense: 'past' },
+    { verbId: 'kalte-egin', tense: 'past' },
+    { verbId: 'aurre-egin', tense: 'past' },
   ] },
   { id: 'dative-verb-past-plural', persons: PHASE_1_PLURAL_PERSONS, sources: [
     { verbId: 'lagundu', tense: 'past' },
@@ -1465,13 +1266,6 @@ export const LESSONS = [
     { verbId: 'deitu', tense: 'past' },
     { verbId: 'eragin', tense: 'past' },
     { verbId: 'antzeman', tense: 'past' },
-  ] },
-  { id: 'dative-verb-past-2', persons: PHASE_1_PERSONS, sources: [
-    { verbId: 'mesede-egin', tense: 'past' },
-    { verbId: 'kalte-egin', tense: 'past' },
-    { verbId: 'aurre-egin', tense: 'past' },
-  ] },
-  { id: 'dative-verb-past-2-plural', persons: PHASE_1_PLURAL_PERSONS, sources: [
     { verbId: 'mesede-egin', tense: 'past' },
     { verbId: 'kalte-egin', tense: 'past' },
     { verbId: 'aurre-egin', tense: 'past' },
@@ -1757,6 +1551,9 @@ export const LESSONS = [
   // `journey.js`'s `number` field, so inserting mid-array would force a
   // ~30-unit renumber. A follow-up issue tracks repositioning this content
   // once the renumbering is done deliberately.
+  // #331 — collapsed the former `egin-construction-{present,past}-2`/
+  // `-plural` siblings (arreta-eman/ados-egon/arriskuan-jarri) into these
+  // canonical pools.
   {
     id: 'egin-construction-present',
     persons: PHASE_1_PERSONS,
@@ -1767,6 +1564,9 @@ export const LESSONS = [
       { verbId: 'ahaleginak-egin', tense: 'present' },
       { verbId: 'parte-hartu', tense: 'present' },
       { verbId: 'kontuan-hartu', tense: 'present' },
+      { verbId: 'arreta-eman', tense: 'present' },
+      { verbId: 'ados-egon', tense: 'present' },
+      { verbId: 'arriskuan-jarri', tense: 'present' },
     ],
   },
   {
@@ -1779,21 +1579,6 @@ export const LESSONS = [
       { verbId: 'ahaleginak-egin', tense: 'present' },
       { verbId: 'parte-hartu', tense: 'present' },
       { verbId: 'kontuan-hartu', tense: 'present' },
-    ],
-  },
-  {
-    id: 'egin-construction-present-2',
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'arreta-eman', tense: 'present' },
-      { verbId: 'ados-egon', tense: 'present' },
-      { verbId: 'arriskuan-jarri', tense: 'present' },
-    ],
-  },
-  {
-    id: 'egin-construction-present-2-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
       { verbId: 'arreta-eman', tense: 'present' },
       { verbId: 'ados-egon', tense: 'present' },
       { verbId: 'arriskuan-jarri', tense: 'present' },
@@ -1809,6 +1594,9 @@ export const LESSONS = [
       { verbId: 'ahaleginak-egin', tense: 'past' },
       { verbId: 'parte-hartu', tense: 'past' },
       { verbId: 'kontuan-hartu', tense: 'past' },
+      { verbId: 'arreta-eman', tense: 'past' },
+      { verbId: 'ados-egon', tense: 'past' },
+      { verbId: 'arriskuan-jarri', tense: 'past' },
     ],
   },
   {
@@ -1821,21 +1609,6 @@ export const LESSONS = [
       { verbId: 'ahaleginak-egin', tense: 'past' },
       { verbId: 'parte-hartu', tense: 'past' },
       { verbId: 'kontuan-hartu', tense: 'past' },
-    ],
-  },
-  {
-    id: 'egin-construction-past-2',
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'arreta-eman', tense: 'past' },
-      { verbId: 'ados-egon', tense: 'past' },
-      { verbId: 'arriskuan-jarri', tense: 'past' },
-    ],
-  },
-  {
-    id: 'egin-construction-past-2-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
       { verbId: 'arreta-eman', tense: 'past' },
       { verbId: 'ados-egon', tense: 'past' },
       { verbId: 'arriskuan-jarri', tense: 'past' },
