@@ -20,6 +20,7 @@ import {
   getCaseFrameLure,
   getCaseFramePronounLure,
   getCrossTenseLure,
+  getDativeOvergenerationLure,
   getCrossVerbCandidates,
   getEncouragement,
   getExplanation,
@@ -1955,6 +1956,32 @@ describe('generateQuestions', () => {
         expect(getRecencyContrastLure(etorri, 'present', 'ni')).toBeUndefined()
         const ukan = VERBS.find((v) => v.id === 'ukan')
         expect(getRecencyContrastLure(ukan, 'past', 'ni')).toBeUndefined()
+      })
+    })
+
+    // #293: the "dative overgeneration" lure — a `dativeOvergeneration`-flagged
+    // NOR-NORK verb's own participle paired with a NOR-NORI-NORK sibling's
+    // auxiliary (`eramango diot` alongside the correct `eramango dut`).
+    describe('getDativeOvergenerationLure', () => {
+      const eraman = VERBS.find((v) => v.id === 'eraman')
+      const jan = VERBS.find((v) => v.id === 'jan')
+
+      it('swaps the participle\'s own auxiliary for the NOR-NORI-NORK sibling\'s (eraman -> esan)', () => {
+        expect(getDativeOvergenerationLure(VERBS, eraman, 'future', 'ni')).toBe('eramango diot')
+        expect(getDativeOvergenerationLure(VERBS, eraman, 'future', 'haiek')).toBe('eramango diote')
+      })
+
+      it('returns undefined for a synthetic (non-periphrastic) form', () => {
+        expect(getDativeOvergenerationLure(VERBS, eraman, 'present', 'ni')).toBeUndefined()
+      })
+
+      it('returns undefined for a verb not flagged dativeOvergeneration', () => {
+        expect(jan.dativeOvergeneration).toBeUndefined()
+        expect(getDativeOvergenerationLure(VERBS, jan, 'future', 'ni')).toBeUndefined()
+      })
+
+      it('returns undefined without a `verbs` list', () => {
+        expect(getDativeOvergenerationLure(undefined, eraman, 'future', 'ni')).toBeUndefined()
       })
     })
 

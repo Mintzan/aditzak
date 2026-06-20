@@ -539,6 +539,7 @@ const LURE_WHY_KEYS = {
   tense: 'lureRationaleTense',
   'object-number': 'lureRationaleObjectNumber',
   'progressive-vs-plain': 'lureRationaleProgressiveVsPlain',
+  'dative-overgeneration': 'lureRationaleDativeOvergeneration',
 }
 
 function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = [], grounded = true) {
@@ -645,6 +646,49 @@ export function getObjectNumberLure(verb, tense, person) {
 export function getProgressiveBaseLure(verbs, baseVerbId, person) {
   if (!baseVerbId) return undefined
   return verbs?.find((candidate) => candidate.id === baseVerbId)?.conjugations.present?.[person]
+}
+
+// #293's "dative overgeneration" sibling: same `nork` status as `agreement`
+// but the opposite `nori` status — the inverse axis from `getCaseFrameSibling`
+// (which holds `nori` fixed and flips `nork`). Also requires `recipient` (not
+// `agent`) so the sibling's `person` key means the same thing (NORK) as the
+// NOR-NORK verb's own `person` — `esan` qualifies, `eman` (NORI-keyed,
+// `agent` fixed) doesn't, since swapping in an `eman` form would pair up two
+// persons that don't actually correspond.
+function getDativeOvergenerationSibling(verbs, agreement) {
+  if (!verbs || !agreement) return undefined
+  return verbs.find(
+    (sibling) =>
+      sibling.agreement &&
+      sibling.recipient !== undefined &&
+      sibling.agreement.includes('nork') === agreement.includes('nork') &&
+      sibling.agreement.includes('nori') !== agreement.includes('nori'),
+  )
+}
+
+// #293: learners drilling verbs that are modeled as plain NOR-NORK but are
+// optionally ditransitive in real usage ("eraman" = carry *something to
+// someone*) commonly insert a phantom dative and reach for the NOR-NORI-NORK
+// auxiliary family instead (`eramango diot` for the correct `eramango dut`).
+// Unlike `getCaseFrameLure`, the verb's own participle is correct — only the
+// auxiliary *family* is wrong — so this swaps just the auxiliary half of a
+// periphrastic form (`<participle> <auxiliary>`) for the
+// `getDativeOvergenerationSibling`'s same-tense/person auxiliary, rather than
+// substituting a whole borrowed form. Requires the verb to be flagged
+// `dativeOvergeneration: true` in `verbs.js` (only the "transfer/handling"
+// verbs learners actually over-extend this way, not every NOR-NORK verb —
+// see #293) and both forms to actually be periphrastic (two words); returns
+// `undefined` otherwise, e.g. for `eraman`'s synthetic present (`daramat`,
+// no auxiliary to swap).
+export function getDativeOvergenerationLure(verbs, verb, tense, person) {
+  if (!verb.dativeOvergeneration) return undefined
+  const ownForm = verb.conjugations[tense]?.[person]
+  if (!ownForm?.includes(' ')) return undefined
+  const siblingForm = getDativeOvergenerationSibling(verbs, verb.agreement)?.conjugations[tense]?.[person]
+  if (!siblingForm?.includes(' ')) return undefined
+  const participle = ownForm.slice(0, ownForm.lastIndexOf(' '))
+  const auxiliary = siblingForm.slice(siblingForm.lastIndexOf(' ') + 1)
+  return `${participle} ${auxiliary}`
 }
 
 // For a NOR-NORI-NORK (ditransitive) verb, resolves its axis-fixed metadata
@@ -1041,7 +1085,10 @@ function buildWordOrderQuestion(table, sentence, person) {
 // issue. #283 added `getRecencyContrastLure` (`presentPerfect` <-> `past`,
 // same participle/different auxiliary tense — `etorri naiz` alongside
 // `etorri nintzen`) and extended this gate to `tense === 'presentPerfect'`
-// so it actually fires.
+// so it actually fires. #293 added `getDativeOvergenerationLure` (a
+// `dativeOvergeneration`-flagged verb's own participle paired with a
+// NOR-NORI-NORK sibling's auxiliary — `eramango diot` alongside the correct
+// `eramango dut`), reusing this same gate since it's NOR-NORK-only.
 export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode } = {}) {
   const table = verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
@@ -1086,6 +1133,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
             { form: getCrossTenseLure(verb, tense, person), errorType: 'tense' },
             { form: getRecencyContrastLure(verb, tense, person), errorType: 'tense' },
             { form: getObjectNumberLure(verb, tense, person), errorType: 'object-number' },
+            { form: getDativeOvergenerationLure(verbs, verb, tense, person), errorType: 'dative-overgeneration' },
           ]
         : []
     // #230: a sentence whose embedded participle is tagged with its base
