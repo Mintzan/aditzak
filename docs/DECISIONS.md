@@ -12,6 +12,23 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #321: academic/rare fodder tier landed as `mode: 'recognition'` pools, completing #304's split
+
+The last of #304's split-out tiers. 12 regular nor-nork verbs
+(`hausnartu`, `argudiatu`, `ondorioztatu`, `gaitzetsi`, `aldarrikatu`,
+`plazaratu`, `sustatu`, `bultzatu`, `bermatu`, `babestu`, `ziurtatu`,
+`borobildu`) landed in their own pools (`unit-10-present-recognition-1/2`
++ `-plural`, `ukan-past-pool-recognition-1/2` + `-plural`) rather than
+mixed into `unit-10-present-4/5/6`/`ukan-past-pool-4/5/6`, since #318
+reserved this tier as `mode: 'recognition'` — exposure-only, no typed
+production framings — and `generateQuestions`/`describeLesson` already
+support that flag on a plain `sources`-array pool lesson without
+`review: true` (precedented by `unit-23-number-split-review` etc., but
+nothing required pairing the two). Keeping a separate set of pools (rather
+than flagging the whole existing pool-4/5/6 set as recognition-only) keeps
+the regular fodder tier's typed-production drilling intact. Closes #304's
+split (#318/#319/#320/#321 all landed).
+
 ## 2026-06-20 — #320: mid/low fodder tier landed exactly per #318's reserved plan; completes the regular-`nor` pools #319 left partial
 
 Implemented #318's reserved pool plan for the 18 mid/low-tier (+ #304's seven previously-unassigned) verbs: added `unit-10-present-4`/`-5`/`-6` (+`ukan-past-pool-4`/`-5`/`-6`, +`-plural` siblings) for the 16 `nor-nork` verbs, split 6/6/4 exactly as #318's table specified, and wired them into Unit 13/14's `lessonIds`. For the 2 regular-`nor` verbs (`erori`, `jaiki`), filled `nor-fodder-present`/`-plural`'s and `izan-past-pool-2`/`-plural`'s remaining slots — both pools now sit at #318's 6-source cap, completing the pools #319 had explicitly left at partial capacity (4 and 2 sources respectively) pending this issue. No cap deviations needed this time — every pool lands at or under 6 sources.

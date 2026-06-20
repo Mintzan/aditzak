@@ -602,6 +602,62 @@ export const LESSONS = [
       { verbId: 'planteatu', tense: 'present' },
     ],
   },
+  // #321 (fodder, academic/rare tier, per #318's reserved plan):
+  // `unit-10-present-recognition-1`/`-2`, `mode: 'recognition'` — these 12
+  // verbs are exposure-only (no typed/production framings), so they're kept
+  // in their own pools rather than mixed into `unit-10-present-4/5/6`.
+  {
+    id: 'unit-10-present-recognition-1',
+    mode: 'recognition',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'hausnartu', tense: 'present' },
+      { verbId: 'argudiatu', tense: 'present' },
+      { verbId: 'ondorioztatu', tense: 'present' },
+      { verbId: 'gaitzetsi', tense: 'present' },
+      { verbId: 'aldarrikatu', tense: 'present' },
+      { verbId: 'plazaratu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-recognition-1-plural',
+    mode: 'recognition',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'hausnartu', tense: 'present' },
+      { verbId: 'argudiatu', tense: 'present' },
+      { verbId: 'ondorioztatu', tense: 'present' },
+      { verbId: 'gaitzetsi', tense: 'present' },
+      { verbId: 'aldarrikatu', tense: 'present' },
+      { verbId: 'plazaratu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-recognition-2',
+    mode: 'recognition',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'sustatu', tense: 'present' },
+      { verbId: 'bultzatu', tense: 'present' },
+      { verbId: 'bermatu', tense: 'present' },
+      { verbId: 'babestu', tense: 'present' },
+      { verbId: 'ziurtatu', tense: 'present' },
+      { verbId: 'borobildu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-10-present-recognition-2-plural',
+    mode: 'recognition',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'sustatu', tense: 'present' },
+      { verbId: 'bultzatu', tense: 'present' },
+      { verbId: 'bermatu', tense: 'present' },
+      { verbId: 'babestu', tense: 'present' },
+      { verbId: 'ziurtatu', tense: 'present' },
+      { verbId: 'borobildu', tense: 'present' },
+    ],
+  },
   // #286 — the NOR-number axis (`dut` vs `ditut`, plural *object*, not
   // plural NORK subject) for the core transitive verbs, pooled the same way
   // as `unit-10-present` above. `eduki` doesn't debut its singular-object
@@ -794,6 +850,61 @@ export const LESSONS = [
       { verbId: 'ukatu', tense: 'past' },
       { verbId: 'batu', tense: 'past' },
       { verbId: 'planteatu', tense: 'past' },
+    ],
+  },
+  // #321 (fodder, academic/rare tier): `ukan-past-pool-recognition-1`/`-2`,
+  // mirroring `unit-10-present-recognition-1`/`-2`'s verb groupings —
+  // completes the 12-verb tier.
+  {
+    id: 'ukan-past-pool-recognition-1',
+    mode: 'recognition',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'hausnartu', tense: 'past' },
+      { verbId: 'argudiatu', tense: 'past' },
+      { verbId: 'ondorioztatu', tense: 'past' },
+      { verbId: 'gaitzetsi', tense: 'past' },
+      { verbId: 'aldarrikatu', tense: 'past' },
+      { verbId: 'plazaratu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-recognition-1-plural',
+    mode: 'recognition',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'hausnartu', tense: 'past' },
+      { verbId: 'argudiatu', tense: 'past' },
+      { verbId: 'ondorioztatu', tense: 'past' },
+      { verbId: 'gaitzetsi', tense: 'past' },
+      { verbId: 'aldarrikatu', tense: 'past' },
+      { verbId: 'plazaratu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-recognition-2',
+    mode: 'recognition',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'sustatu', tense: 'past' },
+      { verbId: 'bultzatu', tense: 'past' },
+      { verbId: 'bermatu', tense: 'past' },
+      { verbId: 'babestu', tense: 'past' },
+      { verbId: 'ziurtatu', tense: 'past' },
+      { verbId: 'borobildu', tense: 'past' },
+    ],
+  },
+  {
+    id: 'ukan-past-pool-recognition-2-plural',
+    mode: 'recognition',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'sustatu', tense: 'past' },
+      { verbId: 'bultzatu', tense: 'past' },
+      { verbId: 'bermatu', tense: 'past' },
+      { verbId: 'babestu', tense: 'past' },
+      { verbId: 'ziurtatu', tense: 'past' },
+      { verbId: 'borobildu', tense: 'past' },
     ],
   },
   // #286 — `pastPlural` counterpart to `nor-nork-present-plural-pool` above
