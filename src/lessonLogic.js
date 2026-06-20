@@ -1067,6 +1067,14 @@ function buildWordOrderQuestion(table, sentence, person) {
 // — not production). Defaults to `undefined`, i.e. the original behaviour
 // (every kind `noTyping` would also allow stays on the table).
 //
+// `verb.recognitionOnly` (#330) is the per-*carrier* counterpart: a rare verb
+// folded into a mixed conjugation pool (see `CARRIERS_PER_SESSION` in
+// `App.jsx`) that should stay recognition-only even when sampled alongside
+// ordinary production carriers in the same pool/session. Unlike
+// `mode: 'recognition'`, this also drops `spot-error` — there's no per-lesson
+// "recognition tier" left for it to belong to once it's just one carrier
+// among others, so it gets no production-adjacent framings at all.
+//
 // #141's case-frame/cross-tense lures (`getCaseFrameLure`/
 // `getCaseFramePronounLure`/`getCrossTenseLure`) add up to two further
 // guaranteed distractors, on top of the same-table ones above, for the rows
@@ -1099,7 +1107,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
   const source = { verbId: verb.id, tense, fixedArgument: getFixedArgument(verb) }
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
-  const noProduction = noTyping || mode === 'recognition'
+  const noProduction = noTyping || mode === 'recognition' || verb.recognitionOnly
 
   function buildQuestion(person) {
     const sentence = normalizeSentence(pickVariant(sentences[person]))
@@ -1157,7 +1165,7 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
         : [
             sentence && 'sentence',
             sentence && !noProduction && !ambiguousTyping && 'type-verb',
-            sentence && !noTyping && personsWithSentences.length + borrowedSpotErrorSlots.length >= 4 && 'spot-error',
+            sentence && !noTyping && !verb.recognitionOnly && personsWithSentences.length + borrowedSpotErrorSlots.length >= 4 && 'spot-error',
             pronounSentence && 'pronoun',
             pronounSentence && !noProduction && 'type-pronoun',
             meetsWordOrderThreshold(sentence) && 'word-order',

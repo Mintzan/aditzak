@@ -33,11 +33,19 @@ const wordOrderMock = vi.hoisted(() => ({ enabled: false, question: null }))
 // of the lesson's normal cross-section.
 const formQuestionMock = vi.hoisted(() => ({ enabled: false, byVerbId: {} }))
 
+// #330: records every `verbId` `createExerciseState` calls `generateQuestions`
+// with, so the 'carrier sampling' tests below can assert how many — and
+// which — of a pool lesson's sources actually got drilled in a given play,
+// without needing to inspect `createExerciseState` itself (it isn't exported).
+const generateQuestionsCalls = vi.hoisted(() => ({ verbIds: [], rounds: [] }))
+
 vi.mock('./lessonLogic', async (importOriginal) => {
   const actual = await importOriginal()
   return {
     ...actual,
     generateQuestions: (verb, tense, options) => {
+      generateQuestionsCalls.verbIds.push(verb.id)
+      generateQuestionsCalls.rounds.push(options.rounds)
       if (formQuestionMock.enabled) return formQuestionMock.byVerbId[verb.id] ? [formQuestionMock.byVerbId[verb.id]] : []
       if (wordOrderMock.enabled) return [wordOrderMock.question]
       if (!matchPairsMock.enabled) return actual.generateQuestions(verb, tense, options)
@@ -56,6 +64,8 @@ describe('App', () => {
   afterEach(() => {
     localStorage.clear()
     vi.restoreAllMocks()
+    generateQuestionsCalls.verbIds = []
+    generateQuestionsCalls.rounds = []
   })
 
   it('renders the home screen with the learning journey', () => {
@@ -447,6 +457,60 @@ describe('App', () => {
       expect(screen.getByRole('button', { name: 'zuk' })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'hark' })).toBeInTheDocument()
       expect(screen.queryByRole('button', { name: 'ni' })).not.toBeInTheDocument()
+    })
+  })
+
+  // #330: `unit-10-present` is a real fixture with more sources (6: jan,
+  // edan, erosi, ikusi, hartu, egin) than `CARRIERS_PER_SESSION` (4) — proof
+  // that `createExerciseState` samples rather than drilling every source
+  // every play, the mechanism that lets a pool lesson grow past 4 carriers
+  // without the session ballooning past `TARGET_EXERCISE_COUNT` (12) or
+  // needing a `-2/-3/…` sibling lesson (#318's now-superseded approach).
+  describe('carrier sampling for large pools (#330)', () => {
+    const POOL_VERB_IDS = ['jan', 'edan', 'erosi', 'ikusi', 'hartu', 'egin']
+    // `unit-10-present` and `unit-10-present-plural` share the same six
+    // sources/subtitle text, differing only in which persons they drill —
+    // matching on the singular `ni/zu/hura` persons label too disambiguates
+    // the singular lesson's button from its plural sibling.
+    const poolButtonName = /ni\/zu\/hura[\s\S]*jan & edan & erosi & ikusi & hartu & egin/
+
+    it('drills at most CARRIERS_PER_SESSION sources from a larger pool, keeping the session near TARGET_EXERCISE_COUNT', async () => {
+      window.history.pushState({}, '', '/?dev=unlock-all')
+      render(<App />)
+
+      const user = userEvent.setup()
+      await user.click(screen.getByRole('button', { name: poolButtonName }))
+
+      const sampledIds = [...new Set(generateQuestionsCalls.verbIds)]
+      expect(sampledIds.length).toBe(4)
+      sampledIds.forEach((id) => expect(POOL_VERB_IDS).toContain(id))
+
+      // Each sampled source gets `rounds` such that rounds × persons (3 for
+      // `PHASE_1_PERSONS`) lands at this session's even share of 12 —
+      // confirms `targetPerSource` was computed off the sampled count (4),
+      // not the full pool size (6), which is what keeps the session bounded.
+      const totalQuestions = generateQuestionsCalls.rounds.reduce((sum, rounds) => sum + rounds * 3, 0)
+      expect(totalQuestions).toBe(12)
+    })
+
+    it('samples a different subset of carriers across plays', { timeout: 15000 }, async () => {
+      window.history.pushState({}, '', '/?dev=unlock-all')
+      const user = userEvent.setup()
+      render(<App />)
+
+      // Sampling is random, so an occasional identical re-roll between two
+      // plays is possible — replaying several times and checking for *any*
+      // variation across the whole run avoids flaking on a single unlucky pair.
+      const poolButton = () => screen.getByRole('button', { name: poolButtonName })
+      const sampledSets = []
+      for (let i = 0; i < 10; i += 1) {
+        generateQuestionsCalls.verbIds = []
+        await user.click(poolButton())
+        sampledSets.push([...new Set(generateQuestionsCalls.verbIds)].sort().join(','))
+        await user.click(screen.getByRole('button', { name: 'Exit lesson' }))
+      }
+
+      expect(new Set(sampledSets).size).toBeGreaterThan(1)
     })
   })
 

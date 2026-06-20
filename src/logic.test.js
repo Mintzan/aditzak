@@ -1793,6 +1793,47 @@ describe('generateQuestions', () => {
     })
   })
 
+  describe('with verb.recognitionOnly (#330)', () => {
+    // A per-carrier flag for a rare verb sampled into an otherwise-typed
+    // conjugation pool (see `CARRIERS_PER_SESSION` in `App.jsx`) — unlike
+    // lesson-level `mode: 'recognition'` (which still allows `spot-error`,
+    // tested above), a `recognitionOnly` carrier gets no production-adjacent
+    // framing at all, since there's no per-lesson "recognition tier" left for
+    // it to belong to once it's just one carrier among others.
+    const recognitionOnlyVerb = { ...verbWithBoth, recognitionOnly: true }
+
+    it('never produces a typed/production framing, on any roll', () => {
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+
+        generateQuestions(recognitionOnlyVerb, 'present').forEach((question) => {
+          expect(['type-verb', 'type-pronoun', 'type-negative']).not.toContain(question.kind)
+        })
+        vi.restoreAllMocks()
+      }
+    })
+
+    it('never produces spot-error either, unlike mode: "recognition"', () => {
+      // Same roll `verbWithBoth` lands on 'spot-error' with at line ~1765.
+      vi.spyOn(Math, 'random').mockReturnValue(0.3)
+
+      const kinds = generateQuestions(recognitionOnlyVerb, 'present').map((q) => q.kind)
+
+      expect(kinds).not.toContain('spot-error')
+    })
+
+    it('still produces sentence/pronoun multiple-choice framings, not just the bare form', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+
+      const questions = generateQuestions(recognitionOnlyVerb, 'present')
+
+      expect(questions.map((q) => q.kind)).toContain('sentence')
+      questions.forEach((question) => {
+        expect(['form', 'sentence', 'pronoun']).toContain(question.kind)
+      })
+    })
+  })
+
   describe('with sentence variants', () => {
     const verbWithVariants = {
       ...verb,
