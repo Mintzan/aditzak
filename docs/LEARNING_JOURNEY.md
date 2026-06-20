@@ -110,6 +110,40 @@
    *more lessons* and *more gentle reps within each lesson* than an easy one —
    without changing the linear `getUnlockedLessonIds` unlock model or the
    stored-progress shape.
+7. **Pattern-first: a verb earns its own lesson only when it adds something
+   specific** (#309). The learning target is a `(agreement-pattern × tense)`
+   conjugation goal (`dut`/`duzu`/`du`, `naiz`/`zara`/`da`, …), not any one
+   verb — once a learner knows a pattern, every verb that rides it is
+   interchangeable. A verb gets a **dedicated** lesson only when it adds:
+   1. **Irregular synthetic morphology** — each synthetic verb is its own
+      paradigm (`egon: nago/zaude/dago` ≠ `joan: noa/zoaz/doa`), not derivable
+      from a shared suffix (`izan`, `ukan`, `egon`, `eduki`, `joan`, `etorri`,
+      `ibili`, `jakin`, `eraman`, `ekarri`, …).
+   2. **A distinct agreement frame** — dative-governing verbs, NOR-NORI psych
+      verbs (`gustatu`/`iruditu`/`ahaztu`), NOR-NORI-NORK ditransitives
+      (`esan`/`eman`).
+   3. **A special construction** — `egin` light verbs, modal particles
+      (`nahi`/`behar`/`ari`/`ahal`), causatives (`-arazi`), allocutive
+      register (toka/noka), the imperative/subjunctive as constructions.
+   4. **A specific known error to drill** — e.g. the optionally-ditransitive
+      `dut`-vs-`diot` confusion (#293).
+
+   **Carve-out — pattern *introducers* may be single-verb.** A pattern's
+   *first* appearance can be taught with one clean carrier verb even when
+   that verb is otherwise regular; only *subsequent* exposure to the same
+   pattern is pooled. `ikusi-present` (Unit 5) is the running example — it
+   introduces the periphrastic `-tzen dut` pattern (so the synthetic/
+   periphrastic contrast shows up early), not a redundant solo drill of an
+   already-known pattern.
+
+   Everything else — regular periphrastic (`-tu`/`-i`/`-n` riding `dut`) and
+   regular `nor` (riding `naiz`) verbs that don't meet one of the four tests
+   above — is **interchangeable pool fodder**: it belongs *inside* an
+   existing pattern-drill pool (e.g. `unit-10-present`'s `sources` array) as
+   vocabulary variety, never as its own lesson id. See `docs/DECISIONS.md`'s
+   2026-06-20 `#309` entry for the audit confirming the current `LESSONS`
+   conforms to this rule, and its pool-size caveat for future fodder
+   additions (#304).
 
 ## Data & architecture implications (read before building)
 
