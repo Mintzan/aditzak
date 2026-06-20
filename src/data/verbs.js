@@ -42,6 +42,15 @@
 // not set on every NOR-NORK verb — `jan`/`edan` rarely take a natural dative
 // in basic sentences, so the same lure there wouldn't reflect a real error.
 //
+// `recognitionOnly` (#330, optional) marks a verb that should never be drilled
+// for production (typed answers, fill-in-the-blank, spot-the-error) even when
+// it's sampled as a carrier inside an otherwise-production conjugation pool
+// (see `CARRIERS_PER_SESSION` in `App.jsx`) — for academic-tier verbs that are
+// worth recognising in a sentence but not worth recalling cold. Distinct from
+// a lesson's `mode: 'recognition'`, which applies to every source in that
+// lesson; this applies per-verb, so a rare carrier stays recognition-only
+// even mixed into a pool of otherwise-typed verbs.
+//
 // `sentences` (optional, by tense → person) gives an example sentence with
 // `___` marking where the conjugated form belongs. It powers the
 // "complete the sentence" question style — `generateQuestions` mixes those

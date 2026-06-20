@@ -1377,6 +1377,17 @@ const NO_TYPING_ATTEMPTS = 2
 // rather than presenting the exact same question twice in a row.
 const TARGET_EXERCISE_COUNT = 12
 
+// A conjugation pool lesson (`lesson.sources`) can carry far more verbs than
+// a single session should drill — at one round per source, a 30-verb pool
+// blew way past `TARGET_EXERCISE_COUNT` (#318's stopgap was chaining the
+// pool into `-2/-3/…` sibling lessons). Instead, once a pool exceeds this
+// many carriers, `createExerciseState` shuffles and samples just this many
+// per play, so session length stays bounded regardless of pool size and
+// repeated plays rotate through the full pool over time. Pinned to 4
+// (4 carriers × 3 persons × 1 round ≈ `TARGET_EXERCISE_COUNT`); revisit with
+// real use.
+const CARRIERS_PER_SESSION = 4
+
 function createExerciseState(lesson, attempts, errorStats = {}) {
   if (lesson.kind === 'reading') {
     const items = lesson.itemIds.map((itemId) => READING_ITEMS.find((item) => item.id === itemId))
@@ -1393,13 +1404,19 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   }
   const sources = lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]
   const noTyping = !lesson.review && attempts < NO_TYPING_ATTEMPTS
-  const targetPerSource = TARGET_EXERCISE_COUNT / sources.length
+  // Sample this play's carriers from the full pool (see `CARRIERS_PER_SESSION`);
+  // pools at or under the cap are left untouched, so single-source/small-pool
+  // lessons behave exactly as before. Distractor/cross-verb/weak-spot logic
+  // below still draws from the full `sources`, not this sampled subset — only
+  // which carriers actually get drilled this session is bounded.
+  const sampledSources = sources.length > CARRIERS_PER_SESSION ? shuffle(sources).slice(0, CARRIERS_PER_SESSION) : sources
+  const targetPerSource = TARGET_EXERCISE_COUNT / sampledSources.length
   // Reviews with fewer than 3 sources fall back to forms from verbs/tenses
   // already introduced earlier in `LESSONS` (see `getIntroducedSources`) when
   // widening the cross-verb candidate pools below — a 2-source review (e.g.
   // `unit-1-review`) otherwise has only a single sibling to draw from.
   const extraSources = lesson.review && sources.length < 3 ? getIntroducedSources(LESSONS, lesson.id) : []
-  const questions = sources.flatMap(({ verbId, tense }) => {
+  const questions = sampledSources.flatMap(({ verbId, tense }) => {
     const verb = VERBS.find((v) => v.id === verbId)
     const personCount = (lesson.persons ?? Object.keys(verb.conjugations[tense])).length
     const rounds = Math.max(1, Math.round(targetPerSource / personCount))

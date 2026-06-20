@@ -12,6 +12,25 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #330: per-session carrier sampling (`CARRIERS_PER_SESSION = 4`)
+
+`createExerciseState` now shuffles and samples up to `CARRIERS_PER_SESSION`
+(pinned to 4) sources per play once a pool lesson's `sources` exceeds that
+count, instead of generating a round per source. This reverses #318's
+chaining of large pools into `-2/-3/…` sibling lessons — the original fix
+for the same "pool too big for one session" problem — by removing the reason
+that chaining existed: a pool can now stay a single lesson node regardless of
+size, with exposure to less-common carriers happening across repeated plays
+rather than within every single session. `errorStats` stays keyed
+`verbId:tense:person`, so weak-spot reinforcement (review lessons only) still
+reaches a verb even on a session that didn't sample it in. Also added
+`verb.recognitionOnly`, the per-*carrier* counterpart to lesson-level
+`mode: 'recognition'`: it drops every production-adjacent framing including
+`spot-error` (which `mode: 'recognition'` deliberately keeps), since a single
+recognition-only carrier mixed into an otherwise-typed pool has no per-lesson
+"recognition tier" to belong to. Sets up #331's pool collapse (part of #329's
+conjugation-first restructure).
+
 ## 2026-06-20 — #307: nine "covert dative" verbs land as Unit 29, shifting Units 29–44 to 30–45
 
 Added `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman`/`mesede-egin`/
