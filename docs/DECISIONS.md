@@ -12,6 +12,46 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #307: nine "covert dative" verbs land as Unit 29, shifting Units 29–44 to 30–45
+
+Added `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman`/`mesede-egin`/
+`kalte-egin`/`aurre-egin` as new `nor-nori-nork` `VERBS` entries riding
+`esan`'s exact shape (`recipient: 'hura'`, dio-family auxiliary, no
+`future` table — matching #306's scope precedent). All `validFor: []`,
+so none of the cross-verb `agreementsCompatible` overlap these verbs now
+have with `esan`/`eman`/each other (confirmed via `agreementsCompatible`
+in `src/lessonLogic.js`, which only checks `nork`/`nori` membership) can
+leak into distractor generation — the explicit allowlist already used
+since #293 means this coordination is satisfied by construction, not by
+new engine code.
+
+Placed the new unit as **Unit 29**, immediately after `esan`/`eman`
+(Units 27–28, where the dio-paradigm these verbs depend on is taught) —
+not literally "after Unit 26" as #307's issue text said, since that
+number predated earlier renumbers. Inserting mid-sequence (rather than
+appending, as #306 did) forced shifting every `number:` field from
+29–44 up to 30–45 across `journey.js`/`journeyTranslations.js`/
+`LEARNING_JOURNEY.md`. Per #137's already-confirmed precedent, existing
+lesson ids did **not** need to change despite their unit's `number:`
+moving — only the new lessons needed ids, and since `unit-29-review`
+etc. were already taken by older (now renumbered) units, the new
+lessons use descriptive `dative-verb-*` ids instead. New unit added as
+a third unit inside the existing `phase-4-stage-9` rather than a new
+stage, since stage ids are a single flat sequence across all phases and
+a new stage would have forced renumbering stage ids too.
+
+New lessons were inserted **mid-array** in `lessons.js` (between
+`eman-future` and the pre-existing Unit-28 block), not appended at the
+end like #306's were — lesson unlocking is driven by array order, not
+`journey.js`'s `number:` field, so an end-append would have placed
+these dative-verb lessons after content that comes much later in the
+actual journey.
+
+The "optionally-dative" verb set (`itxaron`/`saldu`/`utzi`/`adierazi`/
+`eskatu`/`galdetu`) was deferred to a follow-up issue rather than
+bundled in — see `docs/LANGUAGE_DECISIONS.md`'s #307 entry for why it
+needs a different sourcing pass.
+
 ## 2026-06-20 — #306: `egin`-construction expressions get dedicated `VERBS` entries, appended at the end of the journey
 
 Modeled `hitz`/`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`,

@@ -17,14 +17,16 @@
 //     visible from day one even as units are filled in one at a time.
 //
 // `gate: true` marks Refresh Gate units — zero-new-verb consolidation or
-// expansion checkpoints (Units 10, 22, 29, 41 — the present-perfect
+// expansion checkpoints (Units 10, 22, 30, 42 — the present-perfect
 // insertion at Unit 11 first shifted Gates B/C/D up by one from the
-// `LEARNING_JOURNEY_PROPOSED.md` N-20/N-27/N-39 to 21/28/40, and #296's
+// `LEARNING_JOURNEY_PROPOSED.md` N-20/N-27/N-39 to 21/28/40, #296's
 // "Carrying & Bringing" reposition (old Unit 43 -> new Unit 15) shifted them
-// up by one again to 22/29/41). Most sit between phases/stages, but Phase
-// I's "Expansion" gate (Unit 7) sits mid-phase, right after the verbs it
-// expands are introduced — see `docs/DECISIONS.md`, "Moved the Expansion
-// gate earlier".
+// up by one again to 22/29/41, and #307's new "Agentive Verbs with a Covert
+// Dative" unit (placed after Unit 28, before Gate C) shifted Gates C/D up by
+// one more to 30/42). Most sit between phases/stages, but Phase I's
+// "Expansion" gate (Unit 7) sits mid-phase, right after the verbs it expands
+// are introduced — see `docs/DECISIONS.md`, "Moved the Expansion gate
+// earlier".
 //
 // Two units after each "present tense" cluster ("Looking Back I"/"Looking
 // Back II") teach the simple past for verbs already met, so tense variety
@@ -544,6 +546,21 @@ export const JOURNEY = [
             status: 'available',
             lessonIds: ['esan-past', 'esan-future', 'eman-past', 'eman-future'],
           },
+          {
+            number: 29,
+            title: 'Agentive Verbs with a Covert Dative',
+            focus:
+              '#307 — pooled present/past for lagundu/ekin/erantzun/deitu/eragin/antzeman plus the dative egin compounds (mesede/kalte/aurre egin); reuses the diot-family paradigm from Units 27-28, but with no overt direct object to hint NORI — drilling the exact "covert dative" confusion #293 targets',
+            payload: '"I help him." (Laguntzen diot) · "I answer the question." (Galderari erantzuten diot) · "I called him yesterday." (Atzo deitu nion)',
+            status: 'available',
+            lessonIds: [
+              'dative-verb-present', 'dative-verb-present-plural',
+              'dative-verb-present-2', 'dative-verb-present-2-plural',
+              'dative-verb-past', 'dative-verb-past-plural',
+              'dative-verb-past-2', 'dative-verb-past-2-plural',
+              'dative-verb-review', 'dative-verb-review-plural',
+            ],
+          },
         ],
       },
       {
@@ -551,7 +568,7 @@ export const JOURNEY = [
         title: 'Refresh Gate C — The Multi-Argument Audit',
         units: [
           {
-            number: 29,
+            number: 30,
             title: 'REFRESH — The Case-Ending Mixer',
             focus: 'Drills NOR/NORK/NORI role-swaps plus dative past/future recombination — zero new verbs, score-gated and a mandatory pass before Phase V',
             status: 'pending',
@@ -571,7 +588,7 @@ export const JOURNEY = [
         title: 'Stage 10 — Hypotheticals & Potentials',
         units: [
           {
-            number: 30,
+            number: 31,
             title: 'Permissions & Capability (Ahalera)',
             focus: 'dezaket/naiteke contrasted with periphrastic ahal izan — production for NOR/NOR-NORK, recognition-only for the dative paradigms',
             payload: '"I can come." · "I could (have)..."',
@@ -579,7 +596,7 @@ export const JOURNEY = [
             lessonIds: ['izan-potential', 'ukan-potential', 'unit-28-review'],
           },
           {
-            number: 31,
+            number: 32,
             title: 'Conditionals (Baldintza & Ondorioa)',
             focus: 'ba- protasis + -ke apodosis — production for NOR/NOR-NORK, recognition-only for the dative paradigms',
             payload: '"If I had money, I would buy that" (Dirua banu, hori erosiko nuke)',
@@ -593,7 +610,7 @@ export const JOURNEY = [
         title: 'Stage 11 — Directives & Wishes',
         units: [
           {
-            number: 32,
+            number: 33,
             title: 'Commands (Agintera)',
             focus: 'the imperative — izan/ukan production for NOR/NOR-NORK; ditransitive (iezadazu) recognition-only is a future addition',
             payload: 'Hadi hona! · Zaitez lasai. · Ezazu lan.',
@@ -601,7 +618,7 @@ export const JOURNEY = [
             lessonIds: ['izan-imperative', 'ukan-imperative', 'unit-30-review'],
           },
           {
-            number: 33,
+            number: 34,
             title: 'Purpose & Wishing (Subjuntiboa)',
             focus: 'the subjunctive as a construction (matrix verb + subordinate clause) — NOR/NOR-NORK 3rd-person in-construction production, dative/ditransitive recognition-only',
             payload: 'Nahi dut etor dadin. · Esan dio etor dadila. · ...ikus dezan.',
@@ -614,7 +631,7 @@ export const JOURNEY = [
         title: 'Stage 12 — The Intimate Register (hi + Hitanoa)',
         units: [
           {
-            number: 34,
+            number: 35,
             title: 'Meet "hi"',
             focus: 'hi as a subject in known paradigms, plus hi-as-NORK\'s own gender split',
             payload: 'Hi ikaslea haiz. · Hago lasai. · Hator hona. · Hik badakik?',
@@ -622,7 +639,7 @@ export const JOURNEY = [
             lessonIds: ['unit-32-hi-present', 'unit-32-hi-past', 'unit-32-hi-nork-present'],
           },
           {
-            number: 35,
+            number: 36,
             title: 'Toka (Masculine Allocutive)',
             focus: 'addressee-agreement on 3rd-person statements, masculine register',
             payload: 'Lanean dik. · Etorri duk. · Ez nauk ondo.',
@@ -630,7 +647,7 @@ export const JOURNEY = [
             lessonIds: ['izan-present-toka', 'ukan-present-toka', 'izan-past-toka', 'ukan-past-toka', 'unit-33-review'],
           },
           {
-            number: 36,
+            number: 37,
             title: 'Noka (Feminine Allocutive)',
             focus: 'taught as the -k → -n transform of Unit 33\'s toka forms, feminine register',
             payload: 'Lanean din. · Etorri dun. · Ez naun ondo.',
@@ -638,7 +655,7 @@ export const JOURNEY = [
             lessonIds: ['izan-present-noka', 'ukan-present-noka', 'izan-past-noka', 'ukan-past-noka', 'unit-34-review'],
           },
           {
-            number: 37,
+            number: 38,
             title: 'Hitanoa Recombined',
             focus: 'mixed toka/noka chosen by addressee gender, plus when not to use it — suppressed in subordinate clauses and formal -ke- moods',
             status: 'pending',
@@ -650,7 +667,7 @@ export const JOURNEY = [
         title: 'Stage 13 — Reading Real Text',
         units: [
           {
-            number: 38,
+            number: 39,
             title: 'Passive & Reading Real Text',
             focus: 'non-finite forms, nor-shift (ireki dut → ireki da) — comprehension over real sentences, recognition-only throughout',
             payload: 'Nik atea ireki dut. → Atea ireki da. · Filma ikusteko etorri naiz.',
@@ -671,14 +688,14 @@ export const JOURNEY = [
         title: 'Stage 14 — The Causative Suffix (-arazi)',
         units: [
           {
-            number: 39,
+            number: 40,
             title: 'Making Someone Do It',
             focus: '-arazi on intransitives (nor → nor-nork), present/past/future',
             payload: 'Ekaitzak mendizaleak itzularazi zituen. · Musikak umeak dantzarazi ditu.',
             status: 'pending',
           },
           {
-            number: 40,
+            number: 41,
             title: 'Making Someone Do Something to Someone',
             focus: '-arazi on transitives (nor-nork → nor-nori-nork), present/past/future',
             payload: 'Amonak umeei babarrunak janarazi zizkien. · Irakasleak ikasleei hori idatzarazi die.',
@@ -691,7 +708,7 @@ export const JOURNEY = [
         title: 'Refresh Gate D — The Causative Recombination',
         units: [
           {
-            number: 41,
+            number: 42,
             title: 'REFRESH — Causatives Across Tenses & Moods',
             focus: 'Recombines Units 38–39\'s -arazi with future, conditional, and imperative — zero new verbs, score-gated',
             status: 'pending',
@@ -711,7 +728,7 @@ export const JOURNEY = [
         title: 'Stage 15 — Verbs That Don\'t Need an Auxiliary',
         units: [
           {
-            number: 42,
+            number: 43,
             title: 'Synthetic Curiosities',
             focus: 'jario (nor-nori, "dario"/"zerion"), etzan (nor, "datza"), irudi (nor-nork, "dirudi") — rare native-synthetic verbs, recognition-only',
             payload: 'Malkoak dario. · Zertan datza ariketa? · Nekatuta zaude, dirudizu.',
@@ -724,7 +741,7 @@ export const JOURNEY = [
         title: 'Stage 16 — Talking About Weather',
         units: [
           {
-            number: 43,
+            number: 44,
             title: 'Talking About Weather',
             focus: 'ari + ukan ("euria ari du"), izan/egon weather idioms — fixed 3rd person only, zero new conjugation tables',
             payload: 'Euria ari du. · Hotz da. · Eguzkia dago.',
@@ -750,7 +767,7 @@ export const JOURNEY = [
         title: 'Stage 17 — Fixed Noun+Verb Expressions',
         units: [
           {
-            number: 44,
+            number: 45,
             title: 'The "egin" Construction',
             focus: 'hitz/lan/lo/ahaleginak egin, parte/kontuan hartu, arreta eman, ados egon, arriskuan jarri — invariant noun/particle + conjugated auxiliary, same shape as nahi/behar izan',
             payload: 'Euskaraz hitz egiten dut. · Lan egiten dut. · Parte hartzen dut. · Ados nago.',
@@ -775,7 +792,7 @@ export const JOURNEY = [
 ]
 
 // The last `lessonIds` entry of every `available`, `gate: true` unit (Units
-// 10, 21, 28, 40 — see the `gate: true` note above) — `getUnlockedLessonIds`
+// 10, 22, 30, 42 — see the `gate: true` note above) — `getUnlockedLessonIds`
 // (`src/lessonLogic.js`) treats reaching `GATE_PASS_STARS` on one of these as
 // the unlock condition for the lesson that follows it, instead of the regular
 // "previous lesson attempted" rule. A `pending` gate has no `lessonIds` yet

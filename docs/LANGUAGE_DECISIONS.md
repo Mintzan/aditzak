@@ -6,6 +6,49 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-20 — #307: nine "covert dative" agentive verbs — morphology sourcing
+
+**Decision:** added `lagundu`, `ekin`, `erantzun`, `deitu`, `eragin`,
+`antzeman`, `mesede-egin`, `kalte-egin`, `aurre-egin` to `VERBS`, all
+`agreement: ['nor', 'nori', 'nork']` with `recipient: 'hura'` (NORI fixed to
+third person, `person` varies over NORK) — the exact same shape as `esan`
+(`CONJUGATIONS.md` §5's `dio`-family, `NOR`=`hura`/`NORI`=`hari` row:
+present `diot/diozu/dio/diogu/diozue/diote`, past `nion/zenion/zion/genion/
+zenioten/zioten`).
+
+Morphology derivation, following the established `-tzen`/`-ten`
+imperfective-participle split from #319/#320/#321/#306 (consonant/`-tu`-final
+stems → `-tzen`; `-n`-final or irregular stems → `-ten`):
+- `lagundu` → `laguntzen diot` / `lagundu nion` (the `-ndu` cluster
+  assimilates to `-ntzen`, same pattern as `bildu`→`biltzen`)
+- `ekin` → `ekiten diot` / `ekin nion` (`-in`-final, `-ten`)
+- `erantzun` → `erantzuten diot` / `erantzun nion` (`-n`-final, `-ten`)
+- `deitu` → `deitzen diot` / `deitu nion` (`-tu`-final, `-tzen`)
+- `eragin` → `eragiten diot` / `eragin nion` — mirrors `egin`'s own
+  irregular `egiten` (both are `-in`-final and historically related: `eragin`
+  is `egin`'s causative, "to cause to do")
+- `antzeman` → `antzematen diot` / `antzeman nion` — mirrors `eman`'s own
+  `ematen` (`antzeman` is lexically `antz` + `eman`, "to give a likeness to")
+- `mesede-egin`/`kalte-egin`/`aurre-egin` → `mesede/kalte/aurre egiten diot`
+  / `... egin nion` — the dative `egin` compounds deferred from #306 (see
+  that entry below for why the noun+`egin` shape rides `egin`'s own
+  paradigm with the noun prefixed onto every form); these differ from
+  #306's batch only in taking `diot` instead of `dut`, since the noun's
+  implicit argument is a dative "for/against whom" rather than a plain
+  object.
+
+No `future` table was added for any of the nine — matching #306's own scope
+decision (see `docs/DECISIONS.md`) to ship present+past only and leave future
+as a follow-on rather than bloating every new-verb batch with a third tense
+tier nothing currently lessons against.
+
+**Skipped:** the issue's "optionally-dative" set (`itxaron` plus the #304
+optionally-ditransitive `saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`) needs
+its own sourcing pass to resolve which of each verb's two readings (plain vs.
+dative) is natural/common enough to drill — a fundamentally different kind
+of research question than this batch's unambiguous dative verbs, so it's
+left to a follow-up issue rather than guessed at here.
+
 ## 2026-06-20 — #306: nine `egin`-construction fixed expressions — morphology sourcing
 
 **Decision:** added `hitz-egin`, `lan-egin`, `lo-egin`, `ahaleginak-egin`,
