@@ -12,6 +12,35 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-20 — #333: audited the dedicated-lesson set against #329's particularity test
+
+**Decision:** Confirmed every remaining single-verb (non-pooled) practice
+lesson in `src/data/lessons.js` falls into exactly one of #329's
+particularity buckets — no regular verb slipped through as a standalone
+lesson after #331's fodder collapse. 19 verbs carry dedicated lessons:
+
+| Verb(s) | Bucket | Why |
+|---|---|---|
+| `izan`, `ukan`, `egon`, `joan`, `etorri`, `ibili`, `eduki`, `jakin`, `eraman`, `ekarri` | Irregular synthetic morphology | Forms can't be derived from a participle + auxiliary rule; each has its own conjugation table that must be shown directly. |
+| `gustatu`, `iruditu`, `ahaztu` | Distinct agreement frame (NOR-NORI) | Dative-subject "psych" verbs — `nor` fixed to `hura`, `person` ranges over `nori` instead of the default `nor`/`nork` axis. |
+| `esan`, `eman` | Distinct agreement frame (NOR-NORI-NORK) | Ditransitive — introduce the axis-fixed `recipient`/`agent` metadata (#142) no other taught verb uses. |
+| `nahi`, `behar`, `ari` | Modal/aspectual construction | Invariant noun/particle + conjugated auxiliary, not a regular lexical verb — `nahi`/`behar` always select `ukan`, `ari` always selects `izan`, regardless of the lexical verb's own transitivity (`docs/VERB_COVERAGE.md` §5). `ari` isn't named in #329's own "keep dedicated" list, but it's the same shape as `nahi`/`behar` and `VERB_COVERAGE.md` §5 already groups all three together — treated as belonging to this bucket rather than left unclassified. |
+| `ikusi` | Pattern introducer (#309 carve-out) | First periphrastic verb taught — introduces the `-tzen dut` shape, present perfect, and imperfective past before any pool reuses them. |
+
+Zero unclassifiable (regular-verb) standalone lessons remain — every fodder
+verb (`jan`, `edan`, `erosi`, `hartu`, `egin`, and the rest of `unit-10-present`/
+`ukan-past-pool`'s pools, plus `lagundu`/`ekin`/etc. in `dative-verb-*`, plus
+the `egin`-construction compounds) lives only in a pooled `sources` array, per
+#331's collapse. The Unit 29 dative verbs and `egin` construction are pools,
+not dedicated lessons, matching #329 Workstream D's framing of them as
+"already pooled" patterns. Causative is still `pending` (not yet in
+`LESSONS`), so it has no standalone-lesson question to audit yet.
+
+**Why this matters:** this is the guardrail that #329's restructure actually
+achieved its stated point — the journey's surviving per-verb lessons exist
+because of a *particularity*, not because a regular verb happened to get its
+own lesson before the pooling convention existed.
+
 ## 2026-06-20 — #325: repositioned Unit 44 ("The egin Construction") to Unit 29
 
 Moved the egin-construction unit out of the appended-at-the-end Phase
