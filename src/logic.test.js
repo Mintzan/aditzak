@@ -808,6 +808,53 @@ describe('generateQuestions', () => {
         expect(question.options).toContain(question.correct)
       })
     })
+
+    // #348: every cell of `maite`'s object-axis tables is `'maite '` plus
+    // `ukan`'s matching cell, by construction — including the headline
+    // "Maite zaitut" payoff (`presentByObject.ni.zu`).
+    it("rides ukan's presentByObject/pastByObject with a 'maite ' prefix (#348)", () => {
+      const ukan = VERBS.find((v) => v.id === 'ukan')
+      const maite = VERBS.find((v) => v.id === 'maite')
+
+      for (const nork of Object.keys(ukan.conjugations.presentByObject)) {
+        for (const nor of Object.keys(ukan.conjugations.presentByObject[nork])) {
+          expect(maite.conjugations.presentByObject[nork][nor]).toBe(`maite ${ukan.conjugations.presentByObject[nork][nor]}`)
+        }
+      }
+      for (const nork of Object.keys(ukan.conjugations.pastByObject)) {
+        for (const nor of Object.keys(ukan.conjugations.pastByObject[nork])) {
+          expect(maite.conjugations.pastByObject[nork][nor]).toBe(`maite ${ukan.conjugations.pastByObject[nork][nor]}`)
+        }
+      }
+      expect(maite.conjugations.presentByObject.ni.zu).toBe('maite zaitut')
+    })
+
+    // #348: `generateQuestions` resolves the same way for `maite` as it does
+    // for `ukan` (#347's test above) — forcing `Math.random` to `0` pins
+    // `rollQuestionKind` to the bare `'form'` kind, so `correct` is always
+    // the resolved table's value rather than a rendered sentence.
+    it("generates real maite-zaitut-type questions from maite's presentByObject/pastByObject (#348)", () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+      const maite = VERBS.find((v) => v.id === 'maite')
+
+      const presentQuestions = generateQuestions(maite, 'presentByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+      expect(presentQuestions.map((q) => q.correct)).toEqual(
+        expect.arrayContaining(['maite zaitut', 'maite zaituztet', 'maite ditut']),
+      )
+      presentQuestions.forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+        expect(question.options).toContain(question.correct)
+      })
+
+      const pastQuestions = generateQuestions(maite, 'pastByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+      expect(pastQuestions.map((q) => q.correct)).toEqual(
+        expect.arrayContaining(['maite zintudan', 'maite zintuztedan', 'maite nituen']),
+      )
+      pastQuestions.forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+        expect(question.options).toContain(question.correct)
+      })
+    })
   })
 
   it('always includes the correct answer among unique options', () => {

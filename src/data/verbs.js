@@ -888,6 +888,78 @@ export const VERBS = [
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
+  // `maite izan` ("to love", lit. "to hold dear") — #348, the same
+  // invariant-particle + `ukan` shape as `nahi`/`behar` above (see
+  // VERB_COVERAGE.md's §5 note), but unlike them its citation object
+  // (`hura`) isn't the interesting case: `maite`'s whole point is the
+  // NOR-NORK object axis (`ukan.presentByObject`/`pastByObject`), since
+  // "I love you" ("Maite zaitut") needs a 2nd-person *object*, not the
+  // default 3rd-person one. `present`/`past` ride `ukan.present`/`ukan.past`
+  // verbatim with a `'maite '` prefix; `presentByObject`/`pastByObject` do
+  // the same to every cell of `ukan.presentByObject`/`ukan.pastByObject`.
+  // No `presentPlural`/`futurePlural` (out of #348's scope) and no
+  // `sentences` at all — see the form-only note below `conjugations`.
+  {
+    id: 'maite',
+    verb: 'maite izan',
+    meaning: { en: 'to love', es: 'querer / amar', eu: 'maite izan' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'maite dut',
+        zu: 'maite duzu',
+        hura: 'maite du',
+        gu: 'maite dugu',
+        zuek: 'maite duzue',
+        haiek: 'maite dute',
+      },
+      past: {
+        ni: 'maite nuen',
+        zu: 'maite zenuen',
+        hura: 'maite zuen',
+        gu: 'maite genuen',
+        zuek: 'maite zenuten',
+        haiek: 'maite zuten',
+      },
+      // 2D NOR-NORK table, same shape/sourcing convention as `ukan`'s own
+      // (#346/#347) — every cell is `ukan.presentByObject`'s matching cell
+      // with a `'maite '` prefix, so `presentByObject.ni.zu === 'maite ' +
+      // ukan.presentByObject.ni.zu` ("maite zaitut") holds by construction.
+      presentByObject: {
+        ni: { hura: 'maite dut', zu: 'maite zaitut', zuek: 'maite zaituztet', haiek: 'maite ditut' },
+        hura: { ni: 'maite nau', hura: 'maite du', gu: 'maite gaitu', zu: 'maite zaitu', zuek: 'maite zaituzte', haiek: 'maite ditu' },
+        gu: { hura: 'maite dugu', zu: 'maite zaitugu', zuek: 'maite zaituztegu', haiek: 'maite ditugu' },
+        zu: { ni: 'maite nauzu', hura: 'maite duzu', gu: 'maite gaituzu', haiek: 'maite dituzu' },
+        zuek: { ni: 'maite nauzue', hura: 'maite duzue', gu: 'maite gaituzue', haiek: 'maite dituzue' },
+        haiek: { ni: 'maite naute', hura: 'maite dute', gu: 'maite gaituzte', zu: 'maite zaituzte', zuek: 'maite zaituztete', haiek: 'maite dituzte' },
+      },
+      pastByObject: {
+        ni: { hura: 'maite nuen', zu: 'maite zintudan', zuek: 'maite zintuztedan', haiek: 'maite nituen' },
+        hura: { ni: 'maite ninduen', hura: 'maite zuen', gu: 'maite gintuen', zu: 'maite zintuen', zuek: 'maite zintuzten', haiek: 'maite zituen' },
+        gu: { hura: 'maite genuen', zu: 'maite zintugun', zuek: 'maite zintuztegun', haiek: 'maite genituen' },
+        zu: { ni: 'maite ninduzun', hura: 'maite zenuen', gu: 'maite gintuzun', haiek: 'maite zenituen' },
+        zuek: { ni: 'maite ninduzuen', hura: 'maite zenuten', gu: 'maite gintuzuen', haiek: 'maite zenituzten' },
+        haiek: { ni: 'maite ninduten', hura: 'maite zuten', gu: 'maite gintuzten', zu: 'maite zintuzten', zuek: 'maite zintuzteten', haiek: 'maite zituzten' },
+      },
+    },
+    // Form-only, same as `ukan.presentByObject`/`pastByObject` (#347) — no
+    // `sentences` for *any* tense here, including the plain `present`/
+    // `past`. Two independent reasons stack: (1) a `maite`-fits citation
+    // frame ("Nik X maite dut") is exactly the awkward-object problem
+    // `ukan` itself already opted out of describing for the same reason;
+    // (2) `validforGapAudit.mjs`'s `collectTaggedVariants`/`computeGapSlots`
+    // reads `verb.conjugations[tense]?.[person]` assuming a flat table —
+    // `presentByObject`/`pastByObject` are 2D (`{ [nork]: { [nor]: form } }`),
+    // so any `sentences[tense][person]` keyed by the varying axis collides
+    // with that flat-lookup assumption and corrupts the gap audit (a
+    // `[object Object]`-shaped "form"). The "exercises the new axis" bar is
+    // met the same way #347 met it for `ukan`: a logic-level smoke test
+    // (`src/logic.test.js`) running `generateQuestions` against this entry.
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
   // `jakin` ("to know a fact") — fully synthetic, sharing `ukan`'s
   // `-t`/`-zu`/∅ present suffix family (`dakit`/`dakizu`/`daki`), per
   // `docs/CONJUGATIONS.md` §7.
