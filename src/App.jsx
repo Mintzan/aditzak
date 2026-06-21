@@ -239,7 +239,13 @@ function describeLesson(lesson, t, language) {
       subtitle: { main: verb.verb, secondary: verbMeaning(verb, language) },
       heading: persons ? `${verb.verb} · ${label} (${persons})` : `${verb.verb} · ${label}`,
       recognitionOnly,
-      fixedArgument: getFixedArgument(verb),
+      // #346: a lesson drilling a verb's 2D object-axis table pins a
+      // different argument than `getFixedArgument(verb)` would derive from
+      // the verb's own (`recipient`/`agent`) metadata — see
+      // `generateQuestions`'s `objectAxis` doc comment in `lessonLogic.js`.
+      fixedArgument: lesson.objectAxis
+        ? { role: lesson.objectAxis.vary === 'nor' ? 'nork' : 'nor', person: lesson.objectAxis.fixed }
+        : getFixedArgument(verb),
     }
   }
   const verbNames = [...new Set(lesson.sources.map(({ verbId }) => VERBS.find((v) => v.id === verbId).verb))]
@@ -1435,6 +1441,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
       sources,
       mode: lesson.mode,
       review: Boolean(lesson.review),
+      objectAxis: lesson.objectAxis,
     })
   })
   // Review lessons get up to `EXTRA_REVIEW_EXERCISES` extra questions, drawn
