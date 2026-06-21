@@ -12,6 +12,23 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #362: NOR-NORI Potentziala object axis (`potentialByNor`/`potentialAlegiazkoaByNor`/`potentialLehenaldiaByNor`) for `gustatu`/`iruditu`/`ahaztu` — bare participle, not the `-ko` future participle used by Baldintza/Ondorioa
+
+`#361` added Baldintza/Ondorioa's NOR-NORI object axis riding the future
+`-ko` participle (`gustatuko balitzait`, etc.) — matching the codebase's
+existing `future = perfective participle + -ko` rule. Potentziala
+(Ahalera) does **not** follow that prefix: standard Basque ahalera takes
+the **bare/perfective participle**, the same one `past` already uses
+(`gustatu zakidake`, not `*gustatuko zakidake`) — mirroring synthetic
+`dezaket`-type forms like "irakurri dezaket" rather than "*irakurriko
+dezaket". Reused the rest of #361's conventions unchanged: the NOR axis
+is restricted to `{ni, zu, gu, zuek}` (no `hura`/`haiek` inner keys —
+those are already covered by the flat `present`/`past` tables), and only
+the literal diagonal is excluded as reflexive (not the whole
+same-person-category block, unlike `ukan`'s NOR-NORK tables). As with
+#361, lesson/journey wiring is out of scope per the issue's "Done when"
+checklist — this only adds the verb data.
+
 ## 2026-06-21 — #361: NOR-NORI Baldintza/Ondorioa object axis (`baldintzaByNor`/`conditionalByNor`/`conditionalPastByNor`) for `gustatu`/`iruditu`/`ahaztu` — narrower reflexive rule, narrower NOR axis than `ukan`'s object-axis tables
 
 **Decision:** Added the `*ByNor` siblings of `baldintza`/`conditional` for
