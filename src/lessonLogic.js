@@ -1364,17 +1364,38 @@ export function generateQuestions(
 // the same `validFor` exclusion and dedup) — this question already shows a
 // sentence, so an unrelated verb's form reads unambiguously as "wrong verb
 // for this sentence", same as `verb-choice`/`case-mixer`'s normal siblings.
-function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementMatches, extraSiblingSources = [], verbs) {
+// `objectAxis` (#380, optional, `{ vary, fixed }` — same shape as
+// `generateQuestions`'s) — when the review pools sources that carry a 2D
+// NOR-NORK/NOR-NORI table (`ukan`/`maite`/`ikusi`/`jan`/`edan`/`erosi`/
+// `hartu`'s `presentByObject`/`pastByObject`, #346/#347/#378/#379), every
+// source in `resolvedSources` is read through that single shared axis —
+// a review only ever fixes one axis value for all its sources, same as a
+// single-verb `objectAxis` lesson does (see `data/lessons.js`'s Unit 15
+// lessons). None of these verbs have `sentences` for these tenses yet, so
+// candidates here skip the sentence requirement entirely and the resulting
+// question has no `sentence` (`QuestionPrompt` already renders a bare
+// person+`fixedArgument`-badge header when `sentence` is falsy — the same
+// fallback `kind: 'form'` questions use). With no sentence there's also no
+// `validFor` tag to narrow siblings by, so every agreement-compatible
+// sibling's resolved form is a fair distractor.
+function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementMatches, extraSiblingSources = [], verbs, objectAxis) {
   const candidates = []
   const known = new Set(resolvedSources.map(({ verb, tense }) => `${verb.id}:${tense}`))
   const extras = extraSiblingSources.filter(({ verb, tense }) => !known.has(`${verb.id}:${tense}`))
+  const resolveTable = (verb, tense) => {
+    const table = verb.conjugations[tense]
+    if (!table) return undefined
+    return objectAxis ? resolveObjectAxisTable(table, objectAxis) : table
+  }
   for (const { verb, tense } of resolvedSources) {
     const sentences = verb.sentences?.[tense] ?? {}
-    const persons = personsFilter ?? Object.keys(verb.conjugations[tense] ?? {})
+    const table = resolveTable(verb, tense)
+    const persons = personsFilter ?? Object.keys(table ?? {})
+    const fixedArgument = objectAxis ? { role: verb.agreement.find((role) => role !== objectAxis.vary), person: objectAxis.fixed } : undefined
     for (const person of persons) {
-      const sentence = normalizeSentence(pickVariant(sentences[person]))
-      const correct = verb.conjugations[tense]?.[person]
-      if (!sentence || !correct) continue
+      const sentence = objectAxis ? undefined : normalizeSentence(pickVariant(sentences[person]))
+      const correct = table?.[person]
+      if ((!objectAxis && !sentence) || !correct) continue
       const siblings = [
         ...resolvedSources.filter((sibling) => !(sibling.verb.id === verb.id && sibling.tense === tense)),
         ...extras.filter((sibling) => sibling.tense === tense),
@@ -1382,11 +1403,11 @@ function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementM
       const siblingCandidates = siblings
         .filter((sibling) => agreementMatches(sibling.verb.agreement, verb.agreement))
         .map((sibling) => {
-          const form = sibling.verb.conjugations[sibling.tense]?.[person]
+          const form = resolveTable(sibling.verb, sibling.tense)?.[person]
           return form ? { verbId: sibling.verb.id, form } : null
         })
         .filter(Boolean)
-      const siblingForms = filterExtraCandidates(siblingCandidates, sentence.validFor)
+      const siblingForms = objectAxis ? siblingCandidates.map((candidate) => candidate.form) : filterExtraCandidates(siblingCandidates, sentence.validFor)
       // Capped at 3 distractors (4 options total, including `correct`) — same
       // ceiling as `buildOptions` — so Delivery 4's broader fallback pool
       // widens *variety* (which siblings show up) without ever showing more
@@ -1397,17 +1418,17 @@ function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementM
         const borrowedCandidates = (verbs ?? [])
           .filter((sibling) => !knownSiblingIds.has(sibling.id) && agreementMatches(sibling.agreement, verb.agreement))
           .map((sibling) => {
-            const form = sibling.conjugations[tense]?.[person]
+            const form = resolveTable(sibling, tense)?.[person]
             return form ? { verbId: sibling.id, form } : null
           })
           .filter(Boolean)
-        const borrowedForms = filterExtraCandidates(borrowedCandidates, sentence.validFor)
+        const borrowedForms = objectAxis ? borrowedCandidates.map((candidate) => candidate.form) : filterExtraCandidates(borrowedCandidates, sentence.validFor)
         const moreDistractors = shuffle([...new Set(borrowedForms)].filter((form) => form !== correct && !distractors.includes(form)))
         distractors = [...distractors, ...moreDistractors].slice(0, 3)
       }
       if (distractors.length === 0) continue
       const options = [correct, ...distractors]
-      candidates.push({ verbId: verb.id, tense, person, sentence: sentence.text, correct, options })
+      candidates.push({ verbId: verb.id, tense, person, sentence: sentence?.text, fixedArgument, correct, options })
     }
   }
   return candidates
@@ -1418,16 +1439,18 @@ function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementM
 function pickCrossSourceQuestions(candidates, count, kind) {
   return shuffle(candidates)
     .slice(0, count)
-    .map(({ verbId, tense, person, sentence, correct, options }) => ({
+    .map(({ verbId, tense, person, sentence, fixedArgument, correct, options }) => ({
       verbId,
       tense,
       kind,
       person,
       sentence,
+      fixedArgument,
       correct,
       options: shuffle(options),
     }))
 }
+
 
 // Up to this many `kind: 'verb-choice'` cross-verb questions (see
 // `generateCrossVerbQuestions`) get added to a review lesson's queue — kept
@@ -1460,12 +1483,17 @@ export const CROSS_VERB_QUESTION_COUNT = 2
 // combination — a review with too few eligible combinations (e.g. a
 // single-source review, where there are no siblings to choose between at
 // all) simply returns fewer, down to none.
+//
+// `objectAxis` (#380, optional, `{ vary, fixed }`) — when the review pools
+// `objectAxis` sources (e.g. `ukan`/`maite`'s `presentByObject`), every
+// source is read through this one shared axis instead of its flat
+// `conjugations[tense]` table; see `collectCrossSourceCandidates`.
 export function generateCrossVerbQuestions(
   resolvedSources,
-  { persons: personsFilter, count = CROSS_VERB_QUESTION_COUNT, extraSiblingSources = [], verbs } = {},
+  { persons: personsFilter, count = CROSS_VERB_QUESTION_COUNT, extraSiblingSources = [], verbs, objectAxis } = {},
 ) {
   return pickCrossSourceQuestions(
-    collectCrossSourceCandidates(resolvedSources, personsFilter, agreementsCompatible, extraSiblingSources, verbs),
+    collectCrossSourceCandidates(resolvedSources, personsFilter, agreementsCompatible, extraSiblingSources, verbs, objectAxis),
     count,
     'verb-choice',
   )

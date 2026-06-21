@@ -2963,6 +2963,35 @@ describe('generateCrossVerbQuestions', () => {
       expect(question.options.length).toBe(3)
     })
   })
+
+  it('pools two objectAxis verbs together (#380), mixing their resolved presentByObject forms with no sentence', () => {
+    const ukan = VERBS.find((v) => v.id === 'ukan')
+    const maite = VERBS.find((v) => v.id === 'maite')
+    const sources = [
+      { verb: ukan, tense: 'present' },
+      { verb: maite, tense: 'present' },
+    ]
+    const objectAxis = { vary: 'nor', fixed: 'ni' }
+
+    const questions = generateCrossVerbQuestions(sources, { count: 10, objectAxis })
+
+    expect(questions.length).toBeGreaterThan(0)
+    questions.forEach((question) => {
+      expect(question.kind).toBe('verb-choice')
+      expect(question.sentence).toBeUndefined()
+      expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+      expect(question.options).toContain(question.correct)
+      expect(new Set(question.options).size).toBe(question.options.length)
+    })
+    const verbIds = new Set()
+    questions.forEach((question) => {
+      const ukanForm = resolveObjectAxisTable(ukan.conjugations.present, objectAxis)[question.person]
+      const maiteForm = resolveObjectAxisTable(maite.conjugations.present, objectAxis)[question.person]
+      if (question.options.includes(ukanForm)) verbIds.add('ukan')
+      if (question.options.includes(maiteForm)) verbIds.add('maite')
+    })
+    expect(verbIds.size).toBe(2)
+  })
 })
 
 describe('generateCaseMixerQuestions', () => {

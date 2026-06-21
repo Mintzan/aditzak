@@ -12,6 +12,40 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #380: generateCrossVerbQuestions learns objectAxis pooling
+
+Gave `generateCrossVerbQuestions` (and the `collectCrossSourceCandidates`
+helper it shares with `generateCaseMixerQuestions`) an optional `objectAxis`
+parameter so a pooled review can mix `ukan`/`maite`/`ikusi`/`jan`/`edan`/
+`erosi`/`hartu`'s `presentByObject`/`pastByObject` 2D tables, not just flat
+ones — the prerequisite for #381's Unit 15 pooled review.
+
+Treated `objectAxis` as **one shared value across every pooled source**,
+matching the existing convention that `objectAxis` is a lesson-level field
+(`data/lessons.js`'s Unit 15/28 lessons each fix a single `{ vary, fixed }`
+for the whole lesson) — a review never needs a different fixed value per
+source, so there was no reason to make this a per-source option.
+
+None of the `objectAxis` verbs have `sentences[tense]` data for these tables
+yet, so when `objectAxis` is set, the sentence requirement (and the
+`validFor`-based sibling narrowing it drives) is dropped entirely for that
+call — every agreement-compatible sibling's resolved form is a fair
+distractor, and the resulting questions have no `sentence` (`fixedArgument`
+is computed and threaded through instead, same shape `generateQuestions`
+already produces for a single-verb `objectAxis` lesson). `App.jsx`'s
+`QuestionPrompt` already renders a bare person+badge header whenever
+`sentence` is falsy, so no UI change was needed.
+
+Left `generateCaseMixerQuestions` without `objectAxis` support — its whole
+point is nor-vs-nor-nork agreement *mismatch*, and every `objectAxis` verb is
+already nor-nork, so there's nothing for it to mix in practice; it still
+calls `collectCrossSourceCandidates` positionally and simply never passes the
+new argument.
+
+Did not wire `lesson.objectAxis` through from `App.jsx`'s
+`generateCrossVerbQuestions` call site — that's #381's job (the actual Unit
+15 pooled-review wiring), once the lessons that need it exist.
+
 ## 2026-06-21 — #379: jan/edan/erosi/hartu gain presentByObject/pastByObject; fixed a latent getDativeOvergenerationLure bug along the way
 
 Extended `ikusi`'s #378 pattern to four more `ukan`-auxiliary periphrastic
