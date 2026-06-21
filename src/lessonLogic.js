@@ -705,6 +705,33 @@ export function getFixedArgument(verb) {
   return null
 }
 
+// #346: resolves a `nor-nork` verb's real 2D conjugation table
+// (`{ [nork]: { [nor]: form } }`, opted into per verb/tense — see the
+// `object`-vs-2D note in `data/verbs.js`) down to the flat `{ [person]: form }`
+// shape every other consumer in this file (`buildOptions`, sentences, lures,
+// ...) already expects, for whichever axis a lesson declares it's drilling:
+//   - `vary: 'nor'` drills the object — `nork` is pinned at `fixed`, and the
+//     resulting table's keys range over `nor` (e.g. against `ukan`'s grid,
+//     `{ vary: 'nor', fixed: 'ni' }` -> `{ hura: 'dut', zu: 'zaitut', ... }`,
+//     "I have/see *you/him/them/...*").
+//   - `vary: 'nork'` drills the subject — `nor` is pinned at `fixed`, and the
+//     resulting table's keys range over `nork`. Same shape `object: 'hura'`
+//     already produces for the citation paradigm, but expressible here too
+//     for a non-`hura` fixed object once a verb's 2D table is authored.
+// Whichever axis is pinned, a `nork`/`nor` value with no cell for `fixed`
+// (a gap — `hi`, or one of the reflexive cells `data/verbs.js` documents) is
+// simply absent from the result, same as a single-axis table never having
+// had that person in the first place.
+export function resolveObjectAxisTable(table2D, { vary, fixed }) {
+  if (vary === 'nor') return table2D[fixed] ?? {}
+  const table = {}
+  for (const nork of Object.keys(table2D)) {
+    const form = table2D[nork][fixed]
+    if (form) table[nork] = form
+  }
+  return table
+}
+
 // Whether `verb`'s `[tense][person]` form is a "particle + auxiliary"
 // compound (e.g. `nahi`'s `nahi dut`) whose trailing word is *itself* a
 // complete, correct form of some other agreement-compatible verb for the same
@@ -1083,6 +1110,20 @@ function buildWordOrderQuestion(table, sentence, person) {
 // "recognition tier" left for it to belong to once it's just one carrier
 // among others, so it gets no production-adjacent framings at all.
 //
+// `objectAxis` (#346, optional — `{ vary: 'nor' | 'nork', fixed: person }`)
+// declares that `verb.conjugations[tense]` is a real 2D NOR-NORK table
+// (`{ [nork]: { [nor]: form } }`, see `data/verbs.js`'s `ukan.presentByObject`)
+// and which axis this lesson drills: `resolveObjectAxisTable` collapses it to
+// an ordinary flat table before anything else below runs, so `persons`,
+// `buildOptions`'s distractor pool (still just "the other values on the same
+// table", now the same axis being drilled by construction), sentences, and
+// lures all behave exactly as they do for a single-axis verb — the 2D shape
+// never reaches them directly. `fixedArgument` is overridden to describe
+// whichever argument this axis pins (`{ role: 'nork', person: fixed }` for
+// `vary: 'nor'`, the object-varying case) instead of `getFixedArgument(verb)`,
+// reusing the same `FixedArgumentBadge` #142's `recipient`/`agent` already
+// render. Defaults to `undefined`, i.e. the original flat-table behaviour.
+//
 // #141's case-frame/cross-tense lures (`getCaseFrameLure`/
 // `getCaseFramePronounLure`/`getCrossTenseLure`) add up to two further
 // guaranteed distractors, on top of the same-table ones above, for the rows
@@ -1105,14 +1146,23 @@ function buildWordOrderQuestion(table, sentence, person) {
 // `dativeOvergeneration`-flagged verb's own participle paired with a
 // NOR-NORI-NORK sibling's auxiliary — `eramango diot` alongside the correct
 // `eramango dut`), reusing this same gate since it's NOR-NORK-only.
-export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode } = {}) {
-  const table = verb.conjugations[tense]
+export function generateQuestions(
+  verb,
+  tense,
+  { noTyping = false, rounds = 1, includeNegation = false, persons: personsFilter, extraCandidates, verbs, mode, objectAxis } = {},
+) {
+  // #346: `objectAxis` opts into reading `verb.conjugations[tense]` as a 2D
+  // `{ [nork]: { [nor]: form } }` table (see `resolveObjectAxisTable`)
+  // instead of the usual flat one — once resolved, `table` is an ordinary
+  // flat table and nothing else below needs to know the difference.
+  const table = objectAxis ? resolveObjectAxisTable(verb.conjugations[tense], objectAxis) : verb.conjugations[tense]
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const negativeSentences = verb.negativeSentences?.[tense] ?? {}
   const persons = personsFilter ?? Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
-  const source = { verbId: verb.id, tense, fixedArgument: getFixedArgument(verb) }
+  const fixedArgument = objectAxis ? { role: objectAxis.vary === 'nor' ? 'nork' : 'nor', person: objectAxis.fixed } : getFixedArgument(verb)
+  const source = { verbId: verb.id, tense, fixedArgument }
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)
   const noProduction = noTyping || mode === 'recognition' || verb.recognitionOnly

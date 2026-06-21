@@ -210,6 +210,48 @@ words back into order. Resolved per the design questions raised in #185:
   sentence clears the 4-token floor, since auxiliary-fronting is exactly the
   word-order change this kind is best at drilling.
 
+### NOR-NORK object axis (#346 — resolved)
+`ukan`'s `present` table only varied the ergative (NORK) subject against a
+fixed absolutive (NOR) object (`object: 'hura'`), so the engine could only
+drill "I have it" (`dut`), never "I have you" (`zaitut`). Chose option **(b)
+real 2D table**, per the issue's own recommendation:
+
+- `verb.conjugations[tense]` can now optionally be a 2D table, `{ [nork]: {
+  [nor]: form } }`, opt-in per verb/tense — `ukan` gained a sibling
+  `presentByObject` tense (`TENSE_META.presentByObject`) alongside its
+  existing flat `present`, rather than replacing it, so nothing already
+  drilling `present` changes shape.
+- A new pure function, `resolveObjectAxisTable(table2D, { vary, fixed })`
+  (`lessonLogic.js`), collapses the 2D table to an ordinary flat `{ [person]:
+  form }` table for whichever axis a lesson wants to drill (`vary: 'nor'`
+  holds the subject fixed and varies the object, or vice versa), dropping any
+  cell that's missing (the reflexive/impossible cells below).
+- `generateQuestions` takes a new `objectAxis: { vary, fixed }` option: when
+  set, it resolves the table via `resolveObjectAxisTable` *before* any other
+  logic runs, and derives `fixedArgument` from `objectAxis` instead of
+  `getFixedArgument(verb)`. Crucially, **`buildOptions`/`buildTaggedOptions`
+  needed zero changes** — once the table is flat, distractor-building is
+  axis-agnostic by construction. This is a deliberate deviation from the
+  issue's suggested touch points (which expected `buildOptions` to also need
+  updating for a 2D distractor pool); resolving to flat upfront made that
+  unnecessary. See `docs/DECISIONS.md` (2026-06-21) for the full reasoning.
+- **Gap cells**: not just the literal reflexive diagonal (nik→ni, guk→gu,
+  zuk→zu, zuek→zuek) as the issue text describes, but whole same-person-
+  category blocks per `CONJUGATIONS.md` §3's `*(refl.)*` markings — e.g. nik
+  excludes both `ni` *and* `gu` as objects, zuk excludes both `zu` *and*
+  `zuek`. No hark/haiek (3rd person) cells are excluded. `ukan.presentByObject`
+  was transcribed from that authoritative grid, not the issue's simplified
+  description, and cross-checked against the existing flat `present` table
+  (`presentByObject[nork].hura === present[nork]` for all six norks).
+- **Scope**: this lands the engine/data/test support the issue's "Done when"
+  checklist asks for, but does **not** wire a `LESSONS`/`journey.js` entry —
+  `journey.test.js` cross-checks that every `lesson.persons` entry exists as
+  a key in `verb.conjugations[lesson.tense]`, which for a 2D table are `nork`
+  values rather than the drilled axis's persons, so a curriculum lesson would
+  need either a `journey.test.js` update or lesson-level axis-aware
+  resolution before that check could pass. Left for whichever future issue
+  actually adds an object-axis unit to the journey.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey
@@ -233,7 +275,17 @@ represent that with a single `person` key. Two ways forward:
 
 (a) is far cheaper and should be the default unless (b)'s richer drilling is
 judged worth the cost — flagged here as the decision point, same posture as
-the person-restriction question above.
+the person-restriction question above. **Update (#346):** the NOR-NORK case
+above shipped (b) for a 2-argument verb via the "resolve 2D to flat before
+`generateQuestions`'s other logic runs" pattern. The same pattern generalizes
+to this 3-argument NOR-NORI-NORK case in principle — `conjugations[tense]`
+would become `{ [nork]: { [nori]: form } }` (NOR fixed, as it already is for
+Unit 21's planned scope) and a `resolveObjectAxisTable`-like helper would
+collapse it to a flat `{ [nori]: form }` or `{ [nork]: form }` table before
+`generateQuestions` runs — `buildOptions` still wouldn't need changes. The
+remaining open question for Unit 21 specifically is the *UI* surfacing of
+"which NORI is in play per question" (`describeLesson`/badges), which #346's
+NOR-NORK case sidesteps since it never shipped a curriculum lesson.
 
 ### Allocutive register / `hi` (Unit 26)
 Hitanoa adds an **addressee-gender** dimension (masc./fem. `-k`/`-n` forms)

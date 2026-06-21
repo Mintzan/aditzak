@@ -50,6 +50,7 @@ import {
   recordErrors,
   recordResult,
   repairStreak,
+  resolveObjectAxisTable,
   shuffle,
   STREAK_REPAIR_COST,
   WORD_ORDER_MAX_WORDS,
@@ -712,6 +713,70 @@ describe('generateQuestions', () => {
     const agentVerb = { ...verb, agent: 'ni' }
     generateQuestions(agentVerb, 'present').forEach((question) => {
       expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+    })
+  })
+
+  // #346: a verb opted into a real 2D NOR-NORK table (`{ [nork]: { [nor]:
+  // form } }`) instead of the usual flat `[person]: form` — `objectAxis`
+  // tells `generateQuestions` which axis to drill before anything else runs.
+  describe('objectAxis (#346)', () => {
+    const table2D = {
+      ni: { hura: 'dut', zu: 'zaitut', zuek: 'zaituztet', haiek: 'ditut' },
+      hura: { ni: 'nau', hura: 'du', gu: 'gaitu', zu: 'zaitu', zuek: 'zaituzte', haiek: 'ditu' },
+      gu: { hura: 'dugu', zu: 'zaitugu', zuek: 'zaituztegu', haiek: 'ditugu' },
+      zu: { ni: 'nauzu', hura: 'duzu', gu: 'gaituzu', haiek: 'dituzu' },
+      zuek: { ni: 'nauzue', hura: 'duzue', gu: 'gaituzue', haiek: 'dituzue' },
+      haiek: { ni: 'naute', hura: 'dute', gu: 'gaituzte', zu: 'zaituzte', zuek: 'zaituztete', haiek: 'dituzte' },
+    }
+    const objectAxisVerb = { id: 'object-axis-verb', conjugations: { presentByObject: table2D } }
+
+    it('resolveObjectAxisTable drills the object (nor) with nork fixed', () => {
+      expect(resolveObjectAxisTable(table2D, { vary: 'nor', fixed: 'ni' })).toEqual(table2D.ni)
+    })
+
+    it('resolveObjectAxisTable drills the subject (nork) with nor fixed', () => {
+      expect(resolveObjectAxisTable(table2D, { vary: 'nork', fixed: 'hura' })).toEqual({
+        ni: 'dut',
+        hura: 'du',
+        gu: 'dugu',
+        zu: 'duzu',
+        zuek: 'duzue',
+        haiek: 'dute',
+      })
+    })
+
+    it('resolveObjectAxisTable omits gaps (a missing cell, e.g. a reflexive person) rather than crashing', () => {
+      expect(resolveObjectAxisTable(table2D, { vary: 'nor', fixed: 'ni' })).not.toHaveProperty('ni')
+      expect(resolveObjectAxisTable(table2D, { vary: 'nork', fixed: 'ni' })).not.toHaveProperty('ni')
+    })
+
+    it('generateQuestions resolves the 2D table to a flat one before building questions', () => {
+      const objectPersons = Object.keys(table2D.ni)
+      const questions = generateQuestions(objectAxisVerb, 'presentByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+
+      expect(questions).toHaveLength(objectPersons.length)
+      questions.forEach((question) => {
+        expect(question.correct).toBe(table2D.ni[question.person])
+        expect(question.options).toContain(question.correct)
+      })
+    })
+
+    it('overrides fixedArgument to describe the pinned axis instead of getFixedArgument(verb)', () => {
+      generateQuestions(objectAxisVerb, 'presentByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } }).forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+      })
+
+      generateQuestions(objectAxisVerb, 'presentByObject', { objectAxis: { vary: 'nork', fixed: 'hura' } }).forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nor', person: 'hura' })
+      })
+    })
+
+    it("matches ukan's existing single-axis `present` table for the citation (nor: 'hura') column", () => {
+      const ukan = VERBS.find((v) => v.id === 'ukan')
+      for (const nork of Object.keys(ukan.conjugations.present)) {
+        if (!(nork in ukan.conjugations.presentByObject)) continue
+        expect(ukan.conjugations.presentByObject[nork].hura).toBe(ukan.conjugations.present[nork])
+      }
     })
   })
 

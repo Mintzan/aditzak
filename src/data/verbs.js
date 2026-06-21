@@ -27,6 +27,26 @@
 // Exactly one of the two is set on a ditransitive verb; `getFixedArgument`
 // (`lessonLogic.js`) resolves either into `{ role, person }` for the UI.
 //
+// #346: a `nor-nork` verb can *additionally* carry a real 2D table under a
+// separate tense key — `conjugations[tense] = { [nork]: { [nor]: form } }`
+// instead of the usual flat `[person]: form` — to drill the object axis
+// rather than (or in addition to) the subject axis the plain `object: 'hura'`
+// tables above are restricted to. `ukan`'s `presentByObject` is the first:
+// same cells as `present`'s `hura` column plus the five other `nor` columns
+// from `docs/CONJUGATIONS.md` §3's "NOR = 1st/2nd person" grid. `hi` is
+// omitted (per #345's scope note) and so is every cell `docs/CONJUGATIONS.md`
+// marks `*(refl.)*` — not just the literal `nork === nor` diagonal, but the
+// whole same-person-category block (1st: `ni`/`gu`; 2nd: `zu`/`zuek`) the
+// grid itself marks reflexive, e.g. `nik` -> `gu` and `guk` -> `ni` are both
+// gaps, not just `nik` -> `ni`. A lesson opts into reading this 2D shape via
+// `objectAxis: { vary, fixed }` (`generateQuestions`/`resolveObjectAxisTable`
+// in `lessonLogic.js`): `vary: 'nor'` fixes `nork` at `fixed` and drills the
+// object across `person`; `vary: 'nork'` fixes `nor` at `fixed` and drills
+// the subject, the same shape `object: 'hura'` already produces but reusable
+// for a non-`hura` fixed object. Once resolved to a flat table, every
+// downstream consumer (`buildOptions`, lures, sentences) is unchanged — the
+// 2D shape never reaches them directly.
+//
 // `dialect` is a placeholder for future variants: a verb could later carry
 // e.g. `dialectVariants: { bizkaiera: { conjugations: {...} } }` overrides
 // without changing this shape.
@@ -509,6 +529,22 @@ export const VERBS = [
       // out of scope for this table — see the issue filed for #171's
       // remaining scope.
       imperative: { 'hi-m': 'ezak', 'hi-f': 'ezan', zu: 'ezazu', zuek: 'ezazue' },
+      // #346: real 2D NOR-NORK table (`{ [nork]: { [nor]: form } }`) — see
+      // the `object`-vs-2D note near the top of this file. Transcribed from
+      // `docs/CONJUGATIONS.md` §3's "Present — NOR = 1st/2nd person" grid,
+      // `hi` omitted and every `*(refl.)*` cell (the whole same-person-
+      // category block, not just the literal diagonal) left as a gap. Each
+      // `[nork]` row's `hura` cell matches `present[nork]` above exactly
+      // (e.g. `presentByObject.ni.hura === present.ni`, both `'dut'`) — the
+      // citation paradigm is this grid's `nor: 'hura'` column.
+      presentByObject: {
+        ni: { hura: 'dut', zu: 'zaitut', zuek: 'zaituztet', haiek: 'ditut' },
+        hura: { ni: 'nau', hura: 'du', gu: 'gaitu', zu: 'zaitu', zuek: 'zaituzte', haiek: 'ditu' },
+        gu: { hura: 'dugu', zu: 'zaitugu', zuek: 'zaituztegu', haiek: 'ditugu' },
+        zu: { ni: 'nauzu', hura: 'duzu', gu: 'gaituzu', haiek: 'dituzu' },
+        zuek: { ni: 'nauzue', hura: 'duzue', gu: 'gaituzue', haiek: 'dituzue' },
+        haiek: { ni: 'naute', hura: 'dute', gu: 'gaituzte', zu: 'zaituzte', zuek: 'zaituztete', haiek: 'dituzte' },
+      },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by their own (agentive, human) subject
@@ -6945,6 +6981,12 @@ export const TENSE_META = {
   // motion verbs (`nindoan`, `zetorren`, `nenbilen`).
   habitualPast: { labelKey: 'tenseHabitualPast', basque: 'lehen burutugabea' },
   imperfectivePast: { labelKey: 'tenseImperfectivePast', basque: 'lehen burutugabea (mugimendua)' },
+  // #346: `ukan`'s real 2D NOR-NORK table (`{ [nork]: { [nor]: form } }`,
+  // see the `object`-vs-2D note near the top of this file) — `nor` varies
+  // (the object) instead of the usual `nork` (the subject). A separate tense
+  // key from `present` rather than a reshaping of it, so every existing
+  // `present`-keyed lesson/test is untouched.
+  presentByObject: { labelKey: 'tensePresentByObject', basque: 'oraina (objektuka)' },
 }
 
 export const TYPE_META = {

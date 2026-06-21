@@ -12,6 +12,51 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #346: NOR-NORK object axis via real 2D table, resolved to flat before `generateQuestions` runs
+
+**Decision:** chose option (b) from the issue (a real 2D table,
+`conjugations[tense] = { [nork]: { [nor]: form } }`) over option (a)
+(fixing the object and only varying the subject, as every verb did before
+this). `ukan` gained a sibling tense, `presentByObject`, alongside its
+existing flat `present` — `present` itself is untouched, so no existing
+lesson's behavior changes. A new pure function,
+`resolveObjectAxisTable(table2D, { vary, fixed })` (`lessonLogic.js`),
+collapses the 2D table to a flat `{ [person]: form }` table for whichever
+axis a caller wants to drill; `generateQuestions` gained an `objectAxis`
+option that, when set, runs the table through this resolver and derives
+`fixedArgument` from it before any of the function's existing logic
+executes.
+
+**Why:** the issue's own write-up suggested `buildOptions` would also need
+updating to handle a 2D distractor pool. Resolving to a flat table *before*
+`generateQuestions`'s other logic runs (sentences, persons, fixedArgument,
+and eventually `buildOptions`) makes the rest of the pipeline axis-agnostic
+automatically — it sees the same `{ [person]: form }` shape it always has.
+`buildOptions`/`buildTaggedOptions` needed **zero changes**. This is cheaper
+and lower-risk than threading 2D-awareness through the distractor-building
+code, and keeps the new feature fully additive/opt-in: a verb/tense with no
+`objectAxis` caller behaves exactly as before.
+
+The which-cells-are-gaps question turned out broader than the issue text's
+literal description ("nik→ni, guk→gu, zuk→zu, zuek→zuek" — the reflexive
+diagonal only). `CONJUGATIONS.md` §3's authoritative grid marks whole
+same-person-category blocks as `*(refl.)*`/impossible, not just the single
+diagonal cell — e.g. nik excludes both `ni` and `gu` as objects (not just
+`ni`), zuk excludes both `zu` and `zuek` (not just `zu`). No hark/haiek (3rd
+person) cells are excluded. Followed the grid over the issue's simplified
+text; `ukan.presentByObject` was transcribed directly from it and
+cross-checked in `logic.test.js` against the existing `present` table
+(`presentByObject[nork].hura === present[nork]` for all six norks).
+
+Deliberately did **not** wire a `LESSONS`/`journey.js` entry for this axis.
+`journey.test.js` cross-checks that every `lesson.persons` entry is a key of
+`verb.conjugations[lesson.tense]` — for a 2D table those top-level keys are
+`nork` values, not the drilled axis's persons, so a curriculum lesson would
+need either a test update or lesson-level axis resolution first. The issue's
+"Done when" checklist only asks for engine/data/test support for "at least
+one verb's tense," not curriculum integration, so this is left for whichever
+future issue actually adds an object-axis unit to the journey.
+
 ## 2026-06-21 — #314: authored colorful sentences for #319's 16 high-frequency fodder verbs
 
 Replaced the schematic placeholder sentences (from the now-closed
