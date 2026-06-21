@@ -514,8 +514,8 @@ export const JOURNEY_TRANSLATIONS = {
     35: {
       title: { es: 'Baldintza eta Ondorioa — Condicionales', eu: 'Baldintza eta Ondorioa — Baldintzazkoak' },
       focus: {
-        es: 'prótasis con ba- + apódosis con -ke — producción para NOR/NOR-NORK, solo reconocimiento para los paradigmas dativos',
-        eu: 'ba- protasia + -ke ondorioa — ekoizpena NOR/NOR-NORK-erako, ezagutza hutsa paradigma datiboetarako',
+        es: 'prótasis con ba- + apódosis con -ke — producción para NOR/NOR-NORK, solo reconocimiento para los paradigmas dativos; además, el eje del objeto NOR-NORK de ukan (formas tipo bazintut/zintuket, #353) en Baldintza y Ondorioa presente/pasado',
+        eu: 'ba- protasia + -ke ondorioa — ekoizpena NOR/NOR-NORK-erako, ezagutza hutsa paradigma datiboetarako; gainera, ukan-en NOR-NORK objektu-ardatza (bazintut/zintuket motako formak, #353) Baldintzan eta Ondorioa oraina/lehenaldian',
       },
       payload: {
         es: '"Si tuviera dinero, compraría eso" (Dirua banu, hori erosiko nuke)',

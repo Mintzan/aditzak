@@ -1709,6 +1709,42 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'conditional' },
     ],
   },
+  // #353: Baldintza/Ondorioa's NOR-NORK object axis (`bazintut`/`zintuket`-
+  // type forms) — the `ukan-baldintza`/`-conditional` lessons above only
+  // drill the subject axis; these drill the object instead, same
+  // `objectAxis: { vary: 'nor', fixed: 'ni' }` convention as Unit 15/#352.
+  {
+    id: 'ukan-baldintza-object-axis',
+    verbId: 'ukan',
+    tense: 'baldintzaByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'ukan-conditional-object-axis',
+    verbId: 'ukan',
+    tense: 'conditionalByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'ukan-conditional-past-object-axis',
+    verbId: 'ukan',
+    tense: 'conditionalPastByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'unit-35-object-axis-review',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'ukan', tense: 'baldintzaByObject' },
+      { verbId: 'ukan', tense: 'conditionalByObject' },
+      { verbId: 'ukan', tense: 'conditionalPastByObject' },
+    ],
+  },
   // Unit 30 (#171 core scope) — Commands (Agintera/imperative), second-person
   // only. izan/ukan are NOT `agreementsCompatible`, so `unit-30-review`
   // (pooling both for spaced repetition) gets no cross-verb borrowing —
