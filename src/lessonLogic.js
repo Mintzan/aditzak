@@ -722,6 +722,12 @@ export function getFixedArgument(verb) {
 // (a gap — `hi`, or one of the reflexive cells `data/verbs.js` documents) is
 // simply absent from the result, same as a single-axis table never having
 // had that person in the first place.
+//
+// The implementation below never references `nor`/`nork` by name — it only
+// cares which side is outer vs. inner — so the exact same shape and `vary`
+// values work unchanged for a nor-nori verb's outer-NORI/inner-NOR table
+// (e.g. `gustatu.presentByNor`, #358): `{ vary: 'nor', fixed: 'zu' }` pins
+// `nori` at `zu` and varies `nor`, same as it pins `nork` for `ukan`.
 export function resolveObjectAxisTable(table2D, { vary, fixed }) {
   if (vary === 'nor') return table2D[fixed] ?? {}
   const table = {}
@@ -1125,19 +1131,26 @@ function buildWordOrderQuestion(table, sentence, person) {
 // "recognition tier" left for it to belong to once it's just one carrier
 // among others, so it gets no production-adjacent framings at all.
 //
-// `objectAxis` (#346, optional — `{ vary: 'nor' | 'nork', fixed: person }`)
-// declares that `verb.conjugations[tense]` is a real 2D NOR-NORK table
-// (`{ [nork]: { [nor]: form } }`, see `data/verbs.js`'s `ukan.presentByObject`)
+// `objectAxis` (#346, optional — `{ vary: person-role, fixed: person }`)
+// declares that `verb.conjugations[tense]` is a real 2D table over `verb
+// .agreement`'s two non-`nor`-or-other roles (`{ [outer]: { [inner]: form } }`,
+// see `data/verbs.js`'s `ukan.presentByObject` for the NOR-NORK case, or
+// `gustatu.presentByNor` for the NOR-NORI case, #358) keyed by whichever
+// role each lesson resolves outer/inner to — `resolveObjectAxisTable` is
+// itself axis-name-agnostic, so the same shape works for either pairing —
 // and which axis this lesson drills: `resolveObjectAxisTable` collapses it to
 // an ordinary flat table before anything else below runs, so `persons`,
 // `buildOptions`'s distractor pool (still just "the other values on the same
 // table", now the same axis being drilled by construction), sentences, and
 // lures all behave exactly as they do for a single-axis verb — the 2D shape
 // never reaches them directly. `fixedArgument` is overridden to describe
-// whichever argument this axis pins (`{ role: 'nork', person: fixed }` for
-// `vary: 'nor'`, the object-varying case) instead of `getFixedArgument(verb)`,
-// reusing the same `FixedArgumentBadge` #142's `recipient`/`agent` already
-// render. Defaults to `undefined`, i.e. the original flat-table behaviour.
+// whichever argument this axis pins -- `{ role, person: fixed }`, where
+// `role` is whichever of `verb.agreement`'s two roles isn't `objectAxis.vary`
+// itself (`'nork'` for a nor-nork verb like `ukan` varying `'nor'`; `'nori'`
+// for a nor-nori verb like `gustatu` varying `'nor'`, #358) -- instead of
+// `getFixedArgument(verb)`, reusing the same `FixedArgumentBadge` #142's
+// `recipient`/`agent` already render. Defaults to `undefined`, i.e. the
+// original flat-table behaviour.
 //
 // #141's case-frame/cross-tense lures (`getCaseFrameLure`/
 // `getCaseFramePronounLure`/`getCrossTenseLure`) add up to two further
@@ -1176,7 +1189,9 @@ export function generateQuestions(
   const negativeSentences = verb.negativeSentences?.[tense] ?? {}
   const persons = personsFilter ?? Object.keys(table)
   const personsWithSentences = persons.filter((candidate) => sentences[candidate])
-  const fixedArgument = objectAxis ? { role: objectAxis.vary === 'nor' ? 'nork' : 'nor', person: objectAxis.fixed } : getFixedArgument(verb)
+  const fixedArgument = objectAxis
+    ? { role: verb.agreement.find((role) => role !== objectAxis.vary), person: objectAxis.fixed }
+    : getFixedArgument(verb)
   const source = { verbId: verb.id, tense, fixedArgument }
   const usedKinds = new Map()
   const borrowedSpotErrorSlots = getBorrowedSpotErrorSlots(verbs, verb.agreement, tense, verb.id, personsWithSentences)

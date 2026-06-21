@@ -728,7 +728,7 @@ describe('generateQuestions', () => {
       zuek: { ni: 'nauzue', hura: 'duzue', gu: 'gaituzue', haiek: 'dituzue' },
       haiek: { ni: 'naute', hura: 'dute', gu: 'gaituzte', zu: 'zaituzte', zuek: 'zaituztete', haiek: 'dituzte' },
     }
-    const objectAxisVerb = { id: 'object-axis-verb', conjugations: { presentByObject: table2D } }
+    const objectAxisVerb = { id: 'object-axis-verb', agreement: ['nor', 'nork'], conjugations: { presentByObject: table2D } }
 
     it('resolveObjectAxisTable drills the object (nor) with nork fixed', () => {
       expect(resolveObjectAxisTable(table2D, { vary: 'nor', fixed: 'ni' })).toEqual(table2D.ni)
@@ -876,6 +876,70 @@ describe('generateQuestions', () => {
       ]) {
         expect(() =>
           generateQuestions(candidate, tense, { objectAxis: { vary: 'nor', fixed: 'ni' }, verbs: VERBS }),
+        ).not.toThrow()
+      }
+    })
+  })
+
+  // #358: the NOR-NORI mirror of #346/#347/#348's NOR-NORK `objectAxis` work
+  // — `gustatu`/`iruditu`/`ahaztu` opt a real 2D table (`{ [nori]: { [nor]:
+  // form } }`) into the same `resolveObjectAxisTable` machinery. The reason
+  // this needed an engine change (not just data): `generateQuestions`'s
+  // `fixedArgument` role used to be hardcoded to `'nork'`/`'nor'` only, which
+  // would have mis-badged these verbs' fixed argument as NORK instead of
+  // NORI. These tests pin both the data and that fix.
+  describe('objectAxis on a NOR-NORI verb (#358)', () => {
+    it.each(['gustatu', 'iruditu', 'ahaztu'])(
+      "generates real natzaizu-type questions from %s's presentByNor/pastByNor, with fixedArgument.role 'nori' not 'nork'",
+      (id) => {
+        const candidate = VERBS.find((v) => v.id === id)
+        expect(candidate.agreement).toEqual(['nor', 'nori'])
+
+        // vary: 'nor', fixed: 'zu' pins NORI at 'zu' (the outer key) and
+        // varies NOR (the inner key) — same outer/inner convention as
+        // ukan's presentByObject, just with the roles swapped.
+        const presentQuestions = generateQuestions(candidate, 'presentByNor', { objectAxis: { vary: 'nor', fixed: 'zu' } })
+        expect(presentQuestions.length).toBeGreaterThan(0)
+        presentQuestions.forEach((question) => {
+          expect(question.correct).toBe(candidate.conjugations.presentByNor.zu[question.person])
+          expect(question.options).toContain(question.correct)
+          expect(question.fixedArgument).toEqual({ role: 'nori', person: 'zu' })
+        })
+
+        const pastQuestions = generateQuestions(candidate, 'pastByNor', { objectAxis: { vary: 'nor', fixed: 'zu' } })
+        expect(pastQuestions.length).toBeGreaterThan(0)
+        pastQuestions.forEach((question) => {
+          expect(question.correct).toBe(candidate.conjugations.pastByNor.zu[question.person])
+          expect(question.options).toContain(question.correct)
+          expect(question.fixedArgument).toEqual({ role: 'nori', person: 'zu' })
+        })
+      },
+    )
+
+    it("resolveObjectAxisTable drills gustatu's presentByNor the same way it drills ukan's presentByObject", () => {
+      const gustatu = VERBS.find((v) => v.id === 'gustatu')
+      expect(resolveObjectAxisTable(gustatu.conjugations.presentByNor, { vary: 'nor', fixed: 'zu' })).toEqual(
+        gustatu.conjugations.presentByNor.zu,
+      )
+      expect(resolveObjectAxisTable(gustatu.conjugations.presentByNor, { vary: 'nor', fixed: 'zu' })).toEqual({
+        ni: 'gustatzen natzaizu',
+        gu: 'gustatzen gatzaizkizu',
+        zuek: 'gustatzen zatzaizkizu',
+      })
+    })
+
+    it('overrides fixedArgument.role to nori (not the previously-hardcoded nork) for a NOR-NORI objectAxis verb', () => {
+      const gustatu = VERBS.find((v) => v.id === 'gustatu')
+      generateQuestions(gustatu, 'presentByNor', { objectAxis: { vary: 'nor', fixed: 'hura' } }).forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nori', person: 'hura' })
+      })
+    })
+
+    it('does not crash when verbs (sibling list) is passed alongside a NOR-NORI objectAxis (#350-style regression)', () => {
+      const gustatu = VERBS.find((v) => v.id === 'gustatu')
+      for (const tense of ['presentByNor', 'pastByNor']) {
+        expect(() =>
+          generateQuestions(gustatu, tense, { objectAxis: { vary: 'nor', fixed: 'zu' }, verbs: VERBS }),
         ).not.toThrow()
       }
     })

@@ -12,6 +12,36 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #358: NOR-NORI's `objectAxis` extension (`presentByNor`/`pastByNor`) generalizes `fixedArgument.role`, fixing a latent NORK/NORI mis-badge
+
+`gustatu`/`iruditu`/`ahaztu` (NOR-NORI) now carry `presentByNor`/`pastByNor` —
+the same real-2D-table shape `ukan.presentByObject`/`pastByObject` (#346/#347)
+introduced for NOR-NORK, but keyed outer-NORI/inner-NOR instead of
+outer-NORK/inner-NOR, unlocking the missing "natzaizu-type" forms (non-3rd-
+person NOR, e.g. "Gustatzen natzaizu?" = "Do you like me?"). Named `...ByNor`
+rather than `...ByObject` since NOR isn't "the object" for a NOR-NORI verb the
+way it is for NOR-NORK — the suffix names the newly-varying axis, not a fixed
+semantic role.
+
+`resolveObjectAxisTable` needed **no code change** — it was already
+axis-name-agnostic (only outer-vs-inner position matters, never `'nor'`/
+`'nork'` literally) — only its doc comment needed generalizing.
+
+`generateQuestions`'s `fixedArgument` derivation **did** need a real fix:
+it hardcoded `objectAxis.vary === 'nor' ? 'nork' : 'nor'`, correct only for
+NOR-NORK verbs. For a NOR-NORI verb this would have badged the fixed NORI
+argument as "NORK" (wrong color, wrong label, via `AGREEMENT_META`).
+Generalized to `verb.agreement.find((role) => role !== objectAxis.vary)`,
+which is behavior-preserving for existing NOR-NORK callers and correct for
+NOR-NORI. Caught before shipping by reading `AGREEMENT_META`'s distinct
+per-role styling, not by a failing test — added `src/logic.test.js` coverage
+(`objectAxis on a NOR-NORI verb (#358)`) pinning `fixedArgument.role ===
+'nori'` so a regression here fails loudly next time.
+
+Like #347, scoped to logic-level tests only — no `LESSONS`/`journey.js`
+wiring yet; that's deferred to a separate journey-placement issue (#359),
+mirroring #350's role for #346/#347/#348.
+
 ## 2026-06-21 — #350: new Unit 15 ("non-3rd-person object"), inserted after Unit 14, shifting everything from there on +1
 
 **Decision:** inserted a new journey unit teaching `ukan`/`maite`'s
