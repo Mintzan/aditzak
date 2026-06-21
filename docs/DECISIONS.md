@@ -12,6 +12,36 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #359: new Unit 28 places gustatu/iruditu/ahaztu's non-3rd-person NOR axis (#358) directly after its NOR-NORI predecessor, shifting Gates C/D to 33/45
+
+Placed the new unit (`gustatu-nor-axis-present`/`-past` ×3 verbs, `objectAxis:
+{ vary: 'nor', fixed: 'zu' }`) as Unit 28 — directly after Unit 27 (NOR-NORI
+Past & Future), before Stage 9's ditransitive jump (now Unit 29). This follows
+epic #357's placement analysis verbatim (written in pre-#350-renumber
+numbering as "after Unit 26, before Unit 27"; re-mapped onto the current
+post-#350 numbering as "after current Unit 27, before current Unit 28").
+Rationale carried over from the epic: the unit directly contrasts with what
+the learner just finished — Units 26-27 only ever fix NOR at `hura`/`haiek`,
+so seeing NOR vary to `ni`/`gu`/`zuek` right after is the sharpest possible
+contrast, while staying inside the same dative-shift stage rather than
+waiting until after Stage 9's harder ditransitive content. Mirrors #350's own
+placement of its NOR-NORK sibling unit directly after the paradigm it extends.
+
+`fixed: 'zu'` was chosen because it's the unit's payoff sentence's dative
+person ("Gustatzen natzaizu?" = "Do you like me?"); `zu` itself is the
+reflexive gap missing from the table (a person can't be dative to themself in
+this paradigm), and `hura` as NOR is already covered by Units 26-27's flat
+tables, so the new unit's `persons` are exactly `ni`/`gu`/`zuek` — no overlap,
+no redundant drilling.
+
+Inserting a unit shifts every later unit's `number` by +1 (`journey.js`,
+`docs/LEARNING_JOURNEY.md`'s table, `journeyTranslations.js`'s numeric keys) —
+Gates C/D move from 32/44 to 33/45. Per #137/#350's precedent, lesson `id`
+strings are **not** renumbered, only the `number` field and human-readable
+prose — a unit's id is a stable identity, its number is just current display
+position. Same scope limit as #347/#350: no pooled cross-verb review for this
+unit, since `generateCrossVerbQuestions` doesn't support `objectAxis` yet.
+
 ## 2026-06-21 — #358: NOR-NORI's `objectAxis` extension (`presentByNor`/`pastByNor`) generalizes `fixedArgument.role`, fixing a latent NORK/NORI mis-badge
 
 `gustatu`/`iruditu`/`ahaztu` (NOR-NORI) now carry `presentByNor`/`pastByNor` —
