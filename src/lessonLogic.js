@@ -922,6 +922,14 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, 
 // knowledge rather than trial-and-error.
 export const WORD_ORDER_MIN_WORDS = 4
 
+// Maximum word count for the same eligibility check (#315). The cultural
+// sentence bank runs long — some adopted variants clear 10+ words — and
+// past that, the shuffled cloud stops testing word-order knowledge and
+// starts testing working memory instead. 9 keeps the bulk of the curated
+// "ready" sentences (most land in the 6-9 word range) eligible while
+// excluding the handful of longer, more syntactically elaborate ones.
+export const WORD_ORDER_MAX_WORDS = 9
+
 // Builds a "reassemble the sentence" question: `sentence`'s blank gets
 // filled with `table[person]` (same as `sentence`/`negative` already do), a
 // trailing `.` or `?` stripped off and carried separately as `punctuation`
@@ -1152,9 +1160,13 @@ export function generateQuestions(verb, tense, { noTyping = false, rounds = 1, i
       : baseFormLures
     const pronounLures = [{ form: getCaseFramePronounLure(verbs, verb, person), errorType: 'case-frame' }]
     // A sentence only qualifies for `word-order` once its blank is filled in
-    // and it clears `WORD_ORDER_MIN_WORDS` — see `buildWordOrderQuestion`.
-    const meetsWordOrderThreshold = (candidate) =>
-      Boolean(candidate) && candidate.text.replace('___', table[person]).split(' ').length >= WORD_ORDER_MIN_WORDS
+    // and its word count falls within [`WORD_ORDER_MIN_WORDS`,
+    // `WORD_ORDER_MAX_WORDS`] — see `buildWordOrderQuestion`.
+    const meetsWordOrderThreshold = (candidate) => {
+      if (!candidate) return false
+      const wordCount = candidate.text.replace('___', table[person]).split(' ').length
+      return wordCount >= WORD_ORDER_MIN_WORDS && wordCount <= WORD_ORDER_MAX_WORDS
+    }
     const availableKinds =
       includeNegation && negativeSentence
         ? [
