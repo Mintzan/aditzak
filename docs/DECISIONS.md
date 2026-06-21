@@ -12,6 +12,22 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #353: Baldintza/Ondorioa object-axis follows #352's pattern — `conditionalPastByObject` is the only key with no flat sibling
+
+Added `ukan`'s NOR-NORK object axis for Baldintza and Ondorioa present/past
+(`bazintut`/`zintuket`-type forms, `docs/CONJUGATIONS.md`:236-282),
+extending Unit 35's `lessonIds` per the same #351/#286 precedent #352 used.
+Same naming convention as #352: `baldintzaByObject`/`conditionalByObject`
+mirror the existing flat `baldintza`/`conditional` tables, while
+`conditionalPastByObject` (Ondorioa past) is net-new since no flat
+single-axis table for Ondorioa past exists yet — same situation as #352's
+Alegiazkoa/Lehenaldia sub-tenses. The `-zke-` merger forms
+(`docs/CONJUGATIONS.md`:276-282) were transcribed verbatim from the grids
+rather than derived, per the issue's explicit warning that the rule isn't a
+simple suffix-concatenation. Lesson wiring reuses Unit 15/#352's
+`objectAxis: { vary: 'nor', fixed: 'ni' }` convention, with one pooled
+review spanning all three sub-tenses.
+
 ## 2026-06-21 — #352: Ahalera object-axis tense keys named `potential*ByObject`, all three sub-tenses get new keys even without flat counterparts
 
 Added `ukan`'s NOR-NORK object axis for Ahalera (`zaitzaket`-type forms,

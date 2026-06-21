@@ -596,6 +596,41 @@ export const VERBS = [
         zuek: { ni: 'nintzakezuen', hura: 'zenezaketen', gu: 'gintzakezuen', haiek: 'zenitzaketen' },
         haiek: { ni: 'nintzaketen', hura: 'zezaketen', gu: 'gintzaketen', zu: 'zintzaketen', zuek: 'zintzaketeten', haiek: 'zitzaketen' },
       },
+      // #353: Baldintza/Ondorioa's NOR-NORK object axis, same shape/sourcing
+      // convention as the blocks above, from `docs/CONJUGATIONS.md`:236-282.
+      // The `-zke-` merger noted there (object plural, or `haiek`-subject on
+      // a `zint-`/`gint-` stem) is transcribed verbatim rather than derived.
+      // Baldintza (protasis, "if I had you/etc.") — `hura` column matches
+      // the flat `baldintza` table above exactly.
+      baldintzaByObject: {
+        ni: { hura: 'banu', zu: 'bazintut', zuek: 'bazintuztet', haiek: 'banitu' },
+        hura: { ni: 'banindu', hura: 'balu', gu: 'bagintu', zu: 'bazintu', zuek: 'bazintuzte', haiek: 'balitu' },
+        gu: { hura: 'bagenu', zu: 'bazintugu', zuek: 'bazintuztegu', haiek: 'bagenitu' },
+        zu: { ni: 'baninduzu', hura: 'bazenu', gu: 'bagintuzu', haiek: 'bazenitu' },
+        zuek: { ni: 'baninduzue', hura: 'bazenute', gu: 'bagintuzue', haiek: 'bazenituzte' },
+        haiek: { ni: 'banindute', hura: 'balute', gu: 'bagintuzte', zu: 'bazintuzte', zuek: 'bazintuztete', haiek: 'balituzte' },
+      },
+      // Ondorioa, present ("I would [verb] you/etc.") — `hura` column matches
+      // the flat `conditional` table above exactly.
+      conditionalByObject: {
+        ni: { hura: 'nuke', zu: 'zintuket', zuek: 'zintuzketet', haiek: 'nituzke' },
+        hura: { ni: 'ninduke', hura: 'luke', gu: 'gintuke', zu: 'zintuke', zuek: 'zintuzkete', haiek: 'lituzke' },
+        gu: { hura: 'genuke', zu: 'zintukegu', zuek: 'zintuzketegu', haiek: 'genituzke' },
+        zu: { ni: 'nindukezu', hura: 'zenuke', gu: 'gintukezu', haiek: 'zenituzke' },
+        zuek: { ni: 'nindukezue', hura: 'zenukete', gu: 'gintukezue', haiek: 'zenituzkete' },
+        haiek: { ni: 'nindukete', hura: 'lukete', gu: 'gintuzkete', zu: 'zintuzkete', zuek: 'zintuzketete', haiek: 'lituzkete' },
+      },
+      // Ondorioa, past ("I would have [verb]ed you/etc."). No flat
+      // single-axis sibling exists yet (Ondorioa past isn't taught as a flat
+      // table), so there's nothing to cross-check this one against.
+      conditionalPastByObject: {
+        ni: { hura: 'nukeen', zu: 'zintukedan', zuek: 'zintuzketedan', haiek: 'nituzkeen' },
+        hura: { ni: 'nindukeen', hura: 'zukeen', gu: 'gintukeen', zu: 'zintukeen', zuek: 'zintuzketen', haiek: 'zituzkeen' },
+        gu: { hura: 'genukeen', zu: 'zintukegun', zuek: 'zintuzketegun', haiek: 'genituzkeen' },
+        zu: { ni: 'nindukezun', hura: 'zenukeen', gu: 'gintukezun', haiek: 'zenituzkeen' },
+        zuek: { ni: 'nindukezuen', hura: 'zenuketen', gu: 'gintukezuen', haiek: 'zenituzketen' },
+        haiek: { ni: 'ninduketen', hura: 'zuketen', gu: 'gintuzketen', zu: 'zintuzketen', zuek: 'zintuzketeten', haiek: 'zituzketen' },
+      },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by their own (agentive, human) subject
@@ -7306,6 +7341,15 @@ export const TENSE_META = {
   potentialByObject: { labelKey: 'tensePotentialByObject', basque: 'ahalera (objektuka)' },
   potentialAlegiazkoaByObject: { labelKey: 'tensePotentialAlegiazkoaByObject', basque: 'ahalera, alegiazkoa (objektuka)' },
   potentialLehenaldiaByObject: { labelKey: 'tensePotentialLehenaldiaByObject', basque: 'ahalera, lehenaldia (objektuka)' },
+  // #353: Baldintza/Ondorioa's NOR-NORK object axis — the `baldintza`/
+  // `conditional`-family mirror of `presentByObject`/`pastByObject`, same
+  // `-zke-`-merger forms as the flat tables but across the full object axis.
+  // `conditionalPastByObject` has no flat single-axis sibling (Ondorioa past
+  // isn't taught as a flat table yet), same situation as `potential`'s
+  // Alegiazkoa/Lehenaldia siblings in #352.
+  baldintzaByObject: { labelKey: 'tenseBaldintzaByObject', basque: 'baldintza (objektuka)' },
+  conditionalByObject: { labelKey: 'tenseConditionalByObject', basque: 'ondorioa (objektuka)' },
+  conditionalPastByObject: { labelKey: 'tenseConditionalPastByObject', basque: 'ondorioa, lehenaldia (objektuka)' },
 }
 
 export const TYPE_META = {

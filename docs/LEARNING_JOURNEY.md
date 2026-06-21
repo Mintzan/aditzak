@@ -426,7 +426,7 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
 | 34 | **Ahalera — Permissions & Capability** — `dezaket`/`naiteke` contrasted with periphrastic `ahal izan`, plus `ukan`'s NOR-NORK object axis (`zaitzaket`-type forms, #352) across all three Ahalera sub-tenses (present/hypothetical/past) | "I can come." / "I could (have) ..." | NOR/NOR-NORK [P]; dative [R] | §2, §3, VERB_COVERAGE §5 (`ahal`/`ezin`) | available (#148, object axis added by #352) — `izan`/`ukan` potential, form-only; dative [R] paradigms deferred |
-| 35 | **Baldintza & Ondorioa — Conditionals** — `ba-` protasis + `-ke` apodosis | "If I had money, I would buy that" (`Dirua banu, hori erosiko nuke`) | NOR/NOR-NORK [P]; dative [R] | §2, §3 | available (#148) — `izan`/`ukan` baldintza + ondorioa-present, form-only; dative [R] paradigms deferred |
+| 35 | **Baldintza & Ondorioa — Conditionals** — `ba-` protasis + `-ke` apodosis, plus `ukan`'s NOR-NORK object axis (`bazintut`/`zintuket`-type forms, #353) across Baldintza and Ondorioa present/past | "If I had money, I would buy that" (`Dirua banu, hori erosiko nuke`) | NOR/NOR-NORK [P]; dative [R] | §2, §3 | available (#148, object axis added by #353) — `izan`/`ukan` baldintza + ondorioa-present, form-only; dative [R] paradigms deferred |
 
 #### Stage 11: Directives & Wishes
 

@@ -660,10 +660,14 @@ export const JOURNEY = [
           {
             number: 35,
             title: 'Baldintza & Ondorioa — Conditionals',
-            focus: 'ba- protasis + -ke apodosis — production for NOR/NOR-NORK, recognition-only for the dative paradigms',
+            focus: 'ba- protasis + -ke apodosis — production for NOR/NOR-NORK, recognition-only for the dative paradigms; plus ukan\'s NOR-NORK object axis (bazintut/zintuket-type forms, #353) across Baldintza and Ondorioa present/past',
             payload: '"If I had money, I would buy that" (Dirua banu, hori erosiko nuke)',
             status: 'available',
-            lessonIds: ['izan-baldintza', 'izan-conditional', 'ukan-baldintza', 'ukan-conditional', 'unit-29-review'],
+            lessonIds: [
+              'izan-baldintza', 'izan-conditional', 'ukan-baldintza', 'ukan-conditional', 'unit-29-review',
+              'ukan-baldintza-object-axis', 'ukan-conditional-object-axis', 'ukan-conditional-past-object-axis',
+              'unit-35-object-axis-review',
+            ],
           },
         ],
       },
