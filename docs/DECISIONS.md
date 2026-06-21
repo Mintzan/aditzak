@@ -12,6 +12,31 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #364: NOR-NORI Inperatiboa object axis (`imperativeByNor`) for `gustatu`/`iruditu`/`ahaztu` — `hura`/`haiek` included (unlike #361/#362), extended Unit 36 rather than a new unit
+
+Unlike Baldintza/Ondorioa (#361) and Potentziala (#362), there's no flat
+`imperative` table for these verbs for `hura`/`haiek` to be redundant
+with — Units 26-27 never taught a dative imperative at any `NOR` value.
+So `imperativeByNor`'s inner (`NOR`) axis is `{hura, zu, zuek, haiek}`
+(structurally missing `ni`/`gu` — you can't command something to be
+pleasing to yourself/us — and `hi` deferred per the journey's hika
+deferral), not the `{ni, zu, gu, zuek}` restriction #361/#362
+established. Bare participle prefix (`gustatu bekio`, not `gustatuko
+bekio`), matching `past`/Potentziala's convention rather than
+Baldintza/Ondorioa's `-ko` future participle.
+
+Placement: extended Unit 36 (Agintera) with three new `objectAxis: {
+vary: 'nor', fixed: 'zu' }` lessons (`gustatu-imperative-axis`/
+`iruditu-imperative-axis`/`ahaztu-imperative-axis`, `persons: ['hura',
+'zuek', 'haiek']`), rather than giving it a dedicated unit the way Unit
+28 (#358/#359) did for the present/past object axis. Reasoning: Unit 28
+needed its own unit because it covered two tenses (present + past) for
+three verbs = six lessons, a substantial new chunk; the imperative's
+grammar gap (no `ni`/`gu` cells, `hi` deferred) leaves only a three-lesson
+addition, not worth fragmenting the curriculum for. Unlike #361/#362,
+this issue's own scope explicitly required the journey wiring, so (per
+Unit 28's precedent) it's full production, not recognition-only.
+
 ## 2026-06-21 — #362: NOR-NORI Potentziala object axis (`potentialByNor`/`potentialAlegiazkoaByNor`/`potentialLehenaldiaByNor`) for `gustatu`/`iruditu`/`ahaztu` — bare participle, not the `-ko` future participle used by Baldintza/Ondorioa
 
 `#361` added Baldintza/Ondorioa's NOR-NORI object axis riding the future
