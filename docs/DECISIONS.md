@@ -12,6 +12,22 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #343: pool lessons collapse verb-name labels above a small threshold
+
+`describeLesson` joined every verb name in a multi-source pool/review lesson
+(`verbNames.join(' & ')`) for `subtitle.main`/`heading`, which is unreadable
+for large pools (`ukan-past-pool`'s 46 verbs, `unit-10-present`'s 45) and
+shows up with no truncation at all in `handleShareResult`'s native share
+text. Fixed by collapsing to a generic `t('verbCount', { count })` label
+("46 verbs") once `verbNames.length > 3`, joining as before below that
+threshold — small pools (2-3 verbs, e.g. `izan & egon`) are still more
+informative joined than collapsed, and existing tests already asserted that
+readable joined form. The fix applies to both the practice and review
+branches' `subtitle.main` — the review branch's `heading` already collapsed
+multi-verb names to "mixed review" from an earlier fix, but its
+`subtitle.main` had the same unjoined-names defect as the practice branch
+and wasn't covered by that earlier fix.
+
 ## 2026-06-21 — #381: object-axis pooled review extends Unit 15, not a new unit
 
 Once #378-#380 gave `ikusi`/`jan`/`edan`/`erosi`/`hartu` `presentByObject`/
