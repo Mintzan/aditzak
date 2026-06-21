@@ -12,6 +12,37 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #347: ukan's full NOR-NORK object-axis paradigm (zaitut-type forms), form-only, no LESSONS entry
+
+**Decision:** added `pastByObject` alongside `presentByObject` (#346) on `ukan`
+— same core 6-person grid shape (`hi` omitted, reflexive-block cells absent),
+transcribed from `docs/CONJUGATIONS.md` §3's "Past — NOR = 1st/2nd person"
+grid, cross-checked against the existing flat `past` table the same way
+`presentByObject` was checked against `present`. Went form-only (no
+`sentences`/`validFor`) for both — a "Nik zu ___." frame reads closer to a
+`maite izan`/psych-verb sentence than a noun-object `nor-nork` one, so authoring
+one now would mean inventing a frame this verb doesn't naturally take, rather
+than reusing an existing pattern. Follows the `behar`/Unit 21 form-only
+precedent already in this log. The "exercises the new axis" bar from the
+issue's checklist was met with a logic-level smoke test
+(`src/logic.test.js`'s `"generates real zaitut-type questions..."` case) that
+runs `generateQuestions` against the real `VERBS` `ukan` entry rather than
+adding a `LESSONS` entry — an orphan `LESSONS` entry would still surface in
+`ProgressTab` (which renders every `LESSONS` item unconditionally, regardless
+of whether any `journey.js` unit references it) and shift
+`getUnlockedLessonIds`'s array-order-based unlock chain, so it's not actually
+inert the way #346's "no `LESSONS`/`journey.js` entry" scope call assumed.
+Curriculum wiring (a real lesson + unit) stays #350's job, same boundary #346
+already drew, just confirmed by checking what `LESSONS` membership alone
+would have changed.
+
+**Why no `ikusi` parallel yet:** the issue flags `ikusi` (the other plain
+`nor-nork` verb already taught) as a candidate for the same treatment, for
+distractor-pool variety. Left as a follow-up rather than folded in here,
+consistent with how the fodder-pool extensions (#318-321) were sequenced as
+their own issues rather than piggybacked onto whichever issue touched the
+data shape first.
+
 ## 2026-06-21 — #346: NOR-NORK object axis via real 2D table, resolved to flat before `generateQuestions` runs
 
 **Decision:** chose option (b) from the issue (a real 2D table,

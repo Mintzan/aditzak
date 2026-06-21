@@ -545,6 +545,18 @@ export const VERBS = [
         zuek: { ni: 'nauzue', hura: 'duzue', gu: 'gaituzue', haiek: 'dituzue' },
         haiek: { ni: 'naute', hura: 'dute', gu: 'gaituzte', zu: 'zaituzte', zuek: 'zaituztete', haiek: 'dituzte' },
       },
+      // #347: `past`'s NOR-NORK object axis, same shape/sourcing as
+      // `presentByObject` above, transcribed from `docs/CONJUGATIONS.md`
+      // §3's "Past — NOR = 1st/2nd person" grid. Each `[nork]` row's `hura`
+      // cell matches `past[nork]` exactly, same cross-check convention.
+      pastByObject: {
+        ni: { hura: 'nuen', zu: 'zintudan', zuek: 'zintuztedan', haiek: 'nituen' },
+        hura: { ni: 'ninduen', hura: 'zuen', gu: 'gintuen', zu: 'zintuen', zuek: 'zintuzten', haiek: 'zituen' },
+        gu: { hura: 'genuen', zu: 'zintugun', zuek: 'zintuztegun', haiek: 'genituen' },
+        zu: { ni: 'ninduzun', hura: 'zenuen', gu: 'gintuzun', haiek: 'zenituen' },
+        zuek: { ni: 'ninduzuen', hura: 'zenuten', gu: 'gintuzuen', haiek: 'zenituzten' },
+        haiek: { ni: 'ninduten', hura: 'zuten', gu: 'gintuzten', zu: 'zintuzten', zuek: 'zintuzteten', haiek: 'zituzten' },
+      },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by their own (agentive, human) subject
@@ -6987,6 +6999,8 @@ export const TENSE_META = {
   // key from `present` rather than a reshaping of it, so every existing
   // `present`-keyed lesson/test is untouched.
   presentByObject: { labelKey: 'tensePresentByObject', basque: 'oraina (objektuka)' },
+  // #347: `past`'s sibling 2D table, same rationale as `presentByObject`.
+  pastByObject: { labelKey: 'tensePastByObject', basque: 'lehenaldia (objektuka)' },
 }
 
 export const TYPE_META = {

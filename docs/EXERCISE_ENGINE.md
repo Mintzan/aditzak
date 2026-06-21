@@ -252,6 +252,21 @@ real 2D table**, per the issue's own recommendation:
   resolution before that check could pass. Left for whichever future issue
   actually adds an object-axis unit to the journey.
 
+**Update (#347)**: `ukan` gained the matching `pastByObject` 2D table (same
+shape/sourcing, from `CONJUGATIONS.md` §3's past grid), still form-only (no
+`sentences`) and still without a `LESSONS` entry. Turns out "no `LESSONS`
+entry" isn't quite as inert as #346's scope note assumed: `ProgressTab`
+(`App.jsx`) renders every `LESSONS` item unconditionally, regardless of
+whether a `journey.js` unit references it, and `getUnlockedLessonIds`'s
+linear-progression check depends on array order/position — so an orphan
+`LESSONS` entry would show up in the Progress tab and could perturb
+unlocking, not just dangle harmlessly. #347's "exercises the new axis" bar
+was instead met with a logic-level test exercising the real `ukan` data
+through `generateQuestions` (`src/logic.test.js`), leaving an actual
+`LESSONS`/`journey.js` lesson for whichever issue does the curriculum wiring
+(`ikusi` getting the same `*ByObject` treatment, for distractor variety, is
+flagged as a further follow-up rather than folded in here).
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey
