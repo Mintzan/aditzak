@@ -684,6 +684,10 @@ export const VERBS = [
           { text: 'Nik ur bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Nik liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Nik opari bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          // #313: two more infinitive-complement variants, same `validFor: []`
+          // reasoning as `'Zuk etorri ___?'` below.
+          { text: 'Nik gaur gauean sagardotegira joan ___.', validFor: [] },
+          { text: 'Nik baserriko sukaldean euskal pastela egiten ikasi ___.', validFor: [] },
         ],
         zu: [
           { text: 'Zuk etorri ___?', validFor: [] },
@@ -720,7 +724,20 @@ export const VERBS = [
           { text: 'Haiek liburu bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Haiek opari bat ___.', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Gure lagunek Donostiako Danborrada hurbiletik ikusi ___.', validFor: [] },
+          // #313: NOR-NORK infinitive-complement variant, same shape as the
+          // others above.
+          { text: 'Arrantzaleek gaur gauean portura garaiz itzuli ___.', validFor: [] },
         ],
+      },
+      // #313: `presentPlural` block (plural-`NOR` object) — `nahi` had no
+      // `past` to mirror, but it does have `presentPlural`/`futurePlural`
+      // tables (#284) that #312/the modal bank's earlier pass left
+      // unpopulated. Both items here have a genuinely plural object
+      // (`itsaslabarrak`/`aditz guztiak`), correctly driving `dituzte`/
+      // `ditugu` rather than the singular table's `du`/`dugu`.
+      presentPlural: {
+        gu: [{ text: 'Guk gure aplikazioan euskal aditz guztiak sartu ___.', validFor: [] }],
+        haiek: [{ text: 'Turistek Zumaia Flysch-eko itsaslabarrak argazkitan hartu ___.', validFor: [] }],
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -981,8 +998,8 @@ export const VERBS = [
       // Unit 22 ("Motion in Progress (Past)") — `joan`'s own *imperfective*
       // past (ongoing/habitual "I was going"), distinct from `past` above
       // (the periphrastic *simple* past "I went", taught in Unit 11). Per
-      // `docs/CONJUGATIONS.md` §6. Form-only (no `sentences`), same as
-      // `behar`'s tenses — see `docs/LANGUAGE_DECISIONS.md`.
+      // `docs/CONJUGATIONS.md` §6. #313: now has `sentences` (cultural-bank
+      // items below) — see `docs/LANGUAGE_DECISIONS.md`.
       imperfectivePast: {
         ni: 'nindoan',
         hi: 'hindoan',
@@ -1097,6 +1114,23 @@ export const VERBS = [
           { text: 'Haiek joan den astean hondartzara ___.', validFor: ['etorri'] },
           { text: 'Mikel eta Ane lehengo egunean dendara ___.', validFor: ['etorri'] },
         ],
+      },
+      // #313: cultural-bank items for `imperfectivePast` (ongoing/habitual
+      // "I was going..."), distinct from `past`'s simple "I went" above —
+      // `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs bank's "Past" examples
+      // for `joan` actually use this table's forms (`gindoazen`/`zindoazen`/
+      // etc.), not `past`'s (`joan zen`), which #312 missed. Allative/
+      // ablative-directional ones keep `joan`'s usual `validFor: ['etorri']`
+      // (`etorri` has its own `imperfectivePast` table); `ni`'s is a bare
+      // locative ("in the forest") with no directional cue, closer to
+      // `ibili`'s territory — tentative `validFor: ['ibili']`, flagged for
+      // #316.
+      imperfectivePast: {
+        ni: [{ text: 'Ni bakarrik ___ basoan Basajaun ikusi nuenean.', validFor: ['ibili'] }],
+        zu: [{ text: 'Zu iaz Donostiako Parte Zaharreko pintxo taberna guztietara ___.', validFor: ['etorri'] }],
+        gu: [{ text: 'Iaz gu Baionako jaietara ___ autoan bidea galdu genuenean.', validFor: ['etorri'] }],
+        zuek: [{ text: 'Zuek iaz oinez ___ Donostiatik Behobiara bide zaharretik.', validFor: ['etorri'] }],
+        haiek: [{ text: 'Haurrak korrika ___ Olentzero ikustera plazara.', validFor: ['etorri'] }],
       },
     },
     pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
@@ -1328,6 +1362,25 @@ export const VERBS = [
           { text: 'Mikel eta Ane gaurkoan liburutegira ___.', validFor: ['joan'] },
         ],
       },
+      // #313: cultural-bank items for `imperfectivePast` (`etorri`'s native
+      // synthetic "I was coming", distinct from `habitualPast`'s periphrastic
+      // form above) — `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs bank's
+      // "Past" examples for `etorri` use this table's forms (`zetorren`/
+      // `zentozten`/etc.), which #312 missed (it only covered `present`/
+      // `past`). Ablative-source-only sentences ("...museotik...",
+      // "...baserritik...", "...janketatik...") get the tentative
+      // `validFor: []` `etorri` already uses for its own ablative-only
+      // present items — no sibling shares the "coming from X" reading
+      // without also needing a destination; flagged for #316 confirmation.
+      // The "Zuek korrika zentozten Korrika festan..." item is skipped —
+      // same bare-locative-with-no-directional-cue problem #125 already
+      // fixed for `etorri`'s other tables (needs a rewrite, left for #316).
+      imperfectivePast: {
+        ni: [{ text: 'Ni oso nekatuta ___ Tolosako babarrun janketatik.', validFor: [] }],
+        hura: [{ text: 'Zuzendaria Bilboko Guggenheim museotik ___ nirekin topo egin duenean.', validFor: [] }],
+        zuek: [{ text: 'Zuek pilotarien partidatik ___ pozik irabazi zutelako.', validFor: [] }],
+        haiek: [{ text: 'Gurasoak goizeko lehen orduan ___ baserritik esnearekin.', validFor: [] }],
+      },
     },
     pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
@@ -1398,7 +1451,15 @@ export const VERBS = [
         // aren't in `VERBS` yet, so they stay untagged — no lure for them
         // until/unless those verbs are added.
         ni: ['Ni lan egiten ___.', 'Ni ikasten ___.', 'Ni idazten ___.', { text: 'Ni jaten ___.', baseVerb: 'jan' }],
-        zu: ['Zu zer ___?', 'Zu zer egiten ___?', 'Zu irakurtzen ___?'],
+        zu: [
+          'Zu zer ___?',
+          'Zu zer egiten ___?',
+          'Zu irakurtzen ___?',
+          // #313: embedded verb "dasten" (from "dastatu", not in `VERBS`) —
+          // untagged per the comment above, same as the other unlisted
+          // participles.
+          'Zu Idiazabal gazta eta txakolina dasten ___ plazako azokan.',
+        ],
         hura: [
           'Hura irakurtzen ___.',
           { text: 'Hura jaten ___.', baseVerb: 'jan' },
@@ -2547,6 +2608,21 @@ export const VERBS = [
         zuek: ['Zuek non ___?', 'Zuek atzo parkean ___.'],
         haiek: ['Haiek atzo kalean ___.', 'Mikel eta Ane herenegun oinez ___.'],
       },
+      // #313: cultural-bank items for `imperfectivePast` (ongoing/habitual
+      // "I was walking/busy doing X..."), distinct from `past`'s simple
+      // "I walked" above — `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs
+      // bank's "Past" examples for `ibili` use this table's forms
+      // (`zenbiltzaten`/`nenbilen`/`zebiltzan`/`zenbiltzan`), which #312
+      // missed. Plain strings, no `validFor`, same as `ibili`'s other tables.
+      imperfectivePast: {
+        ni: [
+          'Ni goiz osoan sukaldean ___ Tolosako babarrunak egosten.',
+          'Ni goiz osoan ___ sukaldean euskal pastela labean sartu nahian.',
+        ],
+        zu: ['Zu atzo Aste Nagusian ___ lagun zaharrak agurtzen.'],
+        zuek: ['Zuek atzo arratsaldean Donostiako Parte Zaharrean ___ pintxoak jaten.'],
+        haiek: ['Basurdeak gauez herriko soroetan ___ janari bila.'],
+      },
     },
     pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
@@ -2833,7 +2909,15 @@ export const VERBS = [
         hura: [{ text: 'Hari hau ___.', validFor: ['ahaztu'] }],
         gu: [{ text: 'Guri hau ___.', validFor: ['ahaztu'] }],
         zuek: [{ text: 'Zuei hau ___.', validFor: ['ahaztu'] }],
-        haiek: [{ text: 'Haiei hau ___.', validFor: ['ahaztu'] }],
+        // #313: "Uda honetan" makes this naturally future-oriented in the
+        // bank's original text, but the blank itself carries no tense
+        // marking — placed in `present.haiek` so `sentences.future`'s
+        // reuse-by-reference (`docs/DECISIONS.md`) drills it for `future`
+        // too, same pattern as #312's joan/etorri future-ready items.
+        haiek: [
+          { text: 'Haiei hau ___.', validFor: ['ahaztu'] },
+          { text: 'Uda honetan, bidaiariei asko ___ Mundakako ezker olatua.', validFor: ['ahaztu'] },
+        ],
       },
       // #164: plural-object counterpart of the table above ("these please
       // me", not "it pleases me") — `hau` ("this") becomes `hauek` ("these").
@@ -2908,7 +2992,13 @@ export const VERBS = [
         hura: [{ text: 'Hari ongi ___.', validFor: [] }],
         gu: [{ text: 'Guri ongi ___.', validFor: [] }],
         zuek: [{ text: 'Zuei ongi ___.', validFor: [] }],
-        haiek: [{ text: 'Haiei ongi ___.', validFor: [] }],
+        // #313: same future-via-present-reuse placement as `gustatu`'s
+        // analogous item above; `validFor: []` per `iruditu`'s existing
+        // "needs a predicate" judgment (no sibling fits this frame either).
+        haiek: [
+          { text: 'Haiei ongi ___.', validFor: [] },
+          { text: 'Atzerriko ikasleei asko ___ euskal kultura zaharra.', validFor: [] },
+        ],
       },
       // #164: "ongi" (well/good) is an adverb, not a NOR argument, so the
       // plural-NOR variant swaps in a genuine plural subject ("these
@@ -3059,20 +3149,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik lana ___.', validFor: [] },
-        zu: { text: 'Zuk zer ___?', validFor: [] },
-        hura: { text: 'Hark oturuntza ___.', validFor: [] },
-        gu: { text: 'Guk lan asko ___.', validFor: [] },
-        zuek: { text: 'Zuek zer ___?', validFor: [] },
-        haiek: { text: 'Haiek bidaia bat ___.', validFor: [] },
+        ni: { text: 'Nik domekan talo freskoak ___ etxeko sukaldean.', validFor: [] },
+        zu: { text: 'Zuk bertso saio bat ___ herriko festetan?', validFor: [] },
+        hura: { text: 'Hark intxaur-saltsa goxoa ___ Eguberrietan.', validFor: [] },
+        gu: { text: 'Guk erromeria handi bat ___ udan.', validFor: [] },
+        zuek: { text: 'Zuek kalejira polita ___ jaien hasieran?', validFor: [] },
+        haiek: { text: 'Haiek Aste Nagusiko kartel ofiziala ___.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo lana ___.',
-        zu: 'Zuk herenegun zer ___?',
-        hura: 'Hark lehengo egunean oturuntza ___.',
-        gu: 'Guk iaz lan asko ___.',
-        zuek: 'Zuek duela bi egun zer ___?',
-        haiek: 'Haiek joan den astean bidaia bat ___.',
+        ni: { text: 'Nik atzo talo freskoak ___ etxeko sukaldean.', validFor: [] },
+        zu: { text: 'Zuk herenegun bertso saio bat ___ herriko festetan?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean intxaur-saltsa goxoa ___ Eguberrietan.', validFor: [] },
+        gu: { text: 'Guk iaz erromeria handi bat ___ udan.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun kalejira polita ___ jaien hasieran?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean Aste Nagusiko kartel ofiziala ___.', validFor: [] },
       },
     },
   },
@@ -3113,20 +3203,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik liburua ___.', validFor: [] },
-        zu: { text: 'Zuk egunkaria ___?', validFor: [] },
-        hura: { text: 'Hark eleberria ___.', validFor: [] },
-        gu: { text: 'Guk berriak ___.', validFor: [] },
-        zuek: { text: 'Zuek liburua ___?', validFor: [] },
-        haiek: { text: 'Haiek aldizkaria ___.', validFor: [] },
+        ni: { text: 'Nik Bernardo Atxagaren eleberri bat ___ gauero.', validFor: [] },
+        zu: { text: 'Zuk euskarazko egunkaria ___ goizero?', validFor: [] },
+        hura: { text: 'Hark bertso liburu zahar bat ___ liburutegian.', validFor: [] },
+        gu: { text: 'Guk Kirmen Uriberen olerkiak ___ ikastaroan.', validFor: [] },
+        zuek: { text: 'Zuek Berria egunkaria ___ kafetegian?', validFor: [] },
+        haiek: { text: 'Haiek herriko aldizkari txikia ___ plazan.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo liburua ___.',
-        zu: 'Zuk herenegun egunkaria ___?',
-        hura: 'Hark lehengo egunean eleberria ___.',
-        gu: 'Guk iaz berriak ___.',
-        zuek: 'Zuek duela bi egun liburua ___?',
-        haiek: 'Haiek joan den astean aldizkaria ___.',
+        ni: { text: 'Nik atzo Bernardo Atxagaren eleberri bat ___ gauean.', validFor: [] },
+        zu: { text: 'Zuk herenegun euskarazko egunkaria ___ goizean?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean bertso liburu zahar bat ___ liburutegian.', validFor: [] },
+        gu: { text: 'Guk iaz Kirmen Uriberen olerkiak ___ ikastaroan.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun Berria egunkaria ___ kafetegian?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean herriko aldizkari txikia ___ plazan.', validFor: [] },
       },
     },
   },
@@ -3167,20 +3257,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik gutuna ___.', validFor: [] },
-        zu: { text: 'Zuk poema ___?', validFor: [] },
-        hura: { text: 'Hark eleberria ___.', validFor: [] },
-        gu: { text: 'Guk txostena ___.', validFor: [] },
-        zuek: { text: 'Zuek gutuna ___?', validFor: [] },
-        haiek: { text: 'Haiek liburua ___.', validFor: [] },
+        ni: { text: 'Nik gutun bat ___ amonarentzat.', validFor: [] },
+        zu: { text: 'Zuk bertso berriak ___ saiorako?', validFor: [] },
+        hura: { text: 'Hark eleberri labur bat euskaraz ___.', validFor: [] },
+        gu: { text: 'Guk herriko egunkarirako artikulua ___.', validFor: [] },
+        zuek: { text: 'Zuek eskutitz luzea ___ lagunari?', validFor: [] },
+        haiek: { text: 'Haiek kantu hitzak ___ jaietarako.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo gutuna ___.',
-        zu: 'Zuk herenegun poema ___?',
-        hura: 'Hark lehengo egunean eleberria ___.',
-        gu: 'Guk iaz txostena ___.',
-        zuek: 'Zuek duela bi egun gutuna ___?',
-        haiek: 'Haiek joan den astean liburua ___.',
+        ni: { text: 'Nik atzo gutun bat ___ amonarentzat.', validFor: [] },
+        zu: { text: 'Zuk herenegun bertso berriak ___ saiorako?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean eleberri labur bat euskaraz ___.', validFor: [] },
+        gu: { text: 'Guk iaz herriko egunkarirako artikulua ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun eskutitz luzea ___ lagunari?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean kantu hitzak ___ jaietarako.', validFor: [] },
       },
     },
   },
@@ -3221,20 +3311,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik euskara ___.', validFor: [] },
-        zu: { text: 'Zuk lekzioa ___?', validFor: [] },
-        hura: { text: 'Hark gitarra jotzen ___.', validFor: [] },
-        gu: { text: 'Guk hizkuntza berri bat ___.', validFor: [] },
-        zuek: { text: 'Zuek euskara ___?', validFor: [] },
-        haiek: { text: 'Haiek matematika ___.', validFor: [] },
+        ni: { text: 'Nik euskara ___ helduen ikastaroan.', validFor: [] },
+        zu: { text: 'Zuk txistua jotzen ___ udalekuan?', validFor: [] },
+        hura: { text: 'Hark dantza tradizionalak ___ taldean.', validFor: [] },
+        gu: { text: 'Guk Euskal Herriko historia ___ unibertsitatean.', validFor: [] },
+        zuek: { text: 'Zuek trikitixa jotzen ___ eskolan?', validFor: [] },
+        haiek: { text: 'Haiek arrantza teknikak ___ kostaldean.', validFor: [] },
       },
       past: {
-        ni: 'Nik iaz euskara ___.',
-        zu: 'Zuk herenegun lekzioa ___?',
-        hura: 'Hark lehengo egunean gitarra jotzen ___.',
-        gu: 'Guk aurten hizkuntza berri bat ___.',
-        zuek: 'Zuek duela bi egun euskara ___?',
-        haiek: 'Haiek joan den astean matematika ___.',
+        ni: { text: 'Nik iaz euskara ___ helduen ikastaroan.', validFor: [] },
+        zu: { text: 'Zuk herenegun txistua jotzen ___ udalekuan?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean dantza tradizionalak ___ taldean.', validFor: [] },
+        gu: { text: 'Guk aurten Euskal Herriko historia ___ unibertsitatean.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun trikitixa jotzen ___ eskolan?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean arrantza teknikak ___ kostaldean.', validFor: [] },
       },
     },
   },
@@ -3275,20 +3365,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik musika ___.', validFor: [] },
-        zu: { text: 'Zuk irratia ___?', validFor: [] },
-        hura: { text: 'Hark abestia ___.', validFor: [] },
-        gu: { text: 'Guk berriak ___.', validFor: [] },
-        zuek: { text: 'Zuek musika ___?', validFor: [] },
-        haiek: { text: 'Haiek hitzaldia ___.', validFor: [] },
+        ni: { text: 'Nik txalaparta ___ plazan.', validFor: [] },
+        zu: { text: 'Zuk irrati euskalduna ___ goizero?', validFor: [] },
+        hura: { text: 'Hark bertsolarien saioa ___ jaialdian.', validFor: [] },
+        gu: { text: 'Guk Mikel Laboaren kantuak ___ kotxean.', validFor: [] },
+        zuek: { text: 'Zuek herriko danborrada ___ goizean?', validFor: [] },
+        haiek: { text: 'Haiek alkatearen hitzaldia ___ udaletxean.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo musika ___.',
-        zu: 'Zuk herenegun irratia ___?',
-        hura: 'Hark lehengo egunean abestia ___.',
-        gu: 'Guk iaz berriak ___.',
-        zuek: 'Zuek duela bi egun musika ___?',
-        haiek: 'Haiek joan den astean hitzaldia ___.',
+        ni: { text: 'Nik atzo txalaparta ___ plazan.', validFor: [] },
+        zu: { text: 'Zuk herenegun irrati euskalduna ___ goizean?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean bertsolarien saioa ___ jaialdian.', validFor: [] },
+        gu: { text: 'Guk iaz Mikel Laboaren kantuak ___ kotxean.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun herriko danborrada ___ goizean?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean alkatearen hitzaldia ___ udaletxean.', validFor: [] },
       },
     },
   },
@@ -3329,20 +3419,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik kotxea etxe aurrean ___.', validFor: [] },
-        zu: { text: 'Zuk gakoa ___?', validFor: [] },
-        hura: { text: 'Hark liburua mahai gainean ___.', validFor: [] },
-        gu: { text: 'Guk poltsak kanpoan ___.', validFor: [] },
-        zuek: { text: 'Zuek gakoa ___?', validFor: [] },
-        haiek: { text: 'Haiek autoa kalean ___.', validFor: [] },
+        ni: { text: 'Nik bizikleta plaza ondoan ___.', validFor: [] },
+        zu: { text: 'Zuk giltzak leihopean ___?', validFor: [] },
+        hura: { text: 'Hark abarketak atarian ___.', validFor: [] },
+        gu: { text: 'Guk otarrak sagardotegiko atean ___.', validFor: [] },
+        zuek: { text: 'Zuek poltsak autobus geltokian ___?', validFor: [] },
+        haiek: { text: 'Haiek txalupa portuan ___.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo kotxea etxe aurrean ___.',
-        zu: 'Zuk herenegun gakoa ___?',
-        hura: 'Hark lehengo egunean liburua mahai gainean ___.',
-        gu: 'Guk iaz poltsak kanpoan ___.',
-        zuek: 'Zuek duela bi egun gakoa ___?',
-        haiek: 'Haiek joan den astean autoa kalean ___.',
+        ni: { text: 'Nik atzo bizikleta plaza ondoan ___.', validFor: [] },
+        zu: { text: 'Zuk herenegun giltzak leihopean ___?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean abarketak atarian ___.', validFor: [] },
+        gu: { text: 'Guk iaz otarrak sagardotegiko atean ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun poltsak autobus geltokian ___?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean txalupa portuan ___.', validFor: [] },
       },
     },
   },
@@ -3383,20 +3473,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik giltza ___.', validFor: [] },
-        zu: { text: 'Zuk soluzioa ___?', validFor: [] },
-        hura: { text: 'Hark altxorra ___.', validFor: [] },
-        gu: { text: 'Guk bidea ___.', validFor: [] },
-        zuek: { text: 'Zuek giltza ___?', validFor: [] },
-        haiek: { text: 'Haiek erantzuna ___.', validFor: [] },
+        ni: { text: 'Nik hondartzan kontxa polit bat ___.', validFor: [] },
+        zu: { text: 'Zuk Donostiako kale zaharrean dendatxo bat ___?', validFor: [] },
+        hura: { text: 'Hark basoan onddo handi bat ___.', validFor: [] },
+        gu: { text: 'Guk Gernikako azokan opari egokia ___.', validFor: [] },
+        zuek: { text: 'Zuek mendian bide seinale zahar bat ___?', validFor: [] },
+        haiek: { text: 'Haiek itsasoan ontzi hondoratu bat ___.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo giltza ___.',
-        zu: 'Zuk herenegun soluzioa ___?',
-        hura: 'Hark lehengo egunean altxorra ___.',
-        gu: 'Guk iaz bidea ___.',
-        zuek: 'Zuek duela bi egun giltza ___?',
-        haiek: 'Haiek joan den astean erantzuna ___.',
+        ni: { text: 'Nik atzo hondartzan kontxa polit bat ___.', validFor: [] },
+        zu: { text: 'Zuk herenegun Donostiako kale zaharrean dendatxo bat ___?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean basoan onddo handi bat ___.', validFor: [] },
+        gu: { text: 'Guk iaz Gernikako azokan opari egokia ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun mendian bide seinale zahar bat ___?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean itsasoan ontzi hondoratu bat ___.', validFor: [] },
       },
     },
   },
@@ -3437,20 +3527,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik lana ___.', validFor: [] },
-        zu: { text: 'Zuk informazioa ___?', validFor: [] },
-        hura: { text: 'Hark etxe bat ___.', validFor: [] },
-        gu: { text: 'Guk soluzioa ___.', validFor: [] },
-        zuek: { text: 'Zuek lana ___?', validFor: [] },
-        haiek: { text: 'Haiek altxorra ___.', validFor: [] },
+        ni: { text: 'Nik liburutegian erreferentzia zahar bat ___.', validFor: [] },
+        zu: { text: 'Zuk Gasteizko kale-mapan helbide bat ___?', validFor: [] },
+        hura: { text: 'Hark basoan galdutako ardia ___.', validFor: [] },
+        gu: { text: 'Guk azokan opor egokiak ___.', validFor: [] },
+        zuek: { text: 'Zuek interneten errezeta tradizionala ___?', validFor: [] },
+        haiek: { text: 'Haiek herrian etxe alokagarria ___.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo lana ___.',
-        zu: 'Zuk herenegun informazioa ___?',
-        hura: 'Hark lehengo egunean etxe bat ___.',
-        gu: 'Guk iaz soluzioa ___.',
-        zuek: 'Zuek duela bi egun lana ___?',
-        haiek: 'Haiek joan den astean altxorra ___.',
+        ni: { text: 'Nik atzo liburutegian erreferentzia zahar bat ___.', validFor: [] },
+        zu: { text: 'Zuk herenegun Gasteizko kale-mapan helbide bat ___?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean basoan galdutako ardia ___.', validFor: [] },
+        gu: { text: 'Guk iaz azokan opor egokiak ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun interneten errezeta tradizionala ___?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean herrian etxe alokagarria ___.', validFor: [] },
       },
     },
   },
@@ -3491,20 +3581,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik giltza ___.', validFor: [] },
-        zu: { text: 'Zuk partida ___?', validFor: [] },
-        hura: { text: 'Hark dirua ___.', validFor: [] },
-        gu: { text: 'Guk denbora ___.', validFor: [] },
-        zuek: { text: 'Zuek giltza ___?', validFor: [] },
-        haiek: { text: 'Haiek partida ___.', validFor: [] },
+        ni: { text: 'Nik txapelketako partida ___.', validFor: [] },
+        zu: { text: 'Zuk autobusa ___ atzerapenagatik?', validFor: [] },
+        hura: { text: 'Hark txapela jokoan ___.', validFor: [] },
+        gu: { text: 'Guk pilota txapelketa ___ azken jardunaldian.', validFor: [] },
+        zuek: { text: 'Zuek bidea mendian ___?', validFor: [] },
+        haiek: { text: 'Haiek finala azken minutuan ___.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo giltza ___.',
-        zu: 'Zuk herenegun partida ___?',
-        hura: 'Hark lehengo egunean dirua ___.',
-        gu: 'Guk iaz denbora ___.',
-        zuek: 'Zuek duela bi egun giltza ___?',
-        haiek: 'Haiek joan den astean partida ___.',
+        ni: { text: 'Nik atzo txapelketako partida ___.', validFor: [] },
+        zu: { text: 'Zuk herenegun autobusa ___ atzerapenagatik?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean txapela jokoan ___.', validFor: [] },
+        gu: { text: 'Guk iaz pilota txapelketa ___ azken jardunaldian.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun bidea mendian ___?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean finala azken minutuan ___.', validFor: [] },
       },
     },
   },
@@ -3545,20 +3635,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik gutuna ___.', validFor: [] },
-        zu: { text: 'Zuk saria ___?', validFor: [] },
-        hura: { text: 'Hark paketea ___.', validFor: [] },
-        gu: { text: 'Guk laguntza ___.', validFor: [] },
-        zuek: { text: 'Zuek gutuna ___?', validFor: [] },
-        haiek: { text: 'Haiek saria ___.', validFor: [] },
+        ni: { text: 'Nik gutun bat Ameriketatik ___.', validFor: [] },
+        zu: { text: 'Zuk sari bat txapelketan ___?', validFor: [] },
+        hura: { text: 'Hark ohorezko domina ___ kontzejuan.', validFor: [] },
+        gu: { text: 'Guk laguntza ekonomikoa udaletik ___.', validFor: [] },
+        zuek: { text: 'Zuek opari bat zorionetan ___?', validFor: [] },
+        haiek: { text: 'Haiek diru-laguntza berria elkartean ___.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo gutuna ___.',
-        zu: 'Zuk herenegun saria ___?',
-        hura: 'Hark lehengo egunean paketea ___.',
-        gu: 'Guk iaz laguntza ___.',
-        zuek: 'Zuek duela bi egun gutuna ___?',
-        haiek: 'Haiek joan den astean saria ___.',
+        ni: { text: 'Nik atzo gutun bat Ameriketatik ___.', validFor: [] },
+        zu: { text: 'Zuk herenegun sari bat txapelketan ___?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean ohorezko domina ___ kontzejuan.', validFor: [] },
+        gu: { text: 'Guk iaz laguntza ekonomikoa udaletik ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun opari bat zorionetan ___?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean diru-laguntza berria elkartean ___.', validFor: [] },
       },
     },
   },
@@ -3599,20 +3689,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik etxea ___.', validFor: [] },
-        zu: { text: 'Zuk autoa ___?', validFor: [] },
-        hura: { text: 'Hark liburua ___.', validFor: [] },
-        gu: { text: 'Guk produktua ___.', validFor: [] },
-        zuek: { text: 'Zuek etxea ___?', validFor: [] },
-        haiek: { text: 'Haiek autoa ___.', validFor: [] },
+        ni: { text: 'Nik etxeko sagardoa azokan ___.', validFor: [] },
+        zu: { text: 'Zuk arrantzatutako legatza portuan ___?', validFor: [] },
+        hura: { text: 'Hark gaztandegiko Idiazabal gazta ___.', validFor: [] },
+        gu: { text: 'Guk baserriko barazkiak plazan ___.', validFor: [] },
+        zuek: { text: 'Zuek artisautza lanak jaietan ___?', validFor: [] },
+        haiek: { text: 'Haiek txondorreko ikatza herrian ___.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo etxea ___.',
-        zu: 'Zuk herenegun autoa ___?',
-        hura: 'Hark lehengo egunean liburua ___.',
-        gu: 'Guk iaz produktua ___.',
-        zuek: 'Zuek duela bi egun etxea ___?',
-        haiek: 'Haiek joan den astean autoa ___.',
+        ni: { text: 'Nik atzo etxeko sagardoa azokan ___.', validFor: [] },
+        zu: { text: 'Zuk herenegun arrantzatutako legatza portuan ___?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean gaztandegiko Idiazabal gazta ___.', validFor: [] },
+        gu: { text: 'Guk iaz baserriko barazkiak plazan ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun artisautza lanak jaietan ___?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean txondorreko ikatza herrian ___.', validFor: [] },
       },
     },
   },
@@ -3653,20 +3743,20 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: { text: 'Nik autobusa ___.', validFor: [] },
-        zu: { text: 'Zuk emaitza ___?', validFor: [] },
-        hura: { text: 'Hark deia ___.', validFor: [] },
-        gu: { text: 'Guk taxia ___.', validFor: [] },
-        zuek: { text: 'Zuek autobusa ___?', validFor: [] },
-        haiek: { text: 'Haiek emaitza ___.', validFor: [] },
+        ni: { text: 'Nik tranbia geltokian ___.', validFor: [] },
+        zu: { text: 'Zuk txapelketako emaitza urduri ___?', validFor: [] },
+        hura: { text: 'Hark abiatzeko deia kaian ___.', validFor: [] },
+        gu: { text: 'Guk autobusa euripean ___.', validFor: [] },
+        zuek: { text: 'Zuek txanda jatetxean ___?', validFor: [] },
+        haiek: { text: 'Haiek mareak igotzea kostan ___.', validFor: [] },
       },
       past: {
-        ni: 'Nik atzo autobusa ___.',
-        zu: 'Zuk herenegun emaitza ___?',
-        hura: 'Hark lehengo egunean deia ___.',
-        gu: 'Guk iaz taxia ___.',
-        zuek: 'Zuek duela bi egun autobusa ___?',
-        haiek: 'Haiek joan den astean emaitza ___.',
+        ni: { text: 'Nik atzo tranbia geltokian ___.', validFor: [] },
+        zu: { text: 'Zuk herenegun txapelketako emaitza urduri ___?', validFor: [] },
+        hura: { text: 'Hark lehengo egunean abiatzeko deia kaian ___.', validFor: [] },
+        gu: { text: 'Guk iaz autobusa euripean ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun txanda jatetxean ___?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean mareak igotzea kostan ___.', validFor: [] },
       },
     },
   },
@@ -3948,20 +4038,20 @@ export const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Ni etxean ___.',
-        zu: 'Zu gelan ___?',
-        hura: 'Hura dendan ___.',
-        gu: 'Gu kanpoan ___.',
-        zuek: 'Zuek gelan ___?',
-        haiek: 'Haiek etxean ___.',
+        ni: { text: 'Ni Gorbeiako babes-etxean ___ ekaitzetik.', validFor: [] },
+        zu: { text: 'Zu Tolosako tabernan ___ pintxoetara?', validFor: [] },
+        hura: { text: 'Hura San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
+        gu: { text: 'Gu Aste Nagusiko jaitsierara ___.', validFor: [] },
+        zuek: { text: 'Zuek sagardotegira ___ talo jatera?', validFor: [] },
+        haiek: { text: 'Haiek Gernikako frontoira ___ partida ikustera.', validFor: [] },
       },
       past: {
-        ni: 'Ni atzo etxean ___.',
-        zu: 'Zu herenegun gelan ___?',
-        hura: 'Hura lehengo egunean dendan ___.',
-        gu: 'Gu iaz kanpoan ___.',
-        zuek: 'Zuek duela bi egun gelan ___?',
-        haiek: 'Haiek joan den astean etxean ___.',
+        ni: { text: 'Ni atzo Gorbeiako babes-etxean ___ ekaitzetik.', validFor: [] },
+        zu: { text: 'Zu herenegun Tolosako tabernan ___ pintxoetara?', validFor: [] },
+        hura: { text: 'Hura lehengo egunean San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
+        gu: { text: 'Gu iaz Aste Nagusiko jaitsierara ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun sagardotegira ___ talo jatera?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean Gernikako frontoira ___ partida ikustera.', validFor: [] },
       },
     },
   },
@@ -4000,20 +4090,20 @@ export const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Ni etxetik ___.',
-        zu: 'Zu lantegitik ___?',
-        hura: 'Hura kalera ___.',
-        gu: 'Gu lehiaketatik ___.',
-        zuek: 'Zuek etxetik ___?',
-        haiek: 'Haiek kalera ___.',
+        ni: { text: 'Ni Bilboko Casco Viejotik ___ goizeko hamarretan.', validFor: [] },
+        zu: { text: 'Zu lantegitik ___ txirrindulariekin elkartzera?', validFor: [] },
+        hura: { text: 'Hura kaira ___ arraina saltzera.', validFor: [] },
+        gu: { text: 'Gu Donostiako Zinemalditik ___ gauerdian.', validFor: [] },
+        zuek: { text: 'Zuek herriko jaitik ___ goizaldean?', validFor: [] },
+        haiek: { text: 'Haiek Aste Nagusiko karpatik ___ kontzertua bukatu ondoren.', validFor: [] },
       },
       past: {
-        ni: 'Ni atzo etxetik ___.',
-        zu: 'Zu herenegun lantegitik ___?',
-        hura: 'Hura lehengo egunean kalera ___.',
-        gu: 'Gu iaz lehiaketatik ___.',
-        zuek: 'Zuek duela bi egun etxetik ___?',
-        haiek: 'Haiek joan den astean kalera ___.',
+        ni: { text: 'Ni atzo Bilboko Casco Viejotik ___ goizeko hamarretan.', validFor: [] },
+        zu: { text: 'Zu herenegun lantegitik ___ txirrindulariekin elkartzera?', validFor: [] },
+        hura: { text: 'Hura lehengo egunean kaira ___ arraina saltzera.', validFor: [] },
+        gu: { text: 'Gu iaz Donostiako Zinemalditik ___ gauerdian.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun herriko jaitik ___ goizaldean?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean Aste Nagusiko karpatik ___ kontzertua bukatu ondoren.', validFor: [] },
       },
     },
   },
@@ -4052,20 +4142,20 @@ export const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Ni lanean ___.',
-        zu: 'Zu ikastaroan ___?',
-        hura: 'Hura goiz ___.',
-        gu: 'Gu proiektuarekin ___.',
-        zuek: 'Zuek ikastaroan ___?',
-        haiek: 'Haiek lanean ___.',
+        ni: { text: 'Ni euskara ikastaroarekin ___ irailean.', validFor: [] },
+        zu: { text: 'Zu trikitixa ikasten ___ udan?', validFor: [] },
+        hura: { text: 'Hura txapelketako entrenamenduekin ___ goiz.', validFor: [] },
+        gu: { text: 'Gu Gorbeiako igoerarekin ___ ilunabarrean.', validFor: [] },
+        zuek: { text: 'Zuek Aste Nagusiko prestaketekin ___ udaberrian?', validFor: [] },
+        haiek: { text: 'Haiek bertso saioarekin ___ berandu.', validFor: [] },
       },
       past: {
-        ni: 'Ni atzo lanean ___.',
-        zu: 'Zu herenegun ikastaroan ___?',
-        hura: 'Hura lehengo egunean goiz ___.',
-        gu: 'Gu iaz proiektuarekin ___.',
-        zuek: 'Zuek duela bi egun ikastaroan ___?',
-        haiek: 'Haiek joan den astean lanean ___.',
+        ni: { text: 'Ni iaz euskara ikastaroarekin ___ irailean.', validFor: [] },
+        zu: { text: 'Zu herenegun trikitixa ikasten ___ udan?', validFor: [] },
+        hura: { text: 'Hura lehengo egunean txapelketako entrenamenduekin ___ goiz.', validFor: [] },
+        gu: { text: 'Gu aurten Gorbeiako igoerarekin ___ ilunabarrean.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun Aste Nagusiko prestaketekin ___ udaberrian?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean bertso saioarekin ___ berandu.', validFor: [] },
       },
     },
   },
@@ -4109,20 +4199,20 @@ export const VERBS = [
     },
     sentences: {
       present: {
-        ni: 'Ni Donostian ___.',
-        zu: 'Zu Bilbon ___?',
-        hura: 'Hura herri txiki batean ___.',
-        gu: 'Gu Gasteizen ___.',
-        zuek: 'Zuek Donostian ___?',
-        haiek: 'Haiek herri txiki batean ___.',
+        ni: { text: 'Ni Hondarribiko portu zaharretik gertu ___.', validFor: [] },
+        zu: { text: 'Zu Arratzuko baserri batean ___?', validFor: [] },
+        hura: { text: 'Hura Zuberoako mendi artean ___.', validFor: [] },
+        gu: { text: 'Gu Bilboko Casco Viejoan ___.', validFor: [] },
+        zuek: { text: 'Zuek Lapurdiko kostaldean ___?', validFor: [] },
+        haiek: { text: 'Haiek Arabako lautadan ___.', validFor: [] },
       },
       past: {
-        ni: 'Ni garai hartan Donostian ___.',
-        zu: 'Zu lehen Bilbon ___?',
-        hura: 'Hura urte askoan herri txiki batean ___.',
-        gu: 'Gu garai hartan Gasteizen ___.',
-        zuek: 'Zuek lehen Donostian ___?',
-        haiek: 'Haiek urte askoan herri txiki batean ___.',
+        ni: { text: 'Ni garai hartan Hondarribiko portu zaharretik gertu ___.', validFor: [] },
+        zu: { text: 'Zu lehen Arratzuko baserri batean ___?', validFor: [] },
+        hura: { text: 'Hura urte askoan Zuberoako mendi artean ___.', validFor: [] },
+        gu: { text: 'Gu garai hartan Bilboko Casco Viejoan ___.', validFor: [] },
+        zuek: { text: 'Zuek lehen Lapurdiko kostaldean ___?', validFor: [] },
+        haiek: { text: 'Haiek urte askoan Arabako lautadan ___.', validFor: [] },
       },
     },
   },
@@ -6760,6 +6850,16 @@ for (const verb of VERBS) {
   if (!verb.conjugations.future) continue
   if (verb.sentences?.present) verb.sentences.future = verb.sentences.present
   if (verb.pronounSentences?.present) verb.pronounSentences.future = verb.pronounSentences.present
+}
+
+// #313: same reuse-by-reference idea, one level down — a verb with both a
+// `futurePlural` table and existing `presentPlural` sentences gets
+// `sentences.futurePlural` aliased from `presentPlural` for the same reason
+// as the loop above (the blank doesn't care whether the plural-object
+// drill is present or future tense).
+for (const verb of VERBS) {
+  if (!verb.conjugations.futurePlural) continue
+  if (verb.sentences?.presentPlural) verb.sentences.futurePlural = verb.sentences.presentPlural
 }
 
 // `conjugations.past` table. Unlike the future loop above, `sentences.past`

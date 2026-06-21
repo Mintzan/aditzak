@@ -12,6 +12,83 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #314: authored colorful sentences for #319's 16 high-frequency fodder verbs
+
+Replaced the schematic placeholder sentences (from the now-closed
+#318–#321) with culturally-grounded present/past pairs for all 16 of
+#319's verbs: `egin`, `irakurri`, `idatzi`, `ikasi`, `entzun`, `utzi`,
+`aurkitu`, `bilatu`, `galdu`, `jaso`, `saldu`, `itxaron`, `sartu`, `atera`,
+`hasi`, `bizi-izan`. `future` needed no separate authoring — it's already
+covered by the pre-existing `future ← present` reuse-by-reference loop.
+Every variant is tagged `validFor: []`: each sentence anchors on a concrete,
+specific real-world object/setting (a named dish, a named place, a named
+person's writings) deliberately chosen so no sibling verb's same-person
+form is also a natural fit. New sentences recorded in
+`docs/SAMPLE_SENTENCES.md`'s new "Fodder verbs — high-frequency tier" section
+per #314's rule that uncovered-verb sentences get added there too.
+
+**Decision (accepted the full validFor gap-audit delta without further
+curation):** adding 16 new agreement-compatible verbs to `VERBS`
+mechanically inflates `scripts/validforGapAudit.mjs`'s gap counts for
+*every* existing curated `validFor` list dataset-wide — the audit is purely
+agreement-based (does `gapVerb`'s form exist, differ, and sit outside the
+host's `validFor` array?), not semantic. Spot-checked the new gaps against
+the largest-delta host pools (`izan`'s identity/profession sentences,
+`ukan`'s possession cluster, the synthetic-verb present-tense sentences):
+in every case the new gap was a grammatically valid sentence in an
+unrelated semantic relation (e.g. "Nik liburu bat itxaron dut" — I waited
+for a book — being flagged against `ukan`'s curated "have/want/need/buy"
+cluster), the same shape as pre-existing accepted false positives in that
+cluster (`jan`/`edan` were already gap candidates there pre-#314, never
+added). Concluded none of the 16 verbs need `validFor` additions to
+existing sentences, then regenerated `scripts/validfor-gap-baseline.json`
+wholesale via `node scripts/validfor-delta-audit.mjs --json`. #316's
+native-speaker review remains the backstop if this judgment call turns out
+wrong for any specific sentence.
+
+#320's mid/low-frequency tier (18 verbs) and #321's academic/rare tier (12
+verbs) — the rest of #314's ~46-verb scope — are deferred; #314 stays open
+until both land.
+
+## 2026-06-21 — #313: extended cultural sentences to imperfectivePast (joan/etorri/ibili), nahi/gustatu/iruditu/ari, and a new futurePlural reuse loop
+
+Closed out #312's left-behind `imperfectivePast` question (see the #312
+entry below): confirmed programmatically that the synthetic-verb bank's
+"Past" examples for `joan`/`etorri`/`ibili` are genuinely `imperfectivePast`
+forms, and added `sentences.imperfectivePast` blocks for all three. `joan`'s
+bare-locative `ni` item is tagged `validFor: ['ibili']` (no directional cue,
+closer to ibili's territory than joan's usual allative sense) rather than
+joan's typical `['etorri']` — flagged as tentative for #316's native-speaker
+review, same as the #312-era locative item it sits next to. `etorri`'s
+imperfectivePast items are ablative-only and get `validFor: []`, extending
+the convention already established for `etorri`'s present-tense ablative
+sentences (no sibling shares "coming from X" without also needing a
+destination). `etorri`'s `habitualPast` (the periphrastic `etortzen
+nintzen` construction, distinct from `imperfectivePast`) stays form-only —
+no bank section targets it.
+
+Also adopted: `nahi`'s remaining present/infinitive-complement items and a
+new `presentPlural` block; `gustatu`/`iruditu`'s future-ready `present.haiek`
+items; `ari`'s one ready `present.zu` item (the rest of `ari`'s bank stays
+deferred — its table has no `gu`/`zuek`/`haiek` cells and no `past`/`future`
+at all, a conjugation-table gap rather than a sentence-curation one).
+
+**Decision (new `futurePlural ← presentPlural` reuse-by-reference loop):**
+found that `futurePlural` sentences were unreachable for `ukan`/`nahi`/
+`esan`/`eman`/`gustatu`/`iruditu`/`ahaztu` despite each having both a
+`futurePlural` conjugations table and existing `presentPlural` sentences —
+no loop aliased one to the other (only `future ← present` existed). Added a
+loop mirroring the existing pattern, since the blank doesn't care whether
+the plural-object drill is present- or future-tense. This is a structural
+fix, not new bank content — distinguished explicitly from genuine
+bank-content gaps (e.g. `izan`/`ukan`'s potential/baldintza/conditional/
+imperative, which stay form-only because no bank sentence targets them) in
+`docs/SAMPLE_SENTENCES.md`'s new "Coverage inventory (#313)" section.
+
+Causative (`-arazi`/`-erazi`) and `ahal` remain explicitly out of scope per
+the epic body — documented in the coverage inventory but no `VERBS` entries
+authored.
+
 ## 2026-06-21 — #312: adopted cultural-bank present/past sentences into egon/joan/etorri/ibili/ukan/jakin/gustatu/ahaztu/saldu-dative
 
 Adopted the "ready" items from #311's curation pass
