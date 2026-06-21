@@ -1457,7 +1457,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   const resolvedSources = sources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
   const extraSiblingSources = extraSources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
   const crossVerbQuestions = lesson.review
-    ? generateCrossVerbQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources, verbs: VERBS })
+    ? generateCrossVerbQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources, verbs: VERBS, objectAxis: lesson.objectAxis })
     : []
   // Reviews whose sources mix `nor` and `nor-nork` verbs also get up to
   // `CASE_MIXER_QUESTION_COUNT` "which form matches this sentence's subject"

@@ -302,8 +302,8 @@ export const JOURNEY_TRANSLATIONS = {
     15: {
       title: { es: 'maite izan — Querer a alguien (el objeto no-3ª persona)', eu: 'maite izan — Norbait maitatzea (3. pertsona ez den objektua)' },
       focus: {
-        es: 'las tablas presentByObject/pastByObject de ukan y maite (#346/#347/#348) — el objeto (NOR) pasa de hura por defecto a ni/zu/zuek/haiek, con nork fijado en ni',
-        eu: 'ukan eta maite-ren presentByObject/pastByObject taulak (#346/#347/#348) — objektua (NOR) hura lehenetsitik ni/zu/zuek/haiek-era pasatzen da, nork ni-n finkaturik',
+        es: 'las tablas presentByObject/pastByObject de ukan, maite, ikusi, jan, edan, erosi y hartu (#346/#347/#348/#378/#379) — el objeto (NOR) pasa de hura por defecto a ni/zu/zuek/haiek, con nork fijado en ni, más un repaso conjunto de los siete verbos (#380/#381)',
+        eu: 'ukan, maite, ikusi, jan, edan, erosi eta hartu-ren presentByObject/pastByObject taulak (#346/#347/#348/#378/#379) — objektua (NOR) hura lehenetsitik ni/zu/zuek/haiek-era pasatzen da, nork ni-n finkaturik, gainera zazpi aditzen errepaso bateratua (#380/#381)',
       },
       payload: {
         es: '"Te quiero." (Maite zaitut)',

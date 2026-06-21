@@ -3300,6 +3300,39 @@ describe('getIntroducedSources + cross-verb question generation (real LESSONS/VE
   })
 })
 
+// #381: Unit 15's two new pooled reviews (object-axis-present-review,
+// object-axis-past-review) span all seven objectAxis verbs (ukan/maite/
+// ikusi/jan/edan/erosi/hartu); generateCrossVerbQuestions should pool
+// distractors across more than just a pair of them, per #380's design.
+describe.each(['object-axis-present-review', 'object-axis-past-review'])('%s (real LESSONS/VERBS, #381)', (lessonId) => {
+  it('produces verb-choice questions with no sentence, drawing distractors from more than two verbs', () => {
+    const lesson = LESSONS.find((l) => l.id === lessonId)
+    const resolvedSources = lesson.sources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
+
+    const questions = generateCrossVerbQuestions(resolvedSources, {
+      persons: lesson.persons,
+      count: 20,
+      verbs: VERBS,
+      objectAxis: lesson.objectAxis,
+    })
+
+    expect(questions.length).toBeGreaterThan(0)
+    const verbIdsSeen = new Set()
+    questions.forEach((question) => {
+      expect(question.kind).toBe('verb-choice')
+      expect(question.sentence).toBeUndefined()
+      expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+      expect(question.options).toContain(question.correct)
+      expect(new Set(question.options).size).toBe(question.options.length)
+      resolvedSources.forEach(({ verb, tense }) => {
+        const table = resolveObjectAxisTable(verb.conjugations[tense], lesson.objectAxis)
+        if (question.options.includes(table[question.person])) verbIdsSeen.add(verb.id)
+      })
+    })
+    expect(verbIdsSeen.size).toBeGreaterThan(2)
+  })
+})
+
 // #124/#315: every cultural-bank-epic (#310) `nor-nork` verb's
 // `sentences`/`negativeSentences` variant, in any tense, has an explicit
 // `validFor` decision (docs/SENTENCE_FRAMES.md) — even `validFor: []` counts

@@ -288,15 +288,19 @@ export const JOURNEY = [
           // payoff: the first sentence in the whole journey where the
           // *object*, not just the subject, isn't `hura`. See
           // `docs/DECISIONS.md` for the placement decision and
-          // `docs/EXERCISE_ENGINE.md` for why this unit covers only
-          // `ukan`/`maite` (not `ikusi`, which has no `*ByObject` table yet)
-          // and has no pooled cross-verb review (`generateCrossVerbQuestions`
-          // doesn't support `objectAxis`).
+          // `docs/EXERCISE_ENGINE.md` for the unit's original `ukan`/`maite`-
+          // only scope. #378/#379 then gave `ikusi`/`jan`/`edan`/`erosi`/
+          // `hartu` their own `presentByObject`/`pastByObject` tables and
+          // #380 taught `generateCrossVerbQuestions` to pool `objectAxis`
+          // sources, so #381 extended this unit's `lessonIds` with a pooled
+          // review spanning all seven verbs, per the #286 "extend the
+          // existing unit, don't add a new one" precedent — this is more of
+          // what Unit 15 already teaches, not a new grammatical relation.
           {
             number: 15,
             title: 'maite izan — Loving Someone (The Non-3rd-Person Object)',
             focus:
-              "ukan's and maite's presentByObject/pastByObject tables (#346/#347/#348) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni",
+              "ukan/maite/ikusi/jan/edan/erosi/hartu's presentByObject/pastByObject tables (#346/#347/#348/#378/#379) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni, plus a pooled review (#380/#381) drawing distractors across all seven verbs",
             payload: '"I love you." (Maite zaitut.)',
             status: 'available',
             lessonIds: [
@@ -304,6 +308,8 @@ export const JOURNEY = [
               'maite-object-axis-present',
               'ukan-object-axis-past',
               'maite-object-axis-past',
+              'object-axis-present-review',
+              'object-axis-past-review',
             ],
           },
           // Unit 16 ("Carrying & Bringing") moved here from the Phase VII

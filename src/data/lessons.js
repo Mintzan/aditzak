@@ -1875,13 +1875,15 @@ export const LESSONS = [
   // is excluded — `nork: 'ni'` can't take `gu` as its own object (no
   // first-person-plural-includes-the-speaker reflexive in this paradigm; see
   // `resolveObjectAxisTable`'s "missing cell" handling in `lessonLogic.js`).
-  // `ikusi` has no `*ByObject` table yet (#347's follow-up note in
-  // `docs/EXERCISE_ENGINE.md`) and reviews/`sources` pools don't support
-  // `objectAxis` at all (`generateCrossVerbQuestions` only takes flat
-  // single-axis tables) — both are out of this issue's scope, so this unit is
-  // four single-verb practice lessons with no pooled review, matching the
-  // precedent already set by Unit 12 (`izan-past-pool`/`izan-past-pool-plural`
-  // alone, no trailing `unit-N-review`).
+  // At the time this unit was written, `ikusi` had no `*ByObject` table and
+  // `generateCrossVerbQuestions` didn't support `objectAxis` pooling at all,
+  // so this was four single-verb practice lessons with no pooled review,
+  // matching the precedent set by Unit 12 (`izan-past-pool`/
+  // `izan-past-pool-plural` alone, no trailing `unit-N-review`). #378/#379
+  // gave `ikusi`/`jan`/`edan`/`erosi`/`hartu` their own `*ByObject` tables and
+  // #380 added the pooling support, so #381 appended
+  // `object-axis-present-review`/`object-axis-past-review` below, spanning
+  // all seven verbs.
   {
     id: 'ukan-object-axis-present',
     verbId: 'ukan',
@@ -1909,6 +1911,44 @@ export const LESSONS = [
     tense: 'pastByObject',
     persons: ['hura', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  // #381: now that `ikusi`/`jan`/`edan`/`erosi`/`hartu` have their own
+  // `presentByObject`/`pastByObject` tables (#378/#379) and
+  // `generateCrossVerbQuestions` can pool `objectAxis` sources (#380), Unit
+  // 15 gets a pooled review spanning all seven object-axis verbs —
+  // `review: true` + `sources` lets `generateCrossVerbQuestions` draw
+  // "which verb fits" distractors across the whole set, not just
+  // `ukan`/`maite`. Same `persons`/`objectAxis` as the four practice lessons
+  // above (every source shares one fixed axis, see `docs/DECISIONS.md`).
+  {
+    id: 'object-axis-present-review',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'ukan', tense: 'presentByObject' },
+      { verbId: 'maite', tense: 'presentByObject' },
+      { verbId: 'ikusi', tense: 'presentByObject' },
+      { verbId: 'jan', tense: 'presentByObject' },
+      { verbId: 'edan', tense: 'presentByObject' },
+      { verbId: 'erosi', tense: 'presentByObject' },
+      { verbId: 'hartu', tense: 'presentByObject' },
+    ],
+  },
+  {
+    id: 'object-axis-past-review',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'ukan', tense: 'pastByObject' },
+      { verbId: 'maite', tense: 'pastByObject' },
+      { verbId: 'ikusi', tense: 'pastByObject' },
+      { verbId: 'jan', tense: 'pastByObject' },
+      { verbId: 'edan', tense: 'pastByObject' },
+      { verbId: 'erosi', tense: 'pastByObject' },
+      { verbId: 'hartu', tense: 'pastByObject' },
+    ],
   },
 
   // #358/#359: the NOR-NORI mirror of the block above — `gustatu`/`iruditu`/
