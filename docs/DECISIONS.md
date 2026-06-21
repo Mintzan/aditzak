@@ -12,6 +12,41 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #315: word-order length cap + widened validFor coverage enforcement
+
+**Decision (word-order length policy):** Added `WORD_ORDER_MAX_WORDS = 9`
+(`lessonLogic.js`) alongside the existing `WORD_ORDER_MIN_WORDS = 4` —
+`meetsWordOrderThreshold` now requires the filled sentence's word count to
+fall in `[MIN, MAX]`. Chose an upper cap (over a per-sentence `wordOrder:
+false` opt-out tag) because the bound is structural, not sentence-specific:
+sampling the cultural bank showed the curated "ready" sentences mostly land
+6-9 words, with a tail running to 11; 9 keeps the bulk eligible while
+excluding the handful of longer, more syntactically elaborate ones the issue
+flagged as becoming unwieldy 12+-token taps. A per-sentence flag would have
+meant manually annotating that tail rather than deriving the cutoff once.
+
+**Decision (validFor coverage test):** Widened the existing `nor-nork`
+coverage test (#124) to check every tense (not just `present`) and
+`negativeSentences` too, since #267 already gives verbs their own
+hand-written `sentences.past` rather than reusing `present` by reference.
+Scoped to an **explicit allowlist** of the cultural-bank epic's (#310)
+`nor-nork` verbs (`ukan`/`jakin`/`eraman`/`ekarri`/`jan`/`edan`/`erosi`/
+`hartu`/`ikusi`/`eduki`/`esan`/`eman`/`behar`), not every
+`agreement.includes('nork')` verb — widening it to literally every verb or
+every `nor-nork` verb surfaced ~39 unrelated vocabulary-expansion verbs
+(`egin`, `irakurri`, `saldu`, `bultzatu`, ...) whose hand-written
+`sentences.past` predates #310 and has never been `validFor`-tagged. Fixing
+that backlog is a substantial, unrelated native-speaker-judgment task, not
+something #315 (an engine/test stream) should absorb. `ibili`/`ari` (the
+`nor`-cluster verbs #312/#313 are about to enrich) have the same gap and are
+left for a follow-up pass once their cultural data actually lands, rather
+than pre-emptively tagged now.
+
+**Spot-error/availability check:** no cultural-bank data has landed yet
+(#312-314 are still pending), so there's nothing to spot-check the
+question-kind distribution against yet — deferred to #312's actual adoption
+pass rather than checked against today's unchanged data.
+
 ## 2026-06-20 — #311: curated the cultural sentence bank for adoption-readiness
 
 **Decision:** Added an "Adoption-readiness curation (#311)" section to

@@ -52,6 +52,7 @@ import {
   repairStreak,
   shuffle,
   STREAK_REPAIR_COST,
+  WORD_ORDER_MAX_WORDS,
   WORD_ORDER_MIN_WORDS,
 } from './lessonLogic'
 import { LESSONS } from './data/lessons'
@@ -1656,6 +1657,22 @@ describe('generateQuestions', () => {
         vi.restoreAllMocks()
       }
     })
+
+    it(`never offers word-order for a sentence above the ${WORD_ORDER_MAX_WORDS}-word maximum, regardless of roll (#315)`, () => {
+      const tooLongVerb = {
+        ...verb,
+        sentences: {
+          present: { ni: 'Ni gaur goizean lagunekin oinez joan nintzen herriko plazara ___.' },
+        },
+      }
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+        generateQuestions(tooLongVerb, 'present', { persons: ['ni'] }).forEach((question) => {
+          expect(question.kind).not.toBe('word-order')
+        })
+        vi.restoreAllMocks()
+      }
+    })
   })
 
   describe('with typed-answer framings', () => {
@@ -2896,44 +2913,53 @@ describe('getIntroducedSources + cross-verb question generation (real LESSONS/VE
   })
 })
 
-// #124: every `nor-nork` verb's `sentences.present`/`negativeSentences.present`
-// variant has an explicit `validFor` decision (docs/SENTENCE_FRAMES.md) — even
-// `validFor: []` counts as "decided"; a bare string or an object with no
-// `validFor` key is the pre-#124 "not yet vetted" state and fails this test.
-// `present` is the only tense that needs checking: `future`/`past` reuse
-// `sentences.present`/`negativeSentences.present` by reference (see the
-// reuse loops at the bottom of `src/data/verbs.js`).
-describe('validFor coverage for the nor-nork cluster (docs/SENTENCE_FRAMES.md, #124)', () => {
-  const norNorkVerbs = VERBS.filter((verb) => verb.agreement.includes('nork'))
+// #124/#315: every cultural-bank-epic (#310) `nor-nork` verb's
+// `sentences`/`negativeSentences` variant, in any tense, has an explicit
+// `validFor` decision (docs/SENTENCE_FRAMES.md) — even `validFor: []` counts
+// as "decided"; a bare string or an object with no `validFor` key is the
+// pre-#124 "not yet vetted" state and fails this test. Originally scoped to
+// just `sentences.present` across every `nor-nork` verb (#124); widened to
+// every tense and to `negativeSentences` too (#315), since the cultural-bank
+// adoption (#311-314) gives verbs their own hand-written `sentences.past` (no
+// longer just a by-reference reuse of `present` — see the reuse loops at the
+// bottom of `src/data/verbs.js`).
+//
+// Deliberately an explicit allowlist, not every `agreement.includes('nork')`
+// verb: a separate, unrelated vocabulary-expansion effort (`egin`, `irakurri`,
+// `saldu`, `bultzatu`, ~35 others) already ships hand-written
+// `sentences.past` with no `validFor` tagging at all, predating #310 and out
+// of this epic's scope to retroactively audit. This list is exactly
+// #312/#313's already-adopted or in-scope `nor-nork` verbs (`nahi`/`ari` are
+// `nor`/intransitive-only and `gustatu`/`iruditu`/`ahaztu` are `nor-nori`, so
+// they're covered by a future, separately-scoped pass once #312/#313 land
+// their data, per the comment above).
+describe('validFor coverage for the nor-nork cluster (docs/SENTENCE_FRAMES.md, #124/#315)', () => {
+  const CULTURAL_BANK_NOR_NORK_VERBS = ['ukan', 'jakin', 'eraman', 'ekarri', 'jan', 'edan', 'erosi', 'hartu', 'ikusi', 'eduki', 'esan', 'eman', 'behar']
+  const norNorkVerbs = VERBS.filter((verb) => CULTURAL_BANK_NOR_NORK_VERBS.includes(verb.id))
 
   it('covers more than one verb', () => {
     expect(norNorkVerbs.length).toBeGreaterThan(1)
   })
 
+  const expectCoverage = (sentencesByTense, label) => {
+    for (const [tense, sentences] of Object.entries(sentencesByTense ?? {})) {
+      for (const [person, value] of Object.entries(sentences ?? {})) {
+        const variants = Array.isArray(value) ? value : [value]
+        for (const variant of variants) {
+          expect(variant, `${label}.${tense}.${person}`).toEqual(expect.objectContaining({ validFor: expect.any(Array) }))
+        }
+      }
+    }
+  }
+
   for (const verb of norNorkVerbs) {
     describe(verb.id, () => {
-      it('every sentences.present variant has an explicit validFor array', () => {
-        const sentences = verb.sentences?.present ?? {}
-        for (const [person, value] of Object.entries(sentences)) {
-          const variants = Array.isArray(value) ? value : [value]
-          for (const variant of variants) {
-            expect(variant, `${verb.id}.sentences.present.${person}`).toEqual(
-              expect.objectContaining({ validFor: expect.any(Array) }),
-            )
-          }
-        }
+      it('every sentences variant, in every tense, has an explicit validFor array', () => {
+        expectCoverage(verb.sentences, `${verb.id}.sentences`)
       })
 
-      it('every negativeSentences.present variant has an explicit validFor array', () => {
-        const sentences = verb.negativeSentences?.present ?? {}
-        for (const [person, value] of Object.entries(sentences)) {
-          const variants = Array.isArray(value) ? value : [value]
-          for (const variant of variants) {
-            expect(variant, `${verb.id}.negativeSentences.present.${person}`).toEqual(
-              expect.objectContaining({ validFor: expect.any(Array) }),
-            )
-          }
-        }
+      it('every negativeSentences variant, in every tense, has an explicit validFor array', () => {
+        expectCoverage(verb.negativeSentences, `${verb.id}.negativeSentences`)
       })
     })
   }
