@@ -1283,6 +1283,56 @@ sibling fits). Past sentences need individual handling:
 
 ---
 
+## Coverage inventory (#313)
+
+Audit of every `(verb, tense)` pair with a `conjugations` table beyond plain
+present/past/future, cross-checked against whether `sentences` exists for
+that tense (singular tables and `future`/`futurePlural` reused by reference
+per the loops at the bottom of `src/data/verbs.js` count as covered).
+
+**Adopted this pass:**
+- `joan`/`etorri`/`ibili`'s `imperfectivePast` — the synthetic-verbs bank's
+  "Past" examples for these three (see "Synthetic verbs" section above)
+  actually drill this table, not `past`'s simple past — #312 missed this
+  because it predates this cross-check. `etorri`'s one frameless item
+  (`'Zuek korrika zentozten...'`) stays deferred to #316 (same bare-locative
+  issue #125 already fixed elsewhere for `etorri`).
+- `nahi`'s remaining modal-bank `present`/`presentPlural` "ready" items not
+  yet in `src/data/verbs.js` (2 more `ni` infinitive-complements, 1 `haiek`
+  infinitive-complement, `presentPlural.gu`/`presentPlural.haiek`).
+- `gustatu`/`iruditu`'s two future-ready NOR-NORI items (placed in
+  `present.haiek`, picked up by `future`'s reuse-by-reference, same pattern
+  #312 used for `joan`'s future-ready item).
+- `ari`'s one ready `present.zu` continuous item.
+- A new `futurePlural ← presentPlural` reuse-by-reference loop (mirroring
+  the existing `future ← present` one), extending `futurePlural` sentence
+  coverage to every verb that already had `presentPlural` sentences
+  (`ukan`, `nahi`, `esan`, `eman`, `gustatu`, `iruditu`, `ahaztu`) without
+  hand-authoring duplicate text.
+
+**Still form-only, with reasons (not bank-content gaps — structural):**
+- `izan`/`ukan`'s `potential`/`baldintza`/`conditional`/`imperative` — these
+  are the *only* verbs with these tables, but no bank sentence targets
+  `izan`/`ukan` directly in these moods (the bank's conditional/potential/
+  imperative examples all target other verbs — `joan`, `ahal`, the
+  NOR-NORI-NORK cluster — that don't have the table yet, hence "no table"
+  in the curation rows above). Nothing to adopt until a future bank pass
+  writes `izan`/`ukan`-specific examples.
+- `etorri`/`ikusi`'s `habitualPast` (periphrastic "I used to...") — no bank
+  section covers this aspect at all yet.
+- `jan`/`edan`/`erosi`/`hartu`/`ikusi`/`eduki`'s `futurePlural` — these never
+  got `presentPlural` sentences in the first place (a presentPlural-bank gap,
+  not specific to #313's advanced-tense scope), so there's nothing to alias.
+- The `-dative` verbs' (`itxaron`/`saldu`/`utzi`/`adierazi`/`eskatu`/
+  `galdetu`) `future` — none of these have *any* `sentences.present` yet
+  (`saldu-dative` has only `past`, from #312); a present/past NOR-NORI-NORK
+  gap predating #313, not an advanced-tense one.
+
+**Explicitly out of scope per the epic body, not re-evaluated per-sentence:**
+`ahal` (whole 11-sentence set deferred to its own pending unit) and the
+causative (`-arazi`/`-erazi`) bank (blocked on Phase VI units +
+`docs/VERB_COVERAGE.md` §6).
+
 ## Next steps (not yet done)
 
 1. ~~Review/edit these for naturalness and any missing vocabulary gaps.~~ Done
@@ -1305,19 +1355,36 @@ sibling fits). Past sentences need individual handling:
    pull individual sentences from them, blank the drilled form, and fold them
    into that verb's `sentences`/`pronounSentences` tables (plus a theme from
    the categories above) as each unit is implemented.
-6. The modal-verb bank pairs with Unit 2 (`nahi` per `journey.js`'s "Having
-   and Wanting") and Units 14–16's `behar`/Geroa work — `ahal`'s sentences also
-   double as early `potential`-tense examples once that tense exists.
+   ~~Done for the "ready" present/past items targeting `egon`/`joan`/`etorri`/
+   `ibili`/`ukan`/`jakin`/`gustatu`/`ahaztu`/`saldu-dative` (#312)~~ — see
+   `docs/DECISIONS.md`'s "#312" entry. ~~Done for `joan`/`etorri`/`ibili`'s
+   imperfectivePast cultural sentences, `nahi`'s remaining present/
+   presentPlural items, `gustatu`/`iruditu`'s future-ready items, and `ari`'s
+   one ready continuous item (#313)~~ — see "Coverage inventory (#313)"
+   above and `docs/DECISIONS.md`'s "#313" entry. Still outstanding, deferred
+   to #316's native-speaker review: `etorri`'s frameless past item, and
+   `jakin`'s two `ba-`-emphatic past items plus one conditional-past item.
+6. ~~The modal-verb bank pairs with Unit 2 (`nahi`...) and Units 14–16's
+   `behar`/Geroa work~~ — `nahi`'s present/presentPlural-tense bank items are
+   now fully adopted (#313); its `past`-tense items stay deferred (`nahi` has
+   no `past` table). `ahal`'s sentences remain deferred wholesale per the
+   epic body (pending the `ahal` unit) — not re-evaluated per-sentence; they
+   would double as early `potential`-tense examples once that unit lands.
 7. The causative bank pairs with the new Phase VI (Units 28-30,
    `LEARNING_JOURNEY.md`) — `docs/VERB_COVERAGE.md` §6 still needs the
    `-arazi`/`-erazi` conditioning rule sourced before any of these become
    `VERBS` entries.
-8. The `ari izan` continuous-aspect bank isn't yet placed in
-   `LEARNING_JOURNEY.md` — find or add a unit for it (likely paired with
-   present/past tense units, since it reuses their NOR auxiliaries) before
-   pulling sentences from it.
-9. The synthetic-verb (`aditz trinkoak`) bank covers `egon`, `joan`, `etorri`,
-   `ibili`, `ukan`/`edun`, `jakin`, `eraman`, `ekarri` — none of these are yet
-   in `VERBS` or `LEARNING_JOURNEY.md`. `docs/VERB_COVERAGE.md` should gain a
-   section noting these as a distinct "synthetic verbs" coverage area once
-   units are planned for them.
+8. ~~The `ari izan` continuous-aspect bank isn't yet placed in
+   `LEARNING_JOURNEY.md`~~ — `ari`'s one ready `present.zu` item is adopted
+   (#313); the rest stay deferred since `ari`'s table still has no `gu`/
+   `zuek`/`haiek` cells and no `past`/`future` at all (a `LEARNING_JOURNEY.md`
+   placement and a conjugation-table expansion, not a sentence-curation gap).
+9. ~~The synthetic-verb (`aditz trinkoak`) bank covers `egon`, `joan`,
+   `etorri`, `ibili`, `ukan`/`edun`, `jakin`, `eraman`, `ekarri` — none of
+   these are yet in `VERBS` or `LEARNING_JOURNEY.md`~~ — all eight are now in
+   `VERBS` with `present`/`past`/`future` cultural sentences (and `joan`/
+   `etorri`/`ibili` additionally have `imperfectivePast` as of #313). The
+   remaining synthetic-bank gaps are tracked individually elsewhere in this
+   list (item 5's `imperfectivePast` deferrals, the `habitualPast`/advanced-
+   tense items noted in the "Coverage inventory (#313)" section above) rather
+   than as one open bank-adoption item.

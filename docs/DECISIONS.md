@@ -12,6 +12,82 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #313: extended cultural sentences to imperfectivePast (joan/etorri/ibili), nahi/gustatu/iruditu/ari, and a new futurePlural reuse loop
+
+Closed out #312's left-behind `imperfectivePast` question (see the #312
+entry below): confirmed programmatically that the synthetic-verb bank's
+"Past" examples for `joan`/`etorri`/`ibili` are genuinely `imperfectivePast`
+forms, and added `sentences.imperfectivePast` blocks for all three. `joan`'s
+bare-locative `ni` item is tagged `validFor: ['ibili']` (no directional cue,
+closer to ibili's territory than joan's usual allative sense) rather than
+joan's typical `['etorri']` — flagged as tentative for #316's native-speaker
+review, same as the #312-era locative item it sits next to. `etorri`'s
+imperfectivePast items are ablative-only and get `validFor: []`, extending
+the convention already established for `etorri`'s present-tense ablative
+sentences (no sibling shares "coming from X" without also needing a
+destination). `etorri`'s `habitualPast` (the periphrastic `etortzen
+nintzen` construction, distinct from `imperfectivePast`) stays form-only —
+no bank section targets it.
+
+Also adopted: `nahi`'s remaining present/infinitive-complement items and a
+new `presentPlural` block; `gustatu`/`iruditu`'s future-ready `present.haiek`
+items; `ari`'s one ready `present.zu` item (the rest of `ari`'s bank stays
+deferred — its table has no `gu`/`zuek`/`haiek` cells and no `past`/`future`
+at all, a conjugation-table gap rather than a sentence-curation one).
+
+**Decision (new `futurePlural ← presentPlural` reuse-by-reference loop):**
+found that `futurePlural` sentences were unreachable for `ukan`/`nahi`/
+`esan`/`eman`/`gustatu`/`iruditu`/`ahaztu` despite each having both a
+`futurePlural` conjugations table and existing `presentPlural` sentences —
+no loop aliased one to the other (only `future ← present` existed). Added a
+loop mirroring the existing pattern, since the blank doesn't care whether
+the plural-object drill is present- or future-tense. This is a structural
+fix, not new bank content — distinguished explicitly from genuine
+bank-content gaps (e.g. `izan`/`ukan`'s potential/baldintza/conditional/
+imperative, which stay form-only because no bank sentence targets them) in
+`docs/SAMPLE_SENTENCES.md`'s new "Coverage inventory (#313)" section.
+
+Causative (`-arazi`/`-erazi`) and `ahal` remain explicitly out of scope per
+the epic body — documented in the coverage inventory but no `VERBS` entries
+authored.
+
+## 2026-06-21 — #312: adopted cultural-bank present/past sentences into egon/joan/etorri/ibili/ukan/jakin/gustatu/ahaztu/saldu-dative
+
+Adopted the "ready" items from #311's curation pass
+(`docs/SAMPLE_SENTENCES.md`'s "Adoption-readiness curation" section) as new
+array entries alongside each verb's existing sentences — `egon` (5 present +
+7 past added), `joan`/`etorri` (present-only, allative/directional,
+`validFor: ['etorri']`/`['joan']`), `ibili` (5 present), `ukan` (a new
+`presentPlural.haiek` entry + one `past.gu` entry), `jakin` (3 `present.ni`
+entries + a new `negativeSentences.past` block), `gustatu` (`presentPlural.ni`),
+`ahaztu` (a new `pastPlural.zu` block — `ahaztu` didn't have one yet), and
+`saldu-dative` (a new `sentences.past.haiek` — `saldu-dative` had no
+`sentences` block at all before this).
+
+**Decision (skipped joan/etorri/ibili's past cultural-bank sentences):** the
+curation doc classified these "ready", but checking them against the actual
+`VERBS` tables surfaced a mismatch it missed: the bank's "Past (Lehena)"
+examples for these three verbs use `imperfectivePast` forms (`zihoazen`,
+`zetorren`, `zenbiltzaten`, ...), not the modeled `past` table
+(`joan zen`, `etorri zen`, `ibili zen`) `sentences.past` actually drills.
+`imperfectivePast` is form-only (no `sentences` support, per its own
+doc-comment) — adopting the literal text as-is would silently mismatch the
+blank's expected answer with the surrounding sentence's tense reading.
+Rewriting them to fit the simple past (e.g. inserting a comma and switching
+to a completed-action reading) is plausible but changes the sentence's
+nuance enough to want a native speaker's sign-off — left for #316 rather than
+guessed here. Same reasoning for `etorri`'s two "needs-rewrite" frameless
+past items and `jakin`'s `ba-`-emphatic and conditional past items already
+flagged by the curation doc — left unadopted.
+
+**Decision (regenerated `validfor-gap-baseline.json` without new `validFor`
+additions):** the new gap slots the CI guard (`validfor-audit.test.js`)
+flagged all replicate each verb's *already-established* `validFor` judgment
+applied to more variants (e.g. `egon`'s long-standing "no `nor`-sibling takes
+a bare locative" rationale, `ukan`'s "nahi/eduki/ikusi/erosi/behar" concrete-
+object set) — not new naturalness findings, so the baseline was regenerated
+as-is rather than adding new cross-verb `validFor` entries.
+
 ## 2026-06-21 — #315: word-order length cap + widened validFor coverage enforcement
 
 **Decision (word-order length policy):** Added `WORD_ORDER_MAX_WORDS = 9`
