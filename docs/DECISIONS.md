@@ -12,6 +12,46 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #350: new Unit 15 ("non-3rd-person object"), inserted after Unit 14, shifting everything from there on +1
+
+**Decision:** inserted a new journey unit teaching `ukan`/`maite`'s
+`presentByObject`/`pastByObject` tables (#346/#347/#348) with the *object*
+(NOR) drilled away from the default `hura` — `objectAxis: { vary: 'nor',
+fixed: 'ni' }` — landing on "Maite zaitut" ("I love you") as the payoff
+sentence. Placed it as Unit 15, directly after Unit 14's NOR-NORK past pool
+(the first unit to introduce `ukan`'s ergative agreement fully), and shifted
+every unit number from the old 15 onward by +1 across `journey.js`,
+`journeyTranslations.js`, and `docs/LEARNING_JOURNEY.md`. The four Refresh
+Gates shifted from Units 10/22/31/43 to 10/23/32/44 as a result.
+
+Scoped to four single-verb practice lessons
+(`ukan-object-axis-present`/`maite-object-axis-present`/`ukan-object-axis-past`/`maite-object-axis-past`)
+with no pooled review and no `ikusi`: `generateCrossVerbQuestions` (the
+review/pooled-lesson path) has no `objectAxis` support at all, and `ikusi`
+has no `*ByObject` table yet. Both are pre-existing engine gaps noted in
+`docs/EXERCISE_ENGINE.md`, not something to solve inside this issue. Unit 12
+(`izan-past-pool`/`izan-past-pool-plural`, no trailing review) is precedent
+that a unit doesn't need a review to be valid.
+
+This is also `LESSONS`' first actual use of the `objectAxis` field — it's
+existed in the engine since #346 but no lesson had exercised it until now.
+That surfaced a real latent bug: `hasAmbiguousTypedForm` (`lessonLogic.js`)
+indexed `verb.conjugations[tense][person]` directly, which works for a flat
+table but returns a nested object (not a string) for a 2D `objectAxis`
+table, crashing on `.includes(' ')` the moment `generateQuestions` is called
+with `verbs` passed — exactly what `createExerciseState` does for every real
+lesson. None of #346/#347/#348's existing tests caught it because they all
+call `generateQuestions` without `verbs`, short-circuiting that code path.
+Fixed by teaching `hasAmbiguousTypedForm` to resolve through
+`resolveObjectAxisTable` itself (given an `objectAxis`) before comparing
+forms, and added a permanent regression test in `logic.test.js` that passes
+`verbs: VERBS` for an objectAxis lesson. Also tightened
+`journey.test.js`'s person-validation check, which previously checked
+`person in verb.conjugations[tense]` directly — for an objectAxis lesson
+that spuriously passes (nork/nor share the same person vocabulary) without
+confirming the resolved cell actually exists; now it resolves through
+`resolveObjectAxisTable` first.
+
 ## 2026-06-21 — #348: `maite izan` added, form-only (no `sentences` at all, not even `present`/`past`)
 
 **Decision:** added `maite` (`maite izan`, "to love") to `VERBS`, riding

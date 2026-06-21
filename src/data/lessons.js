@@ -1861,4 +1861,53 @@ export const LESSONS = [
       { verbId: 'ekarri', tense: 'past' },
     ],
   },
+  // Unit 15 (#350, new — inserted after Unit 14's NOR-NORK past pool, shifting
+  // every later unit +1) — the non-3rd-person object: `ukan`/`maite`'s
+  // `presentByObject`/`pastByObject` tables (#346/#347/#348) let the *object*
+  // (NOR) be ni/zu/zuek/haiek, not just the default `hura` every earlier unit
+  // fixes it to. `objectAxis: { vary: 'nor', fixed: 'ni' }` is `LESSONS`'
+  // first-ever use of that field — `generateQuestions`/`createExerciseState`
+  // have supported it since #346, but no lesson exercised it until now.
+  // `fixed: 'ni'` (rather than some other NORK) makes the payoff sentence
+  // "Maite zaitut" ("I love you") come out directly: NORK=ni, NOR=zu. `hura`
+  // stays in `persons` (its by-object form, "(maite) dut", is the one every
+  // earlier unit already drilled, so it's free reinforcement here) but `gu`
+  // is excluded — `nork: 'ni'` can't take `gu` as its own object (no
+  // first-person-plural-includes-the-speaker reflexive in this paradigm; see
+  // `resolveObjectAxisTable`'s "missing cell" handling in `lessonLogic.js`).
+  // `ikusi` has no `*ByObject` table yet (#347's follow-up note in
+  // `docs/EXERCISE_ENGINE.md`) and reviews/`sources` pools don't support
+  // `objectAxis` at all (`generateCrossVerbQuestions` only takes flat
+  // single-axis tables) — both are out of this issue's scope, so this unit is
+  // four single-verb practice lessons with no pooled review, matching the
+  // precedent already set by Unit 12 (`izan-past-pool`/`izan-past-pool-plural`
+  // alone, no trailing `unit-N-review`).
+  {
+    id: 'ukan-object-axis-present',
+    verbId: 'ukan',
+    tense: 'presentByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'maite-object-axis-present',
+    verbId: 'maite',
+    tense: 'presentByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'ukan-object-axis-past',
+    verbId: 'ukan',
+    tense: 'pastByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'maite-object-axis-past',
+    verbId: 'maite',
+    tense: 'pastByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
 ]

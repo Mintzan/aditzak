@@ -267,6 +267,21 @@ through `generateQuestions` (`src/logic.test.js`), leaving an actual
 (`ikusi` getting the same `*ByObject` treatment, for distractor variety, is
 flagged as a further follow-up rather than folded in here).
 
+**Update (#350)**: the curriculum wiring landed — Unit 15 ("maite izan,"
+journey-numbered after #350's renumber) is the first `LESSONS`/`journey.js`
+unit to actually use `objectAxis`, with four single-verb practice lessons
+(`ukan`/`maite` × present/past, `vary: 'nor'`/`fixed: 'ni'`) landing on "Maite
+zaitut." Scoped to single-verb lessons only: `generateCrossVerbQuestions` (the
+pooled-review path) has no `objectAxis` support, and `ikusi` still has no
+`*ByObject` table, so neither a review lesson nor `ikusi`'s "distractor
+variety" follow-up could be folded in here — both remain open for a future
+issue. Landing a real lesson also surfaced a bug `journey.test.js`'s
+flat-table assumption couldn't have caught on its own: `hasAmbiguousTypedForm`
+(`lessonLogic.js`) indexed `verb.conjugations[tense][person]` directly, which
+returns a nested object (not a string) for a 2D table — fixed by routing it
+through `resolveObjectAxisTable` too. See `docs/DECISIONS.md` (2026-06-21,
+#350) for the full writeup.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey
