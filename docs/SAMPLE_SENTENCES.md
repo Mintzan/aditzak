@@ -1305,6 +1305,14 @@ sibling fits). Past sentences need individual handling:
    pull individual sentences from them, blank the drilled form, and fold them
    into that verb's `sentences`/`pronounSentences` tables (plus a theme from
    the categories above) as each unit is implemented.
+   ~~Done for the "ready" present/past items targeting `egon`/`joan`/`etorri`/
+   `ibili`/`ukan`/`jakin`/`gustatu`/`ahaztu`/`saldu-dative` (#312)~~ — see
+   `docs/DECISIONS.md`'s "#312" entry. Still outstanding from this same
+   curation pass, deferred to #316's native-speaker review rather than
+   guessed: `joan`/`etorri`/`ibili`'s past cultural sentences (they're written
+   in `imperfectivePast`, which `sentences.past` doesn't drill), `etorri`'s two
+   frameless past items, and `jakin`'s two `ba-`-emphatic past items plus one
+   conditional-past item.
 6. The modal-verb bank pairs with Unit 2 (`nahi` per `journey.js`'s "Having
    and Wanting") and Units 14–16's `behar`/Geroa work — `ahal`'s sentences also
    double as early `potential`-tense examples once that tense exists.
