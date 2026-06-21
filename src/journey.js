@@ -541,9 +541,9 @@ export const JOURNEY = [
           // it yet). See `docs/DECISIONS.md` for the placement decision.
           {
             number: 28,
-            title: 'gustatu/iruditu/ahaztu — The Non-3rd-Person NOR',
+            title: 'The NOR-NORI Object Axis — natzaizu/gatzaizu',
             focus:
-              "gustatu/iruditu/ahaztu's presentByNor/pastByNor tables (#358) — NOR shifts off the default hura/haiek to ni/gu/zuek, with nori fixed at zu",
+              "the NOR-NORI object axis (natzaizu/gatzaizu/zaizkizu) — gustatu/iruditu/ahaztu's presentByNor/pastByNor tables (#358) shift NOR off the default hura/haiek to ni/gu/zuek, with nori fixed at zu",
             payload: '"Do you like me?" (Gustatzen natzaizu?)',
             status: 'available',
             lessonIds: [

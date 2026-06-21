@@ -400,7 +400,7 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 |---|---|---|---|---|
 | 26 | **The NOR-NORI Present — zait/zaizu/zaio** — 3rd-person subjects (`zaigu`/`zaizue`/`zaie` too) | "I like it." / "It seems good to me." / "I forgot (it slipped my mind)." | §4 (gustatu, iruditu, ahaztu) | available (#146, #164) — singular-NOR present (#146) plus plural-NOR (`-zki-`) production drills, a number-split review, and a case-frame buffer review (#164) |
 | 27 | **NOR-NORI Past & Future — Dative Across Time** — recombining Unit 26's grid with the periphrastic past and `-ko`/`-go` future | "I liked it yesterday." (`Atzo gustatu zitzaidan`) / "I'll forget the keys." (`Giltzak ahaztuko zaizkit`) | §4; §11 | pending — **new unit** (closes `LEARNING_JOURNEY_EVALUATION.md` finding F2) |
-| 28 | **gustatu/iruditu/ahaztu — The Non-3rd-Person NOR** — `presentByNor`/`pastByNor` (#358): NOR shifts off the default `hura`/`haiek` to `ni`/`gu`/`zuek`, with NORI fixed at `zu` — direct contrast with Units 26-27's stimulus-is-3rd-person forms | "Do you like me?" (`Gustatzen natzaizu?`) | §4 | available (#358, #359) |
+| 28 | **The NOR-NORI Object Axis — natzaizu/gatzaizu** — `presentByNor`/`pastByNor` (#358): NOR shifts off the default `hura`/`haiek` to `ni`/`gu`/`zuek`, with NORI fixed at `zu` — direct contrast with Units 26-27's stimulus-is-3rd-person forms | "Do you like me?" (`Gustatzen natzaizu?`) | §4 | available (#358, #359) |
 
 #### Stage 9: Communication & Giving (NOR-NORI-NORK)
 
