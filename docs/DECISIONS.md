@@ -12,6 +12,18 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #386: Unit 28 retitled to lead with the pattern, not the verb list
+
+Unit 28's title (`'gustatu/iruditu/ahaztu — The Non-3rd-Person NOR'`) broke
+the convention every other unit follows (Units 13/20/26: name the
+conjugation pattern, verbs as the worked example) — confusing right next to
+Unit 26, which covers the same three verbs and is titled `'The NOR-NORI
+Present — zait/zaizu/zaio'`. Renamed to `'The NOR-NORI Object Axis —
+natzaizu/gatzaizu'` in `journey.js`, `docs/LEARNING_JOURNEY.md`, and the
+Spanish/Basque copy in `journeyTranslations.js`. Copy-only change — no
+`lessonIds`/data touched, Units 26-27's titles were already pattern-led and
+didn't need changes.
+
 ## 2026-06-21 — #343: pool lessons collapse verb-name labels above a small threshold
 
 `describeLesson` joined every verb name in a multi-source pool/review lesson

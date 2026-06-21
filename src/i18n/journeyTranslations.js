@@ -439,7 +439,7 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     28: {
-      title: { es: 'gustatu/iruditu/ahaztu — El NOR no es solo "ello" (El NOR no-3a-persona)', eu: 'gustatu/iruditu/ahaztu — NOR ez da beti "hura" (NOR ez-3. pertsona)' },
+      title: { es: 'El eje del objeto NOR-NORI — natzaizu/gatzaizu', eu: 'NOR-NORI objektu-ardatza — natzaizu/gatzaizu' },
       focus: {
         es: 'el eje NOR-NORI de gustatu/iruditu/ahaztu se extiende: NOR ya no esta fijado en hura/haiek, sino que varia entre ni/zu/gu/zuek mientras NORI permanece fijo — contraste directo con las unidades 26-27',
         eu: 'gustatu/iruditu/ahaztu-ren NOR-NORI ardatza zabaltzen da: NOR ez dago jada hura/haiek-en finkatuta, ni/zu/gu/zuek artean aldatzen da NORI finko mantenduz — 26-27. unitateekiko alderaketa zuzena',
