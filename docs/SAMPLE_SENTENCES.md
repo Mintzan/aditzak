@@ -1283,6 +1283,69 @@ sibling fits). Past sentences need individual handling:
 
 ---
 
+## Fodder verbs — high-frequency tier (#314, #319)
+
+Unlike the banks above, these sentences weren't staged here first — #314
+covers entirely new fodder verbs (added to `VERBS` by the now-closed
+#318–#321 with schematic placeholder sentences), so there was no existing
+bank entry to adopt. Authored directly in `src/data/verbs.js` and recorded
+here per #314's "add new sentences to `SAMPLE_SENTENCES.md`" rule. All are
+present/past pairs; `future` is picked up for free via the existing
+`future ← present` reuse-by-reference loop. Every variant is tagged
+`validFor: []` (each sentence's concrete real-world object/setting is
+specific enough that no sibling verb's same-person form also fits).
+
+Covers #319's 16 high-frequency verbs: `egin` (to do/make), `irakurri` (to
+read), `idatzi` (to write), `ikasi` (to learn), `entzun` (to hear/listen),
+`utzi` (to leave/let), `aurkitu` (to find), `bilatu` (to search for),
+`galdu` (to lose), `jaso` (to receive), `saldu` (to sell), `itxaron` (to
+wait for — plain transitive sense only, not `itxaron-dative`'s #307 recipient
+sense), `sartu` (to enter), `atera` (to go/come out), `hasi` (to start),
+`bizi-izan` (to live).
+
+Representative examples (present tense, `ni`/`hura`):
+- **egin** — *Nik domekan talo freskoak egiten ditut etxeko sukaldean.* (I
+  make fresh talo at home in the kitchen on Sundays.) / *Hark intxaur-saltsa
+  goxoa egiten du Eguberrietan.* (He/she makes tasty walnut sauce at
+  Christmas.)
+- **irakurri** — *Nik Bernardo Atxagaren eleberri bat irakurtzen dut
+  gauero.* (I read a Bernardo Atxaga novel every night.)
+- **idatzi** — *Nik gutun bat idazten dut amonarentzat.* (I write a letter
+  for grandmother.)
+- **ikasi** — *Nik euskara ikasten dut helduen ikastaroan.* (I learn Basque
+  in the adult course.)
+- **entzun** — *Nik txalaparta entzuten dut plazan.* (I hear the txalaparta
+  in the square.)
+- **utzi** — *Hark abarketak atarian uzten ditu.* (He/she leaves espadrilles
+  at the doorway.)
+- **aurkitu** — *Nik hondartzan kontxa polit bat aurkitzen dut.* (I find a
+  pretty shell on the beach.)
+- **bilatu** — *Hark basoan galdutako ardia bilatzen du.* (He/she searches
+  for the lost sheep in the forest.)
+- **galdu** — *Hark txapela jokoan galtzen du.* (He/she loses the beret in
+  the game.)
+- **jaso** — *Nik gutun bat Ameriketatik jasotzen dut.* (I receive a letter
+  from the Americas.)
+- **saldu** — *Hark gaztandegiko Idiazabal gazta saltzen du.* (He/she sells
+  Idiazabal cheese from the dairy.)
+- **itxaron** — *Nik tranbia geltokian itxaroten dut.* (I wait for the tram
+  at the stop.)
+- **sartu** — *Ni Gorbeiako babes-etxean sartzen naiz ekaitzetik.* (I take
+  shelter in the Gorbeia refuge from the storm.)
+- **atera** — *Ni Bilboko Casco Viejotik ateratzen naiz goizeko hamarretan.*
+  (I leave Bilbao's Old Quarter at ten in the morning.)
+- **hasi** — *Ni euskara ikastaroarekin hasten naiz irailean.* (I start the
+  Basque course in September.)
+- **bizi-izan** — *Ni Hondarribiko portu zaharretik gertu bizi naiz.* (I
+  live near Hondarribia's old port.)
+
+`saldu`/`itxaron`/`sartu`/`atera`/`hasi`/`bizi-izan` each have a sibling
+`-dative` or distinct entry already in `VERBS` (`saldu-dative`,
+`itxaron-dative`); only the plain transitive/NOR entries were touched here,
+per #319's own scoping. `#320`/`#321`'s mid/low-frequency and academic/rare
+tiers (the remaining ~30 fodder verbs from #314's full scope) are not yet
+authored — tracked as a "Next steps" item below.
+
 ## Coverage inventory (#313)
 
 Audit of every `(verb, tense)` pair with a `conjugations` table beyond plain
@@ -1388,3 +1451,7 @@ causative (`-arazi`/`-erazi`) bank (blocked on Phase VI units +
    list (item 5's `imperfectivePast` deferrals, the `habitualPast`/advanced-
    tense items noted in the "Coverage inventory (#313)" section above) rather
    than as one open bank-adoption item.
+10. #314's high-frequency tier (#319's 16 verbs) is done — see "Fodder verbs
+    — high-frequency tier (#314, #319)" above. #320's mid/low-frequency tier
+    (18 verbs) and #321's academic/rare tier (12 verbs) — the rest of #314's
+    ~46-verb scope — are not yet authored.
