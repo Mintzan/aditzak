@@ -282,6 +282,18 @@ returns a nested object (not a string) for a 2D table — fixed by routing it
 through `resolveObjectAxisTable` too. See `docs/DECISIONS.md` (2026-06-21,
 #350) for the full writeup.
 
+**Update (#358)**: extended to the NOR-NORI pairing — `gustatu`/`iruditu`/
+`ahaztu` gained `presentByNor`/`pastByNor` (outer-NORI/inner-NOR, mirroring
+`ukan`'s outer-NORK/inner-NOR), unlocking non-3rd-person-NOR forms like
+"Gustatzen natzaizu?". `resolveObjectAxisTable` needed no change (confirmed
+axis-name-agnostic, as #346's design note hoped to eventually check), but
+`generateQuestions`'s `fixedArgument` role derivation did: it was hardcoded
+to only ever produce `'nork'`/`'nor'`, which would have mis-badged a NOR-NORI
+verb's fixed NORI argument as NORK. Generalized to derive the role from
+`verb.agreement` instead. Same scope as #347/#350: logic-level test coverage
+only, no `LESSONS`/`journey.js` wiring (left for #359). See `docs/DECISIONS.md`
+(2026-06-21, #358) for the full writeup.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey
