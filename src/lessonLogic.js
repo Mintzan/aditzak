@@ -746,12 +746,27 @@ export function resolveObjectAxisTable(table2D, { vary, fixed }) {
 // ambiguous bare form never appears as a choice. `verbs` (optional, the full
 // `VERBS` list) — without it this always returns `false`, so existing callers
 // that don't pass it are unaffected.
-function hasAmbiguousTypedForm(verb, tense, person, verbs) {
-  const form = verb.conjugations[tense]?.[person]
+// `objectAxis` (#350, optional) — when the calling lesson drills a 2D
+// NOR-NORK object-axis table (see `generateQuestions`'s `objectAxis` doc
+// comment), `tense` keys a `{ [nork]: { [nor]: form } }` table rather than a
+// flat one: looking up `[person]` directly would either grab the wrong
+// (nork-keyed) row or return a nested object instead of a string. Resolving
+// through `resolveObjectAxisTable` first, for both `verb` and any sibling
+// `other` that happens to carry the same 2D tense, keeps this comparison
+// working the same way it does for a flat table — a sibling with no table at
+// all for `tense` (the common case) simply contributes no match, same as
+// before.
+function hasAmbiguousTypedForm(verb, tense, person, verbs, objectAxis) {
+  const resolveTable = (v) => {
+    const table = v.conjugations[tense]
+    if (!table) return undefined
+    return objectAxis ? resolveObjectAxisTable(table, objectAxis) : table
+  }
+  const form = resolveTable(verb)?.[person]
   if (!verbs || !form || !form.includes(' ')) return false
   const trailing = form.slice(form.lastIndexOf(' ') + 1)
   return verbs.some(
-    (other) => other.id !== verb.id && agreementsCompatible(other.agreement, verb.agreement) && other.conjugations[tense]?.[person] === trailing,
+    (other) => other.id !== verb.id && agreementsCompatible(other.agreement, verb.agreement) && resolveTable(other)?.[person] === trailing,
   )
 }
 
@@ -1171,7 +1186,7 @@ export function generateQuestions(
     const sentence = normalizeSentence(pickVariant(sentences[person]))
     const pronounSentence = verb.pronouns && normalizeSentence(pronounSentences[person])
     const negativeSentence = normalizeSentence(pickVariant(negativeSentences[person]))
-    const ambiguousTyping = hasAmbiguousTypedForm(verb, tense, person, verbs)
+    const ambiguousTyping = hasAmbiguousTypedForm(verb, tense, person, verbs, objectAxis)
     // `borrowed` (see `getBorrowedDistractors`) is `Array<{ verbId, form }>` —
     // every sibling-verb candidate for this slot, unscoped (#227/[B2]
     // retired the old `reviewScoped`/`sources`-based gating). The single

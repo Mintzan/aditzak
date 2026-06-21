@@ -855,6 +855,30 @@ describe('generateQuestions', () => {
         expect(question.options).toContain(question.correct)
       })
     })
+
+    // #350: `hasAmbiguousTypedForm` (called from `buildQuestion` whenever
+    // `verbs` is passed, exactly as `createExerciseState` does in real app
+    // usage) used to look up `verb.conjugations[tense][person]` directly —
+    // for an `objectAxis` lesson that's a 2D table, so the lookup returned a
+    // nested object instead of a string and crashed on `.includes(' ')`.
+    // Earlier objectAxis tests above never caught this because none of them
+    // pass `verbs`. This pins the real `createExerciseState` path: `verbs:
+    // VERBS` alongside `objectAxis`.
+    it('does not crash when verbs (sibling list) is passed alongside objectAxis (#350)', () => {
+      const ukan = VERBS.find((v) => v.id === 'ukan')
+      const maite = VERBS.find((v) => v.id === 'maite')
+
+      for (const [candidate, tense] of [
+        [ukan, 'presentByObject'],
+        [ukan, 'pastByObject'],
+        [maite, 'presentByObject'],
+        [maite, 'pastByObject'],
+      ]) {
+        expect(() =>
+          generateQuestions(candidate, tense, { objectAxis: { vary: 'nor', fixed: 'ni' }, verbs: VERBS }),
+        ).not.toThrow()
+      }
+    })
   })
 
   it('always includes the correct answer among unique options', () => {
