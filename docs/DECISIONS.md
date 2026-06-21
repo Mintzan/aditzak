@@ -12,6 +12,43 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #348: `maite izan` added, form-only (no `sentences` at all, not even `present`/`past`)
+
+**Decision:** added `maite` (`maite izan`, "to love") to `VERBS`, riding
+`ukan`'s `present`/`past`/`presentByObject`/`pastByObject` (#346/#347)
+verbatim with a `'maite '` prefix on every cell — `maite.presentByObject.ni.zu
+=== 'maite ' + ukan.presentByObject.ni.zu` ("maite zaitut") by construction.
+No `presentPlural`/`futurePlural` (out of scope) and no `sentences` for any
+tense, including the plain `present`/`past`.
+
+**Why no `sentences`, not even for `present`/`past`:** first pass added
+`sentences.presentByObject`/`pastByObject` (keyed by the *varying* `nor`
+axis, e.g. `hura`/`zu`/`zuek`/`haiek` — matching `ukan.presentByObject.ni`'s
+row, i.e. authored for a future lesson fixing `nork: 'ni'`) with
+subject-pronoun-free text ("Jon ___.", "Bihotz-bihotzez ___."). That broke
+`validforGapAudit.mjs`'s `computeGapSlots`: it reads
+`verb.conjugations[tense]?.[person]` assuming a flat table, but
+`presentByObject`/`pastByObject` are 2D (`{ [nork]: { [nor]: form } }`) —
+indexing a 2D table by a bare `nor` person returns the wrong row (or, worse,
+an object), corrupting the gap-count baseline (`[object Object]`-shaped
+"forms" showing up as new gap slots). Rather than patch the audit script to
+understand 2D tables for what would be its first caller, dropped the
+sentences entirely and leaned on a logic-level smoke test
+(`src/logic.test.js`'s `"generates real maite-zaitut-type questions..."`
+case) instead — the same "exercises the new axis without an audit-script/
+LESSONS-entry side effect" move #347 already made for `ukan` itself. Also
+dropped the plain `sentences.present`/`sentences.past` (the hura-fixed
+citation tables) for the same reason `ukan` skipped them: a "Nik X maite
+dut" frame needs an object noun, but `maite`'s actual point is the
+object-axis tables, not the citation column.
+
+**Follow-up:** the `validforGapAudit.mjs` 2D-table blind spot is real and
+will resurface the moment any verb's object-axis tense gets `sentences` — if
+that's wanted later (e.g. for #350's lesson), `computeGapSlots`/
+`collectTaggedVariants` need to learn to resolve 2D tables the same way
+`generateQuestions`/`resolveObjectAxisTable` (#346) already do, not just
+treat `conjugations[tense][person]` as a flat lookup.
+
 ## 2026-06-21 — #347: ukan's full NOR-NORK object-axis paradigm (zaitut-type forms), form-only, no LESSONS entry
 
 **Decision:** added `pastByObject` alongside `presentByObject` (#346) on `ukan`

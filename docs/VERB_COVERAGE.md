@@ -259,7 +259,10 @@ extending Unit 10's pooled drill or seeding later units:
 `maite izan` ("to love", lit. "to hold dear") doesn't fit this table:
 "Maite dut"/"Maite nuen" are `maite` + `ukan`, the same fixed-expression-plus-
 auxiliary shape as §5's `nahi`/`behar` rather than a participle+auxiliary
-periphrastic verb — a §5-style candidate, not a §4b one.
+periphrastic verb — a §5-style candidate, not a §4b one. ✅ in `VERBS` (#348),
+including the NOR-NORK object-axis paradigm (`presentByObject`/`pastByObject`,
+riding `ukan`'s own #346/#347 tables with a `'maite '` prefix) — its actual
+payoff, since "Maite zaitut" ("I love you") needs a 2nd-person object.
 
 ### 4b-ter. Agentive verbs with a covert dative (#307)
 A distinct pattern from §4a/§4b's `esan`/`eman`: plain-looking verbs with no
