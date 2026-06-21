@@ -251,13 +251,22 @@ function describeLesson(lesson, t, language) {
   const verbNames = [...new Set(lesson.sources.map(({ verbId }) => VERBS.find((v) => v.id === verbId).verb))]
   const tenseLabels = [...new Set(lesson.sources.map(({ tense }) => t(TENSE_META[tense].labelKey)))]
   const tenseLabel = tenseLabels.join(' + ')
+  // A pool spanning more than a handful of verbs collapses to a generic
+  // label (`t('verbCount')`) instead of joining every verb name — a pool of
+  // dozens of verbs (e.g. `ukan-past-pool`'s 46) otherwise produces an
+  // unreadable string everywhere this is shown: the results screen, the
+  // lesson card/progress tab (clipped by CSS `truncate`, but still present
+  // in full in the DOM/accessibility tree and in share-result text, which
+  // has no such clipping at all). Small pools (a handful of verbs or fewer)
+  // still join the names, since that's still readable and more informative.
+  const verbsLabel = verbNames.length > 3 ? t('verbCount', { count: verbNames.length }) : verbNames.join(' & ')
   if (!lesson.review) {
     const meta = TENSE_META[lesson.sources[0].tense]
     return {
       icon: tenseLabel[0],
       title: { main: tenseLabel, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
-      subtitle: { main: verbNames.join(' & '), secondary: t('mixedPractice') },
-      heading: persons ? `${verbNames.join(' & ')} · ${tenseLabel} (${persons})` : `${verbNames.join(' & ')} · ${tenseLabel}`,
+      subtitle: { main: verbsLabel, secondary: t('mixedPractice') },
+      heading: persons ? `${verbsLabel} · ${tenseLabel} (${persons})` : `${verbsLabel} · ${tenseLabel}`,
       recognitionOnly,
     }
   }
@@ -265,7 +274,7 @@ function describeLesson(lesson, t, language) {
   return {
     icon: '🔁',
     title: { main: t('reviewLabel'), secondary: persons ? `${tenseLabel} · ${persons}` : tenseLabel },
-    subtitle: { main: verbNames.join(' & '), secondary: t('mixedPractice') },
+    subtitle: { main: verbsLabel, secondary: t('mixedPractice') },
     heading: persons ? `${reviewName} · ${tenseLabel} (${persons})` : `${reviewName} · ${tenseLabel}`,
     recognitionOnly,
   }
