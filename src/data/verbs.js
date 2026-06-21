@@ -557,6 +557,45 @@ export const VERBS = [
         zuek: { ni: 'ninduzuen', hura: 'zenuten', gu: 'gintuzuen', haiek: 'zenituzten' },
         haiek: { ni: 'ninduten', hura: 'zuten', gu: 'gintuzten', zu: 'zintuzten', zuek: 'zintuzteten', haiek: 'zituzten' },
       },
+      // #352: Ahalera's NOR-NORK object axis, three sub-tenses — same shape/
+      // sourcing convention as `presentByObject`/`pastByObject` above, this
+      // time from `docs/CONJUGATIONS.md`:316-358. The broader reflexive
+      // exclusion described there (any same-person-category pair, not just
+      // the literal diagonal — `guk`->`ni`/`nik`->`gu` and `zuk`<->`zuek` are
+      // also gaps) is the same rule `presentByObject`/`pastByObject` already
+      // apply above; it just happens to be spelled out explicitly for
+      // Ahalera in the docs. `hi` omitted, matching every table above.
+      // Orainaldia (present, "I can [verb] you/etc.") — `hura` column matches
+      // the flat `potential` table above exactly (e.g.
+      // `potentialByObject.ni.hura === potential.ni`, both `'dezaket'`).
+      potentialByObject: {
+        ni: { hura: 'dezaket', zu: 'zaitzaket', zuek: 'zaitzaketet', haiek: 'ditzaket' },
+        hura: { ni: 'nazake', hura: 'dezake', gu: 'gaitzake', zu: 'zaitzake', zuek: 'zaitzakete', haiek: 'ditzake' },
+        gu: { hura: 'dezakegu', zu: 'zaitzakegu', zuek: 'zaitzaketegu', haiek: 'ditzakegu' },
+        zu: { ni: 'nazakezu', hura: 'dezakezu', gu: 'gaitzakezu', haiek: 'ditzakezu' },
+        zuek: { ni: 'nazakezue', hura: 'dezakezue', gu: 'gaitzakezue', haiek: 'ditzakezue' },
+        haiek: { ni: 'nazakete', hura: 'dezakete', gu: 'gaitzakete', zu: 'zaitzakete', zuek: 'zaitzaketete', haiek: 'ditzakete' },
+      },
+      // Alegiazkoa (hypothetical, "I could/would be able to [verb] you/etc."),
+      // same sourcing convention.
+      potentialAlegiazkoaByObject: {
+        ni: { hura: 'nezake', zu: 'zintzaket', zuek: 'zintzaketet', haiek: 'nitzake' },
+        hura: { ni: 'nintzake', hura: 'lezake', gu: 'gintzake', zu: 'zintzake', zuek: 'zintzakete', haiek: 'litzake' },
+        gu: { hura: 'genezake', zu: 'zintzakegu', zuek: 'zintzaketegu', haiek: 'genitzake' },
+        zu: { ni: 'nintzakezu', hura: 'zenezake', gu: 'gintzakezu', haiek: 'zenitzake' },
+        zuek: { ni: 'nintzakezue', hura: 'zenezakete', gu: 'gintzakezue', haiek: 'zenitzakete' },
+        haiek: { ni: 'nintzakete', hura: 'lezakete', gu: 'gintzakete', zu: 'zintzakete', zuek: 'zintzaketete', haiek: 'litzakete' },
+      },
+      // Lehenaldia (past, "I could have [verb]ed you/etc."), same sourcing
+      // convention.
+      potentialLehenaldiaByObject: {
+        ni: { hura: 'nezakeen', zu: 'zintzakedan', zuek: 'zintzaketedan', haiek: 'nitzakeen' },
+        hura: { ni: 'nintzakeen', hura: 'zezakeen', gu: 'gintzakeen', zu: 'zintzakeen', zuek: 'zintzaketen', haiek: 'zitzakeen' },
+        gu: { hura: 'genezakeen', zu: 'zintzakegun', zuek: 'zintzaketegun', haiek: 'genitzakeen' },
+        zu: { ni: 'nintzakezun', hura: 'zenezakeen', gu: 'gintzakezun', haiek: 'zenitzakeen' },
+        zuek: { ni: 'nintzakezuen', hura: 'zenezaketen', gu: 'gintzakezuen', haiek: 'zenitzaketen' },
+        haiek: { ni: 'nintzaketen', hura: 'zezaketen', gu: 'gintzaketen', zu: 'zintzaketen', zuek: 'zintzaketeten', haiek: 'zitzaketen' },
+      },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by their own (agentive, human) subject
@@ -7259,6 +7298,14 @@ export const TENSE_META = {
   // these verbs' usual varying axis (untouched); `nor` is the new one.
   presentByNor: { labelKey: 'tensePresentByNor', basque: 'oraina (nor-ka)' },
   pastByNor: { labelKey: 'tensePastByNor', basque: 'lehenaldia (nor-ka)' },
+  // #352: Ahalera's NOR-NORK object axis — the `potential`-family mirror of
+  // `presentByObject`/`pastByObject` above. Three sub-tenses since Ahalera
+  // (unlike the plain indicative) has present/hypothetical/past forms with
+  // genuinely different stems (`-zake-` vs `-tza-ke-`), not just a tense
+  // suffix swap.
+  potentialByObject: { labelKey: 'tensePotentialByObject', basque: 'ahalera (objektuka)' },
+  potentialAlegiazkoaByObject: { labelKey: 'tensePotentialAlegiazkoaByObject', basque: 'ahalera, alegiazkoa (objektuka)' },
+  potentialLehenaldiaByObject: { labelKey: 'tensePotentialLehenaldiaByObject', basque: 'ahalera, lehenaldia (objektuka)' },
 }
 
 export const TYPE_META = {

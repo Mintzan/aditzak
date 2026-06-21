@@ -648,10 +648,14 @@ export const JOURNEY = [
           {
             number: 34,
             title: 'Ahalera — Permissions & Capability',
-            focus: 'dezaket/naiteke contrasted with periphrastic ahal izan — production for NOR/NOR-NORK, recognition-only for the dative paradigms',
+            focus: 'dezaket/naiteke contrasted with periphrastic ahal izan — production for NOR/NOR-NORK, recognition-only for the dative paradigms; plus ukan\'s NOR-NORK object axis (zaitzaket-type forms, #352) across all three Ahalera sub-tenses — present, hypothetical, and past',
             payload: '"I can come."',
             status: 'available',
-            lessonIds: ['izan-potential', 'ukan-potential', 'unit-28-review'],
+            lessonIds: [
+              'izan-potential', 'ukan-potential', 'unit-28-review',
+              'ukan-potential-object-axis-present', 'ukan-potential-object-axis-alegiazkoa',
+              'ukan-potential-object-axis-lehenaldia', 'unit-34-object-axis-review',
+            ],
           },
           {
             number: 35,

@@ -503,8 +503,8 @@ export const JOURNEY_TRANSLATIONS = {
     34: {
       title: { es: 'Ahalera — Permisos y capacidad', eu: 'Ahalera — Baimenak eta gaitasuna' },
       focus: {
-        es: 'dezaket/naiteke contrastados con la forma perifrástica ahal izan — producción para NOR/NOR-NORK, solo reconocimiento para los paradigmas dativos',
-        eu: 'dezaket/naiteke, ahal izan formaren aldean — ekoizpena NOR/NOR-NORK-erako, ezagutza hutsa paradigma datiboetarako',
+        es: 'dezaket/naiteke contrastados con la forma perifrástica ahal izan — producción para NOR/NOR-NORK, solo reconocimiento para los paradigmas dativos; además, el eje del objeto NOR-NORK de ukan (formas tipo zaitzaket, #352) en las tres variantes de la ahalera — presente, hipotética y pasada',
+        eu: 'dezaket/naiteke, ahal izan formaren aldean — ekoizpena NOR/NOR-NORK-erako, ezagutza hutsa paradigma datiboetarako; gainera, ukan-en NOR-NORK objektu-ardatza (zaitzaket motako formak, #352) ahaleraren hiru azpiformetan — oraina, alegiazkoa eta lehenaldia',
       },
       payload: {
         es: '"Puedo venir." · "Podría (haber)..."',

@@ -12,6 +12,33 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #352: Ahalera object-axis tense keys named `potential*ByObject`, all three sub-tenses get new keys even without flat counterparts
+
+Added `ukan`'s NOR-NORK object axis for Ahalera (`zaitzaket`-type forms,
+`docs/CONJUGATIONS.md:316-358`), extending Unit 34 per #351's precedent
+(extend an existing unit's `lessonIds` rather than insert a new unit).
+Two naming decisions worth recording:
+
+- **Tense keys**: `potentialByObject` (Orainaldia/present, mirrors the
+  existing flat `potential` table the same way `presentByObject` mirrors
+  `present`), plus net-new `potentialAlegiazkoaByObject` (hypothetical) and
+  `potentialLehenaldiaByObject` (past) — neither of the latter two has a
+  flat single-axis counterpart in `VERBS` (the issue only asked for the
+  object-axis tables), but `TENSE_META` entries were still added for all
+  three so the UI can label them like every other tense.
+- **Reflexive exclusion**: the issue's text describes Ahalera's exclusion
+  rule (any same-person-category pair, not just the literal `nork===nor`
+  diagonal) as "broader" than the present/past indicative's. Checking
+  `presentByObject`/`pastByObject`'s actual cells shows they already apply
+  that same broader rule (see the file-level comment at the top of
+  `verbs.js`) — so no new exclusion logic was needed, just the same
+  cell-omission convention applied to three more tables.
+
+Lesson wiring reuses Unit 15's `objectAxis: { vary: 'nor', fixed: 'ni' }`
+convention verbatim (same `persons` list, same `fixed: 'ni'` choice for the
+same "direct payoff sentence" reason), plus one pooled review spanning all
+three sub-tenses since there's a single verb (`ukan`) rather than several.
+
 ## 2026-06-21 — #386: Unit 28 retitled to lead with the pattern, not the verb list
 
 Unit 28's title (`'gustatu/iruditu/ahaztu — The Non-3rd-Person NOR'`) broke

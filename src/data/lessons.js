@@ -1651,6 +1651,46 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'potential' },
     ],
   },
+  // #352: Ahalera's NOR-NORK object axis (`zaitzaket`-type forms) — the
+  // `ukan-potential` lesson above only drills the subject axis (NORK varies,
+  // NOR fixed at `hura`); these three lessons drill the object instead,
+  // mirroring Unit 15's `objectAxis: { vary: 'nor', fixed: 'ni' }` convention
+  // (`ukan-object-axis-present`/`-past` above) — `fixed: 'ni'` again makes
+  // the payoff sentence direct ("Zaitzaket lagundu" — well-formed NORK=ni,
+  // NOR=zu reading). `gu` stays excluded from `persons` for the same reason
+  // as Unit 15: `nork: 'ni'` has no cell for NOR=`gu` (reflexive gap).
+  {
+    id: 'ukan-potential-object-axis-present',
+    verbId: 'ukan',
+    tense: 'potentialByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'ukan-potential-object-axis-alegiazkoa',
+    verbId: 'ukan',
+    tense: 'potentialAlegiazkoaByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'ukan-potential-object-axis-lehenaldia',
+    verbId: 'ukan',
+    tense: 'potentialLehenaldiaByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'unit-34-object-axis-review',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'ukan', tense: 'potentialByObject' },
+      { verbId: 'ukan', tense: 'potentialAlegiazkoaByObject' },
+      { verbId: 'ukan', tense: 'potentialLehenaldiaByObject' },
+    ],
+  },
   // Unit 29 (#148) — Baldintza (if-clause) + Ondorioa present (would):
   // `izan`/`ukan` production for NOR/NOR-NORK. Dative-paradigm recognition-
   // only conditional is deferred alongside Unit 28's — see the issue filed
