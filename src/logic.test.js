@@ -778,6 +778,36 @@ describe('generateQuestions', () => {
         expect(ukan.conjugations.presentByObject[nork].hura).toBe(ukan.conjugations.present[nork])
       }
     })
+
+    // #347: `past`'s sibling 2D table, same cross-check as `presentByObject`.
+    it("matches ukan's existing single-axis `past` table for the citation (nor: 'hura') column", () => {
+      const ukan = VERBS.find((v) => v.id === 'ukan')
+      for (const nork of Object.keys(ukan.conjugations.past)) {
+        if (!(nork in ukan.conjugations.pastByObject)) continue
+        expect(ukan.conjugations.pastByObject[nork].hura).toBe(ukan.conjugations.past[nork])
+      }
+    })
+
+    // #347: smoke test exercising the real `ukan` data (not the synthetic
+    // fixture above) end to end through `generateQuestions`, confirming the
+    // "zaitut-type forms" payoff the issue is named for actually surfaces.
+    it("generates real zaitut-type questions from ukan's presentByObject/pastByObject (#347)", () => {
+      const ukan = VERBS.find((v) => v.id === 'ukan')
+
+      const presentQuestions = generateQuestions(ukan, 'presentByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+      expect(presentQuestions.map((q) => q.correct)).toEqual(expect.arrayContaining(['zaitut', 'zaituztet', 'ditut']))
+      presentQuestions.forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+        expect(question.options).toContain(question.correct)
+      })
+
+      const pastQuestions = generateQuestions(ukan, 'pastByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+      expect(pastQuestions.map((q) => q.correct)).toEqual(expect.arrayContaining(['zintudan', 'zintuztedan', 'nituen']))
+      pastQuestions.forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+        expect(question.options).toContain(question.correct)
+      })
+    })
   })
 
   it('always includes the correct answer among unique options', () => {
