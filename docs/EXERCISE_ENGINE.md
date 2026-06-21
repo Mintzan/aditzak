@@ -306,6 +306,19 @@ its own existing flat tables' shapes — still generated mechanically from
 to wait for that engine work first. See `docs/DECISIONS.md` (2026-06-21,
 #378) for the full writeup.
 
+**Update (#379)**: `jan`/`edan`/`erosi`/`hartu` gained `presentByObject`/
+`pastByObject` too, same mechanical generation from `ukan`'s base tables with
+each verb's own present/past prefix. Surfaced a real bug along the way:
+`getDativeOvergenerationLure` (`src/lessonLogic.js`) indexed
+`verb.conjugations[tense][person]` directly without going through
+`resolveObjectAxisTable` first — the same class of bug #350 fixed in
+`hasAmbiguousTypedForm` — which crashed for `erosi`/`hartu` specifically,
+since they're the first `dativeOvergeneration: true` verbs to carry a 2D
+`*ByObject` table. Fixed by giving it the same `objectAxis` param and
+resolution `hasAmbiguousTypedForm` already had. Still no `LESSONS`/
+`journey.js` wiring (#380/#381 unchanged). See `docs/DECISIONS.md`
+(2026-06-21, #379).
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

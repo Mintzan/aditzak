@@ -914,6 +914,78 @@ describe('generateQuestions', () => {
       })
     })
 
+    // #379: same prefix-of-ukan convention extended to four more verbs
+    // (jan/edan/erosi/hartu), each with its own present/past prefix pair
+    // read off its existing flat present/past tables, same as #378's ikusi.
+    it.each([
+      ['jan', 'jaten ', 'jan '],
+      ['edan', 'edaten ', 'edan '],
+      ['erosi', 'erosten ', 'erosi '],
+      ['hartu', 'hartzen ', 'hartu '],
+    ])("rides ukan's presentByObject/pastByObject with %s's own prefixes (#379)", (verbId, presentPrefix, pastPrefix) => {
+      const ukan = VERBS.find((v) => v.id === 'ukan')
+      const verb = VERBS.find((v) => v.id === verbId)
+
+      for (const nork of Object.keys(ukan.conjugations.presentByObject)) {
+        for (const nor of Object.keys(ukan.conjugations.presentByObject[nork])) {
+          expect(verb.conjugations.presentByObject[nork][nor]).toBe(`${presentPrefix}${ukan.conjugations.presentByObject[nork][nor]}`)
+        }
+      }
+      for (const nork of Object.keys(ukan.conjugations.pastByObject)) {
+        for (const nor of Object.keys(ukan.conjugations.pastByObject[nork])) {
+          expect(verb.conjugations.pastByObject[nork][nor]).toBe(`${pastPrefix}${ukan.conjugations.pastByObject[nork][nor]}`)
+        }
+      }
+    })
+
+    // #379: citation (nor: 'hura') column matches each verb's existing flat
+    // present/past tables, same cross-check #378 ran for ikusi.
+    it.each(['jan', 'edan', 'erosi', 'hartu'])(
+      "matches %s's existing single-axis present/past tables for the citation (nor: 'hura') column",
+      (verbId) => {
+        const verb = VERBS.find((v) => v.id === verbId)
+        for (const nork of Object.keys(verb.conjugations.present)) {
+          if (!(nork in verb.conjugations.presentByObject)) continue
+          expect(verb.conjugations.presentByObject[nork].hura).toBe(verb.conjugations.present[nork])
+        }
+        for (const nork of Object.keys(verb.conjugations.past)) {
+          if (!(nork in verb.conjugations.pastByObject)) continue
+          expect(verb.conjugations.pastByObject[nork].hura).toBe(verb.conjugations.past[nork])
+        }
+      },
+    )
+
+    it.each([
+      ['jan', 'jaten zaitut', 'jaten zaituztet', 'jaten ditut', 'jan zintudan', 'jan zintuztedan', 'jan nituen'],
+      ['edan', 'edaten zaitut', 'edaten zaituztet', 'edaten ditut', 'edan zintudan', 'edan zintuztedan', 'edan nituen'],
+      ['erosi', 'erosten zaitut', 'erosten zaituztet', 'erosten ditut', 'erosi zintudan', 'erosi zintuztedan', 'erosi nituen'],
+      ['hartu', 'hartzen zaitut', 'hartzen zaituztet', 'hartzen ditut', 'hartu zintudan', 'hartu zintuztedan', 'hartu nituen'],
+    ])(
+      "generates real questions from %s's presentByObject/pastByObject (#379)",
+      (verbId, presentZu, presentZuek, presentHaiek, pastZu, pastZuek, pastHaiek) => {
+        vi.spyOn(Math, 'random').mockReturnValue(0)
+        const verb = VERBS.find((v) => v.id === verbId)
+
+        const presentQuestions = generateQuestions(verb, 'presentByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+        expect(presentQuestions.map((q) => q.correct)).toEqual(
+          expect.arrayContaining([presentZu, presentZuek, presentHaiek]),
+        )
+        presentQuestions.forEach((question) => {
+          expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+          expect(question.options).toContain(question.correct)
+        })
+
+        const pastQuestions = generateQuestions(verb, 'pastByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+        expect(pastQuestions.map((q) => q.correct)).toEqual(
+          expect.arrayContaining([pastZu, pastZuek, pastHaiek]),
+        )
+        pastQuestions.forEach((question) => {
+          expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+          expect(question.options).toContain(question.correct)
+        })
+      },
+    )
+
     // #350: `hasAmbiguousTypedForm` (called from `buildQuestion` whenever
     // `verbs` is passed, exactly as `createExerciseState` does in real app
     // usage) used to look up `verb.conjugations[tense][person]` directly —
@@ -923,21 +995,16 @@ describe('generateQuestions', () => {
     // pass `verbs`. This pins the real `createExerciseState` path: `verbs:
     // VERBS` alongside `objectAxis`.
     it('does not crash when verbs (sibling list) is passed alongside objectAxis (#350)', () => {
-      const ukan = VERBS.find((v) => v.id === 'ukan')
-      const maite = VERBS.find((v) => v.id === 'maite')
-      const ikusi = VERBS.find((v) => v.id === 'ikusi')
+      const candidates = ['ukan', 'maite', 'ikusi', 'jan', 'edan', 'erosi', 'hartu'].map((id) =>
+        VERBS.find((v) => v.id === id),
+      )
 
-      for (const [candidate, tense] of [
-        [ukan, 'presentByObject'],
-        [ukan, 'pastByObject'],
-        [maite, 'presentByObject'],
-        [maite, 'pastByObject'],
-        [ikusi, 'presentByObject'],
-        [ikusi, 'pastByObject'],
-      ]) {
-        expect(() =>
-          generateQuestions(candidate, tense, { objectAxis: { vary: 'nor', fixed: 'ni' }, verbs: VERBS }),
-        ).not.toThrow()
+      for (const candidate of candidates) {
+        for (const tense of ['presentByObject', 'pastByObject']) {
+          expect(() =>
+            generateQuestions(candidate, tense, { objectAxis: { vary: 'nor', fixed: 'ni' }, verbs: VERBS }),
+          ).not.toThrow()
+        }
       }
     })
   })

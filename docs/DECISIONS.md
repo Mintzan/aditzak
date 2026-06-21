@@ -12,6 +12,34 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #379: jan/edan/erosi/hartu gain presentByObject/pastByObject; fixed a latent getDativeOvergenerationLure bug along the way
+
+Extended `ikusi`'s #378 pattern to four more `ukan`-auxiliary periphrastic
+verbs — `jan` ("eat"), `edan` ("drink"), `erosi` ("buy"), `hartu` ("take") —
+each gaining `presentByObject`/`pastByObject`, every cell `ukan`'s matching
+cell with the verb's own prefix swapped in (`jaten `/`jan `, `edaten
+`/`edan `, `erosten `/`erosi `, `hartzen `/`hartu `, read off each verb's own
+existing flat `present`/`past` tables, same convention as `ikusi`/`maite`).
+Chosen per the issue for thematic variety (eat/drink/buy/take vs. ikusi's
+"see") so Unit 15's eventual pooled review (#381) doesn't just rotate
+between near-synonyms.
+
+While running the new tests, found that `erosi` and `hartu` — both flagged
+`dativeOvergeneration: true` — crashed `getDativeOvergenerationLure`
+(`src/lessonLogic.js`) when given an `objectAxis` lesson: it looked up
+`verb.conjugations[tense]?.[person]` directly, which for a 2D
+`presentByObject`/`pastByObject` table returns a nested object instead of a
+form string, the same class of bug #350 already fixed in
+`hasAmbiguousTypedForm`. `ikusi`/`maite`/`ukan` never exposed this because
+none of them carry `dativeOvergeneration: true`. Fixed
+`getDativeOvergenerationLure` the same way #350 fixed its sibling: take an
+optional `objectAxis` param and resolve both the verb's own and its sibling's
+table through `resolveObjectAxisTable` before indexing by `person`.
+
+No `LESSONS`/`journey.js` wiring yet — still deferred to #380 (pooled-review
+engine support for `objectAxis`) and #381 (the wiring itself), per epic
+#377's sequencing.
+
 ## 2026-06-21 — #378: ikusi gains presentByObject/pastByObject, riding ukan's table with ikusi's own two prefixes
 
 `ikusi` (periphrastic, `ukan`-auxiliary) now carries `presentByObject`/

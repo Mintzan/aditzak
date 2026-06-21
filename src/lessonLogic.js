@@ -680,11 +680,21 @@ function getDativeOvergenerationSibling(verbs, agreement) {
 // see #293) and both forms to actually be periphrastic (two words); returns
 // `undefined` otherwise, e.g. for `eraman`'s synthetic present (`daramat`,
 // no auxiliary to swap).
-export function getDativeOvergenerationLure(verbs, verb, tense, person) {
+// `objectAxis` (#379, optional) — same `resolveObjectAxisTable` resolution
+// `hasAmbiguousTypedForm` already does (#350), needed once a
+// `dativeOvergeneration: true` verb (`erosi`/`hartu`) gets a 2D
+// `presentByObject`/`pastByObject` table: looking up `[person]` directly on
+// that table would return a nested object, not a form string.
+export function getDativeOvergenerationLure(verbs, verb, tense, person, objectAxis) {
   if (!verb.dativeOvergeneration) return undefined
-  const ownForm = verb.conjugations[tense]?.[person]
+  const resolveTable = (v) => {
+    const table = v?.conjugations[tense]
+    if (!table) return undefined
+    return objectAxis ? resolveObjectAxisTable(table, objectAxis) : table
+  }
+  const ownForm = resolveTable(verb)?.[person]
   if (!ownForm?.includes(' ')) return undefined
-  const siblingForm = getDativeOvergenerationSibling(verbs, verb.agreement)?.conjugations[tense]?.[person]
+  const siblingForm = resolveTable(getDativeOvergenerationSibling(verbs, verb.agreement))?.[person]
   if (!siblingForm?.includes(' ')) return undefined
   const participle = ownForm.slice(0, ownForm.lastIndexOf(' '))
   const auxiliary = siblingForm.slice(siblingForm.lastIndexOf(' ') + 1)
@@ -1229,7 +1239,7 @@ export function generateQuestions(
             { form: getCrossTenseLure(verb, tense, person), errorType: 'tense' },
             { form: getRecencyContrastLure(verb, tense, person), errorType: 'tense' },
             { form: getObjectNumberLure(verb, tense, person), errorType: 'object-number' },
-            { form: getDativeOvergenerationLure(verbs, verb, tense, person), errorType: 'dative-overgeneration' },
+            { form: getDativeOvergenerationLure(verbs, verb, tense, person, objectAxis), errorType: 'dative-overgeneration' },
           ]
         : []
     // #230: a sentence whose embedded participle is tagged with its base
