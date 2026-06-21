@@ -294,6 +294,18 @@ verb's fixed NORI argument as NORK. Generalized to derive the role from
 only, no `LESSONS`/`journey.js` wiring (left for #359). See `docs/DECISIONS.md`
 (2026-06-21, #358) for the full writeup.
 
+**Update (#378)**: `ikusi` gained `presentByObject`/`pastByObject`, closing
+the "`ikusi` getting the same `*ByObject` treatment" follow-up flagged back
+in #347's update above. Unlike `maite`'s single `'maite '` prefix, `ikusi`
+needed two distinct prefixes (`'ikusten '` present, `'ikusi '` past) matching
+its own existing flat tables' shapes — still generated mechanically from
+`ukan.presentByObject`/`pastByObject`, same cross-check convention. Still no
+`LESSONS`/`journey.js` wiring: `generateCrossVerbQuestions` still has no
+`objectAxis` support (tracked by #380), so pooling `ikusi`'s distractors with
+`ukan`/`maite`'s — the actual point of adding a third verb to this axis — has
+to wait for that engine work first. See `docs/DECISIONS.md` (2026-06-21,
+#378) for the full writeup.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

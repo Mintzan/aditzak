@@ -856,6 +856,64 @@ describe('generateQuestions', () => {
       })
     })
 
+    // #378: same `'ikusten '`/`'ikusi '`-prefix-of-ukan convention as
+    // `maite`'s `'maite '` prefix (#348), except `ikusi` has two distinct
+    // prefixes (present's imperfective `-ten` marker vs. past's bare
+    // participle) instead of one shared prefix across both tenses.
+    it("rides ukan's presentByObject/pastByObject with ikusi's own prefixes (#378)", () => {
+      const ukan = VERBS.find((v) => v.id === 'ukan')
+      const ikusi = VERBS.find((v) => v.id === 'ikusi')
+
+      for (const nork of Object.keys(ukan.conjugations.presentByObject)) {
+        for (const nor of Object.keys(ukan.conjugations.presentByObject[nork])) {
+          expect(ikusi.conjugations.presentByObject[nork][nor]).toBe(`ikusten ${ukan.conjugations.presentByObject[nork][nor]}`)
+        }
+      }
+      for (const nork of Object.keys(ukan.conjugations.pastByObject)) {
+        for (const nor of Object.keys(ukan.conjugations.pastByObject[nork])) {
+          expect(ikusi.conjugations.pastByObject[nork][nor]).toBe(`ikusi ${ukan.conjugations.pastByObject[nork][nor]}`)
+        }
+      }
+      expect(ikusi.conjugations.presentByObject.ni.zu).toBe('ikusten zaitut')
+    })
+
+    // #378: citation (nor: 'hura') column matches ikusi's existing flat
+    // present/past tables, same cross-check #346/#347 already run for ukan.
+    it("matches ikusi's existing single-axis present/past tables for the citation (nor: 'hura') column", () => {
+      const ikusi = VERBS.find((v) => v.id === 'ikusi')
+      for (const nork of Object.keys(ikusi.conjugations.present)) {
+        if (!(nork in ikusi.conjugations.presentByObject)) continue
+        expect(ikusi.conjugations.presentByObject[nork].hura).toBe(ikusi.conjugations.present[nork])
+      }
+      for (const nork of Object.keys(ikusi.conjugations.past)) {
+        if (!(nork in ikusi.conjugations.pastByObject)) continue
+        expect(ikusi.conjugations.pastByObject[nork].hura).toBe(ikusi.conjugations.past[nork])
+      }
+    })
+
+    it("generates real ikusten-zaitut-type questions from ikusi's presentByObject/pastByObject (#378)", () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+      const ikusi = VERBS.find((v) => v.id === 'ikusi')
+
+      const presentQuestions = generateQuestions(ikusi, 'presentByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+      expect(presentQuestions.map((q) => q.correct)).toEqual(
+        expect.arrayContaining(['ikusten zaitut', 'ikusten zaituztet', 'ikusten ditut']),
+      )
+      presentQuestions.forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+        expect(question.options).toContain(question.correct)
+      })
+
+      const pastQuestions = generateQuestions(ikusi, 'pastByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
+      expect(pastQuestions.map((q) => q.correct)).toEqual(
+        expect.arrayContaining(['ikusi zintudan', 'ikusi zintuztedan', 'ikusi nituen']),
+      )
+      pastQuestions.forEach((question) => {
+        expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+        expect(question.options).toContain(question.correct)
+      })
+    })
+
     // #350: `hasAmbiguousTypedForm` (called from `buildQuestion` whenever
     // `verbs` is passed, exactly as `createExerciseState` does in real app
     // usage) used to look up `verb.conjugations[tense][person]` directly —
@@ -867,12 +925,15 @@ describe('generateQuestions', () => {
     it('does not crash when verbs (sibling list) is passed alongside objectAxis (#350)', () => {
       const ukan = VERBS.find((v) => v.id === 'ukan')
       const maite = VERBS.find((v) => v.id === 'maite')
+      const ikusi = VERBS.find((v) => v.id === 'ikusi')
 
       for (const [candidate, tense] of [
         [ukan, 'presentByObject'],
         [ukan, 'pastByObject'],
         [maite, 'presentByObject'],
         [maite, 'pastByObject'],
+        [ikusi, 'presentByObject'],
+        [ikusi, 'pastByObject'],
       ]) {
         expect(() =>
           generateQuestions(candidate, tense, { objectAxis: { vary: 'nor', fixed: 'ni' }, verbs: VERBS }),

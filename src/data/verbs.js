@@ -2245,6 +2245,29 @@ export const VERBS = [
         zuek: 'ikusi duzue',
         haiek: 'ikusi dute',
       },
+      // #378 (part of #377): NOR-NORK object axis, same shape/sourcing
+      // convention as `ukan`/`maite`'s own (#346/#347) — every cell is
+      // `ukan.presentByObject`/`pastByObject`'s matching cell with `ikusi`'s
+      // own auxiliary-prefix swapped in (`ikusten ` for present, matching
+      // `present`'s imperfective `-ten` marker; `ikusi ` for past, matching
+      // `past`'s bare participle), so `presentByObject.ni.zu === 'ikusten ' +
+      // ukan.presentByObject.ni.zu` ("ikusten zaitut") holds by construction.
+      presentByObject: {
+        ni: { hura: 'ikusten dut', zu: 'ikusten zaitut', zuek: 'ikusten zaituztet', haiek: 'ikusten ditut' },
+        hura: { ni: 'ikusten nau', hura: 'ikusten du', gu: 'ikusten gaitu', zu: 'ikusten zaitu', zuek: 'ikusten zaituzte', haiek: 'ikusten ditu' },
+        gu: { hura: 'ikusten dugu', zu: 'ikusten zaitugu', zuek: 'ikusten zaituztegu', haiek: 'ikusten ditugu' },
+        zu: { ni: 'ikusten nauzu', hura: 'ikusten duzu', gu: 'ikusten gaituzu', haiek: 'ikusten dituzu' },
+        zuek: { ni: 'ikusten nauzue', hura: 'ikusten duzue', gu: 'ikusten gaituzue', haiek: 'ikusten dituzue' },
+        haiek: { ni: 'ikusten naute', hura: 'ikusten dute', gu: 'ikusten gaituzte', zu: 'ikusten zaituzte', zuek: 'ikusten zaituztete', haiek: 'ikusten dituzte' },
+      },
+      pastByObject: {
+        ni: { hura: 'ikusi nuen', zu: 'ikusi zintudan', zuek: 'ikusi zintuztedan', haiek: 'ikusi nituen' },
+        hura: { ni: 'ikusi ninduen', hura: 'ikusi zuen', gu: 'ikusi gintuen', zu: 'ikusi zintuen', zuek: 'ikusi zintuzten', haiek: 'ikusi zituen' },
+        gu: { hura: 'ikusi genuen', zu: 'ikusi zintugun', zuek: 'ikusi zintuztegun', haiek: 'ikusi genituen' },
+        zu: { ni: 'ikusi ninduzun', hura: 'ikusi zenuen', gu: 'ikusi gintuzun', haiek: 'ikusi zenituen' },
+        zuek: { ni: 'ikusi ninduzuen', hura: 'ikusi zenuten', gu: 'ikusi gintuzuen', haiek: 'ikusi zenituzten' },
+        haiek: { ni: 'ikusi ninduten', hura: 'ikusi zuten', gu: 'ikusi gintuzten', zu: 'ikusi zintuzten', zuek: 'ikusi zintuzteten', haiek: 'ikusi zituzten' },
+      },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. `ikusi`'s
     // candidates are `ukan`/`eduki`/`jakin`/`nahi`/`erosi` (the four
