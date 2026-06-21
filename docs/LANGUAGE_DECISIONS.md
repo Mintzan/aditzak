@@ -6,6 +6,49 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-21 — #355: no NOR-NORK object-axis imperative — Unit 36 needs no extension
+
+**Question:** does a `NOR-NORK` imperative with a 1st/2nd-person object (a
+`zaitzaket`-type form, "see me!"/"see us!") exist as a distinct grammatical
+form, the way it does for Ahalera/Baldintza/Ondorioa/Subjuntiboa (#352/#353)?
+
+**Conclusion: no — not as a separate synthetic form.** Reasoning:
+
+- `docs/CONJUGATIONS.md` §16.2's `NOR-NORK` imperative table (`ezazu`/`itzazu`,
+  `bedi`/`bitza`, `dezagun`/`ditzagun`) is derived mechanically from the
+  `NOR-NORK` subjunctive root (§3) by dropping the leading `d-` —
+  `dezazu` → `ezazu`. That `d-` only exists on the cells where `NOR` is
+  3rd-person (`hura`/`haiek`, the `deza-`/`ditza-` stems); the cells where
+  `NOR` is 1st/2nd person use the object-prefix forms instead (`nazazun`,
+  `gaitzazun`, `zaitzazun`, …, per §3's full subjunctive grid,
+  `docs/CONJUGATIONS.md:370-378`) — there's no leading `d-` for the
+  imperative-formation rule to strip, so the mechanical derivation that
+  produces every other person's imperative cell simply doesn't apply here.
+- This isn't just a documentation gap — §16.3's PCC re-verification confirms
+  `NOR` = 1st/2nd person is independently fine in subjunctive/imperative
+  *moods* (the constraint only blocks `NORI` = 1st/2nd person stacking with
+  `NOR` = 1st/2nd person, irrelevant to plain `NOR-NORK`). The gap is
+  specifically that **no dedicated imperative register exists for those
+  cells** — Basque routes "have someone do something to you/me" through a
+  subjunctive complement instead (`Nahi dut ikus nazazun`, "I want you to
+  look at me") rather than a bare command, structurally because the
+  addressee (the commanded `NORK`) and a 1st/2nd-person `NOR` both being
+  non-3rd-person speech-act participants on the same command clashes with
+  what an imperative *is* (an instruction about an action's effect on
+  someone other than a co-present interlocutor) — the same person-hierarchy
+  effect on imperatives documented cross-linguistically for object-marking
+  language imperatives, not a Basque-specific oddity.
+- This is **inferred from the documented morphology and PCC discussion
+  already in `CONJUGATIONS.md`, not a direct citation** — flagging for
+  native-speaker/grammar-reference confirmation before treating as fully
+  settled, per the toka/noka precedent (2026-06-17, #167).
+
+**Outcome:** #351's epic table already anticipated this ("Unit 34 may need
+no extension at all") — confirmed. Unit 36 (Agintera, `journey.js:664-671`,
+formerly Unit 34 before renumbering) needs no object-axis lesson; no
+`VERBS`/`journey.js` changes from this issue. #351 updated to mark this
+sub-issue resolved with no further action.
+
 ## 2026-06-20 — #334: optionally-dative verbs — reading decisions + future fodder
 
 **Part 1 — six optionally-dative verbs each get a second `<verb>-dative` `VERBS` entry**, since no existing convention lets one verb id carry two simultaneous agreement-frame readings:
