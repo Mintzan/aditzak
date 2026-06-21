@@ -1910,4 +1910,59 @@ export const LESSONS = [
     persons: ['hura', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'ni' },
   },
+
+  // #358/#359: the NOR-NORI mirror of the block above — `gustatu`/`iruditu`/
+  // `ahaztu`'s `presentByNor`/`pastByNor` tables (#358) let NOR be ni/gu/zuek,
+  // not just the default hura/haiek every earlier NOR-NORI lesson fixes it
+  // to. `objectAxis: { vary: 'nor', fixed: 'zu' }` pins NORI at `zu` (the
+  // unit's payoff dative person, "Gustatzen natzaizu?") and varies NOR —
+  // `zu` itself is the reflexive gap (absent from the table), and `hura` as
+  // NOR is already covered by Units 26-27's flat `present`/`past` tables, so
+  // `persons` here is just `ni`/`gu`/`zuek`. Same scope limits as the block
+  // above: no `ikusi`-style sibling (no other taught NOR-NORI verb to extend)
+  // and no pooled review (`generateCrossVerbQuestions` has no `objectAxis`
+  // support), so this is six single-verb practice lessons with no trailing
+  // `unit-N-review`.
+  {
+    id: 'gustatu-nor-axis-present',
+    verbId: 'gustatu',
+    tense: 'presentByNor',
+    persons: ['ni', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'iruditu-nor-axis-present',
+    verbId: 'iruditu',
+    tense: 'presentByNor',
+    persons: ['ni', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ahaztu-nor-axis-present',
+    verbId: 'ahaztu',
+    tense: 'presentByNor',
+    persons: ['ni', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'gustatu-nor-axis-past',
+    verbId: 'gustatu',
+    tense: 'pastByNor',
+    persons: ['ni', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'iruditu-nor-axis-past',
+    verbId: 'iruditu',
+    tense: 'pastByNor',
+    persons: ['ni', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ahaztu-nor-axis-past',
+    verbId: 'ahaztu',
+    tense: 'pastByNor',
+    persons: ['ni', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
 ]
