@@ -3266,6 +3266,40 @@ export const VERBS = [
         zuek: { ni: 'gustatuko nintzaizueketen', zu: 'gustatuko zintzaizueketen', gu: 'gustatuko gintzaizkizueketen' },
         haiek: { ni: 'gustatuko nintzaiekeen', zu: 'gustatuko zintzaiekeen', gu: 'gustatuko gintzaizkiekeen', zuek: 'gustatuko zintzaizkiekeen' },
       },
+      // #362: Potentziala-present's NOR-NORI object axis, transcribed from
+      // `docs/CONJUGATIONS.md:537-545`. Bare participle (matching `past`'s
+      // own prefix), not the `-ko` future participle Baldintza/Ondorioa use
+      // above — Ahalera takes the bare participle in Basque. Same
+      // literal-diagonal-only reflexive exclusion and `{ni,zu,gu,zuek}`-only
+      // `NOR` axis as `presentByNor`/`baldintzaByNor` above.
+      potentialByNor: {
+        ni: { zu: 'gustatu zakidake', gu: 'gustatu gakizkidake', zuek: 'gustatu zakizkidake' },
+        zu: { ni: 'gustatu nakizuke', gu: 'gustatu gakizkizuke', zuek: 'gustatu zakizkizuke' },
+        hura: { ni: 'gustatu nakioke', zu: 'gustatu zakioke', gu: 'gustatu gakizkioke', zuek: 'gustatu zakizkioke' },
+        gu: { ni: 'gustatu nakiguke', zu: 'gustatu zakiguke', zuek: 'gustatu zakizkiguke' },
+        zuek: { ni: 'gustatu nakizuekete', zu: 'gustatu zakizuekete', gu: 'gustatu gakizkizuekete' },
+        haiek: { ni: 'gustatu nakieke', zu: 'gustatu zakieke', gu: 'gustatu gakizkieke', zuek: 'gustatu zakizkieke' },
+      },
+      // #362: Potentziala-hypothetical's NOR-NORI object axis, transcribed
+      // from `docs/CONJUGATIONS.md:570-578`.
+      potentialAlegiazkoaByNor: {
+        ni: { zu: 'gustatu zenkidake', gu: 'gustatu genkizkidake', zuek: 'gustatu zenkizkidake' },
+        zu: { ni: 'gustatu nenkizuke', gu: 'gustatu genkizkizuke', zuek: 'gustatu zenkizkizuke' },
+        hura: { ni: 'gustatu nenkioke', zu: 'gustatu zenkioke', gu: 'gustatu genkizkioke', zuek: 'gustatu zenkizkioke' },
+        gu: { ni: 'gustatu nenkiguke', zu: 'gustatu zenkiguke', zuek: 'gustatu zenkizkiguke' },
+        zuek: { ni: 'gustatu nenkizuekete', zu: 'gustatu zenkizuekete', gu: 'gustatu genkizkizuekete' },
+        haiek: { ni: 'gustatu nenkieke', zu: 'gustatu zenkieke', gu: 'gustatu genkizkieke', zuek: 'gustatu zenkizkieke' },
+      },
+      // #362: Potentziala-past's NOR-NORI object axis, transcribed from
+      // `docs/CONJUGATIONS.md:554-562`.
+      potentialLehenaldiaByNor: {
+        ni: { zu: 'gustatu zenkidakeen', gu: 'gustatu genkizkidakeen', zuek: 'gustatu zenkizkidakeen' },
+        zu: { ni: 'gustatu nenkizukeen', gu: 'gustatu genkizkizukeen', zuek: 'gustatu zenkizkizukeen' },
+        hura: { ni: 'gustatu nenkiokeen', zu: 'gustatu zenkiokeen', gu: 'gustatu genkizkiokeen', zuek: 'gustatu zenkizkiokeen' },
+        gu: { ni: 'gustatu nenkigukeen', zu: 'gustatu zenkigukeen', zuek: 'gustatu zenkizkigukeen' },
+        zuek: { ni: 'gustatu nenkizueketen', zu: 'gustatu zenkizueketen', gu: 'gustatu genkizkizueketen' },
+        haiek: { ni: 'gustatu nenkiekeen', zu: 'gustatu zenkiekeen', gu: 'gustatu genkizkiekeen', zuek: 'gustatu zenkizkiekeen' },
+      },
     },
     // NORI is the varying slot here, so each sentence leads with the dative
     // pronoun ("Niri"/"Zuri"/...). #263: `validFor: ['ahaztu']` — "Niri hau
@@ -3398,6 +3432,34 @@ export const VERBS = [
         gu: { ni: 'irudituko nintzaigukeen', zu: 'irudituko zintzaigukeen', zuek: 'irudituko zintzaizkigukeen' },
         zuek: { ni: 'irudituko nintzaizueketen', zu: 'irudituko zintzaizueketen', gu: 'irudituko gintzaizkizueketen' },
         haiek: { ni: 'irudituko nintzaiekeen', zu: 'irudituko zintzaiekeen', gu: 'irudituko gintzaizkiekeen', zuek: 'irudituko zintzaizkiekeen' },
+      },
+      // #362: see `gustatu.potentialByNor`/`potentialAlegiazkoaByNor`/
+      // `potentialLehenaldiaByNor` above for the shape, sourcing, and
+      // bare-participle rule — same auxiliary family, this verb's own bare
+      // participle (`iruditu`) prefixed instead.
+      potentialByNor: {
+        ni: { zu: 'iruditu zakidake', gu: 'iruditu gakizkidake', zuek: 'iruditu zakizkidake' },
+        zu: { ni: 'iruditu nakizuke', gu: 'iruditu gakizkizuke', zuek: 'iruditu zakizkizuke' },
+        hura: { ni: 'iruditu nakioke', zu: 'iruditu zakioke', gu: 'iruditu gakizkioke', zuek: 'iruditu zakizkioke' },
+        gu: { ni: 'iruditu nakiguke', zu: 'iruditu zakiguke', zuek: 'iruditu zakizkiguke' },
+        zuek: { ni: 'iruditu nakizuekete', zu: 'iruditu zakizuekete', gu: 'iruditu gakizkizuekete' },
+        haiek: { ni: 'iruditu nakieke', zu: 'iruditu zakieke', gu: 'iruditu gakizkieke', zuek: 'iruditu zakizkieke' },
+      },
+      potentialAlegiazkoaByNor: {
+        ni: { zu: 'iruditu zenkidake', gu: 'iruditu genkizkidake', zuek: 'iruditu zenkizkidake' },
+        zu: { ni: 'iruditu nenkizuke', gu: 'iruditu genkizkizuke', zuek: 'iruditu zenkizkizuke' },
+        hura: { ni: 'iruditu nenkioke', zu: 'iruditu zenkioke', gu: 'iruditu genkizkioke', zuek: 'iruditu zenkizkioke' },
+        gu: { ni: 'iruditu nenkiguke', zu: 'iruditu zenkiguke', zuek: 'iruditu zenkizkiguke' },
+        zuek: { ni: 'iruditu nenkizuekete', zu: 'iruditu zenkizuekete', gu: 'iruditu genkizkizuekete' },
+        haiek: { ni: 'iruditu nenkieke', zu: 'iruditu zenkieke', gu: 'iruditu genkizkieke', zuek: 'iruditu zenkizkieke' },
+      },
+      potentialLehenaldiaByNor: {
+        ni: { zu: 'iruditu zenkidakeen', gu: 'iruditu genkizkidakeen', zuek: 'iruditu zenkizkidakeen' },
+        zu: { ni: 'iruditu nenkizukeen', gu: 'iruditu genkizkizukeen', zuek: 'iruditu zenkizkizukeen' },
+        hura: { ni: 'iruditu nenkiokeen', zu: 'iruditu zenkiokeen', gu: 'iruditu genkizkiokeen', zuek: 'iruditu zenkizkiokeen' },
+        gu: { ni: 'iruditu nenkigukeen', zu: 'iruditu zenkigukeen', zuek: 'iruditu zenkizkigukeen' },
+        zuek: { ni: 'iruditu nenkizueketen', zu: 'iruditu zenkizueketen', gu: 'iruditu genkizkizueketen' },
+        haiek: { ni: 'iruditu nenkiekeen', zu: 'iruditu zenkiekeen', gu: 'iruditu genkizkiekeen', zuek: 'iruditu zenkizkiekeen' },
       },
     },
     // #263: `validFor: []` throughout — "ongi" ("well") modifies *how*
@@ -3532,6 +3594,34 @@ export const VERBS = [
         gu: { ni: 'ahaztuko nintzaigukeen', zu: 'ahaztuko zintzaigukeen', zuek: 'ahaztuko zintzaizkigukeen' },
         zuek: { ni: 'ahaztuko nintzaizueketen', zu: 'ahaztuko zintzaizueketen', gu: 'ahaztuko gintzaizkizueketen' },
         haiek: { ni: 'ahaztuko nintzaiekeen', zu: 'ahaztuko zintzaiekeen', gu: 'ahaztuko gintzaizkiekeen', zuek: 'ahaztuko zintzaizkiekeen' },
+      },
+      // #362: see gustatu.potentialByNor/potentialAlegiazkoaByNor/
+      // potentialLehenaldiaByNor above for the shape, sourcing, and
+      // bare-participle rule — same auxiliary family, this verb's own bare
+      // participle (ahaztu) prefixed instead.
+      potentialByNor: {
+        ni: { zu: 'ahaztu zakidake', gu: 'ahaztu gakizkidake', zuek: 'ahaztu zakizkidake' },
+        zu: { ni: 'ahaztu nakizuke', gu: 'ahaztu gakizkizuke', zuek: 'ahaztu zakizkizuke' },
+        hura: { ni: 'ahaztu nakioke', zu: 'ahaztu zakioke', gu: 'ahaztu gakizkioke', zuek: 'ahaztu zakizkioke' },
+        gu: { ni: 'ahaztu nakiguke', zu: 'ahaztu zakiguke', zuek: 'ahaztu zakizkiguke' },
+        zuek: { ni: 'ahaztu nakizuekete', zu: 'ahaztu zakizuekete', gu: 'ahaztu gakizkizuekete' },
+        haiek: { ni: 'ahaztu nakieke', zu: 'ahaztu zakieke', gu: 'ahaztu gakizkieke', zuek: 'ahaztu zakizkieke' },
+      },
+      potentialAlegiazkoaByNor: {
+        ni: { zu: 'ahaztu zenkidake', gu: 'ahaztu genkizkidake', zuek: 'ahaztu zenkizkidake' },
+        zu: { ni: 'ahaztu nenkizuke', gu: 'ahaztu genkizkizuke', zuek: 'ahaztu zenkizkizuke' },
+        hura: { ni: 'ahaztu nenkioke', zu: 'ahaztu zenkioke', gu: 'ahaztu genkizkioke', zuek: 'ahaztu zenkizkioke' },
+        gu: { ni: 'ahaztu nenkiguke', zu: 'ahaztu zenkiguke', zuek: 'ahaztu zenkizkiguke' },
+        zuek: { ni: 'ahaztu nenkizuekete', zu: 'ahaztu zenkizuekete', gu: 'ahaztu genkizkizuekete' },
+        haiek: { ni: 'ahaztu nenkieke', zu: 'ahaztu zenkieke', gu: 'ahaztu genkizkieke', zuek: 'ahaztu zenkizkieke' },
+      },
+      potentialLehenaldiaByNor: {
+        ni: { zu: 'ahaztu zenkidakeen', gu: 'ahaztu genkizkidakeen', zuek: 'ahaztu zenkizkidakeen' },
+        zu: { ni: 'ahaztu nenkizukeen', gu: 'ahaztu genkizkizukeen', zuek: 'ahaztu zenkizkizukeen' },
+        hura: { ni: 'ahaztu nenkiokeen', zu: 'ahaztu zenkiokeen', gu: 'ahaztu genkizkiokeen', zuek: 'ahaztu zenkizkiokeen' },
+        gu: { ni: 'ahaztu nenkigukeen', zu: 'ahaztu zenkigukeen', zuek: 'ahaztu zenkizkigukeen' },
+        zuek: { ni: 'ahaztu nenkizueketen', zu: 'ahaztu zenkizueketen', gu: 'ahaztu genkizkizueketen' },
+        haiek: { ni: 'ahaztu nenkiekeen', zu: 'ahaztu zenkiekeen', gu: 'ahaztu genkizkiekeen', zuek: 'ahaztu zenkizkiekeen' },
       },
     },
     // #263: `validFor: ['gustatu']` — "Niri liburua gustatzen zait" ("I like
@@ -7451,6 +7541,16 @@ export const TENSE_META = {
   baldintzaByNor: { labelKey: 'tenseBaldintzaByNor', basque: 'baldintza (nor-ka)' },
   conditionalByNor: { labelKey: 'tenseConditionalByNor', basque: 'ondorioa (nor-ka)' },
   conditionalPastByNor: { labelKey: 'tenseConditionalPastByNor', basque: 'ondorioa, lehenaldia (nor-ka)' },
+  // #362: Potentziala's NOR-NORI object axis — the `gustatu`/`iruditu`/
+  // `ahaztu` mirror of `potentialByObject`/`potentialAlegiazkoaByObject`/
+  // `potentialLehenaldiaByObject` (#352), riding the bare perfective
+  // participle (matching `past`'s own prefix) over the dative `ki`-stem
+  // Potentziala forms — unlike Baldintza/Ondorioa's `-ko` future participle,
+  // Ahalera takes the bare participle in Basque ("irakurri dezaket", not
+  // "*irakurriko dezaket").
+  potentialByNor: { labelKey: 'tensePotentialByNor', basque: 'ahalera (nor-ka)' },
+  potentialAlegiazkoaByNor: { labelKey: 'tensePotentialAlegiazkoaByNor', basque: 'ahalera, alegiazkoa (nor-ka)' },
+  potentialLehenaldiaByNor: { labelKey: 'tensePotentialLehenaldiaByNor', basque: 'ahalera, lehenaldia (nor-ka)' },
 }
 
 export const TYPE_META = {
