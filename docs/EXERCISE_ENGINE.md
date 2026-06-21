@@ -319,6 +319,23 @@ resolution `hasAmbiguousTypedForm` already had. Still no `LESSONS`/
 `journey.js` wiring (#380/#381 unchanged). See `docs/DECISIONS.md`
 (2026-06-21, #379).
 
+**Update (#380)**: `generateCrossVerbQuestions` (and the
+`collectCrossSourceCandidates` helper it shares with
+`generateCaseMixerQuestions`) now accepts an optional `objectAxis`
+parameter, letting a pooled review mix `objectAxis` verbs'
+`presentByObject`/`pastByObject` tables instead of just flat ones — the
+engine prerequisite for #381's Unit 15 pooled review. `objectAxis` is one
+shared `{ vary, fixed }` applied to every pooled source (matching the
+existing lesson-level convention), and resolving through it drops the
+sentence/`validFor` requirement entirely (none of these verbs have sentence
+data for these tables), threading `fixedArgument` through instead — same
+shape `generateQuestions` already produces for a single-verb `objectAxis`
+lesson. `generateCaseMixerQuestions` intentionally got no `objectAxis`
+support (case-mixer drills nor-vs-nor-nork mismatch, which doesn't apply to
+already-nor-nork `objectAxis` verbs). `App.jsx`'s call site still doesn't
+pass `lesson.objectAxis` through — deferred to #381. See `docs/DECISIONS.md`
+(2026-06-21, #380).
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey
