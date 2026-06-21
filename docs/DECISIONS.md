@@ -12,6 +12,42 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #361: NOR-NORI Baldintza/Ondorioa object axis (`baldintzaByNor`/`conditionalByNor`/`conditionalPastByNor`) for `gustatu`/`iruditu`/`ahaztu` — narrower reflexive rule, narrower NOR axis than `ukan`'s object-axis tables
+
+**Decision:** Added the `*ByNor` siblings of `baldintza`/`conditional` for
+`gustatu`/`iruditu`/`ahaztu`, transcribed from `docs/CONJUGATIONS.md:468-483`
+(Baldintza) and `:494-528` (Ondorioa present/past). Two things differ from
+`ukan`'s NOR-NORK object-axis tables (#352/#353), both confirmed by direct
+inspection of the source grids rather than assumed by analogy:
+
+1. **Reflexive exclusion is narrower.** NOR-NORK (`ukan`) excludes the whole
+   same-person-*category* block (e.g. `nik`→`ni` *and* `nik`→`gu`, since NORK
+   and NOR are the same argument-role type — subject vs. object). NOR-NORI
+   (`gustatu` et al.) excludes *only* the literal diagonal (`niri`→`ni`,
+   `guri`→`gu`, `zuri`→`zu`, `zuei`→`zuek`) — NORI (dative) and NOR
+   (absolutive) are different roles, so e.g. `guri`→`ni` is a fully
+   grammatical, non-excluded cell.
+2. **The NOR axis itself is narrower.** Matching the existing
+   `presentByNor`/`pastByNor` precedent (#358), `nor` only ranges over
+   `{ni, zu, gu, zuek}` — `nor=hura`/`nor=haiek` are deliberately omitted
+   because those are exactly the default-object meaning the flat
+   `present`/`past`/`presentPlural`/`pastPlural` tables already cover; adding
+   them to the 2D table would be redundant, not new content.
+
+Each verb's cells prefix its own *future* participle (`gustatuko`/
+`irudituko`/`ahaztuko`) over the bare dative-auxiliary forms transcribed
+verbatim from the grids — the same `-ko` shape `future` already uses
+(`irudituko zait`), extended into the hypothetical moods. No flat
+single-axis `baldintza`/`conditional`/`conditionalPast` table exists yet for
+these three verbs to cross-check against (unlike `ukan`, which has flat
+`baldintza`/`conditional` siblings) — verified instead by matching the new
+tables' shape exactly against `presentByNor`/`pastByNor`'s established
+per-outer-person key sets.
+
+Lessons/journey wiring was left out of scope — the issue's "Done when"
+checklist only requires the `VERBS` data and a green `npm test`, unlike
+#352/#353 which explicitly called out Unit 34/35 `lessonIds`.
+
 ## 2026-06-21 — #353: Baldintza/Ondorioa object-axis follows #352's pattern — `conditionalPastByObject` is the only key with no flat sibling
 
 Added `ukan`'s NOR-NORK object axis for Baldintza and Ondorioa present/past

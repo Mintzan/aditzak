@@ -3228,6 +3228,44 @@ export const VERBS = [
         zuek: { ni: 'gustatu nintzaizuen', zu: 'gustatu zintzaizuen', gu: 'gustatu gintzaizkizuen' },
         haiek: { ni: 'gustatu nintzaien', zu: 'gustatu zintzaien', gu: 'gustatu gintzaizkien', zuek: 'gustatu zintzaizkien' },
       },
+      // #361: Baldintza's NOR-NORI object axis, transcribed from
+      // `docs/CONJUGATIONS.md:468-483` — the future `-ko` participle
+      // (matching `future`'s own `irudituko zait`-style prefix above) over
+      // the dative `tzai`-stem Baldintza forms. Only the literal diagonal
+      // (`niri`-`ni`, `guri`-`gu`, `zuri`-`zu`, `zuei`-`zuek`) is reflexive —
+      // unlike `ukan`'s NOR-NORK Ahalera/Baldintza tables (#352/#353), NORI
+      // and NOR are different argument roles here, so e.g. `guri`-`ni` is a
+      // genuine, non-excluded cell.
+      baldintzaByNor: {
+        ni: { zu: 'gustatuko bazintzait', gu: 'gustatuko bagintzaizkit', zuek: 'gustatuko bazintzaizkit' },
+        zu: { ni: 'gustatuko banintzaizu', gu: 'gustatuko bagintzaizkizu', zuek: 'gustatuko bazintzaizkizu' },
+        hura: { ni: 'gustatuko banintzaio', zu: 'gustatuko bazintzaio', gu: 'gustatuko bagintzaizkio', zuek: 'gustatuko bazintzaizkio' },
+        gu: { ni: 'gustatuko banintzaigu', zu: 'gustatuko bazintzaigu', zuek: 'gustatuko bazintzaizkigu' },
+        zuek: { ni: 'gustatuko banintzaizue', zu: 'gustatuko bazintzaizue', gu: 'gustatuko bagintzaizkizue' },
+        haiek: { ni: 'gustatuko banintzaie', zu: 'gustatuko bazintzaie', gu: 'gustatuko bagintzaizkie', zuek: 'gustatuko bazintzaizkie' },
+      },
+      // #361: Ondorioa-present's NOR-NORI object axis, transcribed from
+      // `docs/CONJUGATIONS.md:494-510`. Same literal-diagonal-only
+      // reflexive exclusion as `baldintzaByNor` above.
+      conditionalByNor: {
+        ni: { zu: 'gustatuko zintzaidake', gu: 'gustatuko gintzaizkidake', zuek: 'gustatuko zintzaizkidake' },
+        zu: { ni: 'gustatuko nintzaizuke', gu: 'gustatuko gintzaizkizuke', zuek: 'gustatuko zintzaizkizuke' },
+        hura: { ni: 'gustatuko nintzaioke', zu: 'gustatuko zintzaioke', gu: 'gustatuko gintzaizkioke', zuek: 'gustatuko zintzaizkioke' },
+        gu: { ni: 'gustatuko nintzaiguke', zu: 'gustatuko zintzaiguke', zuek: 'gustatuko zintzaizkiguke' },
+        zuek: { ni: 'gustatuko nintzaizuekete', zu: 'gustatuko zintzaizuekete', gu: 'gustatuko gintzaizkizuekete' },
+        haiek: { ni: 'gustatuko nintzaieke', zu: 'gustatuko zintzaieke', gu: 'gustatuko gintzaizkieke', zuek: 'gustatuko zintzaizkieke' },
+      },
+      // #361: Ondorioa-past's NOR-NORI object axis, transcribed from
+      // `docs/CONJUGATIONS.md:512-528`. Same literal-diagonal-only
+      // reflexive exclusion as `baldintzaByNor`/`conditionalByNor` above.
+      conditionalPastByNor: {
+        ni: { zu: 'gustatuko zintzaidakeen', gu: 'gustatuko gintzaizkidakeen', zuek: 'gustatuko zintzaizkidakeen' },
+        zu: { ni: 'gustatuko nintzaizukeen', gu: 'gustatuko gintzaizkizukeen', zuek: 'gustatuko zintzaizkizukeen' },
+        hura: { ni: 'gustatuko nintzaiokeen', zu: 'gustatuko zintzaiokeen', gu: 'gustatuko gintzaizkiokeen', zuek: 'gustatuko zintzaizkiokeen' },
+        gu: { ni: 'gustatuko nintzaigukeen', zu: 'gustatuko zintzaigukeen', zuek: 'gustatuko zintzaizkigukeen' },
+        zuek: { ni: 'gustatuko nintzaizueketen', zu: 'gustatuko zintzaizueketen', gu: 'gustatuko gintzaizkizueketen' },
+        haiek: { ni: 'gustatuko nintzaiekeen', zu: 'gustatuko zintzaiekeen', gu: 'gustatuko gintzaizkiekeen', zuek: 'gustatuko zintzaizkiekeen' },
+      },
     },
     // NORI is the varying slot here, so each sentence leads with the dative
     // pronoun ("Niri"/"Zuri"/...). #263: `validFor: ['ahaztu']` — "Niri hau
@@ -3332,6 +3370,34 @@ export const VERBS = [
         gu: { ni: 'iruditu nintzaigun', zu: 'iruditu zintzaigun', zuek: 'iruditu zintzaizkigun' },
         zuek: { ni: 'iruditu nintzaizuen', zu: 'iruditu zintzaizuen', gu: 'iruditu gintzaizkizuen' },
         haiek: { ni: 'iruditu nintzaien', zu: 'iruditu zintzaien', gu: 'iruditu gintzaizkien', zuek: 'iruditu zintzaizkien' },
+      },
+      // #361: see `gustatu.baldintzaByNor`/`conditionalByNor`/
+      // `conditionalPastByNor` above for the shape, sourcing, and reflexive
+      // rule — same auxiliary family, this verb's own future participle
+      // (`irudituko`) prefixed instead.
+      baldintzaByNor: {
+        ni: { zu: 'irudituko bazintzait', gu: 'irudituko bagintzaizkit', zuek: 'irudituko bazintzaizkit' },
+        zu: { ni: 'irudituko banintzaizu', gu: 'irudituko bagintzaizkizu', zuek: 'irudituko bazintzaizkizu' },
+        hura: { ni: 'irudituko banintzaio', zu: 'irudituko bazintzaio', gu: 'irudituko bagintzaizkio', zuek: 'irudituko bazintzaizkio' },
+        gu: { ni: 'irudituko banintzaigu', zu: 'irudituko bazintzaigu', zuek: 'irudituko bazintzaizkigu' },
+        zuek: { ni: 'irudituko banintzaizue', zu: 'irudituko bazintzaizue', gu: 'irudituko bagintzaizkizue' },
+        haiek: { ni: 'irudituko banintzaie', zu: 'irudituko bazintzaie', gu: 'irudituko bagintzaizkie', zuek: 'irudituko bazintzaizkie' },
+      },
+      conditionalByNor: {
+        ni: { zu: 'irudituko zintzaidake', gu: 'irudituko gintzaizkidake', zuek: 'irudituko zintzaizkidake' },
+        zu: { ni: 'irudituko nintzaizuke', gu: 'irudituko gintzaizkizuke', zuek: 'irudituko zintzaizkizuke' },
+        hura: { ni: 'irudituko nintzaioke', zu: 'irudituko zintzaioke', gu: 'irudituko gintzaizkioke', zuek: 'irudituko zintzaizkioke' },
+        gu: { ni: 'irudituko nintzaiguke', zu: 'irudituko zintzaiguke', zuek: 'irudituko zintzaizkiguke' },
+        zuek: { ni: 'irudituko nintzaizuekete', zu: 'irudituko zintzaizuekete', gu: 'irudituko gintzaizkizuekete' },
+        haiek: { ni: 'irudituko nintzaieke', zu: 'irudituko zintzaieke', gu: 'irudituko gintzaizkieke', zuek: 'irudituko zintzaizkieke' },
+      },
+      conditionalPastByNor: {
+        ni: { zu: 'irudituko zintzaidakeen', gu: 'irudituko gintzaizkidakeen', zuek: 'irudituko zintzaizkidakeen' },
+        zu: { ni: 'irudituko nintzaizukeen', gu: 'irudituko gintzaizkizukeen', zuek: 'irudituko zintzaizkizukeen' },
+        hura: { ni: 'irudituko nintzaiokeen', zu: 'irudituko zintzaiokeen', gu: 'irudituko gintzaizkiokeen', zuek: 'irudituko zintzaizkiokeen' },
+        gu: { ni: 'irudituko nintzaigukeen', zu: 'irudituko zintzaigukeen', zuek: 'irudituko zintzaizkigukeen' },
+        zuek: { ni: 'irudituko nintzaizueketen', zu: 'irudituko zintzaizueketen', gu: 'irudituko gintzaizkizueketen' },
+        haiek: { ni: 'irudituko nintzaiekeen', zu: 'irudituko zintzaiekeen', gu: 'irudituko gintzaizkiekeen', zuek: 'irudituko zintzaizkiekeen' },
       },
     },
     // #263: `validFor: []` throughout — "ongi" ("well") modifies *how*
@@ -3438,6 +3504,34 @@ export const VERBS = [
         gu: { ni: 'ahaztu nintzaigun', zu: 'ahaztu zintzaigun', zuek: 'ahaztu zintzaizkigun' },
         zuek: { ni: 'ahaztu nintzaizuen', zu: 'ahaztu zintzaizuen', gu: 'ahaztu gintzaizkizuen' },
         haiek: { ni: 'ahaztu nintzaien', zu: 'ahaztu zintzaien', gu: 'ahaztu gintzaizkien', zuek: 'ahaztu zintzaizkien' },
+      },
+      // #361: see `gustatu.baldintzaByNor`/`conditionalByNor`/
+      // `conditionalPastByNor` above for the shape, sourcing, and reflexive
+      // rule — same auxiliary family, this verb's own future participle
+      // (`ahaztuko`) prefixed instead.
+      baldintzaByNor: {
+        ni: { zu: 'ahaztuko bazintzait', gu: 'ahaztuko bagintzaizkit', zuek: 'ahaztuko bazintzaizkit' },
+        zu: { ni: 'ahaztuko banintzaizu', gu: 'ahaztuko bagintzaizkizu', zuek: 'ahaztuko bazintzaizkizu' },
+        hura: { ni: 'ahaztuko banintzaio', zu: 'ahaztuko bazintzaio', gu: 'ahaztuko bagintzaizkio', zuek: 'ahaztuko bazintzaizkio' },
+        gu: { ni: 'ahaztuko banintzaigu', zu: 'ahaztuko bazintzaigu', zuek: 'ahaztuko bazintzaizkigu' },
+        zuek: { ni: 'ahaztuko banintzaizue', zu: 'ahaztuko bazintzaizue', gu: 'ahaztuko bagintzaizkizue' },
+        haiek: { ni: 'ahaztuko banintzaie', zu: 'ahaztuko bazintzaie', gu: 'ahaztuko bagintzaizkie', zuek: 'ahaztuko bazintzaizkie' },
+      },
+      conditionalByNor: {
+        ni: { zu: 'ahaztuko zintzaidake', gu: 'ahaztuko gintzaizkidake', zuek: 'ahaztuko zintzaizkidake' },
+        zu: { ni: 'ahaztuko nintzaizuke', gu: 'ahaztuko gintzaizkizuke', zuek: 'ahaztuko zintzaizkizuke' },
+        hura: { ni: 'ahaztuko nintzaioke', zu: 'ahaztuko zintzaioke', gu: 'ahaztuko gintzaizkioke', zuek: 'ahaztuko zintzaizkioke' },
+        gu: { ni: 'ahaztuko nintzaiguke', zu: 'ahaztuko zintzaiguke', zuek: 'ahaztuko zintzaizkiguke' },
+        zuek: { ni: 'ahaztuko nintzaizuekete', zu: 'ahaztuko zintzaizuekete', gu: 'ahaztuko gintzaizkizuekete' },
+        haiek: { ni: 'ahaztuko nintzaieke', zu: 'ahaztuko zintzaieke', gu: 'ahaztuko gintzaizkieke', zuek: 'ahaztuko zintzaizkieke' },
+      },
+      conditionalPastByNor: {
+        ni: { zu: 'ahaztuko zintzaidakeen', gu: 'ahaztuko gintzaizkidakeen', zuek: 'ahaztuko zintzaizkidakeen' },
+        zu: { ni: 'ahaztuko nintzaizukeen', gu: 'ahaztuko gintzaizkizukeen', zuek: 'ahaztuko zintzaizkizukeen' },
+        hura: { ni: 'ahaztuko nintzaiokeen', zu: 'ahaztuko zintzaiokeen', gu: 'ahaztuko gintzaizkiokeen', zuek: 'ahaztuko zintzaizkiokeen' },
+        gu: { ni: 'ahaztuko nintzaigukeen', zu: 'ahaztuko zintzaigukeen', zuek: 'ahaztuko zintzaizkigukeen' },
+        zuek: { ni: 'ahaztuko nintzaizueketen', zu: 'ahaztuko zintzaizueketen', gu: 'ahaztuko gintzaizkizueketen' },
+        haiek: { ni: 'ahaztuko nintzaiekeen', zu: 'ahaztuko zintzaiekeen', gu: 'ahaztuko gintzaizkiekeen', zuek: 'ahaztuko zintzaizkiekeen' },
       },
     },
     // #263: `validFor: ['gustatu']` — "Niri liburua gustatzen zait" ("I like
@@ -7350,6 +7444,13 @@ export const TENSE_META = {
   baldintzaByObject: { labelKey: 'tenseBaldintzaByObject', basque: 'baldintza (objektuka)' },
   conditionalByObject: { labelKey: 'tenseConditionalByObject', basque: 'ondorioa (objektuka)' },
   conditionalPastByObject: { labelKey: 'tenseConditionalPastByObject', basque: 'ondorioa, lehenaldia (objektuka)' },
+  // #361: Baldintza/Ondorioa's NOR-NORI object axis — the `gustatu`/
+  // `iruditu`/`ahaztu` mirror of `presentByNor`/`pastByNor` above, riding
+  // the future `-ko` participle (matching how `future` already builds on
+  // `present`'s aux) over the dative `tzai`-stem Baldintza/Ondorioa forms.
+  baldintzaByNor: { labelKey: 'tenseBaldintzaByNor', basque: 'baldintza (nor-ka)' },
+  conditionalByNor: { labelKey: 'tenseConditionalByNor', basque: 'ondorioa (nor-ka)' },
+  conditionalPastByNor: { labelKey: 'tenseConditionalPastByNor', basque: 'ondorioa, lehenaldia (nor-ka)' },
 }
 
 export const TYPE_META = {
