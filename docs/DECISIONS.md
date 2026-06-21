@@ -12,6 +12,26 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-21 — #381: object-axis pooled review extends Unit 15, not a new unit
+
+Once #378-#380 gave `ikusi`/`jan`/`edan`/`erosi`/`hartu` `presentByObject`/
+`pastByObject` tables and pooling support, the question was where the
+resulting cross-verb review should live. Extended Unit 15's existing
+`lessonIds` with two new lessons (`object-axis-present-review`,
+`object-axis-past-review`) rather than spinning out a new unit, following
+the #286 precedent ("extend the unit that introduced the grammar, don't add
+a new one for more of the same drill"). This is still the same NOR-NORK
+non-3rd-person-object relation Unit 15 already teaches, just pooled across
+the full verb set instead of `ukan`/`maite` alone — no new grammatical
+relation, no renumber needed.
+
+Both new lessons share one `objectAxis: { vary: 'nor', fixed: 'ni' }` and
+`persons` across all seven sources, matching #380's design (a review fixes
+one shared axis for every pooled source, never a per-source value). Verified
+via a `logic.test.js` test against the real `LESSONS`/`VERBS` data that the
+pooled review's `verb-choice` questions draw distractors from more than two
+of the seven verbs, not just a couple.
+
 ## 2026-06-21 — #380: generateCrossVerbQuestions learns objectAxis pooling
 
 Gave `generateCrossVerbQuestions` (and the `collectCrossSourceCandidates`
