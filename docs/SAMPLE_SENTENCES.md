@@ -1381,12 +1381,45 @@ Representative examples (present tense, `ni`/`hura`):
 - **jaiki** — *Ni goizean goiz jaikitzen naiz lanera joateko.* (I get up
   early in the morning to go to work.)
 
-`#321`'s academic/rare tier (12 verbs) stays out of scope here — its
-sentences are deliberately minimal one-frame-per-person (`mode:
-'recognition'`, per `docs/LANGUAGE_DECISIONS.md`'s #321 entry), so the
-"colorful bank" treatment given to the high/mid/low tiers doesn't apply: a
-recognition-only pool never surfaces a second variant to choose from, so
-authoring richer alternatives would add data nothing reads.
+## Fodder verbs — academic/rare tier (#314, #321/#404)
+
+Same quality bar as the high/mid/low tiers above, but deliberately *not* the
+same breadth: #314's own text only asks for "≥1 sentence each... one good
+sentence is enough for exposure" on this tier, and `mode: 'recognition'`
+(per `docs/LANGUAGE_DECISIONS.md`'s #321 entry) means a recognition-only
+lesson never surfaces a second variant anyway — so the single existing
+present/past frame per person was upgraded in place, not expanded into
+arrays. An earlier pass (PR #403) had mistakenly called this tier "out of
+scope" for #314 entirely, conflating "skip variety" with "skip quality";
+#404 corrected that — see `docs/DECISIONS.md`.
+
+Covers `hausnartu` (to reflect on/ponder), `argudiatu` (to argue a case),
+`ondorioztatu` (to conclude/deduce), `gaitzetsi` (to condemn/reprehend),
+`aldarrikatu` (to proclaim/declare), `plazaratu` (to bring to light/make
+public), `sustatu` (to promote/foster), `bultzatu` (to push/drive forward),
+`bermatu` (to guarantee/ensure), `babestu` (to protect), `ziurtatu` (to
+ensure/make certain), and `borobildu` (to round off/finalize).
+
+Representative examples (present tense, `ni`/`hura`):
+- **hausnartu** — *Nik bizitzaren zentzuari buruz hausnartzen dut.* (I
+  reflect on the meaning of life.) / *Hark bere etorkizunaz hausnartzen du.*
+  (He/she reflects on his/her future.)
+- **aldarrikatu** — *Nik nire askatasuna ozenki aldarrikatzen dut.* (I
+  proclaim my freedom loudly.) / *Hark independentzia balkoitik
+  aldarrikatzen du.* (He/she proclaims independence from the balcony.)
+- **babestu** — *Nik basoa suteetatik babesten dut.* (I protect the forest
+  from fires.) / *Hark herria ekaitzetik babesten du.* (He/she protects the
+  town from the storm.)
+- **borobildu** — *Nik akordioa azken xehetasunean borobiltzen dut.* (I
+  round off the agreement on the last detail.) / *Hark eskaintza azkenean
+  borobiltzen du.* (He/she finalizes the offer in the end.)
+
+Plural placeholder objects from the original schematic frames (e.g.
+`eskubideak`, `emaitzak`, `mehatxupeko espezieak`) were singularized during
+this pass per the #285 number-agreement convention. Every `present`/`past`
+variant across all 12 verbs is now tagged `validFor: []` (`past` entries
+were previously bare untagged strings, same fix already applied to #320's
+tier in PR #403).
 
 ## Coverage inventory (#313)
 
@@ -1493,9 +1526,9 @@ causative (`-arazi`/`-erazi`) bank (blocked on Phase VI units +
    list (item 5's `imperfectivePast` deferrals, the `habitualPast`/advanced-
    tense items noted in the "Coverage inventory (#313)" section above) rather
    than as one open bank-adoption item.
-10. #314's high-frequency tier (#319's 16 verbs) and mid/low-frequency tier
-    (#320's 18 verbs) are done — see "Fodder verbs — high-frequency tier
-    (#314, #319)" and "Fodder verbs — mid/low-frequency tier (#314, #320)"
-    above. #321's academic/rare tier (12 verbs) is judged out of scope for
-    #314's "colorful sentences" treatment (see that section's closing note);
-    #314 can close once that's confirmed.
+10. ~~#314's high-frequency tier (#319's 16 verbs) and mid/low-frequency
+    tier (#320's 18 verbs) are done~~ — see "Fodder verbs — high-frequency
+    tier (#314, #319)" and "Fodder verbs — mid/low-frequency tier (#314,
+    #320)" above. #321's academic/rare tier (12 verbs) is now done too (see
+    "Fodder verbs — academic/rare tier (#314, #321/#404)" above) — all three
+    tiers of #314's scope are complete, so #314 can close.

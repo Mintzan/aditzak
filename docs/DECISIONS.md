@@ -8,6 +8,34 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #404: upgraded #321's 12 academic/rare fodder verbs to one colorful sentence per person, correcting the prior "out of scope" call
+
+The entry directly below this one (from earlier the same day, PR #403)
+judged #321's academic/rare tier "out of scope" for #314's colorful-sentences
+bar entirely. Re-reading #314's own issue body surfaced that this was wrong:
+it only argues against *variety* for this tier ("don't over-invest — one
+good sentence is enough for exposure"), not against *quality* — it
+explicitly still requires "≥1 sentence each." The earlier reasoning
+conflated "skip the multi-variant array" (a real, separately-justified call
+per `mode: 'recognition'`) with "skip the upgrade entirely" (not justified).
+
+Rather than silently fixing the merged #403/#314 framing, this discrepancy
+was surfaced to the user, who asked for a new tracked issue instead of
+folding the fix back into #314 — hence #404. Replaced all 12 verbs'
+(`hausnartu`, `argudiatu`, `ondorioztatu`, `gaitzetsi`, `aldarrikatu`,
+`plazaratu`, `sustatu`, `bultzatu`, `bermatu`, `babestu`, `ziurtatu`,
+`borobildu`) single present/past sentence frame per person with concrete,
+culturally-grounded text — still one frame per person, no arrays added,
+preserving the `mode: 'recognition'` rationale for variety. Also tagged
+these verbs' `past` entries as `{ text, validFor: [] }` objects (previously
+bare untagged strings, same fix #403 already applied to #320's tier).
+Singularized a few plural placeholder objects (`eskubideak`, `emaitzak`,
+`mehatxupeko espezieak`) per the #285 number-agreement convention while
+rewriting. New sentences recorded in `docs/SAMPLE_SENTENCES.md`'s new
+"Fodder verbs — academic/rare tier" section, which also corrects that
+section's and the mid/low-tier section's prior "out of scope" framing.
+With all three tiers (#319/#320/#321) now done, #314 itself closes.
+
 ## 2026-06-22 — #314: authored colorful sentences for #320's 18 mid/low-frequency fodder verbs
 
 Replaced the schematic placeholder sentences for `eskatu`, `galdetu`,
