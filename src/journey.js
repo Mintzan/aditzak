@@ -675,13 +675,21 @@ export const JOURNEY = [
         id: 'phase-5-stage-11',
         title: 'Stage 11 — Directives & Wishes',
         units: [
+          // #364: extended (not split into a new unit) with gustatu/iruditu/
+          // ahaztu's NOR-NORI object axis (imperativeByNor, "bekio"/"zakio"-
+          // type forms) — unlike Unit 28's present/past split, the grammar
+          // gap (no ni/gu cells, hi deferred) makes this a single small
+          // axis, not worth its own unit. See docs/DECISIONS.md.
           {
             number: 36,
             title: 'Agintera — Commands',
-            focus: 'the imperative — izan/ukan production for NOR/NOR-NORK; ditransitive (iezadazu) recognition-only is a future addition',
+            focus: 'the imperative — izan/ukan production for NOR/NOR-NORK; plus gustatu/iruditu/ahaztu\'s NOR-NORI object axis (#364, bekio/zakio-type forms); ditransitive (iezadazu) recognition-only is a future addition',
             payload: 'Hadi hona!',
             status: 'available',
-            lessonIds: ['izan-imperative', 'ukan-imperative', 'unit-30-review'],
+            lessonIds: [
+              'izan-imperative', 'ukan-imperative', 'unit-30-review',
+              'gustatu-imperative-axis', 'iruditu-imperative-axis', 'ahaztu-imperative-axis',
+            ],
           },
           {
             number: 37,

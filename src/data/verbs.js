@@ -3300,6 +3300,23 @@ export const VERBS = [
         zuek: { ni: 'gustatu nenkizueketen', zu: 'gustatu zenkizueketen', gu: 'gustatu genkizkizueketen' },
         haiek: { ni: 'gustatu nenkiekeen', zu: 'gustatu zenkiekeen', gu: 'gustatu genkizkiekeen', zuek: 'gustatu zenkizkiekeen' },
       },
+      // #364: Inperatiboa's NOR-NORI object axis (`docs/CONJUGATIONS.md:613-631`)
+      // — unlike `*ByNor`'s other moods, there's no existing flat `imperative`
+      // table for these verbs to be redundant with, so `hura`/`haiek` ARE
+      // included as NOR values here (the grid's only structurally blocked NOR
+      // columns are `ni`/`gu` — you can't command something to be pleasing to
+      // yourself/us — already omitted; `hi` stays deferred per the journey's
+      // hika deferral, matching every other `*ByNor` table's outer-key set).
+      // Bare participle prefix, same as `past`/Potentziala (not the `-ko`
+      // future participle Baldintza/Ondorioa uses).
+      imperativeByNor: {
+        ni: { hura: 'gustatu bekit', zu: 'gustatu zakit', zuek: 'gustatu zakizkit', haiek: 'gustatu bekizkit' },
+        hura: { hura: 'gustatu bekio', zu: 'gustatu zakio', zuek: 'gustatu zakizkio', haiek: 'gustatu bekizkio' },
+        gu: { hura: 'gustatu bekigu', zu: 'gustatu zakigu', zuek: 'gustatu zakizkigu', haiek: 'gustatu bekizkigu' },
+        zu: { hura: 'gustatu bekizu', zuek: 'gustatu zakizkizu', haiek: 'gustatu bekizkizu' },
+        zuek: { hura: 'gustatu bekizue', zu: 'gustatu zakizue', haiek: 'gustatu bekizkizue' },
+        haiek: { hura: 'gustatu bekie', zu: 'gustatu zakie', zuek: 'gustatu zakizkie', haiek: 'gustatu bekizkie' },
+      },
     },
     // NORI is the varying slot here, so each sentence leads with the dative
     // pronoun ("Niri"/"Zuri"/...). #263: `validFor: ['ahaztu']` — "Niri hau
@@ -3460,6 +3477,17 @@ export const VERBS = [
         gu: { ni: 'iruditu nenkigukeen', zu: 'iruditu zenkigukeen', zuek: 'iruditu zenkizkigukeen' },
         zuek: { ni: 'iruditu nenkizueketen', zu: 'iruditu zenkizueketen', gu: 'iruditu genkizkizueketen' },
         haiek: { ni: 'iruditu nenkiekeen', zu: 'iruditu zenkiekeen', gu: 'iruditu genkizkiekeen', zuek: 'iruditu zenkizkiekeen' },
+      },
+      // #364: see gustatu.imperativeByNor above for the shape, sourcing, and
+      // why hura/haiek are included as NOR values here unlike the other
+      // *ByNor moods.
+      imperativeByNor: {
+        ni: { hura: 'iruditu bekit', zu: 'iruditu zakit', zuek: 'iruditu zakizkit', haiek: 'iruditu bekizkit' },
+        hura: { hura: 'iruditu bekio', zu: 'iruditu zakio', zuek: 'iruditu zakizkio', haiek: 'iruditu bekizkio' },
+        gu: { hura: 'iruditu bekigu', zu: 'iruditu zakigu', zuek: 'iruditu zakizkigu', haiek: 'iruditu bekizkigu' },
+        zu: { hura: 'iruditu bekizu', zuek: 'iruditu zakizkizu', haiek: 'iruditu bekizkizu' },
+        zuek: { hura: 'iruditu bekizue', zu: 'iruditu zakizue', haiek: 'iruditu bekizkizue' },
+        haiek: { hura: 'iruditu bekie', zu: 'iruditu zakie', zuek: 'iruditu zakizkie', haiek: 'iruditu bekizkie' },
       },
     },
     // #263: `validFor: []` throughout — "ongi" ("well") modifies *how*
@@ -3622,6 +3650,17 @@ export const VERBS = [
         gu: { ni: 'ahaztu nenkigukeen', zu: 'ahaztu zenkigukeen', zuek: 'ahaztu zenkizkigukeen' },
         zuek: { ni: 'ahaztu nenkizueketen', zu: 'ahaztu zenkizueketen', gu: 'ahaztu genkizkizueketen' },
         haiek: { ni: 'ahaztu nenkiekeen', zu: 'ahaztu zenkiekeen', gu: 'ahaztu genkizkiekeen', zuek: 'ahaztu zenkizkiekeen' },
+      },
+      // #364: see gustatu.imperativeByNor above for the shape, sourcing, and
+      // why hura/haiek are included as NOR values here unlike the other
+      // *ByNor moods.
+      imperativeByNor: {
+        ni: { hura: 'ahaztu bekit', zu: 'ahaztu zakit', zuek: 'ahaztu zakizkit', haiek: 'ahaztu bekizkit' },
+        hura: { hura: 'ahaztu bekio', zu: 'ahaztu zakio', zuek: 'ahaztu zakizkio', haiek: 'ahaztu bekizkio' },
+        gu: { hura: 'ahaztu bekigu', zu: 'ahaztu zakigu', zuek: 'ahaztu zakizkigu', haiek: 'ahaztu bekizkigu' },
+        zu: { hura: 'ahaztu bekizu', zuek: 'ahaztu zakizkizu', haiek: 'ahaztu bekizkizu' },
+        zuek: { hura: 'ahaztu bekizue', zu: 'ahaztu zakizue', haiek: 'ahaztu bekizkizue' },
+        haiek: { hura: 'ahaztu bekie', zu: 'ahaztu zakie', zuek: 'ahaztu zakizkie', haiek: 'ahaztu bekizkie' },
       },
     },
     // #263: `validFor: ['gustatu']` — "Niri liburua gustatzen zait" ("I like
@@ -7551,6 +7590,11 @@ export const TENSE_META = {
   potentialByNor: { labelKey: 'tensePotentialByNor', basque: 'ahalera (nor-ka)' },
   potentialAlegiazkoaByNor: { labelKey: 'tensePotentialAlegiazkoaByNor', basque: 'ahalera, alegiazkoa (nor-ka)' },
   potentialLehenaldiaByNor: { labelKey: 'tensePotentialLehenaldiaByNor', basque: 'ahalera, lehenaldia (nor-ka)' },
+  // #364: Inperatiboa's NOR-NORI object axis — see gustatu.imperativeByNor
+  // for why this table's NOR axis includes hura/haiek unlike the other
+  // *ByNor moods (no flat `imperative` table exists for these verbs to be
+  // redundant with).
+  imperativeByNor: { labelKey: 'tenseImperativeByNor', basque: 'agintera (nor-ka)' },
 }
 
 export const TYPE_META = {

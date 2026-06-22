@@ -1762,6 +1762,35 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'imperative' },
     ],
   },
+  // #364: the NOR-NORI object axis for Agintera — gustatu/iruditu/ahaztu's
+  // `imperativeByNor` tables, same `objectAxis: { vary: 'nor', fixed: 'zu' }`
+  // convention Unit 28 (#358) established for this verb family's dative
+  // axis. `zu` is excluded from `persons` (the reflexive gap), and unlike
+  // Unit 28, `hura` stays IN scope here — `imperativeByNor` has no flat
+  // `imperative` table to be redundant with (see the comment on
+  // `gustatu.conjugations.imperativeByNor` in `verbs.js`). No pooled
+  // cross-verb review, same `objectAxis` limitation as Unit 28.
+  {
+    id: 'gustatu-imperative-axis',
+    verbId: 'gustatu',
+    tense: 'imperativeByNor',
+    persons: ['hura', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'iruditu-imperative-axis',
+    verbId: 'iruditu',
+    tense: 'imperativeByNor',
+    persons: ['hura', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ahaztu-imperative-axis',
+    verbId: 'ahaztu',
+    tense: 'imperativeByNor',
+    persons: ['hura', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
   // Unit 32 (#144, +#180 `ibili`) — "Meet hi": `hi` (familiar "you") joins
   // izan/egon/joan/etorri/ibili's present and past tables as a 7th person.
   // These five are `nor`-only verbs, so `hi`-as-subject takes a single
