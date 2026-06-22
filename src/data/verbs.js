@@ -3075,6 +3075,97 @@ export const VERBS = [
         'hi-m': 'iezaiok',
         'hi-f': 'iezaion',
       },
+      // #366: ditransitive Baldintza/Ondorioa/Ahalera, per
+      // `docs/CONJUGATIONS.md:751-1081`. `recipient: 'hura'` above already
+      // fixes NORI = hari, so each table below is that grid's `hari` row,
+      // keyed by the varying NORK (`person`) — same shape as `present`/
+      // `past`/`future`, just a different mood/tense. `hi` stays excluded
+      // throughout (matches every other table on this verb).
+      baldintza: { ni: 'banio', zu: 'bazenio', hura: 'balio', gu: 'bagenio', zuek: 'bazeniote', haiek: 'baliote' },
+      conditional: { ni: 'nioke', zu: 'zenioke', hura: 'lioke', gu: 'genioke', zuek: 'zeniokete', haiek: 'liokete' },
+      conditionalPast: {
+        ni: 'niokeen',
+        zu: 'zeniokeen',
+        hura: 'ziokeen',
+        gu: 'geniokeen',
+        zuek: 'zenioketen',
+        haiek: 'zioketen',
+      },
+      potential: {
+        ni: 'diezaioket',
+        zu: 'diezaiokezu',
+        hura: 'diezaioke',
+        gu: 'diezaiokegu',
+        zuek: 'diezaiokezue',
+        haiek: 'diezaiokete',
+      },
+      potentialLehenaldia: {
+        ni: 'niezaiokeen',
+        zu: 'zeniezaiokeen',
+        hura: 'ziezaiokeen',
+        gu: 'geniezaiokeen',
+        zuek: 'zeniezaioketen',
+        haiek: 'ziezaioketen',
+      },
+      potentialAlegiazkoa: {
+        ni: 'niezaioke',
+        zu: 'zeniezaioke',
+        hura: 'liezaioke',
+        gu: 'geniezaioke',
+        zuek: 'zeniezaiokete',
+        haiek: 'liezaiokete',
+      },
+      // #366: the same six tables' plural-object (`NOR`=haiek, `-zki-`)
+      // siblings, same `hari` row, mirroring `presentPlural`/`pastPlural`/
+      // `futurePlural`'s naming above.
+      baldintzaPlural: {
+        ni: 'banizkio',
+        zu: 'bazenizkio',
+        hura: 'balizkio',
+        gu: 'bagenizkio',
+        zuek: 'bazenizkiote',
+        haiek: 'balizkiote',
+      },
+      conditionalPlural: {
+        ni: 'nizkioke',
+        zu: 'zenizkioke',
+        hura: 'lizkioke',
+        gu: 'genizkioke',
+        zuek: 'zenizkiokete',
+        haiek: 'lizkiokete',
+      },
+      conditionalPastPlural: {
+        ni: 'nizkiokeen',
+        zu: 'zenizkiokeen',
+        hura: 'zizkiokeen',
+        gu: 'genizkiokeen',
+        zuek: 'zenizkioketen',
+        haiek: 'zizkioketen',
+      },
+      potentialPlural: {
+        ni: 'diezazkioket',
+        zu: 'diezazkiokezu',
+        hura: 'diezazkioke',
+        gu: 'diezazkiokegu',
+        zuek: 'diezazkiokezue',
+        haiek: 'diezazkiokete',
+      },
+      potentialLehenaldiaPlural: {
+        ni: 'niezazkiokeen',
+        zu: 'zeniezazkiokeen',
+        hura: 'ziezazkiokeen',
+        gu: 'geniezazkiokeen',
+        zuek: 'zeniezazkioketen',
+        haiek: 'ziezazkioketen',
+      },
+      potentialAlegiazkoaPlural: {
+        ni: 'niezazkioke',
+        zu: 'zeniezazkioke',
+        hura: 'liezazkioke',
+        gu: 'geniezazkioke',
+        zuek: 'zeniezazkiokete',
+        haiek: 'liezazkiokete',
+      },
     },
     // #265: `validFor: []` throughout, confirmed rather than assumed.
     // `agreementsCompatible(['nor','nori','nork'], ['nor','nori','nork'])` is
@@ -3185,6 +3276,52 @@ export const VERBS = [
         hura: 'iezaiozu',
         gu: 'iezaguzu',
         haiek: 'iezaiezu',
+      },
+      // #366: ditransitive Baldintza/Ondorioa/Ahalera, per
+      // `docs/CONJUGATIONS.md:751-1081`. `agent: 'ni'` above already fixes
+      // NORK = nik, so each table below is that grid's `nik` column, keyed
+      // by the varying NORI (`person`) — same shape as `present`/`past`/
+      // `future`, just a different mood/tense. `ni`/`gu` stay reflexive-only
+      // (absent) throughout, matching every other table on this verb.
+      baldintza: { zu: 'banizu', hura: 'banio', zuek: 'banizue', haiek: 'banie' },
+      conditional: { zu: 'nizuke', hura: 'nioke', zuek: 'nizueke', haiek: 'nieke' },
+      conditionalPast: { zu: 'nizukeen', hura: 'niokeen', zuek: 'nizuekeen', haiek: 'niekeen' },
+      potential: { zu: 'diezazuket', hura: 'diezaioket', zuek: 'diezazueket', haiek: 'diezaieket' },
+      potentialLehenaldia: {
+        zu: 'niezazukeen',
+        hura: 'niezaiokeen',
+        zuek: 'niezazuekeen',
+        haiek: 'niezaiekeen',
+      },
+      potentialAlegiazkoa: { zu: 'niezazuke', hura: 'niezaioke', zuek: 'niezazueke', haiek: 'niezaieke' },
+      // #366: the same six tables' plural-object (`NOR`=haiek, `-zki-`)
+      // siblings, same `nik` column, mirroring `presentPlural`/`pastPlural`/
+      // `futurePlural`'s naming above.
+      baldintzaPlural: { zu: 'banizkizu', hura: 'banizkio', zuek: 'banizkizue', haiek: 'banizkie' },
+      conditionalPlural: { zu: 'nizkizuke', hura: 'nizkioke', zuek: 'nizkizueke', haiek: 'nizkieke' },
+      conditionalPastPlural: {
+        zu: 'nizkizukeen',
+        hura: 'nizkiokeen',
+        zuek: 'nizkizuekeen',
+        haiek: 'nizkiekeen',
+      },
+      potentialPlural: {
+        zu: 'diezazkizuket',
+        hura: 'diezazkioket',
+        zuek: 'diezazkizueket',
+        haiek: 'diezazkieket',
+      },
+      potentialLehenaldiaPlural: {
+        zu: 'niezazkizukeen',
+        hura: 'niezazkiokeen',
+        zuek: 'niezazkizuekeen',
+        haiek: 'niezazkiekeen',
+      },
+      potentialAlegiazkoaPlural: {
+        zu: 'niezazkizuke',
+        hura: 'niezazkioke',
+        zuek: 'niezazkizueke',
+        haiek: 'niezazkieke',
       },
     },
     // #265: `validFor: []` throughout — see `esan`'s sentences above for the
@@ -7586,6 +7723,22 @@ export const TENSE_META = {
   potential: { labelKey: 'tensePotential', basque: 'ahalera' },
   baldintza: { labelKey: 'tenseBaldintza', basque: 'baldintza' },
   conditional: { labelKey: 'tenseConditional', basque: 'ondorioa' },
+  // #366: flat (single-axis-fixed) siblings of `conditional`/`potential`
+  // above — `conditionalPast` ("would have"), and Ahalera's Lehenaldia/
+  // Alegiazkoa sub-tenses, first used by `esan`/`eman`'s ditransitive
+  // tables (their `present`/`baldintza`/`conditional` etc. are already
+  // single-axis-fixed flat tables, not 2D — see the `*ByNor`/`*ByObject`
+  // entries below for the genuinely-2D versions on other verbs).
+  conditionalPast: { labelKey: 'tenseConditionalPast', basque: 'ondorioa, lehenaldia' },
+  potentialLehenaldia: { labelKey: 'tensePotentialLehenaldia', basque: 'ahalera, lehenaldia' },
+  potentialAlegiazkoa: { labelKey: 'tensePotentialAlegiazkoa', basque: 'ahalera, alegiazkoa' },
+  // #366: those same flat tables' plural-object (`NOR`=haiek) siblings.
+  baldintzaPlural: { labelKey: 'tenseBaldintzaPlural', basque: 'baldintza (anitza)' },
+  conditionalPlural: { labelKey: 'tenseConditionalPlural', basque: 'ondorioa (anitza)' },
+  conditionalPastPlural: { labelKey: 'tenseConditionalPastPlural', basque: 'ondorioa, lehenaldia (anitza)' },
+  potentialPlural: { labelKey: 'tensePotentialPlural', basque: 'ahalera (anitza)' },
+  potentialLehenaldiaPlural: { labelKey: 'tensePotentialLehenaldiaPlural', basque: 'ahalera, lehenaldia (anitza)' },
+  potentialAlegiazkoaPlural: { labelKey: 'tensePotentialAlegiazkoaPlural', basque: 'ahalera, alegiazkoa (anitza)' },
   // #164: plural-`NOR` counterparts of present/past/future for NOR-NORI
   // verbs (`gustatu`/`iruditu`/`ahaztu`) — same tense, `-zki-`-infixed
   // because the fixed `NOR` argument is `haiek` instead of `hura`.
