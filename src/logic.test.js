@@ -2637,7 +2637,15 @@ describe('generateQuestions', () => {
     })
 
     it('gives ukan a hi-m/hi-f imperative split (ezak/ezan), since hi is the grammatical NORK subject', () => {
-      expect(ukan.conjugations.imperative).toEqual({ 'hi-m': 'ezak', 'hi-f': 'ezan', zu: 'ezazu', zuek: 'ezazue' })
+      expect(ukan.conjugations.imperative).toEqual({
+        'hi-m': 'ezak',
+        'hi-f': 'ezan',
+        zu: 'ezazu',
+        zuek: 'ezazue',
+        hura: 'beza',
+        gu: 'dezagun',
+        haiek: 'bezate',
+      })
     })
 
     it('drills izan imperative as multiple-choice over its 3-person table', () => {

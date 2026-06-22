@@ -432,7 +432,7 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 36 | **Agintera — Commands** — the imperative | "Come here!" (`Hadi hona!`) | izan/ukan NOR/NOR-NORK [P]; gustatu/iruditu/ahaztu NOR-NORI object axis (#364) [P]; ditransitive (`iezadazu`) [R] | §16 | available (#171, #364) — izan/ukan + dative object axis; ditransitive/jussive/hortative/egon-etorri-joan deferred |
+| 36 | **Agintera — Commands** — the imperative | "Come here!" (`Hadi hona!`) | izan/ukan NOR/NOR-NORK incl. jussive/hortative/plural-object [P]; egon/etorri/joan [P]; gustatu/iruditu/ahaztu NOR-NORI object axis (#364) [P]; esan/eman ditransitive (`iezadazu`/`iezaiozu`) [R] | §16 | available (#171, #364, #368) — full Agintera coverage; izan's own missing `bedi`/`bitez` jussive and etorri/joan's bare-radical jussive remain out of scope |
 | 37 | **Purpose & Wishing (Subjuntiboa)** — the subjunctive **as a construction** (matrix verb + subordinate clause) | "I want him to come." (`Nahi dut etor dadin`) / "She told him to come." (`Esan dio etor dadila`) / "...so that he sees it." (`...ikus dezan`) | NOR/NOR-NORK 3rd-person in-construction [P]; dative [R] | §16 | pending |
 
 Two different moods with different difficulty profiles get their own units —

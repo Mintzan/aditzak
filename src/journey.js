@@ -680,15 +680,22 @@ export const JOURNEY = [
           // type forms) — unlike Unit 28's present/past split, the grammar
           // gap (no ni/gu cells, hi deferred) makes this a single small
           // axis, not worth its own unit. See docs/DECISIONS.md.
+          // #368: filled in the rest of the Agintera picture in the same
+          // unit — ukan's jussive/hortative and plural-object cells,
+          // esan/eman's ditransitive forms (recognition-only), and
+          // egon/etorri/joan's imperative (= present tense). See
+          // docs/DECISIONS.md.
           {
             number: 36,
             title: 'Agintera — Commands',
-            focus: 'the imperative — izan/ukan production for NOR/NOR-NORK; plus gustatu/iruditu/ahaztu\'s NOR-NORI object axis (#364, bekio/zakio-type forms); ditransitive (iezadazu) recognition-only is a future addition',
+            focus: 'the imperative — izan/ukan production for NOR/NOR-NORK (including jussive/hortative and plural-object); egon/etorri/joan production; gustatu/iruditu/ahaztu\'s NOR-NORI object axis (#364, bekio/zakio-type forms); esan/eman\'s ditransitive (iezadazu) recognition-only',
             payload: 'Hadi hona!',
             status: 'available',
             lessonIds: [
               'izan-imperative', 'ukan-imperative', 'unit-30-review',
               'gustatu-imperative-axis', 'iruditu-imperative-axis', 'ahaztu-imperative-axis',
+              'egon-imperative', 'etorri-imperative', 'joan-imperative',
+              'unit-30-plural-object-review', 'unit-30-ditransitive-review',
             ],
           },
           {
