@@ -8,6 +8,52 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #314: authored colorful sentences for #320's 18 mid/low-frequency fodder verbs
+
+Replaced the schematic placeholder sentences for `eskatu`, `galdetu`,
+`adierazi`, `bukatu`, `amaitu`, `gainditu`, `bereiztu`, `ezagutu`, `sentitu`,
+`pentsatu`, `sumatu`, `ulertu`, `aztertu`, `ukatu`, `batu`, `planteatu`,
+`erori`, `jaiki` with culturally-grounded present/past pairs (same pattern
+#314 already used for #319's 16 high-frequency verbs). Also converted these
+verbs' `past` entries from bare untagged strings to `{ text, validFor: [] }`
+objects — they'd never been tagged at all, unlike `present`, which already
+had `validFor: []` wrappers around its old placeholder text. `future` needed
+no separate authoring (`future ← present` reuse-by-reference). New sentences
+recorded in `docs/SAMPLE_SENTENCES.md`'s new "Fodder verbs — mid/low-frequency
+tier" section per #314's rule.
+
+**`#321`'s academic/rare tier is out of scope for #314's "colorful sentences"
+bar, not just deferred.** Re-read its own decision
+(`docs/LANGUAGE_DECISIONS.md`'s #321 entry): that tier's sentences are
+deliberately minimal — one frame per person, `mode: 'recognition'`, no typed
+exercises ever read a second variant — a decision made *before* #314 existed
+but for an unrelated-but-overlapping reason (recognition-only pools don't
+need variety, full stop, regardless of how colorful a single frame is).
+Authoring richer alternatives there wouldn't change anything a learner sees.
+Concluded #314's mid/low-tier work (this entry) is the last piece that
+*needs* doing; #314 can close once that's confirmed, with #321 noted as
+"intentionally minimal," not "still TODO."
+
+**Accepted the gap-audit baseline delta without per-sentence curation,
+same call as #314's high-frequency-tier entry above:** tagging 18 more
+verbs' `past` sentences with `validFor: []` (previously untracked, since
+bare strings) inflates `scripts/validforGapAudit.mjs`'s agreement-based gap
+counts dataset-wide, purely mechanically. Spot-checked the deltas against a
+sample of largest-affected hosts (`kontuan-hartu`, `ondorioztatu`,
+`ziurtatu`) — every new gap was the same "grammatically valid but
+semantically unrelated" shape already accepted pre-#314 (e.g. an `ondorioztatu`-form
+flagged against an unrelated `ukan`-cluster sentence). Regenerated
+`scripts/validfor-gap-baseline.json` wholesale via
+`node scripts/validfor-delta-audit.mjs --json`. #316's native-speaker review
+remains the backstop if any specific sentence's judgment call turns out
+wrong.
+
+**Word count:** a few new `past` sentences run to 10-11 words (e.g. `batu`'s
+`haiek` past), matching the existing high-frequency tier's own 9-10-word
+items (`irakurri`'s `hura`/`haiek` past) — `WORD_ORDER_MAX_WORDS = 9` (#315)
+just excludes the longer ones from the `word-order` question pool; it's not
+a validity constraint on sentence content.
+
 This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.

@@ -1346,6 +1346,48 @@ per #319's own scoping. `#320`/`#321`'s mid/low-frequency and academic/rare
 tiers (the remaining ~30 fodder verbs from #314's full scope) are not yet
 authored — tracked as a "Next steps" item below.
 
+## Fodder verbs — mid/low-frequency tier (#314, #320)
+
+Same approach as the high-frequency tier above: authored directly in
+`src/data/verbs.js`, recorded here per #314's bank-extension rule. Present
+and past pairs for all 18 of #320's verbs; `future` is free via the
+`future ← present` reuse loop. Every variant tagged `validFor: []` (concrete
+specific objects/settings, so no sibling's same-person form also fits).
+
+Covers `eskatu` (to ask for/request), `galdetu` (to ask a question),
+`adierazi` (to express/indicate), `bukatu`/`amaitu` (to finish), `gainditu`
+(to pass/overcome), `bereiztu` (to distinguish/separate), `ezagutu` (to
+know/meet), `sentitu` (to feel), `pentsatu` (to think), `sumatu` (to
+sense/perceive), `ulertu` (to understand), `aztertu` (to examine/analyze),
+`ukatu` (to deny), `batu` (to gather/join/add), `planteatu` (to pose/raise
+an issue), and the two `nor`-only verbs `erori` (to fall) / `jaiki` (to get
+up).
+
+Representative examples (present tense, `ni`/`hura`):
+- **eskatu** — *Nik mahai bat eskatzen dut jatetxean.* (I ask for a table at
+  the restaurant.) / *Hark mailegua eskatzen du bankuan.* (He/she asks for a
+  loan at the bank.)
+- **galdetu** — *Nik ordua galdetzen dut geltokian.* (I ask the time at the
+  station.)
+- **adierazi** — *Nik nire iritzia adierazten dut bilkuran.* (I express my
+  opinion at the meeting.)
+- **ezagutu** — *Nik herri hau ondo ezagutzen dut.* (I know this town well.)
+- **bereiztu** — *Hark egia gezurretik bereizten du erraz.* (He/she
+  distinguishes truth from lies easily.)
+- **gainditu** — *Nik azterketa gainditzen dut lehen saiakeran.* (I pass the
+  exam on the first try.)
+- **erori** — *Hura bizikletatik erortzen da bide zikinean.* (He/she falls
+  off the bike on the muddy path.)
+- **jaiki** — *Ni goizean goiz jaikitzen naiz lanera joateko.* (I get up
+  early in the morning to go to work.)
+
+`#321`'s academic/rare tier (12 verbs) stays out of scope here — its
+sentences are deliberately minimal one-frame-per-person (`mode:
+'recognition'`, per `docs/LANGUAGE_DECISIONS.md`'s #321 entry), so the
+"colorful bank" treatment given to the high/mid/low tiers doesn't apply: a
+recognition-only pool never surfaces a second variant to choose from, so
+authoring richer alternatives would add data nothing reads.
+
 ## Coverage inventory (#313)
 
 Audit of every `(verb, tense)` pair with a `conjugations` table beyond plain
@@ -1451,7 +1493,9 @@ causative (`-arazi`/`-erazi`) bank (blocked on Phase VI units +
    list (item 5's `imperfectivePast` deferrals, the `habitualPast`/advanced-
    tense items noted in the "Coverage inventory (#313)" section above) rather
    than as one open bank-adoption item.
-10. #314's high-frequency tier (#319's 16 verbs) is done — see "Fodder verbs
-    — high-frequency tier (#314, #319)" above. #320's mid/low-frequency tier
-    (18 verbs) and #321's academic/rare tier (12 verbs) — the rest of #314's
-    ~46-verb scope — are not yet authored.
+10. #314's high-frequency tier (#319's 16 verbs) and mid/low-frequency tier
+    (#320's 18 verbs) are done — see "Fodder verbs — high-frequency tier
+    (#314, #319)" and "Fodder verbs — mid/low-frequency tier (#314, #320)"
+    above. #321's academic/rare tier (12 verbs) is judged out of scope for
+    #314's "colorful sentences" treatment (see that section's closing note);
+    #314 can close once that's confirmed.
