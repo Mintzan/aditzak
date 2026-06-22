@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #383 sub-issue 3: Units 26-28 already use conjugation-led titles; fixed stale unit-number references in their copy instead
+
+#383's third sub-issue asked to rename Unit 28 and audit Units 26-28's
+`focus`/`payload` copy for "verb-first" framing — `gustatu/iruditu/ahaztu —
+The Non-3rd-Person NOR` was the complained-about title. Checking the current
+`journey.js`/`docs/LEARNING_JOURNEY.md`/`journeyTranslations.js`, that
+specific complaint is already moot: Unit 28 was built fresh by #358/#359
+(same day #383 was filed) with the conjugation-led title `The NOR-NORI Object
+Axis — natzaizu/gatzaizu`, and Units 26-27 already led with their pattern
+names too. No rename was needed.
+
+The audit did surface real staleness from stacked renumbering, left over from
+before #358/#359/#385 landed — fixed:
+- `journey.js`'s Unit 26 focus said "ahead of Unit 26's ditransitive jump"
+  (self-referential — the ditransitive jump is Stage 9's Unit 29).
+- `journey.js`'s Unit 27 focus said "recombines Unit 24's dative grid" (the
+  present NOR-NORI table it recombines with is Unit 26, not 24).
+- `docs/LEARNING_JOURNEY.md`'s Unit 27 row still said "pending — new unit"
+  despite `journey.js` marking it `available` since #385 (same staleness
+  flagged but deliberately left alone during #385 itself, now in scope here).
+- `journeyTranslations.js`'s es/eu copy for Units 26-27 hadn't been updated
+  past #146/#385 at all — referenced "unidad 25"/"unidad 23" for the same
+  ditransitive-jump/predecessor-grid unit numbers, and didn't mention the
+  #385 pools the English copy does. Brought in line with the corrected
+  English text.
+
+No code/engine changes; `npm test` + `npm run lint` + `npm run build` all
+green throughout.
+
 ## 2026-06-22 — #406: hitanoa (#212/Unit 41) and subjunctive (#369/Unit 37) don't need a shared new engine mechanic
 
 #406 asked us to resolve `docs/EXERCISE_ENGINE.md`'s open "Allocutive
