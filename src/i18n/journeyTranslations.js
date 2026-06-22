@@ -419,8 +419,8 @@ export const JOURNEY_TRANSLATIONS = {
     26: {
       title: { es: 'El presente NOR-NORI — zait/zaizu/zaio', eu: 'NOR-NORI oraina — zait/zaizu/zaio' },
       focus: {
-        es: 'presente NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; termina con una lección "colchón" de marco de caso antes del salto ditransitivo de la unidad 25',
-        eu: 'oraina NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu; 25. unitatearen jauzi ditransitiboaren aurretik kasu-markoaren "koltxoi" saio batekin amaitzen da',
+        es: 'presente NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, más su división de número NOR plural (zaizkit); termina con una lección "colchón" de marco de caso y una revisión combinada (#385) que amplía el patrón a jarraitu/jario, antes del salto ditransitivo de la unidad 29',
+        eu: 'oraina NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, gehi NOR plural zatiketa (zaizkit); kasu-markoaren "koltxoi" saio batekin eta eredua jarraitu/jario-ra zabaltzen duen errepaso nahasi batekin (#385) amaitzen da, 29. unitatearen jauzi ditransitiboaren aurretik',
       },
       payload: {
         es: '"Me gusta esto." (Hau gustatzen zait)',
@@ -430,8 +430,8 @@ export const JOURNEY_TRANSLATIONS = {
     27: {
       title: { es: 'NOR-NORI pasado y futuro — El dativo a través del tiempo', eu: 'NOR-NORI iragana eta geroa — Datiboa denboran zehar' },
       focus: {
-        es: 'NOR-NORI en pasado y futuro — recombina la tabla dativa de la unidad 23 con el pasado perifrástico y el futuro -ko/-go',
-        eu: 'NOR-NORI iraganean eta geroan — 23. unitateko datibo-taula iragan perifrastikoarekin eta -ko/-go geroaldiarekin berrelkartzen du',
+        es: 'NOR-NORI en pasado y futuro — recombina la tabla dativa de la unidad 26 con el pasado perifrástico y el futuro -ko/-go; termina con una revisión combinada (#385) que refleja el grupo de presente de la unidad 26',
+        eu: 'NOR-NORI iraganean eta geroan — 26. unitateko datibo-taula iragan perifrastikoarekin eta -ko/-go geroaldiarekin berrelkartzen du; 26. unitatearen oraina-multzoa islatzen duen errepaso nahasi batekin (#385) amaitzen da',
       },
       payload: {
         es: '"Me gustó ayer." (Atzo gustatu zitzaidan)',
