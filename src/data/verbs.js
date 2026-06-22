@@ -281,6 +281,50 @@ export const VERBS = [
           { text: 'Txakurrak eta katuak duela bi egun handiak ___.', validFor: [] },
         ],
       },
+      // #413: potential/baldintza/conditional, same predicate-nominal frames
+      // as present/past above. `validFor: []` throughout is the *verified*
+      // tag here, not a placeholder — none of izan's `nor`-cluster siblings
+      // (egon/joan/etorri) have a `potential`/`baldintza`/`conditional` tense
+      // table at all, so there's no candidate to ever cross-list.
+      potential: {
+        ni: [{ text: 'Ni irakaslea ___.', validFor: [] }],
+        hi: [{ text: 'Hi ikaslea ___.', validFor: [] }],
+        zu: [{ text: 'Zu gidaria ___.', validFor: [] }],
+        hura: [{ text: 'Hura medikua ___.', validFor: [] }],
+        gu: [{ text: 'Gu lagunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek irakasleak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek ikasleak ___.', validFor: [] }],
+      },
+      baldintza: {
+        ni: [{ text: 'Ni irakaslea ___.', validFor: [] }],
+        hi: [{ text: 'Hi ikaslea ___.', validFor: [] }],
+        zu: [{ text: 'Zu gidaria ___.', validFor: [] }],
+        hura: [{ text: 'Hura medikua ___.', validFor: [] }],
+        gu: [{ text: 'Gu lagunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek irakasleak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek ikasleak ___.', validFor: [] }],
+      },
+      conditional: {
+        ni: [{ text: 'Ni irakaslea ___.', validFor: [] }],
+        hi: [{ text: 'Hi ikaslea ___.', validFor: [] }],
+        zu: [{ text: 'Zu gidaria ___.', validFor: [] }],
+        hura: [{ text: 'Hura medikua ___.', validFor: [] }],
+        gu: [{ text: 'Gu lagunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek irakasleak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek ikasleak ___.', validFor: [] }],
+      },
+      // #413: imperative, second/third-person-only per `izan`'s own table
+      // (no ni/gu cells). `validFor` left **absent** (not `[]`) on these —
+      // unlike potential/baldintza/conditional above, `egon`/`joan`/`etorri`
+      // *do* have their own `imperative` tables, so a real cross-verb
+      // naturalness check would be needed before tagging `[]`; left
+      // unvetted (the documented safe default, excluding all cross-verb
+      // candidates) rather than guessing. See docs/DECISIONS.md.
+      imperative: {
+        hi: [{ text: 'Hi ona ___!' }],
+        zu: [{ text: 'Zu ona ___!' }],
+        zuek: [{ text: 'Zuek onak ___!' }],
+      },
     },
     pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
@@ -764,6 +808,49 @@ export const VERBS = [
           { text: 'Haiek anaia bat ___.', validFor: ['nahi', 'eduki'] },
           { text: 'Haiek hegazkin bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
+      },
+      // #413: potential/baldintza/conditional sentence frames, deferred by
+      // #148 as form-only. `validFor: []` here is verified (not assumed): no
+      // `nor-nork` sibling (`nahi`/`behar`/`jakin`/`eduki`/`maite`) has a
+      // `potential`/`baldintza`/`conditional` table at all, so no cross-verb
+      // candidate can exist regardless of noun choice.
+      potential: {
+        ni: [{ text: 'Nik liburu bat ___.', validFor: [] }],
+        zu: [{ text: 'Zuk auto bat ___.', validFor: [] }],
+        hura: [{ text: 'Hark etxe bat ___.', validFor: [] }],
+        gu: [{ text: 'Guk txartel bat ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek mapa bat ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek pasaporte bat ___.', validFor: [] }],
+      },
+      baldintza: {
+        ni: [{ text: 'Nik liburu bat ___.', validFor: [] }],
+        zu: [{ text: 'Zuk auto bat ___.', validFor: [] }],
+        hura: [{ text: 'Hark etxe bat ___.', validFor: [] }],
+        gu: [{ text: 'Guk txartel bat ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek mapa bat ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek pasaporte bat ___.', validFor: [] }],
+      },
+      conditional: {
+        ni: [{ text: 'Nik liburu bat ___.', validFor: [] }],
+        zu: [{ text: 'Zuk auto bat ___.', validFor: [] }],
+        hura: [{ text: 'Hark etxe bat ___.', validFor: [] }],
+        gu: [{ text: 'Guk txartel bat ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek mapa bat ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek pasaporte bat ___.', validFor: [] }],
+      },
+      // #413: imperative, "Pazientzia ___!" idiom (NOR-NORK Agintera,
+      // singular-object column — see `conjugations.imperative` above).
+      // `hi-m`/`hi-f` skipped per this codebase's convention of excluding
+      // gendered `hi` cells from sentence-completion data entirely (no
+      // existing entry anywhere keys a sentence on `hi-m`/`hi-f`).
+      // `validFor: []` is verified here too: none of `ukan`'s `nor-nork`
+      // periphrastic siblings have an `imperative` table.
+      imperative: {
+        zu: [{ text: 'Pazientzia ___!', validFor: [] }],
+        zuek: [{ text: 'Pazientzia ___, mesedez!', validFor: [] }],
+        hura: [{ text: 'Pazientzia ___ Jonek!', validFor: [] }],
+        gu: [{ text: 'Pazientzia ___!', validFor: [] }],
+        haiek: [{ text: 'Pazientzia ___ ikasleek!', validFor: [] }],
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
