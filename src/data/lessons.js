@@ -1745,6 +1745,25 @@ export const LESSONS = [
       { verbId: 'eman', tense: 'potentialAlegiazkoaPlural' },
     ],
   },
+  // #410/#411: periphrastic `ahal`/`ezin`, the auxiliary-transparent
+  // positive/negative pair this unit's Focus already advertises but never
+  // delivered — contrasted against the synthetic `naiteke`/`dezaket` drilled
+  // above. Each gets an `izan`-carrier and a `ukan`-carrier lesson so the
+  // "which auxiliary?" pass-through point actually lands.
+  { id: 'ahal-izan-present', verbId: 'ahal-izan', tense: 'present' },
+  { id: 'ahal-ukan-present', verbId: 'ahal-ukan', tense: 'present' },
+  { id: 'ezin-izan-present', verbId: 'ezin-izan', tense: 'present' },
+  { id: 'ezin-ukan-present', verbId: 'ezin-ukan', tense: 'present' },
+  {
+    id: 'unit-34-ahal-ezin-review',
+    review: true,
+    sources: [
+      { verbId: 'ahal-izan', tense: 'present' },
+      { verbId: 'ahal-ukan', tense: 'present' },
+      { verbId: 'ezin-izan', tense: 'present' },
+      { verbId: 'ezin-ukan', tense: 'present' },
+    ],
+  },
   // Unit 29 (#148) — Baldintza (if-clause) + Ondorioa present (would):
   // `izan`/`ukan` production for NOR/NOR-NORK. Dative-paradigm recognition-
   // only conditional is deferred alongside Unit 28's — see the issue filed

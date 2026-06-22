@@ -8,6 +8,52 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #410/#411: periphrastic `ahal`/`ezin` get two `VERBS` entries each (izan-carrier + ukan-carrier), not one
+
+`ahal` ("can") and its negation `ezin` ("can't") were entirely missing from
+the implemented app even though Unit 34's own Focus text advertised `ahal
+izan` and `VERB_COVERAGE.md` §5 flagged `ezin` as high-priority. Added four
+dedicated `VERBS` entries — `ahal-izan`, `ahal-ukan`, `ezin-izan`,
+`ezin-ukan` — following #306's "dedicated entries over sentences-layered-
+on-host" precedent.
+
+**Why two entries per particle, not one:** `nahi`/`behar` always take `ukan`
+regardless of the embedded verb's own transitivity (`joan nahi dut`, not
+`joan nahi naiz`). `ahal`/`ezin` don't get that exemption — they're
+auxiliary-*transparent*, taking whatever auxiliary the carrier verb itself
+would pick (`izan` for an intransitive carrier: "etorri ahal naiz"; `ukan`
+for a transitive one: "esan ahal dut"). A single invariant-particle entry
+can't show both halves of that contrast, so each particle is split exactly
+the way Unit 34 already splits `izan-potential`/`ukan-potential`.
+
+**Data shape:** flat conjugation tables (`ahal naiz`, `ezin dut`, ...), no
+infinitive baked in — same shape as `behar`'s entry. The carrier verb's
+infinitive lives only in the sentence text (`'Ni gaur etxera joan ___.'`),
+mirroring `behar`'s infinitive-complement sentences (#267/#288) exactly.
+`validFor: []` throughout: ran `scripts/validfor-delta-audit.mjs` against
+all four new ids and reviewed every flagged gap by hand — all are false
+positives, either because the host sentence has no infinitive complement
+for `ahal`/`ezin` to attach to (every plain noun-object/predicate-nominal
+sentence in the corpus), or because the candidate's auxiliary family
+doesn't match the carrier verb's transitivity (e.g. `ezin-ukan`'s "ezin
+dut" can't complete an intransitive `joan`/`etorri` sentence, which needs
+the izan-shaped "ezin naiz"). Regenerated `scripts/validfor-gap-baseline.json`
+accordingly.
+
+**Placement:** appended to Unit 34 (already `available`) rather than a new
+unit — four new lessons (`ahal-izan-present`, `ahal-ukan-present`,
+`ezin-izan-present`, `ezin-ukan-present`) plus a review, added to its
+`lessonIds`. `docs/LEARNING_JOURNEY.md` and `docs/VERB_COVERAGE.md` §5
+updated to reflect that `ahal`/`ezin` are now implemented, not just
+referenced.
+
+**Question kinds:** plain form-only multiple-choice for now (matching the
+existing `izan-potential`/`ukan-potential` lessons) — `negative`/`word-order`
+question kinds for `ezin` specifically are a reasonable follow-up but out of
+scope here, since `ezin` is lexically negative rather than `ez`+positive-verb
+negation, so the existing negation-question machinery wasn't assumed to
+apply without separate review.
+
 ## 2026-06-22 — #413: izan/ukan potential/baldintza/conditional/imperative sentence frames authored; `validFor: []` verified rather than assumed
 
 Authored `sentences` data for `izan`'s and `ukan`'s `potential`, `baldintza`,
