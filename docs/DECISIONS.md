@@ -12,6 +12,55 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-22 — #368: Unit 36 Agintera remainder — jussive/hortative, plural-object, ditransitive, egon/etorri/joan
+
+Filled in the rest of `docs/CONJUGATIONS.md` §16.2's Agintera (imperative)
+picture, flagged as out of scope by #171's own table comment:
+
+- **`ukan.conjugations.imperative`** gained `hura: 'beza'` (3rd-person
+  jussive) and `gu: 'dezagun'` (1st-person hortative) directly in the
+  existing flat table, plus `haiek: 'bezate'`. Since `ukan-imperative`'s
+  lesson has no `persons` filter, `generateQuestions`'s `personsFilter ??
+  Object.keys(table)` default means these new cells are picked up
+  automatically — no `lessons.js` change needed for this piece, only the
+  `logic.test.js` exact-table assertion had to be updated.
+- **`ukan.conjugations.imperativePlural`** is a new sibling table for the
+  `-itz-` plural-object column (`itzak`/`itzan`/`itzazu`/`itzazue`/`bitza`/
+  `ditzagun`/`bitzate`), named to match the existing `presentPlural`/
+  `pastPlural` convention. Drilled recognition-only against the singular
+  table (`unit-30-plural-object-review`), same rationale as Unit 25's
+  `unit-25-object-number-review`.
+- **`esan.conjugations.imperativeDitransitive`** = `{ zu, zuek, 'hi-m',
+  'hi-f' }` reuses `esan`'s existing `recipient: 'hura'`-fixed/NORK-varies
+  shape directly — the imperative's addressee dimension maps onto the same
+  NORK axis `esan` already varies over, just restricted to addressable
+  persons.
+- **`eman.conjugations.imperativeDitransitive`** = `{ ni, hura, gu, haiek }`
+  keeps `eman`'s NORI-varies shape, but fixes the addressee at `zu` instead
+  of `eman`'s usual `agent: 'ni'` for this one table only (documented via a
+  comment on the table, not a change to `eman`'s general `agent` field) —
+  you can't command someone to give to themselves as agent, so the
+  imperative needs a real addressee, and `zu` is the only one available.
+  This also happens to produce the doc's own canonical worked example,
+  "Eman iezadazu" ("Give me that"). Both ditransitive tables are
+  recognition-only (`unit-30-ditransitive-review`), pooling esan and eman
+  the same way Unit 25's `unit-25-two-axis-review` already does for their
+  other axes.
+- **`egon`/`etorri`/`joan` each gained a flat `imperative` table** that's a
+  literal copy of their existing `present` table's `hi`/`zu`/`zuek` cells,
+  per the synthetic-imperative-=-present-tense rule (CONJUGATIONS.md
+  §16.2). `egon` additionally gets `hura: 'bego'`/`haiek: 'begoz'` (it has
+  its own synthetic jussive); `etorri`/`joan` don't, since their 3rd-person
+  jussive (`etor bedi`/`joan bedi`) needs the Radical/Bare-Stem rule
+  (§16.2's bare-stem-before-subjunctive-auxiliary pattern) — a new stem
+  concept not currently in the data model, judged too large for this issue
+  and left out of scope. New `egon-imperative`/`etorri-imperative`/
+  `joan-imperative` lessons, added to Unit 36's `lessonIds`.
+- **Explicitly excluded**: `izan`'s own missing `hura: 'bedi'`/`haiek:
+  'bitez'` jussive forms (documented in CONJUGATIONS.md §2 but never part of
+  #368's cited scope, which pointed only at the NOR-NORK section) — a
+  separate, not-yet-filed gap rather than something to fold in here.
+
 ## 2026-06-21 — #364: NOR-NORI Inperatiboa object axis (`imperativeByNor`) for `gustatu`/`iruditu`/`ahaztu` — `hura`/`haiek` included (unlike #361/#362), extended Unit 36 rather than a new unit
 
 Unlike Baldintza/Ondorioa (#361) and Potentziala (#362), there's no flat

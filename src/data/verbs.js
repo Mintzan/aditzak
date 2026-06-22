@@ -327,6 +327,11 @@ export const VERBS = [
         zuek: 'egongo zarete',
         haiek: 'egongo dira',
       },
+      // #368: synthetic-imperative-=-present-tense rule (CONJUGATIONS.md
+      // §16.2) — `hi`/`zu`/`zuek` are identical to the present-tense forms
+      // above; `hura`/`haiek` have their own synthetic jussive forms
+      // (`bego`/`begoz`). No `ni`/`gu` cell (no hortative for egon).
+      imperative: { hi: 'hago', zu: 'zaude', zuek: 'zaudete', hura: 'bego', haiek: 'begoz' },
     },
     // Every variant here is a locative `-an`/`-en` frame ("Ni etxean ___." =
     // "I am at home") — izan doesn't take a bare locative this way, and
@@ -520,15 +525,35 @@ export const VERBS = [
         zuek: 'izango dituzue',
         haiek: 'izango dituzte',
       },
-      // #171 core scope — NOR-NORK Agintera (imperative, generic "do it!"),
-      // singular-object column only, per CONJUGATIONS.md §16.2. `hi`-m/`hi`-f
-      // split (`ezak`/`ezan`) since `hi` is the grammatical NORK subject
-      // here, matching #167's `hi`-as-NORK convention. 3rd-person jussive
-      // (`beza`/`bitza`), 1st-person hortative (`dezagun`), the plural-object
-      // (`-itz-`) column, and the ditransitive (`iezadazu`) imperative are
-      // out of scope for this table — see the issue filed for #171's
-      // remaining scope.
-      imperative: { 'hi-m': 'ezak', 'hi-f': 'ezan', zu: 'ezazu', zuek: 'ezazue' },
+      // #171 core scope, extended by #368 — NOR-NORK Agintera (imperative,
+      // generic "do it!"), singular-object column, per CONJUGATIONS.md §16.2.
+      // `hi`-m/`hi`-f split (`ezak`/`ezan`) since `hi` is the grammatical
+      // NORK subject here, matching #167's `hi`-as-NORK convention. #368
+      // adds the 3rd-person jussive (`beza`/`bezate`) and 1st-person
+      // hortative (`dezagun`) cells; the plural-object (`-itz-`) column lives
+      // in `imperativePlural` below, and the ditransitive (`iezadazu`)
+      // imperative lives on `esan`/`eman`'s `imperativeDitransitive`.
+      imperative: {
+        'hi-m': 'ezak',
+        'hi-f': 'ezan',
+        zu: 'ezazu',
+        zuek: 'ezazue',
+        hura: 'beza',
+        gu: 'dezagun',
+        haiek: 'bezate',
+      },
+      // #368: plural-object (`-itz-`) column of the same NOR-NORK Agintera
+      // grid — same NORK rows as `imperative` above, the object is plural
+      // instead of singular (per CONJUGATIONS.md §16.2's `-itz-` column).
+      imperativePlural: {
+        'hi-m': 'itzak',
+        'hi-f': 'itzan',
+        zu: 'itzazu',
+        zuek: 'itzazue',
+        hura: 'bitza',
+        gu: 'ditzagun',
+        haiek: 'bitzate',
+      },
       // #346: real 2D NOR-NORK table (`{ [nork]: { [nor]: form } }`) — see
       // the `object`-vs-2D note near the top of this file. Transcribed from
       // `docs/CONJUGATIONS.md` §3's "Present — NOR = 1st/2nd person" grid,
@@ -1215,6 +1240,13 @@ export const VERBS = [
         zuek: 'joan zarete',
         haiek: 'joan dira',
       },
+      // #368: synthetic-imperative-=-present-tense rule (CONJUGATIONS.md
+      // §16.2) — `hi`/`zu`/`zuek` are identical to the present-tense forms
+      // above. No `hura`/`haiek`/`ni`/`gu` cells: `joan` has no synthetic
+      // 3rd-person jussive the way `izan`/`egon` do (it would need the
+      // Radical/Bare-Stem rule's `joan bedi`, out of scope for #368 — see
+      // docs/DECISIONS.md).
+      imperative: { hi: 'hoa', zu: 'zoaz', zuek: 'zoazte' },
     },
     // Every variant here is an allative `-ra` frame ("Ni hondartzara ___." =
     // "I go to the beach"). `etorri`'s same-person form ("Ni hondartzara
@@ -1415,6 +1447,11 @@ export const VERBS = [
         zuek: 'etorri zarete',
         haiek: 'etorri dira',
       },
+      // #368: synthetic-imperative-=-present-tense rule (CONJUGATIONS.md
+      // §16.2) — `hi`/`zu`/`zuek` are identical to the present-tense forms
+      // above. No `hura`/`haiek`/`ni`/`gu` cells, same reasoning as `joan`'s
+      // imperative above (Radical/Bare-Stem `etor bedi` is out of scope).
+      imperative: { hi: 'hator', zu: 'zatoz', zuek: 'zatozte' },
     },
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
     // `validFor: ['joan']` — joan's same-person form ("Ni etxera noa" = "I'm
@@ -3025,6 +3062,19 @@ export const VERBS = [
         zuek: 'esango dizkiozue',
         haiek: 'esango dizkiote',
       },
+      // #368: ditransitive (NOR-NORI-NORK) Agintera, per CONJUGATIONS.md
+      // §16.2's `iezaiozu` grid — root is the ditransitive subjunctive root
+      // with the leading `d-` dropped. `recipient: 'hura'` above already
+      // fixes NORI = hari, so this table's keys are the addressee (the
+      // commanded NORK), same shape as `present`/`past` above, just
+      // restricted to the addressable persons (`zu`/`zuek`/`hi`-m/`hi`-f —
+      // you can't command `ni`/`gu`/`hura`/`haiek` to do something).
+      imperativeDitransitive: {
+        zu: 'iezaiozu',
+        zuek: 'iezaiozue',
+        'hi-m': 'iezaiok',
+        'hi-f': 'iezaion',
+      },
     },
     // #265: `validFor: []` throughout, confirmed rather than assumed.
     // `agreementsCompatible(['nor','nori','nork'], ['nor','nori','nork'])` is
@@ -3120,6 +3170,21 @@ export const VERBS = [
         hura: 'emango dizkiot',
         zuek: 'emango dizkizuet',
         haiek: 'emango dizkiet',
+      },
+      // #368: ditransitive Agintera, per CONJUGATIONS.md §16.2's `iezadazu`
+      // grid. `agent: 'ni'` above fixes NORK = nik for `eman`'s other
+      // tenses, but you can't command someone to give *to themselves as
+      // agent* — there is no addressee here. So this one table fixes the
+      // addressee (commanded NORK) at `zu` instead, and `person` varies over
+      // NORI exactly as it does everywhere else on this verb ("Eman iezadazu
+      // hori" = "Give me that", the doc's own worked example). `ni`/`gu`
+      // become reachable again here since NORI=ni/gu is no longer reflexive
+      // once NORK=zu instead of NORK=ni.
+      imperativeDitransitive: {
+        ni: 'iezadazu',
+        hura: 'iezaiozu',
+        gu: 'iezaguzu',
+        haiek: 'iezaiezu',
       },
     },
     // #265: `validFor: []` throughout — see `esan`'s sentences above for the
@@ -7595,6 +7660,12 @@ export const TENSE_META = {
   // *ByNor moods (no flat `imperative` table exists for these verbs to be
   // redundant with).
   imperativeByNor: { labelKey: 'tenseImperativeByNor', basque: 'agintera (nor-ka)' },
+  // #368: NOR-NORK Agintera's plural-object (`-itz-`) column — `ukan`'s
+  // sibling to the singular-object `imperative` table above.
+  imperativePlural: { labelKey: 'tenseImperativePlural', basque: 'agintera (plurala)' },
+  // #368: ditransitive (NOR-NORI-NORK) Agintera — `esan`/`eman`'s
+  // `iezaiozu`/`iezadazu`-type forms.
+  imperativeDitransitive: { labelKey: 'tenseImperativeDitransitive', basque: 'agintera (nor-nori-nork)' },
 }
 
 export const TYPE_META = {

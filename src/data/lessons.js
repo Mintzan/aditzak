@@ -1748,10 +1748,12 @@ export const LESSONS = [
   // Unit 30 (#171 core scope) — Commands (Agintera/imperative), second-person
   // only. izan/ukan are NOT `agreementsCompatible`, so `unit-30-review`
   // (pooling both for spaced repetition) gets no cross-verb borrowing —
-  // accepted as-is, same as #167's toka/noka. Ditransitive (`iezadazu`),
-  // jussive/hortative forms, and egon/etorri/joan's imperative (= present
-  // tense — see CONJUGATIONS.md §16.2) are deferred to the issue filed for
-  // #171's remaining scope.
+  // accepted as-is, same as #167's toka/noka. #368 fills in the rest of
+  // `ukan`'s imperative (jussive/hortative cells added directly to this same
+  // `imperative` table — auto-picked-up by this lesson since it has no
+  // `persons` filter — plus the plural-object and ditransitive axes below),
+  // and adds egon/etorri/joan's imperative (= present tense — see
+  // CONJUGATIONS.md §16.2).
   { id: 'izan-imperative', verbId: 'izan', tense: 'imperative' },
   { id: 'ukan-imperative', verbId: 'ukan', tense: 'imperative' },
   {
@@ -1790,6 +1792,38 @@ export const LESSONS = [
     tense: 'imperativeByNor',
     persons: ['hura', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  // #368 — egon/etorri/joan's imperative, per the synthetic-imperative-=-
+  // present-tense rule (CONJUGATIONS.md §16.2): these three tables are
+  // literal copies of cells already taught in Units 3-4's present tense, so
+  // production here is really "notice the present-tense form doubles as a
+  // command," not new conjugation to learn.
+  { id: 'egon-imperative', verbId: 'egon', tense: 'imperative' },
+  { id: 'etorri-imperative', verbId: 'etorri', tense: 'imperative' },
+  { id: 'joan-imperative', verbId: 'joan', tense: 'imperative' },
+  // #368 — singular-vs-plural-object contrast on `ukan`'s Agintera
+  // (`ezazu` vs `itzazu`), recognition-only since the point is noticing the
+  // `-itz-` infix, same rationale as Unit 25's `unit-25-object-number-review`.
+  {
+    id: 'unit-30-plural-object-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'ukan', tense: 'imperative' },
+      { verbId: 'ukan', tense: 'imperativePlural' },
+    ],
+  },
+  // #368 — esan/eman's ditransitive Agintera (`iezaiozu`/`iezadazu`),
+  // recognition-only and pooled across both verbs, mirroring Unit 25's
+  // `unit-25-two-axis-review` treatment of these same two verbs' other axes.
+  {
+    id: 'unit-30-ditransitive-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'esan', tense: 'imperativeDitransitive' },
+      { verbId: 'eman', tense: 'imperativeDitransitive' },
+    ],
   },
   // Unit 32 (#144, +#180 `ibili`) — "Meet hi": `hi` (familiar "you") joins
   // izan/egon/joan/etorri/ibili's present and past tables as a 7th person.
