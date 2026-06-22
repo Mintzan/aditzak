@@ -1691,6 +1691,29 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'potentialLehenaldiaByObject' },
     ],
   },
+  // #366 — esan/eman's ditransitive Ahalera (`diezaioket`-type forms, plus
+  // their Lehenaldia/Alegiazkoa sub-tenses and `-zki-` plural-object
+  // siblings), recognition-only per this unit's focus text, pooled across
+  // both verbs mirroring Unit 30's `unit-30-ditransitive-review` treatment.
+  {
+    id: 'unit-34-ditransitive-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'esan', tense: 'potential' },
+      { verbId: 'esan', tense: 'potentialLehenaldia' },
+      { verbId: 'esan', tense: 'potentialAlegiazkoa' },
+      { verbId: 'esan', tense: 'potentialPlural' },
+      { verbId: 'esan', tense: 'potentialLehenaldiaPlural' },
+      { verbId: 'esan', tense: 'potentialAlegiazkoaPlural' },
+      { verbId: 'eman', tense: 'potential' },
+      { verbId: 'eman', tense: 'potentialLehenaldia' },
+      { verbId: 'eman', tense: 'potentialAlegiazkoa' },
+      { verbId: 'eman', tense: 'potentialPlural' },
+      { verbId: 'eman', tense: 'potentialLehenaldiaPlural' },
+      { verbId: 'eman', tense: 'potentialAlegiazkoaPlural' },
+    ],
+  },
   // Unit 29 (#148) — Baldintza (if-clause) + Ondorioa present (would):
   // `izan`/`ukan` production for NOR/NOR-NORK. Dative-paradigm recognition-
   // only conditional is deferred alongside Unit 28's — see the issue filed
@@ -1743,6 +1766,29 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'baldintzaByObject' },
       { verbId: 'ukan', tense: 'conditionalByObject' },
       { verbId: 'ukan', tense: 'conditionalPastByObject' },
+    ],
+  },
+  // #366 — esan/eman's ditransitive Baldintza/Ondorioa (`balio`/`nioke`-type
+  // forms, plus Ondorioa's past sub-tense and `-zki-` plural-object
+  // siblings), recognition-only per this unit's focus text, pooled across
+  // both verbs mirroring Unit 30's `unit-30-ditransitive-review` treatment.
+  {
+    id: 'unit-35-ditransitive-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'esan', tense: 'baldintza' },
+      { verbId: 'esan', tense: 'conditional' },
+      { verbId: 'esan', tense: 'conditionalPast' },
+      { verbId: 'esan', tense: 'baldintzaPlural' },
+      { verbId: 'esan', tense: 'conditionalPlural' },
+      { verbId: 'esan', tense: 'conditionalPastPlural' },
+      { verbId: 'eman', tense: 'baldintza' },
+      { verbId: 'eman', tense: 'conditional' },
+      { verbId: 'eman', tense: 'conditionalPast' },
+      { verbId: 'eman', tense: 'baldintzaPlural' },
+      { verbId: 'eman', tense: 'conditionalPlural' },
+      { verbId: 'eman', tense: 'conditionalPastPlural' },
     ],
   },
   // Unit 30 (#171 core scope) — Commands (Agintera/imperative), second-person

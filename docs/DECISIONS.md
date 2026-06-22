@@ -12,6 +12,31 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-22 — #366: esan/eman ditransitive Baldintza/Ondorioa/Ahalera
+
+Added `docs/CONJUGATIONS.md:751-1081`'s ditransitive Baldintza/Ondorioa
+(present + past)/Ahalera (Orainaldia/Lehenaldia/Alegiazkoa) grids to `esan`
+and `eman`, mirroring the existing `present`/`past`/`future`/
+`imperativeDitransitive` axis-fixed convention from #142/#368:
+
+- **New flat (non-2D) tense keys**: `conditionalPast`, `potentialLehenaldia`,
+  `potentialAlegiazkoa`, plus their `*Plural` (NOR=haiek, `-zki-`) siblings,
+  and `baldintzaPlural`/`conditionalPlural`/`conditionalPastPlural`/
+  `potentialPlural`. These names already existed as `*ByObject`/`*ByNor` 2D
+  tables (added by #352/#353/#362) — the new ones here are deliberately
+  *flat* siblings, since `esan`/`eman`'s tables are single-axis-fixed (like
+  their existing `present`/`past`/`future`), not genuinely 2D. Same name,
+  different shape, disambiguated by which verb it lives on.
+- `esan` keeps `recipient: 'hura'` fixed (NORI = hari), varying NORK; `eman`
+  keeps `agent: 'ni'` fixed (NORK = nik), varying NORI — each table below is
+  that grid's fixed-axis row/column, read straight off the source doc.
+- Wired into Units 34 (Ahalera) and 35 (Baldintza/Ondorioa) rather than new
+  units — both units' focus text already said "recognition-only for the
+  dative paradigms," and `unit-34-ditransitive-review`/
+  `unit-35-ditransitive-review` pool esan+eman (singular and plural object
+  together) in one `mode: 'recognition'` lesson each, mirroring Unit 30's
+  `unit-30-ditransitive-review` (#368) treatment of the same two verbs.
+
 ## 2026-06-22 — #368: Unit 36 Agintera remainder — jussive/hortative, plural-object, ditransitive, egon/etorri/joan
 
 Filled in the rest of `docs/CONJUGATIONS.md` §16.2's Agintera (imperative)
