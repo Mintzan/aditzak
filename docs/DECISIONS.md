@@ -8,6 +8,38 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #406: hitanoa (#212/Unit 41) and subjunctive (#369/Unit 37) don't need a shared new engine mechanic
+
+#406 asked us to resolve `docs/EXERCISE_ENGINE.md`'s open "Allocutive
+register / `hi`" either/or and decide whether subjunctive needs a similar
+new "context-selected question type" mechanic, possibly shared between the
+two. Researching both turned up that the premise didn't hold:
+
+- **Hitanoa's data-shape question was already resolved and shipped** two
+  issues ago (#144: `hi`/`hi-m`/`hi-f` as person keys; #167: toka/noka as
+  new tense keys, plus the `hi`-as-NORK gender split). `EXERCISE_ENGINE.md`'s
+  section was simply never updated after that work landed — it was
+  presenting a settled, implemented decision as an open one. Unit 41
+  ("Hitanoa Recombined") needs no further data-shape work, just content.
+- **Subjunctive needs no new mechanic at all.** It fits the same
+  generic-tense-key precedent already used for toka/noka (#148/#162/#164/
+  #167): a new tense is an opaque string key to `generateQuestions`, so
+  `subjunctivePresent` etc. need zero engine changes. The construction/
+  trigger (purpose clause, `nahi izan` volitional, indirect command) lives in
+  the hand-authored sentence text, exactly like every other tense's
+  `sentences` already encode whatever real-world context they describe —
+  no new "construction frame" field, no new question `kind`. The existing
+  `grounded` distractor invariant (`docs/DISTRACTOR_STRATEGY.md` §4.3)
+  already covers safety for a subjunctive sentence question.
+
+Net effect: no shared mechanic was needed because there was no real
+remaining design gap on either side once each was checked against what's
+already shipped. Updated `docs/EXERCISE_ENGINE.md` to replace the stale
+hitanoa either/or with the resolved/shipped account and added a new
+subjunctive section reasoning through the above. No code changes — #369
+(Unit 37) and #212 (Unit 41) can drop their `blocked` status and proceed as
+ordinary Tier 1 content work.
+
 ## 2026-06-22 — #385: added a pooled NOR-NORI mixer review to Units 26-27
 
 Units 26-27 (Stage 8, the dative-shift NOR-NORI pattern) only ever drilled

@@ -371,26 +371,78 @@ remaining open question for Unit 21 specifically is the *UI* surfacing of
 "which NORI is in play per question" (`describeLesson`/badges), which #346's
 NOR-NORK case sidesteps since it never shipped a curriculum lesson.
 
-### Allocutive register / `hi` (Unit 26)
-Hitanoa adds an **addressee-gender** dimension (masc./fem. `-k`/`-n` forms)
-that the current model has no slot for — `conjugations[tense][person]` cells
-are plain strings, and `isAnswerCorrect`/`buildOptions` assume one correct
-string per cell. Two shapes to choose between:
+### Allocutive register / `hi` (Units 39–41) — resolved (#144, #167)
+Hitanoa posed two data-shape questions; both are resolved and shipped:
 
-- Treat masc./fem. as **separate person-like keys** (e.g. `hi-m`/`hi-f`),
-  each a normal string cell with their own `PERSON_LABELS` entries — fits the
-  existing shape with zero logic changes, at the cost of `hi` effectively
-  becoming two table rows.
-- Make `conjugations[tense].hi = { masc: '...', fem: '...' }` and add a
-  learner-facing "addressee gender" toggle/setting that
-  `generateQuestions`/`buildOptions` read when resolving `hi`'s cell — more
-  faithful to "one person, two registers", but touches the table-reading code
-  in several places (`generateQuestions`, `buildOptions`,
-  `buildSpotErrorQuestion`) and adds new UI state.
+1. **`hi`-as-subject's own gender split** (`hi`-as-NORK present —
+   `ukan`'s `duk`/`dun`, `jakin`'s `dakik`/`dakin`) is modeled as separate
+   person-like keys, `hi-m`/`hi-f`, alongside plain `hi`. Fits the existing
+   shape with zero engine changes — `hi` is just a 7th person key (#144),
+   and `hi-m`/`hi-f` are two more (#167 item 4).
+2. **Toka/noka** — gender of the *addressee*, on statements where `hi` may
+   not even be an argument — is modeled as **new tense keys**
+   (`presentToka`/`presentNoka`/`pastToka`/`pastNoka`), not gender-suffixed
+   person keys, because the gender dimension attaches to who's being
+   addressed, not to the statement's own subject (`hura`/`haiek` stay the
+   subject throughout). This follows the established generic-tense-key
+   precedent (#148/#162/#164): `tense` is an opaque string key to
+   `generateQuestions`, so a new tense needs zero engine changes — just a
+   new `VERBS` table entry and `TENSE_META` row. Implemented for
+   `izan`/`ukan`, `hura`/`haiek` only (CONJUGATIONS.md §10's own source
+   tables are binary, not a gap), shipped as Units 39–40 (#167).
 
-Given Unit 26 is late in the sequence (Phase V) this can be deferred, but it's
-the second data-shape question (after ditransitives) that doesn't fit
-"one string per `[tense][person]` cell".
+Unit 41 ("Hitanoa Recombined" — mixed toka/noka chosen by addressee gender,
+plus "when not to use it") is pure curriculum/content on top of this
+already-resolved shape — no further data-shape decision blocks it. What
+remains open, tracked separately and not blocking Unit 41's content: **#213**
+(a hi/hitanoa wrong-gender/neutral-form distractor-matrix row, blocked on
+native-speaker confirmation of the toka/noka data) and a learner-facing
+addressee-gender *selection* control for Unit 41 — a UI-state question, not a
+data-shape one, since toka/noka already exist as two directly-selectable
+tense values.
+
+### Subjunctive constructions (Unit 37 — Subjuntiboa) — resolved (#406)
+#369 frames this as construction-based (matrix verb + subordinate clause:
+final/purpose, volitional via `nahi izan`, indirect commands —
+CONJUGATIONS.md §16.3) and #406 asked whether it needs a new "context-selected
+question type" mechanic, possibly shared with hitanoa (#212/Unit 41). It
+doesn't, on either count:
+
+- **No new engine mechanic.** Same generic-tense-key precedent used for
+  toka/noka (#148/#162/#164/#167) applies directly: subjunctive is just new
+  tense keys (e.g. `subjunctivePresent`; a synthetic ditransitive
+  `NOR-NORI-NORK` *past* is only added where CONJUGATIONS.md §16.1 actually
+  tabulates one — it explicitly doesn't, "an honest gap over an unverifiable
+  form," not a gap to engineer around). `generateQuestions`/`buildOptions`/
+  `isAnswerCorrect` already treat `tense` as an opaque string key, so this
+  needs zero changes.
+- **The construction/trigger lives in the sentence text, not a new field.**
+  A purpose clause, a `nahi izan` volitional clause, and an indirect command
+  with `-(e)la` are three different *sentences* a hand-author writes into
+  that tense's `sentences[person]` entry — exactly how every other tense
+  already encodes whatever real-world context its examples describe; no
+  tense has ever needed a separate "context type" tag. `validFor` keeps
+  policing cross-verb safety per `docs/SENTENCE_FRAMES.md`, unchanged.
+- **Question shape/rendering: unchanged.** A subjunctive `sentence`-kind
+  question is mechanically indistinguishable from any other tense's
+  `sentence` question — `QuestionPrompt` keys off `question.sentence`
+  generically, not off a list of tenses or kinds. No new `kind` is needed.
+- **Distractors: the existing `grounded` invariant already covers it**
+  (`docs/DISTRACTOR_STRATEGY.md` §4.3) — a subjunctive sentence question has
+  a grounding sentence, so siblings drawn into `options` go through the
+  normal `validFor` check like any other sentence-kind tense. Per #369's
+  scope, the NOR/NOR-NORK 3rd-person in-construction forms get full
+  production while the dative/ditransitive families stay recognition-only
+  (`recognitionOnly: true`, #330) — their much smaller `validFor`-review
+  surface (`docs/DISTRACTOR_STRATEGY.md` §3) is a curriculum-scoping choice,
+  not an engine one.
+
+So the premise that hitanoa and subjunctive need a *shared* new mechanic
+doesn't hold once each is examined on its own: hitanoa's data-shape question
+was already resolved and shipped (#144/#167), and subjunctive needs no
+data-shape decision at all — it fits the one-tense-key-per-construction
+pattern every other tense already uses. Both units can proceed independently
+as ordinary Tier 1 content work; see `docs/DECISIONS.md`'s #406 entry.
 
 ### Non-finite forms & passive/"nor-shift" (Unit 36) — done (#145, core scope)
 Implemented as `kind: 'reading'` (`generateReadingQuestions` in
@@ -449,8 +501,11 @@ Roughly cheapest-and-most-unblocking first:
    likely reuses the same machinery later.
 5. **Score-gating** — needed before Gate B (17), independent of the above.
 6. **Ditransitive data-shape decision** — needed before Unit 21.
-7. **Allocutive/hitanoa shape** — Unit 26, can be deferred until Phase V.
+7. **Allocutive/hitanoa shape** — resolved and shipped (#144/#167, Units
+   39–40); Unit 41 is content-only from here.
 8. **Reading/non-finite question kind** — Unit 36, done for the
    nor-shift/passive half (#145); §14 non-finite forms remain a follow-up.
-9. **Flash drills / error-pattern detection** — separate design passes,
-   whenever prioritized; not blocking any specific unit.
+9. **Subjunctive constructions** — Unit 37, resolved (#406): no data-shape
+   or mechanic decision blocks it, content-only from here.
+10. **Flash drills / error-pattern detection** — separate design passes,
+    whenever prioritized; not blocking any specific unit.
