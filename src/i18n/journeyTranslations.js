@@ -302,12 +302,12 @@ export const JOURNEY_TRANSLATIONS = {
     15: {
       title: { es: 'maite izan — Querer a alguien (el objeto no-3ª persona)', eu: 'maite izan — Norbait maitatzea (3. pertsona ez den objektua)' },
       focus: {
-        es: 'las tablas presentByObject/pastByObject de ukan, maite, ikusi, jan, edan, erosi y hartu (#346/#347/#348/#378/#379) — el objeto (NOR) pasa de hura por defecto a ni/zu/zuek/haiek, con nork fijado en ni, más un repaso conjunto de los siete verbos (#380/#381)',
-        eu: 'ukan, maite, ikusi, jan, edan, erosi eta hartu-ren presentByObject/pastByObject taulak (#346/#347/#348/#378/#379) — objektua (NOR) hura lehenetsitik ni/zu/zuek/haiek-era pasatzen da, nork ni-n finkaturik, gainera zazpi aditzen errepaso bateratua (#380/#381)',
+        es: 'las tablas presentByObject/pastByObject de ukan, maite, ikusi, jan, edan, erosi y hartu (#346/#347/#348/#378/#379) — el objeto (NOR) pasa de hura por defecto a ni/zu/zuek/haiek, con nork fijado en ni, más un repaso conjunto de los siete verbos (#380/#381); #416 practica además la dirección inversa (alguien/algo actuando sobre ni/gu/zu/zuek) fijando nork en hura/gu/zu/zuek/haiek, para ukan/maite',
+        eu: 'ukan, maite, ikusi, jan, edan, erosi eta hartu-ren presentByObject/pastByObject taulak (#346/#347/#348/#378/#379) — objektua (NOR) hura lehenetsitik ni/zu/zuek/haiek-era pasatzen da, nork ni-n finkaturik, gainera zazpi aditzen errepaso bateratua (#380/#381); #416-k alderantzizko norabidea ere lantzen du (norbait/zerbait ni/gu/zu/zuek-engan eragiten), nork hura/gu/zu/zuek/haiek-en finkaturik, ukan/maite-rentzat',
       },
       payload: {
-        es: '"Te quiero." (Maite zaitut)',
-        eu: '"Maite zaitut" (Te quiero)',
+        es: '"Te quiero." (Maite zaitut) / "Me sorprendió." (Harritu nau)',
+        eu: '"Maite zaitut" (Te quiero) / "Harritu nau" (Me sorprendió)',
       },
     },
     16: {
