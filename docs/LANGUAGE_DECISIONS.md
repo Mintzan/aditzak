@@ -6,6 +6,45 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-22 — #384: jarraitu/jario sourcing and scope calls
+
+Added two more NOR-NORI verbs alongside `gustatu`/`iruditu`/`ahaztu`, per
+`docs/VERB_COVERAGE.md:169` (`jario`) and `:205-210` (`jarraitu`):
+
+- **`jarraitu`'s nor-nork-vs-nor-nori ambiguity** — `jarraitu` patterns as
+  NOR-NORK ("jarraitzen dio" = "continues it") *and* NOR-NORI ("jarraitzen
+  zaio" = "follows him/her", in a succession sense), and the issue flagged
+  this as the one thing to get right. Picked a sentence frame that's
+  unambiguously the NOR-NORI succession reading and can't be misheard as
+  "continue it": turn order ("Aitorren txanda {nori} jarraitzen zait/zaizu/
+  zaio/...", "Aitor's turn comes right after me/you/him/..."). Every
+  `validFor` is left empty (`[]`) rather than guessed, same conservative
+  default already used elsewhere for newly-authored sentences pending
+  native-speaker review (#316).
+- **`jario`'s table transcription** — `docs/CONJUGATIONS.md:1392-1400`'s
+  grid is the source of truth, used directly over `VERB_COVERAGE.md:61`'s
+  own abbreviated prose (which writes the niri-form example as `dariot`,
+  one letter off from the grid's literal `dari(zki)t` → `darit`). Where the
+  two disagreed, the grid won — it's the line-numbered, cell-by-cell
+  source the issue itself points to; the prose elsewhere is a rougher
+  paraphrase. The `(zki)` plural-`nor` alternant is dropped (out of scope
+  per the issue — `jario`'s `nor` doesn't vary by person the way `ukan`'s
+  does, so there's no `*ByNor` axis to build here).
+- **`hi`/`hiri` omitted on both verbs** — same convention as `gustatu`/
+  `iruditu`/`ahaztu` (#144): `jario`'s own past hitanoa cell
+  (`zeri(zki)(n)an`) is written ambiguously enough in the source that
+  guessing the masc./fem. split without a native check seemed worse than
+  just omitting it, consistent with every other NOR-NORI verb already in
+  `VERBS`.
+- **`jario` is `recognitionOnly: true`**, not wired into any lesson by this
+  issue — `VERB_COVERAGE.md:169` itself calls it "oso erabilpen mugatua"
+  (very limited everyday use), so it's exposure-only content for whichever
+  future issue pools it into a review, same flag the academic/rare fodder
+  tiers use (#330). `jarraitu` is full periphrastic production-shaped data
+  (no `recognitionOnly`) but likewise isn't wired into `LESSONS`/`journey.js`
+  here — the issue's own "Done when" stops at "ready to be pooled into a
+  review lesson," leaving that pooling to a separate issue.
+
 ## 2026-06-21 — #355: no NOR-NORK object-axis imperative — Unit 36 needs no extension
 
 **Question:** does a `NOR-NORK` imperative with a 1st/2nd-person object (a

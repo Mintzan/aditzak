@@ -7637,6 +7637,101 @@ export const VERBS = [
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
+  // #384 — `jarraitu`/`jario`, two more NOR-NORI verbs alongside `gustatu`/
+  // `iruditu`/`ahaztu`. Sourcing/scope calls (the `jarraitu` nor-nork-vs-
+  // nor-nori ambiguity resolution, `jario`'s table transcription, both
+  // verbs' `hi`/`hiri` omission) are logged in `docs/LANGUAGE_DECISIONS.md`.
+  // `jarraitu` is periphrastic — rides `izan`'s NOR-NORI auxiliary exactly
+  // like `gustatu`/`iruditu` (`-tzen` habitual present, bare participle +
+  // past dative aux) — but `jarraitu` *also* has an everyday NOR-NORK
+  // reading ("jarraitzen dio" = "continues it"), so every sentence here is
+  // built around the one frame that's unambiguously NOR-NORI: succession/
+  // order ("X's turn comes right after Y"), not "follow/continue Y" in the
+  // sense that NOR-NORK reading would invite.
+  {
+    id: 'jarraitu',
+    verb: 'jarraitu',
+    meaning: { en: 'to follow (come after)', es: 'seguir (venir después de)', eu: 'jarraitu' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'jarraitzen zait', zu: 'jarraitzen zaizu', hura: 'jarraitzen zaio',
+        gu: 'jarraitzen zaigu', zuek: 'jarraitzen zaizue', haiek: 'jarraitzen zaie',
+      },
+      past: {
+        ni: 'jarraitu zitzaidan', zu: 'jarraitu zitzaizun', hura: 'jarraitu zitzaion',
+        gu: 'jarraitu zitzaigun', zuek: 'jarraitu zitzaizuen', haiek: 'jarraitu zitzaien',
+      },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Aitorren txanda niri jarraitzen ___.', validFor: [] }],
+        zu: [{ text: 'Aitorren txanda zuri jarraitzen ___.', validFor: [] }],
+        hura: [{ text: 'Aitorren txanda Mireni jarraitzen ___.', validFor: [] }],
+        gu: [{ text: 'Aitorren txanda guri jarraitzen ___.', validFor: [] }],
+        zuek: [{ text: 'Aitorren txanda zuei jarraitzen ___.', validFor: [] }],
+        haiek: [{ text: 'Aitorren txanda haiei jarraitzen ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Aitorren txandak niri ___.', validFor: [] }],
+        zu: [{ text: 'Aitorren txandak zuri ___.', validFor: [] }],
+        hura: [{ text: 'Aitorren txandak Mireni ___.', validFor: [] }],
+        gu: [{ text: 'Aitorren txandak guri ___.', validFor: [] }],
+        zuek: [{ text: 'Aitorren txandak zuei ___.', validFor: [] }],
+        haiek: [{ text: 'Aitorren txandak haiei ___.', validFor: [] }],
+      },
+    },
+  },
+  // `jario` is native synthetic and defective — almost always used with an
+  // inanimate `nor` (water, tears, sweat...), so `nor` is fixed (`object:
+  // 'hura'`, mirroring `ukan.object`) and `person` ranges over `nori`
+  // instead, transcribed directly from `docs/CONJUGATIONS.md:1392-1400`
+  // (the `(zki)` plural-`nor` marker dropped, since that axis is out of
+  // scope per the issue). `recognitionOnly: true` per its "oso erabilpen
+  // mugatua" (very limited everyday use) framing in `VERB_COVERAGE.md:169`
+  // — same flag the academic/rare fodder tiers use (#330) to stay
+  // exposure-only without a dedicated `mode: 'recognition'` lesson.
+  {
+    id: 'jario',
+    verb: 'jario',
+    meaning: { en: 'to flow / ooze', es: 'fluir / manar', eu: 'jario' },
+    type: 'synthetic',
+    agreement: ['nor', 'nori'],
+    object: 'hura',
+    dialect: 'batua',
+    recognitionOnly: true,
+    conjugations: {
+      present: {
+        ni: 'darit', zu: 'darizu', hura: 'dario',
+        gu: 'darigu', zuek: 'darizue', haiek: 'darie',
+      },
+      past: {
+        ni: 'zeridan', zu: 'zerizun', hura: 'zerion',
+        gu: 'zerigun', zuek: 'zerizuen', haiek: 'zerien',
+      },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Izerdia niri ___.', validFor: [] }],
+        zu: [{ text: 'Izerdia zuri ___.', validFor: [] }],
+        hura: [{ text: 'Izerdia hari ___.', validFor: [] }],
+        gu: [{ text: 'Izerdia guri ___.', validFor: [] }],
+        zuek: [{ text: 'Izerdia zuei ___.', validFor: [] }],
+        haiek: [{ text: 'Izerdia haiei ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Malkoak niri ___.', validFor: [] }],
+        zu: [{ text: 'Malkoak zuri ___.', validFor: [] }],
+        hura: [{ text: 'Malkoak hari ___.', validFor: [] }],
+        gu: [{ text: 'Malkoak guri ___.', validFor: [] }],
+        zuek: [{ text: 'Malkoak zuei ___.', validFor: [] }],
+        haiek: [{ text: 'Malkoak haiei ___.', validFor: [] }],
+      },
+    },
+  },
 ]
 
 // Stage 6 (Units 14-15, "Talking About the Future") gave every verb above (except
