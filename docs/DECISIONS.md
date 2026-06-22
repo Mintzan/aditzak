@@ -8,6 +8,26 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #385: added a pooled NOR-NORI mixer review to Units 26-27
+
+Units 26-27 (Stage 8, the dative-shift NOR-NORI pattern) only ever drilled
+three lexical examples (`gustatu`/`iruditu`/`ahaztu`) — every other
+multi-verb tense in the journey backs its dedicated lessons with a pooled,
+cross-verb review that varies *which verb* supplies a question (Unit 14's
+`ukan-past-pool`, Unit 21's future mixer), but Stage 8 had no equivalent.
+Added `nor-nori-present-pool` (Unit 26) and `nor-nori-past-pool` (Unit 27),
+each pooling the three founding verbs plus `jarraitu` and `jario`
+(`docs/lessons.js`'s `sources` shape, same as `ukan-past-pool`).
+
+`jario` is folded into the pool as-is rather than split into a separate
+recognition-only review: its verb-level `recognitionOnly: true` flag (#330)
+already exists specifically so a rare verb can ride alongside ordinary
+production carriers in a mixed pool/session while staying recognition-only
+itself (`generateQuestions`'s `noProduction` gate reads `verb.recognitionOnly`
+per-source, not a lesson-level `mode`) — no `mode: 'recognition'` needed on
+either pool lesson. Comfortably under the existing 6-source pool cap at 5
+sources each.
+
 ## 2026-06-22 — #404: upgraded #321's 12 academic/rare fodder verbs to one colorful sentence per person, correcting the prior "out of scope" call
 
 The entry directly below this one (from earlier the same day, PR #403)

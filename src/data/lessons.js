@@ -1145,6 +1145,24 @@ export const LESSONS = [
       { verbId: 'ahaztu', tense: 'present' },
     ],
   },
+  // #385 — present NOR-NORI mixer review: widens Unit 26's pool past the
+  // three founding verbs to include `jarraitu` (ordinary production carrier)
+  // and `jario` (`recognitionOnly: true`, #330's "carrier folded into a
+  // mixed pool" mechanism — it stays recognition-only on its own even
+  // without a lesson-level `mode: 'recognition'`), so a learner sees the
+  // dative-shift pattern applied beyond the three lexical examples they
+  // already have dedicated lessons for.
+  {
+    id: 'nor-nori-present-pool',
+    review: true,
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'present' },
+      { verbId: 'jarraitu', tense: 'present' },
+      { verbId: 'jario', tense: 'present' },
+    ],
+  },
   // Unit 24 (#146) — NOR-NORI past + future on the same verbs.
   { id: 'gustatu-past', verbId: 'gustatu', tense: 'past' },
   { id: 'gustatu-future', verbId: 'gustatu', tense: 'future' },
@@ -1152,6 +1170,19 @@ export const LESSONS = [
   { id: 'iruditu-future', verbId: 'iruditu', tense: 'future' },
   { id: 'ahaztu-past', verbId: 'ahaztu', tense: 'past' },
   { id: 'ahaztu-future', verbId: 'ahaztu', tense: 'future' },
+  // #385 — past sibling of `nor-nori-present-pool`, mirroring Unit 13/14's
+  // present/past pool pairing.
+  {
+    id: 'nor-nori-past-pool',
+    review: true,
+    sources: [
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'iruditu', tense: 'past' },
+      { verbId: 'ahaztu', tense: 'past' },
+      { verbId: 'jarraitu', tense: 'past' },
+      { verbId: 'jario', tense: 'past' },
+    ],
+  },
   // Unit 25 (#147) — axis-scaffolded NOR-NORI-NORK: L1 fixes NORI (`esan`,
   // `recipient: 'hura'`, NORK varies), L2 fixes NORK (`eman`, `agent: 'ni'`,
   // NORI varies).
