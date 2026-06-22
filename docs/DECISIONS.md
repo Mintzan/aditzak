@@ -8,6 +8,12 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #419: drill the NORI≠zu object-axis cells, extending Unit 28 rather than opening a new unit, all three NOR-NORI verbs
+
+The direct NOR-NORI analogue of #416 below: `gustatu`/`iruditu`/`ahaztu`'s `presentByNor`/`pastByNor` tables (`{ [nori]: { [nor]: form } }`) held 17 cells — every NORI row other than `zu` (`ni`/`hura`/`gu`/`zuek`/`haiek`) — that Unit 28's lessons never exposed, since all of them fix `objectAxis: { vary: 'nor', fixed: 'zu' }`.
+
+Same two calls as #416, for consistency: **extended Unit 28 in place** (36 new `lessonIds`, one present+past pair per remaining NORI value × all three verbs) rather than opening a new unit, per the #286 precedent. Unlike #416's `ukan`/`maite` scope cut, did all three NOR-NORI verbs here since there are only three (no `ikusi`-style sibling family to defer) — but still **no pooled cross-verb review**, same reasoning as #416: `generateCrossVerbQuestions`'s `objectAxis` pooling expects one shared fixed value across sources, and pooling across different NORI rows is the same unbuilt "mixed-fixed-person" design noted there. Left for a future issue if wanted.
+
 ## 2026-06-22 — #416: drill the NORK≠ni object-axis cells, extending Unit 15 rather than opening a new unit, scoped to `ukan`/`maite`
 
 `ukan`/`maite`'s `presentByObject`/`pastByObject` 2D tables (`{ [nork]: { [nor]: form } }`) already held 19 cells — every NORK row other than `ni` (`hura`/`gu`/`zu`/`zuek`/`haiek`) — that no lesson ever exposed: Unit 15's four practice lessons all fix `nork: 'ni'`, so forms like `nau`/`gaitu`/`naute` ("someone/something acts on me/us") were undrillable even though the data already supported them via `objectAxis: { vary: 'nor', fixed }`.

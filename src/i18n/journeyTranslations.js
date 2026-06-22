@@ -445,8 +445,8 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'gustatu/iruditu/ahaztu-ren NOR-NORI ardatza zabaltzen da: NOR ez dago jada hura/haiek-en finkatuta, ni/zu/gu/zuek artean aldatzen da NORI finko mantenduz — 26-27. unitateekiko alderaketa zuzena',
       },
       payload: {
-        es: '"¿Te gusto?" (Gustatzen natzaizu?)',
-        eu: '"Gustatzen natzaizu?" (¿Te gusto?)',
+        es: '"¿Te gusto?" (Gustatzen natzaizu?) / "Me gusta él." (Gustatzen natzaio.)',
+        eu: '"Gustatzen natzaizu?" (¿Te gusto?) / "Gustatzen natzaio" (Me gusta él)',
       },
     },
     29: {
