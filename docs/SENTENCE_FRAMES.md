@@ -413,6 +413,51 @@ candidates can stay as bare strings. #123's new tests additionally add
 `{ text, validFor: [...] }` fixtures to cover the exclusion cases, and #124's
 backfill is a separate, incremental data change to `src/data/verbs.js`.
 
+## Infinitive-complement sentences (`behar`) — resolved (#267/#288, confirmed #367)
+
+`behar` ("need to / have to") is the one verb in `VERBS` whose complement is
+an **infinitive verb phrase** ("Joan behar dut" = "I have to go"), not an
+object noun — so the noun-object `validFor` reasoning above (§"What `validFor`
+means", the `ukan`↔`nahi`/`eduki`/`ikusi` worked examples) doesn't apply to it
+as written. This was flagged as an open question in #148 and resolved when
+`behar`'s `present`/`past`/`future` sentences were authored (#267/#288):
+
+- **The blank is always the trailing auxiliary token only**, placed
+  immediately after the infinitive (`'Nik gaur arratsaldean etxera joan
+  ___.'`). The conjugated answer (`behar dut`, `beharko zuen`, ...) already
+  supplies the modal particle, so the template never repeats `behar`/`beharko`
+  before the blank (#288 — writing it twice produced `'... behar behar
+  dute.'`).
+- **`validFor: []` throughout, with no exceptions to date.** An infinitive
+  complement has no `nor-nork` noun-object sibling whose form actually fits
+  the sentence (`nahi`/`eduki`/`ikusi`'s sibling-checking logic is about
+  *object nouns*, which don't apply here), and `ukan` itself is excluded by
+  construction rather than by `validFor`: `behar`'s trailing auxiliary is
+  textually identical to `ukan`'s bare form for the same person/tense (`dut`,
+  `zuen`, ...), so offering `ukan` as a distractor would just be a duplicate
+  of the correct answer, not a wrong one.
+- **No new data shape was needed** — `behar`'s sentences use the same
+  `{ text, validFor }` per-variant shape as every other verb; only the
+  *content* (where the blank sits, what `validFor` evaluates to) differs from
+  a noun-object verb's.
+- The subject pronoun is always written explicitly in `behar`'s sentence
+  text (`'Nik ...'`, `'Zuk ...'`, ...), same as the rest of `VERBS`'s
+  sentence bank — this isn't a special rule for infinitive complements, just
+  the existing house style, and it happens to sidestep any pro-drop ambiguity
+  (e.g. a dropped subject leaving more than one modal/tense grammatically
+  possible) before it can come up.
+
+This pattern doesn't need to extend anywhere else: `behar` only has
+`present`/`past`/`future` (no `potential`/`baldintza`/`conditional`/
+`imperative` tenses), and `izan`/`ukan`'s own `potential`/`baldintza`/
+`conditional`/`imperative` tenses are ordinary synthetic forms with the verb's
+usual `nor` (`izan`) or `nor-nork` (`ukan`) agreement and no infinitive
+complement at all (`naiteke` = "I can be", `banintz` = "if I were", `nuke` =
+"I would have", ...) — writing their sentences is just regular noun-object
+(`ukan`)/predicate-nominal (`izan`) authoring under the existing `validFor`
+scheme already used for those verbs' `present`/`past`/`future`, no new design
+decision required.
+
 ## Follow-up issues
 
 - **#123** — reimplement `getCrossVerbCandidates`/`collectCrossSourceCandidates`

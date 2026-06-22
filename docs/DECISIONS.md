@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #367: `behar`'s infinitive-complement frame shape was already decided (#267/#288); izan/ukan's potential/baldintza/conditional/imperative need no new pattern at all
+
+#367 was blocked on "decide `behar`'s infinitive-complement frame shape
+before forms are written" (#148's original deferral). Checking `src/data/
+verbs.js`, this was actually already resolved when `behar`'s `present`/
+`past`/`future` sentences were authored (#267/#288) — just never written up
+as a standing decision in `docs/SENTENCE_FRAMES.md`, so #367 still listed it
+as open. Documented the existing pattern there: the blank is always the
+trailing auxiliary token right after the infinitive (never repeating
+`behar`/`beharko` in the template), and `validFor: []` throughout (`ukan` is
+excluded by construction — its bare form is textually identical to `behar`'s
+trailing auxiliary, so it would be a duplicate-correct option, not a real
+distractor — not by a noun-object naturalness check, which doesn't apply to
+an infinitive complement in the first place).
+
+Also realized the rest of #367's scope (`izan`/`ukan`'s `potential`/
+`baldintza`/`conditional`/`imperative` lessons) was never actually blocked by
+this question: `behar` has no tenses beyond `present`/`past`/`future`, so the
+infinitive-complement pattern has nowhere else to extend to, and `izan`/
+`ukan`'s own potential/baldintza/conditional/imperative forms (`naiteke`,
+`banintz`, `nuke`, ...) are ordinary synthetic forms with their usual `nor`/
+`nor-nork` agreement and no infinitive complement at all — their sentences
+just need ordinary predicate-nominal (`izan`)/noun-object (`ukan`) authoring
+under the existing `validFor` scheme, same as those verbs' `present`/`past`/
+`future` already use. No engine or schema change needed anywhere in #367's
+scope; unblocked the issue to move straight to content authoring.
+
+No code changes; `npm test`/`lint`/`build` unaffected (docs-only).
+
 ## 2026-06-22 — #383 sub-issue 3: Units 26-28 already use conjugation-led titles; fixed stale unit-number references in their copy instead
 
 #383's third sub-issue asked to rename Unit 28 and audit Units 26-28's
