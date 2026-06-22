@@ -500,7 +500,7 @@ export const JOURNEY = [
             number: 26,
             title: 'The NOR-NORI Present — zait/zaizu/zaio',
             focus:
-              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; ends with a case-frame buffer lesson ahead of Unit 26\'s ditransitive jump',
+              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; ends with a case-frame buffer lesson and a pooled mixer review (#385) widening the pattern past the three founding verbs to jarraitu/jario, ahead of Unit 26\'s ditransitive jump',
             payload: '"I like this." (Hau gustatzen zait)',
             status: 'available',
             lessonIds: [
@@ -512,15 +512,25 @@ export const JOURNEY = [
               'ahaztu-present-plural',
               'unit-23-number-split-review',
               'unit-23-case-frame-buffer',
+              'nor-nori-present-pool',
             ],
           },
           {
             number: 27,
             title: 'NOR-NORI Past & Future — Dative Across Time',
-            focus: 'NOR-NORI past + future — recombines Unit 24\'s dative grid with the periphrastic past and -ko/-go future',
+            focus:
+              'NOR-NORI past + future — recombines Unit 24\'s dative grid with the periphrastic past and -ko/-go future; ends with a pooled mixer review (#385) mirroring Unit 26\'s past',
             payload: '"I liked it yesterday." (Atzo gustatu zitzaidan)',
             status: 'available',
-            lessonIds: ['gustatu-past', 'gustatu-future', 'iruditu-past', 'iruditu-future', 'ahaztu-past', 'ahaztu-future'],
+            lessonIds: [
+              'gustatu-past',
+              'gustatu-future',
+              'iruditu-past',
+              'iruditu-future',
+              'ahaztu-past',
+              'ahaztu-future',
+              'nor-nori-past-pool',
+            ],
           },
           // Unit 28 (#358/#359, new) — the non-3rd-person NOR: `gustatu`/
           // `iruditu`/`ahaztu`'s `presentByNor`/`pastByNor` tables (#358) let
