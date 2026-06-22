@@ -2186,6 +2186,160 @@ export const LESSONS = [
     ],
   },
 
+  // #416: the block above only ever fixes `nork` at `ni` — every other NORK
+  // value (`hura`/`gu`/`zu`/`zuek`/`haiek`) sits in `ukan`/`maite`'s
+  // `presentByObject`/`pastByObject` tables already but was never wired into
+  // a lesson, so forms like `nau`/`gaitu`/`naute` (someone/something acting
+  // on me/us) were undrillable. One `objectAxis: { vary: 'nor', fixed: <nork> }`
+  // pair (present + past) per remaining NORK value, `ukan` and `maite` each,
+  // mirrors the four-lesson shape Unit 15 already established for `fixed:
+  // 'ni'` above — extending this unit rather than opening a new one, per the
+  // #286 "extend, don't add a new unit" precedent (this is more of the same
+  // grammatical relation, not a new one). Scoped to `ukan`/`maite` only for
+  // now (not the `ikusi`/`jan`/`edan`/`erosi`/`hartu` siblings, nor a pooled
+  // cross-verb review) — see docs/DECISIONS.md; those can extend this same
+  // shape later exactly as #378-#381 did for `fixed: 'ni'`.
+  {
+    id: 'ukan-object-axis-present-hura',
+    verbId: 'ukan',
+    tense: 'presentByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'maite-object-axis-present-hura',
+    verbId: 'maite',
+    tense: 'presentByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'ukan-object-axis-past-hura',
+    verbId: 'ukan',
+    tense: 'pastByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'maite-object-axis-past-hura',
+    verbId: 'maite',
+    tense: 'pastByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'ukan-object-axis-present-gu',
+    verbId: 'ukan',
+    tense: 'presentByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'maite-object-axis-present-gu',
+    verbId: 'maite',
+    tense: 'presentByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'ukan-object-axis-past-gu',
+    verbId: 'ukan',
+    tense: 'pastByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'maite-object-axis-past-gu',
+    verbId: 'maite',
+    tense: 'pastByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'ukan-object-axis-present-zu',
+    verbId: 'ukan',
+    tense: 'presentByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'maite-object-axis-present-zu',
+    verbId: 'maite',
+    tense: 'presentByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ukan-object-axis-past-zu',
+    verbId: 'ukan',
+    tense: 'pastByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'maite-object-axis-past-zu',
+    verbId: 'maite',
+    tense: 'pastByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ukan-object-axis-present-zuek',
+    verbId: 'ukan',
+    tense: 'presentByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'maite-object-axis-present-zuek',
+    verbId: 'maite',
+    tense: 'presentByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'ukan-object-axis-past-zuek',
+    verbId: 'ukan',
+    tense: 'pastByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'maite-object-axis-past-zuek',
+    verbId: 'maite',
+    tense: 'pastByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'ukan-object-axis-present-haiek',
+    verbId: 'ukan',
+    tense: 'presentByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  {
+    id: 'maite-object-axis-present-haiek',
+    verbId: 'maite',
+    tense: 'presentByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  {
+    id: 'ukan-object-axis-past-haiek',
+    verbId: 'ukan',
+    tense: 'pastByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  {
+    id: 'maite-object-axis-past-haiek',
+    verbId: 'maite',
+    tense: 'pastByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+
   // #358/#359: the NOR-NORI mirror of the block above — `gustatu`/`iruditu`/
   // `ahaztu`'s `presentByNor`/`pastByNor` tables (#358) let NOR be ni/gu/zuek,
   // not just the default hura/haiek every earlier NOR-NORI lesson fixes it

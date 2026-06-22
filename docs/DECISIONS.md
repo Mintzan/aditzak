@@ -8,6 +8,14 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #416: drill the NORK≠ni object-axis cells, extending Unit 15 rather than opening a new unit, scoped to `ukan`/`maite`
+
+`ukan`/`maite`'s `presentByObject`/`pastByObject` 2D tables (`{ [nork]: { [nor]: form } }`) already held 19 cells — every NORK row other than `ni` (`hura`/`gu`/`zu`/`zuek`/`haiek`) — that no lesson ever exposed: Unit 15's four practice lessons all fix `nork: 'ni'`, so forms like `nau`/`gaitu`/`naute` ("someone/something acts on me/us") were undrillable even though the data already supported them via `objectAxis: { vary: 'nor', fixed }`.
+
+**Placement:** extended Unit 15 in place (20 new `lessonIds`, one present+past pair per remaining NORK value × `ukan`/`maite`) instead of opening a new unit, following the same #286 "extend the existing unit, don't add a new one" precedent #381 already used when it added the pooled `fixed: 'ni'` review to this same unit — this is more of the same grammatical relation (the NOR-NORK object axis), not a new one.
+
+**Scope cut:** deliberately limited to `ukan`/`maite` for this pass, mirroring Unit 15's *original* four-lesson shape (before #378-#381 layered in `ikusi`/`jan`/`edan`/`erosi`/`hartu` and the pooled cross-verb review as separate follow-up issues). No pooled review across the new NORK values was added either — `generateCrossVerbQuestions`'s `objectAxis` pooling expects every source to share one fixed value, and mixing different NORK rows into one review is a different (currently unbuilt) "mixed-fixed-person" design, not a quick addition. Extending to the other five verbs, and/or building that pooled-mixed review, is left for a future issue exactly as `#378`-`#381` did incrementally for `fixed: 'ni'`.
+
 ## 2026-06-22 — #410/#411: periphrastic `ahal`/`ezin` get two `VERBS` entries each (izan-carrier + ukan-carrier), not one
 
 `ahal` ("can") and its negation `ezin` ("can't") were entirely missing from
