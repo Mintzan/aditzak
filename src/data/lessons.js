@@ -859,6 +859,39 @@ export const LESSONS = [
       { verbId: 'etorri', tense: 'future' },
     ],
   },
+  // #417 — `futurePlural` counterpart to `nor-nork-present-plural-pool`/
+  // `nor-nork-past-plural-pool` (`izango ditut` vs `izango dut`), same
+  // pool of verbs plus `nahi` (whose own singular `future` table is
+  // 3-person-only per the comment below, but `futurePlural` was sourced
+  // with the full 6-person table, so it joins this pool same as the rest).
+  {
+    id: 'nor-nork-future-plural-pool',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'ukan', tense: 'futurePlural' },
+      { verbId: 'jan', tense: 'futurePlural' },
+      { verbId: 'edan', tense: 'futurePlural' },
+      { verbId: 'erosi', tense: 'futurePlural' },
+      { verbId: 'hartu', tense: 'futurePlural' },
+      { verbId: 'ikusi', tense: 'futurePlural' },
+      { verbId: 'eduki', tense: 'futurePlural' },
+      { verbId: 'nahi', tense: 'futurePlural' },
+    ],
+  },
+  {
+    id: 'nor-nork-future-plural-pool-plural',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'ukan', tense: 'futurePlural' },
+      { verbId: 'jan', tense: 'futurePlural' },
+      { verbId: 'edan', tense: 'futurePlural' },
+      { verbId: 'erosi', tense: 'futurePlural' },
+      { verbId: 'hartu', tense: 'futurePlural' },
+      { verbId: 'ikusi', tense: 'futurePlural' },
+      { verbId: 'eduki', tense: 'futurePlural' },
+      { verbId: 'nahi', tense: 'futurePlural' },
+    ],
+  },
   // Unit 18 (The Future, Across Every Verb): the rule is already learned, so
   // the remaining verbs arrive as themed mixer reviews — which the engine
   // makes the *more* varied exercise type (cross-verb "which verb fits?",
@@ -1195,6 +1228,10 @@ export const LESSONS = [
   // NORK×NORI table/engine support — see docs/DECISIONS.md.
   { id: 'esan-present-plural', verbId: 'esan', tense: 'presentPlural' },
   { id: 'eman-present-plural', verbId: 'eman', tense: 'presentPlural' },
+  // #417 — `pastPlural` counterpart to the two lessons above; `esan`/`eman`
+  // already had the data (`verbs.js`) but no lesson selected it.
+  { id: 'esan-past-plural', verbId: 'esan', tense: 'pastPlural' },
+  { id: 'eman-past-plural', verbId: 'eman', tense: 'pastPlural' },
   {
     // Reinforces esan's axis (NORI fixed, NORK varies) across all three tenses.
     id: 'unit-25-fix-nori-review',

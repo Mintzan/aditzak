@@ -357,8 +357,8 @@ export const JOURNEY_TRANSLATIONS = {
     20: {
       title: { es: 'izan/ukan/joan — La regla del futuro', eu: 'izan/ukan/joan — Geroaldiaren araua' },
       focus: {
-        es: 'formar el futuro con -ko/-go + auxiliares de presente (izan, ukan, joan) — primer par mínimo -ko/-go (izango frente a etorriko)',
-        eu: 'geroaldia osatzea -ko/-go + oraineko laguntzaileekin (izan, ukan, joan) — lehen -ko/-go bikote minimoa (izango vs etorriko)',
+        es: 'formar el futuro con -ko/-go + auxiliares de presente (izan, ukan, joan) — primer par mínimo -ko/-go (izango frente a etorriko); el eje del número de NOR en futuro (izango dut frente a izango ditut) en ukan, jan, edan, erosi, hartu, ikusi, eduki, nahi',
+        eu: 'geroaldia osatzea -ko/-go + oraineko laguntzaileekin (izan, ukan, joan) — lehen -ko/-go bikote minimoa (izango vs etorriko); NOR-ren kopuru ardatza geroaldian (izango dut vs izango ditut) ukan, jan, edan, erosi, hartu, ikusi, eduki, nahi aditzetan',
       },
       payload: {
         es: '"Seré profesor" (irakasle izango naiz)',
@@ -463,8 +463,8 @@ export const JOURNEY_TRANSLATIONS = {
     30: {
       title: { es: 'NOR-NORI-NORK pasado y futuro — Contar y dar a través del tiempo', eu: 'NOR-NORI-NORK iragana eta geroa — Esan eta eman denboran zehar' },
       focus: {
-        es: 'NOR-NORI-NORK en pasado y futuro — reutiliza el pasado perifrástico y el futuro -ko/-go sobre los recortes de eje fijo de la unidad 25; el #334 añade los grupos de pasado/futuro/repaso para el mismo fodder ditransitivo',
-        eu: 'NOR-NORI-NORK iraganean eta geroan — 25. unitateko ardatz finkoko zatiei iragan perifrastikoa eta -ko/-go geroaldia aplikatzen die; #334-k iragan/gero/berrikuspen taldeak gehitzen ditu fodder ditransitibo berarentzat',
+        es: 'NOR-NORI-NORK en pasado y futuro — reutiliza el pasado perifrástico y el futuro -ko/-go sobre los recortes de eje fijo de la unidad 25; el #334 añade los grupos de pasado/futuro/repaso para el mismo fodder ditransitivo; el #417 añade el objeto plural de esan/eman en pasado (pastPlural)',
+        eu: 'NOR-NORI-NORK iraganean eta geroan — 25. unitateko ardatz finkoko zatiei iragan perifrastikoa eta -ko/-go geroaldia aplikatzen die; #334-k iragan/gero/berrikuspen taldeak gehitzen ditu fodder ditransitibo berarentzat; #417-k esan/eman-en objektu plurala gehitzen du iraganean (pastPlural)',
       },
       payload: {
         es: '"Se lo dije." (Esan nion)',

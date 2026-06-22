@@ -406,7 +406,7 @@ export const JOURNEY = [
           {
             number: 20,
             title: 'izan/ukan/joan — The Future Rule',
-            focus: 'forming the future with -ko/-go + present auxiliaries (izan, ukan, joan) — first -ko/-go minimal pair (izango vs. etorriko)',
+            focus: 'forming the future with -ko/-go + present auxiliaries (izan, ukan, joan) — first -ko/-go minimal pair (izango vs. etorriko); #417 adds the NOR-number axis in the future (izango dut vs. izango ditut) across ukan, jan, edan, erosi, hartu, ikusi, eduki, nahi',
             payload: '"I will be a teacher" (irakasle izango naiz)',
             status: 'available',
             lessonIds: [
@@ -418,6 +418,8 @@ export const JOURNEY = [
               'joan-future-plural',
               'future-intro-review',
               'future-intro-review-plural',
+              'nor-nork-future-plural-pool',
+              'nor-nork-future-plural-pool-plural',
             ],
           },
           {
@@ -643,6 +645,7 @@ export const JOURNEY = [
             status: 'available',
             lessonIds: [
               'esan-past', 'esan-future', 'eman-past', 'eman-future',
+              'esan-past-plural', 'eman-past-plural',
               'ditransitive-dative-past', 'ditransitive-dative-past-plural',
               'ditransitive-dative-future', 'ditransitive-dative-future-plural',
               'ditransitive-dative-review', 'ditransitive-dative-review-plural',
