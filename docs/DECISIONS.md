@@ -8,6 +8,14 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #417: drilled the dead `futurePlural`/`pastPlural` data with new pool/lesson entries, no scope cuts needed
+
+Two unrelated unused-data gaps in the same issue: (1) `futurePlural` (`izango ditut` vs `izango dut`) existed in `verbs.js` for `ukan`/`jan`/`edan`/`erosi`/`hartu`/`ikusi`/`eduki`/`nahi` but no lesson ever selected it — `nor-nork-present-plural-pool`/`nor-nork-past-plural-pool` had the present/past tenses covered but no future counterpart; (2) `esan`/`eman`'s `pastPlural` (`esan nizkion` vs `esan nion`) existed but only their `presentPlural` got a lesson.
+
+Fixed both directly, no scope cut: added `nor-nork-future-plural-pool`/`-plural` (mirrors the present/past pools exactly, same 8-verb-eligible list plus `nahi` — `nahi`'s own singular `future` table is 3-person-only, per Unit 18's "stay 3-person" comment, but its `futurePlural` table was sourced with the full 6 persons, so it's no different from the rest here) into Unit 20 (`izan/ukan/joan — The Future Rule`, the unit that introduces `ukan-future`, same placement logic as Units 13/14 hosting the present/past plural pools), and added `esan-past-plural`/`eman-past-plural` into Unit 30 (`NOR-NORI-NORK Past & Future`, alongside `esan-past`/`eman-past`).
+
+These are non-`review` pooled lessons (no `review: true`), so they go through `App.jsx`'s plain per-source `generateQuestions` path, not `generateCrossVerbQuestions` — verified via a throwaway script that all 24 expected (8 verbs × 3 persons) `futurePlural` cells are reachable, and that `esan`/`eman`'s `pastPlural` lessons reach all 6/4 persons respectively.
+
 ## 2026-06-22 — #419: drill the NORI≠zu object-axis cells, extending Unit 28 rather than opening a new unit, all three NOR-NORI verbs
 
 The direct NOR-NORI analogue of #416 below: `gustatu`/`iruditu`/`ahaztu`'s `presentByNor`/`pastByNor` tables (`{ [nori]: { [nor]: form } }`) held 17 cells — every NORI row other than `zu` (`ni`/`hura`/`gu`/`zuek`/`haiek`) — that Unit 28's lessons never exposed, since all of them fix `objectAxis: { vary: 'nor', fixed: 'zu' }`.
