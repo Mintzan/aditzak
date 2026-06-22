@@ -12,6 +12,37 @@ This file keeps the most recent ~25 entries. Older entries live in
 `docs/DECISIONS_ARCHIVE.md` — check there too if you don't find the
 context you're looking for here.
 
+## 2026-06-22 — #316: native-speaker sentence review generator
+
+Built `scripts/generate-sentence-review.mjs` (part of epic #310) — turns
+`VERBS`' tagged `sentences`/`negativeSentences` into a plain-language Spanish
+(or Basque, `--lang eu`) markdown checklist a non-technical native speaker
+can fill in directly, no `validFor`/person-key/JS exposure:
+
+- **Alternatives = every `agreementsCompatible` sibling, unfiltered** — same
+  definition `scripts/validforGapAudit.mjs` already uses for the
+  delta-audit's gap slots. Considered narrowing this (e.g. to siblings that
+  share an object-class per `docs/OBJECT_FRAME_TAGGING.md`), but the
+  point of human review is precisely to filter the overgenerated structural
+  candidate set down to the semantically real ones — pre-filtering with a
+  second heuristic would just relocate the judgment call into the tool. The
+  cost: a long-established cluster (`ukan`'s "nor-nork" siblings) produces a
+  long alternatives list per sentence (50+) — that's the actual size of the
+  open question, not a generator bug.
+- **No full-sentence translation gloss** — the issue's worked example shows
+  one ("Hura medikua da." → "(Él/ella es médico/a.)"), but `VERBS` has no
+  per-sentence translation field, only a per-verb `meaning`. Glossing the
+  highlighted form via `meaning[lang]` is the closest derivable equivalent
+  without adding a new data field; a native-speaker reviewer reading the
+  Basque sentence directly needs this least of all the checklist's parts.
+- **`--limit <n>` caps variants per verb** — added so the sample artifact
+  committed at `docs/reviews/sentence-review-sample-izan-egon-ukan.md` stays
+  reviewable-sized; real review runs omit it to cover a full batch.
+- Workflow (generate → reviewer ticks checkboxes inline → implementer maps
+  ticked alternatives into `validFor`, "No" + correction into a sentence/text
+  fix) is documented in the script's own header rather than only here, since
+  that's where someone running it will actually look.
+
 ## 2026-06-22 — #366: esan/eman ditransitive Baldintza/Ondorioa/Ahalera
 
 Added `docs/CONJUGATIONS.md:751-1081`'s ditransitive Baldintza/Ondorioa
