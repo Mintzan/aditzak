@@ -8,6 +8,34 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-22 — #413: izan/ukan potential/baldintza/conditional/imperative sentence frames authored; `validFor: []` verified rather than assumed
+
+Authored `sentences` data for `izan`'s and `ukan`'s `potential`, `baldintza`,
+and `conditional` tenses (predicate-nominal / noun-object frames reusing the
+existing pronoun-subject style) and `imperative` (predicate-adjective for
+`izan`; the "Pazientzia ___!" idiom for `ukan`). These were deferred
+form-only by #148 and unblocked in design by #367/#412.
+
+For potential/baldintza/conditional on both verbs, `validFor: []` is tagged
+with confidence, not as a stylistic default: grepping `verbs.js` confirms no
+`nor-nork` periphrastic sibling (`nahi`/`behar`/`jakin`/`eduki`/`maite`) has
+any of those three tense tables, so no cross-verb distractor candidate can
+exist regardless of which noun the sentence uses.
+
+`izan`'s `imperative` is the one case left with `validFor` absent
+(unvetted) rather than `[]`: its real `nor`-cluster siblings (`egon`/`joan`/
+`etorri`) do have `imperative` tables, so asserting "no sibling fits" would
+need a real per-sentence naturalness judgment this pass didn't do. Per
+`docs/SENTENCE_FRAMES.md`, absent `validFor` safely falls back to
+same-table-only distractors, so this is the correct conservative choice
+rather than a guess. `ukan`'s `imperative` siblings have no such table, so
+its `validFor: []` is verified the same way as the other three tenses.
+
+No `pronounSentences`/`negativeSentences` were added for these tenses —
+none of `izan`/`ukan`'s existing `potential`/`baldintza`/`conditional`/
+`imperative` lessons currently exercise those question kinds, so there was
+nothing to extend.
+
 ## 2026-06-22 — #367: `behar`'s infinitive-complement frame shape was already decided (#267/#288); izan/ukan's potential/baldintza/conditional/imperative need no new pattern at all
 
 #367 was blocked on "decide `behar`'s infinitive-complement frame shape
