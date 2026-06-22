@@ -1074,6 +1074,113 @@ export const VERBS = [
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
+  // #410/#411: `ahal` ("ability/possibility") and its negation `ezin`
+  // ("can't") — per `docs/VERB_COVERAGE.md` §5, these are *auxiliary-
+  // transparent*: unlike `nahi`/`behar` (always `ukan`) or `ari` (always
+  // `izan`), each one falls through to whichever auxiliary the lexical verb
+  // underneath would pick on its own — `izan` for an intransitive carrier
+  // ("Etorri ahal naiz" = "I can come"), `ukan` for a transitive one ("Esan
+  // ahal dut" = "I can say [it]"). One invariant particle can't show both
+  // sides of that contrast, so — mirroring how Unit 34 already splits
+  // `izan-potential`/`ukan-potential` — `ahal`/`ezin` each get *two*
+  // dedicated `VERBS` entries, one per auxiliary family, following #306's
+  // precedent of dedicated entries over sentences-layered-on-host. Like
+  // `nahi`/`behar`, the conjugation tables are flat (`ahal naiz`, `ahal
+  // dut`) — the carrier verb's own infinitive lives only in the sentence
+  // text, not baked into the conjugated form, exactly like `behar`'s
+  // infinitive-complement sentences (#267/#288). `validFor: []` throughout:
+  // no other `VERBS` entry shares this exact invariant-particle-plus-
+  // auxiliary shape, so no cross-verb candidate could ever fit.
+  {
+    id: 'ahal-izan',
+    verb: 'ahal izan',
+    meaning: { en: 'to be able to (intransitive)', es: 'poder (intransitivo)', eu: 'ahal izan' },
+    type: 'periphrastic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'ahal naiz', zu: 'ahal zara', hura: 'ahal da', gu: 'ahal gara', zuek: 'ahal zarete', haiek: 'ahal dira' },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Ni gaur etxera joan ___.', validFor: [] }],
+        zu: [{ text: 'Zu bihar lehenago etorri ___?', validFor: [] }],
+        hura: [{ text: 'Hura goiz esnatu ___.', validFor: [] }],
+        gu: [{ text: 'Gu autobusez etorri ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek gaur lanera etorri ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek bihar etorri ___.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
+    id: 'ahal-ukan',
+    verb: 'ahal izan',
+    meaning: { en: 'to be able to (transitive)', es: 'poder (transitivo)', eu: 'ahal izan' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'ahal dut', zu: 'ahal duzu', hura: 'ahal du', gu: 'ahal dugu', zuek: 'ahal duzue', haiek: 'ahal dute' },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik egia esan ___.', validFor: [] }],
+        zu: [{ text: 'Zuk hori egin ___?', validFor: [] }],
+        hura: [{ text: 'Hark liburua irakurri ___.', validFor: [] }],
+        gu: [{ text: 'Guk lana bukatu ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek mezua bidali ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek arazoa konpondu ___.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
+    id: 'ezin-izan',
+    verb: 'ezin',
+    meaning: { en: "to not be able to / can't (intransitive)", es: 'no poder (intransitivo)', eu: 'ezin' },
+    type: 'periphrastic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'ezin naiz', zu: 'ezin zara', hura: 'ezin da', gu: 'ezin gara', zuek: 'ezin zarete', haiek: 'ezin dira' },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Ni gaur lanera joan ___.', validFor: [] }],
+        zu: [{ text: 'Zu bihar etorri ___?', validFor: [] }],
+        hura: [{ text: 'Hura garaiz esnatu ___.', validFor: [] }],
+        gu: [{ text: 'Gu autobusez etorri ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek gaur etorri ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek bihar joan ___.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
+    id: 'ezin-ukan',
+    verb: 'ezin',
+    meaning: { en: "to not be able to / can't (transitive)", es: 'no poder (transitivo)', eu: 'ezin' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'ezin dut', zu: 'ezin duzu', hura: 'ezin du', gu: 'ezin dugu', zuek: 'ezin duzue', haiek: 'ezin dute' },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik hori esan ___.', validFor: [] }],
+        zu: [{ text: 'Zuk lana bukatu ___?', validFor: [] }],
+        hura: [{ text: 'Hark mezua bidali ___.', validFor: [] }],
+        gu: [{ text: 'Guk arazoa konpondu ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek liburua irakurri ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek txartela erosi ___.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
   // `maite izan` ("to love", lit. "to hold dear") — #348, the same
   // invariant-particle + `ukan` shape as `nahi`/`behar` above (see
   // VERB_COVERAGE.md's §5 note), but unlike them its citation object

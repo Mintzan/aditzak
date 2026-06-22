@@ -389,6 +389,15 @@ egon`, `arriskuan jarri`. Each gets its own gloss and lesson identity
 base verb (`egin`/`hartu`/`eman`/`egon`/`jarri`) alone — see
 `docs/DECISIONS.md`.
 
+**`ahal`/`ezin` themselves implemented (#410/#411):** following the same
+dedicated-entry precedent, `ahal`/`ezin` each got two `VERBS` entries
+(`ahal-izan`/`ahal-ukan`, `ezin-izan`/`ezin-ukan`) rather than one, since
+unlike the `#306` family they're auxiliary-*transparent* — the auxiliary
+they take depends on the lexical carrier verb underneath, not on `ahal`/
+`ezin` itself, so a single entry can't show both halves of "etorri ahal
+naiz" vs. "esan ahal dut". Drilled in Unit 34 alongside the synthetic
+`naiteke`/`dezaket`. See `docs/DECISIONS.md`.
+
 ## 6. Valency-changing morphology — the causative (`-arazi`/`-erazi`)
 
 🔲 Not represented anywhere in `VERBS` yet — flagged here, and given a home in

@@ -2649,7 +2649,14 @@ describe('generateQuestions', () => {
     })
 
     it('drills izan imperative as multiple-choice over its 3-person table', () => {
-      const question = generateQuestions(izan, 'imperative', { verbs: VERBS })[0]
+      // #413 gave izan's imperative its own sentences, so `generateQuestions`
+      // can now roll `type-verb`/`word-order` kinds for a given person too —
+      // those are typed/reordering questions with no `options` at all. Pull
+      // enough rounds to reliably land a multiple-choice kind (`form`/
+      // `sentence`) rather than asserting on whichever kind the first roll
+      // happens to produce (#415 CI flake).
+      const questions = generateQuestions(izan, 'imperative', { verbs: VERBS, rounds: 20 })
+      const question = questions.find((candidate) => candidate.options?.includes('hadi'))
 
       expect(question.options).toEqual(expect.arrayContaining(['hadi', 'zaitez', 'zaitezte']))
       expect(question.options).toContain(question.correct)
