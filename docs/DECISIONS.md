@@ -8,6 +8,15 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-23 — #425: drilled `gustatu`/`iruditu`/`ahaztu`'s Baldintza/Ondorioa/Ahalera/Agintera object-axis tables, all zero-lesson before now, with recognition-only mood lessons
+
+Unlike #419's gap (17 of 18 NORI rows undrilled, but every row at least reachable through a `fixed: 'zu'`-adjacent table elsewhere), the six mood tables here (`baldintzaByNor`, `conditionalByNor`, `conditionalPastByNor`, `potentialByNor`, `potentialAlegiazkoaByNor`, `potentialLehenaldiaByNor`) had **no** lessons at any NORI value, and `imperativeByNor` only had the single `fixed: 'zu'` lesson from #364.
+
+- Added 108 new lessons (3 verbs × 6 tables × 6 NORI values), each `objectAxis: { vary: 'nor', fixed: <person> }` with `mode: 'recognition'` — these tables structurally restrict NOR to `{ni,zu,gu,zuek}` (nothing pleases/seems-to/forgets itself in 3rd person), and use literal-diagonal-only exclusion (e.g. `fixed: 'zu'` excludes only NOR=`zu`, not `zuek`, unlike the NOR-NORK object-axis tables' broader same-person-category exclusion). `mode: 'recognition'` fulfills Units 33/34's focus text, which already flagged "recognition-only for the dative paradigms" as deferred scope from #148.
+- Added 15 more lessons for `imperativeByNor`'s remaining NORI values (`ni`/`hura`/`gu`/`zuek`/`haiek` — `zu` already existed from #364), matching the existing `gustatu-imperative-axis`-style lessons with no `mode` override, since that precedent treats imperative production as in-scope rather than recognition-only. `imperativeByNor` uniquely allows `hura`/`haiek` as NOR (no flat `imperative` table to be redundant with) while excluding `ni`/`gu` (can't command something to please yourself/us).
+- No pooled cross-verb review added, per #416/#419/#424's precedent — `generateCrossVerbQuestions` doesn't support multi-fixed-value `objectAxis` pooling.
+- Generated the 123 lesson entries and their `journey.js` wiring programmatically (Node scripts against the live `verbs.js` shapes, then spliced in) rather than hand-typing each one, given the scale — reviewed via lint and the full `journey.test.js`/`logic.test.js`/`shareUtils.test.js` cross-check rather than line-by-line authorship.
+
 ## 2026-06-23 — #424: extended `ukan`'s Baldintza/Ondorioa/Ahalera object-axis tables to every NORK value, mirroring #416's `presentByObject`/`pastByObject` extension
 
 `ukan`'s six mood/tense object-axis tables (`potentialByObject`, `potentialAlegiazkoaByObject`, `potentialLehenaldiaByObject`, `baldintzaByObject`, `conditionalByObject`, `conditionalPastByObject`) each carry a full `ni`/`hura`/`gu`/`zu`/`zuek`/`haiek` NORK row, but every lesson touching them only ever fixed `objectAxis.fixed: 'ni'` — forms like `bagintuzue` ("if you all had us") existed in the data with no question able to ask for them.

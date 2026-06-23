@@ -505,7 +505,7 @@ describe('App', () => {
       expect(totalQuestions).toBe(12)
     })
 
-    it('samples a different subset of carriers across plays', { timeout: 15000 }, async () => {
+    it('samples a different subset of carriers across plays', { timeout: 45000 }, async () => {
       window.history.pushState({}, '', '/?dev=unlock-all')
       const user = userEvent.setup()
       render(<App />)
@@ -513,6 +513,8 @@ describe('App', () => {
       // Sampling is random, so an occasional identical re-roll between two
       // plays is possible — replaying several times and checking for *any*
       // variation across the whole run avoids flaking on a single unlucky pair.
+      // 10 full enter/exit cycles against the home screen's now-larger lesson
+      // list (#425) push this past the previous 15s budget under CI timing.
       const poolButton = () => screen.getByRole('button', { name: poolButtonName })
       const sampledSets = []
       for (let i = 0; i < 10; i += 1) {
@@ -544,6 +546,10 @@ describe('App', () => {
       render(<App />)
       await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
       await user.click(screen.getByRole('button', { name: 'Start' }))
+      // Wait for the exercise screen to mount rather than assuming the click
+      // above already flushed it — under CI's slower timing (the lesson list
+      // has grown considerably, #425) the transition can still be pending.
+      await screen.findByRole('button', { name: 'Check' })
     }
 
     const baseQuestion = {
