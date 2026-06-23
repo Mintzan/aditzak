@@ -1819,6 +1819,119 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'potentialLehenaldiaByObject' },
     ],
   },
+  // #424: the block above only ever fixes `nork` at `ni` — every other NORK
+  // value sits in `potentialByObject`/`potentialAlegiazkoaByObject`/
+  // `potentialLehenaldiaByObject` already but was never wired into a lesson.
+  // Same shape as #416's extension of `presentByObject`/`pastByObject`
+  // above: one lesson per remaining NORK value, per sub-tense, `persons`
+  // matching that NORK row's actual NOR keys (the reflexive-gap pattern is
+  // identical across all three sub-tenses, since they share `presentByObject`/
+  // `pastByObject`'s table shape).
+  {
+    id: 'ukan-potential-object-axis-present-hura',
+    verbId: 'ukan',
+    tense: 'potentialByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'ukan-potential-object-axis-alegiazkoa-hura',
+    verbId: 'ukan',
+    tense: 'potentialAlegiazkoaByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'ukan-potential-object-axis-lehenaldia-hura',
+    verbId: 'ukan',
+    tense: 'potentialLehenaldiaByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'ukan-potential-object-axis-present-gu',
+    verbId: 'ukan',
+    tense: 'potentialByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'ukan-potential-object-axis-alegiazkoa-gu',
+    verbId: 'ukan',
+    tense: 'potentialAlegiazkoaByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'ukan-potential-object-axis-lehenaldia-gu',
+    verbId: 'ukan',
+    tense: 'potentialLehenaldiaByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'ukan-potential-object-axis-present-zu',
+    verbId: 'ukan',
+    tense: 'potentialByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ukan-potential-object-axis-alegiazkoa-zu',
+    verbId: 'ukan',
+    tense: 'potentialAlegiazkoaByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ukan-potential-object-axis-lehenaldia-zu',
+    verbId: 'ukan',
+    tense: 'potentialLehenaldiaByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ukan-potential-object-axis-present-zuek',
+    verbId: 'ukan',
+    tense: 'potentialByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'ukan-potential-object-axis-alegiazkoa-zuek',
+    verbId: 'ukan',
+    tense: 'potentialAlegiazkoaByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'ukan-potential-object-axis-lehenaldia-zuek',
+    verbId: 'ukan',
+    tense: 'potentialLehenaldiaByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'ukan-potential-object-axis-present-haiek',
+    verbId: 'ukan',
+    tense: 'potentialByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  {
+    id: 'ukan-potential-object-axis-alegiazkoa-haiek',
+    verbId: 'ukan',
+    tense: 'potentialAlegiazkoaByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  {
+    id: 'ukan-potential-object-axis-lehenaldia-haiek',
+    verbId: 'ukan',
+    tense: 'potentialLehenaldiaByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
   // #366 — esan/eman's ditransitive Ahalera (`diezaioket`-type forms, plus
   // their Lehenaldia/Alegiazkoa sub-tenses and `-zki-` plural-object
   // siblings), recognition-only per this unit's focus text, pooled across
@@ -1914,6 +2027,117 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'conditionalByObject' },
       { verbId: 'ukan', tense: 'conditionalPastByObject' },
     ],
+  },
+  // #424: the block above only ever fixes `nork` at `ni` — every other NORK
+  // value sits in `baldintzaByObject`/`conditionalByObject`/
+  // `conditionalPastByObject` already but was never wired into a lesson.
+  // Same shape as #416's extension of `presentByObject`/`pastByObject` and
+  // the Ahalera block above — one lesson per remaining NORK value, per
+  // sub-tense, `persons` matching that NORK row's actual NOR keys.
+  {
+    id: 'ukan-baldintza-object-axis-hura',
+    verbId: 'ukan',
+    tense: 'baldintzaByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'ukan-conditional-object-axis-hura',
+    verbId: 'ukan',
+    tense: 'conditionalByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'ukan-conditional-past-object-axis-hura',
+    verbId: 'ukan',
+    tense: 'conditionalPastByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'ukan-baldintza-object-axis-gu',
+    verbId: 'ukan',
+    tense: 'baldintzaByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'ukan-conditional-object-axis-gu',
+    verbId: 'ukan',
+    tense: 'conditionalByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'ukan-conditional-past-object-axis-gu',
+    verbId: 'ukan',
+    tense: 'conditionalPastByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+  },
+  {
+    id: 'ukan-baldintza-object-axis-zu',
+    verbId: 'ukan',
+    tense: 'baldintzaByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ukan-conditional-object-axis-zu',
+    verbId: 'ukan',
+    tense: 'conditionalByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ukan-conditional-past-object-axis-zu',
+    verbId: 'ukan',
+    tense: 'conditionalPastByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+  },
+  {
+    id: 'ukan-baldintza-object-axis-zuek',
+    verbId: 'ukan',
+    tense: 'baldintzaByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'ukan-conditional-object-axis-zuek',
+    verbId: 'ukan',
+    tense: 'conditionalByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'ukan-conditional-past-object-axis-zuek',
+    verbId: 'ukan',
+    tense: 'conditionalPastByObject',
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+  },
+  {
+    id: 'ukan-baldintza-object-axis-haiek',
+    verbId: 'ukan',
+    tense: 'baldintzaByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  {
+    id: 'ukan-conditional-object-axis-haiek',
+    verbId: 'ukan',
+    tense: 'conditionalByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  {
+    id: 'ukan-conditional-past-object-axis-haiek',
+    verbId: 'ukan',
+    tense: 'conditionalPastByObject',
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
   },
   // #366 — esan/eman's ditransitive Baldintza/Ondorioa (`balio`/`nioke`-type
   // forms, plus Ondorioa's past sub-tense and `-zki-` plural-object

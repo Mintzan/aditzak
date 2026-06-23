@@ -8,6 +8,14 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-23 — #424: extended `ukan`'s Baldintza/Ondorioa/Ahalera object-axis tables to every NORK value, mirroring #416's `presentByObject`/`pastByObject` extension
+
+`ukan`'s six mood/tense object-axis tables (`potentialByObject`, `potentialAlegiazkoaByObject`, `potentialLehenaldiaByObject`, `baldintzaByObject`, `conditionalByObject`, `conditionalPastByObject`) each carry a full `ni`/`hura`/`gu`/`zu`/`zuek`/`haiek` NORK row, but every lesson touching them only ever fixed `objectAxis.fixed: 'ni'` — forms like `bagintuzue` ("if you all had us") existed in the data with no question able to ask for them.
+
+- Added one practice lesson per remaining NORK value (`hura`/`gu`/`zu`/`zuek`/`haiek`) for each of the six tables — 30 new lessons total — each `persons` list matching that NORK row's actual NOR keys (the reflexive-gap pattern — `nork: 'ni'`/`'gu'` excludes NOR=`ni`/`gu`; `nork: 'zu'`/`'zuek'` excludes NOR=`zu`/`zuek` — is identical across all six tables, since they share `presentByObject`/`pastByObject`'s table shape).
+- Followed #416's precedent exactly: no new pooled review was added (`generateCrossVerbQuestions` has no `objectAxis` pooling support beyond a single fixed value per review, and there's no other verb sharing this exact table shape to pool against) — just the individual practice lessons, wired into Units 33/34's existing `lessonIds`.
+- `potentialByObject`/`potentialAlegiazkoaByObject`/`potentialLehenaldiaByObject` already had `fixed: 'ni'` lessons by the time this issue was picked up (added between #424 being filed and worked) — only the NORK extension was missing, not the base lessons the issue description assumed were absent.
+
 ## 2026-06-23 — #423: collapsed the old Units 20-21 (Future) into one pooled unit; trimmed `joan`'s redundant table, kept `ukan`'s as the suppletive callout
 
 The old two-unit Future stage taught the `-ko`/`-go` rule on a three-verb core (`izan`/`ukan`/`joan`) in Unit 20, then re-drilled it across the rest of the fodder via three curated themed mixer pairs + a capstone in Unit 21 — a curated handful, not the full pool. Collapsed both into one Unit 20:
