@@ -544,6 +544,10 @@ describe('App', () => {
       render(<App />)
       await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
       await user.click(screen.getByRole('button', { name: 'Start' }))
+      // Wait for the exercise screen to mount rather than assuming the click
+      // above already flushed it — under CI's slower timing (the lesson list
+      // has grown considerably, #425) the transition can still be pending.
+      await screen.findByRole('button', { name: 'Check' })
     }
 
     const baseQuestion = {
