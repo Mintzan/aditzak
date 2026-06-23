@@ -1563,6 +1563,33 @@ export function generateMatchPairsQuestions(resolvedSources, { persons: personsF
   return shuffle(candidates).slice(0, count)
 }
 
+// Up to this many `kind: 'suffix-choice'` questions get added to a lesson
+// opted in via `lesson.suffixChoice: true` (#423) — kept small/"a handful",
+// same rationale as `CROSS_VERB_QUESTION_COUNT`.
+export const SUFFIX_CHOICE_QUESTION_COUNT = 3
+
+// A `kind: 'suffix-choice'` question isolates the one genuinely new skill
+// the periphrastic future teaches, separate from producing a full
+// conjugation: given a verb's bare infinitive, pick whether its future
+// attaches `-ko` or `-go`. The rule is purely orthographic — stem ends in
+// `n` -> `-go` (`jan` -> `jango`), anything else -> `-ko` (`erosi` ->
+// `erosiko`) — so it's derived from `verb.id` rather than stored data.
+// `ukan` is deliberately excluded: its future is `izan`'s suppletive
+// `izango`, not a derived `*ukango`, so applying the mechanical rule to it
+// would teach the wrong lesson (see `docs/DECISIONS.md`).
+export function generateSuffixChoiceQuestions(resolvedSources, { count = SUFFIX_CHOICE_QUESTION_COUNT } = {}) {
+  const eligibleVerbs = resolvedSources
+    .filter(({ tense, verb }) => tense === 'future' && verb.id !== 'ukan')
+    .map(({ verb }) => verb)
+  const uniqueVerbs = [...new Map(eligibleVerbs.map((verb) => [verb.id, verb])).values()]
+  return shuffle(uniqueVerbs)
+    .slice(0, count)
+    .map((verb) => {
+      const correct = verb.id.endsWith('n') ? '-go' : '-ko'
+      return { verbId: verb.id, tense: 'future', kind: 'suffix-choice', infinitive: verb.verb, correct, options: shuffle(['-ko', '-go']) }
+    })
+}
+
 // `kind: 'reading'` questions (Unit 36, see `src/data/readingItems.js`) have
 // no `verbId`/`tense`/`person` of their own — each is just a source sentence
 // plus a comprehension prompt and four candidate sentences, one of which
@@ -1671,6 +1698,10 @@ export function getExplanation(verb, question, t) {
   if (question.kind === 'case-mixer') {
     const key = verb.agreement.includes('nork') ? 'explanationCaseMixerErgative' : 'explanationCaseMixerAbsolutive'
     return t(key, { verb: verb.verb, form: question.correct })
+  }
+  if (question.kind === 'suffix-choice') {
+    const key = question.correct === '-go' ? 'explanationSuffixChoiceGo' : 'explanationSuffixChoiceKo'
+    return t(key, { verb: question.infinitive })
   }
   if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
   const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'

@@ -11,6 +11,7 @@ import {
   generateMatchPairsQuestions,
   generateQuestions,
   generateReadingQuestions,
+  generateSuffixChoiceQuestions,
   getActiveStreak,
   getCrossVerbCandidates,
   getExplanation,
@@ -1484,7 +1485,18 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // sources have an eligible table, per the engine's own person/distinct-
   // form check.
   const matchPairsQuestions = lesson.negation ? [] : generateMatchPairsQuestions(resolvedSources, { persons: lesson.persons })
-  const allQuestions = shuffle([...questions, ...extraQuestions, ...crossVerbQuestions, ...caseMixerQuestions, ...matchPairsQuestions])
+  // A lesson opted in via `lesson.suffixChoice` (#423) gets a handful of
+  // "pick -ko or -go" questions on top of its normal cross-section — see
+  // `generateSuffixChoiceQuestions`.
+  const suffixChoiceQuestions = lesson.suffixChoice ? generateSuffixChoiceQuestions(resolvedSources) : []
+  const allQuestions = shuffle([
+    ...questions,
+    ...extraQuestions,
+    ...crossVerbQuestions,
+    ...caseMixerQuestions,
+    ...matchPairsQuestions,
+    ...suffixChoiceQuestions,
+  ])
   return {
     queue: allQuestions,
     total: allQuestions.length,
@@ -1901,6 +1913,14 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
       </>
     )
   }
+  if (question.kind === 'suffix-choice') {
+    return (
+      <>
+        <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">{t(tenseMeta.labelKey)}</p>
+        <h2 className="mt-2 text-4xl font-extrabold text-gray-900">{question.infinitive}</h2>
+      </>
+    )
+  }
   return (
     <>
       <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">
@@ -1947,6 +1967,7 @@ const QUESTION_PROMPT_KEYS = {
   reading: 'questionReading',
   'match-pairs': 'questionMatchPairs',
   'word-order': 'questionWordOrder',
+  'suffix-choice': 'questionSuffixChoice',
 }
 
 // The explanation toggle is its own pill-shaped button above the

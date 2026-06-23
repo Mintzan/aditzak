@@ -8,6 +8,17 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-23 — #423: collapsed the old Units 20-21 (Future) into one pooled unit; trimmed `joan`'s redundant table, kept `ukan`'s as the suppletive callout
+
+The old two-unit Future stage taught the `-ko`/`-go` rule on a three-verb core (`izan`/`ukan`/`joan`) in Unit 20, then re-drilled it across the rest of the fodder via three curated themed mixer pairs + a capstone in Unit 21 — a curated handful, not the full pool. Collapsed both into one Unit 20:
+
+- **Trimmed `joan-future`/`joan-future-plural`** from the lesson list — `joan` is `nor`-agreement exactly like `izan`, so its own dedicated future table taught nothing `izan`'s didn't already.
+- **Kept `ukan-future`/`ukan-future-plural`** as their own dedicated lessons, specifically *because* `ukan`'s future (`izango`) is borrowed wholesale from `izan` rather than derived from `ukan`'s own stem — drilling it on its own keeps that suppletive exception visible.
+- **Replaced the three mixer pairs + capstone with one pooled review** (`future-mixer-pool` + plural sibling) whose `sources` spans every regular fodder verb's `future` table not already covered elsewhere (~58 verbs, including the existing 14 named verbs — no reason to exclude them from the same pool). `CARRIERS_PER_SESSION = 4` already handles pools this large with zero engine changes (random 4-carrier sample per play, rotating over repeated plays).
+- **Added a `suffixChoice: true` flag** on the pooled review, consumed by a new `generateSuffixChoiceQuestions` (`lessonLogic.js`) producing a handful of `kind: 'suffix-choice'` questions that isolate the "pick `-ko` or `-go`" decision from full conjugation production. The rule is derived from `verb.id` (ends in `n` → `-go`, else → `-ko`) rather than stored data. `ukan` is excluded from this pool specifically — the mechanical rule would coincidentally-but-wrongly predict `-go` for it — while still being drilled normally for its actual conjugation.
+- **`*-dative` variants, the agentive covert-dative set, and invariant-noun constructions** stay out of scope, as before.
+- **Renumbering cascade**: every unit from the old Unit 22 onward shifts down by one (old 22 → new 21, ... old 47 → new 46), following the #137 precedent — lesson `id` strings are untouched; only `number:`/translation-key fields and prose move. Updated `journey.js`, `lessons.js`, `journeyTranslations.js`, and `LEARNING_JOURNEY.md` accordingly; `journey.js`'s header comment got an appended (not rewritten) clause documenting the shift, same append-only convention used for #296/#307/#350/#359.
+
 ## 2026-06-22 — #417: drilled the dead `futurePlural`/`pastPlural` data with new pool/lesson entries, no scope cuts needed
 
 Two unrelated unused-data gaps in the same issue: (1) `futurePlural` (`izango ditut` vs `izango dut`) existed in `verbs.js` for `ukan`/`jan`/`edan`/`erosi`/`hartu`/`ikusi`/`eduki`/`nahi` but no lesson ever selected it — `nor-nork-present-plural-pool`/`nor-nork-past-plural-pool` had the present/past tenses covered but no future counterpart; (2) `esan`/`eman`'s `pastPlural` (`esan nizkion` vs `esan nion`) existed but only their `presentPlural` got a lesson.

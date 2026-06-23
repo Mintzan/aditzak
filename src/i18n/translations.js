@@ -91,6 +91,7 @@ export const TRANSLATIONS = {
     questionReading: 'Choose the sentence that fits:',
     questionMatchPairs: 'Match each person to its form.',
     questionWordOrder: 'Tap the words back into order.',
+    questionSuffixChoice: 'Does its future take -ko or -go?',
     personNi: 'I',
     personHi: 'you (familiar)',
     personHiM: 'you (familiar, to a man)',
@@ -247,6 +248,10 @@ export const TRANSLATIONS = {
       "'{form}' is right because this sentence's subject takes the '-k' ending (Nik, Zuk...) — '{verb}' marks its subject that way. The other option(s) belong to a verb whose subject takes no '-k', so they wouldn't fit this sentence.",
     explanationCaseMixerAbsolutive:
       "'{form}' is right because this sentence's subject takes no '-k' ending (Ni, Zu...) — '{verb}' doesn't mark its subject that way. The other option(s) belong to a verb whose subject takes '-k', so they wouldn't fit this sentence.",
+    explanationSuffixChoiceGo:
+      "'{verb}' ends in 'n', so its future takes '-go': the rule is purely about the last letter, not the verb's meaning.",
+    explanationSuffixChoiceKo:
+      "'{verb}' doesn't end in 'n', so its future takes '-ko': the rule is purely about the last letter, not the verb's meaning.",
     lureRationaleCaseFrame:
       "'{form}' marks a different subject case than this question needs (NOR vs NOR-NORK) — it's borrowed from a verb whose subject works the opposite way. The correct form here is '{correct}'.",
     lureRationaleTense:
@@ -319,6 +324,7 @@ export const TRANSLATIONS = {
     questionReading: 'Elige la frase que corresponde:',
     questionMatchPairs: 'Empareja cada persona con su forma.',
     questionWordOrder: 'Toca las palabras para ordenarlas.',
+    questionSuffixChoice: '¿Su futuro lleva -ko o -go?',
     personNi: 'yo',
     personHi: 'tú (familiar)',
     personHiM: 'tú (familiar, a un hombre)',
@@ -475,6 +481,10 @@ export const TRANSLATIONS = {
       "'{form}' es correcto porque el sujeto de esta frase lleva la terminación '-k' (Nik, Zuk...) — '{verb}' marca así su sujeto. La(s) otra(s) opción(es) pertenecen a un verbo cuyo sujeto no lleva '-k', así que no encajarían en esta frase.",
     explanationCaseMixerAbsolutive:
       "'{form}' es correcto porque el sujeto de esta frase no lleva la terminación '-k' (Ni, Zu...) — '{verb}' no marca así su sujeto. La(s) otra(s) opción(es) pertenecen a un verbo cuyo sujeto lleva '-k', así que no encajarían en esta frase.",
+    explanationSuffixChoiceGo:
+      "'{verb}' termina en 'n', así que su futuro lleva '-go': la regla depende solo de la última letra, no del significado del verbo.",
+    explanationSuffixChoiceKo:
+      "'{verb}' no termina en 'n', así que su futuro lleva '-ko': la regla depende solo de la última letra, no del significado del verbo.",
     lureRationaleCaseFrame:
       "'{form}' marca un sujeto de otro tipo (NOR vs NOR-NORK) — viene de un verbo cuyo sujeto funciona al revés. La forma correcta aquí es '{correct}'.",
     lureRationaleTense:
@@ -547,6 +557,7 @@ export const TRANSLATIONS = {
     questionReading: 'Aukeratu dagokion esaldia:',
     questionMatchPairs: 'Lotu pertsona bakoitza bere formarekin.',
     questionWordOrder: 'Sakatu hitzak ordenan jartzeko.',
+    questionSuffixChoice: 'Geroaldian -ko ala -go hartzen du?',
     personNi: 'ni',
     personHi: 'hi (hurbila)',
     personHiM: 'hi (gizonezkoari, toka)',
@@ -703,6 +714,10 @@ export const TRANSLATIONS = {
       "'{form}' zuzena da, esaldi honetako subjektuak '-k' atzizkia hartzen duelako (Nik, Zuk...) — '{verb}'-ek horrela markatzen du bere subjektua. Beste aukera(k) '-k' gabeko subjektua duen aditz batenak dira, eta ez dute esaldi honetan tokirik.",
     explanationCaseMixerAbsolutive:
       "'{form}' zuzena da, esaldi honetako subjektuak '-k' atzizkirik ez duelako (Ni, Zu...) — '{verb}'-ek ez du horrela markatzen bere subjektua. Beste aukera(k) '-k' atzizkia duen subjektua eskatzen duen aditz batenak dira, eta ez dute esaldi honetan tokirik.",
+    explanationSuffixChoiceGo:
+      "'{verb}'-k 'n'-z amaitzen da, eta horregatik geroaldian '-go' hartzen du: araua azken letraren araberakoa da soilik, ez aditzaren esanahiarena.",
+    explanationSuffixChoiceKo:
+      "'{verb}'-k ez du 'n'-z amaitzen, eta horregatik geroaldian '-ko' hartzen du: araua azken letraren araberakoa da soilik, ez aditzaren esanahiarena.",
     lureRationaleCaseFrame:
       "'{form}' beste motako subjektu bat markatzen du (NOR vs NOR-NORK) — alderantziz funtzionatzen duen aditz batetik dator. Forma zuzena hemen '{correct}' da.",
     lureRationaleTense:

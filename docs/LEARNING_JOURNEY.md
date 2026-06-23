@@ -10,15 +10,20 @@
 > 2026-06-21, #350; a new "non-3rd-person NOR" unit inserted as Unit 28
 > (after Unit 27's NOR-NORI past/future, before Stage 9's ditransitive jump)
 > — pushing everything from Unit 29 onward up by one more — on 2026-06-21,
-> #359; see `docs/DECISIONS.md` for all four). Unit numbers 1–10
+> #359; see `docs/DECISIONS.md` for all four; the old Units 20-21 (Future)
+> were then collapsed into one unit on 2026-06-23, #423 — shifting every
+> unit from the old Unit 22 onward back down by one, to 21 onward — see
+> `docs/DECISIONS.md`). Unit numbers 1–10
 > still match `docs/LEARNING_JOURNEY_PROPOSED.md`'s "N-n" scheme; **from Unit
 > 12 through 14 the live number is that spec's N-n + 1** (the
 > present-perfect offset); **Unit 15 has no PROPOSED-spec equivalent** (it's
-> wholly new, added by #350); **from Unit 16 through 27 it's N-n + 3** (the
-> #296 offset plus #350's later insertion); **Unit 28 has no PROPOSED-spec
-> equivalent either** (wholly new, added by #359); **and from Unit 29 onward
-> it's N-n + 4**. See the present-perfect, #296, #350, and #359 placement
-> entries in `docs/DECISIONS.md` for the reasoning behind each insertion. The PROPOSED spec
+> wholly new, added by #350); **from Unit 16 through 21 it's N-n + 3** (the
+> #296 offset plus #350's later insertion); **from Unit 22 through 26 it's
+> N-n + 2** (the same offset, minus #423's later -1 shift); **Unit 27 has no
+> PROPOSED-spec equivalent either** (wholly new, added by #359); **and from
+> Unit 28 onward it's N-n + 3**. See the present-perfect, #296, #350, #359,
+> and #423 placement entries in `docs/DECISIONS.md` for the reasoning behind
+> each insertion. The PROPOSED spec
 > remains the self-contained reference for the full design (Pronoun-Fading
 > Matrix, morphophonological pacing, production/recognition scoping, the
 > Distractor Engine Matrix, and the architectural data resolutions for the
@@ -26,7 +31,7 @@
 > the findings that motivated this layout and the old (O-n) → new (N-n)
 > mapping.
 >
-> Implemented: Units 1–24 (Unit 8 included) — see `journey.js`'s
+> Implemented: Units 1–23 (Unit 8 included) — see `journey.js`'s
 > `available` units and `LESSONS` in `src/data/lessons.js` for the
 > up-to-date picture of which later units are also implemented. Units are
 > ordered by communicative goal rather than grammatical category, and
@@ -91,19 +96,19 @@
      zero-new-verb "Ni vs. Nik" case-marking checkpoint drilling bare
      (`izan`/`egon`) vs. ergative (`ukan`) subjects; Unit 4 then reinforces the
      same suffixes on `jakin`, a fully synthetic verb, alongside `nahi`
-   - **Unit 26** — first NOR-NORI / dative-subject forms (`zait`/`zaizu`/`zaio`),
-     four extra lessons ending with a case-frame buffer before Unit 29
-   - **Unit 29** — first NOR-NORI-NORK / ditransitive — the steepest jump in
+   - **Unit 25** — first NOR-NORI / dative-subject forms (`zait`/`zaizu`/`zaio`),
+     four extra lessons ending with a case-frame buffer before Unit 28
+   - **Unit 28** — first NOR-NORI-NORK / ditransitive — the steepest jump in
      the whole sequence, gets **four** extra practice lessons, axis-scaffolded
-   - **Unit 36** — imperative (a new register), with the distractor-floor fix
-   - **Unit 37** — subjunctive as a construction (a new register)
-   - **Units 38–41** — `hi` + hitanoa, staged across four units (one extra
+   - **Unit 35** — imperative (a new register), with the distractor-floor fix
+   - **Unit 36** — subjunctive as a construction (a new register)
+   - **Units 37–40** — `hi` + hitanoa, staged across four units (one extra
      lesson each) instead of crammed into one
-   - **Unit 43** — first valency-*increasing* derivation (`-arazi` turning
+   - **Unit 42** — first valency-*increasing* derivation (`-arazi` turning
      `nor` into `nor-nork`) — a new morphological operation, not just new
      vocabulary in a known pattern
-   - **Unit 44** — extends `-arazi` to `nor-nori-nork` — same "steepest jump"
-     character as Unit 29, gets extra practice lessons like it did
+   - **Unit 43** — extends `-arazi` to `nor-nori-nork` — same "steepest jump"
+     character as Unit 28, gets extra practice lessons like it did
 
    The "Looking Back I/II" units (12-14, 17-19) are deliberately **not** on
    this list — they pair an already-taught verb's *simple past* with its
@@ -165,7 +170,7 @@ slices, and `-arazi` are spelled out in full in
 
 - **`egon`/`joan`/`etorri`/`ibili` (§6) already have `zu` rows** — §6's data
   was written with 7 persons (`ni`/`hi`/`hura`/`gu`/`zu`/`zuek`/`haiek`) from
-  the start, so this journey just stops asking for `hi`'s row until Unit 38.
+  the start, so this journey just stops asking for `hi`'s row until Unit 37.
 - **§6's "Past" column for `joan`/`etorri`/`ibili` is imperfective
   ("I was going" — `nindoan`, `zetorren`), not simple past ("I went" —
   periphrastic `joan nintzen`).** Those forms express ongoing/habitual past
@@ -173,7 +178,7 @@ slices, and `-arazi` are spelled out in full in
   **Resolved**: simple/completed past for `joan`/`etorri`/`ibili`
   (`joan nintzen`, `etorri nintzen`, `ibili nintzen`) was implemented in Units 12 and 18 ("Looking Back I/II") via the periphrastic Lehenaldi Mugatua
   pattern (§11: perfective participle + `izan`'s past auxiliary, §1) — see
-  `docs/LANGUAGE_DECISIONS.md`. Unit 25 ("Motion in Progress (Past)") has now
+  `docs/LANGUAGE_DECISIONS.md`. Unit 24 ("Motion in Progress (Past)") has now
   implemented §6's distinct imperfective forms (`nindoan`/`zetorren`/
   `nenbilen`).
 - **Restricting a lesson to `ni`/`zu`/`hura`** isn't something the current
@@ -189,7 +194,7 @@ slices, and `-arazi` are spelled out in full in
   **Resolved**: implemented as a `negativeSentences` table (mirroring
   `pronounSentences`'s shape) plus `negative`/`type-negative` question kinds —
   see `docs/DECISIONS.md`'s "Implemented Unit 5" entry (predates this
-  redesign's renumbering; that unit is now Unit 10). **Refresh Gate C (Unit 33)** drills the same "candidate full sentences, pick the right/wrong one"
+  redesign's renumbering; that unit is now Unit 10). **Refresh Gate C (Unit 32)** drills the same "candidate full sentences, pick the right/wrong one"
   shape for NOR/NORI/NORK role-swaps instead of negation, and is expected to
   reuse this same question-kind machinery with a role-swapped sentence-pair
   source.
@@ -353,22 +358,22 @@ with `egon`'s own past following in Unit 19.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 20 | **izan/ukan/joan — The Future Rule** — forming the future with `-ko`/`-go` + present auxiliaries, taught on a three-verb core spanning both auxiliary patterns (`nor`/`naiz` and `nor-nork`/`dut`). **MP**: first `-ko`/`-go` minimal pair (`izango` vs. `etorriko`). #417 adds the NOR-number axis in the future (`izango dut` vs. `izango ditut`) across `ukan`/`jan`/`edan`/`erosi`/`hartu`/`ikusi`/`eduki`/`nahi`. | "I will be a teacher" (`irakasle izango naiz`) / "We will have a car" (`autoa izango dugu`) / "I will go tomorrow" (`bihar joango naiz`) | §11 (periphrastic tense matrix) | ✅ implemented |
-| 21 | **The Future, Across Every Verb** — the same `-ko`/`-go` rule applied across all remaining known verbs (`egon`, `etorri`, `ibili`, `jan`, `edan`, `erosi`, `ikusi`, `eduki`, `nahi`, `jakin`), drilled as cross-verb mixer reviews rather than per-verb tables | "You will see it" (`ikusiko duzu`) / "We will buy a house" (`etxe bat erosiko dugu`) / "Will you know?" (`jakingo duzu?`) | §11 | ✅ implemented |
-| 22 | **behar — Requirements & Obligations** — `behar` + `ukan`, present and future | "I have to go." (`Joan behar dut`) / "You'll have to come." (`Etorri beharko duzu`) | VERB_COVERAGE §5 (point 2 — the construction's head, not the lexical verb, picks the auxiliary) | available (#148) — reuses `ukan`'s suffixes exactly like Unit 4's `nahi`; form-only (no sentence frames — `behar`'s complement is an infinitive, not an object noun) |
+| 20 | **izan/ukan — The Future Rule, Across Every Verb** — forming the future with `-ko`/`-go` + present auxiliaries, taught on a two-verb core spanning both auxiliary patterns (`nor`/`naiz` and `nor-nork`/`dut`). **MP**: first `-ko`/`-go` minimal pair (`izango` vs. `etorriko`); `ukan` called out as the one suppletive exception (`izango`, not "ukango"). #417 adds the NOR-number axis in the future (`izango dut` vs. `izango ditut`). #423 pools the rule across every fodder verb's `future` table (rather than a curated handful) plus a dedicated `-ko`/`-go` suffix-choice question. | "I will be a teacher" (`irakasle izango naiz`) / "We will have a car" (`autoa izango dugu`) | §11 (periphrastic tense matrix) | ✅ implemented |
+| 21 | **behar — Requirements & Obligations** — `behar` + `ukan`, present and future | "I have to go." (`Joan behar dut`) / "You'll have to come." (`Etorri beharko duzu`) | VERB_COVERAGE §5 (point 2 — the construction's head, not the lexical verb, picks the auxiliary) | available (#148) — reuses `ukan`'s suffixes exactly like Unit 4's `nahi`; form-only (no sentence frames — `behar`'s complement is an infinitive, not an object noun) |
 
 The Basque future is morphologically trivial — one participle rule (`-ko`/`-go`)
 layered onto auxiliaries already mastered in Units 1-19 — so Stage 6 teaches
-that rule once (Unit 20) and then spreads it across the remaining verbs as
-cross-verb *mixer reviews* (Unit 21) rather than re-drilling each verb's table
-one at a time. See `docs/DECISIONS.md` (2026-06-14, "Compressed the future
-stage").
+that rule once and then spreads it across every other fodder verb as a single
+pooled review (Unit 20) rather than re-drilling each verb's table one at a
+time or splitting the pool across several curated mixer pairs. See
+`docs/DECISIONS.md` (2026-06-14, "Compressed the future stage"; #423, "Merged
+the future units into one pooled review").
 
 ### 🛡️ Refresh Gate B — The Core Tense Checkpoint
 
 | Unit | Focus | Constraint | Notes |
 |---|---|---|---|
-| 23 | **REFRESH — Cumulative Present/Past/Future Mixer** | zero new verbs; **score-gated** (`bestStars >= 2`) | Mixes synthetic + periphrastic, positive + negative (reuses Gate A's negation pattern), and present + past + future — the full tense range Units 1-22 introduced. ✅ implemented — `unit-20-review-1..4` mix `izan`/`ukan`/`joan`/`ikusi` across present/past/future (singular then plural); `unit-20-review-5` extends negation to `eduki`/`ibili` (present) and, for the first time, past tense (`izan`/`ukan`/`jakin`, via `negativeSentences.past`'s auto-extend); `unit-20-review-6` is the gate-checked capstone. |
+| 22 | **REFRESH — Cumulative Present/Past/Future Mixer** | zero new verbs; **score-gated** (`bestStars >= 2`) | Mixes synthetic + periphrastic, positive + negative (reuses Gate A's negation pattern), and present + past + future — the full tense range Units 1-21 introduced. ✅ implemented — `unit-20-review-1..4` mix `izan`/`ukan`/`joan`/`ikusi` across present/past/future (singular then plural); `unit-20-review-5` extends negation to `eduki`/`ibili` (present) and, for the first time, past tense (`izan`/`ukan`/`jakin`, via `negativeSentences.past`'s auto-extend); `unit-20-review-6` is the gate-checked capstone. |
 
 ---
 
@@ -380,8 +385,8 @@ Pronoun stage: **C (pro-drop default)**.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 24 | **The Imperfective Past — "I Used To..."** | "I used to come here every day." / "I was working when she called." | imperfective/habitual past (`etortzen nintzen`, "I used to come / I was coming") — distinct from the simple past taught in Units 12/14/18/19 | implemented (`etorri`/`ikusi`'s `habitualPast`) |
-| 25 | **joan/etorri/ibili — Motion in Progress (Past)** — native imperfective past forms (`nindoan`, `zetorren`) | "I was on my way (when...)." / "He was coming (and then...)." | §6 | implemented (`joan`/`etorri`/`ibili`'s `imperfectivePast`) — framed explicitly as imperfective/progressive, contrasted with Units 12/18's `joan nintzen`/`ibili nintzen` |
+| 23 | **The Imperfective Past — "I Used To..."** | "I used to come here every day." / "I was working when she called." | imperfective/habitual past (`etortzen nintzen`, "I used to come / I was coming") — distinct from the simple past taught in Units 12/14/18/19 | implemented (`etorri`/`ikusi`'s `habitualPast`) |
+| 24 | **joan/etorri/ibili — Motion in Progress (Past)** — native imperfective past forms (`nindoan`, `zetorren`) | "I was on my way (when...)." / "He was coming (and then...)." | §6 | implemented (`joan`/`etorri`/`ibili`'s `imperfectivePast`) — framed explicitly as imperfective/progressive, contrasted with Units 12/18's `joan nintzen`/`ibili nintzen` |
 
 This phase is narrower than the surrounding ones — completed simple past
 ("I went", "I saw", "I ate", "I had") moved to Units 12/14/18/19, so Phase III's
@@ -398,24 +403,24 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 26 | **The NOR-NORI Present — zait/zaizu/zaio** — 3rd-person subjects (`zaigu`/`zaizue`/`zaie` too) | "I like it." / "It seems good to me." / "I forgot (it slipped my mind)." | §4 (gustatu, iruditu, ahaztu) | available (#146, #164, #385) — singular-NOR present (#146) plus plural-NOR (`-zki-`) production drills, a number-split review, a case-frame buffer review (#164), and a pooled mixer review widening the pattern to `jarraitu`/`jario` (#385) |
-| 27 | **NOR-NORI Past & Future — Dative Across Time** — recombining Unit 26's grid with the periphrastic past and `-ko`/`-go` future | "I liked it yesterday." (`Atzo gustatu zitzaidan`) / "I'll forget the keys." (`Giltzak ahaztuko zaizkit`) | §4; §11 | available (closes `LEARNING_JOURNEY_EVALUATION.md` finding F2) — plus a pooled mixer review widening the three founding verbs to `jarraitu`/`jario`, mirroring Unit 26's present pool (#385) |
-| 28 | **The NOR-NORI Object Axis — natzaizu/gatzaizu** — `presentByNor`/`pastByNor` (#358): NOR shifts off the default `hura`/`haiek` to `ni`/`gu`/`zuek`, with NORI fixed at `zu` — direct contrast with Units 26-27's stimulus-is-3rd-person forms; #419 then drills the rest of the table by fixing NORI at `ni`/`hura`/`gu`/`zuek`/`haiek` in turn | "Do you like me?" (`Gustatzen natzaizu?`) / "I like him." (`Gustatzen natzaio.`) | §4 | available (#358, #359, #419 — no pooled cross-verb review yet, see `docs/DECISIONS.md`) |
+| 25 | **The NOR-NORI Present — zait/zaizu/zaio** — 3rd-person subjects (`zaigu`/`zaizue`/`zaie` too) | "I like it." / "It seems good to me." / "I forgot (it slipped my mind)." | §4 (gustatu, iruditu, ahaztu) | available (#146, #164, #385) — singular-NOR present (#146) plus plural-NOR (`-zki-`) production drills, a number-split review, a case-frame buffer review (#164), and a pooled mixer review widening the pattern to `jarraitu`/`jario` (#385) |
+| 26 | **NOR-NORI Past & Future — Dative Across Time** — recombining Unit 25's grid with the periphrastic past and `-ko`/`-go` future | "I liked it yesterday." (`Atzo gustatu zitzaidan`) / "I'll forget the keys." (`Giltzak ahaztuko zaizkit`) | §4; §11 | available (closes `LEARNING_JOURNEY_EVALUATION.md` finding F2) — plus a pooled mixer review widening the three founding verbs to `jarraitu`/`jario`, mirroring Unit 25's present pool (#385) |
+| 27 | **The NOR-NORI Object Axis — natzaizu/gatzaizu** — `presentByNor`/`pastByNor` (#358): NOR shifts off the default `hura`/`haiek` to `ni`/`gu`/`zuek`, with NORI fixed at `zu` — direct contrast with Units 25-26's stimulus-is-3rd-person forms; #419 then drills the rest of the table by fixing NORI at `ni`/`hura`/`gu`/`zuek`/`haiek` in turn | "Do you like me?" (`Gustatzen natzaizu?`) / "I like him." (`Gustatzen natzaio.`) | §4 | available (#358, #359, #419 — no pooled cross-verb review yet, see `docs/DECISIONS.md`) |
 
 #### Stage 9: Communication & Giving (NOR-NORI-NORK)
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 29 | **The NOR-NORI-NORK Present — diot/diozu/dio** — (`esan`, `eman`), axis-scaffolded, plus plural-object (`-zki-`) fodder, a four-lesson extra-practice sequence, and a pooled present carrier for the ditransitive optionally-dative fodder (`saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`) | "I give it to him" (`ematen diot`) / "You tell it to him" (`esaten diozu`) / "I tell him lies." (`Gezurrak esaten dizkiot`) | §5, §8 | available (#147, #162, ditransitive-dative pool added by #334) |
-| 30 | **NOR-NORI-NORK Past & Future — Telling & Giving Across Time** — reusing the periphrastic past and `-ko`/`-go` future on Unit 29's axis-fixed slices, plus pooled past/future/review carriers for the same ditransitive-dative fodder; #417 adds `esan`/`eman`'s plural-object past (`pastPlural` — "esan nizkion" vs. "esan nion") | "I told him." (`Esan nion`) / "He gave it to me." (`Eman zidan`) / "I'll tell you tomorrow." (`Bihar esango dizut`) | §5; §11 | available (#147, ditransitive-dative pool added by #334, esan/eman pastPlural added by #417) |
-| 31 | **The "egin" Construction** — `hitz`/`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`, `arreta eman`, `ados egon`, `arriskuan jarri`; invariant noun/particle + conjugated auxiliary, same shape as `nahi`/`behar izan`; placed here, the first point where `egin`/`hartu` (Units 13-14) and `eman` (Units 29-30) are all individually taught | "I speak Basque." (`Euskaraz hitz egiten dut`) | VERB_COVERAGE §7 | available (#306, repositioned by #325, future added by #334) |
-| 32 | **Covert-Dative NOR-NORI-NORK — Agentive Verbs** — `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman` + the dative `egin` compounds (`mesede`/`kalte`/`aurre egin`) + `itxaron`'s dative reading, pooled present/past/future, reusing the `diot`-family paradigm from Units 29-30 — but with no overt direct object signaling NORI, drilling the exact "covert dative" confusion #293 targets | "I help him." (`Laguntzen diot`) | §4, §5; VERB_COVERAGE §2/§4 | available (#307, future added by #334, itxaron-dative carrier added by #334) |
+| 28 | **The NOR-NORI-NORK Present — diot/diozu/dio** — (`esan`, `eman`), axis-scaffolded, plus plural-object (`-zki-`) fodder, a four-lesson extra-practice sequence, and a pooled present carrier for the ditransitive optionally-dative fodder (`saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`) | "I give it to him" (`ematen diot`) / "You tell it to him" (`esaten diozu`) / "I tell him lies." (`Gezurrak esaten dizkiot`) | §5, §8 | available (#147, #162, ditransitive-dative pool added by #334) |
+| 29 | **NOR-NORI-NORK Past & Future — Telling & Giving Across Time** — reusing the periphrastic past and `-ko`/`-go` future on Unit 28's axis-fixed slices, plus pooled past/future/review carriers for the same ditransitive-dative fodder; #417 adds `esan`/`eman`'s plural-object past (`pastPlural` — "esan nizkion" vs. "esan nion") | "I told him." (`Esan nion`) / "He gave it to me." (`Eman zidan`) / "I'll tell you tomorrow." (`Bihar esango dizut`) | §5; §11 | available (#147, ditransitive-dative pool added by #334, esan/eman pastPlural added by #417) |
+| 30 | **The "egin" Construction** — `hitz`/`lan`/`lo`/`ahaleginak egin`, `parte`/`kontuan hartu`, `arreta eman`, `ados egon`, `arriskuan jarri`; invariant noun/particle + conjugated auxiliary, same shape as `nahi`/`behar izan`; placed here, the first point where `egin`/`hartu` (Units 13-14) and `eman` (Units 28-29) are all individually taught | "I speak Basque." (`Euskaraz hitz egiten dut`) | VERB_COVERAGE §7 | available (#306, repositioned by #325, future added by #334) |
+| 31 | **Covert-Dative NOR-NORI-NORK — Agentive Verbs** — `lagundu`/`ekin`/`erantzun`/`deitu`/`eragin`/`antzeman` + the dative `egin` compounds (`mesede`/`kalte`/`aurre egin`) + `itxaron`'s dative reading, pooled present/past/future, reusing the `diot`-family paradigm from Units 28-29 — but with no overt direct object signaling NORI, drilling the exact "covert dative" confusion #293 targets | "I help him." (`Laguntzen diot`) | §4, §5; VERB_COVERAGE §2/§4 | available (#307, future added by #334, itxaron-dative carrier added by #334) |
 
 ### 🛡️ Refresh Gate C — The Multi-Argument Audit
 
 | Unit | Focus | Constraint | Notes |
 |---|---|---|---|
-| 33 | **REFRESH — The Case-Ending Mixer** | zero new verbs; **score-gated**, mandatory pass before Phase V | Isolates and drills the NOR/NORK/NORI distinction — sentences that swap which argument is absolutive vs. ergative vs. dative, heading off the classic "mixed up the `-k`" error — plus a dative past/future recombination drill bridging Units 27/29. |
+| 32 | **REFRESH — The Case-Ending Mixer** | zero new verbs; **score-gated**, mandatory pass before Phase V | Isolates and drills the NOR/NORK/NORI distinction — sentences that swap which argument is absolutive vs. ergative vs. dative, heading off the classic "mixed up the `-k`" error — plus a dative past/future recombination drill bridging Units 26/28. |
 
 ---
 
@@ -425,20 +430,20 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 34 | **Ahalera — Permissions & Capability** — `dezaket`/`naiteke` contrasted with periphrastic `ahal izan`/`ezin` (#410/#411), plus `ukan`'s NOR-NORK object axis (`zaitzaket`-type forms, #352) across all three Ahalera sub-tenses (present/hypothetical/past), plus `esan`/`eman`'s ditransitive Ahalera (`diezaioket`-type forms, #366) | "I can come." / "I can't come." / "I could (have) ..." | NOR/NOR-NORK [P]; dative [R] | §2, §3, VERB_COVERAGE §5 (`ahal`/`ezin`) | available (#148, object axis added by #352, esan/eman ditransitive [R] added by #366, periphrastic `ahal`/`ezin` izan/ukan carriers added by #410/#411) — `izan`/`ukan` potential, form-only; remaining dative [R] paradigms deferred |
-| 35 | **Baldintza & Ondorioa — Conditionals** — `ba-` protasis + `-ke` apodosis, plus `ukan`'s NOR-NORK object axis (`bazintut`/`zintuket`-type forms, #353) across Baldintza and Ondorioa present/past, plus `esan`/`eman`'s ditransitive Baldintza/Ondorioa (`balio`/`nioke`-type forms, #366) | "If I had money, I would buy that" (`Dirua banu, hori erosiko nuke`) | NOR/NOR-NORK [P]; dative [R] | §2, §3 | available (#148, object axis added by #353, esan/eman ditransitive [R] added by #366) — `izan`/`ukan` baldintza + ondorioa-present, form-only; remaining dative [R] paradigms deferred |
+| 33 | **Ahalera — Permissions & Capability** — `dezaket`/`naiteke` contrasted with periphrastic `ahal izan`/`ezin` (#410/#411), plus `ukan`'s NOR-NORK object axis (`zaitzaket`-type forms, #352) across all three Ahalera sub-tenses (present/hypothetical/past), plus `esan`/`eman`'s ditransitive Ahalera (`diezaioket`-type forms, #366) | "I can come." / "I can't come." / "I could (have) ..." | NOR/NOR-NORK [P]; dative [R] | §2, §3, VERB_COVERAGE §5 (`ahal`/`ezin`) | available (#148, object axis added by #352, esan/eman ditransitive [R] added by #366, periphrastic `ahal`/`ezin` izan/ukan carriers added by #410/#411) — `izan`/`ukan` potential, form-only; remaining dative [R] paradigms deferred |
+| 34 | **Baldintza & Ondorioa — Conditionals** — `ba-` protasis + `-ke` apodosis, plus `ukan`'s NOR-NORK object axis (`bazintut`/`zintuket`-type forms, #353) across Baldintza and Ondorioa present/past, plus `esan`/`eman`'s ditransitive Baldintza/Ondorioa (`balio`/`nioke`-type forms, #366) | "If I had money, I would buy that" (`Dirua banu, hori erosiko nuke`) | NOR/NOR-NORK [P]; dative [R] | §2, §3 | available (#148, object axis added by #353, esan/eman ditransitive [R] added by #366) — `izan`/`ukan` baldintza + ondorioa-present, form-only; remaining dative [R] paradigms deferred |
 
 #### Stage 11: Directives & Wishes
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 36 | **Agintera — Commands** — the imperative | "Come here!" (`Hadi hona!`) | izan/ukan NOR/NOR-NORK incl. jussive/hortative/plural-object [P]; egon/etorri/joan [P]; gustatu/iruditu/ahaztu NOR-NORI object axis (#364) [P]; esan/eman ditransitive (`iezadazu`/`iezaiozu`) [R] | §16 | available (#171, #364, #368) — full Agintera coverage; izan's own missing `bedi`/`bitez` jussive and etorri/joan's bare-radical jussive remain out of scope |
-| 37 | **Purpose & Wishing (Subjuntiboa)** — the subjunctive **as a construction** (matrix verb + subordinate clause) | "I want him to come." (`Nahi dut etor dadin`) / "She told him to come." (`Esan dio etor dadila`) / "...so that he sees it." (`...ikus dezan`) | NOR/NOR-NORK 3rd-person in-construction [P]; dative [R] | §16 | pending |
+| 35 | **Agintera — Commands** — the imperative | "Come here!" (`Hadi hona!`) | izan/ukan NOR/NOR-NORK incl. jussive/hortative/plural-object [P]; egon/etorri/joan [P]; gustatu/iruditu/ahaztu NOR-NORI object axis (#364) [P]; esan/eman ditransitive (`iezadazu`/`iezaiozu`) [R] | §16 | available (#171, #364, #368) — full Agintera coverage; izan's own missing `bedi`/`bitez` jussive and etorri/joan's bare-radical jussive remain out of scope |
+| 36 | **Purpose & Wishing (Subjuntiboa)** — the subjunctive **as a construction** (matrix verb + subordinate clause) | "I want him to come." (`Nahi dut etor dadin`) / "She told him to come." (`Esan dio etor dadila`) / "...so that he sees it." (`...ikus dezan`) | NOR/NOR-NORK 3rd-person in-construction [P]; dative [R] | §16 | pending |
 
 Two different moods with different difficulty profiles get their own units —
 the imperative is concrete, high-utility, and second-person, taught first; the
 subjunctive barely exists as a standalone form outside subordinate clauses, so
-Unit 37 teaches it as a *syntactic construction*, recognition-first (see
+Unit 36 teaches it as a *syntactic construction*, recognition-first (see
 `LEARNING_JOURNEY_EVALUATION.md` finding F3).
 
 #### Stage 12: The Intimate Register (`hi` + Hitanoa)
@@ -449,23 +454,23 @@ novelties — new person, addressee-agreement, gender — one at a time (see
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
-| 38 | **hi — Meet "hi"** (no allocutivity) — as a subject in known paradigms, plus `hi`-as-NORK's own gender split | `Hi ikaslea haiz.` / `Hago lasai.` / `Hator hona.` / `Hik badakik?` | §3/§6 | available (#144, #167) |
-| 39 | **Toka (masculine allocutive)** — addressee-agreement on 3rd-person statements, one gender | `Lanean dik.` / `Etorri duk.` / `Ez nauk ondo.` | §10 | available (#167) |
-| 40 | **Noka (feminine allocutive)** — taught as the `-k`→`-n` transform of Unit 39 | `Lanean din.` / `Etorri dun.` / `Ez naun ondo.` | §10 | available (#167) |
-| 41 | **Hitanoa Recombined** — mixed toka/noka + *when not to use it* (subordinate clauses, formal `-ke-` moods) | choose register by addressee gender | §10, `LANGUAGE_DECISIONS.md` 2026-06-11 | pending |
+| 37 | **hi — Meet "hi"** (no allocutivity) — as a subject in known paradigms, plus `hi`-as-NORK's own gender split | `Hi ikaslea haiz.` / `Hago lasai.` / `Hator hona.` / `Hik badakik?` | §3/§6 | available (#144, #167) |
+| 38 | **Toka (masculine allocutive)** — addressee-agreement on 3rd-person statements, one gender | `Lanean dik.` / `Etorri duk.` / `Ez nauk ondo.` | §10 | available (#167) |
+| 39 | **Noka (feminine allocutive)** — taught as the `-k`→`-n` transform of Unit 38 | `Lanean din.` / `Etorri dun.` / `Ez naun ondo.` | §10 | available (#167) |
+| 40 | **Hitanoa Recombined** — mixed toka/noka + *when not to use it* (subordinate clauses, formal `-ke-` moods) | choose register by addressee gender | §10, `LANGUAGE_DECISIONS.md` 2026-06-11 | pending |
 
 #### Stage 13: Reading Real Text
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 42 | **The Passive nor-shift — Reading Real Text** — non-finite forms, nor-shift (`ireki dut` → `ireki da`) | comprehension over real sentences | [R] throughout | §14/§15 | available (#145, #170) — `kind: 'reading'`, §15 nor-shift + §14 non-finite forms |
+| 41 | **The Passive nor-shift — Reading Real Text** — non-finite forms, nor-shift (`ireki dut` → `ireki da`) | comprehension over real sentences | [R] throughout | §14/§15 | available (#145, #170) — `kind: 'reading'`, §15 nor-shift + §14 non-finite forms |
 
 ---
 
 ### Phase VI — Making Things Happen (Causatives)
 
 Persons in scope: full **`ni`/`zu`/`hura`/`gu`/`zuek`/`haiek`** grid plus `hi`
-(available since Unit 38). The causative is a *morphological operation*
+(available since Unit 37). The causative is a *morphological operation*
 (`-arazi`) that recombines everything prior; placed last so every piece it
 recombines already exists.
 
@@ -473,30 +478,30 @@ recombines already exists.
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 43 | **Making Someone Do It** — `-arazi` on intransitives (`nor`→`nor-nork`) | "The storm made the climbers turn back." (`itzularazi zituen`) / "The music made the kids dance." (`dantzarazi ditu`) | present/past/future [P] | VERB_COVERAGE §6 | pending |
-| 44 | **Making Someone Do Something to Someone** — `-arazi` on transitives (`nor-nork`→`nor-nori-nork`) | "Grandma made the kids eat the beans." (`janarazi zizkien`) / "The teacher made the students write it." (`idatzarazi die`) | present/past/future [P] | VERB_COVERAGE §6 | pending |
+| 42 | **Making Someone Do It** — `-arazi` on intransitives (`nor`→`nor-nork`) | "The storm made the climbers turn back." (`itzularazi zituen`) / "The music made the kids dance." (`dantzarazi ditu`) | present/past/future [P] | VERB_COVERAGE §6 | pending |
+| 43 | **Making Someone Do Something to Someone** — `-arazi` on transitives (`nor-nork`→`nor-nori-nork`) | "Grandma made the kids eat the beans." (`janarazi zizkien`) / "The teacher made the students write it." (`idatzarazi die`) | present/past/future [P] | VERB_COVERAGE §6 | pending |
 
 #### 🛡️ Refresh Gate D — The Causative Recombination
 
 | Unit | Focus | Constraint | Notes |
 |---|---|---|---|
-| 45 | **REFRESH — Causatives Across Tenses & Moods** | zero new verbs; **score-gated** | Recombines Units 43-44's `-arazi` forms with future (Units 20-21), conditional (Unit 35), and imperative (Unit 36) — "makes/made/will make/would make/make (someone do X)". |
+| 44 | **REFRESH — Causatives Across Tenses & Moods** | zero new verbs; **score-gated** | Recombines Units 42-43's `-arazi` forms with future (Unit 20), conditional (Unit 34), and imperative (Unit 35) — "makes/made/will make/would make/make (someone do X)". |
 
 ### Phase VII — Bonus: Curiosities & Color
 
-Optional flavor content layered on top of the already-complete core curriculum (Units 1-44) — neither unit unlocks new agreement coverage that isn't already taught elsewhere; see `docs/DECISIONS.md` for why each was scoped this way.
+Optional flavor content layered on top of the already-complete core curriculum (Units 1-43) — neither unit unlocks new agreement coverage that isn't already taught elsewhere; see `docs/DECISIONS.md` for why each was scoped this way.
 
 #### Stage 15: Verbs That Don't Need an Auxiliary
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 46 | **Synthetic Curiosities** — `jario` (`nor-nori`, "dario"/"zerion"), `etzan` (`nor`, "datza"), `irudi` (`nor-nork`, "dirudi"); recognition-only | "Tears flow from him." (`Malkoak dario`) / "What does the exercise consist of?" (`Zertan datza ariketa?`) / "You look tired." (`Nekatuta zaude, dirudizu`) | VERB_COVERAGE §4a; CONJUGATIONS §8 | pending |
+| 45 | **Synthetic Curiosities** — `jario` (`nor-nori`, "dario"/"zerion"), `etzan` (`nor`, "datza"), `irudi` (`nor-nork`, "dirudi"); recognition-only | "Tears flow from him." (`Malkoak dario`) / "What does the exercise consist of?" (`Zertan datza ariketa?`) / "You look tired." (`Nekatuta zaude, dirudizu`) | VERB_COVERAGE §4a; CONJUGATIONS §8 | pending |
 
 #### Stage 16: Talking About Weather
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 47 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | pending |
+| 46 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | pending |
 
 ---
 

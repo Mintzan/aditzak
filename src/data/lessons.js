@@ -816,27 +816,30 @@ export const LESSONS = [
   // The Basque future is morphologically trivial — one rule, layered onto
   // auxiliaries the learner already drilled in Units 1-15 — so this was
   // deliberately *compressed* from four near-identical per-verb drill units
-  // (the old "Future Groups A-D", ~32 lessons) into two: Unit 17 teaches the
-  // rule on a small core set, and Unit 18 spreads it across the remaining
-  // verbs as cross-verb *mixer reviews* rather than re-drilling each verb's
-  // table one at a time. See `docs/DECISIONS.md` (2026-06-14, "Compressed the
-  // future stage").
+  // (the old "Future Groups A-D", ~32 lessons) into one unit (originally two
+  // — see `docs/DECISIONS.md`, 2026-06-14, "Compressed the future stage";
+  // #423 later merged them into one, see below): a rule intro on a small
+  // core set, plus a single pooled review spreading it across every other
+  // fodder verb rather than re-drilling each verb's table one at a time.
   //
-  // Unit 17 (The Future Tense): introduce `-ko`/`-go` on a three-verb core
-  // spanning both auxiliary patterns — `izan` (nor / `naiz`), `ukan`
-  // (nor-nork / `dut`), `joan` (nor motion / `naiz`) — full singular/plural
-  // split (same as Units 12-15) plus an intro-review pair. #143 added
-  // `etorri`'s future to that intro-review to stage the first `-ko`/`-go`
-  // minimal pair — `izan`'s future (`izango`) takes `-go`, `etorri`'s
-  // (`etorriko`) takes `-ko`, drilled side by side here. `etorri`'s future
-  // table already existed for Unit 18's "being/going" mixer, so no new
-  // `VERBS` data was needed.
+  // The rule intro: `-ko`/`-go` on a two-verb core spanning both auxiliary
+  // patterns — `izan` (nor / `naiz`), `ukan` (nor-nork / `dut`, also the
+  // future's one suppletive exception — see below) — full singular/plural
+  // split (same as Units 12-15) plus an intro-review. #143 added `etorri`'s
+  // future to that intro-review to stage the first `-ko`/`-go` minimal pair
+  // — `izan`'s future (`izango`) takes `-go`, `etorri`'s (`etorriko`) takes
+  // `-ko`, drilled side by side here. `joan`'s own future was trimmed by
+  // #423: it's `nor`-agreement like `izan` and was already redundant with
+  // the intro-review's coverage, with no new skill of its own. `ukan-future`
+  // stays as a dedicated lesson specifically because its future (`izango`)
+  // is borrowed wholesale from `izan` rather than derived from `ukan`'s own
+  // stem (which the mechanical `-ko`/`-go` rule would wrongly predict as
+  // "ukango") — drilling it on its own keeps that exception visible instead
+  // of folding it silently into the mechanical pool below.
   { id: 'izan-future', verbId: 'izan', tense: 'future', persons: PHASE_1_PERSONS },
   { id: 'izan-future-plural', verbId: 'izan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
   { id: 'ukan-future', verbId: 'ukan', tense: 'future', persons: PHASE_1_PERSONS },
   { id: 'ukan-future-plural', verbId: 'ukan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'joan-future', verbId: 'joan', tense: 'future', persons: PHASE_1_PERSONS },
-  { id: 'joan-future-plural', verbId: 'joan', tense: 'future', persons: PHASE_1_PLURAL_PERSONS },
   {
     id: 'future-intro-review',
     review: true,
@@ -892,97 +895,154 @@ export const LESSONS = [
       { verbId: 'nahi', tense: 'futurePlural' },
     ],
   },
-  // Unit 18 (The Future, Across Every Verb): the rule is already learned, so
-  // the remaining verbs arrive as themed mixer reviews — which the engine
-  // makes the *more* varied exercise type (cross-verb "which verb fits?",
-  // case-mixer, the full sentence/typing/spot-error mix, weak-spot boosters)
-  // rather than another round of one-verb-at-a-time form drills. `nahi`/`jakin`
-  // stay 3-person (ni/zu/hura), so they appear only in singular mixers; their
-  // plural counterparts simply drop them.
+  // #423 — the rule is already learned, so every other fodder verb with a
+  // `future` table (not already covered by a dative/covert-dative/invariant-
+  // noun construction elsewhere) arrives pooled into one review rather than
+  // a handful of hand-picked themed mixer pairs (the old "being/going",
+  // "eating/buying", "having/knowing" pairs + capstone this replaces) — the
+  // future is morphologically trivial enough that drilling it on a curated
+  // 14-verb subset had no pedagogical edge over drilling it on the full
+  // pool, and `CARRIERS_PER_SESSION` (`App.jsx`) already bounds session
+  // length regardless of pool size. `suffixChoice: true` adds a handful of
+  // "pick -ko or -go" recognition questions (see
+  // `generateSuffixChoiceQuestions`, `lessonLogic.js`) isolating the actual
+  // suffix decision from full conjugation — `ukan` is excluded from those
+  // specifically (its future is `izan`'s suppletive `izango`, not its own
+  // stem + suffix) even though it's still drilled here for the ordinary
+  // conjugation practice. `nahi`/`jakin` stay 3-person (ni/zu/hura), so they
+  // appear only in the singular pool; the plural pool simply drops them.
   {
-    id: 'future-mixer-being-going',
+    id: 'future-mixer-pool',
     review: true,
+    suffixChoice: true,
     persons: PHASE_1_PERSONS,
     sources: [
-      { verbId: 'egon', tense: 'future' },
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'joan', tense: 'future' },
       { verbId: 'etorri', tense: 'future' },
-      { verbId: 'ibili', tense: 'future' },
-    ],
-  },
-  {
-    id: 'future-mixer-being-going-plural',
-    review: true,
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
       { verbId: 'egon', tense: 'future' },
-      { verbId: 'etorri', tense: 'future' },
       { verbId: 'ibili', tense: 'future' },
-    ],
-  },
-  {
-    id: 'future-mixer-eating-buying',
-    review: true,
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'jan', tense: 'future' },
       { verbId: 'edan', tense: 'future' },
       { verbId: 'erosi', tense: 'future' },
-    ],
-  },
-  {
-    id: 'future-mixer-eating-buying-plural',
-    review: true,
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'jan', tense: 'future' },
-      { verbId: 'edan', tense: 'future' },
-      { verbId: 'erosi', tense: 'future' },
-    ],
-  },
-  {
-    id: 'future-mixer-having-knowing',
-    review: true,
-    persons: PHASE_1_PERSONS,
-    sources: [
       { verbId: 'ikusi', tense: 'future' },
       { verbId: 'eduki', tense: 'future' },
       { verbId: 'nahi', tense: 'future' },
       { verbId: 'jakin', tense: 'future' },
+      { verbId: 'hartu', tense: 'future' },
+      { verbId: 'egin', tense: 'future' },
+      { verbId: 'irakurri', tense: 'future' },
+      { verbId: 'idatzi', tense: 'future' },
+      { verbId: 'ikasi', tense: 'future' },
+      { verbId: 'entzun', tense: 'future' },
+      { verbId: 'utzi', tense: 'future' },
+      { verbId: 'aurkitu', tense: 'future' },
+      { verbId: 'bilatu', tense: 'future' },
+      { verbId: 'galdu', tense: 'future' },
+      { verbId: 'jaso', tense: 'future' },
+      { verbId: 'saldu', tense: 'future' },
+      { verbId: 'itxaron', tense: 'future' },
+      { verbId: 'sartu', tense: 'future' },
+      { verbId: 'atera', tense: 'future' },
+      { verbId: 'hasi', tense: 'future' },
+      { verbId: 'bizi-izan', tense: 'future' },
+      { verbId: 'eskatu', tense: 'future' },
+      { verbId: 'galdetu', tense: 'future' },
+      { verbId: 'adierazi', tense: 'future' },
+      { verbId: 'bukatu', tense: 'future' },
+      { verbId: 'amaitu', tense: 'future' },
+      { verbId: 'gainditu', tense: 'future' },
+      { verbId: 'bereiztu', tense: 'future' },
+      { verbId: 'ezagutu', tense: 'future' },
+      { verbId: 'sentitu', tense: 'future' },
+      { verbId: 'pentsatu', tense: 'future' },
+      { verbId: 'sumatu', tense: 'future' },
+      { verbId: 'ulertu', tense: 'future' },
+      { verbId: 'aztertu', tense: 'future' },
+      { verbId: 'ukatu', tense: 'future' },
+      { verbId: 'batu', tense: 'future' },
+      { verbId: 'planteatu', tense: 'future' },
+      { verbId: 'erori', tense: 'future' },
+      { verbId: 'jaiki', tense: 'future' },
+      { verbId: 'hausnartu', tense: 'future' },
+      { verbId: 'argudiatu', tense: 'future' },
+      { verbId: 'ondorioztatu', tense: 'future' },
+      { verbId: 'gaitzetsi', tense: 'future' },
+      { verbId: 'aldarrikatu', tense: 'future' },
+      { verbId: 'plazaratu', tense: 'future' },
+      { verbId: 'sustatu', tense: 'future' },
+      { verbId: 'bultzatu', tense: 'future' },
+      { verbId: 'bermatu', tense: 'future' },
+      { verbId: 'babestu', tense: 'future' },
+      { verbId: 'ziurtatu', tense: 'future' },
+      { verbId: 'borobildu', tense: 'future' },
     ],
   },
   {
-    id: 'future-mixer-having-knowing-plural',
+    id: 'future-mixer-pool-plural',
     review: true,
+    suffixChoice: true,
     persons: PHASE_1_PLURAL_PERSONS,
     sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'joan', tense: 'future' },
+      { verbId: 'etorri', tense: 'future' },
+      { verbId: 'egon', tense: 'future' },
+      { verbId: 'ibili', tense: 'future' },
+      { verbId: 'jan', tense: 'future' },
+      { verbId: 'edan', tense: 'future' },
+      { verbId: 'erosi', tense: 'future' },
       { verbId: 'ikusi', tense: 'future' },
       { verbId: 'eduki', tense: 'future' },
-    ],
-  },
-  // Cumulative capstone — a cross-section spanning both units and both
-  // auxiliary patterns (nor: izan/joan · nor-nork: ukan/ikusi), so the stage
-  // ends on mixed nor/nor-nork case-mixer and verb-choice questions rather
-  // than a single verb's table.
-  {
-    id: 'future-mixer-capstone',
-    review: true,
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'izan', tense: 'future' },
-      { verbId: 'ukan', tense: 'future' },
-      { verbId: 'joan', tense: 'future' },
-      { verbId: 'ikusi', tense: 'future' },
-    ],
-  },
-  {
-    id: 'future-mixer-capstone-plural',
-    review: true,
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'izan', tense: 'future' },
-      { verbId: 'ukan', tense: 'future' },
-      { verbId: 'joan', tense: 'future' },
-      { verbId: 'ikusi', tense: 'future' },
+      { verbId: 'hartu', tense: 'future' },
+      { verbId: 'egin', tense: 'future' },
+      { verbId: 'irakurri', tense: 'future' },
+      { verbId: 'idatzi', tense: 'future' },
+      { verbId: 'ikasi', tense: 'future' },
+      { verbId: 'entzun', tense: 'future' },
+      { verbId: 'utzi', tense: 'future' },
+      { verbId: 'aurkitu', tense: 'future' },
+      { verbId: 'bilatu', tense: 'future' },
+      { verbId: 'galdu', tense: 'future' },
+      { verbId: 'jaso', tense: 'future' },
+      { verbId: 'saldu', tense: 'future' },
+      { verbId: 'itxaron', tense: 'future' },
+      { verbId: 'sartu', tense: 'future' },
+      { verbId: 'atera', tense: 'future' },
+      { verbId: 'hasi', tense: 'future' },
+      { verbId: 'bizi-izan', tense: 'future' },
+      { verbId: 'eskatu', tense: 'future' },
+      { verbId: 'galdetu', tense: 'future' },
+      { verbId: 'adierazi', tense: 'future' },
+      { verbId: 'bukatu', tense: 'future' },
+      { verbId: 'amaitu', tense: 'future' },
+      { verbId: 'gainditu', tense: 'future' },
+      { verbId: 'bereiztu', tense: 'future' },
+      { verbId: 'ezagutu', tense: 'future' },
+      { verbId: 'sentitu', tense: 'future' },
+      { verbId: 'pentsatu', tense: 'future' },
+      { verbId: 'sumatu', tense: 'future' },
+      { verbId: 'ulertu', tense: 'future' },
+      { verbId: 'aztertu', tense: 'future' },
+      { verbId: 'ukatu', tense: 'future' },
+      { verbId: 'batu', tense: 'future' },
+      { verbId: 'planteatu', tense: 'future' },
+      { verbId: 'erori', tense: 'future' },
+      { verbId: 'jaiki', tense: 'future' },
+      { verbId: 'hausnartu', tense: 'future' },
+      { verbId: 'argudiatu', tense: 'future' },
+      { verbId: 'ondorioztatu', tense: 'future' },
+      { verbId: 'gaitzetsi', tense: 'future' },
+      { verbId: 'aldarrikatu', tense: 'future' },
+      { verbId: 'plazaratu', tense: 'future' },
+      { verbId: 'sustatu', tense: 'future' },
+      { verbId: 'bultzatu', tense: 'future' },
+      { verbId: 'bermatu', tense: 'future' },
+      { verbId: 'babestu', tense: 'future' },
+      { verbId: 'ziurtatu', tense: 'future' },
+      { verbId: 'borobildu', tense: 'future' },
     ],
   },
   // Unit 19 (#148) — `behar` ("need to / have to"), riding `ukan`'s present/
