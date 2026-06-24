@@ -8,6 +8,12 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-24 — #435: widened Unit 15's reverse-direction object-axis block from `ukan`/`maite`-only to all seven object-axis verbs
+
+#416 had extended Unit 15's reverse-direction block (NORK fixed at `hura`/`gu`/`zu`/`zuek`/`haiek`, drilling forms like `nau`/`gaitu`/`naute`) but deliberately scoped it to `ukan`/`maite` only, leaving 20 of those 26 lessons as a straight `ukan`/`maite` alternation — `ikusi`/`jan`/`edan`/`erosi`/`hartu` (which already had the same `presentByObject`/`pastByObject` table shape since #378/#379) appeared only inside the `fixed: 'ni'` block's pooled reviews, never as standalone practice.
+
+Resolved by, per remaining NORK value: replacing the fixed `ukan`-present + `maite`-present + `ukan`-past + `maite`-past four-lesson shape with **one rotated verb per tense** (cycling through all seven object-axis verbs across the ten present/past slots — `ukan`/`maite` twice each, `ikusi` twice, `jan`/`edan`/`erosi`/`hartu` once each — so the headline verbs stay most frequent without dominating), plus **a pooled present/past review per NORK value** spanning all seven verbs, mirroring what #381 already did for `fixed: 'ni'`. Net lesson count for the block is unchanged (20 in, 20 out: 10 practice + 10 review), so Unit 15 stays roughly its original size while gaining real lexical variety. No engine changes needed — `generateCrossVerbQuestions`'s `objectAxis` pooling already supports one shared `fixed` per review, which is all this needed (the "mixed-fixed-person" pooling #416/#419/#424 flagged as unbuilt is a different, harder feature this didn't require). #436 tracks widening the fodder pool itself to verbs beyond these seven.
+
 ## 2026-06-24 — Extended the NOR-number object pools (Units 13/14 + future) with 8 long-tail transitive verbs
 
 Fixing the plural-object agreement bug (see `docs/LANGUAGE_DECISIONS.md`, same date) added `presentPlural`/`pastPlural`/`futurePlural` tables to `egin`/`irakurri`/`idatzi`/`ikasi`/`entzun`/`utzi`/`bilatu`/`saldu`. Rather than leave those tables as dead data (reachable only as object-number distractor lures via `getObjectNumberLure`), wired all 8 into the existing object-number pools — `nor-nork-{present,past,future}-plural-pool` and their `-plural` siblings — so the new `ditut`/`nituen` forms are actually drilled.
