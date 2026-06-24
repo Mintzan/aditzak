@@ -2152,3 +2152,121 @@ imperative `NOR-NORI-NORK` forms, since the constraint is about which
 No new exceptions or relaxations apply in these moods — the PCC is a property
 of the auxiliary's agreement morphology, not of any one mood/tense built on
 top of it.
+
+---
+
+## 17. Causative (Arazlea — the `-arazi` construction)
+
+### 17.1 Formation
+
+The causative suffix **`-arazi`** attaches directly to a verb's **bare
+radical** — the same stripped stem §16.3's Radical/Bare-Stem Rule uses for
+subjunctive/jussive forms (`idatzi` → `idatz-`, `etorri` → `etor-`, `joan` →
+`joan-` (already bare)) — to derive a new lexical item: `idatzarazi` ("to
+make [someone] write"), `etorrarazi` ("to make [someone] come"), `ikusarazi`
+("to make [someone] see"). The result is itself a perfective participle
+(already ends in `-i`), so it takes the regular periphrastic aspect suffixes
+of §11 like any other verb: `idatzarazten` (imperfective), `idatzaraziko`
+(prospective/future).
+
+Two productive exceptions:
+- **`-erazi`** is *not* a vowel-harmony variant in general use — it survives
+  only in a handful of lexicalized forms (e.g. `adierazi`, "to express/
+  indicate", historically `adi` + `-erazi`). `-arazi` is the form to use when
+  deriving a new causative.
+- **Noun + `egin` compounds** (e.g. `barre egin`, "to laugh") use **`eragin`**
+  in place of `-arazi`: `barre eragin`, "to make [someone] laugh" — `eragin`
+  is its own lexicalized NOR-NORI-NORK verb (etymologically `egin` + causative),
+  not a productive suffixation pattern.
+
+### 17.2 Valency promotion
+
+Causativizing adds a new argument — the **causer** — which always takes the
+**ergative** (`NORK`) slot. Every other argument shifts down by one rung on
+the `NORK > NORI > NOR` hierarchy:
+
+| Base verb's pattern | Causativized pattern | What happens to the base verb's arguments |
+|---|---|---|
+| `NOR` (intransitive — `etorri`, `joan`) | `NOR-NORK` | the original subject (`NOR`) **stays absolutive**, now read as the causee/object of the causing; the causer is the new `NORK` |
+| `NOR-NORK` (transitive — `idatzi`, `ikusi`) | `NOR-NORI-NORK` | the original object (`NOR`) **stays absolutive**; the original subject (`NORK`) is **demoted to dative** (`NORI`) — it's now the causee; the causer is the new `NORK` |
+| `NOR-NORI` / `NOR-NORI-NORK` (already dative/ditransitive — `gustatu`, `esan`/`eman`) | — | **no further promotion is possible**: Basque's finite auxiliary only cross-references three arguments (`NOR`/`NORI`/`NORK`), and the slot is already full. The causee must be left **morphologically implicit** (an "indirect causative" — documented in the literature, e.g. Etxepare & Oyharçabal's work on implicit causees) rather than overtly case-marked. **Out of scope for Units 37-39** — see 17.5. |
+
+This matches the project's existing axis-fixed convention (§3/§5, `#142`):
+a `NOR-NORK` causative fixes `NOR` at `hura`/`haiek` and varies `NORK`; a
+`NOR-NORI-NORK` causative fixes `NOR` at `hura` and varies `NORI`/`NORK`,
+exactly like `ukan`-dative's existing tables.
+
+### 17.3 Conjugation — no new auxiliary morphology needed
+
+This is the key simplification for implementation: **a causative is just an
+ordinary periphrastic verb** (§11) built on a derived stem, conjugated with
+the **auxiliary the *causativized* pattern calls for** — `ukan` (§3) for a
+`NOR-NORK` causative, `ukan`-dative (§5) for a `NOR-NORI-NORK` causative.
+There is no separate "causative auxiliary" or new agreement morphology to
+document — every form below is a direct citation from §3/§5's existing
+tables with a causativized stem prefixed on.
+
+### 17.4 Worked examples
+
+**`NOR` → `NOR-NORK`** — `etorrarazi` ("make come"), `NOR` fixed at `hura`
+(singular causee), auxiliary = §3's plain `ukan` citation form:
+
+| NORK | Present | Past |
+|---|---|---|
+| nik | etorrarazi dut | etorrarazi nuen |
+| hik | etorrarazi duk | etorrarazi huen |
+| hark | etorrarazi du | etorrarazi zuen |
+| guk | etorrarazi dugu | etorrarazi genuen |
+| zuk | etorrarazi duzu | etorrarazi zenuen |
+| zuek | etorrarazi duzue | etorrarazi zenuten |
+| haiek | etorrarazi dute | etorrarazi zuten |
+
+*"Nik [hura] etorrarazi dut"* — "I made him/her come." (Standard Batua keeps
+the causee absolutive/unmarked here — see 17.6 on the dialectal dative
+variant.)
+
+**`NOR-NORK` → `NOR-NORI-NORK`** — `idatzarazi` ("make write"), `NOR` fixed
+at `hura` (the thing written), `NORI` = the causee (the one made to write),
+auxiliary = §5's `NOR`=hura, `NORI`=hari row:
+
+| NORK | Present | Past |
+|---|---|---|
+| nik | idatzarazi diot | idatzarazi nion |
+| hark | idatzarazi dio | idatzarazi zion |
+| guk | idatzarazi diogu | idatzarazi genion |
+| zuk | idatzarazi diozu | idatzarazi zenion |
+| zuek | idatzarazi diozue | idatzarazi zenioten |
+| haiek | idatzarazi diote | idatzarazi zioten |
+
+*"Nik [hari] [hura] idatzarazi diot"* — "I made him/her write it." (`hik`
+omitted, matching every other table's hika deferral.)
+
+Future/conditional/imperative forms are the regular periphrastic formulas
+from §11/§2/§3 applied to these same causativized stems — e.g.
+`etorraraziko dut` (future, "I will make him/her come"), `etorrarazi
+dezadan` (subjunctive, dropping to the bare radical-final form per §16.3 —
+`arazi` itself is a radical-ending-in-`-i` participle, so the subjunctive
+stacks on `arazi`'s own bare form `araz-`: *idatzaraz dezan*, "so that he/she
+may make him/her write it"). No new derivation rules — these are the same
+formulas already in this document, just composed with a causativized stem.
+
+### 17.5 Ceiling: causative-of-ditransitive is out of scope
+
+A causative built on an already-`NOR-NORI`/`NOR-NORI-NORK` verb
+(`gustatu`-family, `esan`/`eman`) has nowhere to put the causee — same
+class of gap as `#369`'s ditransitive subjunctive-past (§16.1), which this
+document explicitly declined to tabulate as too rare even in literary
+registers. Units 37-39 should scope to causatives of `NOR` and `NOR-NORK` base verbs
+only (`etorri`/`joan`/`egon` and `idatzi`/`ikusi`/`irakurri`-class verbs
+already in `VERBS`) — the same scoping move `#369` made for its own
+ceiling case.
+
+### 17.6 Dialectal note — not in scope
+
+Western varieties allow an alternate "indirect causative" for `NOR`-base
+verbs, marking the causee dative instead of absolutive (*emakumeak umeari
+etorrarazi **dio*** vs. standard Batua *emakumeak umea etorrarazi **du***).
+Per `CLAUDE.md`'s `dialect: 'batua'` scope (no dialect variants modeled
+yet), Units 37-39 should use only the standard absolutive-causee form in
+17.4 — the dative variant is noted here so it isn't mistaken for an error if
+encountered in outside reading, not because it needs its own lesson content.

@@ -35,6 +35,50 @@ teknikak), `entzun` (kantuak), `utzi` (giltzak, abarketak, otarrak, poltsak),
   rest of the periphrastic plural-object tables. `validFor` left `[]` on every
   relocated sentence (same conservative default as the rest of this batch).
 
+## 2026-06-24 — #370: causative (`-arazi`) grammar documented, no new auxiliary needed
+
+Researched and added `docs/CONJUGATIONS.md` §17 ("Causative (Arazlea)") to
+unblock #370 (Units 37-39), whose "Done when" required citing the causative's
+argument-structure conditioning before any `VERBS` data gets written.
+Cross-checked across multiple grammar sources (Euskaltzaindia's own grammar
+site, academic literature on Basque causatives/implicit causees, and learner
+references) rather than relying on a single source, since this paradigm
+wasn't previously documented anywhere in the repo:
+
+- **Formation**: `-arazi` attaches to the bare radical (§16.3's existing
+  Radical/Bare-Stem Rule — `idatzi`→`idatz-`→`idatzarazi`). `-erazi` is *not*
+  a productive vowel-harmony variant (a common misconception) — it only
+  survives in lexicalized forms like `adierazi`. Noun+`egin` compounds use
+  the separately-lexicalized `eragin`, not `-arazi`.
+- **Valency promotion** (the actual grammar, confirmed across sources): `NOR`
+  base → `NOR-NORK` causative, original subject stays absolutive (the
+  causee); `NOR-NORK` base → `NOR-NORI-NORK` causative, original object stays
+  absolutive, original subject demotes to dative (the causee). This is the
+  standard Batua "direct causative." A western-dialect "indirect causative"
+  variant (dative causee even for `NOR`-base verbs) exists but is out of
+  scope per `CLAUDE.md`'s `dialect: 'batua'`-only scope — noted in §17.6 so
+  it isn't mistaken for an error if encountered elsewhere.
+- **No new auxiliary morphology**: the big simplification. A causative is an
+  ordinary periphrastic verb (§11) on a derived stem (`idatzarazi`,
+  `etorrarazi`) — it conjugates with the *already-documented* `ukan` (§3) or
+  `ukan`-dative (§5) auxiliary, exactly like any other periphrastic verb.
+  §17.4's worked tables are direct citations from §3/§5, not new forms.
+- **Ceiling, scoped out**: causativizing an already-`NOR-NORI`/
+  `NOR-NORI-NORK` verb (`gustatu`-family, `esan`/`eman`) has no 4th
+  cross-referencable slot — the causee can only be expressed via an
+  "indirect causative" with an implicit causee, a distinct construction this
+  app doesn't model. Units 37-39 should scope to causatives of `NOR`/
+  `NOR-NORK` base verbs already in `VERBS` (`etorri`/`joan`/`egon`,
+  `idatzi`/`ikusi`/`irakurri`-class) — same kind of scope cut #369 made for
+  its own ditransitive-subjunctive-past ceiling case.
+
+This research pass is doc-only — no `VERBS`/`journey.js`/`lessons.js`
+changes yet. #370 still needs the data-shape decision (a causative wraps an
+*existing* verb's stem rather than being a standalone paradigm — likely a
+`causative: { baseVerbId, conjugations: {...} }`-shaped entry, or its own
+verb entries with a `derivedFrom` pointer) and concrete Units 37-39
+`lessonIds` scoping before the `blocked` label comes off.
+
 ## 2026-06-22 — #384: jarraitu/jario sourcing and scope calls
 
 Added two more NOR-NORI verbs alongside `gustatu`/`iruditu`/`ahaztu`, per

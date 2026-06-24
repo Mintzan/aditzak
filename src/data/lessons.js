@@ -3981,4 +3981,118 @@ export const LESSONS = [
     persons: ['hura', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'haiek' },
   },
+  // #369 — Unit 36, "Purpose & Wishing (Subjuntiboa)". izan/ukan get
+  // in-construction production (sentences over the volitional `nahi izan`
+  // frame), restricted to `hura`/`haiek` per the unit's stated "3rd-person...
+  // production" scope. gustatu/iruditu/ahaztu's dative and esan/eman's
+  // ditransitive subjunctive are recognition-only, pooled per verb family —
+  // same `unit-N-dative-review`/`unit-N-ditransitive-review` split every
+  // prior unit in this stage uses.
+  {
+    id: 'izan-subjunctive-present',
+    verbId: 'izan',
+    tense: 'subjunctivePresent',
+    persons: ['hura', 'haiek'],
+  },
+  {
+    id: 'ukan-subjunctive-present',
+    verbId: 'ukan',
+    tense: 'subjunctivePresent',
+    persons: ['hura', 'haiek'],
+  },
+  {
+    id: 'unit-36-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'subjunctivePresent' },
+      { verbId: 'ukan', tense: 'subjunctivePresent' },
+    ],
+  },
+  {
+    id: 'unit-36-dative-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'gustatu', tense: 'subjunctivePresent' },
+      { verbId: 'iruditu', tense: 'subjunctivePresent' },
+      { verbId: 'ahaztu', tense: 'subjunctivePresent' },
+    ],
+  },
+  {
+    id: 'unit-36-ditransitive-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'esan', tense: 'subjunctivePresent' },
+      { verbId: 'eman', tense: 'subjunctivePresent' },
+    ],
+  },
+  // #370 — Unit 42, "Making Someone Do It": causative `nor` → `nor-nork`
+  // (`itzularazi`/`dantzarazi`), present/past/future per LEARNING_JOURNEY.md.
+  { id: 'itzularazi-present', verbId: 'itzularazi', tense: 'present' },
+  { id: 'itzularazi-past', verbId: 'itzularazi', tense: 'past' },
+  { id: 'itzularazi-future', verbId: 'itzularazi', tense: 'future' },
+  { id: 'dantzarazi-present', verbId: 'dantzarazi', tense: 'present' },
+  { id: 'dantzarazi-past', verbId: 'dantzarazi', tense: 'past' },
+  { id: 'dantzarazi-future', verbId: 'dantzarazi', tense: 'future' },
+  {
+    id: 'unit-42-causative-review',
+    review: true,
+    sources: [
+      { verbId: 'itzularazi', tense: 'present' },
+      { verbId: 'itzularazi', tense: 'past' },
+      { verbId: 'itzularazi', tense: 'future' },
+      { verbId: 'dantzarazi', tense: 'present' },
+      { verbId: 'dantzarazi', tense: 'past' },
+      { verbId: 'dantzarazi', tense: 'future' },
+    ],
+  },
+  // #370 — Unit 43, "Making Someone Do Something to Someone": causative
+  // `nor-nork` → `nor-nori-nork` (`janarazi`/`idatzarazi`), present/past/future.
+  { id: 'janarazi-present', verbId: 'janarazi', tense: 'present' },
+  { id: 'janarazi-past', verbId: 'janarazi', tense: 'past' },
+  { id: 'janarazi-future', verbId: 'janarazi', tense: 'future' },
+  { id: 'idatzarazi-present', verbId: 'idatzarazi', tense: 'present' },
+  { id: 'idatzarazi-past', verbId: 'idatzarazi', tense: 'past' },
+  { id: 'idatzarazi-future', verbId: 'idatzarazi', tense: 'future' },
+  {
+    id: 'unit-43-causative-review',
+    review: true,
+    sources: [
+      { verbId: 'janarazi', tense: 'present' },
+      { verbId: 'janarazi', tense: 'past' },
+      { verbId: 'janarazi', tense: 'future' },
+      { verbId: 'idatzarazi', tense: 'present' },
+      { verbId: 'idatzarazi', tense: 'past' },
+      { verbId: 'idatzarazi', tense: 'future' },
+    ],
+  },
+  // #370 — Unit 44, Refresh Gate D: zero new verbs, dedicated gate review
+  // lessons pooling Units 42-43's verbs (mirroring Unit 22 gate's own
+  // dedicated `unit-20-review-*` lessons rather than reusing the prior
+  // units' review lesson ids — every LESSONS id is referenced exactly once).
+  {
+    id: 'unit-44-review-1',
+    review: true,
+    sources: [
+      { verbId: 'itzularazi', tense: 'present' },
+      { verbId: 'itzularazi', tense: 'past' },
+      { verbId: 'itzularazi', tense: 'future' },
+      { verbId: 'dantzarazi', tense: 'present' },
+      { verbId: 'dantzarazi', tense: 'past' },
+      { verbId: 'dantzarazi', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-44-review-2',
+    review: true,
+    sources: [
+      { verbId: 'janarazi', tense: 'present' },
+      { verbId: 'janarazi', tense: 'past' },
+      { verbId: 'janarazi', tense: 'future' },
+      { verbId: 'idatzarazi', tense: 'present' },
+      { verbId: 'idatzarazi', tense: 'past' },
+      { verbId: 'idatzarazi', tense: 'future' },
+    ],
+  },
 ]
