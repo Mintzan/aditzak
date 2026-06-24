@@ -360,7 +360,25 @@ rewritten against `getComposedTable`'s output instead of the literal fields.
 The NOR-NORI flat/`byNor` tables and the ditransitive `diot`-family tables
 flagged in this issue's follow-up comments are out of scope for this pass —
 the composer is intentionally only as axis-generic as this one family needs
-today; widening it to those three remaining families is left to a follow-up.
+today; widening it to those three remaining families is left to a follow-up
+(#448).
+
+**Update (#442)**: added `animateObject` (default `true`) to the verb model —
+when `false`, `getComposedTable` omits every personal (`ni`/`hi`/`gu`/`zu`/
+`zuek`) `nor` cell from a composed `presentByObject`/`pastByObject` table,
+keeping only the 3rd-person ones, so a thing-only verb's object axis never
+yields (or offers as a distractor) a "[verb] you/me/us" form. Marked on the
+six verbs that are unambiguously thing-only/metaphor and have no composed
+table yet (`irakurri`/`idatzi`/`argudiatu`/`ondorioztatu`/`planteatu`/
+`borobildu`/`saldu`/`galdu`) plus `jario` (gates its future NOR-NORI subject
+slot instead, once #441/#448 builds that composer) — all no-ops today, ready
+for #443/#441 to pick up. `jan`/`edan` (also named as exceptions in #442) and
+the borderline `hartu`/`erosi` were deliberately **not** marked: all four
+already have a composed table wired into shipped Unit 15 lessons that drill
+personal-`nor` cells for them, so flipping the flag now would silently orphan
+those lessons rather than just filter a still-unused one — left to #443's
+Unit 15 rework (`hartu`/`erosi`'s call also needs native-speaker confirmation,
+tracked in `docs/LANGUAGE_DECISIONS.md`).
 
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids

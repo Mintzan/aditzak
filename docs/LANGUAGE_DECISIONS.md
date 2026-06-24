@@ -6,6 +6,10 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-24 — Open question: `hartu`/`erosi`'s `animateObject` call (#442) needs native-speaker confirmation
+
+#442 added `animateObject: false` to gate a verb's personal-object cells out of its composed NOR-NORK object-axis table, and flagged `hartu`/`erosi` (both `dativeOvergeneration: true`, both already have a composed `presentByObject`/`pastByObject` table from #436) as a borderline call: `hartu` "take [someone]" reads as plausible (escorting/fetching a person), `erosi` "buy [someone]" reads as a metaphor (or worse, human trafficking) rather than the literal sense the table drills — but neither call was made here. Left both unset (default `true`, unfiltered) pending a native speaker confirming which, if either, should flip to `false`. Whoever resolves this should also check whether flipping either one orphans an already-shipped Unit 15 lesson (`src/data/lessons.js`'s `hartu-object-axis-present-zuek`, `erosi-object-axis-past-zu`, and the pooled `object-axis-*-review*` lessons all draw on these verbs' personal-`nor` cells) — same caveat #442 left for `jan`/`edan`, deferred to #443's Unit 15 rework.
+
 ## 2026-06-24 — Plural-object (`ditut`/`nituen`) tables for eight long-tail transitive verbs whose example sentences had plural objects
 
 A user flagged "Guk baserriko barazkiak plazan saltzen **dugu**" as wrong — a

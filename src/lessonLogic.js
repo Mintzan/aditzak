@@ -750,6 +750,14 @@ export function resolveObjectAxisTable(table2D, { vary, fixed }) {
   return table
 }
 
+// #442: the personal (non-3rd-person) `nor` values a composed NOR-NORK
+// by-object table can vary over — every key the `edun` skeleton uses for its
+// varying object slot except the two 3rd-person ones (`hura`/`haiek`, which
+// can name a thing as well as a person). `getComposedTable` omits these for
+// an `animateObject: false` verb (`data/verbs.js` has the field's full doc
+// comment).
+const PERSONAL_NOR_VALUES = new Set(['ni', 'hi', 'gu', 'zu', 'zuek'])
+
 // #436: every consumer of `verb.conjugations[tense]` reads through here
 // instead, so a verb can carry `presentByObject`/`pastByObject` either as a
 // literal 2D table (today, for any verb not yet migrated) or — for `ukan`/
@@ -759,6 +767,11 @@ export function resolveObjectAxisTable(table2D, { vary, fixed }) {
 // to every leaf string of the skeleton, reproducing exactly what used to be
 // hand-written there. Any other `tense` (or a verb with no `byObjectPrefixes`)
 // just falls through to the literal table, unchanged.
+// #442: a verb with `animateObject: false` additionally drops every
+// personal (`PERSONAL_NOR_VALUES`) `nor` cell from the composed table, so its
+// object axis only ever yields the 3rd-person forms a thing-only object can
+// take — never a grammatically-valid-but-pragmatically-wrong "I read you"
+// form, either as a question's correct answer or as a distractor.
 export function getComposedTable(verb, tense) {
   const base = tense === 'presentByObject' ? 'present' : tense === 'pastByObject' ? 'past' : undefined
   const prefix = base && verb.byObjectPrefixes?.[base]
@@ -768,6 +781,7 @@ export function getComposedTable(verb, tense) {
   for (const outer of Object.keys(skeleton)) {
     table[outer] = {}
     for (const inner of Object.keys(skeleton[outer])) {
+      if (verb.animateObject === false && PERSONAL_NOR_VALUES.has(inner)) continue
       table[outer][inner] = prefix + skeleton[outer][inner]
     }
   }

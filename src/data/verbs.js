@@ -47,6 +47,29 @@
 // downstream consumer (`buildOptions`, lures, sentences) is unchanged — the
 // 2D shape never reaches them directly.
 //
+// `animateObject` (#442, optional, default `true`) gates whether a verb's
+// *varying* personal slot on a composed axis table (`getComposedTable`,
+// `lessonLogic.js`) may take a non-3rd-person value — i.e. whether the slot
+// can plausibly be a person rather than a thing. For the NOR-NORK object axis
+// above, that's the `nor` (object) side: composing `presentByObject`/
+// `pastByObject` for an `animateObject: false` verb omits every `nor` cell
+// except `hura`/`haiek`, so a form like "irakurtzen zaitut" ("I read *you*")
+// is never produced or offered as a distractor for a verb whose object is
+// always a thing. Most verbs leave this unset (default `true`, no
+// annotation needed); set `false` only on the exceptions — thing-only
+// objects (`irakurri`, `idatzi`, `argudiatu`, `ondorioztatu`, `planteatu`,
+// `borobildu`) and object-axis metaphors (`saldu`, `galdu`) — listed here
+// even though none of them have a composed axis table yet (that's #443's
+// widening), so the flag is already correct once they get one. Binary, no
+// "marginal" state — see `docs/LANGUAGE_DECISIONS.md` for the open
+// `hartu`/`erosi` borderline call this deliberately leaves unset pending
+// native-speaker confirmation, and for why `jan`/`edan` (also named in #442
+// as exceptions) aren't marked yet: both already have a composed table
+// that's wired into shipped Unit 15 lessons using personal-`nor` cells
+// (`edan-object-axis-present-zu`, `jan-object-axis-past-gu`, their pooled
+// reviews, `src/data/lessons.js`), so flipping the flag now would silently
+// orphan those lessons — left to #443, which reworks that pool anyway.
+//
 // `dialect` is a placeholder for future variants: a verb could later carry
 // e.g. `dialectVariants: { bizkaiera: { conjugations: {...} } }` overrides
 // without changing this shape.
@@ -4206,6 +4229,7 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor', 'nork'],
     object: 'hura',
+    animateObject: false, // #442: thing-only object
     dialect: 'batua',
     conjugations: {
       present: {
@@ -4269,6 +4293,7 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor', 'nork'],
     object: 'hura',
+    animateObject: false, // #442: thing-only object
     dialect: 'batua',
     conjugations: {
       present: {
@@ -4638,6 +4663,7 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor', 'nork'],
     object: 'hura',
+    animateObject: false, // #442: object-axis metaphor ("lose" a person reads as bereavement, not the literal sense this table drills)
     dialect: 'batua',
     conjugations: {
       present: {
@@ -4746,6 +4772,7 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor', 'nork'],
     object: 'hura',
+    animateObject: false, // #442: object-axis metaphor (human trafficking, not this table's literal sense)
     dialect: 'batua',
     conjugations: {
       present: {
@@ -6131,6 +6158,7 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor', 'nork'],
     object: 'hura',
+    animateObject: false, // #442: thing-only object
     dialect: 'batua',
     conjugations: {
       present: {
@@ -6349,6 +6377,7 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor', 'nork'],
     object: 'hura',
+    animateObject: false, // #442: thing-only object
     dialect: 'batua',
     recognitionOnly: true,
     conjugations: {
@@ -6404,6 +6433,7 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor', 'nork'],
     object: 'hura',
+    animateObject: false, // #442: thing-only object
     dialect: 'batua',
     recognitionOnly: true,
     conjugations: {
@@ -6899,6 +6929,7 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor', 'nork'],
     object: 'hura',
+    animateObject: false, // #442: thing-only object
     dialect: 'batua',
     recognitionOnly: true,
     conjugations: {
@@ -7997,6 +8028,13 @@ export const VERBS = [
     type: 'synthetic',
     agreement: ['nor', 'nori'],
     object: 'hura',
+    // #442: gates the *subject* (`nor`) slot here, not the object — `jario`
+    // is `nor-nori`, so its varying personal slot once a `*ByNor` axis table
+    // is composed (#441) is the thing that's flowing, not an object. The
+    // composer (`getComposedTable`) doesn't yet handle that axis (#441/#448),
+    // so this has no effect today; marked now per #442's scope so #441 picks
+    // it up correctly.
+    animateObject: false,
     dialect: 'batua',
     recognitionOnly: true,
     conjugations: {
