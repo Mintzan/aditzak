@@ -336,6 +336,16 @@ already-nor-nork `objectAxis` verbs). `App.jsx`'s call site still doesn't
 pass `lesson.objectAxis` through — deferred to #381. See `docs/DECISIONS.md`
 (2026-06-21, #380).
 
+**Update (#435)**: #416 had extended Unit 15's reverse-direction block (NORK
+fixed at `hura`/`gu`/`zu`/`zuek`/`haiek`) but scoped it to `ukan`/`maite`
+only, leaving that half of the unit wall-to-wall those two verbs. #435 closed
+that gap with no engine changes — each remaining NORK value now rotates a
+single practice verb per tense across the full seven-verb object-axis set,
+and gets its own pooled review (one shared `fixed` per review, same shape
+`generateCrossVerbQuestions` already supported since #380). #436 tracks
+widening the fodder pool itself (`*ByObject` tables for more verbs) into this
+same structure.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

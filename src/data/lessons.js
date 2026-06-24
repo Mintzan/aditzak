@@ -2567,33 +2567,24 @@ export const LESSONS = [
   // value (`hura`/`gu`/`zu`/`zuek`/`haiek`) sits in `ukan`/`maite`'s
   // `presentByObject`/`pastByObject` tables already but was never wired into
   // a lesson, so forms like `nau`/`gaitu`/`naute` (someone/something acting
-  // on me/us) were undrillable. One `objectAxis: { vary: 'nor', fixed: <nork> }`
-  // pair (present + past) per remaining NORK value, `ukan` and `maite` each,
-  // mirrors the four-lesson shape Unit 15 already established for `fixed:
-  // 'ni'` above — extending this unit rather than opening a new one, per the
-  // #286 "extend, don't add a new unit" precedent (this is more of the same
-  // grammatical relation, not a new one). Scoped to `ukan`/`maite` only for
-  // now (not the `ikusi`/`jan`/`edan`/`erosi`/`hartu` siblings, nor a pooled
-  // cross-verb review) — see docs/DECISIONS.md; those can extend this same
-  // shape later exactly as #378-#381 did for `fixed: 'ni'`.
+  // on me/us) were undrillable. #416 itself scoped this to `ukan`/`maite`
+  // only, which left the unit wall-to-wall `maite`/`ukan` (see #435).
+  //
+  // #435: rather than a fixed `ukan`+`maite` pair per remaining NORK value,
+  // each value now carries a single *rotated* practice verb per tense — the
+  // ten present/past slots below cycle through all seven object-axis verbs
+  // (`ukan`/`maite` twice each as the unit's headline anchors, `ikusi` twice,
+  // `jan`/`edan`/`erosi`/`hartu` once each) so every fodder verb gets a real
+  // standalone practice lesson instead of living only inside the #350/#381
+  // `fixed: 'ni'` review. Each NORK value also gains its own pooled
+  // `present`/`past` review spanning all seven verbs, mirroring #381's
+  // `fixed: 'ni'` reviews — `generateCrossVerbQuestions`'s `objectAxis`
+  // pooling only needs one shared `fixed` per review, which each of these
+  // already has. See docs/DECISIONS.md.
   {
     id: 'ukan-object-axis-present-hura',
     verbId: 'ukan',
     tense: 'presentByObject',
-    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'hura' },
-  },
-  {
-    id: 'maite-object-axis-present-hura',
-    verbId: 'maite',
-    tense: 'presentByObject',
-    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'hura' },
-  },
-  {
-    id: 'ukan-object-axis-past-hura',
-    verbId: 'ukan',
-    tense: 'pastByObject',
     persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'hura' },
   },
@@ -2605,71 +2596,126 @@ export const LESSONS = [
     objectAxis: { vary: 'nor', fixed: 'hura' },
   },
   {
-    id: 'ukan-object-axis-present-gu',
-    verbId: 'ukan',
+    id: 'object-axis-present-review-hura',
+    review: true,
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+    sources: [
+      { verbId: 'ukan', tense: 'presentByObject' },
+      { verbId: 'maite', tense: 'presentByObject' },
+      { verbId: 'ikusi', tense: 'presentByObject' },
+      { verbId: 'jan', tense: 'presentByObject' },
+      { verbId: 'edan', tense: 'presentByObject' },
+      { verbId: 'erosi', tense: 'presentByObject' },
+      { verbId: 'hartu', tense: 'presentByObject' },
+    ],
+  },
+  {
+    id: 'object-axis-past-review-hura',
+    review: true,
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+    sources: [
+      { verbId: 'ukan', tense: 'pastByObject' },
+      { verbId: 'maite', tense: 'pastByObject' },
+      { verbId: 'ikusi', tense: 'pastByObject' },
+      { verbId: 'jan', tense: 'pastByObject' },
+      { verbId: 'edan', tense: 'pastByObject' },
+      { verbId: 'erosi', tense: 'pastByObject' },
+      { verbId: 'hartu', tense: 'pastByObject' },
+    ],
+  },
+  {
+    id: 'ikusi-object-axis-present-gu',
+    verbId: 'ikusi',
     tense: 'presentByObject',
     persons: ['hura', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'gu' },
   },
   {
-    id: 'maite-object-axis-present-gu',
-    verbId: 'maite',
-    tense: 'presentByObject',
-    persons: ['hura', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'gu' },
-  },
-  {
-    id: 'ukan-object-axis-past-gu',
-    verbId: 'ukan',
+    id: 'jan-object-axis-past-gu',
+    verbId: 'jan',
     tense: 'pastByObject',
     persons: ['hura', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'gu' },
   },
   {
-    id: 'maite-object-axis-past-gu',
-    verbId: 'maite',
-    tense: 'pastByObject',
+    id: 'object-axis-present-review-gu',
+    review: true,
     persons: ['hura', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'gu' },
+    sources: [
+      { verbId: 'ukan', tense: 'presentByObject' },
+      { verbId: 'maite', tense: 'presentByObject' },
+      { verbId: 'ikusi', tense: 'presentByObject' },
+      { verbId: 'jan', tense: 'presentByObject' },
+      { verbId: 'edan', tense: 'presentByObject' },
+      { verbId: 'erosi', tense: 'presentByObject' },
+      { verbId: 'hartu', tense: 'presentByObject' },
+    ],
   },
   {
-    id: 'ukan-object-axis-present-zu',
-    verbId: 'ukan',
+    id: 'object-axis-past-review-gu',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+    sources: [
+      { verbId: 'ukan', tense: 'pastByObject' },
+      { verbId: 'maite', tense: 'pastByObject' },
+      { verbId: 'ikusi', tense: 'pastByObject' },
+      { verbId: 'jan', tense: 'pastByObject' },
+      { verbId: 'edan', tense: 'pastByObject' },
+      { verbId: 'erosi', tense: 'pastByObject' },
+      { verbId: 'hartu', tense: 'pastByObject' },
+    ],
+  },
+  {
+    id: 'edan-object-axis-present-zu',
+    verbId: 'edan',
     tense: 'presentByObject',
     persons: ['ni', 'hura', 'gu', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'zu' },
   },
   {
-    id: 'maite-object-axis-present-zu',
-    verbId: 'maite',
-    tense: 'presentByObject',
-    persons: ['ni', 'hura', 'gu', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'zu' },
-  },
-  {
-    id: 'ukan-object-axis-past-zu',
-    verbId: 'ukan',
+    id: 'erosi-object-axis-past-zu',
+    verbId: 'erosi',
     tense: 'pastByObject',
     persons: ['ni', 'hura', 'gu', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'zu' },
   },
   {
-    id: 'maite-object-axis-past-zu',
-    verbId: 'maite',
-    tense: 'pastByObject',
+    id: 'object-axis-present-review-zu',
+    review: true,
     persons: ['ni', 'hura', 'gu', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'zu' },
+    sources: [
+      { verbId: 'ukan', tense: 'presentByObject' },
+      { verbId: 'maite', tense: 'presentByObject' },
+      { verbId: 'ikusi', tense: 'presentByObject' },
+      { verbId: 'jan', tense: 'presentByObject' },
+      { verbId: 'edan', tense: 'presentByObject' },
+      { verbId: 'erosi', tense: 'presentByObject' },
+      { verbId: 'hartu', tense: 'presentByObject' },
+    ],
   },
   {
-    id: 'ukan-object-axis-present-zuek',
-    verbId: 'ukan',
-    tense: 'presentByObject',
+    id: 'object-axis-past-review-zu',
+    review: true,
     persons: ['ni', 'hura', 'gu', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'zuek' },
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+    sources: [
+      { verbId: 'ukan', tense: 'pastByObject' },
+      { verbId: 'maite', tense: 'pastByObject' },
+      { verbId: 'ikusi', tense: 'pastByObject' },
+      { verbId: 'jan', tense: 'pastByObject' },
+      { verbId: 'edan', tense: 'pastByObject' },
+      { verbId: 'erosi', tense: 'pastByObject' },
+      { verbId: 'hartu', tense: 'pastByObject' },
+    ],
   },
   {
-    id: 'maite-object-axis-present-zuek',
-    verbId: 'maite',
+    id: 'hartu-object-axis-present-zuek',
+    verbId: 'hartu',
     tense: 'presentByObject',
     persons: ['ni', 'hura', 'gu', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'zuek' },
@@ -2682,18 +2728,34 @@ export const LESSONS = [
     objectAxis: { vary: 'nor', fixed: 'zuek' },
   },
   {
-    id: 'maite-object-axis-past-zuek',
-    verbId: 'maite',
-    tense: 'pastByObject',
+    id: 'object-axis-present-review-zuek',
+    review: true,
     persons: ['ni', 'hura', 'gu', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'zuek' },
+    sources: [
+      { verbId: 'ukan', tense: 'presentByObject' },
+      { verbId: 'maite', tense: 'presentByObject' },
+      { verbId: 'ikusi', tense: 'presentByObject' },
+      { verbId: 'jan', tense: 'presentByObject' },
+      { verbId: 'edan', tense: 'presentByObject' },
+      { verbId: 'erosi', tense: 'presentByObject' },
+      { verbId: 'hartu', tense: 'presentByObject' },
+    ],
   },
   {
-    id: 'ukan-object-axis-present-haiek',
-    verbId: 'ukan',
-    tense: 'presentByObject',
-    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'haiek' },
+    id: 'object-axis-past-review-zuek',
+    review: true,
+    persons: ['ni', 'hura', 'gu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+    sources: [
+      { verbId: 'ukan', tense: 'pastByObject' },
+      { verbId: 'maite', tense: 'pastByObject' },
+      { verbId: 'ikusi', tense: 'pastByObject' },
+      { verbId: 'jan', tense: 'pastByObject' },
+      { verbId: 'edan', tense: 'pastByObject' },
+      { verbId: 'erosi', tense: 'pastByObject' },
+      { verbId: 'hartu', tense: 'pastByObject' },
+    ],
   },
   {
     id: 'maite-object-axis-present-haiek',
@@ -2703,18 +2765,41 @@ export const LESSONS = [
     objectAxis: { vary: 'nor', fixed: 'haiek' },
   },
   {
-    id: 'ukan-object-axis-past-haiek',
-    verbId: 'ukan',
+    id: 'ikusi-object-axis-past-haiek',
+    verbId: 'ikusi',
     tense: 'pastByObject',
     persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'haiek' },
   },
   {
-    id: 'maite-object-axis-past-haiek',
-    verbId: 'maite',
-    tense: 'pastByObject',
+    id: 'object-axis-present-review-haiek',
+    review: true,
     persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'haiek' },
+    sources: [
+      { verbId: 'ukan', tense: 'presentByObject' },
+      { verbId: 'maite', tense: 'presentByObject' },
+      { verbId: 'ikusi', tense: 'presentByObject' },
+      { verbId: 'jan', tense: 'presentByObject' },
+      { verbId: 'edan', tense: 'presentByObject' },
+      { verbId: 'erosi', tense: 'presentByObject' },
+      { verbId: 'hartu', tense: 'presentByObject' },
+    ],
+  },
+  {
+    id: 'object-axis-past-review-haiek',
+    review: true,
+    persons: ['ni', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+    sources: [
+      { verbId: 'ukan', tense: 'pastByObject' },
+      { verbId: 'maite', tense: 'pastByObject' },
+      { verbId: 'ikusi', tense: 'pastByObject' },
+      { verbId: 'jan', tense: 'pastByObject' },
+      { verbId: 'edan', tense: 'pastByObject' },
+      { verbId: 'erosi', tense: 'pastByObject' },
+      { verbId: 'hartu', tense: 'pastByObject' },
+    ],
   },
 
   // #358/#359: the NOR-NORI mirror of the block above — `gustatu`/`iruditu`/
