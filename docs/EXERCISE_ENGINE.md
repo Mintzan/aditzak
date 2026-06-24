@@ -427,6 +427,28 @@ doesn't, on either count:
   question is mechanically indistinguishable from any other tense's
   `sentence` question — `QuestionPrompt` keys off `question.sentence`
   generically, not off a list of tenses or kinds. No new `kind` is needed.
+
+### Causative constructions (Units 37-39) — resolved (#370 research pass)
+#370 flagged the causative (`-arazi`) as "the most structurally distinct
+chunk… likely to need its own data-shape thinking (a causative wraps an
+*existing* verb's conjugation rather than being a standalone paradigm)."
+`docs/CONJUGATIONS.md` §17 (added researching #370) resolves the *engine*
+side of that worry, though not the `VERBS` data-shape question (still open,
+see `docs/LANGUAGE_DECISIONS.md`'s 2026-06-24 `#370` entry):
+
+- **No new engine mechanic, same reasoning as subjunctive above.** A
+  causativized stem (`idatzarazi`, `etorrarazi`) conjugates with the
+  *already-existing* `ukan`/`ukan`-dative auxiliary paradigms (§3/§5) — it's
+  an ordinary periphrastic verb on a derived stem, not a new paradigm shape.
+  `generateQuestions`/`buildOptions` don't care what produced a verb's
+  `conjugations[tense][person]` string.
+- **What's still open is data *placement*, not engine work**: whether
+  causative entries live as new `VERBS` entries with a `derivedFrom`/
+  `baseVerbId` pointer, or as a `causative: {...}` sub-table nested on the
+  base verb's own entry. Either shape slots into the existing
+  `kind: 'form'`/`'sentence'` machinery unchanged — this is a data-modeling
+  call for whoever picks up #370's implementation, not a blocking engine
+  question.
 - **Distractors: the existing `grounded` invariant already covers it**
   (`docs/DISTRACTOR_STRATEGY.md` §4.3) — a subjunctive sentence question has
   a grounding sentence, so siblings drawn into `options` go through the
@@ -507,5 +529,8 @@ Roughly cheapest-and-most-unblocking first:
    nor-shift/passive half (#145); §14 non-finite forms remain a follow-up.
 9. **Subjunctive constructions** — Unit 37, resolved (#406): no data-shape
    or mechanic decision blocks it, content-only from here.
-10. **Flash drills / error-pattern detection** — separate design passes,
+10. **Causative constructions** — Units 37-39, engine question resolved
+    (#370 research pass): no new mechanic needed; the `VERBS` data-*shape*
+    (where a causative entry lives relative to its base verb) is still open.
+11. **Flash drills / error-pattern detection** — separate design passes,
     whenever prioritized; not blocking any specific unit.
