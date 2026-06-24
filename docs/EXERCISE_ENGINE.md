@@ -342,9 +342,25 @@ only, leaving that half of the unit wall-to-wall those two verbs. #435 closed
 that gap with no engine changes — each remaining NORK value now rotates a
 single practice verb per tense across the full seven-verb object-axis set,
 and gets its own pooled review (one shared `fixed` per review, same shape
-`generateCrossVerbQuestions` already supported since #380). #436 tracks
-widening the fodder pool itself (`*ByObject` tables for more verbs) into this
-same structure.
+`generateCrossVerbQuestions` already supported since #380).
+
+**Update (#436)**: the seven verbs' `presentByObject`/`pastByObject` literal
+tables above (`ukan`/`maite`/`ikusi`/`jan`/`edan`/`erosi`/`hartu`) are gone —
+each cell was always `<per-verb prefix> + ukan`'s matching cell, so `verbs.js`
+now stores that skeleton once (`OBJECT_AXIS_SKELETONS.edun`, present + past)
+plus each verb's `byObjectPrefixes: { present, past }`, composed at read time
+by `getComposedTable(verb, tense)` (`lessonLogic.js`). Every consumer that
+used to read `verb.conjugations[tense]` for these two tenses
+(`generateQuestions`, `collectCrossSourceCandidates`,
+`getDativeOvergenerationLure`, `hasAmbiguousTypedForm`, plus the
+`journey.test.js`/`logic.test.js` cross-checks) now goes through
+`getComposedTable` instead — behavior-preserving by construction, guarded by
+`logic.test.js`'s existing #347/#348/#378/#379 composition tests, now
+rewritten against `getComposedTable`'s output instead of the literal fields.
+The NOR-NORI flat/`byNor` tables and the ditransitive `diot`-family tables
+flagged in this issue's follow-up comments are out of scope for this pass —
+the composer is intentionally only as axis-generic as this one family needs
+today; widening it to those three remaining families is left to a follow-up.
 
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids

@@ -8,6 +8,14 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-24 — #436: composed the NOR-NORK by-object tables (`presentByObject`/`pastByObject`) from a shared skeleton instead of storing them per verb
+
+`ukan`/`maite`/`ikusi`/`jan`/`edan`/`erosi`/`hartu`'s `presentByObject`/`pastByObject` 2D tables (#346/#347/#348/#378/#379) were each just `<per-verb prefix> + ukan`'s own cell, repeated verb-by-verb (7 × 36 cells). Replaced with one shared skeleton (`OBJECT_AXIS_SKELETONS.edun` in `data/verbs.js`, present + past) plus each verb's `byObjectPrefixes: { present, past }` (`''`/`''` for `ukan` itself, `'maite '`/`'maite '` for `maite`, `'ikusten '`/`'ikusi '` for `ikusi`, etc.), composed at read time by `getComposedTable(verb, tense)` (`lessonLogic.js`).
+
+Routed every choke point that used to read `verb.conjugations[tense]` directly for these two tenses — `generateQuestions`, `collectCrossSourceCandidates`, `getDativeOvergenerationLure`, `hasAmbiguousTypedForm`, plus the `journey.test.js`/`logic.test.js` cross-checks — through `getComposedTable` instead, so the 2D-vs-composed distinction never leaks past this one function. Behavior-preserving by construction: the existing #347/#348/#378/#379 tests (already asserting `presentByObject`/`pastByObject` cells match `<prefix> + ukan`'s cell) were rewritten against `getComposedTable`'s output rather than the now-removed literal fields, so they still guard the composition.
+
+Scoped to just this one table family (NOR-NORK by-object) — the issue's follow-up comments asked for the same treatment on the NOR-NORI flat tables (Units 25/26), the NOR-NORI `byNor` 2D tables, and the ditransitive `diot`-family tables (Units 28/29), but folding all four into one PR risked a half-finished composer; left those three as follow-up work once each is actually needed.
+
 ## 2026-06-24 — #434: synced the feedback worker's `diagnostics` validator with `buildFlagDiagnostics`, added a cross-package regression test
 
 The worker's `isValidDiagnostics` (`worker/src/index.js`) was written for the original sentence/options/items question kinds and never updated as `buildFlagDiagnostics` (`src/lessonLogic.js`) grew `source`/`pairs`/`tokens`/`punctuation` for `reading`/`match-pairs`/`word-order`, so flagging those question kinds 400'd. Fixed by widening `QUESTION_KEYS` and adding type checks for the new sub-fields, and by treating `verbId`/`tense`/`person` as nullable (like the existing `userAnswer`) instead of required strings, since `match-pairs` has no single `person` and `reading` has none of the three.
