@@ -28,9 +28,9 @@ these keys:
 {
   "lessonId": "string",
   "review": "boolean",
-  "verbId": "string",
-  "tense": "string",
-  "person": "string",
+  "verbId": "string, optional (absent for kinds with no single verb/tense/person, e.g. reading)",
+  "tense": "string, optional",
+  "person": "string, optional",
   "kind": "string",
   "correct": "string",
   "userAnswer": "string or null",
@@ -40,7 +40,11 @@ these keys:
   "question": {
     "sentence": "string, optional",
     "options": "string[], optional",
-    "items": "[{ person: string, sentence: string }], optional"
+    "items": "[{ person: string, sentence: string }], optional",
+    "source": "string, optional",
+    "pairs": "[{ person: string, form: string }], optional",
+    "tokens": "[{ id: number, text: string }], optional",
+    "punctuation": "string, optional (only present alongside tokens)"
   }
 }
 ```
