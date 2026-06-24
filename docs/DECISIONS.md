@@ -8,6 +8,14 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-24 — Extended the NOR-number object pools (Units 13/14 + future) with 8 long-tail transitive verbs
+
+Fixing the plural-object agreement bug (see `docs/LANGUAGE_DECISIONS.md`, same date) added `presentPlural`/`pastPlural`/`futurePlural` tables to `egin`/`irakurri`/`idatzi`/`ikasi`/`entzun`/`utzi`/`bilatu`/`saldu`. Rather than leave those tables as dead data (reachable only as object-number distractor lures via `getObjectNumberLure`), wired all 8 into the existing object-number pools — `nor-nork-{present,past,future}-plural-pool` and their `-plural` siblings — so the new `ditut`/`nituen` forms are actually drilled.
+
+- This grows the object-number core from the curated 7 verbs (`ukan`/`jan`/`edan`/`erosi`/`hartu`/`ikusi`/`eduki`) to 15. Accepted: these 8 already appear in the singular `unit-10-present` pool (~30 verbs), so the asymmetry of teaching their singular forms but not their plural ones was the odd state, not the fix. No `journey.js` change needed — the pools' `lessonIds` are unchanged, only their `sources` grew, so the trio cross-check (`journey.test.js`) still holds.
+- The relocated plural-object sentences make these 8 verbs' plural pool lessons sentence-bearing (e.g. "Guk baserriko barazkiak plazan ___" → `saltzen ditugu`), unlike `jan`/`erosi`'s table-only plural lessons — fine, since the engine already supports plural-tense sentence buckets (`ukan`/`nahi`/`esan`/`gustatu` have them). Partial singular buckets (some persons now sentence-less) degrade gracefully to bare-form questions per `rollQuestionKind`.
+- Regenerated `scripts/validfor-gap-baseline.json`: the new plural forms add cross-verb gap slots of the same kind as these verbs' existing untagged singular gaps (project policy tags only a core set, never `saldu`/`utzi`/...), so no new `validFor` entries — counts-only baseline refresh.
+
 ## 2026-06-23 — #425: drilled `gustatu`/`iruditu`/`ahaztu`'s Baldintza/Ondorioa/Ahalera/Agintera object-axis tables, all zero-lesson before now, with recognition-only mood lessons
 
 Unlike #419's gap (17 of 18 NORI rows undrilled, but every row at least reachable through a `fixed: 'zu'`-adjacent table elsewhere), the six mood tables here (`baldintzaByNor`, `conditionalByNor`, `conditionalPastByNor`, `potentialByNor`, `potentialAlegiazkoaByNor`, `potentialLehenaldiaByNor`) had **no** lessons at any NORI value, and `imperativeByNor` only had the single `fixed: 'zu'` lesson from #364.

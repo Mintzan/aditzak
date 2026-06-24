@@ -6,6 +6,35 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-24 — Plural-object (`ditut`/`nituen`) tables for eight long-tail transitive verbs whose example sentences had plural objects
+
+A user flagged "Guk baserriko barazkiak plazan saltzen **dugu**" as wrong — a
+plural absolutive object (*barazkiak*, "the vegetables") forces plural-object
+agreement on the auxiliary, so it must be *saltzen **ditugu***. Auditing every
+`object: 'hura'` NOR-NORK verb surfaced the same mismatch in **8 verbs**: their
+example sentences carried genuinely plural objects, but their conjugation
+tables were singular-object only (`object: 'hura'`, i.e. only `dut`/`du`/...).
+Affected verbs/objects: `egin` (talo freskoak), `irakurri` (olerkiak), `idatzi`
+(bertso berriak, kantu hitzak), `ikasi` (dantza tradizionalak, arrantza
+teknikak), `entzun` (kantuak), `utzi` (giltzak, abarketak, otarrak, poltsak),
+`bilatu` (opor egokiak), `saldu` (barazkiak, artisautza lanak).
+
+- **Fix chosen:** add `presentPlural`/`pastPlural`/`futurePlural` tables to
+  these verbs (rather than singularising the sentences), then move each
+  plural-object sentence out of the singular `present`/`past` buckets into the
+  matching `presentPlural`/`pastPlural` buckets so it's answered by the
+  plural-object table. The sentence wasn't wrong — the missing table was.
+- **Forms** are the mechanical `dit-`/`nitu-` swap on the same participle/stem
+  as the singular tables (`saltzen dut` → `saltzen ditut`, `saldu nuen` →
+  `saldu nituen`, `salduko dut` → `salduko ditut`), exactly mirroring
+  `jan`/`erosi`'s existing plural tables (#284). `sentences.futurePlural`
+  reuses `presentPlural` by reference via the existing end-of-file loop; the
+  `pastPlural` sentence buckets are hand-placed (no auto-alias for past).
+- **Flag for native-speaker review:** these `dit-`/`nitu-` forms are
+  mechanically derived and inherit the same standing "unconfirmed" flag as the
+  rest of the periphrastic plural-object tables. `validFor` left `[]` on every
+  relocated sentence (same conservative default as the rest of this batch).
+
 ## 2026-06-22 — #384: jarraitu/jario sourcing and scope calls
 
 Added two more NOR-NORI verbs alongside `gustatu`/`iruditu`/`ahaztu`, per
