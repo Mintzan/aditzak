@@ -615,8 +615,8 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'BERRIKUSPENA — Kausatiboak denbora eta moduetan zehar',
       },
       focus: {
-        es: 'Recombina las unidades 42–43 con el futuro, el condicional y el imperativo — sin verbos nuevos, con gating por puntuación',
-        eu: '42-43 unitateak geroaldiarekin, baldintzarekin eta agintera moduarekin berrelkartzen ditu — aditz berririk gabe, puntuazioaren arabera blokeatuta',
+        es: 'Recombina las formas -arazi de las unidades 42–43 en presente/pasado/futuro — sin verbos nuevos, con gating por puntuación',
+        eu: '42-43 unitateetako -arazi formak orainean/iraganean/geroan berrelkartzen ditu — aditz berririk gabe, puntuazioaren arabera blokeatuta',
       },
     },
     45: {

@@ -8,6 +8,17 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-24 — #370: implemented Units 42–44 (causative `-arazi`), four new standalone `VERBS` entries, zero new data shapes
+
+Per the prior research pass (#430, `docs/CONJUGATIONS.md` §17), causatives need no new shape — each is just another `type: 'periphrastic'` entry whose participle is `[radical]+arazi`.
+
+- **`itzularazi`/`dantzarazi`** (Unit 42, `nor`→`nor-nork`): `object: 'haiek'` (the causee — "mendizaleak"/"umeak" — stays absolutive but plural in both citation sentences from `VERB_COVERAGE.md` §6), `person` varies over `nork` (the causer). Plain `ukan`-plural-object paradigm (`ditu`-family), no dative.
+- **`janarazi`/`idatzarazi`** (Unit 43, `nor-nork`→`nor-nori-nork`): `recipient: 'haiek'` (the causee — "umeei"/"ikasleei" — is plural and dative in both citation sentences), `person` varies over `nork`, mirroring `esan`'s `recipient: 'hura'` convention (#147) one dative-number step up. `janarazi`'s `nor` (babarrunak) is plural, so it rides the `-zki-`-infixed (`dizkie`-family) row; `idatzarazi`'s `nor` (hori) is singular, so it rides the plain `die`-family row — verified cell-for-cell against both citation sentences (`janarazi zizkien`, `idatzarazi die`).
+- `journey.js`'s teaser `payload` strings for `dantzarazi`/`idatzarazi` read as present-perfect (bare perfective participle + present aux, e.g. "idatzarazi die") rather than the habitual-present shape ("idatzarazten die") this app's `present` tables always use elsewhere (`jan`/`idatzi`/`itzularazi`). Treated the teaser strings as loose illustrative gloss rather than literal table citations, and built `present` using the established imperfective-participle convention for internal consistency — flagged in both verbs' `conjugations.past` comments.
+- **Unit 44 (gate)** scoped down from its `journey.js`/i18n teaser's "recombines with future, conditional, and imperative" to present/past/future only, mirroring Unit 22 gate's own scope (no mood-recombination beyond the three core tenses) — conditional/imperative causative forms exist in principle (§17.4) but need their own tables, out of scope here. Gate gets dedicated `unit-44-review-1`/`-2` lessons (not a reuse of Units 42/43's own review lesson ids) since `journey.test.js` requires every `LESSONS` id referenced exactly once, matching Unit 22's own `unit-20-review-*` precedent.
+- Regenerated `scripts/validfor-gap-baseline.json` after manually auditing every new gap slot the four verbs create against existing pool verbs (`ukan`, `nahi`, `esan`, `eman`, ...) via `validfor-delta-audit.mjs` — none are natural completions (different lexical content despite matching agreement), so `validFor: []` throughout is correct and the larger baseline reflects genuinely-unfillable gaps, not an oversight.
+- Closes #370 (closed early by the repo owner ahead of this implementation landing) and the last open sub-issue of epic #182.
+
 ## 2026-06-24 — #369: implemented Unit 36 (Subjuntiboa) as data-only, present-tense, 3rd-person-restricted
 
 Per #406's earlier mechanic decision, the subjunctive needed no new engine `kind` — just a `subjunctivePresent` tense key plus `sentences`/`conjugations` entries, like every other tense.
