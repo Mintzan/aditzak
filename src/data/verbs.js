@@ -8059,6 +8059,287 @@ export const VERBS = [
       },
     },
   },
+  // #370 (Unit 42) — causative `nor` → `nor-nork`: per CONJUGATIONS.md §17.2,
+  // the original `nor` subject (the climbers/kids) becomes the new plural
+  // `nor` object, and the causer (storm/music) fills the new `nork` slot.
+  // `nor`'s plural here is fixed in the sentence frame's noun phrase rather
+  // than drilled, so the table below is the plural-object (`-zki-`-free,
+  // `ditu`-family) `ukan` paradigm throughout — `object: 'haiek'` matches
+  // `du`-family verbs' own `object: 'hura'` convention (#162), just plural.
+  {
+    id: 'itzularazi',
+    verb: 'itzularazi',
+    meaning: { en: 'to make (someone) turn back', es: 'hacer volver (a alguien)', eu: 'itzularazi' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'haiek',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'itzularazten ditut',
+        zu: 'itzularazten dituzu',
+        hura: 'itzularazten ditu',
+        gu: 'itzularazten ditugu',
+        zuek: 'itzularazten dituzue',
+        haiek: 'itzularazten dituzte',
+      },
+      // "Ekaitzak mendizaleak itzularazi zituen" (VERB_COVERAGE.md §6) — `hura`
+      // cell below matches this exactly.
+      past: {
+        ni: 'itzularazi nituen',
+        zu: 'itzularazi zenituen',
+        hura: 'itzularazi zituen',
+        gu: 'itzularazi genituen',
+        zuek: 'itzularazi zenituzten',
+        haiek: 'itzularazi zituzten',
+      },
+      future: {
+        ni: 'itzularaziko ditut',
+        zu: 'itzularaziko dituzu',
+        hura: 'itzularaziko ditu',
+        gu: 'itzularaziko ditugu',
+        zuek: 'itzularaziko dituzue',
+        haiek: 'itzularaziko dituzte',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik mendizaleak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk mendizaleak ___?', validFor: [] }],
+        hura: [{ text: 'Hark mendizaleak ___.', validFor: [] }],
+        gu: [{ text: 'Guk mendizaleak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek mendizaleak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek mendizaleak ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo mendizaleak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk atzo mendizaleak ___?', validFor: [] }],
+        hura: [{ text: 'Hark mendizaleak ___.', validFor: [] }],
+        gu: [{ text: 'Guk atzo mendizaleak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek atzo mendizaleak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek atzo mendizaleak ___.', validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar mendizaleak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk bihar mendizaleak ___?', validFor: [] }],
+        hura: [{ text: 'Hark mendizaleak ___.', validFor: [] }],
+        gu: [{ text: 'Guk bihar mendizaleak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek bihar mendizaleak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek bihar mendizaleak ___.', validFor: [] }],
+      },
+    },
+  },
+  {
+    id: 'dantzarazi',
+    verb: 'dantzarazi',
+    meaning: { en: 'to make (someone) dance', es: 'hacer bailar (a alguien)', eu: 'dantzarazi' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'haiek',
+    dialect: 'batua',
+    conjugations: {
+      present: {
+        ni: 'dantzarazten ditut',
+        zu: 'dantzarazten dituzu',
+        hura: 'dantzarazten ditu',
+        gu: 'dantzarazten ditugu',
+        zuek: 'dantzarazten dituzue',
+        haiek: 'dantzarazten dituzte',
+      },
+      // "Musikak umeak dantzarazi ditu" (journey.js payload) is the present-
+      // perfect surface form; the habitual-present cell here instead follows
+      // `itzularazi`/`jan`/`idatzi`'s own present-table convention (imperfective
+      // participle + present aux) so the table stays internally consistent.
+      past: {
+        ni: 'dantzarazi nituen',
+        zu: 'dantzarazi zenituen',
+        hura: 'dantzarazi zituen',
+        gu: 'dantzarazi genituen',
+        zuek: 'dantzarazi zenituzten',
+        haiek: 'dantzarazi zituzten',
+      },
+      future: {
+        ni: 'dantzaraziko ditut',
+        zu: 'dantzaraziko dituzu',
+        hura: 'dantzaraziko ditu',
+        gu: 'dantzaraziko ditugu',
+        zuek: 'dantzaraziko dituzue',
+        haiek: 'dantzaraziko dituzte',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik umeak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk umeak ___?', validFor: [] }],
+        hura: [{ text: 'Hark umeak ___.', validFor: [] }],
+        gu: [{ text: 'Guk umeak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek umeak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek umeak ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo umeak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk atzo umeak ___?', validFor: [] }],
+        hura: [{ text: 'Hark umeak ___.', validFor: [] }],
+        gu: [{ text: 'Guk atzo umeak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek atzo umeak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek atzo umeak ___.', validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar umeak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk bihar umeak ___?', validFor: [] }],
+        hura: [{ text: 'Hark umeak ___.', validFor: [] }],
+        gu: [{ text: 'Guk bihar umeak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek bihar umeak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek bihar umeak ___.', validFor: [] }],
+      },
+    },
+  },
+  // #370 (Unit 43) — causative `nor-nork` → `nor-nori-nork`: per
+  // CONJUGATIONS.md §17.2, the original `nork` subject (the kids/students)
+  // demotes to the new `nori` causee, the original `nor` object stays `nor`,
+  // and the causer (grandma/teacher) fills the new `nork` slot.
+  // `recipient: 'haiek'` fixes NORI = haiei (the causee is plural in both
+  // verbs' citation sentences, per VERB_COVERAGE.md §6) — `person` varies
+  // over NORK, mirroring `esan`'s `recipient: 'hura'` convention (#147) one
+  // dative-number step up.
+  {
+    id: 'janarazi',
+    verb: 'janarazi',
+    meaning: { en: 'to make (someone) eat (something)', es: 'hacer comer (algo a alguien)', eu: 'janarazi' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    recipient: 'haiek',
+    dialect: 'batua',
+    conjugations: {
+      // `NOR` = babarrunak (plural) throughout, so this is the `-zki-`-infixed
+      // (`dizkie`-family) NORI=haiei row from CONJUGATIONS.md's "NOR = haiek"
+      // ditransitive grid.
+      present: {
+        ni: 'janarazten dizkiet',
+        zu: 'janarazten dizkiezu',
+        hura: 'janarazten dizkie',
+        gu: 'janarazten dizkiegu',
+        zuek: 'janarazten dizkiezue',
+        haiek: 'janarazten dizkiete',
+      },
+      // "Amonak umeei babarrunak janarazi zizkien" (VERB_COVERAGE.md §6) — the
+      // `hura` cell below matches this exactly.
+      past: {
+        ni: 'janarazi nizkien',
+        zu: 'janarazi zenizkien',
+        hura: 'janarazi zizkien',
+        gu: 'janarazi genizkien',
+        zuek: 'janarazi zenizkieten',
+        haiek: 'janarazi zizkieten',
+      },
+      future: {
+        ni: 'janaraziko dizkiet',
+        zu: 'janaraziko dizkiezu',
+        hura: 'janaraziko dizkie',
+        gu: 'janaraziko dizkiegu',
+        zuek: 'janaraziko dizkiezue',
+        haiek: 'janaraziko dizkiete',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik umeei babarrunak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk umeei babarrunak ___?', validFor: [] }],
+        hura: [{ text: 'Hark umeei babarrunak ___.', validFor: [] }],
+        gu: [{ text: 'Guk umeei babarrunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek umeei babarrunak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek umeei babarrunak ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo umeei babarrunak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk atzo umeei babarrunak ___?', validFor: [] }],
+        hura: [{ text: 'Hark umeei babarrunak ___.', validFor: [] }],
+        gu: [{ text: 'Guk atzo umeei babarrunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek atzo umeei babarrunak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek atzo umeei babarrunak ___.', validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar umeei babarrunak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk bihar umeei babarrunak ___?', validFor: [] }],
+        hura: [{ text: 'Hark umeei babarrunak ___.', validFor: [] }],
+        gu: [{ text: 'Guk bihar umeei babarrunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek bihar umeei babarrunak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek bihar umeei babarrunak ___.', validFor: [] }],
+      },
+    },
+  },
+  {
+    id: 'idatzarazi',
+    verb: 'idatzarazi',
+    meaning: { en: 'to make (someone) write (something)', es: 'hacer escribir (algo a alguien)', eu: 'idatzarazi' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nori', 'nork'],
+    recipient: 'haiek',
+    dialect: 'batua',
+    conjugations: {
+      // `NOR` = hori (singular) throughout, so this is the non-`-zki-`
+      // (`die`-family) NORI=haiei row from CONJUGATIONS.md's "NOR = hura"
+      // ditransitive grid.
+      present: {
+        ni: 'idatzarazten diet',
+        zu: 'idatzarazten diezu',
+        hura: 'idatzarazten die',
+        gu: 'idatzarazten diegu',
+        zuek: 'idatzarazten diezue',
+        haiek: 'idatzarazten diete',
+      },
+      // "Irakasleak ikasleei hori idatzarazi die" (VERB_COVERAGE.md §6) is the
+      // present-perfect surface form; the habitual-present cell above instead
+      // follows `esan`/`janarazi`'s own present-table convention so the table
+      // stays internally consistent (see `dantzarazi`'s identical note).
+      past: {
+        ni: 'idatzarazi nien',
+        zu: 'idatzarazi zenien',
+        hura: 'idatzarazi zien',
+        gu: 'idatzarazi genien',
+        zuek: 'idatzarazi zenieten',
+        haiek: 'idatzarazi zieten',
+      },
+      future: {
+        ni: 'idatzaraziko diet',
+        zu: 'idatzaraziko diezu',
+        hura: 'idatzaraziko die',
+        gu: 'idatzaraziko diegu',
+        zuek: 'idatzaraziko diezue',
+        haiek: 'idatzaraziko diete',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik ikasleei hori ___.', validFor: [] }],
+        zu: [{ text: 'Zuk ikasleei hori ___?', validFor: [] }],
+        hura: [{ text: 'Hark ikasleei hori ___.', validFor: [] }],
+        gu: [{ text: 'Guk ikasleei hori ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek ikasleei hori ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek ikasleei hori ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo ikasleei hori ___.', validFor: [] }],
+        zu: [{ text: 'Zuk atzo ikasleei hori ___?', validFor: [] }],
+        hura: [{ text: 'Hark ikasleei hori ___.', validFor: [] }],
+        gu: [{ text: 'Guk atzo ikasleei hori ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek atzo ikasleei hori ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek atzo ikasleei hori ___.', validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar ikasleei hori ___.', validFor: [] }],
+        zu: [{ text: 'Zuk bihar ikasleei hori ___?', validFor: [] }],
+        hura: [{ text: 'Hark ikasleei hori ___.', validFor: [] }],
+        gu: [{ text: 'Guk bihar ikasleei hori ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek bihar ikasleei hori ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek bihar ikasleei hori ___.', validFor: [] }],
+      },
+    },
+  },
 ]
 
 // Stage 6 (Units 14-15, "Talking About the Future") gave every verb above (except
