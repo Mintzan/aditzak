@@ -3,7 +3,7 @@ import { JOURNEY } from './journey'
 import { LESSONS } from './data/lessons'
 import { VERBS } from './data/verbs'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
-import { resolveObjectAxisTable } from './lessonLogic'
+import { getComposedTable, resolveObjectAxisTable } from './lessonLogic'
 
 // Cross-checks the three files that make up "the learning journey"
 // (`journey.js`'s `JOURNEY`, `data/lessons.js`'s `LESSONS`, `data/verbs.js`'s
@@ -70,7 +70,7 @@ describe('LESSONS <-> VERBS', () => {
   function expectTenseExists(verbId, tense, lessonId) {
     const verb = verbsById.get(verbId)
     expect(verb, `lesson "${lessonId}" references unknown verb "${verbId}"`).toBeDefined()
-    expect(verb.conjugations[tense], `lesson "${lessonId}" references "${verbId}.conjugations.${tense}", which doesn't exist`).toBeDefined()
+    expect(getComposedTable(verb, tense), `lesson "${lessonId}" references "${verbId}.conjugations.${tense}", which doesn't exist`).toBeDefined()
     return verb
   }
 
@@ -84,7 +84,9 @@ describe('LESSONS <-> VERBS', () => {
       // table's top-level keys, so checking `person in verb.conjugations[tense]`
       // directly would spuriously pass (nork/nor share the same person
       // vocabulary) without actually confirming the resolved cell exists.
-      const table = lesson.objectAxis ? resolveObjectAxisTable(verb.conjugations[lesson.tense], lesson.objectAxis) : verb.conjugations[lesson.tense]
+      const table = lesson.objectAxis
+        ? resolveObjectAxisTable(getComposedTable(verb, lesson.tense), lesson.objectAxis)
+        : getComposedTable(verb, lesson.tense)
       for (const person of lesson.persons ?? []) {
         expect(person in table, `lesson "${lesson.id}" restricts to person "${person}", missing from ${lesson.verbId}.conjugations.${lesson.tense}${lesson.objectAxis ? ` (resolved for objectAxis ${JSON.stringify(lesson.objectAxis)})` : ''}`).toBe(true)
       }
@@ -97,7 +99,10 @@ describe('LESSONS <-> VERBS', () => {
       for (const source of lesson.sources) {
         const verb = expectTenseExists(source.verbId, source.tense, lesson.id)
         for (const person of lesson.persons ?? []) {
-          expect(person in verb.conjugations[source.tense], `lesson "${lesson.id}" restricts to person "${person}", missing from ${source.verbId}.conjugations.${source.tense}`).toBe(true)
+          expect(
+            person in getComposedTable(verb, source.tense),
+            `lesson "${lesson.id}" restricts to person "${person}", missing from ${source.verbId}.conjugations.${source.tense}`,
+          ).toBe(true)
         }
       }
     }

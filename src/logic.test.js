@@ -21,6 +21,7 @@ import {
   getCaseFramePronounLure,
   getCrossTenseLure,
   getDativeOvergenerationLure,
+  getComposedTable,
   getCrossVerbCandidates,
   getEncouragement,
   getExplanation,
@@ -773,18 +774,20 @@ describe('generateQuestions', () => {
 
     it("matches ukan's existing single-axis `present` table for the citation (nor: 'hura') column", () => {
       const ukan = VERBS.find((v) => v.id === 'ukan')
+      const presentByObject = getComposedTable(ukan, 'presentByObject')
       for (const nork of Object.keys(ukan.conjugations.present)) {
-        if (!(nork in ukan.conjugations.presentByObject)) continue
-        expect(ukan.conjugations.presentByObject[nork].hura).toBe(ukan.conjugations.present[nork])
+        if (!(nork in presentByObject)) continue
+        expect(presentByObject[nork].hura).toBe(ukan.conjugations.present[nork])
       }
     })
 
     // #347: `past`'s sibling 2D table, same cross-check as `presentByObject`.
     it("matches ukan's existing single-axis `past` table for the citation (nor: 'hura') column", () => {
       const ukan = VERBS.find((v) => v.id === 'ukan')
+      const pastByObject = getComposedTable(ukan, 'pastByObject')
       for (const nork of Object.keys(ukan.conjugations.past)) {
-        if (!(nork in ukan.conjugations.pastByObject)) continue
-        expect(ukan.conjugations.pastByObject[nork].hura).toBe(ukan.conjugations.past[nork])
+        if (!(nork in pastByObject)) continue
+        expect(pastByObject[nork].hura).toBe(ukan.conjugations.past[nork])
       }
     })
 
@@ -815,18 +818,22 @@ describe('generateQuestions', () => {
     it("rides ukan's presentByObject/pastByObject with a 'maite ' prefix (#348)", () => {
       const ukan = VERBS.find((v) => v.id === 'ukan')
       const maite = VERBS.find((v) => v.id === 'maite')
+      const ukanPresentByObject = getComposedTable(ukan, 'presentByObject')
+      const ukanPastByObject = getComposedTable(ukan, 'pastByObject')
+      const maitePresentByObject = getComposedTable(maite, 'presentByObject')
+      const maitePastByObject = getComposedTable(maite, 'pastByObject')
 
-      for (const nork of Object.keys(ukan.conjugations.presentByObject)) {
-        for (const nor of Object.keys(ukan.conjugations.presentByObject[nork])) {
-          expect(maite.conjugations.presentByObject[nork][nor]).toBe(`maite ${ukan.conjugations.presentByObject[nork][nor]}`)
+      for (const nork of Object.keys(ukanPresentByObject)) {
+        for (const nor of Object.keys(ukanPresentByObject[nork])) {
+          expect(maitePresentByObject[nork][nor]).toBe(`maite ${ukanPresentByObject[nork][nor]}`)
         }
       }
-      for (const nork of Object.keys(ukan.conjugations.pastByObject)) {
-        for (const nor of Object.keys(ukan.conjugations.pastByObject[nork])) {
-          expect(maite.conjugations.pastByObject[nork][nor]).toBe(`maite ${ukan.conjugations.pastByObject[nork][nor]}`)
+      for (const nork of Object.keys(ukanPastByObject)) {
+        for (const nor of Object.keys(ukanPastByObject[nork])) {
+          expect(maitePastByObject[nork][nor]).toBe(`maite ${ukanPastByObject[nork][nor]}`)
         }
       }
-      expect(maite.conjugations.presentByObject.ni.zu).toBe('maite zaitut')
+      expect(maitePresentByObject.ni.zu).toBe('maite zaitut')
     })
 
     // #348: `generateQuestions` resolves the same way for `maite` as it does
@@ -863,31 +870,37 @@ describe('generateQuestions', () => {
     it("rides ukan's presentByObject/pastByObject with ikusi's own prefixes (#378)", () => {
       const ukan = VERBS.find((v) => v.id === 'ukan')
       const ikusi = VERBS.find((v) => v.id === 'ikusi')
+      const ukanPresentByObject = getComposedTable(ukan, 'presentByObject')
+      const ukanPastByObject = getComposedTable(ukan, 'pastByObject')
+      const ikusiPresentByObject = getComposedTable(ikusi, 'presentByObject')
+      const ikusiPastByObject = getComposedTable(ikusi, 'pastByObject')
 
-      for (const nork of Object.keys(ukan.conjugations.presentByObject)) {
-        for (const nor of Object.keys(ukan.conjugations.presentByObject[nork])) {
-          expect(ikusi.conjugations.presentByObject[nork][nor]).toBe(`ikusten ${ukan.conjugations.presentByObject[nork][nor]}`)
+      for (const nork of Object.keys(ukanPresentByObject)) {
+        for (const nor of Object.keys(ukanPresentByObject[nork])) {
+          expect(ikusiPresentByObject[nork][nor]).toBe(`ikusten ${ukanPresentByObject[nork][nor]}`)
         }
       }
-      for (const nork of Object.keys(ukan.conjugations.pastByObject)) {
-        for (const nor of Object.keys(ukan.conjugations.pastByObject[nork])) {
-          expect(ikusi.conjugations.pastByObject[nork][nor]).toBe(`ikusi ${ukan.conjugations.pastByObject[nork][nor]}`)
+      for (const nork of Object.keys(ukanPastByObject)) {
+        for (const nor of Object.keys(ukanPastByObject[nork])) {
+          expect(ikusiPastByObject[nork][nor]).toBe(`ikusi ${ukanPastByObject[nork][nor]}`)
         }
       }
-      expect(ikusi.conjugations.presentByObject.ni.zu).toBe('ikusten zaitut')
+      expect(ikusiPresentByObject.ni.zu).toBe('ikusten zaitut')
     })
 
     // #378: citation (nor: 'hura') column matches ikusi's existing flat
     // present/past tables, same cross-check #346/#347 already run for ukan.
     it("matches ikusi's existing single-axis present/past tables for the citation (nor: 'hura') column", () => {
       const ikusi = VERBS.find((v) => v.id === 'ikusi')
+      const presentByObject = getComposedTable(ikusi, 'presentByObject')
+      const pastByObject = getComposedTable(ikusi, 'pastByObject')
       for (const nork of Object.keys(ikusi.conjugations.present)) {
-        if (!(nork in ikusi.conjugations.presentByObject)) continue
-        expect(ikusi.conjugations.presentByObject[nork].hura).toBe(ikusi.conjugations.present[nork])
+        if (!(nork in presentByObject)) continue
+        expect(presentByObject[nork].hura).toBe(ikusi.conjugations.present[nork])
       }
       for (const nork of Object.keys(ikusi.conjugations.past)) {
-        if (!(nork in ikusi.conjugations.pastByObject)) continue
-        expect(ikusi.conjugations.pastByObject[nork].hura).toBe(ikusi.conjugations.past[nork])
+        if (!(nork in pastByObject)) continue
+        expect(pastByObject[nork].hura).toBe(ikusi.conjugations.past[nork])
       }
     })
 
@@ -925,15 +938,19 @@ describe('generateQuestions', () => {
     ])("rides ukan's presentByObject/pastByObject with %s's own prefixes (#379)", (verbId, presentPrefix, pastPrefix) => {
       const ukan = VERBS.find((v) => v.id === 'ukan')
       const verb = VERBS.find((v) => v.id === verbId)
+      const ukanPresentByObject = getComposedTable(ukan, 'presentByObject')
+      const ukanPastByObject = getComposedTable(ukan, 'pastByObject')
+      const verbPresentByObject = getComposedTable(verb, 'presentByObject')
+      const verbPastByObject = getComposedTable(verb, 'pastByObject')
 
-      for (const nork of Object.keys(ukan.conjugations.presentByObject)) {
-        for (const nor of Object.keys(ukan.conjugations.presentByObject[nork])) {
-          expect(verb.conjugations.presentByObject[nork][nor]).toBe(`${presentPrefix}${ukan.conjugations.presentByObject[nork][nor]}`)
+      for (const nork of Object.keys(ukanPresentByObject)) {
+        for (const nor of Object.keys(ukanPresentByObject[nork])) {
+          expect(verbPresentByObject[nork][nor]).toBe(`${presentPrefix}${ukanPresentByObject[nork][nor]}`)
         }
       }
-      for (const nork of Object.keys(ukan.conjugations.pastByObject)) {
-        for (const nor of Object.keys(ukan.conjugations.pastByObject[nork])) {
-          expect(verb.conjugations.pastByObject[nork][nor]).toBe(`${pastPrefix}${ukan.conjugations.pastByObject[nork][nor]}`)
+      for (const nork of Object.keys(ukanPastByObject)) {
+        for (const nor of Object.keys(ukanPastByObject[nork])) {
+          expect(verbPastByObject[nork][nor]).toBe(`${pastPrefix}${ukanPastByObject[nork][nor]}`)
         }
       }
     })
@@ -944,13 +961,15 @@ describe('generateQuestions', () => {
       "matches %s's existing single-axis present/past tables for the citation (nor: 'hura') column",
       (verbId) => {
         const verb = VERBS.find((v) => v.id === verbId)
+        const presentByObject = getComposedTable(verb, 'presentByObject')
+        const pastByObject = getComposedTable(verb, 'pastByObject')
         for (const nork of Object.keys(verb.conjugations.present)) {
-          if (!(nork in verb.conjugations.presentByObject)) continue
-          expect(verb.conjugations.presentByObject[nork].hura).toBe(verb.conjugations.present[nork])
+          if (!(nork in presentByObject)) continue
+          expect(presentByObject[nork].hura).toBe(verb.conjugations.present[nork])
         }
         for (const nork of Object.keys(verb.conjugations.past)) {
-          if (!(nork in verb.conjugations.pastByObject)) continue
-          expect(verb.conjugations.pastByObject[nork].hura).toBe(verb.conjugations.past[nork])
+          if (!(nork in pastByObject)) continue
+          expect(pastByObject[nork].hura).toBe(verb.conjugations.past[nork])
         }
       },
     )
@@ -3340,7 +3359,7 @@ describe.each(['object-axis-present-review', 'object-axis-past-review'])('%s (re
       expect(question.options).toContain(question.correct)
       expect(new Set(question.options).size).toBe(question.options.length)
       resolvedSources.forEach(({ verb, tense }) => {
-        const table = resolveObjectAxisTable(verb.conjugations[tense], lesson.objectAxis)
+        const table = resolveObjectAxisTable(getComposedTable(verb, tense), lesson.objectAxis)
         if (question.options.includes(table[question.person])) verbIdsSeen.add(verb.id)
       })
     })

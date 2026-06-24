@@ -110,6 +110,39 @@
 // simply have 3-person tables (option (a)) since there's nothing to expand yet.
 // =============================================================================
 
+// #436: shared NOR-NORK by-object skeletons for the `presentByObject`/
+// `pastByObject` 2D tables described above (#346/#347). Every verb that
+// carries one of these tables — `ukan` itself plus `maite`/`ikusi`/`jan`/
+// `edan`/`erosi`/`hartu` — turns out to be `<per-verb prefix> + ukan's own
+// cell`: `ikusi.presentByObject.ni.zu === 'ikusten ' + ukan.presentByObject
+// .ni.zu` ("ikusten zaitut"), and likewise for `past` with the bare
+// participle. Rather than store the same 36-cell grid seven times, it's
+// recorded once here (`edun`, the transitive auxiliary's traditional name)
+// and composed at runtime (`getComposedTable`, `lessonLogic.js`) from this
+// skeleton plus each verb's `byObjectPrefixes`. `ukan` itself carries
+// `byObjectPrefixes: { present: '', past: '' }` — the empty-prefix case —
+// so it's just this table, unchanged from before #436.
+export const OBJECT_AXIS_SKELETONS = {
+  edun: {
+    present: {
+      ni: { hura: 'dut', zu: 'zaitut', zuek: 'zaituztet', haiek: 'ditut' },
+      hura: { ni: 'nau', hura: 'du', gu: 'gaitu', zu: 'zaitu', zuek: 'zaituzte', haiek: 'ditu' },
+      gu: { hura: 'dugu', zu: 'zaitugu', zuek: 'zaituztegu', haiek: 'ditugu' },
+      zu: { ni: 'nauzu', hura: 'duzu', gu: 'gaituzu', haiek: 'dituzu' },
+      zuek: { ni: 'nauzue', hura: 'duzue', gu: 'gaituzue', haiek: 'dituzue' },
+      haiek: { ni: 'naute', hura: 'dute', gu: 'gaituzte', zu: 'zaituzte', zuek: 'zaituztete', haiek: 'dituzte' },
+    },
+    past: {
+      ni: { hura: 'nuen', zu: 'zintudan', zuek: 'zintuztedan', haiek: 'nituen' },
+      hura: { ni: 'ninduen', hura: 'zuen', gu: 'gintuen', zu: 'zintuen', zuek: 'zintuzten', haiek: 'zituen' },
+      gu: { hura: 'genuen', zu: 'zintugun', zuek: 'zintuztegun', haiek: 'genituen' },
+      zu: { ni: 'ninduzun', hura: 'zenuen', gu: 'gintuzun', haiek: 'zenituen' },
+      zuek: { ni: 'ninduzuen', hura: 'zenuten', gu: 'gintuzuen', haiek: 'zenituzten' },
+      haiek: { ni: 'ninduten', hura: 'zuten', gu: 'gintuzten', zu: 'zintuzten', zuek: 'zintuzteten', haiek: 'zituzten' },
+    },
+  },
+}
+
 // Locate a specific verb: grep for `id: 'verbId'` (e.g. `id: 'izan'`) — each
 // verb's whole block starts there.
 
@@ -551,6 +584,10 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #436: empty-prefix case of the `edun` skeleton — `ukan` *is* the
+    // skeleton, so `getComposedTable` just hands back `OBJECT_AXIS_SKELETONS
+    // .edun` unprefixed for `presentByObject`/`pastByObject`.
+    byObjectPrefixes: { present: '', past: '' },
     conjugations: {
       // #167: `hi-m`/`hi-f` add `hi`-as-`NORK`'s own present-tense gender
       // split (`duk`/`dun`, "you (m./f.) have it") — distinct from this
@@ -630,34 +667,6 @@ export const VERBS = [
         hura: 'bitza',
         gu: 'ditzagun',
         haiek: 'bitzate',
-      },
-      // #346: real 2D NOR-NORK table (`{ [nork]: { [nor]: form } }`) — see
-      // the `object`-vs-2D note near the top of this file. Transcribed from
-      // `docs/CONJUGATIONS.md` §3's "Present — NOR = 1st/2nd person" grid,
-      // `hi` omitted and every `*(refl.)*` cell (the whole same-person-
-      // category block, not just the literal diagonal) left as a gap. Each
-      // `[nork]` row's `hura` cell matches `present[nork]` above exactly
-      // (e.g. `presentByObject.ni.hura === present.ni`, both `'dut'`) — the
-      // citation paradigm is this grid's `nor: 'hura'` column.
-      presentByObject: {
-        ni: { hura: 'dut', zu: 'zaitut', zuek: 'zaituztet', haiek: 'ditut' },
-        hura: { ni: 'nau', hura: 'du', gu: 'gaitu', zu: 'zaitu', zuek: 'zaituzte', haiek: 'ditu' },
-        gu: { hura: 'dugu', zu: 'zaitugu', zuek: 'zaituztegu', haiek: 'ditugu' },
-        zu: { ni: 'nauzu', hura: 'duzu', gu: 'gaituzu', haiek: 'dituzu' },
-        zuek: { ni: 'nauzue', hura: 'duzue', gu: 'gaituzue', haiek: 'dituzue' },
-        haiek: { ni: 'naute', hura: 'dute', gu: 'gaituzte', zu: 'zaituzte', zuek: 'zaituztete', haiek: 'dituzte' },
-      },
-      // #347: `past`'s NOR-NORK object axis, same shape/sourcing as
-      // `presentByObject` above, transcribed from `docs/CONJUGATIONS.md`
-      // §3's "Past — NOR = 1st/2nd person" grid. Each `[nork]` row's `hura`
-      // cell matches `past[nork]` exactly, same cross-check convention.
-      pastByObject: {
-        ni: { hura: 'nuen', zu: 'zintudan', zuek: 'zintuztedan', haiek: 'nituen' },
-        hura: { ni: 'ninduen', hura: 'zuen', gu: 'gintuen', zu: 'zintuen', zuek: 'zintuzten', haiek: 'zituen' },
-        gu: { hura: 'genuen', zu: 'zintugun', zuek: 'zintuztegun', haiek: 'genituen' },
-        zu: { ni: 'ninduzun', hura: 'zenuen', gu: 'gintuzun', haiek: 'zenituen' },
-        zuek: { ni: 'ninduzuen', hura: 'zenuten', gu: 'gintuzuen', haiek: 'zenituzten' },
-        haiek: { ni: 'ninduten', hura: 'zuten', gu: 'gintuzten', zu: 'zintuzten', zuek: 'zintuzteten', haiek: 'zituzten' },
       },
       // #352: Ahalera's NOR-NORK object axis, three sub-tenses — same shape/
       // sourcing convention as `presentByObject`/`pastByObject` above, this
@@ -1266,6 +1275,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #436: `'maite '` prefixes the `edun` skeleton for both tenses — see
+    // `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'maite ', past: 'maite ' },
     conjugations: {
       present: {
         ni: 'maite dut',
@@ -1282,26 +1294,6 @@ export const VERBS = [
         gu: 'maite genuen',
         zuek: 'maite zenuten',
         haiek: 'maite zuten',
-      },
-      // 2D NOR-NORK table, same shape/sourcing convention as `ukan`'s own
-      // (#346/#347) — every cell is `ukan.presentByObject`'s matching cell
-      // with a `'maite '` prefix, so `presentByObject.ni.zu === 'maite ' +
-      // ukan.presentByObject.ni.zu` ("maite zaitut") holds by construction.
-      presentByObject: {
-        ni: { hura: 'maite dut', zu: 'maite zaitut', zuek: 'maite zaituztet', haiek: 'maite ditut' },
-        hura: { ni: 'maite nau', hura: 'maite du', gu: 'maite gaitu', zu: 'maite zaitu', zuek: 'maite zaituzte', haiek: 'maite ditu' },
-        gu: { hura: 'maite dugu', zu: 'maite zaitugu', zuek: 'maite zaituztegu', haiek: 'maite ditugu' },
-        zu: { ni: 'maite nauzu', hura: 'maite duzu', gu: 'maite gaituzu', haiek: 'maite dituzu' },
-        zuek: { ni: 'maite nauzue', hura: 'maite duzue', gu: 'maite gaituzue', haiek: 'maite dituzue' },
-        haiek: { ni: 'maite naute', hura: 'maite dute', gu: 'maite gaituzte', zu: 'maite zaituzte', zuek: 'maite zaituztete', haiek: 'maite dituzte' },
-      },
-      pastByObject: {
-        ni: { hura: 'maite nuen', zu: 'maite zintudan', zuek: 'maite zintuztedan', haiek: 'maite nituen' },
-        hura: { ni: 'maite ninduen', hura: 'maite zuen', gu: 'maite gintuen', zu: 'maite zintuen', zuek: 'maite zintuzten', haiek: 'maite zituen' },
-        gu: { hura: 'maite genuen', zu: 'maite zintugun', zuek: 'maite zintuztegun', haiek: 'maite genituen' },
-        zu: { ni: 'maite ninduzun', hura: 'maite zenuen', gu: 'maite gintuzun', haiek: 'maite zenituen' },
-        zuek: { ni: 'maite ninduzuen', hura: 'maite zenuten', gu: 'maite gintuzuen', haiek: 'maite zenituzten' },
-        haiek: { ni: 'maite ninduten', hura: 'maite zuten', gu: 'maite gintuzten', zu: 'maite zintuzten', zuek: 'maite zintuzteten', haiek: 'maite zituzten' },
       },
     },
     // Form-only, same as `ukan.presentByObject`/`pastByObject` (#347) — no
@@ -1996,6 +1988,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'jaten ', past: 'jan ' },
     conjugations: {
       present: {
         ni: 'jaten dut',
@@ -2046,28 +2040,6 @@ export const VERBS = [
         gu: 'jango ditugu',
         zuek: 'jango dituzue',
         haiek: 'jango dituzte',
-      },
-      // #379 (part of #377): NOR-NORK object axis, same shape/sourcing
-      // convention as `ukan`/`maite`/`ikusi`'s own (#346/#347/#378) — every
-      // cell is `ukan.presentByObject`/`pastByObject`'s matching cell with
-      // `jan`'s own auxiliary-prefix swapped in (`jaten ` for present,
-      // matching `present`'s imperfective `-ten` marker; `jan ` for past,
-      // matching `past`'s bare participle).
-      presentByObject: {
-        ni: { hura: 'jaten dut', zu: 'jaten zaitut', zuek: 'jaten zaituztet', haiek: 'jaten ditut' },
-        hura: { ni: 'jaten nau', hura: 'jaten du', gu: 'jaten gaitu', zu: 'jaten zaitu', zuek: 'jaten zaituzte', haiek: 'jaten ditu' },
-        gu: { hura: 'jaten dugu', zu: 'jaten zaitugu', zuek: 'jaten zaituztegu', haiek: 'jaten ditugu' },
-        zu: { ni: 'jaten nauzu', hura: 'jaten duzu', gu: 'jaten gaituzu', haiek: 'jaten dituzu' },
-        zuek: { ni: 'jaten nauzue', hura: 'jaten duzue', gu: 'jaten gaituzue', haiek: 'jaten dituzue' },
-        haiek: { ni: 'jaten naute', hura: 'jaten dute', gu: 'jaten gaituzte', zu: 'jaten zaituzte', zuek: 'jaten zaituztete', haiek: 'jaten dituzte' },
-      },
-      pastByObject: {
-        ni: { hura: 'jan nuen', zu: 'jan zintudan', zuek: 'jan zintuztedan', haiek: 'jan nituen' },
-        hura: { ni: 'jan ninduen', hura: 'jan zuen', gu: 'jan gintuen', zu: 'jan zintuen', zuek: 'jan zintuzten', haiek: 'jan zituen' },
-        gu: { hura: 'jan genuen', zu: 'jan zintugun', zuek: 'jan zintuztegun', haiek: 'jan genituen' },
-        zu: { ni: 'jan ninduzun', hura: 'jan zenuen', gu: 'jan gintuzun', haiek: 'jan zenituen' },
-        zuek: { ni: 'jan ninduzuen', hura: 'jan zenuten', gu: 'jan gintuzuen', haiek: 'jan zenituzten' },
-        haiek: { ni: 'jan ninduten', hura: 'jan zuten', gu: 'jan gintuzten', zu: 'jan zintuzten', zuek: 'jan zintuzteten', haiek: 'jan zituzten' },
       },
     },
     // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every object
@@ -2159,6 +2131,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'edaten ', past: 'edan ' },
     conjugations: {
       present: {
         ni: 'edaten dut',
@@ -2209,28 +2183,6 @@ export const VERBS = [
         gu: 'edango ditugu',
         zuek: 'edango dituzue',
         haiek: 'edango dituzte',
-      },
-      // #379 (part of #377): NOR-NORK object axis, same shape/sourcing
-      // convention as `ukan`/`maite`/`ikusi`'s own (#346/#347/#378) — every
-      // cell is `ukan.presentByObject`/`pastByObject`'s matching cell with
-      // `edan`'s own auxiliary-prefix swapped in (`edaten ` for present,
-      // matching `present`'s imperfective `-ten` marker; `edan ` for past,
-      // matching `past`'s bare participle).
-      presentByObject: {
-        ni: { hura: 'edaten dut', zu: 'edaten zaitut', zuek: 'edaten zaituztet', haiek: 'edaten ditut' },
-        hura: { ni: 'edaten nau', hura: 'edaten du', gu: 'edaten gaitu', zu: 'edaten zaitu', zuek: 'edaten zaituzte', haiek: 'edaten ditu' },
-        gu: { hura: 'edaten dugu', zu: 'edaten zaitugu', zuek: 'edaten zaituztegu', haiek: 'edaten ditugu' },
-        zu: { ni: 'edaten nauzu', hura: 'edaten duzu', gu: 'edaten gaituzu', haiek: 'edaten dituzu' },
-        zuek: { ni: 'edaten nauzue', hura: 'edaten duzue', gu: 'edaten gaituzue', haiek: 'edaten dituzue' },
-        haiek: { ni: 'edaten naute', hura: 'edaten dute', gu: 'edaten gaituzte', zu: 'edaten zaituzte', zuek: 'edaten zaituztete', haiek: 'edaten dituzte' },
-      },
-      pastByObject: {
-        ni: { hura: 'edan nuen', zu: 'edan zintudan', zuek: 'edan zintuztedan', haiek: 'edan nituen' },
-        hura: { ni: 'edan ninduen', hura: 'edan zuen', gu: 'edan gintuen', zu: 'edan zintuen', zuek: 'edan zintuzten', haiek: 'edan zituen' },
-        gu: { hura: 'edan genuen', zu: 'edan zintugun', zuek: 'edan zintuztegun', haiek: 'edan genituen' },
-        zu: { ni: 'edan ninduzun', hura: 'edan zenuen', gu: 'edan gintuzun', haiek: 'edan zenituen' },
-        zuek: { ni: 'edan ninduzuen', hura: 'edan zenuten', gu: 'edan gintuzuen', haiek: 'edan zenituzten' },
-        haiek: { ni: 'edan ninduten', hura: 'edan zuten', gu: 'edan gintuzten', zu: 'edan zintuzten', zuek: 'edan zintuzteten', haiek: 'edan zituzten' },
       },
     },
     // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every drink
@@ -2326,6 +2278,8 @@ export const VERBS = [
     object: 'hura',
     dialect: 'batua',
     dativeOvergeneration: true,
+    // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'erosten ', past: 'erosi ' },
     conjugations: {
       present: {
         ni: 'erosten dut',
@@ -2376,28 +2330,6 @@ export const VERBS = [
         gu: 'erosiko ditugu',
         zuek: 'erosiko dituzue',
         haiek: 'erosiko dituzte',
-      },
-      // #379 (part of #377): NOR-NORK object axis, same shape/sourcing
-      // convention as `ukan`/`maite`/`ikusi`'s own (#346/#347/#378) — every
-      // cell is `ukan.presentByObject`/`pastByObject`'s matching cell with
-      // `erosi`'s own auxiliary-prefix swapped in (`erosten ` for present,
-      // matching `present`'s imperfective `-ten` marker; `erosi ` for past,
-      // matching `past`'s bare participle).
-      presentByObject: {
-        ni: { hura: 'erosten dut', zu: 'erosten zaitut', zuek: 'erosten zaituztet', haiek: 'erosten ditut' },
-        hura: { ni: 'erosten nau', hura: 'erosten du', gu: 'erosten gaitu', zu: 'erosten zaitu', zuek: 'erosten zaituzte', haiek: 'erosten ditu' },
-        gu: { hura: 'erosten dugu', zu: 'erosten zaitugu', zuek: 'erosten zaituztegu', haiek: 'erosten ditugu' },
-        zu: { ni: 'erosten nauzu', hura: 'erosten duzu', gu: 'erosten gaituzu', haiek: 'erosten dituzu' },
-        zuek: { ni: 'erosten nauzue', hura: 'erosten duzue', gu: 'erosten gaituzue', haiek: 'erosten dituzue' },
-        haiek: { ni: 'erosten naute', hura: 'erosten dute', gu: 'erosten gaituzte', zu: 'erosten zaituzte', zuek: 'erosten zaituztete', haiek: 'erosten dituzte' },
-      },
-      pastByObject: {
-        ni: { hura: 'erosi nuen', zu: 'erosi zintudan', zuek: 'erosi zintuztedan', haiek: 'erosi nituen' },
-        hura: { ni: 'erosi ninduen', hura: 'erosi zuen', gu: 'erosi gintuen', zu: 'erosi zintuen', zuek: 'erosi zintuzten', haiek: 'erosi zituen' },
-        gu: { hura: 'erosi genuen', zu: 'erosi zintugun', zuek: 'erosi zintuztegun', haiek: 'erosi genituen' },
-        zu: { ni: 'erosi ninduzun', hura: 'erosi zenuen', gu: 'erosi gintuzun', haiek: 'erosi zenituen' },
-        zuek: { ni: 'erosi ninduzuen', hura: 'erosi zenuten', gu: 'erosi gintuzuen', haiek: 'erosi zenituzten' },
-        haiek: { ni: 'erosi ninduten', hura: 'erosi zuten', gu: 'erosi gintuzten', zu: 'erosi zintuzten', zuek: 'erosi zintuzteten', haiek: 'erosi zituzten' },
       },
     },
     // #124/#155/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Edible/
@@ -2494,6 +2426,8 @@ export const VERBS = [
     object: 'hura',
     dialect: 'batua',
     dativeOvergeneration: true,
+    // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'hartzen ', past: 'hartu ' },
     conjugations: {
       present: {
         ni: 'hartzen dut',
@@ -2544,28 +2478,6 @@ export const VERBS = [
         gu: 'hartuko ditugu',
         zuek: 'hartuko dituzue',
         haiek: 'hartuko dituzte',
-      },
-      // #379 (part of #377): NOR-NORK object axis, same shape/sourcing
-      // convention as `ukan`/`maite`/`ikusi`'s own (#346/#347/#378) — every
-      // cell is `ukan.presentByObject`/`pastByObject`'s matching cell with
-      // `hartu`'s own auxiliary-prefix swapped in (`hartzen ` for present,
-      // matching `present`'s imperfective `-tzen` marker; `hartu ` for past,
-      // matching `past`'s bare participle).
-      presentByObject: {
-        ni: { hura: 'hartzen dut', zu: 'hartzen zaitut', zuek: 'hartzen zaituztet', haiek: 'hartzen ditut' },
-        hura: { ni: 'hartzen nau', hura: 'hartzen du', gu: 'hartzen gaitu', zu: 'hartzen zaitu', zuek: 'hartzen zaituzte', haiek: 'hartzen ditu' },
-        gu: { hura: 'hartzen dugu', zu: 'hartzen zaitugu', zuek: 'hartzen zaituztegu', haiek: 'hartzen ditugu' },
-        zu: { ni: 'hartzen nauzu', hura: 'hartzen duzu', gu: 'hartzen gaituzu', haiek: 'hartzen dituzu' },
-        zuek: { ni: 'hartzen nauzue', hura: 'hartzen duzue', gu: 'hartzen gaituzue', haiek: 'hartzen dituzue' },
-        haiek: { ni: 'hartzen naute', hura: 'hartzen dute', gu: 'hartzen gaituzte', zu: 'hartzen zaituzte', zuek: 'hartzen zaituztete', haiek: 'hartzen dituzte' },
-      },
-      pastByObject: {
-        ni: { hura: 'hartu nuen', zu: 'hartu zintudan', zuek: 'hartu zintuztedan', haiek: 'hartu nituen' },
-        hura: { ni: 'hartu ninduen', hura: 'hartu zuen', gu: 'hartu gintuen', zu: 'hartu zintuen', zuek: 'hartu zintuzten', haiek: 'hartu zituen' },
-        gu: { hura: 'hartu genuen', zu: 'hartu zintugun', zuek: 'hartu zintuztegun', haiek: 'hartu genituen' },
-        zu: { ni: 'hartu ninduzun', hura: 'hartu zenuen', gu: 'hartu gintuzun', haiek: 'hartu zenituen' },
-        zuek: { ni: 'hartu ninduzuen', hura: 'hartu zenuten', gu: 'hartu gintuzuen', haiek: 'hartu zenituzten' },
-        haiek: { ni: 'hartu ninduten', hura: 'hartu zuten', gu: 'hartu gintuzten', zu: 'hartu zintuzten', zuek: 'hartu zintuzteten', haiek: 'hartu zituzten' },
       },
     },
     // #143: `hartu` added to the Unit 12 "daily routine" pool to stage the
@@ -2627,6 +2539,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'ikusten ', past: 'ikusi ' },
     conjugations: {
       present: {
         ni: 'ikusten dut',
@@ -2703,29 +2617,6 @@ export const VERBS = [
         gu: 'ikusi dugu',
         zuek: 'ikusi duzue',
         haiek: 'ikusi dute',
-      },
-      // #378 (part of #377): NOR-NORK object axis, same shape/sourcing
-      // convention as `ukan`/`maite`'s own (#346/#347) — every cell is
-      // `ukan.presentByObject`/`pastByObject`'s matching cell with `ikusi`'s
-      // own auxiliary-prefix swapped in (`ikusten ` for present, matching
-      // `present`'s imperfective `-ten` marker; `ikusi ` for past, matching
-      // `past`'s bare participle), so `presentByObject.ni.zu === 'ikusten ' +
-      // ukan.presentByObject.ni.zu` ("ikusten zaitut") holds by construction.
-      presentByObject: {
-        ni: { hura: 'ikusten dut', zu: 'ikusten zaitut', zuek: 'ikusten zaituztet', haiek: 'ikusten ditut' },
-        hura: { ni: 'ikusten nau', hura: 'ikusten du', gu: 'ikusten gaitu', zu: 'ikusten zaitu', zuek: 'ikusten zaituzte', haiek: 'ikusten ditu' },
-        gu: { hura: 'ikusten dugu', zu: 'ikusten zaitugu', zuek: 'ikusten zaituztegu', haiek: 'ikusten ditugu' },
-        zu: { ni: 'ikusten nauzu', hura: 'ikusten duzu', gu: 'ikusten gaituzu', haiek: 'ikusten dituzu' },
-        zuek: { ni: 'ikusten nauzue', hura: 'ikusten duzue', gu: 'ikusten gaituzue', haiek: 'ikusten dituzue' },
-        haiek: { ni: 'ikusten naute', hura: 'ikusten dute', gu: 'ikusten gaituzte', zu: 'ikusten zaituzte', zuek: 'ikusten zaituztete', haiek: 'ikusten dituzte' },
-      },
-      pastByObject: {
-        ni: { hura: 'ikusi nuen', zu: 'ikusi zintudan', zuek: 'ikusi zintuztedan', haiek: 'ikusi nituen' },
-        hura: { ni: 'ikusi ninduen', hura: 'ikusi zuen', gu: 'ikusi gintuen', zu: 'ikusi zintuen', zuek: 'ikusi zintuzten', haiek: 'ikusi zituen' },
-        gu: { hura: 'ikusi genuen', zu: 'ikusi zintugun', zuek: 'ikusi zintuztegun', haiek: 'ikusi genituen' },
-        zu: { ni: 'ikusi ninduzun', hura: 'ikusi zenuen', gu: 'ikusi gintuzun', haiek: 'ikusi zenituen' },
-        zuek: { ni: 'ikusi ninduzuen', hura: 'ikusi zenuten', gu: 'ikusi gintuzuen', haiek: 'ikusi zenituzten' },
-        haiek: { ni: 'ikusi ninduten', hura: 'ikusi zuten', gu: 'ikusi gintuzten', zu: 'ikusi zintuzten', zuek: 'ikusi zintuzteten', haiek: 'ikusi zituzten' },
       },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. `ikusi`'s
