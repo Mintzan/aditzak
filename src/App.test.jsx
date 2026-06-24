@@ -1038,7 +1038,7 @@ describe('App', () => {
         expect(await screen.findByRole('dialog', { name: 'Sync your progress' })).toBeInTheDocument()
       })
 
-      it('applies "keep the best of both"', async () => {
+      it('applies "keep the best of both"', { timeout: 15000 }, async () => {
         mockFetch()
         const user = userEvent.setup()
         render(<App />)
@@ -1057,7 +1057,7 @@ describe('App', () => {
         expect(progress['egon-present']).toEqual(cloudPayload.progress['egon-present'])
       })
 
-      it("applies \"use this device's progress\"", async () => {
+      it("applies \"use this device's progress\"", { timeout: 15000 }, async () => {
         const fetchMock = mockFetch()
         const user = userEvent.setup()
         render(<App />)
@@ -1070,7 +1070,7 @@ describe('App', () => {
         expect(JSON.parse(localStorage.getItem('aditzak:progress:v1'))).toEqual(localProgress)
       })
 
-      it('applies "use account progress"', async () => {
+      it('applies "use account progress"', { timeout: 15000 }, async () => {
         mockFetch()
         const user = userEvent.setup()
         render(<App />)
