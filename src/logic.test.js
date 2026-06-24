@@ -58,7 +58,7 @@ import {
   WORD_ORDER_MIN_WORDS,
 } from './lessonLogic'
 import { LESSONS } from './data/lessons'
-import { VERBS } from './data/verbs'
+import { OBJECT_AXIS_SKELETONS, VERBS } from './data/verbs'
 import { READING_ITEMS } from './data/readingItems'
 
 describe('computeStars', () => {
@@ -1025,6 +1025,55 @@ describe('generateQuestions', () => {
           ).not.toThrow()
         }
       }
+    })
+  })
+
+  // #442: `animateObject: false` makes `getComposedTable` omit every
+  // personal `nor` cell from a composed NOR-NORK by-object table, so a
+  // thing-only verb's object axis never yields a "[verb] you/me/us" form.
+  // No real verb both has a composed table and is marked `false` yet (#436's
+  // composed verbs are all wired into shipped Unit 15 lessons that drill
+  // personal-object cells — see `data/verbs.js`'s `animateObject` doc
+  // comment) — so these exercise the mechanism directly against a fixture
+  // verb shaped like a real composed one, rather than real `VERBS` data.
+  describe('animateObject (#442)', () => {
+    const fixtureVerb = { byObjectPrefixes: { present: 'irakurtzen ', past: 'irakurri ' }, animateObject: false }
+    const animateFixtureVerb = { byObjectPrefixes: { present: 'irakurtzen ', past: 'irakurri ' } }
+
+    it('omits every personal nor cell, keeping only hura/haiek, when animateObject is false', () => {
+      const present = getComposedTable(fixtureVerb, 'presentByObject')
+      for (const nork of Object.keys(present)) {
+        expect(Object.keys(present[nork]).sort()).toEqual(
+          Object.keys(present[nork])
+            .filter((nor) => nor === 'hura' || nor === 'haiek')
+            .sort(),
+        )
+      }
+      // sanity: the filter actually removed something, it didn't just no-op
+      expect(present.hura).not.toHaveProperty('ni')
+      expect(present.hura).not.toHaveProperty('zu')
+      expect(present.zu).not.toHaveProperty('ni')
+    })
+
+    it('keeps the 3rd-person cells unfiltered, matching the unflagged composition', () => {
+      const filtered = getComposedTable(fixtureVerb, 'presentByObject')
+      const unfiltered = getComposedTable(animateFixtureVerb, 'presentByObject')
+      for (const nork of Object.keys(filtered)) {
+        if ('hura' in filtered[nork]) expect(filtered[nork].hura).toBe(unfiltered[nork].hura)
+        if ('haiek' in filtered[nork]) expect(filtered[nork].haiek).toBe(unfiltered[nork].haiek)
+      }
+    })
+
+    it('does not filter when animateObject is left unset (default true)', () => {
+      const present = getComposedTable(animateFixtureVerb, 'presentByObject')
+      expect(present.hura).toHaveProperty('ni')
+      expect(present.zu).toHaveProperty('ni')
+    })
+
+    it('applies the same filtering to pastByObject', () => {
+      const past = getComposedTable(fixtureVerb, 'pastByObject')
+      expect(past.hura).not.toHaveProperty('ni')
+      expect(past.hura.haiek).toBe(`irakurri ${OBJECT_AXIS_SKELETONS.edun.past.hura.haiek}`)
     })
   })
 
