@@ -6,6 +6,39 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-24 — Criterion for `wordOrderSafe` (which sentences are fair to grade as a single-order reorder drill)
+
+The `word-order` drill (reassemble a scrambled sentence) can only fairly grade
+sentences with a single defensible order, but Basque word order is governed by
+the **galdegaia (focus) rule**: whatever sits immediately before the finite
+verb is the focus, and most constituents can move to claim that slot. So a
+sentence like "Zuek herriko danborrada entzuten duzue goizean" has several
+grammatical orders ("...danborrada goizean entzuten duzue" just refocuses onto
+*goizean*) — grading one as the only right answer is wrong. (Mechanism for the
+opt-in gate is in `docs/DECISIONS.md`/`docs/EXERCISE_ENGINE.md`; this entry is
+the *language* criterion for the tag.)
+
+A sentence variant earns `wordOrderSafe: true` only when its taught/neutral
+order has **no reasonable competing arrangement a learner would produce** —
+judged, not assumed:
+
+- **Yes — negative copula/auxiliary patterns** (`[Subject] ez [aux]
+  [predicate]`, e.g. "Ni ez naiz irakaslea"): `ez` + finite verb is a pinned
+  sequence and the predicate follows it; the one alternative (fronting the
+  predicate for contrastive focus) is marked enough that a learner won't
+  default to it. Seed tagged set: `izan`'s `negativeSentences.present` trio.
+- **No — affirmatives with both an object and a separate time/place adjunct**:
+  the adjunct can sit pre-verb (focus) *or* trail after the verb, and the
+  subject can front independently — multiple natural orders, the exact case
+  that prompted this.
+- **Borderline — allative/locative motion/location sentences** ("Ni ez noa
+  etxera"): the `ez`+aux is pinned but the `-ra`/`-an` phrase can still front
+  for focus; left untagged for now pending a fluent review.
+
+Tagging more of the bank is a deliberate per-sentence pass, best done by a
+fluent reviewer, since each call is a naturalness judgment like the `validFor`
+bar in `docs/SENTENCE_FRAMES.md`.
+
 ## 2026-06-24 — Plural-object (`ditut`/`nituen`) tables for eight long-tail transitive verbs whose example sentences had plural objects
 
 A user flagged "Guk baserriko barazkiak plazan saltzen **dugu**" as wrong — a

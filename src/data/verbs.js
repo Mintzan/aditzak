@@ -372,9 +372,13 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Ni ez ___ irakaslea.', validFor: [] },
-        zu: { text: 'Zu ez ___ ikaslea.', validFor: [] },
-        hura: { text: 'Hura ez ___ medikua.', validFor: [] },
+        // `wordOrderSafe` (see `docs/EXERCISE_ENGINE.md`): the negative copula
+        // pattern `[Subject] ez [aux] [predicate]` has a pinned `ez`+auxiliary
+        // sequence and no reasonable competing learner order, so it's safe to
+        // grade as a single-answer reorder drill.
+        ni: { text: 'Ni ez ___ irakaslea.', validFor: [], wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ ikaslea.', validFor: [], wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ medikua.', validFor: [], wordOrderSafe: true },
       },
     },
   },

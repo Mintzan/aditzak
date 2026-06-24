@@ -8,6 +8,14 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-24 — `word-order` drills are now opt-in (`wordOrderSafe`), fail-closed
+
+A user flagged a `word-order` drill marking a grammatically-valid order wrong ("Zuek herriko danborrada **goizean** entzuten duzue" — a focus/galdegaia variant of the authored "...danborrada entzuten duzue goizean"). Root cause: `word-order` was auto-generated from *any* sentence in the 4–9 word range and graded against the single authored string, but Basque's focus rule lets constituents compete for the pre-verb slot, so most object+adjunct sentences have several valid orders.
+
+Considered (a) accepting multiple orders per sentence and (b) auditing/rewriting the pool to remove ambiguity; chose **(c) an opt-in per-sentence `wordOrderSafe: true` tag** gating `word-order` eligibility in `meetsWordOrderThreshold`. Matches the existing per-sentence `validFor` philosophy, fails closed (untagged → never a reorder drill, but all other framings unaffected), and avoids hand-authoring accepted-order lists or encoding the focus rule (too subtle to do reliably). The "is this order the only one a learner would produce" call is a language judgment, so the criterion + seed set live in `docs/LANGUAGE_DECISIONS.md`; the mechanism + tagging guidance in `docs/EXERCISE_ENGINE.md` ("Word-order safety").
+
+Trade-off: until the tagged set grows, `word-order` questions become rare (seed set is `izan`'s negative-present trio). Accepted — a vetted-but-rare drill beats a frequent-but-unfair one. Expanding the tag is a deliberate curation pass.
+
 ## 2026-06-24 — Extended the NOR-number object pools (Units 13/14 + future) with 8 long-tail transitive verbs
 
 Fixing the plural-object agreement bug (see `docs/LANGUAGE_DECISIONS.md`, same date) added `presentPlural`/`pastPlural`/`futurePlural` tables to `egin`/`irakurri`/`idatzi`/`ikasi`/`entzun`/`utzi`/`bilatu`/`saldu`. Rather than leave those tables as dead data (reachable only as object-number distractor lures via `getObjectNumberLure`), wired all 8 into the existing object-number pools — `nor-nork-{present,past,future}-plural-pool` and their `-plural` siblings — so the new `ditut`/`nituen` forms are actually drilled.

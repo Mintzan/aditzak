@@ -199,16 +199,51 @@ words back into order. Resolved per the design questions raised in #185:
   twice — same reasoning as a frozen match-pairs board being a worse retry
   experience than a reshuffled one.
 - **Kind-pool gating**: competes in the same `rollQuestionKind(availableKinds)`
-  pool as `sentence`/`type-verb`/`spot-error`, gated by a minimum word
-  count — **at least 4 tokens** (post-fill, post-split). Below that a cloud
-  degenerates into trivial trial-and-error (a 3-word sentence has only 6
-  permutations) rather than testing word order.
+  pool as `sentence`/`type-verb`/`spot-error`, gated by (a) the
+  `wordOrderSafe: true` opt-in tag (see "Word-order safety" below) and (b) a
+  minimum word count — **at least 4 tokens** (post-fill, post-split). Below
+  that a cloud degenerates into trivial trial-and-error (a 3-word sentence has
+  only 6 permutations) rather than testing word order.
 - **Negation interaction**: offered for `negativeSentences` only when
   `includeNegation` is set (same gating `negative`/`type-negative` already
   use), and it **supplements** rather than replaces them — Unit 10's roll
   pool becomes `[negative, type-negative, word-order]` once the negated
   sentence clears the 4-token floor, since auxiliary-fronting is exactly the
   word-order change this kind is best at drilling.
+
+### Word-order safety (`wordOrderSafe`) — resolved
+A user flagged that a `word-order` drill marked a grammatically-correct order
+wrong: for "Zuek herriko danborrada entzuten duzue goizean", tapping
+"...danborrada **goizean** entzuten duzue" is valid Basque (it just shifts the
+galdegaia/focus onto *goizean*), but the drill grades against the single
+authored string. The root cause: `word-order` was auto-generated from *any*
+sentence in the 4–9 word range, and Basque's focus rule lets constituents
+compete for the pre-verb slot, so most object-plus-adjunct sentences have more
+than one valid order.
+
+Fix: `word-order` generation is now **opt-in and fail-closed**. A sentence
+variant only becomes a reorder drill if it carries `wordOrderSafe: true`
+(checked in `meetsWordOrderThreshold` alongside the word-count window).
+Untagged sentences — the default — keep all their other framings
+(`sentence`/`type-verb`/`negative`/…) but never become `word-order`.
+
+The tag is a **curatorial language judgment**, not a claim of strict
+grammatical uniqueness. Tag a variant only when its taught/neutral order has
+**no reasonable competing arrangement a learner would produce**. In practice
+that means:
+
+- **Strongest candidates — negative copula/auxiliary patterns**
+  (`[Subject] ez [aux] [predicate]`, e.g. "Ni ez naiz irakaslea"): the
+  `ez`+finite-verb sequence is grammatically pinned and the predicate sits
+  after it, so there's effectively one order. This is exactly the
+  auxiliary-fronting change `word-order` drills best.
+- **Avoid tagging** affirmative sentences carrying both an object and a
+  separate adjunct (time/place) — those are precisely the
+  multiple-valid-order cases the focus rule produces (the danborrada bug).
+
+The seed tagged set (as of this change) is `izan`'s `negativeSentences.present`
+trio. Expanding the tagged set across the bank is a deliberate curation pass
+(best driven by a fluent reviewer); the gate makes it safe to grow incrementally.
 
 ### NOR-NORK object axis (#346 — resolved)
 `ukan`'s `present` table only varied the ergative (NORK) subject against a
