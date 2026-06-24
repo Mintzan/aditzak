@@ -8,6 +8,12 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-24 — #434: synced the feedback worker's `diagnostics` validator with `buildFlagDiagnostics`, added a cross-package regression test
+
+The worker's `isValidDiagnostics` (`worker/src/index.js`) was written for the original sentence/options/items question kinds and never updated as `buildFlagDiagnostics` (`src/lessonLogic.js`) grew `source`/`pairs`/`tokens`/`punctuation` for `reading`/`match-pairs`/`word-order`, so flagging those question kinds 400'd. Fixed by widening `QUESTION_KEYS` and adding type checks for the new sub-fields, and by treating `verbId`/`tense`/`person` as nullable (like the existing `userAnswer`) instead of required strings, since `match-pairs` has no single `person` and `reading` has none of the three.
+
+To stop the two from drifting apart silently again, exported `isValidDiagnostics` from the worker and added `src/feedbackWorkerDiagnostics.test.js`, which runs one fixture question per kind through `buildFlagDiagnostics` and asserts the worker accepts the result — even though `worker/` is its own package with no test runner of its own, importing its module from a `src/` Vitest test is enough to catch the next drift, and avoids standing up a whole second test setup for one validator function.
+
 ## 2026-06-24 — #435: widened Unit 15's reverse-direction object-axis block from `ukan`/`maite`-only to all seven object-axis verbs
 
 #416 had extended Unit 15's reverse-direction block (NORK fixed at `hura`/`gu`/`zu`/`zuek`/`haiek`, drilling forms like `nau`/`gaitu`/`naute`) but deliberately scoped it to `ukan`/`maite` only, leaving 20 of those 26 lessons as a straight `ukan`/`maite` alternation — `ikusi`/`jan`/`edan`/`erosi`/`hartu` (which already had the same `presentByObject`/`pastByObject` table shape since #378/#379) appeared only inside the `fixed: 'ni'` block's pooled reviews, never as standalone practice.

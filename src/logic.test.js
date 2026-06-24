@@ -3727,6 +3727,25 @@ describe('buildFlagDiagnostics', () => {
     expect(diagnostics.verbId).toBeUndefined()
   })
 
+  it('includes the tokens and punctuation for a word-order question', () => {
+    const tokens = [{ id: 0, text: 'Ni' }, { id: 1, text: 'irakaslea' }, { id: 2, text: 'naiz' }]
+    const question = { verbId: 'izan', tense: 'present', person: 'ni', kind: 'word-order', tokens, correct: 'Ni irakaslea naiz', punctuation: '.' }
+
+    const diagnostics = buildFlagDiagnostics({ lesson, question, selected: 'Ni irakaslea naiz', status: 'correct', language: 'en' })
+
+    expect(diagnostics.question).toMatchObject({ tokens, punctuation: '.' })
+  })
+
+  it('includes the pairs and omits person for a match-pairs question (#434)', () => {
+    const pairs = [{ person: 'ni', form: 'naiz' }, { person: 'hi', form: 'haiz' }, { person: 'hura', form: 'da' }]
+    const question = { verbId: 'izan', tense: 'present', kind: 'match-pairs', pairs, correct: 'complete' }
+
+    const diagnostics = buildFlagDiagnostics({ lesson: reviewLesson, question, selected: 'complete', status: 'correct', language: 'en' })
+
+    expect(diagnostics.question).toMatchObject({ pairs })
+    expect(diagnostics.person).toBeUndefined()
+  })
+
 })
 
 describe('recordErrors', () => {
