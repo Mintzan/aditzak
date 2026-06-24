@@ -8,6 +8,14 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-24 — Extended the NOR-number object pools (Units 13/14 + future) with 8 long-tail transitive verbs
+
+Fixing the plural-object agreement bug (see `docs/LANGUAGE_DECISIONS.md`, same date) added `presentPlural`/`pastPlural`/`futurePlural` tables to `egin`/`irakurri`/`idatzi`/`ikasi`/`entzun`/`utzi`/`bilatu`/`saldu`. Rather than leave those tables as dead data (reachable only as object-number distractor lures via `getObjectNumberLure`), wired all 8 into the existing object-number pools — `nor-nork-{present,past,future}-plural-pool` and their `-plural` siblings — so the new `ditut`/`nituen` forms are actually drilled.
+
+- This grows the object-number core from the curated 7 verbs (`ukan`/`jan`/`edan`/`erosi`/`hartu`/`ikusi`/`eduki`) to 15. Accepted: these 8 already appear in the singular `unit-10-present` pool (~30 verbs), so the asymmetry of teaching their singular forms but not their plural ones was the odd state, not the fix. No `journey.js` change needed — the pools' `lessonIds` are unchanged, only their `sources` grew, so the trio cross-check (`journey.test.js`) still holds.
+- The relocated plural-object sentences make these 8 verbs' plural pool lessons sentence-bearing (e.g. "Guk baserriko barazkiak plazan ___" → `saltzen ditugu`), unlike `jan`/`erosi`'s table-only plural lessons — fine, since the engine already supports plural-tense sentence buckets (`ukan`/`nahi`/`esan`/`gustatu` have them). Partial singular buckets (some persons now sentence-less) degrade gracefully to bare-form questions per `rollQuestionKind`.
+- Regenerated `scripts/validfor-gap-baseline.json`: the new plural forms add cross-verb gap slots of the same kind as these verbs' existing untagged singular gaps (project policy tags only a core set, never `saldu`/`utzi`/...), so no new `validFor` entries — counts-only baseline refresh.
+
 ## 2026-06-24 — #370: implemented Units 42–44 (causative `-arazi`), four new standalone `VERBS` entries, zero new data shapes
 
 Per the prior research pass (#430, `docs/CONJUGATIONS.md` §17), causatives need no new shape — each is just another `type: 'periphrastic'` entry whose participle is `[radical]+arazi`.

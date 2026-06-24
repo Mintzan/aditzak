@@ -568,6 +568,18 @@ export const LESSONS = [
       { verbId: 'hartu', tense: 'presentPlural' },
       { verbId: 'ikusi', tense: 'presentPlural' },
       { verbId: 'eduki', tense: 'presentPlural' },
+      // Long-tail transitive verbs whose example sentences carry plural
+      // objects (saldu's "barazkiak", utzi's "giltzak", …); their
+      // `presentPlural` tables were added so those sentences agree (`ditugu`,
+      // not `dugu`) instead of being singularised.
+      { verbId: 'egin', tense: 'presentPlural' },
+      { verbId: 'irakurri', tense: 'presentPlural' },
+      { verbId: 'idatzi', tense: 'presentPlural' },
+      { verbId: 'ikasi', tense: 'presentPlural' },
+      { verbId: 'entzun', tense: 'presentPlural' },
+      { verbId: 'utzi', tense: 'presentPlural' },
+      { verbId: 'bilatu', tense: 'presentPlural' },
+      { verbId: 'saldu', tense: 'presentPlural' },
     ],
   },
   {
@@ -581,6 +593,14 @@ export const LESSONS = [
       { verbId: 'hartu', tense: 'presentPlural' },
       { verbId: 'ikusi', tense: 'presentPlural' },
       { verbId: 'eduki', tense: 'presentPlural' },
+      { verbId: 'egin', tense: 'presentPlural' },
+      { verbId: 'irakurri', tense: 'presentPlural' },
+      { verbId: 'idatzi', tense: 'presentPlural' },
+      { verbId: 'ikasi', tense: 'presentPlural' },
+      { verbId: 'entzun', tense: 'presentPlural' },
+      { verbId: 'utzi', tense: 'presentPlural' },
+      { verbId: 'bilatu', tense: 'presentPlural' },
+      { verbId: 'saldu', tense: 'presentPlural' },
     ],
   },
   // Unit 13 ("Looking Back I — The "ukan" Past Pool", Phase II) — `ukan`'s
@@ -726,6 +746,16 @@ export const LESSONS = [
       { verbId: 'hartu', tense: 'pastPlural' },
       { verbId: 'ikusi', tense: 'pastPlural' },
       { verbId: 'eduki', tense: 'pastPlural' },
+      // Long-tail transitive verbs (see present-plural pool above) — their
+      // `pastPlural` tables (`saldu nituen`, `utzi nituen`, …).
+      { verbId: 'egin', tense: 'pastPlural' },
+      { verbId: 'irakurri', tense: 'pastPlural' },
+      { verbId: 'idatzi', tense: 'pastPlural' },
+      { verbId: 'ikasi', tense: 'pastPlural' },
+      { verbId: 'entzun', tense: 'pastPlural' },
+      { verbId: 'utzi', tense: 'pastPlural' },
+      { verbId: 'bilatu', tense: 'pastPlural' },
+      { verbId: 'saldu', tense: 'pastPlural' },
     ],
   },
   {
@@ -739,6 +769,14 @@ export const LESSONS = [
       { verbId: 'hartu', tense: 'pastPlural' },
       { verbId: 'ikusi', tense: 'pastPlural' },
       { verbId: 'eduki', tense: 'pastPlural' },
+      { verbId: 'egin', tense: 'pastPlural' },
+      { verbId: 'irakurri', tense: 'pastPlural' },
+      { verbId: 'idatzi', tense: 'pastPlural' },
+      { verbId: 'ikasi', tense: 'pastPlural' },
+      { verbId: 'entzun', tense: 'pastPlural' },
+      { verbId: 'utzi', tense: 'pastPlural' },
+      { verbId: 'bilatu', tense: 'pastPlural' },
+      { verbId: 'saldu', tense: 'pastPlural' },
     ],
   },
   // Unit 14 ("Physical States & Possessions", Phase II) — `eduki` (nor-nork)
@@ -879,6 +917,16 @@ export const LESSONS = [
       { verbId: 'ikusi', tense: 'futurePlural' },
       { verbId: 'eduki', tense: 'futurePlural' },
       { verbId: 'nahi', tense: 'futurePlural' },
+      // Long-tail transitive verbs (see present-plural pool above) — their
+      // `futurePlural` tables (`salduko ditut`, `utziko ditut`, …).
+      { verbId: 'egin', tense: 'futurePlural' },
+      { verbId: 'irakurri', tense: 'futurePlural' },
+      { verbId: 'idatzi', tense: 'futurePlural' },
+      { verbId: 'ikasi', tense: 'futurePlural' },
+      { verbId: 'entzun', tense: 'futurePlural' },
+      { verbId: 'utzi', tense: 'futurePlural' },
+      { verbId: 'bilatu', tense: 'futurePlural' },
+      { verbId: 'saldu', tense: 'futurePlural' },
     ],
   },
   {
@@ -893,6 +941,14 @@ export const LESSONS = [
       { verbId: 'ikusi', tense: 'futurePlural' },
       { verbId: 'eduki', tense: 'futurePlural' },
       { verbId: 'nahi', tense: 'futurePlural' },
+      { verbId: 'egin', tense: 'futurePlural' },
+      { verbId: 'irakurri', tense: 'futurePlural' },
+      { verbId: 'idatzi', tense: 'futurePlural' },
+      { verbId: 'ikasi', tense: 'futurePlural' },
+      { verbId: 'entzun', tense: 'futurePlural' },
+      { verbId: 'utzi', tense: 'futurePlural' },
+      { verbId: 'bilatu', tense: 'futurePlural' },
+      { verbId: 'saldu', tense: 'futurePlural' },
     ],
   },
   // #423 — the rule is already learned, so every other fodder verb with a
