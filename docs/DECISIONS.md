@@ -8,6 +8,15 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-24 — #369: implemented Unit 36 (Subjuntiboa) as data-only, present-tense, 3rd-person-restricted
+
+Per #406's earlier mechanic decision, the subjunctive needed no new engine `kind` — just a `subjunctivePresent` tense key plus `sentences`/`conjugations` entries, like every other tense.
+
+- **izan**/**ukan** (NOR / NOR-NORK): `sentences`-based in-construction production over a `nahi izan` ("Nahi dut ... ___") frame, restricted to `persons: ['hura', 'haiek']` per the journey's stated "3rd-person... production" scope — `ni`/`zu`/`gu`/`zuek` forms are still in `conjugations` for completeness/cross-referencing but have no lesson.
+- **gustatu**/**iruditu**/**ahaztu** (dative) and **esan**/**eman** (ditransitive): recognition-only (`mode: 'recognition'`, pooled per family into `unit-36-dative-review`/`unit-36-ditransitive-review`), no `sentences` — matches the journey's "dative/ditransitive recognition-only" scope and the existing precedent for these verbs' other mood tables (potential/baldintza/conditional).
+- Forms sourced from `CONJUGATIONS.md` §2-4/§16.1/§16.3, verified cell-for-cell against its citation tables. `gustatu`/`iruditu`/`ahaztu` use the full participle prefix (`gustatu dakion`, not the doc's literal bare-radical `gusta dakion`), matching #364's precedent for `imperativeByNor` rather than §16.3's general Radical/Bare-Stem Rule, for consistency with this codebase's existing tables. `esan`/`eman` use the bare auxiliary with no prefix, matching their existing `potential`/`baldintza`/`conditional` convention.
+- Added the missing `TENSE_META.subjunctivePresent` entry (+ `tenseSubjunctivePresent` i18n key in all three locales) — omitting it crashes `describeLesson` for any lesson list touching the tense, which is what the 45 failing tests during development turned out to be.
+
 ## 2026-06-23 — #425: drilled `gustatu`/`iruditu`/`ahaztu`'s Baldintza/Ondorioa/Ahalera/Agintera object-axis tables, all zero-lesson before now, with recognition-only mood lessons
 
 Unlike #419's gap (17 of 18 NORI rows undrilled, but every row at least reachable through a `fixed: 'zu'`-adjacent table elsewhere), the six mood tables here (`baldintzaByNor`, `conditionalByNor`, `conditionalPastByNor`, `potentialByNor`, `potentialAlegiazkoaByNor`, `potentialLehenaldiaByNor`) had **no** lessons at any NORI value, and `imperativeByNor` only had the single `fixed: 'zu'` lesson from #364.

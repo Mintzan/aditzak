@@ -3925,4 +3925,50 @@ export const LESSONS = [
     persons: ['hura', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'haiek' },
   },
+  // #369 — Unit 36, "Purpose & Wishing (Subjuntiboa)". izan/ukan get
+  // in-construction production (sentences over the volitional `nahi izan`
+  // frame), restricted to `hura`/`haiek` per the unit's stated "3rd-person...
+  // production" scope. gustatu/iruditu/ahaztu's dative and esan/eman's
+  // ditransitive subjunctive are recognition-only, pooled per verb family —
+  // same `unit-N-dative-review`/`unit-N-ditransitive-review` split every
+  // prior unit in this stage uses.
+  {
+    id: 'izan-subjunctive-present',
+    verbId: 'izan',
+    tense: 'subjunctivePresent',
+    persons: ['hura', 'haiek'],
+  },
+  {
+    id: 'ukan-subjunctive-present',
+    verbId: 'ukan',
+    tense: 'subjunctivePresent',
+    persons: ['hura', 'haiek'],
+  },
+  {
+    id: 'unit-36-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'subjunctivePresent' },
+      { verbId: 'ukan', tense: 'subjunctivePresent' },
+    ],
+  },
+  {
+    id: 'unit-36-dative-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'gustatu', tense: 'subjunctivePresent' },
+      { verbId: 'iruditu', tense: 'subjunctivePresent' },
+      { verbId: 'ahaztu', tense: 'subjunctivePresent' },
+    ],
+  },
+  {
+    id: 'unit-36-ditransitive-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'esan', tense: 'subjunctivePresent' },
+      { verbId: 'eman', tense: 'subjunctivePresent' },
+    ],
+  },
 ]

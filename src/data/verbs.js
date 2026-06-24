@@ -181,6 +181,21 @@ export const VERBS = [
       // `bitez`) and 1st-person hortative are out of scope for this table —
       // see the issue filed for #171's remaining scope.
       imperative: { hi: 'hadi', zu: 'zaitez', zuek: 'zaitezte' },
+      // #369 — Subjuntiboa Present (Unit 36, "Purpose & Wishing"), `izan`'s
+      // own NOR paradigm per CONJUGATIONS.md §2/§16.1's citation table
+      // (`nadin`/`hadin`/`dadin`/`gaitezen`/`zaitezen`/`zaitezten`/`daitezen`).
+      // `hi` omitted per the journey's hika deferral (matches every table
+      // above). The full table is written here even though Unit 36's
+      // production lessons restrict `persons` to `hura`/`haiek` — same
+      // convention as every other tense in this file.
+      subjunctivePresent: {
+        ni: 'nadin',
+        zu: 'zaitezen',
+        hura: 'dadin',
+        gu: 'gaitezen',
+        zuek: 'zaitezten',
+        haiek: 'daitezen',
+      },
     },
     // Every variant here is a predicate-nominal/adjective frame ("Ni
     // irakaslea ___." = "I am a teacher", "Txakurra handia ___." = "The dog is
@@ -324,6 +339,24 @@ export const VERBS = [
         hi: [{ text: 'Hi ona ___!' }],
         zu: [{ text: 'Zu ona ___!' }],
         zuek: [{ text: 'Zuek onak ___!' }],
+      },
+      // #369 — Subjuntiboa Present, volitional `nahi izan` frame
+      // (CONJUGATIONS.md §16.3's "Nahi dut etor dadin" trigger) over the same
+      // predicate-nominal content as `present`/`past` above. Restricted to
+      // `hura`/`haiek` — Unit 36's stated scope ("NOR/NOR-NORK 3rd-person
+      // in-construction production"). `validFor: []` for the same reason as
+      // `potential`/`baldintza`/`conditional` above — none of izan's
+      // `nor`-cluster siblings have a `subjunctivePresent` table to cross-list.
+      subjunctivePresent: {
+        hura: [
+          { text: 'Nahi dut Mikel irakaslea ___.', validFor: [] },
+          { text: 'Nahi dut hura medikua ___.', validFor: [] },
+          { text: 'Nahi dut Ane zuzendaria ___.', validFor: [] },
+        ],
+        haiek: [
+          { text: 'Nahi dut haiek ikasleak ___.', validFor: [] },
+          { text: 'Nahi dut Mikel eta Ane lagunak ___.', validFor: [] },
+        ],
       },
     },
     pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
@@ -700,6 +733,22 @@ export const VERBS = [
         zuek: { ni: 'nindukezuen', hura: 'zenuketen', gu: 'gintukezuen', haiek: 'zenituzketen' },
         haiek: { ni: 'ninduketen', hura: 'zuketen', gu: 'gintuzketen', zu: 'zintuzketen', zuek: 'zintuzketeten', haiek: 'zituzketen' },
       },
+      // #369 — Subjuntiboa Present (Unit 36), `NOR` fixed at `hura` (object),
+      // `NORK` varying — same shape/sourcing convention as `potential`/
+      // `baldintza`/`conditional` above, per CONJUGATIONS.md §3's
+      // "Subjuntiboa, Orainaldia" grid's `NOR`=`hura` column. Derivable from
+      // `potential` by the same drop-`-ke-`-then-resuffix transformation the
+      // doc uses elsewhere (`dezaket` → `dezadan`, etc.) — verified to match
+      // the doc's citation table cell-for-cell. `hi` omitted, matching every
+      // table above.
+      subjunctivePresent: {
+        ni: 'dezadan',
+        zu: 'dezazun',
+        hura: 'dezan',
+        gu: 'dezagun',
+        zuek: 'dezazuen',
+        haiek: 'dezaten',
+      },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by their own (agentive, human) subject
@@ -851,6 +900,23 @@ export const VERBS = [
         hura: [{ text: 'Pazientzia ___ Jonek!', validFor: [] }],
         gu: [{ text: 'Pazientzia ___!', validFor: [] }],
         haiek: [{ text: 'Pazientzia ___ ikasleek!', validFor: [] }],
+      },
+      // #369 — Subjuntiboa Present (Unit 36), volitional `nahi izan` frame
+      // over a transitive radical (CONJUGATIONS.md §16.3's Radical/Bare-Stem
+      // Rule — `irakurri`/`ikusi` drop their `-i` participle to `irakur-`/
+      // `ikus-` before `ukan`'s bare subjunctive auxiliary). Restricted to
+      // `hura`/`haiek` — Unit 36's stated scope. `validFor: []` since
+      // `irakurri`/`ikusi` don't have their own `subjunctivePresent` table to
+      // cross-list against.
+      subjunctivePresent: {
+        hura: [
+          { text: 'Nahi dut hark liburua irakur ___.', validFor: [] },
+          { text: 'Nahi dut Jonek auto berria eros ___.', validFor: [] },
+        ],
+        haiek: [
+          { text: 'Nahi dut haiek liburua irakur ___.', validFor: [] },
+          { text: 'Nahi dut ikasleek testua idatz ___.', validFor: [] },
+        ],
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -3360,6 +3426,22 @@ export const VERBS = [
         zuek: 'zeniezazkiokete',
         haiek: 'liezazkiokete',
       },
+      // #369 — ditransitive Subjuntiboa Present (Unit 36), per
+      // CONJUGATIONS.md §16.1's NOR-NORI-NORK derivation (drop `-ke-` from
+      // `potential` above, then close with the `Subjuntiboa`-`NORK` suffix
+      // family) — verified cell-for-cell against the doc's `NORI = hari`
+      // citation table (`diezaiodan`/`diezaiozun`/`diezaion`/`diezaiogun`/
+      // `diezaiozuen`/`diezaioten`). Bare auxiliary, no `esan` prefix —
+      // matches `potential`/`baldintza`/`conditional`'s convention above.
+      // Recognition-only (no `sentences` entry), matching those same tables.
+      subjunctivePresent: {
+        ni: 'diezaiodan',
+        zu: 'diezaiozun',
+        hura: 'diezaion',
+        gu: 'diezaiogun',
+        zuek: 'diezaiozuen',
+        haiek: 'diezaioten',
+      },
     },
     // #265: `validFor: []` throughout, confirmed rather than assumed.
     // `agreementsCompatible(['nor','nori','nork'], ['nor','nori','nork'])` is
@@ -3516,6 +3598,17 @@ export const VERBS = [
         hura: 'niezazkioke',
         zuek: 'niezazkizueke',
         haiek: 'niezazkieke',
+      },
+      // #369 — see `esan.subjunctivePresent` above for the shape/sourcing
+      // (same drop-`-ke-`-then-resuffix derivation from `potential`,
+      // verified against CONJUGATIONS.md §16.1's `NORI = hari/zuri/zuei`
+      // citation tables — `diezazudan`/`diezaiodan`/`diezazuedan`/
+      // `diezaiedan`). Bare auxiliary, no `eman` prefix, recognition-only.
+      subjunctivePresent: {
+        zu: 'diezazudan',
+        hura: 'diezaiodan',
+        zuek: 'diezazuedan',
+        haiek: 'diezaiedan',
       },
     },
     // #265: `validFor: []` throughout — see `esan`'s sentences above for the
@@ -3713,6 +3806,24 @@ export const VERBS = [
         zuek: { hura: 'gustatu bekizue', zu: 'gustatu zakizue', haiek: 'gustatu bekizkizue' },
         haiek: { hura: 'gustatu bekie', zu: 'gustatu zakie', zuek: 'gustatu zakizkie', haiek: 'gustatu bekizkie' },
       },
+      // #369 — Subjuntiboa Present (Unit 36), `NOR` fixed at `hura` (object),
+      // `NORI` varying — per CONJUGATIONS.md §4's "Subjuntiboa — Present"
+      // grid, `NOR`=`hura` column (`dakidan`/`dakian`/`dakion`/`dakigun`/
+      // `dakizun`/`dakizueten`/`dakien`). Bare participle prefix, same
+      // convention as `imperativeByNor` above (not the `-tzen` present
+      // participle `present` uses) — both are jussive/subjunctive-family
+      // auxiliaries per the Radical/Bare-Stem Rule. Recognition-only
+      // (Unit 36's stated "dative... recognition-only" scope) — no
+      // `sentences` entry, matching `baldintzaByNor`/`conditionalByNor`/
+      // `potentialByNor`'s precedent. `hi` omitted, matching every table.
+      subjunctivePresent: {
+        ni: 'gustatu dakidan',
+        hura: 'gustatu dakion',
+        gu: 'gustatu dakigun',
+        zu: 'gustatu dakizun',
+        zuek: 'gustatu dakizueten',
+        haiek: 'gustatu dakien',
+      },
     },
     // NORI is the varying slot here, so each sentence leads with the dative
     // pronoun ("Niri"/"Zuri"/...). #263: `validFor: ['ahaztu']` — "Niri hau
@@ -3884,6 +3995,17 @@ export const VERBS = [
         zu: { hura: 'iruditu bekizu', zuek: 'iruditu zakizkizu', haiek: 'iruditu bekizkizu' },
         zuek: { hura: 'iruditu bekizue', zu: 'iruditu zakizue', haiek: 'iruditu bekizkizue' },
         haiek: { hura: 'iruditu bekie', zu: 'iruditu zakie', zuek: 'iruditu zakizkie', haiek: 'iruditu bekizkie' },
+      },
+      // #369 — see `gustatu.subjunctivePresent` above for the shape and
+      // sourcing (same `dakidan`/`dakion`/`dakigun`/`dakizun`/`dakizueten`/
+      // `dakien` auxiliary family, bare-participle-prefixed, recognition-only).
+      subjunctivePresent: {
+        ni: 'iruditu dakidan',
+        hura: 'iruditu dakion',
+        gu: 'iruditu dakigun',
+        zu: 'iruditu dakizun',
+        zuek: 'iruditu dakizueten',
+        haiek: 'iruditu dakien',
       },
     },
     // #263: `validFor: []` throughout — "ongi" ("well") modifies *how*
@@ -4057,6 +4179,17 @@ export const VERBS = [
         zu: { hura: 'ahaztu bekizu', zuek: 'ahaztu zakizkizu', haiek: 'ahaztu bekizkizu' },
         zuek: { hura: 'ahaztu bekizue', zu: 'ahaztu zakizue', haiek: 'ahaztu bekizkizue' },
         haiek: { hura: 'ahaztu bekie', zu: 'ahaztu zakie', zuek: 'ahaztu zakizkie', haiek: 'ahaztu bekizkie' },
+      },
+      // #369 — see `gustatu.subjunctivePresent` above for the shape and
+      // sourcing (same `dakidan`/`dakion`/`dakigun`/`dakizun`/`dakizueten`/
+      // `dakien` auxiliary family, bare-participle-prefixed, recognition-only).
+      subjunctivePresent: {
+        ni: 'ahaztu dakidan',
+        hura: 'ahaztu dakion',
+        gu: 'ahaztu dakigun',
+        zu: 'ahaztu dakizun',
+        zuek: 'ahaztu dakizueten',
+        haiek: 'ahaztu dakien',
       },
     },
     // #263: `validFor: ['gustatu']` — "Niri liburua gustatzen zait" ("I like
@@ -8108,6 +8241,9 @@ export const TENSE_META = {
   // #368: ditransitive (NOR-NORI-NORK) Agintera — `esan`/`eman`'s
   // `iezaiozu`/`iezadazu`-type forms.
   imperativeDitransitive: { labelKey: 'tenseImperativeDitransitive', basque: 'agintera (nor-nori-nork)' },
+  // #369: the subjunctive (Unit 36) — `nadin`/`dezan`/`dakion`/`diezaiodan`-
+  // type forms across NOR/NOR-NORK/NOR-NORI/NOR-NORI-NORK.
+  subjunctivePresent: { labelKey: 'tenseSubjunctivePresent', basque: 'subjuntiboa' },
 }
 
 export const TYPE_META = {

@@ -819,7 +819,11 @@ export const JOURNEY = [
             title: 'Purpose & Wishing (Subjuntiboa)',
             focus: 'the subjunctive as a construction (matrix verb + subordinate clause) — NOR/NOR-NORK 3rd-person in-construction production, dative/ditransitive recognition-only',
             payload: 'Nahi dut etor dadin. · Esan dio etor dadila. · ...ikus dezan.',
-            status: 'pending',
+            status: 'available',
+            lessonIds: [
+              'izan-subjunctive-present', 'ukan-subjunctive-present', 'unit-36-review',
+              'unit-36-dative-review', 'unit-36-ditransitive-review',
+            ],
           },
         ],
       },
