@@ -8152,6 +8152,40 @@ export const VERBS = [
         zuek: { ni: 'jarraituko nintzaizueketen', zu: 'jarraituko zintzaizueketen', gu: 'jarraituko gintzaizkizueketen' },
         haiek: { ni: 'jarraituko nintzaiekeen', zu: 'jarraituko zintzaiekeen', gu: 'jarraituko gintzaizkiekeen', zuek: 'jarraituko zintzaizkiekeen' },
       },
+      // #446: the Ahalera (potential) twins of `baldintzaByNor`/
+      // `conditionalByNor`/`conditionalPastByNor` above — same `gustatu`/
+      // `iruditu`/`ahaztu` auxiliary family (byte-identical cells, only the
+      // bare participle prefix swapped for "jarraitu ", matching `past`'s
+      // own prefix rather than `baldintzaByNor`'s `-ko` future participle —
+      // Ahalera takes the bare participle in Basque), joining Unit 32's
+      // pooled potential/potentialAlegiazkoa/potentialLehenaldia NOR-NORI
+      // object axis reviews as the 4th member. Hand-written, same
+      // #436-composer-doesn't-cover-`byNor`-yet (#448) reasoning as
+      // `baldintzaByNor`'s comment above.
+      potentialByNor: {
+        ni: { zu: 'jarraitu zakidake', gu: 'jarraitu gakizkidake', zuek: 'jarraitu zakizkidake' },
+        zu: { ni: 'jarraitu nakizuke', gu: 'jarraitu gakizkizuke', zuek: 'jarraitu zakizkizuke' },
+        hura: { ni: 'jarraitu nakioke', zu: 'jarraitu zakioke', gu: 'jarraitu gakizkioke', zuek: 'jarraitu zakizkioke' },
+        gu: { ni: 'jarraitu nakiguke', zu: 'jarraitu zakiguke', zuek: 'jarraitu zakizkiguke' },
+        zuek: { ni: 'jarraitu nakizuekete', zu: 'jarraitu zakizuekete', gu: 'jarraitu gakizkizuekete' },
+        haiek: { ni: 'jarraitu nakieke', zu: 'jarraitu zakieke', gu: 'jarraitu gakizkieke', zuek: 'jarraitu zakizkieke' },
+      },
+      potentialAlegiazkoaByNor: {
+        ni: { zu: 'jarraitu zenkidake', gu: 'jarraitu genkizkidake', zuek: 'jarraitu zenkizkidake' },
+        zu: { ni: 'jarraitu nenkizuke', gu: 'jarraitu genkizkizuke', zuek: 'jarraitu zenkizkizuke' },
+        hura: { ni: 'jarraitu nenkioke', zu: 'jarraitu zenkioke', gu: 'jarraitu genkizkioke', zuek: 'jarraitu zenkizkioke' },
+        gu: { ni: 'jarraitu nenkiguke', zu: 'jarraitu zenkiguke', zuek: 'jarraitu zenkizkiguke' },
+        zuek: { ni: 'jarraitu nenkizuekete', zu: 'jarraitu zenkizuekete', gu: 'jarraitu genkizkizuekete' },
+        haiek: { ni: 'jarraitu nenkieke', zu: 'jarraitu zenkieke', gu: 'jarraitu genkizkieke', zuek: 'jarraitu zenkizkieke' },
+      },
+      potentialLehenaldiaByNor: {
+        ni: { zu: 'jarraitu zenkidakeen', gu: 'jarraitu genkizkidakeen', zuek: 'jarraitu zenkizkidakeen' },
+        zu: { ni: 'jarraitu nenkizukeen', gu: 'jarraitu genkizkizukeen', zuek: 'jarraitu zenkizkizukeen' },
+        hura: { ni: 'jarraitu nenkiokeen', zu: 'jarraitu zenkiokeen', gu: 'jarraitu genkizkiokeen', zuek: 'jarraitu zenkizkiokeen' },
+        gu: { ni: 'jarraitu nenkigukeen', zu: 'jarraitu zenkigukeen', zuek: 'jarraitu zenkizkigukeen' },
+        zuek: { ni: 'jarraitu nenkizueketen', zu: 'jarraitu zenkizueketen', gu: 'jarraitu genkizkizueketen' },
+        haiek: { ni: 'jarraitu nenkiekeen', zu: 'jarraitu zenkiekeen', gu: 'jarraitu genkizkiekeen', zuek: 'jarraitu zenkizkiekeen' },
+      },
     },
     sentences: {
       present: {
