@@ -392,6 +392,18 @@ only handles the NOR-NORK `byObject` axis), and added one pooled
 `animateObject: false` flag still has no live effect on this axis until #448
 extends the composer to `byNor`.
 
+**Update (#443)**: widened Unit 15's NOR-NORK object-axis pool from 7 verbs to
+~37 — every periphrastic transitive verb in `VERBS` that had no
+`byObjectPrefixes` yet got one (prefix derived from the verb's own flat
+`present.ni`/`past.ni`, per #436's composition scheme — no new literal
+tables), `animateObject: false` where the personal-object reading is
+nonsensical for the verb's modeled sense, and a `sources` entry in every one
+of Unit 15's 12 pooled reviews. No engine changes — #380's `objectAxis`
+pooling already drops a thing-only verb's personal-`nor` cells from a
+review's candidate pool, exactly the case this was built for. `jan`/`edan`/
+`erosi`/`hartu`'s long-open `animateObject` question (`docs/LANGUAGE_DECISIONS.md`,
+2026-06-24) is still unresolved — see `docs/DECISIONS.md`'s #443 entry for why.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

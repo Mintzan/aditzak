@@ -3409,9 +3409,25 @@ describe('getIntroducedSources + cross-verb question generation (real LESSONS/VE
 // object-axis-past-review) span all seven objectAxis verbs (ukan/maite/
 // ikusi/jan/edan/erosi/hartu); generateCrossVerbQuestions should pool
 // distractors across more than just a pair of them, per #380's design.
-describe.each(['object-axis-present-review', 'object-axis-past-review'])('%s (real LESSONS/VERBS, #381)', (lessonId) => {
+// #443 widened every Unit 15 pooled review's sources from 7 verbs to ~37 —
+// this test now checks all 12, not just the original fixed:'ni' pair.
+describe.each([
+  'object-axis-present-review',
+  'object-axis-past-review',
+  'object-axis-present-review-hura',
+  'object-axis-past-review-hura',
+  'object-axis-present-review-gu',
+  'object-axis-past-review-gu',
+  'object-axis-present-review-zu',
+  'object-axis-past-review-zu',
+  'object-axis-present-review-zuek',
+  'object-axis-past-review-zuek',
+  'object-axis-present-review-haiek',
+  'object-axis-past-review-haiek',
+])('%s (real LESSONS/VERBS, #381/#443)', (lessonId) => {
   it('produces verb-choice questions with no sentence, drawing distractors from more than two verbs', () => {
     const lesson = LESSONS.find((l) => l.id === lessonId)
+    expect(lesson.sources.length).toBeGreaterThan(30)
     const resolvedSources = lesson.sources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
 
     const questions = generateCrossVerbQuestions(resolvedSources, {
@@ -3426,12 +3442,18 @@ describe.each(['object-axis-present-review', 'object-axis-past-review'])('%s (re
     questions.forEach((question) => {
       expect(question.kind).toBe('verb-choice')
       expect(question.sentence).toBeUndefined()
-      expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
+      expect(question.fixedArgument).toEqual({ role: 'nork', person: lesson.objectAxis.fixed })
       expect(question.options).toContain(question.correct)
       expect(new Set(question.options).size).toBe(question.options.length)
       resolvedSources.forEach(({ verb, tense }) => {
         const table = resolveObjectAxisTable(getComposedTable(verb, tense), lesson.objectAxis)
         if (question.options.includes(table[question.person])) verbIdsSeen.add(verb.id)
+        // #443: a thing-only verb's composed table omits personal-`nor` cells
+        // entirely (#442), so it must never surface as an option for a
+        // personal `question.person`.
+        if (verb.animateObject === false && ['ni', 'hi', 'gu', 'zu', 'zuek'].includes(question.person)) {
+          expect(question.options).not.toContain(table?.[question.person])
+        }
       })
     })
     expect(verbIdsSeen.size).toBeGreaterThan(2)
