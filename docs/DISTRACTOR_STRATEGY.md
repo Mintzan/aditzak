@@ -289,6 +289,39 @@ The four forks from §4, with their outcomes:
   `nor`-only verb, since `ari`/`ibili` going from untagged to vetted-empty
   makes them newly visible as gap-candidates in everyone else's slots — not
   a content change on those verbs, just the audit now seeing them).
+- **#455, resolved (2026-06-25):** backfilled `validFor` on batch 1 of the
+  `nor-nork` cluster — the 9 modal/request/completion verbs `behar,
+  ahal-ukan, ezin-ukan, eskatu, galdetu, adierazi, bukatu, amaitu, gainditu`.
+  `behar`/`ahal-ukan`/`ezin-ukan` cross-tagged each other on `present` only
+  (the only tense `ahal-ukan`/`ezin-ukan` have): all three share the exact
+  "[infinitive clause] + invariant particle + auxiliary" shape, so each
+  one's auxiliary substitutes cleanly into the others' sentence text.
+  `eskatu` (request-an-object verb) got per-object tagging with `ukan`/
+  `eduki`/`behar` broadly, `nahi` on `present` only (no `past` table), and
+  `ikusi`/`erosi` only where the object is concretely visible/buyable.
+  `galdetu` (ask-for-information verb) needed a different sibling set
+  entirely (`jakin`/`ikusi`, not the ownable-things cluster) since its
+  objects are pieces of information, not things; its `gu` sentence keeps a
+  unique dative argument ("to a hiker") that blocks every sibling, so it
+  stays `validFor: []`. `adierazi` (express/state an opinion) got `ukan`/
+  `eduki` on the 3 objects where an "have an opinion/intention/doubt"
+  reading is natural Basque (`iritzia`/`asmoa`/`zalantza`); the other 3
+  (`protesta`/`babesa`/`poztasuna`) don't support a "have" collocation, so
+  stayed `[]`. `bukatu`/`amaitu` are near-total synonyms ("finish") and got
+  a full mutual cross-tag on every sentence, both tenses. `gainditu`
+  ("pass"/"overcome") was reviewed but left untagged — its overlap with
+  `bukatu`/`amaitu` is inconsistent per-object (works for `azterketa`/
+  `maratoia`, fails for `gidabaimena`/`kontratua`/`lan-txanda`) and too
+  marginal to tag without native-speaker confirmation; tracked as open debt
+  below. Two further debt items surfaced and were deliberately left out of
+  scope for #455: (1) `nahi` is a genuine semantic fit for the
+  `behar`/`ahal-ukan`/`ezin-ukan` infinitive-complement sentences but wasn't
+  retroactively cross-tagged onto them, since `nahi`'s own `validFor: []`
+  predates this batch and touching it is a separate, asymmetric change; (2)
+  the `--classes` object-frame-class audit tool produced zero candidates for
+  any of this batch's 9 verbs (their object nouns aren't yet in
+  `scripts/frameClasses.mjs`'s lookup table), so it gave no independent
+  second-pass signal here, unlike for the `--classes`-covered verbs above.
 - Remaining distractor work outside this strategy: **#213** (hi/hitanoa
   wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
   on native-speaker confirmation of #167's toka/noka data, not on engineering.
