@@ -805,7 +805,7 @@ export const VERBS = [
           { text: 'Nik liburu bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Nik arreba bat ___.', validFor: ['nahi', 'eduki'] },
           { text: 'Nik txartel bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Nik bilera bat ___.', validFor: ['eduki', 'behar'] },
+          { text: 'Nik bilera bat ___.', validFor: ['nahi', 'eduki', 'behar'] },
         ],
         zu: [
           { text: 'Zuk auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
@@ -826,7 +826,7 @@ export const VERBS = [
         gu: [
           { text: 'Guk etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Guk auto bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Guk bilera bat ___.', validFor: ['eduki', 'behar'] },
+          { text: 'Guk bilera bat ___.', validFor: ['nahi', 'eduki', 'behar'] },
           { text: 'Guk txartel bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         zuek: [

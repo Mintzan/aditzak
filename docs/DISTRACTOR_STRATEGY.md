@@ -234,7 +234,37 @@ The four forks from §4, with their outcomes:
   across the `nor-nork` cluster's ownable-object sentences (incl. #218.1's
   "Gurasoek etxea ___.").
 - **food-drink under-tagging on `jan`/`edan`/`erosi`** — surfaced by the #237
-  spike (finding #1); tracked in **#240 [A5]**.
+  spike (finding #1); tracked in **#240 [A5]**. **Resolved** — confirmed via
+  #439's investigation (2026-06-25) that `jan`/`edan`/`erosi`'s food/drink
+  sentences already carry the full `[ukan, nahi, eduki, ikusi, erosi/jan/edan,
+  behar]` sibling set. The only remaining `--classes` candidates for these
+  three are `jan`<->`edan` cross-suggestions (e.g. "Nik sagarra ___" ("I eat
+  an apple") suggesting `edan` ("drink") as a valid substitute) — these are a
+  known false positive of the `food-drink` class (it doesn't distinguish
+  solid food from drink within the class; see `docs/OBJECT_FRAME_TAGGING.md`)
+  and should **not** be applied. `#240` can be closed as already resolved.
+  The same #439 pass found and fixed one genuine small gap nearby: `ukan`'s
+  "Nik/Guk bilera bat ___." ("I/we [have] a meeting") was missing `nahi`
+  ("I/we want a meeting") despite every other sentence in that
+  `abstract-ownable`-class block already carrying it — a plain oversight, not
+  a class-model judgment call. The remaining `--classes` worklist (2 items:
+  `ikusi`'s "Txakurrak katua ___." -> `ukan`) is left untouched, per
+  `docs/OBJECT_FRAME_TAGGING.md`'s own note that this exact sentence is a
+  documented fine-grained judgment call, not a bug.
+- **#439's 15/104 verb backfill**: investigated 2026-06-25 — the "core"
+  cluster (`izan, egon, ukan, nahi, jakin, joan, etorri, jan, edan, erosi,
+  ikusi, eduki, hartu, behar` plus `eraman, ekarri, gustatu, ahaztu`) is
+  already thoroughly tagged; the remaining 89 verbs split cleanly into four
+  categories with different work needed, tracked as separate issues rather
+  than one mega-backfill: **#454** (14 `nor`-only intransitive verbs, mostly
+  a verification pass — no object frame to substitute into, same as
+  `izan`/`egon`), **#455/#456/#457/#458** (52 `nor-nork` verbs split into 4
+  reviewable batches by semantic cluster), **#459** (17 dative-tail
+  `nor-nori(-nork)` verbs, which need dative-role matching, not just
+  agreement matching). 6 further "untagged" ids (`maite`,
+  `itxaron-dative`/`utzi-dative`/`adierazi-dative`/`eskatu-dative`/
+  `galdetu-dative`) have zero `sentences` entries of their own — no backfill
+  applies to them at all, they're conjugation-table-only variants.
 - Remaining distractor work outside this strategy: **#213** (hi/hitanoa
   wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
   on native-speaker confirmation of #167's toka/noka data, not on engineering.
