@@ -4376,9 +4376,17 @@ export const VERBS = [
         gu: { text: 'Guk herriko egunkarirako artikulua ___.', validFor: [] },
         zuek: { text: 'Zuek eskutitz luzea ___ lagunari?', validFor: [] },
       },
+      // #456: `bertso berriak`/`kantu hitzak` (verses/song lyrics) are the
+      // one genuine overlap with `egin` in this batch — "bertsoak egin"
+      // ("to compose/make verses") is a standard Basque collocation, often
+      // more natural than "idatzi" since bertsolaritza is fundamentally an
+      // oral-composition tradition; "hitzak egin" (compose lyrics) is the
+      // same idiom for song lyrics. The other `idatzi` objects (gutun bat,
+      // eleberri labur bat, artikulua, eskutitz luzea) are personal/formal
+      // written documents where "egin" doesn't fit as naturally.
       presentPlural: {
-        zu: { text: 'Zuk bertso berriak ___ saiorako?', validFor: [] },
-        haiek: { text: 'Haiek kantu hitzak ___ jaietarako.', validFor: [] },
+        zu: { text: 'Zuk bertso berriak ___ saiorako?', validFor: ['egin'] },
+        haiek: { text: 'Haiek kantu hitzak ___ jaietarako.', validFor: ['egin'] },
       },
       past: {
         ni: { text: 'Nik atzo gutun bat ___ amonarentzat.', validFor: [] },
@@ -4387,8 +4395,8 @@ export const VERBS = [
         zuek: { text: 'Zuek duela bi egun eskutitz luzea ___ lagunari?', validFor: [] },
       },
       pastPlural: {
-        zu: { text: 'Zuk herenegun bertso berriak ___ saiorako?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean kantu hitzak ___ jaietarako.', validFor: [] },
+        zu: { text: 'Zuk herenegun bertso berriak ___ saiorako?', validFor: ['egin'] },
+        haiek: { text: 'Haiek joan den astean kantu hitzak ___ jaietarako.', validFor: ['egin'] },
       },
     },
   },
@@ -5743,22 +5751,33 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #456: `aztertu` ("examine/study") is a genuine sibling on all six — a
+    // town, old quarter, writer, neighborhood, path, or language are all
+    // plausible subjects of academic/professional study, not just
+    // acquaintance ("ondo aztertu" = "examine thoroughly" is as standard a
+    // collocation as "ondo ezagutu" = "know well"). `ulertu` only fits
+    // `hura`/`gu`/`haiek` (idazle bat, auzo berria, hizkuntza zahar hori) —
+    // understanding a writer's work, a neighborhood's character (note
+    // `pixkanaka`, "gradually", which supports a comprehension process), or
+    // a language are natural alternate claims; `ni`/`zu`/`zuek` (herri hau,
+    // alde zaharra, mendi-bide hori) don't — places and paths aren't things
+    // you "understand" the way you "know" them.
     sentences: {
       present: {
-        ni: { text: 'Nik herri hau ondo ___.', validFor: [] },
-        zu: { text: 'Zuk Gasteizko alde zaharra ___?', validFor: [] },
-        hura: { text: 'Hark idazle ospetsu bat ___.', validFor: [] },
-        gu: { text: 'Guk auzo berria pixkanaka ___.', validFor: [] },
-        zuek: { text: 'Zuek mendi-bide hori ___?', validFor: [] },
-        haiek: { text: 'Haiek hizkuntza zahar hori ___.', validFor: [] },
+        ni: { text: 'Nik herri hau ondo ___.', validFor: ['aztertu'] },
+        zu: { text: 'Zuk Gasteizko alde zaharra ___?', validFor: ['aztertu'] },
+        hura: { text: 'Hark idazle ospetsu bat ___.', validFor: ['ulertu', 'aztertu'] },
+        gu: { text: 'Guk auzo berria pixkanaka ___.', validFor: ['ulertu', 'aztertu'] },
+        zuek: { text: 'Zuek mendi-bide hori ___?', validFor: ['aztertu'] },
+        haiek: { text: 'Haiek hizkuntza zahar hori ___.', validFor: ['ulertu', 'aztertu'] },
       },
       past: {
-        ni: { text: 'Nik atzo herri hau ondo ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun Gasteizko alde zaharra ___?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean idazle ospetsu bat ___.', validFor: [] },
-        gu: { text: 'Guk iaz auzo berria pixkanaka ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun mendi-bide hori ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean hizkuntza zahar hori ___.', validFor: [] },
+        ni: { text: 'Nik atzo herri hau ondo ___.', validFor: ['aztertu'] },
+        zu: { text: 'Zuk herenegun Gasteizko alde zaharra ___?', validFor: ['aztertu'] },
+        hura: { text: 'Hark lehengo egunean idazle ospetsu bat ___.', validFor: ['ulertu', 'aztertu'] },
+        gu: { text: 'Guk iaz auzo berria pixkanaka ___.', validFor: ['ulertu', 'aztertu'] },
+        zuek: { text: 'Zuek duela bi egun mendi-bide hori ___?', validFor: ['aztertu'] },
+        haiek: { text: 'Haiek joan den astean hizkuntza zahar hori ___.', validFor: ['ulertu', 'aztertu'] },
       },
     },
   },
@@ -5800,22 +5819,27 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #456: `sumatu` ("sense/perceive") is a genuine sibling on all six —
+    // "noticing/perceiving" an emotion or sensation (fear, joy, pain, pride,
+    // tiredness, anger) in oneself is a natural alternate to "feeling" it
+    // ("mina sumatzen du belaunean" = "he senses pain in his knee" reads as
+    // naturally as "sentitzen du").
     sentences: {
       present: {
-        ni: { text: 'Nik beldur handia ___ ekaitzean.', validFor: [] },
-        zu: { text: 'Zuk poza ___ helmugara iristean?', validFor: [] },
-        hura: { text: 'Hark mina ___ belaunean.', validFor: [] },
-        gu: { text: 'Guk harrotasuna ___ txapelketan.', validFor: [] },
-        zuek: { text: 'Zuek nekea ___ igoeran?', validFor: [] },
-        haiek: { text: 'Haiek haserrea ___ galtzean.', validFor: [] },
+        ni: { text: 'Nik beldur handia ___ ekaitzean.', validFor: ['sumatu'] },
+        zu: { text: 'Zuk poza ___ helmugara iristean?', validFor: ['sumatu'] },
+        hura: { text: 'Hark mina ___ belaunean.', validFor: ['sumatu'] },
+        gu: { text: 'Guk harrotasuna ___ txapelketan.', validFor: ['sumatu'] },
+        zuek: { text: 'Zuek nekea ___ igoeran?', validFor: ['sumatu'] },
+        haiek: { text: 'Haiek haserrea ___ galtzean.', validFor: ['sumatu'] },
       },
       past: {
-        ni: { text: 'Nik atzo beldur handia ___ ekaitzean.', validFor: [] },
-        zu: { text: 'Zuk herenegun poza ___ helmugara iristean?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean mina ___ belaunean.', validFor: [] },
-        gu: { text: 'Guk iaz harrotasuna ___ txapelketan.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun nekea ___ igoeran?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean haserrea ___ galtzean.', validFor: [] },
+        ni: { text: 'Nik atzo beldur handia ___ ekaitzean.', validFor: ['sumatu'] },
+        zu: { text: 'Zuk herenegun poza ___ helmugara iristean?', validFor: ['sumatu'] },
+        hura: { text: 'Hark lehengo egunean mina ___ belaunean.', validFor: ['sumatu'] },
+        gu: { text: 'Guk iaz harrotasuna ___ txapelketan.', validFor: ['sumatu'] },
+        zuek: { text: 'Zuek duela bi egun nekea ___ igoeran?', validFor: ['sumatu'] },
+        haiek: { text: 'Haiek joan den astean haserrea ___ galtzean.', validFor: ['sumatu'] },
       },
     },
   },
@@ -5856,6 +5880,14 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #456: stays `validFor: []` throughout — `pentsatu`'s complement here is
+    // inessive-marked ("oporretan", "etorkizunean", -an = "about/regarding
+    // X"), not a bare absolutive direct object like `sumatu`/`ulertu`/
+    // `aztertu`/`ezagutu`/`sentitu`'s sentences. Swapping in any of those
+    // verbs' forms while keeping the inessive-marked noun produces an
+    // ungrammatical or unidiomatic sentence ("oporretan sumatzen dut" isn't
+    // standard) — the apparent semantic overlap the issue flagged doesn't
+    // survive contact with the actual case-marking in these sentences.
     sentences: {
       present: {
         ni: { text: 'Nik oporretan ___ lan-egun luzeetan.', validFor: [] },
@@ -5912,22 +5944,26 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #456: `sentitu` ("feel") is a genuine sibling on all six — see
+    // `sentitu`'s own comment above for the reasoning (these are the same
+    // emotion/sensation objects, just from the opposite "feel" vs "sense"
+    // angle).
     sentences: {
       present: {
-        ni: { text: 'Nik arriskua ___ bide horretan.', validFor: [] },
-        zu: { text: 'Zuk aldaketa ___ giroan?', validFor: [] },
-        hura: { text: 'Hark susmo txarra ___ etxean.', validFor: [] },
-        gu: { text: 'Guk presio handia ___ lantokian.', validFor: [] },
-        zuek: { text: 'Zuek tentsioa ___ bileran?', validFor: [] },
-        haiek: { text: 'Haiek arrisku larria ___ itsasoan.', validFor: [] },
+        ni: { text: 'Nik arriskua ___ bide horretan.', validFor: ['sentitu'] },
+        zu: { text: 'Zuk aldaketa ___ giroan?', validFor: ['sentitu'] },
+        hura: { text: 'Hark susmo txarra ___ etxean.', validFor: ['sentitu'] },
+        gu: { text: 'Guk presio handia ___ lantokian.', validFor: ['sentitu'] },
+        zuek: { text: 'Zuek tentsioa ___ bileran?', validFor: ['sentitu'] },
+        haiek: { text: 'Haiek arrisku larria ___ itsasoan.', validFor: ['sentitu'] },
       },
       past: {
-        ni: { text: 'Nik atzo arriskua ___ bide horretan.', validFor: [] },
-        zu: { text: 'Zuk herenegun aldaketa ___ giroan?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean susmo txarra ___ etxean.', validFor: [] },
-        gu: { text: 'Guk iaz presio handia ___ lantokian.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun tentsioa ___ bileran?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean arrisku larria ___ itsasoan.', validFor: [] },
+        ni: { text: 'Nik atzo arriskua ___ bide horretan.', validFor: ['sentitu'] },
+        zu: { text: 'Zuk herenegun aldaketa ___ giroan?', validFor: ['sentitu'] },
+        hura: { text: 'Hark lehengo egunean susmo txarra ___ etxean.', validFor: ['sentitu'] },
+        gu: { text: 'Guk iaz presio handia ___ lantokian.', validFor: ['sentitu'] },
+        zuek: { text: 'Zuek duela bi egun tentsioa ___ bileran?', validFor: ['sentitu'] },
+        haiek: { text: 'Haiek joan den astean arrisku larria ___ itsasoan.', validFor: ['sentitu'] },
       },
     },
   },
@@ -5968,22 +6004,33 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #456: `aztertu` ("examine/analyze") is a genuine sibling on all six —
+    // "understanding" and "examining" a document/text/question are both
+    // natural true claims about the same object. `ezagutu` ("know") only
+    // fits on `zu`/`hura`/`zuek`/`haiek` (medikuaren agindua, kontratuaren
+    // atal hori, mapa hori, galdera korapilatsua) — you can genuinely "know"
+    // an order/clause/map/question exists or what it says without
+    // necessarily comprehending it, a real distinct-but-true alternate
+    // claim; `ni`/`gu` (irakaslearen azalpena, testu zaharra "nekez") don't
+    // support this — "know an explanation" and "know a text with
+    // difficulty" aren't natural Basque collocations the way "understand"
+    // ones are.
     sentences: {
       present: {
-        ni: { text: 'Nik irakaslearen azalpena ___.', validFor: [] },
-        zu: { text: 'Zuk medikuaren agindua ___?', validFor: [] },
-        hura: { text: 'Hark kontratuaren atal hori ___.', validFor: [] },
-        gu: { text: 'Guk testu zaharra ___ nekez.', validFor: [] },
-        zuek: { text: 'Zuek mapa hori ___?', validFor: [] },
-        haiek: { text: 'Haiek galdera korapilatsua ___.', validFor: [] },
+        ni: { text: 'Nik irakaslearen azalpena ___.', validFor: ['aztertu'] },
+        zu: { text: 'Zuk medikuaren agindua ___?', validFor: ['aztertu', 'ezagutu'] },
+        hura: { text: 'Hark kontratuaren atal hori ___.', validFor: ['aztertu', 'ezagutu'] },
+        gu: { text: 'Guk testu zaharra ___ nekez.', validFor: ['aztertu'] },
+        zuek: { text: 'Zuek mapa hori ___?', validFor: ['aztertu', 'ezagutu'] },
+        haiek: { text: 'Haiek galdera korapilatsua ___.', validFor: ['aztertu', 'ezagutu'] },
       },
       past: {
-        ni: { text: 'Nik atzo irakaslearen azalpena ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun medikuaren agindua ___?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean kontratuaren atal hori ___.', validFor: [] },
-        gu: { text: 'Guk iaz testu zaharra ___ nekez.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun mapa hori ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean galdera korapilatsua ___.', validFor: [] },
+        ni: { text: 'Nik atzo irakaslearen azalpena ___.', validFor: ['aztertu'] },
+        zu: { text: 'Zuk herenegun medikuaren agindua ___?', validFor: ['aztertu', 'ezagutu'] },
+        hura: { text: 'Hark lehengo egunean kontratuaren atal hori ___.', validFor: ['aztertu', 'ezagutu'] },
+        gu: { text: 'Guk iaz testu zaharra ___ nekez.', validFor: ['aztertu'] },
+        zuek: { text: 'Zuek duela bi egun mapa hori ___?', validFor: ['aztertu', 'ezagutu'] },
+        haiek: { text: 'Haiek joan den astean galdera korapilatsua ___.', validFor: ['aztertu', 'ezagutu'] },
       },
     },
   },
@@ -6024,22 +6071,29 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #456: `ulertu`/`ezagutu` are genuine siblings on all six — every
+    // object here is a piece of data/document (a medical analysis, a
+    // market trend, a patient's history, a soil structure, a report, a
+    // testimony), and "understanding" it or simply "knowing" its content
+    // are both natural true alternate claims to "examining" it, unlike
+    // `sentitu`/`sumatu`'s emotion-object sentences above which don't fit
+    // this analytical-document register at all.
     sentences: {
       present: {
-        ni: { text: 'Nik analisi medikoa ___ kontu handiz.', validFor: [] },
-        zu: { text: 'Zuk merkatuaren joera ___?', validFor: [] },
-        hura: { text: 'Hark gaixoaren historiala ___.', validFor: [] },
-        gu: { text: 'Guk lurraren egitura ___ laborategian.', validFor: [] },
-        zuek: { text: 'Zuek txosten luzea ___?', validFor: [] },
-        haiek: { text: 'Haiek lekuko bakoitzaren adierazpena ___.', validFor: [] },
+        ni: { text: 'Nik analisi medikoa ___ kontu handiz.', validFor: ['ulertu', 'ezagutu'] },
+        zu: { text: 'Zuk merkatuaren joera ___?', validFor: ['ulertu', 'ezagutu'] },
+        hura: { text: 'Hark gaixoaren historiala ___.', validFor: ['ulertu', 'ezagutu'] },
+        gu: { text: 'Guk lurraren egitura ___ laborategian.', validFor: ['ulertu', 'ezagutu'] },
+        zuek: { text: 'Zuek txosten luzea ___?', validFor: ['ulertu', 'ezagutu'] },
+        haiek: { text: 'Haiek lekuko bakoitzaren adierazpena ___.', validFor: ['ulertu', 'ezagutu'] },
       },
       past: {
-        ni: { text: 'Nik atzo analisi medikoa ___ kontu handiz.', validFor: [] },
-        zu: { text: 'Zuk herenegun merkatuaren joera ___?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean gaixoaren historiala ___.', validFor: [] },
-        gu: { text: 'Guk iaz lurraren egitura ___ laborategian.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun txosten luzea ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean lekuko bakoitzaren adierazpena ___.', validFor: [] },
+        ni: { text: 'Nik atzo analisi medikoa ___ kontu handiz.', validFor: ['ulertu', 'ezagutu'] },
+        zu: { text: 'Zuk herenegun merkatuaren joera ___?', validFor: ['ulertu', 'ezagutu'] },
+        hura: { text: 'Hark lehengo egunean gaixoaren historiala ___.', validFor: ['ulertu', 'ezagutu'] },
+        gu: { text: 'Guk iaz lurraren egitura ___ laborategian.', validFor: ['ulertu', 'ezagutu'] },
+        zuek: { text: 'Zuek duela bi egun txosten luzea ___?', validFor: ['ulertu', 'ezagutu'] },
+        haiek: { text: 'Haiek joan den astean lekuko bakoitzaren adierazpena ___.', validFor: ['ulertu', 'ezagutu'] },
       },
     },
   },
@@ -6359,6 +6413,11 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #456: stays `validFor: []` throughout — `hausnartu`'s complement here
+    // is `buruz`/`-z`-marked ("zentzuari buruz", "etorkizunaz") or a bare
+    // interrogative adverb ("zergatik", "zertaz"), not a bare absolutive
+    // direct object. Same case-frame mismatch as `pentsatu` above (see its
+    // comment) — no sibling in this batch shares this complement shape.
     sentences: {
       present: {
         ni: { text: 'Nik bizitzaren zentzuari buruz ___.', validFor: [] },

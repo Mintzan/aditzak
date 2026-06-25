@@ -322,6 +322,46 @@ The four forks from §4, with their outcomes:
   any of this batch's 9 verbs (their object nouns aren't yet in
   `scripts/frameClasses.mjs`'s lookup table), so it gave no independent
   second-pass signal here, unlike for the `--classes`-covered verbs above.
+- **#456, resolved (2026-06-25):** backfilled `validFor` on batch 2 of the
+  `nor-nork` cluster — the 12 perception/cognition/learning verbs `egin,
+  irakurri, idatzi, ikasi, entzun, ezagutu, sentitu, pentsatu, sumatu,
+  ulertu, aztertu, hausnartu`. The issue's own hint named `pentsatu`/
+  `sumatu`/`hausnartu` and `ulertu`/`ezagutu` as the likeliest real
+  clusters; checking the actual sentence text complicated both: `pentsatu`
+  and `hausnartu`'s complements are case-marked (inessive `-an` for
+  `pentsatu`, `buruz`/`-z` for `hausnartu`), not bare absolutive direct
+  objects like `sumatu`'s — so despite the semantic similarity ("think"/
+  "reflect"/"sense"), swapping forms while keeping the case-marked noun
+  produces ungrammatical or unidiomatic Basque; both stay `validFor: []`
+  throughout (documented inline). The real "sense" pairing turned out to be
+  `sentitu`/`sumatu` ("feel"/"perceive") — both take bare absolutive
+  emotion/sensation objects (fear, pain, risk, tension, ...) and noticing
+  vs. feeling a sensation are genuinely interchangeable true claims; fully
+  cross-tagged on all 6 persons, both tenses. `ulertu`/`ezagutu` partially
+  holds (3 of 6 objects per verb — "know" vs. "understand" a
+  document/clause/map/language are both true, distinct claims; but "know
+  an explanation" or "know a text with difficulty" aren't natural Basque).
+  The strongest, unflagged-by-the-issue finding was `aztertu`
+  ("examine/analyze"): it fully cross-tags with `ulertu` (12/12 — examining
+  and understanding a document/report/analysis are near-equivalent
+  processes) and broadly with `ezagutu` (academic/professional "study"
+  register fits a town/quarter/writer/neighborhood/path/language as
+  cleanly as "know" does). `egin`/`irakurri`/`idatzi`/`ikasi`/`entzun`
+  (production/consumption verbs) mostly confirmed `validFor: []` is
+  correct — their objects are domain-specific enough (reading material,
+  written documents, skills/subjects, audio) that they don't substitute
+  for each other; the one exception is `idatzi`'s `bertso berriak`/`kantu
+  hitzak` (verses/song lyrics) sentences, which got `egin` added since
+  "bertsoak egin"/"hitzak egin" (compose verses/lyrics) is a standard
+  Basque collocation, arguably more natural than `idatzi` given
+  bertsolaritza's oral-composition tradition. As in #455, several
+  borderline calls (e.g. whether `aztertu` fits `ezagutu`'s `herri hau`/
+  `alde zaharra`/`mendi-bide hori` slots, or whether `ulertu` extends to
+  `ikasi`'s skill-learning objects) were resolved by leaning on the
+  "natural register-appropriate sentence, not a stretch" bar rather than
+  pure grammatical possibility — flagging here that this batch's
+  abstract-cognition vocabulary carries more native-speaker-confirmation
+  risk than #455's concrete-object verbs.
 - Remaining distractor work outside this strategy: **#213** (hi/hitanoa
   wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
   on native-speaker confirmation of #167's toka/noka data, not on engineering.
