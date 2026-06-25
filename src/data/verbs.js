@@ -8119,6 +8119,39 @@ export const VERBS = [
         zuek: { hura: 'jarraitu bekizue', zu: 'jarraitu zakizue', haiek: 'jarraitu bekizkizue' },
         haiek: { hura: 'jarraitu bekie', zu: 'jarraitu zakie', zuek: 'jarraitu zakizkie', haiek: 'jarraitu bekizkie' },
       },
+      // #445: the Baldintza/Ondorioa twins of `presentByNor`/`pastByNor`
+      // above — same `gustatu`/`iruditu`/`ahaztu` auxiliary family
+      // (byte-identical cells, only the bare-`gustatuko`-style future
+      // participle prefix swapped for "jarraituko "), joining Unit 33's
+      // pooled baldintza/conditional/conditionalPast NOR-NORI object axis
+      // reviews as the 4th member. Composing these at runtime instead of
+      // hand-writing them is #448's tracked follow-up (`getComposedTable`
+      // only handles the NOR-NORK `byObject` axis today, not `byNor` — see
+      // `docs/DECISIONS.md`'s #441/#444 entries) — not in scope here.
+      baldintzaByNor: {
+        ni: { zu: 'jarraituko bazintzait', gu: 'jarraituko bagintzaizkit', zuek: 'jarraituko bazintzaizkit' },
+        zu: { ni: 'jarraituko banintzaizu', gu: 'jarraituko bagintzaizkizu', zuek: 'jarraituko bazintzaizkizu' },
+        hura: { ni: 'jarraituko banintzaio', zu: 'jarraituko bazintzaio', gu: 'jarraituko bagintzaizkio', zuek: 'jarraituko bazintzaizkio' },
+        gu: { ni: 'jarraituko banintzaigu', zu: 'jarraituko bazintzaigu', zuek: 'jarraituko bazintzaizkigu' },
+        zuek: { ni: 'jarraituko banintzaizue', zu: 'jarraituko bazintzaizue', gu: 'jarraituko bagintzaizkizue' },
+        haiek: { ni: 'jarraituko banintzaie', zu: 'jarraituko bazintzaie', gu: 'jarraituko bagintzaizkie', zuek: 'jarraituko bazintzaizkie' },
+      },
+      conditionalByNor: {
+        ni: { zu: 'jarraituko zintzaidake', gu: 'jarraituko gintzaizkidake', zuek: 'jarraituko zintzaizkidake' },
+        zu: { ni: 'jarraituko nintzaizuke', gu: 'jarraituko gintzaizkizuke', zuek: 'jarraituko zintzaizkizuke' },
+        hura: { ni: 'jarraituko nintzaioke', zu: 'jarraituko zintzaioke', gu: 'jarraituko gintzaizkioke', zuek: 'jarraituko zintzaizkioke' },
+        gu: { ni: 'jarraituko nintzaiguke', zu: 'jarraituko zintzaiguke', zuek: 'jarraituko zintzaizkiguke' },
+        zuek: { ni: 'jarraituko nintzaizuekete', zu: 'jarraituko zintzaizuekete', gu: 'jarraituko gintzaizkizuekete' },
+        haiek: { ni: 'jarraituko nintzaieke', zu: 'jarraituko zintzaieke', gu: 'jarraituko gintzaizkieke', zuek: 'jarraituko zintzaizkieke' },
+      },
+      conditionalPastByNor: {
+        ni: { zu: 'jarraituko zintzaidakeen', gu: 'jarraituko gintzaizkidakeen', zuek: 'jarraituko zintzaizkidakeen' },
+        zu: { ni: 'jarraituko nintzaizukeen', gu: 'jarraituko gintzaizkizukeen', zuek: 'jarraituko zintzaizkizukeen' },
+        hura: { ni: 'jarraituko nintzaiokeen', zu: 'jarraituko zintzaiokeen', gu: 'jarraituko gintzaizkiokeen', zuek: 'jarraituko zintzaizkiokeen' },
+        gu: { ni: 'jarraituko nintzaigukeen', zu: 'jarraituko zintzaigukeen', zuek: 'jarraituko zintzaizkigukeen' },
+        zuek: { ni: 'jarraituko nintzaizueketen', zu: 'jarraituko zintzaizueketen', gu: 'jarraituko gintzaizkizueketen' },
+        haiek: { ni: 'jarraituko nintzaiekeen', zu: 'jarraituko zintzaiekeen', gu: 'jarraituko gintzaizkiekeen', zuek: 'jarraituko zintzaizkiekeen' },
+      },
     },
     sentences: {
       present: {
