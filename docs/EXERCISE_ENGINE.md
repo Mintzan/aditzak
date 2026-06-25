@@ -380,6 +380,18 @@ those lessons rather than just filter a still-unused one — left to #443's
 Unit 15 rework (`hartu`/`erosi`'s call also needs native-speaker confirmation,
 tracked in `docs/LANGUAGE_DECISIONS.md`).
 
+**Update (#441)**: Unit 27's NOR-NORI `byNor` axis (`gustatu`/`iruditu`/
+`ahaztu`'s `presentByNor`/`pastByNor`, #358/#419) had the same "no pooled
+review" gap #380 had already fixed on the NOR-NORK side — widened the pool to
+4 verbs by adding `jarraitu.presentByNor`/`pastByNor` (literal tables,
+matching the existing per-verb-prefix-over-shared-cells pattern `gustatu`/
+`iruditu`/`ahaztu` already use — not composed, since `getComposedTable` still
+only handles the NOR-NORK `byObject` axis), and added one pooled
+`generateCrossVerbQuestions`/`objectAxis` review per `nori` value per tense
+(12 lessons total). `jario` stays excluded (thing-NOR, #442); its
+`animateObject: false` flag still has no live effect on this axis until #448
+extends the composer to `byNor`.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

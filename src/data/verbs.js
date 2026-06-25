@@ -7992,6 +7992,28 @@ export const VERBS = [
         ni: 'jarraitu zitzaidan', zu: 'jarraitu zitzaizun', hura: 'jarraitu zitzaion',
         gu: 'jarraitu zitzaigun', zuek: 'jarraitu zitzaizuen', haiek: 'jarraitu zitzaien',
       },
+      // #441: `jarraitu` joins `gustatu`/`iruditu`/`ahaztu`'s NOR-NORI object
+      // axis pool (Unit 27) as the 4th animate-NOR member — `jario` stays out
+      // (thing-NOR, #442). Same auxiliary family as `gustatu.presentByNor`/
+      // `pastByNor` (byte-identical cells, prefix swapped only): `present`'s
+      // `-tzen` participle prefix ("jarraitzen ") for `presentByNor`, the bare
+      // participle ("jarraitu ", matching `past` above) for `pastByNor`.
+      presentByNor: {
+        ni: { zu: 'jarraitzen zatzait', gu: 'jarraitzen gatzaizkit', zuek: 'jarraitzen zatzaizkit' },
+        zu: { ni: 'jarraitzen natzaizu', gu: 'jarraitzen gatzaizkizu', zuek: 'jarraitzen zatzaizkizu' },
+        hura: { ni: 'jarraitzen natzaio', zu: 'jarraitzen zatzaio', gu: 'jarraitzen gatzaizkio', zuek: 'jarraitzen zatzaizkio' },
+        gu: { ni: 'jarraitzen natzaigu', zu: 'jarraitzen zatzaigu', zuek: 'jarraitzen zatzaizkigu' },
+        zuek: { ni: 'jarraitzen natzaizue', zu: 'jarraitzen zatzaizue', gu: 'jarraitzen gatzaizkizue' },
+        haiek: { ni: 'jarraitzen natzaie', zu: 'jarraitzen zatzaie', gu: 'jarraitzen gatzaizkie', zuek: 'jarraitzen zatzaizkie' },
+      },
+      pastByNor: {
+        ni: { zu: 'jarraitu zintzaidan', gu: 'jarraitu gintzaizkidan', zuek: 'jarraitu zintzaizkidan' },
+        zu: { ni: 'jarraitu nintzaizun', gu: 'jarraitu gintzaizkizun', zuek: 'jarraitu zintzaizkizun' },
+        hura: { ni: 'jarraitu nintzaion', zu: 'jarraitu zintzaion', gu: 'jarraitu gintzaizkion', zuek: 'jarraitu zintzaizkion' },
+        gu: { ni: 'jarraitu nintzaigun', zu: 'jarraitu zintzaigun', zuek: 'jarraitu zintzaizkigun' },
+        zuek: { ni: 'jarraitu nintzaizuen', zu: 'jarraitu zintzaizuen', gu: 'jarraitu gintzaizkizuen' },
+        haiek: { ni: 'jarraitu nintzaien', zu: 'jarraitu zintzaien', gu: 'jarraitu gintzaizkien', zuek: 'jarraitu zintzaizkien' },
+      },
     },
     sentences: {
       present: {
@@ -8029,11 +8051,13 @@ export const VERBS = [
     agreement: ['nor', 'nori'],
     object: 'hura',
     // #442: gates the *subject* (`nor`) slot here, not the object — `jario`
-    // is `nor-nori`, so its varying personal slot once a `*ByNor` axis table
-    // is composed (#441) is the thing that's flowing, not an object. The
-    // composer (`getComposedTable`) doesn't yet handle that axis (#441/#448),
-    // so this has no effect today; marked now per #442's scope so #441 picks
-    // it up correctly.
+    // is `nor-nori`, so its varying personal slot on a `*ByNor` axis table is
+    // the thing that's flowing, not an object. #441 deliberately did not give
+    // `jario` a `presentByNor`/`pastByNor` table at all (the flag would have
+    // nothing to filter anyway: `getComposedTable` only composes the NOR-NORK
+    // `byObject` axis today, not `byNor` — extending it there is #448's
+    // axis-generic composer work). This flag stays set now so #448's composer
+    // honors it automatically once that axis is wired up.
     animateObject: false,
     dialect: 'batua',
     recognitionOnly: true,

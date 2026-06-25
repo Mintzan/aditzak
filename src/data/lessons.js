@@ -2856,6 +2856,34 @@ export const LESSONS = [
     persons: ['ni', 'gu', 'zuek'],
     objectAxis: { vary: 'nor', fixed: 'zu' },
   },
+  // #441: the pooled cross-verb review this axis never had — mixes
+  // gustatu/iruditu/ahaztu/jarraitu's presentByNor/pastByNor, same
+  // `generateCrossVerbQuestions`'s `objectAxis` pooling (#380) Unit 15's
+  // `object-axis-*-review-*` lessons already use.
+  {
+    id: 'nor-axis-present-review-zu',
+    review: true,
+    persons: ['ni', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+    sources: [
+      { verbId: 'gustatu', tense: 'presentByNor' },
+      { verbId: 'iruditu', tense: 'presentByNor' },
+      { verbId: 'ahaztu', tense: 'presentByNor' },
+      { verbId: 'jarraitu', tense: 'presentByNor' },
+    ],
+  },
+  {
+    id: 'nor-axis-past-review-zu',
+    review: true,
+    persons: ['ni', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+    sources: [
+      { verbId: 'gustatu', tense: 'pastByNor' },
+      { verbId: 'iruditu', tense: 'pastByNor' },
+      { verbId: 'ahaztu', tense: 'pastByNor' },
+      { verbId: 'jarraitu', tense: 'pastByNor' },
+    ],
+  },
 
   // #419: the block above only ever fixes `nori` at `zu` — every other NORI
   // value (`ni`/`hura`/`gu`/`zuek`/`haiek`) sits in `gustatu`/`iruditu`/
@@ -2910,6 +2938,30 @@ export const LESSONS = [
     objectAxis: { vary: 'nor', fixed: 'ni' },
   },
   {
+    id: 'nor-axis-present-review-ni',
+    review: true,
+    persons: ['zu', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'gustatu', tense: 'presentByNor' },
+      { verbId: 'iruditu', tense: 'presentByNor' },
+      { verbId: 'ahaztu', tense: 'presentByNor' },
+      { verbId: 'jarraitu', tense: 'presentByNor' },
+    ],
+  },
+  {
+    id: 'nor-axis-past-review-ni',
+    review: true,
+    persons: ['zu', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'gustatu', tense: 'pastByNor' },
+      { verbId: 'iruditu', tense: 'pastByNor' },
+      { verbId: 'ahaztu', tense: 'pastByNor' },
+      { verbId: 'jarraitu', tense: 'pastByNor' },
+    ],
+  },
+  {
     id: 'gustatu-nor-axis-present-hura',
     verbId: 'gustatu',
     tense: 'presentByNor',
@@ -2950,6 +3002,30 @@ export const LESSONS = [
     tense: 'pastByNor',
     persons: ['ni', 'zu', 'gu', 'zuek'],
     objectAxis: { vary: 'nor', fixed: 'hura' },
+  },
+  {
+    id: 'nor-axis-present-review-hura',
+    review: true,
+    persons: ['ni', 'zu', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+    sources: [
+      { verbId: 'gustatu', tense: 'presentByNor' },
+      { verbId: 'iruditu', tense: 'presentByNor' },
+      { verbId: 'ahaztu', tense: 'presentByNor' },
+      { verbId: 'jarraitu', tense: 'presentByNor' },
+    ],
+  },
+  {
+    id: 'nor-axis-past-review-hura',
+    review: true,
+    persons: ['ni', 'zu', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+    sources: [
+      { verbId: 'gustatu', tense: 'pastByNor' },
+      { verbId: 'iruditu', tense: 'pastByNor' },
+      { verbId: 'ahaztu', tense: 'pastByNor' },
+      { verbId: 'jarraitu', tense: 'pastByNor' },
+    ],
   },
   {
     id: 'gustatu-nor-axis-present-gu',
@@ -2994,6 +3070,30 @@ export const LESSONS = [
     objectAxis: { vary: 'nor', fixed: 'gu' },
   },
   {
+    id: 'nor-axis-present-review-gu',
+    review: true,
+    persons: ['ni', 'zu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+    sources: [
+      { verbId: 'gustatu', tense: 'presentByNor' },
+      { verbId: 'iruditu', tense: 'presentByNor' },
+      { verbId: 'ahaztu', tense: 'presentByNor' },
+      { verbId: 'jarraitu', tense: 'presentByNor' },
+    ],
+  },
+  {
+    id: 'nor-axis-past-review-gu',
+    review: true,
+    persons: ['ni', 'zu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+    sources: [
+      { verbId: 'gustatu', tense: 'pastByNor' },
+      { verbId: 'iruditu', tense: 'pastByNor' },
+      { verbId: 'ahaztu', tense: 'pastByNor' },
+      { verbId: 'jarraitu', tense: 'pastByNor' },
+    ],
+  },
+  {
     id: 'gustatu-nor-axis-present-zuek',
     verbId: 'gustatu',
     tense: 'presentByNor',
@@ -3036,6 +3136,30 @@ export const LESSONS = [
     objectAxis: { vary: 'nor', fixed: 'zuek' },
   },
   {
+    id: 'nor-axis-present-review-zuek',
+    review: true,
+    persons: ['ni', 'zu', 'gu'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+    sources: [
+      { verbId: 'gustatu', tense: 'presentByNor' },
+      { verbId: 'iruditu', tense: 'presentByNor' },
+      { verbId: 'ahaztu', tense: 'presentByNor' },
+      { verbId: 'jarraitu', tense: 'presentByNor' },
+    ],
+  },
+  {
+    id: 'nor-axis-past-review-zuek',
+    review: true,
+    persons: ['ni', 'zu', 'gu'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+    sources: [
+      { verbId: 'gustatu', tense: 'pastByNor' },
+      { verbId: 'iruditu', tense: 'pastByNor' },
+      { verbId: 'ahaztu', tense: 'pastByNor' },
+      { verbId: 'jarraitu', tense: 'pastByNor' },
+    ],
+  },
+  {
     id: 'gustatu-nor-axis-present-haiek',
     verbId: 'gustatu',
     tense: 'presentByNor',
@@ -3076,6 +3200,30 @@ export const LESSONS = [
     tense: 'pastByNor',
     persons: ['ni', 'zu', 'gu', 'zuek'],
     objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  {
+    id: 'nor-axis-present-review-haiek',
+    review: true,
+    persons: ['ni', 'zu', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+    sources: [
+      { verbId: 'gustatu', tense: 'presentByNor' },
+      { verbId: 'iruditu', tense: 'presentByNor' },
+      { verbId: 'ahaztu', tense: 'presentByNor' },
+      { verbId: 'jarraitu', tense: 'presentByNor' },
+    ],
+  },
+  {
+    id: 'nor-axis-past-review-haiek',
+    review: true,
+    persons: ['ni', 'zu', 'gu', 'zuek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+    sources: [
+      { verbId: 'gustatu', tense: 'pastByNor' },
+      { verbId: 'iruditu', tense: 'pastByNor' },
+      { verbId: 'ahaztu', tense: 'pastByNor' },
+      { verbId: 'jarraitu', tense: 'pastByNor' },
+    ],
   },
   // #425: gustatu/iruditu/ahaztu's Baldintza/Ondorioa/Ahalera/Agintera
   // object-axis tables (baldintzaByNor/conditionalByNor/conditionalPastByNor/

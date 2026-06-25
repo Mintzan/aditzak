@@ -1085,7 +1085,7 @@ describe('generateQuestions', () => {
   // would have mis-badged these verbs' fixed argument as NORK instead of
   // NORI. These tests pin both the data and that fix.
   describe('objectAxis on a NOR-NORI verb (#358)', () => {
-    it.each(['gustatu', 'iruditu', 'ahaztu'])(
+    it.each(['gustatu', 'iruditu', 'ahaztu', 'jarraitu'])(
       "generates real natzaizu-type questions from %s's presentByNor/pastByNor, with fixedArgument.role 'nori' not 'nork'",
       (id) => {
         const candidate = VERBS.find((v) => v.id === id)
@@ -3074,6 +3074,28 @@ describe('generateCrossVerbQuestions', () => {
       if (question.options.includes(maiteForm)) verbIds.add('maite')
     })
     expect(verbIds.size).toBe(2)
+  })
+
+  it('pools the NOR-NORI axis (#441) across gustatu/iruditu/ahaztu/jarraitu, with fixedArgument.role nori not nork', () => {
+    const verbs = ['gustatu', 'iruditu', 'ahaztu', 'jarraitu'].map((id) => VERBS.find((v) => v.id === id))
+    const sources = verbs.map((verb) => ({ verb, tense: 'presentByNor' }))
+    const objectAxis = { vary: 'nor', fixed: 'zu' }
+
+    const questions = generateCrossVerbQuestions(sources, { count: 10, objectAxis })
+
+    expect(questions.length).toBeGreaterThan(0)
+    questions.forEach((question) => {
+      expect(question.fixedArgument).toEqual({ role: 'nori', person: 'zu' })
+      expect(question.options).toContain(question.correct)
+    })
+    const verbIds = new Set()
+    questions.forEach((question) => {
+      for (const verb of verbs) {
+        const form = resolveObjectAxisTable(verb.conjugations.presentByNor, objectAxis)[question.person]
+        if (question.options.includes(form)) verbIds.add(verb.id)
+      }
+    })
+    expect(verbIds.size).toBeGreaterThan(1)
   })
 })
 
