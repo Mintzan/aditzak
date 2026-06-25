@@ -14,7 +14,7 @@ A user flagged a `word-order` drill marking a grammatically-valid order wrong ("
 
 Considered (a) accepting multiple orders per sentence and (b) auditing/rewriting the pool to remove ambiguity; chose **(c) an opt-in per-sentence `wordOrderSafe: true` tag** gating `word-order` eligibility in `meetsWordOrderThreshold`. Matches the existing per-sentence `validFor` philosophy, fails closed (untagged → never a reorder drill, but all other framings unaffected), and avoids hand-authoring accepted-order lists or encoding the focus rule (too subtle to do reliably). The "is this order the only one a learner would produce" call is a language judgment, so the criterion + seed set live in `docs/LANGUAGE_DECISIONS.md`; the mechanism + tagging guidance in `docs/EXERCISE_ENGINE.md` ("Word-order safety").
 
-Trade-off: until the tagged set grows, `word-order` questions become rare (seed set is `izan`'s negative-present trio). Accepted — a vetted-but-rare drill beats a frequent-but-unfair one. Expanding the tag is a deliberate curation pass.
+Trade-off: until the tagged set grows, `word-order` questions become rare. Accepted — a vetted-but-rare drill beats a frequent-but-unfair one. A first curation pass (see `docs/LANGUAGE_DECISIONS.md`, same date) then tagged the single-complement negatives across the bank (`izan`/`egon`/`ibili`/`ukan`/`jakin`/`joan` all persons, `etorri` `ni` only); affirmatives and multi-constituent negatives stay untagged for a later pass.
 
 ## 2026-06-24 — Extended the NOR-number object pools (Units 13/14 + future) with 8 long-tail transitive verbs
 

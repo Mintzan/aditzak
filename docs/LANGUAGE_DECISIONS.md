@@ -19,25 +19,35 @@ opt-in gate is in `docs/DECISIONS.md`/`docs/EXERCISE_ENGINE.md`; this entry is
 the *language* criterion for the tag.)
 
 A sentence variant earns `wordOrderSafe: true` only when its taught/neutral
-order has **no reasonable competing arrangement a learner would produce** —
-judged, not assumed:
+order has **no reasonable competing arrangement a learner would produce**. The
+operative invariant, applied during the first curation pass (negatives only):
+a negated sentence is safe iff it has **exactly one constituent after the
+pinned `ez`+auxiliary** (plus a fronted subject) — i.e. no *second* adjunct
+competing for the slot. By complement type:
 
-- **Yes — negative copula/auxiliary patterns** (`[Subject] ez [aux]
-  [predicate]`, e.g. "Ni ez naiz irakaslea"): `ez` + finite verb is a pinned
-  sequence and the predicate follows it; the one alternative (fronting the
-  predicate for contrastive focus) is marked enough that a learner won't
-  default to it. Seed tagged set: `izan`'s `negativeSentences.present` trio.
-- **No — affirmatives with both an object and a separate time/place adjunct**:
-  the adjunct can sit pre-verb (focus) *or* trail after the verb, and the
-  subject can front independently — multiple natural orders, the exact case
-  that prompted this.
-- **Borderline — allative/locative motion/location sentences** ("Ni ez noa
-  etxera"): the `ez`+aux is pinned but the `-ra`/`-an` phrase can still front
-  for focus; left untagged for now pending a fluent review.
+- **Yes — single predicate/complement after `ez`+aux**, regardless of whether
+  it's a predicate nominal (`izan`: "Ni ez naiz irakaslea"), a locative
+  (`egon`/`ibili`: "Ni ez nago etxean"), an object (`ukan`/`jakin`: "Nik ez
+  dut liburu bat"), or an allative (`joan`/`etorri`: "Ni ez noa hondartzara").
+  The `ez`+finite-verb sequence is pinned and the lone complement follows it;
+  the only alternative (fronting that complement for contrastive focus) is
+  marked enough that a learner won't default to it.
+- **No — two movable constituents.** A sentence with both an object *and* a
+  locative (`eduki`: "Nik ez daukat giltza poltsikoan"), or a time adverb
+  *and* an allative (`etorri`'s `zu`/`hura`: "Zu ez zatoz bihar eskolara"),
+  has several natural orders — left untagged. Same for the `jakin` past
+  `hura`/`haiek` items, whose complement is a whole subordinate clause.
+- **No — affirmatives** (this pass): single-complement affirmatives are mostly
+  below the 4-word floor ("Ni etxean nago"), and the longer ones generally add
+  a time/place adjunct on top of an object — the multiple-order case that
+  prompted this (the danborrada sentence). Deferred to a later pass.
 
-Tagging more of the bank is a deliberate per-sentence pass, best done by a
-fluent reviewer, since each call is a naturalness judgment like the `validFor`
-bar in `docs/SENTENCE_FRAMES.md`.
+Tagged in this pass: `izan`/`egon`/`ibili` (locative/predicate, all persons),
+`ukan`/`jakin` (object; `jakin` also past `ni`/`zu`), `joan` (allative, all
+persons), `etorri` (`ni` only). Tagging more of the bank — especially
+affirmatives — is a deliberate per-sentence pass, best done by a fluent
+reviewer, since each call is a naturalness judgment like the `validFor` bar in
+`docs/SENTENCE_FRAMES.md`.
 
 ## 2026-06-24 — Plural-object (`ditut`/`nituen`) tables for eight long-tail transitive verbs whose example sentences had plural objects
 

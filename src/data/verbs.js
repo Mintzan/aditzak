@@ -536,9 +536,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Ni ez ___ etxean.', validFor: [] },
-        zu: { text: 'Zu ez ___ kalean.', validFor: [] },
-        hura: { text: 'Hura ez ___ eskolan.', validFor: [] },
+        // wordOrderSafe: single locative complement after the pinned `ez`+aux.
+        ni: { text: 'Ni ez ___ etxean.', validFor: [], wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ kalean.', validFor: [], wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ eskolan.', validFor: [], wordOrderSafe: true },
       },
     },
   },
@@ -936,9 +937,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Nik ez ___ liburu bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-        zu: { text: 'Zuk ez ___ auto bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-        hura: { text: 'Berak ez ___ etxe bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+        // wordOrderSafe: single object NP after the pinned `ez`+aux.
+        ni: { text: 'Nik ez ___ liburu bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], wordOrderSafe: true },
+        zu: { text: 'Zuk ez ___ auto bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], wordOrderSafe: true },
+        hura: { text: 'Berak ez ___ etxe bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], wordOrderSafe: true },
       },
     },
   },
@@ -1434,16 +1436,19 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'] },
-        zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'] },
-        hura: { text: 'Hark ez ___ sekretua.', validFor: ['nahi', 'ukan'] },
+        // wordOrderSafe: single object after the pinned `ez`+aux.
+        ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'], wordOrderSafe: true },
+        zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'], wordOrderSafe: true },
+        hura: { text: 'Hark ez ___ sekretua.', validFor: ['nahi', 'ukan'], wordOrderSafe: true },
       },
       // #312: cultural-bank negated-past items — both use `ez zekien`/`ez
       // zekiten` ("didn't know that..."), so they're `negativeSentences`
-      // entries rather than plain `sentences.past`.
+      // entries rather than plain `sentences.past`. The `ni`/`zu` items are
+      // single-object (wordOrderSafe); `hura`/`haiek` carry a subordinate
+      // clause with multiple movable parts, so they stay untagged.
       past: {
-        ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'] },
-        zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'] },
+        ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'], wordOrderSafe: true },
+        zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'], wordOrderSafe: true },
         hura: { text: 'Aitonak ez ___ gaur gauean sagardotegira joateko plana genuenik.', validFor: [] },
         haiek: { text: 'Gure gurasoek ez ___ bertsolarien saioa gaur arratsaldean zenik.', validFor: [] },
       },
@@ -1636,9 +1641,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Ni ez ___ hondartzara.', validFor: ['etorri'] },
-        zu: { text: 'Zu ez ___ eskolara.', validFor: ['etorri'] },
-        hura: { text: 'Hura ez ___ lanera.', validFor: ['etorri'] },
+        // wordOrderSafe: single allative complement after the pinned `ez`+aux.
+        ni: { text: 'Ni ez ___ hondartzara.', validFor: ['etorri'], wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ eskolara.', validFor: ['etorri'], wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ lanera.', validFor: ['etorri'], wordOrderSafe: true },
       },
     },
   },
@@ -1914,7 +1920,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Ni ez ___ etxera.', validFor: ['joan'] },
+        // wordOrderSafe: `ni` has a single allative complement. `zu`/`hura`
+        // carry both a time adverb (`bihar`/`orain`) and an allative — two
+        // movable constituents with several valid orders — so they stay untagged.
+        ni: { text: 'Ni ez ___ etxera.', validFor: ['joan'], wordOrderSafe: true },
         zu: { text: 'Zu ez ___ bihar eskolara.', validFor: ['joan'] },
         hura: { text: 'Hura ez ___ orain etxera.', validFor: ['joan'] },
       },
@@ -2984,6 +2993,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
+        // Deliberately NOT wordOrderSafe: each carries both an object and a
+        // locative (`giltza poltsikoan` = "the key in the pocket"), so the
+        // object and the locative can each take the pre-verb/post-verb slot —
+        // multiple valid orders, not a single-answer reorder drill.
         ni: { text: 'Nik ez ___ giltza poltsikoan.', validFor: ['ukan', 'ikusi'] },
         zu: { text: 'Zuk ez ___ dirua eskuan.', validFor: ['ukan', 'ikusi'] },
         hura: { text: 'Hark ez ___ liburua eskuan.', validFor: ['ukan', 'ikusi'] },
@@ -3243,9 +3256,12 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: 'Ni ez ___ kalean.',
-        zu: 'Zu ez ___ lanean.',
-        hura: 'Hura ez ___ kalean.',
+        // wordOrderSafe: single locative complement after the pinned `ez`+aux.
+        // No `validFor` key (kept untagged, the prior bare-string semantics) —
+        // `wordOrderSafe` is orthogonal to cross-verb distractor eligibility.
+        ni: { text: 'Ni ez ___ kalean.', wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ lanean.', wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ kalean.', wordOrderSafe: true },
       },
     },
   },

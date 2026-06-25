@@ -241,9 +241,13 @@ that means:
   separate adjunct (time/place) — those are precisely the
   multiple-valid-order cases the focus rule produces (the danborrada bug).
 
-The seed tagged set (as of this change) is `izan`'s `negativeSentences.present`
-trio. Expanding the tagged set across the bank is a deliberate curation pass
-(best driven by a fluent reviewer); the gate makes it safe to grow incrementally.
+A first curation pass tagged the single-complement *negative* sentences across
+the bank (`izan`/`egon`/`ibili`/`ukan`/`jakin`/`joan` all persons; `etorri`
+`ni` only) — see `docs/LANGUAGE_DECISIONS.md` for the per-verb rationale and
+the exact invariant ("exactly one constituent after the pinned `ez`+aux").
+Affirmatives and multi-constituent negatives are deliberately left untagged;
+expanding to them is a later curation pass (best driven by a fluent reviewer),
+which the gate makes safe to grow incrementally.
 
 ### NOR-NORK object axis (#346 — resolved)
 `ukan`'s `present` table only varied the ergative (NORK) subject against a
