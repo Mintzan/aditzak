@@ -265,6 +265,30 @@ The four forks from §4, with their outcomes:
   `itxaron-dative`/`utzi-dative`/`adierazi-dative`/`eskatu-dative`/
   `galdetu-dative`) have zero `sentences` entries of their own — no backfill
   applies to them at all, they're conjugation-table-only variants.
+- **#454, resolved (2026-06-25):** reviewed all 14 `nor`-only intransitive
+  verbs (`izan, egon, ahal-izan, ezin-izan, ari, ibili, sartu, atera, hasi,
+  bizi-izan, erori, jaiki, ados-egon, arriskuan-jarri`) — confirmed each has
+  `agreement: ['nor']` only (no object frame to substitute into). 12 of the
+  14 already carried `validFor: []` throughout, and manual review found no
+  genuine cross-verb sibling for any of them (each is a distinct frame:
+  identity, location, ability/inability, motion-into/out-of, inceptive,
+  residence, falling, waking, agreement-with-someone, danger). `ari`/`ibili`
+  were the two real findings: both had entirely *untagged* sentences (bare
+  strings — "not yet vetted", not "vetted empty"), so this was tagging work,
+  not pure verification. `ari` came back `validFor: []` throughout (its
+  blank always carries an embedded activity participle marking the
+  progressive-aspect frame itself, distinct from any sibling's sense). For
+  `ibili`, the `kalean`/`lanean` variants got a genuine sibling: "kalean
+  ibili" ("to be out and about") and "lanean ibili" ("to be busy/working")
+  are standard Basque idioms where `egon`'s same-person form also correctly
+  completes those exact blanks — so those specific variants (on both `egon`
+  and `ibili`) now list each other in `validFor`; every other locative/
+  manner variant on either verb (etxean, oinez, parkean, ...) isn't a fixed
+  idiom shared with the other verb, so stayed `[]`. Baseline regenerated
+  accordingly (the gap surface also widened mechanically for every other
+  `nor`-only verb, since `ari`/`ibili` going from untagged to vetted-empty
+  makes them newly visible as gap-candidates in everyone else's slots — not
+  a content change on those verbs, just the audit now seeing them).
 - Remaining distractor work outside this strategy: **#213** (hi/hitanoa
   wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
   on native-speaker confirmation of #167's toka/noka data, not on engineering.
