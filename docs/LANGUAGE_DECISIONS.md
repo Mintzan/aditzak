@@ -6,6 +6,76 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-25 — Criterion for `wordOrderSafe` (which sentences are fair to grade as a single-order reorder drill)
+
+The `word-order` drill (reassemble a scrambled sentence) can only fairly grade
+sentences with a single defensible order, but Basque word order is governed by
+the **galdegaia (focus) rule**: whatever sits immediately before the finite
+verb is the focus, and most constituents can move to claim that slot. So a
+sentence like "Zuek herriko danborrada entzuten duzue goizean" has several
+grammatical orders ("...danborrada goizean entzuten duzue" just refocuses onto
+*goizean*) — grading one as the only right answer is wrong. (Mechanism for the
+opt-in gate is in `docs/DECISIONS.md`/`docs/EXERCISE_ENGINE.md`; this entry is
+the *language* criterion for the tag.)
+
+A sentence variant earns `wordOrderSafe: true` only when its taught/neutral
+order has **no reasonable competing arrangement a learner would produce**. The
+operative invariant, applied during the first curation pass (negatives only):
+a negated sentence is safe iff it has **exactly one constituent after the
+pinned `ez`+auxiliary** (plus a fronted subject) — i.e. no *second* adjunct
+competing for the slot. By complement type:
+
+- **Yes — single predicate/complement after `ez`+aux**, regardless of whether
+  it's a predicate nominal (`izan`: "Ni ez naiz irakaslea"), a locative
+  (`egon`/`ibili`: "Ni ez nago etxean"), an object (`ukan`/`jakin`: "Nik ez
+  dut liburu bat"), or an allative (`joan`/`etorri`: "Ni ez noa hondartzara").
+  The `ez`+finite-verb sequence is pinned and the lone complement follows it;
+  the only alternative (fronting that complement for contrastive focus) is
+  marked enough that a learner won't default to it.
+- **No — two movable constituents.** A sentence with both an object *and* a
+  locative (`eduki`: "Nik ez daukat giltza poltsikoan"), or a time adverb
+  *and* an allative (`etorri`'s `zu`/`hura`: "Zu ez zatoz bihar eskolara"),
+  has several natural orders — left untagged. Same for the `jakin` past
+  `hura`/`haiek` items, whose complement is a whole subordinate clause.
+
+Tagged in the negatives pass: `izan`/`egon`/`ibili` (locative/predicate, all
+persons), `ukan`/`jakin` (object; `jakin` also past `ni`/`zu`), `joan`
+(allative, all persons), `etorri` (`ni` only).
+
+## 2026-06-25 — `wordOrderSafe` affirmatives pass (4-word periphrastic, single-complement)
+
+Extended the tag to affirmative sentences. The danborrada complaint that
+started this was itself an affirmative, so the bar stayed strict. The safe
+affirmative shape is **a periphrastic clause that fills out to exactly four
+words** — `[subject] [one complement] [participle] [auxiliary]` — which leaves
+the participle+aux as a tight two-word block and a single content slot before
+it. Filter used (scripted, then reviewed):
+
+- `type: 'periphrastic'` (the participle+aux supplies two of the four words, so
+  four words ⇒ exactly one non-subject constituent — a *synthetic* verb at four
+  words would instead mean two complements, e.g. `eduki`'s "Nik giltza
+  poltsikoan daukat", object + locative);
+- `agreement` excludes `nori` (a dative argument reorders freely against the
+  absolutive — `ahaztu`/`gustatu`/`deitu`/`antzeman` etc. are out);
+- **exactly four words** after filling the blank (five-plus almost always means
+  a trailing time/place adjunct — "...adierazten du **kalean**" — i.e. the
+  danborrada ambiguity; those stay untagged).
+
+This yields canonical SOV transitives ("Nik ura edaten dut", "Hark filma
+ikusten du"), the progressive frame (`ari`: "Ni idazten ari naiz", gerund
+locked before `ari`), modal `nahi` ("Zuk etorri nahi duzu"), and `-arazi`
+causatives ("Guk umeak dantzaraziko ditugu"). Verbs covered: `jan`, `edan`,
+`erosi`, `ikusi`, `hartu`, `ari`, `nahi`, `ukatu`, `itzularazi`, `dantzarazi`.
+Because `sentences.future` is aliased to `present` by reference (and `past`
+falls back the same way when there's no adverbial past frame), tagging a
+present template automatically covers its future/past fillings — same
+two-word verb block, same four-word shape.
+
+Deliberately still untagged: five-plus-word affirmatives (trailing adjunct),
+synthetic-verb sentences with two complements, and any `nori` verb. Those
+remain a later, fluent-reviewed pass — each is a naturalness judgment like the
+`validFor` bar in `docs/SENTENCE_FRAMES.md`.
+
 ## 2026-06-24 — Open question: `hartu`/`erosi`'s `animateObject` call (#442) needs native-speaker confirmation
 
 #442 added `animateObject: false` to gate a verb's personal-object cells out of its composed NOR-NORK object-axis table, and flagged `hartu`/`erosi` (both `dativeOvergeneration: true`, both already have a composed `presentByObject`/`pastByObject` table from #436) as a borderline call: `hartu` "take [someone]" reads as plausible (escorting/fetching a person), `erosi` "buy [someone]" reads as a metaphor (or worse, human trafficking) rather than the literal sense the table drills — but neither call was made here. Left both unset (default `true`, unfiltered) pending a native speaker confirming which, if either, should flip to `false`. Whoever resolves this should also check whether flipping either one orphans an already-shipped Unit 15 lesson (`src/data/lessons.js`'s `hartu-object-axis-present-zuek`, `erosi-object-axis-past-zu`, and the pooled `object-axis-*-review*` lessons all draw on these verbs' personal-`nor` cells) — same caveat #442 left for `jan`/`edan`, deferred to #443's Unit 15 rework.

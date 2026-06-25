@@ -1379,9 +1379,9 @@ describe('generateQuestions', () => {
       },
       sentences: {
         present: {
-          ni: 'Nik liburu bat ___.',
-          zu: 'Zuk liburu bat ___?',
-          hura: 'Hark liburu bat ___.',
+          ni: { text: 'Nik liburu bat ___.', wordOrderSafe: true },
+          zu: { text: 'Zuk liburu bat ___?', wordOrderSafe: true },
+          hura: { text: 'Hark liburu bat ___.', wordOrderSafe: true },
         },
       },
       negativeSentences: {
@@ -1879,13 +1879,15 @@ describe('generateQuestions', () => {
       ...verb,
       negativeSentences: {
         present: {
-          ni: 'Ni ez ___ irakaslea.',
-          hi: 'Hi ez ___ ikaslea.',
-          hura: 'Hura ez ___ medikua.',
+          ni: { text: 'Ni ez ___ irakaslea.', wordOrderSafe: true },
+          hi: { text: 'Hi ez ___ ikaslea.', wordOrderSafe: true },
+          hura: { text: 'Hura ez ___ medikua.', wordOrderSafe: true },
         },
       },
     }
-    const negated = verbWithNegation.negativeSentences.present
+    const negated = Object.fromEntries(
+      Object.entries(verbWithNegation.negativeSentences.present).map(([person, s]) => [person, s.text]),
+    )
 
     it('frames a question as filling the negative sentence when includeNegation is set and the roll favours it', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0)
@@ -1993,31 +1995,31 @@ describe('generateQuestions', () => {
     const wordOrderVerb = {
       ...verb,
       sentences: {
-        present: { ni: 'Ni gaur hemen ___.' },
+        present: { ni: { text: 'Ni gaur hemen ___.', wordOrderSafe: true } },
       },
     }
     const duplicateWordVerb = {
       ...verb,
       sentences: {
-        present: { ni: 'Ni oso oso ___.' },
+        present: { ni: { text: 'Ni oso oso ___.', wordOrderSafe: true } },
       },
     }
     const tooShortVerb = {
       ...verb,
       sentences: {
-        present: { ni: 'Ni irakaslea ___.' },
+        present: { ni: { text: 'Ni irakaslea ___.', wordOrderSafe: true } },
       },
     }
     const wordOrderNegationVerb = {
       ...verb,
       negativeSentences: {
-        present: { ni: 'Ni ez ___ irakaslea.' },
+        present: { ni: { text: 'Ni ez ___ irakaslea.', wordOrderSafe: true } },
       },
     }
     const wordOrderQuestionVerb = {
       ...verb,
       sentences: {
-        present: { ni: 'Ni gaur hemen ___?' },
+        present: { ni: { text: 'Ni gaur hemen ___?', wordOrderSafe: true } },
       },
     }
 
@@ -2084,11 +2086,27 @@ describe('generateQuestions', () => {
       }
     })
 
+    it('never offers word-order for a length-eligible sentence that is not tagged wordOrderSafe, regardless of roll', () => {
+      const untaggedVerb = {
+        ...verb,
+        sentences: {
+          present: { ni: 'Ni gaur hemen ___.' },
+        },
+      }
+      for (let roll = 0; roll < 1; roll += 0.05) {
+        vi.spyOn(Math, 'random').mockReturnValue(roll)
+        generateQuestions(untaggedVerb, 'present', { persons: ['ni'] }).forEach((question) => {
+          expect(question.kind).not.toBe('word-order')
+        })
+        vi.restoreAllMocks()
+      }
+    })
+
     it(`never offers word-order for a sentence above the ${WORD_ORDER_MAX_WORDS}-word maximum, regardless of roll (#315)`, () => {
       const tooLongVerb = {
         ...verb,
         sentences: {
-          present: { ni: 'Ni gaur goizean lagunekin oinez joan nintzen herriko plazara ___.' },
+          present: { ni: { text: 'Ni gaur goizean lagunekin oinez joan nintzen herriko plazara ___.', wordOrderSafe: true } },
         },
       }
       for (let roll = 0; roll < 1; roll += 0.05) {

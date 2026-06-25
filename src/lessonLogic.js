@@ -1289,11 +1289,19 @@ export function generateQuestions(
       ? [...baseFormLures, { form: getProgressiveBaseLure(verbs, sentence.baseVerb, person), errorType: 'progressive-vs-plain' }]
       : baseFormLures
     const pronounLures = [{ form: getCaseFramePronounLure(verbs, verb, person), errorType: 'case-frame' }]
-    // A sentence only qualifies for `word-order` once its blank is filled in
-    // and its word count falls within [`WORD_ORDER_MIN_WORDS`,
-    // `WORD_ORDER_MAX_WORDS`] — see `buildWordOrderQuestion`.
+    // A sentence only qualifies for `word-order` once (a) it's explicitly
+    // tagged `wordOrderSafe: true` and (b) its blank is filled in and its word
+    // count falls within [`WORD_ORDER_MIN_WORDS`, `WORD_ORDER_MAX_WORDS`] — see
+    // `buildWordOrderQuestion`. The `wordOrderSafe` gate is opt-in and
+    // fail-closed: most Basque sentences with an object *and* an adjunct have
+    // more than one valid order (the galdegaia/focus rule lets constituents
+    // compete for the pre-verb slot), so reorder-and-grade-one-string would
+    // mark a learner's grammatical-but-differently-focused order wrong. Only
+    // sentences whose taught/neutral order has no reasonable competing
+    // arrangement a learner would produce carry the tag — see
+    // `docs/EXERCISE_ENGINE.md`'s "Word-order safety (`wordOrderSafe`)".
     const meetsWordOrderThreshold = (candidate) => {
-      if (!candidate) return false
+      if (!candidate || !candidate.wordOrderSafe) return false
       const wordCount = candidate.text.replace('___', table[person]).split(' ').length
       return wordCount >= WORD_ORDER_MIN_WORDS && wordCount <= WORD_ORDER_MAX_WORDS
     }

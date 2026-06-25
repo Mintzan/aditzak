@@ -428,9 +428,13 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Ni ez ___ irakaslea.', validFor: [] },
-        zu: { text: 'Zu ez ___ ikaslea.', validFor: [] },
-        hura: { text: 'Hura ez ___ medikua.', validFor: [] },
+        // `wordOrderSafe` (see `docs/EXERCISE_ENGINE.md`): the negative copula
+        // pattern `[Subject] ez [aux] [predicate]` has a pinned `ez`+auxiliary
+        // sequence and no reasonable competing learner order, so it's safe to
+        // grade as a single-answer reorder drill.
+        ni: { text: 'Ni ez ___ irakaslea.', validFor: [], wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ ikaslea.', validFor: [], wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ medikua.', validFor: [], wordOrderSafe: true },
       },
     },
   },
@@ -588,9 +592,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Ni ez ___ etxean.', validFor: [] },
-        zu: { text: 'Zu ez ___ kalean.', validFor: [] },
-        hura: { text: 'Hura ez ___ eskolan.', validFor: [] },
+        // wordOrderSafe: single locative complement after the pinned `ez`+aux.
+        ni: { text: 'Ni ez ___ etxean.', validFor: [], wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ kalean.', validFor: [], wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ eskolan.', validFor: [], wordOrderSafe: true },
       },
     },
   },
@@ -964,9 +969,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Nik ez ___ liburu bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-        zu: { text: 'Zuk ez ___ auto bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-        hura: { text: 'Berak ez ___ etxe bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+        // wordOrderSafe: single object NP after the pinned `ez`+aux.
+        ni: { text: 'Nik ez ___ liburu bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], wordOrderSafe: true },
+        zu: { text: 'Zuk ez ___ auto bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], wordOrderSafe: true },
+        hura: { text: 'Berak ez ___ etxe bat.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], wordOrderSafe: true },
       },
     },
   },
@@ -1024,7 +1030,7 @@ export const VERBS = [
           { text: 'Nik baserriko sukaldean euskal pastela egiten ikasi ___.', validFor: [] },
         ],
         zu: [
-          { text: 'Zuk etorri ___?', validFor: [] },
+          { text: 'Zuk etorri ___?', wordOrderSafe: true, validFor: [] },
           { text: 'Zuk kafe bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Zuk liburu bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Zuk sagar bat ___?', validFor: ['ukan', 'eduki', 'ikusi', 'erosi', 'behar'] },
@@ -1449,16 +1455,19 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'] },
-        zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'] },
-        hura: { text: 'Hark ez ___ sekretua.', validFor: ['nahi', 'ukan'] },
+        // wordOrderSafe: single object after the pinned `ez`+aux.
+        ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'], wordOrderSafe: true },
+        zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'], wordOrderSafe: true },
+        hura: { text: 'Hark ez ___ sekretua.', validFor: ['nahi', 'ukan'], wordOrderSafe: true },
       },
       // #312: cultural-bank negated-past items — both use `ez zekien`/`ez
       // zekiten` ("didn't know that..."), so they're `negativeSentences`
-      // entries rather than plain `sentences.past`.
+      // entries rather than plain `sentences.past`. The `ni`/`zu` items are
+      // single-object (wordOrderSafe); `hura`/`haiek` carry a subordinate
+      // clause with multiple movable parts, so they stay untagged.
       past: {
-        ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'] },
-        zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'] },
+        ni: { text: 'Nik ez ___ erantzuna.', validFor: ['ikusi', 'nahi'], wordOrderSafe: true },
+        zu: { text: 'Zuk ez ___ egia.', validFor: ['ikusi', 'nahi'], wordOrderSafe: true },
         hura: { text: 'Aitonak ez ___ gaur gauean sagardotegira joateko plana genuenik.', validFor: [] },
         haiek: { text: 'Gure gurasoek ez ___ bertsolarien saioa gaur arratsaldean zenik.', validFor: [] },
       },
@@ -1651,9 +1660,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Ni ez ___ hondartzara.', validFor: ['etorri'] },
-        zu: { text: 'Zu ez ___ eskolara.', validFor: ['etorri'] },
-        hura: { text: 'Hura ez ___ lanera.', validFor: ['etorri'] },
+        // wordOrderSafe: single allative complement after the pinned `ez`+aux.
+        ni: { text: 'Ni ez ___ hondartzara.', validFor: ['etorri'], wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ eskolara.', validFor: ['etorri'], wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ lanera.', validFor: ['etorri'], wordOrderSafe: true },
       },
     },
   },
@@ -1929,7 +1939,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: { text: 'Ni ez ___ etxera.', validFor: ['joan'] },
+        // wordOrderSafe: `ni` has a single allative complement. `zu`/`hura`
+        // carry both a time adverb (`bihar`/`orain`) and an allative — two
+        // movable constituents with several valid orders — so they stay untagged.
+        ni: { text: 'Ni ez ___ etxera.', validFor: ['joan'], wordOrderSafe: true },
         zu: { text: 'Zu ez ___ bihar eskolara.', validFor: ['joan'] },
         hura: { text: 'Hura ez ___ orain etxera.', validFor: ['joan'] },
       },
@@ -1960,23 +1973,23 @@ export const VERBS = [
         // variants' embedded verbs (egin/ikasi/idatzi/irakurri/jolastu)
         // aren't in `VERBS` yet, so they stay untagged — no lure for them
         // until/unless those verbs are added.
-        ni: ['Ni lan egiten ___.', 'Ni ikasten ___.', 'Ni idazten ___.', { text: 'Ni jaten ___.', baseVerb: 'jan' }],
+        ni: ['Ni lan egiten ___.', { text: 'Ni ikasten ___.', wordOrderSafe: true }, { text: 'Ni idazten ___.', wordOrderSafe: true }, { text: 'Ni jaten ___.', wordOrderSafe: true, baseVerb: 'jan' }],
         zu: [
-          'Zu zer ___?',
+          { text: 'Zu zer ___?', wordOrderSafe: true },
           'Zu zer egiten ___?',
-          'Zu irakurtzen ___?',
+          { text: 'Zu irakurtzen ___?', wordOrderSafe: true },
           // #313: embedded verb "dasten" (from "dastatu", not in `VERBS`) —
           // untagged per the comment above, same as the other unlisted
           // participles.
           'Zu Idiazabal gazta eta txakolina dasten ___ plazako azokan.',
         ],
         hura: [
-          'Hura irakurtzen ___.',
-          { text: 'Hura jaten ___.', baseVerb: 'jan' },
+          { text: 'Hura irakurtzen ___.', wordOrderSafe: true },
+          { text: 'Hura jaten ___.', wordOrderSafe: true, baseVerb: 'jan' },
           'Hura lan egiten ___.',
-          'Mikel ikasten ___.',
-          'Ane idazten ___.',
-          'Txakurra jolasten ___.',
+          { text: 'Mikel ikasten ___.', wordOrderSafe: true },
+          { text: 'Ane idazten ___.', wordOrderSafe: true },
+          { text: 'Txakurra jolasten ___.', wordOrderSafe: true },
           'Katua lo egiten ___.',
           'Hura telefonoz hizketan ___.',
         ],
@@ -2081,31 +2094,31 @@ export const VERBS = [
     sentences: {
       present: {
         ni: [
-          { text: 'Nik sagarra ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Nik ogia ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Nik tortilla ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik sagarra ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik ogia ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik tortilla ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk fruta ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Zuk arroza ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuk fruta ___?', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuk arroza ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         hura: [
-          { text: 'Hark taloa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Mikelek pizza ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Anek entsalada ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Umeak gaztaina ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Hark taloa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Mikelek pizza ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Anek entsalada ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Umeak gaztaina ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         gu: [
-          { text: 'Guk arroza ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Guk ogitartekoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk arroza ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk ogitartekoa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek fruta ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Zuek taloa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek fruta ___?', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek taloa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         haiek: [
-          { text: 'Haiek pastela ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Gurasoek arroza ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Haiek pastela ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Gurasoek arroza ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
       },
       past: {
@@ -2227,31 +2240,31 @@ export const VERBS = [
     sentences: {
       present: {
         ni: [
-          { text: 'Nik ura ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Nik esnea ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Nik zukua ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik ura ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik esnea ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik zukua ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk ardoa ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Zuk kafea ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuk ardoa ___?', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuk kafea ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         hura: [
-          { text: 'Hark sagardoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Mikelek tea ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Anek ura ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Katuak esnea ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
+          { text: 'Hark sagardoa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Mikelek tea ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Anek ura ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Katuak esnea ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi'] },
         ],
         gu: [
-          { text: 'Guk ura ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Guk kafea ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk ura ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Guk kafea ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek zukua ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Zuek ardoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek zukua ___?', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuek ardoa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         haiek: [
-          { text: 'Haiek garagardoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
-          { text: 'Lagunek sagardoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Haiek garagardoa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Lagunek sagardoa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
       },
       past: {
@@ -2376,18 +2389,18 @@ export const VERBS = [
       present: {
         ni: [
           { text: 'Nik liburu bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
-          { text: 'Nik ogia ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
+          { text: 'Nik ogia ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
           { text: 'Nik jaka berri bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         zu: [
           { text: 'Zuk sagar bat ___?', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
-          { text: 'Zuk diskoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Zuk diskoa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         hura: [
-          { text: 'Hark autoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Hark autoa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
           { text: 'Mikelek opari bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
           { text: 'Anek etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
-          { text: 'Saltzaileak fruta ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
+          { text: 'Saltzaileak fruta ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar', 'jan'] },
         ],
         gu: [
           { text: 'Guk etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
@@ -2398,7 +2411,7 @@ export const VERBS = [
           { text: 'Zuek liburu bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
         haiek: [
-          { text: 'Haiek autoa ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
+          { text: 'Haiek autoa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
           { text: 'Gurasoek etxe bat ___.', validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'behar'] },
         ],
       },
@@ -2518,31 +2531,31 @@ export const VERBS = [
     sentences: {
       present: {
         ni: [
-          { text: 'Nik autobusa ___.', validFor: ['behar'] },
-          { text: 'Nik aterkia ___.', validFor: ['behar'] },
+          { text: 'Nik autobusa ___.', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Nik aterkia ___.', wordOrderSafe: true, validFor: ['behar'] },
           { text: 'Nik erabaki bat ___.', validFor: ['behar'] },
         ],
         zu: [
-          { text: 'Zuk taxia ___?', validFor: ['behar'] },
-          { text: 'Zuk telefonoa ___.', validFor: ['behar'] },
+          { text: 'Zuk taxia ___?', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Zuk telefonoa ___.', wordOrderSafe: true, validFor: ['behar'] },
         ],
         hura: [
-          { text: 'Hark trena ___.', validFor: ['behar'] },
-          { text: 'Mikelek katua ___.', validFor: ['behar'] },
-          { text: 'Anek txanda ___.', validFor: ['behar'] },
-          { text: 'Gidariak autobusa ___.', validFor: ['behar'] },
+          { text: 'Hark trena ___.', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Mikelek katua ___.', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Anek txanda ___.', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Gidariak autobusa ___.', wordOrderSafe: true, validFor: ['behar'] },
         ],
         gu: [
-          { text: 'Guk taxia ___.', validFor: ['behar'] },
+          { text: 'Guk taxia ___.', wordOrderSafe: true, validFor: ['behar'] },
           { text: 'Guk erabaki garrantzitsu bat ___.', validFor: ['behar'] },
         ],
         zuek: [
-          { text: 'Zuek autobusa ___?', validFor: ['behar'] },
-          { text: 'Zuek aterkia ___.', validFor: ['behar'] },
+          { text: 'Zuek autobusa ___?', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Zuek aterkia ___.', wordOrderSafe: true, validFor: ['behar'] },
         ],
         haiek: [
-          { text: 'Haiek trena ___.', validFor: ['behar'] },
-          { text: 'Gurasoek erabakia ___.', validFor: ['behar'] },
+          { text: 'Haiek trena ___.', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Gurasoek erabakia ___.', wordOrderSafe: true, validFor: ['behar'] },
         ],
       },
     },
@@ -2667,31 +2680,31 @@ export const VERBS = [
     sentences: {
       present: {
         ni: [
-          { text: 'Nik filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
-          { text: 'Nik mendia ___.', validFor: [] },
-          { text: 'Nik zerua ___.', validFor: [] },
+          { text: 'Nik filma ___.', wordOrderSafe: true, validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
+          { text: 'Nik mendia ___.', wordOrderSafe: true, validFor: [] },
+          { text: 'Nik zerua ___.', wordOrderSafe: true, validFor: [] },
         ],
         zu: [
-          { text: 'Zuk hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] },
-          { text: 'Zuk Mikel ___?', validFor: [] },
+          { text: 'Zuk hori ___?', wordOrderSafe: true, validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] },
+          { text: 'Zuk Mikel ___?', wordOrderSafe: true, validFor: [] },
         ],
         hura: [
-          { text: 'Hark itsasoa ___.', validFor: [] },
-          { text: 'Anek filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
-          { text: 'Irakasleak ikaslea ___.', validFor: ['ukan', 'nahi'] },
-          { text: 'Txakurrak katua ___.', validFor: ['eduki', 'nahi'] },
+          { text: 'Hark itsasoa ___.', wordOrderSafe: true, validFor: [] },
+          { text: 'Anek filma ___.', wordOrderSafe: true, validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
+          { text: 'Irakasleak ikaslea ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi'] },
+          { text: 'Txakurrak katua ___.', wordOrderSafe: true, validFor: ['eduki', 'nahi'] },
         ],
         gu: [
-          { text: 'Guk itsasoa ___.', validFor: [] },
-          { text: 'Guk filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
+          { text: 'Guk itsasoa ___.', wordOrderSafe: true, validFor: [] },
+          { text: 'Guk filma ___.', wordOrderSafe: true, validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
         ],
         zuek: [
-          { text: 'Zuek hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] },
-          { text: 'Zuek mendia ___?', validFor: [] },
+          { text: 'Zuek hori ___?', wordOrderSafe: true, validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] },
+          { text: 'Zuek mendia ___?', wordOrderSafe: true, validFor: [] },
         ],
         haiek: [
-          { text: 'Haiek filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
-          { text: 'Gurasoek etxea ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
+          { text: 'Haiek filma ___.', wordOrderSafe: true, validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
+          { text: 'Gurasoek etxea ___.', wordOrderSafe: true, validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] },
         ],
       },
       past: {
@@ -2898,6 +2911,10 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
+        // Deliberately NOT wordOrderSafe: each carries both an object and a
+        // locative (`giltza poltsikoan` = "the key in the pocket"), so the
+        // object and the locative can each take the pre-verb/post-verb slot —
+        // multiple valid orders, not a single-answer reorder drill.
         ni: { text: 'Nik ez ___ giltza poltsikoan.', validFor: ['ukan', 'ikusi'] },
         zu: { text: 'Zuk ez ___ dirua eskuan.', validFor: ['ukan', 'ikusi'] },
         hura: { text: 'Hark ez ___ liburua eskuan.', validFor: ['ukan', 'ikusi'] },
@@ -3157,9 +3174,12 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        ni: 'Ni ez ___ kalean.',
-        zu: 'Zu ez ___ lanean.',
-        hura: 'Hura ez ___ kalean.',
+        // wordOrderSafe: single locative complement after the pinned `ez`+aux.
+        // No `validFor` key (kept untagged, the prior bare-string semantics) —
+        // `wordOrderSafe` is orthogonal to cross-verb distractor eligibility.
+        ni: { text: 'Ni ez ___ kalean.', wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ lanean.', wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ kalean.', wordOrderSafe: true },
       },
     },
   },
@@ -6126,9 +6146,9 @@ export const VERBS = [
     sentences: {
       present: {
         ni: { text: 'Nik akusazioa ___ auzitegian.', validFor: [] },
-        zu: { text: 'Zuk erantzukizuna ___?', validFor: [] },
+        zu: { text: 'Zuk erantzukizuna ___?', wordOrderSafe: true, validFor: [] },
         hura: { text: 'Hark errua ___ behin eta berriz.', validFor: [] },
-        gu: { text: 'Guk parte-hartzea ___.', validFor: [] },
+        gu: { text: 'Guk parte-hartzea ___.', wordOrderSafe: true, validFor: [] },
         zuek: { text: 'Zuek leporatutako delitua ___?', validFor: [] },
         haiek: { text: 'Haiek istorio osoa ___.', validFor: [] },
       },
@@ -8221,17 +8241,17 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: [{ text: 'Nik mendizaleak ___.', validFor: [] }],
-        zu: [{ text: 'Zuk mendizaleak ___?', validFor: [] }],
-        hura: [{ text: 'Hark mendizaleak ___.', validFor: [] }],
-        gu: [{ text: 'Guk mendizaleak ___.', validFor: [] }],
-        zuek: [{ text: 'Zuek mendizaleak ___?', validFor: [] }],
-        haiek: [{ text: 'Haiek mendizaleak ___.', validFor: [] }],
+        ni: [{ text: 'Nik mendizaleak ___.', wordOrderSafe: true, validFor: [] }],
+        zu: [{ text: 'Zuk mendizaleak ___?', wordOrderSafe: true, validFor: [] }],
+        hura: [{ text: 'Hark mendizaleak ___.', wordOrderSafe: true, validFor: [] }],
+        gu: [{ text: 'Guk mendizaleak ___.', wordOrderSafe: true, validFor: [] }],
+        zuek: [{ text: 'Zuek mendizaleak ___?', wordOrderSafe: true, validFor: [] }],
+        haiek: [{ text: 'Haiek mendizaleak ___.', wordOrderSafe: true, validFor: [] }],
       },
       past: {
         ni: [{ text: 'Nik atzo mendizaleak ___.', validFor: [] }],
         zu: [{ text: 'Zuk atzo mendizaleak ___?', validFor: [] }],
-        hura: [{ text: 'Hark mendizaleak ___.', validFor: [] }],
+        hura: [{ text: 'Hark mendizaleak ___.', wordOrderSafe: true, validFor: [] }],
         gu: [{ text: 'Guk atzo mendizaleak ___.', validFor: [] }],
         zuek: [{ text: 'Zuek atzo mendizaleak ___?', validFor: [] }],
         haiek: [{ text: 'Haiek atzo mendizaleak ___.', validFor: [] }],
@@ -8239,7 +8259,7 @@ export const VERBS = [
       future: {
         ni: [{ text: 'Nik bihar mendizaleak ___.', validFor: [] }],
         zu: [{ text: 'Zuk bihar mendizaleak ___?', validFor: [] }],
-        hura: [{ text: 'Hark mendizaleak ___.', validFor: [] }],
+        hura: [{ text: 'Hark mendizaleak ___.', wordOrderSafe: true, validFor: [] }],
         gu: [{ text: 'Guk bihar mendizaleak ___.', validFor: [] }],
         zuek: [{ text: 'Zuek bihar mendizaleak ___?', validFor: [] }],
         haiek: [{ text: 'Haiek bihar mendizaleak ___.', validFor: [] }],
@@ -8287,17 +8307,17 @@ export const VERBS = [
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
-        ni: [{ text: 'Nik umeak ___.', validFor: [] }],
-        zu: [{ text: 'Zuk umeak ___?', validFor: [] }],
-        hura: [{ text: 'Hark umeak ___.', validFor: [] }],
-        gu: [{ text: 'Guk umeak ___.', validFor: [] }],
-        zuek: [{ text: 'Zuek umeak ___?', validFor: [] }],
-        haiek: [{ text: 'Haiek umeak ___.', validFor: [] }],
+        ni: [{ text: 'Nik umeak ___.', wordOrderSafe: true, validFor: [] }],
+        zu: [{ text: 'Zuk umeak ___?', wordOrderSafe: true, validFor: [] }],
+        hura: [{ text: 'Hark umeak ___.', wordOrderSafe: true, validFor: [] }],
+        gu: [{ text: 'Guk umeak ___.', wordOrderSafe: true, validFor: [] }],
+        zuek: [{ text: 'Zuek umeak ___?', wordOrderSafe: true, validFor: [] }],
+        haiek: [{ text: 'Haiek umeak ___.', wordOrderSafe: true, validFor: [] }],
       },
       past: {
         ni: [{ text: 'Nik atzo umeak ___.', validFor: [] }],
         zu: [{ text: 'Zuk atzo umeak ___?', validFor: [] }],
-        hura: [{ text: 'Hark umeak ___.', validFor: [] }],
+        hura: [{ text: 'Hark umeak ___.', wordOrderSafe: true, validFor: [] }],
         gu: [{ text: 'Guk atzo umeak ___.', validFor: [] }],
         zuek: [{ text: 'Zuek atzo umeak ___?', validFor: [] }],
         haiek: [{ text: 'Haiek atzo umeak ___.', validFor: [] }],
@@ -8305,7 +8325,7 @@ export const VERBS = [
       future: {
         ni: [{ text: 'Nik bihar umeak ___.', validFor: [] }],
         zu: [{ text: 'Zuk bihar umeak ___?', validFor: [] }],
-        hura: [{ text: 'Hark umeak ___.', validFor: [] }],
+        hura: [{ text: 'Hark umeak ___.', wordOrderSafe: true, validFor: [] }],
         gu: [{ text: 'Guk bihar umeak ___.', validFor: [] }],
         zuek: [{ text: 'Zuek bihar umeak ___?', validFor: [] }],
         haiek: [{ text: 'Haiek bihar umeak ___.', validFor: [] }],
