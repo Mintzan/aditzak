@@ -542,18 +542,23 @@ export const VERBS = [
     // "I am at home") — izan doesn't take a bare locative this way, and
     // joan/etorri need an allative (`-ra`/`-tik`), not a locative, so every
     // variant gets `validFor: []` (#124, see docs/SENTENCE_FRAMES.md worked
-    // example 1).
+    // example 1) — except the `kalean`/`lanean` ones (#454): "kalean ibili"
+    // ("to be out and about") and "lanean ibili" ("to be busy/working") are
+    // both standard Basque idioms where `ibili`'s same-person form completes
+    // these specific blanks just as naturally as `egon`'s, so those variants
+    // list `ibili` in `validFor`. Other locatives (etxean, eskolan, Bilbon,
+    // ...) aren't fixed idioms with `ibili` the same way, so they stay `[]`.
     sentences: {
       present: {
         ni: [
           { text: 'Ni etxean ___.', validFor: [] },
           { text: 'Ni ikasgelan ___.', validFor: [] },
           { text: 'Ni Bilbon ___.', validFor: [] },
-          { text: 'Ni lanean ___.', validFor: [] },
+          { text: 'Ni lanean ___.', validFor: ['ibili'] },
           { text: 'Ni upategian ___ txakolin botilak etiketatzen.', validFor: [] },
         ],
         zu: [
-          { text: 'Zu kalean ___.', validFor: [] },
+          { text: 'Zu kalean ___.', validFor: ['ibili'] },
           { text: 'Zu liburutegian ___.', validFor: [] },
           { text: 'Zu sukaldean ___.', validFor: [] },
           { text: 'Zu Donostian ___.', validFor: [] },
@@ -564,7 +569,7 @@ export const VERBS = [
           { text: 'Hura patioan ___.', validFor: [] },
           { text: 'Hura logelan ___.', validFor: [] },
           { text: 'Hura Gasteizen ___.', validFor: [] },
-          { text: 'Hura kalean ___.', validFor: [] },
+          { text: 'Hura kalean ___.', validFor: ['ibili'] },
           { text: 'Mikel eskolan ___.', validFor: [] },
           { text: 'Ane etxean ___.', validFor: [] },
           { text: 'Txakurra parkean ___.', validFor: [] },
@@ -575,13 +580,13 @@ export const VERBS = [
         ],
         gu: [
           { text: 'Gu etxean ___.', validFor: [] },
-          { text: 'Gu lanean ___.', validFor: [] },
+          { text: 'Gu lanean ___.', validFor: ['ibili'] },
           { text: 'Gu Bilbon ___.', validFor: [] },
           { text: 'Gu liburutegian ___.', validFor: [] },
           { text: 'Gu Bilboko Zazpi Kaleetan ___ lagunen zain.', validFor: [] },
         ],
         zuek: [
-          { text: 'Zuek kalean ___.', validFor: [] },
+          { text: 'Zuek kalean ___.', validFor: ['ibili'] },
           { text: 'Zuek dendan ___.', validFor: [] },
           { text: 'Zuek Donostian ___.', validFor: [] },
           { text: 'Zuek ikasgelan ___.', validFor: [] },
@@ -589,7 +594,7 @@ export const VERBS = [
         ],
         haiek: [
           { text: 'Haiek eskolan ___.', validFor: [] },
-          { text: 'Haiek kalean ___.', validFor: [] },
+          { text: 'Haiek kalean ___.', validFor: ['ibili'] },
           { text: 'Gurasoak etxean ___.', validFor: [] },
           { text: 'Mikel eta Ane patioan ___.', validFor: [] },
           { text: 'Liburuak mahai gainean ___.', validFor: [] },
@@ -600,10 +605,10 @@ export const VERBS = [
           { text: 'Ni atzo etxean ___.', validFor: [] },
           { text: 'Ni herenegun ikasgelan ___.', validFor: [] },
           { text: 'Ni iaz Bilbon ___.', validFor: [] },
-          { text: 'Ni lehengo egunean lanean ___.', validFor: [] },
+          { text: 'Ni lehengo egunean lanean ___.', validFor: ['ibili'] },
         ],
         zu: [
-          { text: 'Zu atzo kalean ___.', validFor: [] },
+          { text: 'Zu atzo kalean ___.', validFor: ['ibili'] },
           { text: 'Zu herenegun liburutegian ___.', validFor: [] },
           { text: 'Zu duela bi egun sukaldean ___.', validFor: [] },
           { text: 'Zu iaz Donostian ___.', validFor: [] },
@@ -614,7 +619,7 @@ export const VERBS = [
           { text: 'Hura herenegun patioan ___.', validFor: [] },
           { text: 'Hura lehengo egunean logelan ___.', validFor: [] },
           { text: 'Hura iaz Gasteizen ___.', validFor: [] },
-          { text: 'Hura duela bi egun kalean ___.', validFor: [] },
+          { text: 'Hura duela bi egun kalean ___.', validFor: ['ibili'] },
           { text: 'Mikel atzo eskolan ___.', validFor: [] },
           { text: 'Ane herenegun etxean ___.', validFor: [] },
           { text: 'Txakurra atzo parkean ___.', validFor: [] },
@@ -624,21 +629,21 @@ export const VERBS = [
         ],
         gu: [
           { text: 'Gu atzo etxean ___.', validFor: [] },
-          { text: 'Gu herenegun lanean ___.', validFor: [] },
+          { text: 'Gu herenegun lanean ___.', validFor: ['ibili'] },
           { text: 'Gu iaz Bilbon ___.', validFor: [] },
           { text: 'Gu joan den astean liburutegian ___.', validFor: [] },
           { text: 'Gu atzo Bilboko Guggenheim museoaren aurrean ___ zain.', validFor: [] },
           { text: 'Gu atzo arratsaldean Donostiako hondartzan ___ jendea begiratzen.', validFor: [] },
         ],
         zuek: [
-          { text: 'Zuek atzo kalean ___.', validFor: [] },
+          { text: 'Zuek atzo kalean ___.', validFor: ['ibili'] },
           { text: 'Zuek herenegun dendan ___.', validFor: [] },
           { text: 'Zuek iaz Donostian ___.', validFor: [] },
           { text: 'Zuek aurreko igandean ikasgelan ___.', validFor: [] },
         ],
         haiek: [
           { text: 'Haiek atzo eskolan ___.', validFor: [] },
-          { text: 'Haiek herenegun kalean ___.', validFor: [] },
+          { text: 'Haiek herenegun kalean ___.', validFor: ['ibili'] },
           { text: 'Gurasoak iaz etxean ___.', validFor: [] },
           { text: 'Mikel eta Ane duela bi egun patioan ___.', validFor: [] },
           { text: 'Liburuak lehengo egunean mahai gainean ___.', validFor: [] },
@@ -662,7 +667,7 @@ export const VERBS = [
       present: {
         // wordOrderSafe: single locative complement after the pinned `ez`+aux.
         ni: { text: 'Ni ez ___ etxean.', validFor: [], wordOrderSafe: true },
-        zu: { text: 'Zu ez ___ kalean.', validFor: [], wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ kalean.', validFor: ['ibili'], wordOrderSafe: true },
         hura: { text: 'Hura ez ___ eskolan.', validFor: [], wordOrderSafe: true },
       },
     },
@@ -2032,6 +2037,13 @@ export const VERBS = [
     conjugations: {
       present: { ni: 'ari naiz', zu: 'ari zara', hura: 'ari da' },
     },
+    // #454: `ari`'s blank always carries an embedded activity participle
+    // ("lan egiten", "jaten", "irakurtzen", ...) marking the progressive-
+    // aspect frame itself — `ibili` (this corpus's only other `nor`-only
+    // verb that can pair with an activity participle) reads as directed
+    // motion/being busy "around" a place, not as the aspectual "to be
+    // [doing]" `ari` marks, so there's no genuine cross-verb sibling here;
+    // every variant gets `validFor: []`.
     sentences: {
       present: {
         // #230: `baseVerb` resolves "jaten" -> `jan` deterministically (the
@@ -2041,25 +2053,29 @@ export const VERBS = [
         // variants' embedded verbs (egin/ikasi/idatzi/irakurri/jolastu)
         // aren't in `VERBS` yet, so they stay untagged — no lure for them
         // until/unless those verbs are added.
-        ni: ['Ni lan egiten ___.', { text: 'Ni ikasten ___.', wordOrderSafe: true }, { text: 'Ni idazten ___.', wordOrderSafe: true }, { text: 'Ni jaten ___.', wordOrderSafe: true, baseVerb: 'jan' }],
+        ni: [
+          { text: 'Ni lan egiten ___.', validFor: [] },
+          { text: 'Ni ikasten ___.', validFor: [], wordOrderSafe: true },
+          { text: 'Ni idazten ___.', validFor: [], wordOrderSafe: true },
+          { text: 'Ni jaten ___.', validFor: [], wordOrderSafe: true, baseVerb: 'jan' },
+        ],
         zu: [
-          { text: 'Zu zer ___?', wordOrderSafe: true },
-          'Zu zer egiten ___?',
-          { text: 'Zu irakurtzen ___?', wordOrderSafe: true },
+          { text: 'Zu zer ___?', validFor: [], wordOrderSafe: true },
+          { text: 'Zu zer egiten ___?', validFor: [] },
+          { text: 'Zu irakurtzen ___?', validFor: [], wordOrderSafe: true },
           // #313: embedded verb "dasten" (from "dastatu", not in `VERBS`) —
-          // untagged per the comment above, same as the other unlisted
-          // participles.
-          'Zu Idiazabal gazta eta txakolina dasten ___ plazako azokan.',
+          // no lure target, but vetted `validFor: []` same as the rest.
+          { text: 'Zu Idiazabal gazta eta txakolina dasten ___ plazako azokan.', validFor: [] },
         ],
         hura: [
-          { text: 'Hura irakurtzen ___.', wordOrderSafe: true },
-          { text: 'Hura jaten ___.', wordOrderSafe: true, baseVerb: 'jan' },
-          'Hura lan egiten ___.',
-          { text: 'Mikel ikasten ___.', wordOrderSafe: true },
-          { text: 'Ane idazten ___.', wordOrderSafe: true },
-          { text: 'Txakurra jolasten ___.', wordOrderSafe: true },
-          'Katua lo egiten ___.',
-          'Hura telefonoz hizketan ___.',
+          { text: 'Hura irakurtzen ___.', validFor: [], wordOrderSafe: true },
+          { text: 'Hura jaten ___.', validFor: [], wordOrderSafe: true, baseVerb: 'jan' },
+          { text: 'Hura lan egiten ___.', validFor: [] },
+          { text: 'Mikel ikasten ___.', validFor: [], wordOrderSafe: true },
+          { text: 'Ane idazten ___.', validFor: [], wordOrderSafe: true },
+          { text: 'Txakurra jolasten ___.', validFor: [], wordOrderSafe: true },
+          { text: 'Katua lo egiten ___.', validFor: [] },
+          { text: 'Hura telefonoz hizketan ___.', validFor: [] },
         ],
       },
     },
@@ -3185,48 +3201,95 @@ export const VERBS = [
         haiek: 'zebiltzan',
       },
     },
+    // #454: `kalean`/`lanean` blanks get `validFor: ['egon']` — "kalean
+    // ibili" ("to be out and about") and "lanean ibili" ("to be busy/
+    // working") are standard idioms where `egon`'s same-person form
+    // ("dago"/"dabiltza" etc.'s `egon` counterpart) completes these exact
+    // blanks just as naturally; every other locative/manner variant here
+    // (oinez, parkean, etxean, basoan, ...) doesn't share that idiom with
+    // `egon`, so those stay `validFor: []`.
     sentences: {
       present: {
-        ni: ['Ni kalean ___.', 'Ni oinez ___.', 'Ni parkean ___.'],
-        zu: ['Zu non ___?', 'Zu lanean ___.'],
-        hura: ['Hura kalean ___.', 'Mikel parkean ___.', 'Ane oinez ___.', 'Txakurra etxean ___.'],
-        gu: ['Gu kalean ___.', 'Gu oinez ___.', 'Gu egun osoan aplikazioaren kodea idazten ___ gure sotorik ilunenean.'],
-        zuek: ['Zuek non ___?', 'Zuek parkean ___.', 'Zuek basoan ___ sasoiko perretxikoak eta zizak biltzen.'],
+        ni: [
+          { text: 'Ni kalean ___.', validFor: ['egon'] },
+          { text: 'Ni oinez ___.', validFor: [] },
+          { text: 'Ni parkean ___.', validFor: [] },
+        ],
+        zu: [
+          { text: 'Zu non ___?', validFor: [] },
+          { text: 'Zu lanean ___.', validFor: ['egon'] },
+        ],
+        hura: [
+          { text: 'Hura kalean ___.', validFor: ['egon'] },
+          { text: 'Mikel parkean ___.', validFor: [] },
+          { text: 'Ane oinez ___.', validFor: [] },
+          { text: 'Txakurra etxean ___.', validFor: [] },
+        ],
+        gu: [
+          { text: 'Gu kalean ___.', validFor: ['egon'] },
+          { text: 'Gu oinez ___.', validFor: [] },
+          { text: 'Gu egun osoan aplikazioaren kodea idazten ___ gure sotorik ilunenean.', validFor: [] },
+        ],
+        zuek: [
+          { text: 'Zuek non ___?', validFor: [] },
+          { text: 'Zuek parkean ___.', validFor: [] },
+          { text: 'Zuek basoan ___ sasoiko perretxikoak eta zizak biltzen.', validFor: [] },
+        ],
         haiek: [
-          'Haiek kalean ___.',
-          'Mikel eta Ane oinez ___.',
-          'Surflariak egun osoan Mundakako olatuetan ___.',
-          'Basurdeak gauez herriko baso sakonetan ___ janari bila.',
-          'Gazteak Donostiako Parte Zaharrean ___ pintxorik onenaren bila.',
+          { text: 'Haiek kalean ___.', validFor: ['egon'] },
+          { text: 'Mikel eta Ane oinez ___.', validFor: [] },
+          { text: 'Surflariak egun osoan Mundakako olatuetan ___.', validFor: [] },
+          { text: 'Basurdeak gauez herriko baso sakonetan ___ janari bila.', validFor: [] },
+          { text: 'Gazteak Donostiako Parte Zaharrean ___ pintxorik onenaren bila.', validFor: [] },
         ],
       },
       past: {
-        ni: ['Ni atzo kalean ___.', 'Ni herenegun oinez ___.', 'Ni lehengo egunean parkean ___.'],
-        zu: ['Zu non ___?', 'Zu atzo lanean ___.'],
-        hura: [
-          'Hura atzo kalean ___.',
-          'Mikel herenegun parkean ___.',
-          'Ane lehengo egunean oinez ___.',
-          'Txakurra duela bi egun etxean ___.',
+        ni: [
+          { text: 'Ni atzo kalean ___.', validFor: ['egon'] },
+          { text: 'Ni herenegun oinez ___.', validFor: [] },
+          { text: 'Ni lehengo egunean parkean ___.', validFor: [] },
         ],
-        gu: ['Gu atzo kalean ___.', 'Gu herenegun oinez ___.'],
-        zuek: ['Zuek non ___?', 'Zuek atzo parkean ___.'],
-        haiek: ['Haiek atzo kalean ___.', 'Mikel eta Ane herenegun oinez ___.'],
+        zu: [
+          { text: 'Zu non ___?', validFor: [] },
+          { text: 'Zu atzo lanean ___.', validFor: ['egon'] },
+        ],
+        hura: [
+          { text: 'Hura atzo kalean ___.', validFor: ['egon'] },
+          { text: 'Mikel herenegun parkean ___.', validFor: [] },
+          { text: 'Ane lehengo egunean oinez ___.', validFor: [] },
+          { text: 'Txakurra duela bi egun etxean ___.', validFor: [] },
+        ],
+        gu: [
+          { text: 'Gu atzo kalean ___.', validFor: ['egon'] },
+          { text: 'Gu herenegun oinez ___.', validFor: [] },
+        ],
+        zuek: [
+          { text: 'Zuek non ___?', validFor: [] },
+          { text: 'Zuek atzo parkean ___.', validFor: [] },
+        ],
+        haiek: [
+          { text: 'Haiek atzo kalean ___.', validFor: ['egon'] },
+          { text: 'Mikel eta Ane herenegun oinez ___.', validFor: [] },
+        ],
       },
       // #313: cultural-bank items for `imperfectivePast` (ongoing/habitual
       // "I was walking/busy doing X..."), distinct from `past`'s simple
       // "I walked" above — `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs
       // bank's "Past" examples for `ibili` use this table's forms
       // (`zenbiltzaten`/`nenbilen`/`zebiltzan`/`zenbiltzan`), which #312
-      // missed. Plain strings, no `validFor`, same as `ibili`'s other tables.
+      // missed. #454: `joan`/`etorri` are this table's only agreement
+      // siblings (both have their own `imperfectivePast`), but every
+      // variant here pairs the blank with a "busy doing X" participle/
+      // postposition reading specific to `ibili`'s idiom, not `joan`/
+      // `etorri`'s directional-motion sense, so `validFor: []` throughout.
       imperfectivePast: {
         ni: [
-          'Ni goiz osoan sukaldean ___ Tolosako babarrunak egosten.',
-          'Ni goiz osoan ___ sukaldean euskal pastela labean sartu nahian.',
+          { text: 'Ni goiz osoan sukaldean ___ Tolosako babarrunak egosten.', validFor: [] },
+          { text: 'Ni goiz osoan ___ sukaldean euskal pastela labean sartu nahian.', validFor: [] },
         ],
-        zu: ['Zu atzo Aste Nagusian ___ lagun zaharrak agurtzen.'],
-        zuek: ['Zuek atzo arratsaldean Donostiako Parte Zaharrean ___ pintxoak jaten.'],
-        haiek: ['Basurdeak gauez herriko soroetan ___ janari bila.'],
+        zu: [{ text: 'Zu atzo Aste Nagusian ___ lagun zaharrak agurtzen.', validFor: [] }],
+        zuek: [{ text: 'Zuek atzo arratsaldean Donostiako Parte Zaharrean ___ pintxoak jaten.', validFor: [] }],
+        haiek: [{ text: 'Basurdeak gauez herriko soroetan ___ janari bila.', validFor: [] }],
       },
     },
     pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
@@ -3240,14 +3303,14 @@ export const VERBS = [
         haiek: '___ kalean dabiltza.',
       },
     },
+    // #454: every variant here is a `kalean`/`lanean` blank, same idiom
+    // overlap with `egon` as `sentences` above, so each lists `egon`.
     negativeSentences: {
       present: {
         // wordOrderSafe: single locative complement after the pinned `ez`+aux.
-        // No `validFor` key (kept untagged, the prior bare-string semantics) —
-        // `wordOrderSafe` is orthogonal to cross-verb distractor eligibility.
-        ni: { text: 'Ni ez ___ kalean.', wordOrderSafe: true },
-        zu: { text: 'Zu ez ___ lanean.', wordOrderSafe: true },
-        hura: { text: 'Hura ez ___ kalean.', wordOrderSafe: true },
+        ni: { text: 'Ni ez ___ kalean.', validFor: ['egon'], wordOrderSafe: true },
+        zu: { text: 'Zu ez ___ lanean.', validFor: ['egon'], wordOrderSafe: true },
+        hura: { text: 'Hura ez ___ kalean.', validFor: ['egon'], wordOrderSafe: true },
       },
     },
   },
