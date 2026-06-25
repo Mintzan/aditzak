@@ -8,6 +8,19 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-25 — #440: dissolved Unit 30 ("The egin Construction"), reversing #306; its 9 verbs redistributed into base-paradigm host pools
+
+#440 argued Unit 30's 9 verbs (`hitz-egin`, `lan-egin`, `lo-egin`, `ahaleginak-egin`, `parte-hartu`, `kontuan-hartu`, `arreta-eman`, `ados-egon`, `arriskuan-jarri`) teach no new grammatical relation — each is just an invariant noun/particle glued onto a paradigm already taught elsewhere (`nor-nork` present/past/future for the 7 `egin`/`hartu`/`eman` compounds, `egon`'s own simple-past paradigm for `ados egon`, the `izan`-auxiliary intransitive `nor` paradigm for `arriskuan jarri`). Agreed and reversed #306's decision to give them a dedicated unit (and #325/#331/#334's build-out on top of it): kept all 9 `VERBS` entries and their conjugation tables as-is, deleted Unit 30 and its 8 lessons, and renumbered every later unit down by one (31→30 ... 46→45; Refresh Gates C/D land on Units 31/43).
+
+Redistribution, by paradigm match:
+- `hitz-egin`/`lan-egin`/`lo-egin`/`ahaleginak-egin`/`parte-hartu`/`kontuan-hartu`/`arreta-eman` (all plain `nor-nork` transitives) → pooled into Unit 13's present pool (`unit-10-present(-plural)`), Unit 14's past pool (`ukan-past-pool(-plural)`), and Unit 20's universal future pool (`future-mixer-pool(-plural)`).
+- `ados-egon` → new `ados-egon-present(-plural)`/`ados-egon-past(-plural)` lessons folded directly alongside `egon`'s own simple-past material in Unit 19 (its present didn't have a dedicated host lesson before; created one rather than pooling, since `egon`'s present lives all the way back in Unit 1's `izan`/`egon` pair, too far from `egon`'s own past to be a natural pool-mate) — and into Unit 20's future pool like the other 7.
+- `arriskuan-jarri` → Unit 6's `nor-fodder-present(-plural)` pool and Unit 12's `izan-past-pool(-plural)`, plus Unit 20's future pool.
+
+Two placements the issue itself flagged as needing a judgment call: `ados-egon` got new present lessons (rather than only past) because Unit 19 otherwise had no present-tense practice for it at all, and pairing it with `egon`'s past felt like the closer paradigm match than pooling it into a present-tense pool far upstream; `arriskuan-jarri` went into `nor-fodder-present(-plural)` despite that pool's existing "6-source cap" comment — `CARRIERS_PER_SESSION` already bounds session length regardless of pool size, so the cap was never a hard architectural limit, just a snapshot of the pool's size when that comment was written.
+
+`docs/EXERCISE_ENGINE.md` wasn't touched — it doesn't mention Unit 30, and its own unit-numbering references are already stale relative to the current 46-(now 45-)unit journey (it still describes a "32-unit sequence"), a pre-existing drift out of scope here.
+
 ## 2026-06-25 — #439 split into 5 narrower issues instead of one mega-backfill; #240 closed as resolved
 
 #439 asked to backfill `validFor` cross-verb distractor tags so every verb has them, not just 15/104. Investigating before touching any data showed two things that changed the scope: (1) the "core" 15+4 verbs already tagged (`izan, egon, ukan, nahi, jakin, joan, etorri, jan, edan, erosi, ikusi, eduki, hartu, behar, eraman, ekarri, gustatu, ahaztu`) are already thorough — the class-model second-pass audit (`--classes`) only surfaces 64 candidates total across the whole corpus, and 62 of those are false positives (`jan`<->`edan` cross-suggestions the class model can't filter, since `food-drink` doesn't distinguish solid food from drink — see `docs/OBJECT_FRAME_TAGGING.md`); (2) #240's "food-drink under-tagging" finding turns out to already be fixed in the data (`jan`/`edan`/`erosi`'s sentences already carry the full sibling set) — closed #240 as resolved.

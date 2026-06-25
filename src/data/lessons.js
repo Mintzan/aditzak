@@ -186,6 +186,9 @@ export const LESSONS = [
       { verbId: 'bizi-izan', tense: 'present' },
       { verbId: 'erori', tense: 'present' },
       { verbId: 'jaiki', tense: 'present' },
+      // #440 — Unit 30 dissolved; `arriskuan jarri` is the same `izan`-
+      // auxiliary intransitive `nor` paradigm as this pool's other verbs.
+      { verbId: 'arriskuan-jarri', tense: 'present' },
     ],
   },
   {
@@ -198,6 +201,7 @@ export const LESSONS = [
       { verbId: 'bizi-izan', tense: 'present' },
       { verbId: 'erori', tense: 'present' },
       { verbId: 'jaiki', tense: 'present' },
+      { verbId: 'arriskuan-jarri', tense: 'present' },
     ],
   },
   // Unit 7 ("Expansion: Absolutive Plurals") — zero new verbs for
@@ -405,6 +409,7 @@ export const LESSONS = [
       { verbId: 'bizi-izan', tense: 'past' },
       { verbId: 'erori', tense: 'past' },
       { verbId: 'jaiki', tense: 'past' },
+      { verbId: 'arriskuan-jarri', tense: 'past' },
     ],
   },
   {
@@ -421,6 +426,7 @@ export const LESSONS = [
       { verbId: 'bizi-izan', tense: 'past' },
       { verbId: 'erori', tense: 'past' },
       { verbId: 'jaiki', tense: 'past' },
+      { verbId: 'arriskuan-jarri', tense: 'past' },
     ],
   },
   // Unit 12 ("Daily Routine (Transitive)", Phase II) — the `ukan`-present
@@ -498,6 +504,17 @@ export const LESSONS = [
       { verbId: 'babestu', tense: 'present' },
       { verbId: 'ziurtatu', tense: 'present' },
       { verbId: 'borobildu', tense: 'present' },
+      // #440 — Unit 30 ("The egin Construction") dissolved; these 7 are
+      // plain nor-nork transitives in this pool's existing shape, just with
+      // an invariant noun glued on, so they fold in here rather than keeping
+      // their own unit.
+      { verbId: 'hitz-egin', tense: 'present' },
+      { verbId: 'lan-egin', tense: 'present' },
+      { verbId: 'lo-egin', tense: 'present' },
+      { verbId: 'ahaleginak-egin', tense: 'present' },
+      { verbId: 'parte-hartu', tense: 'present' },
+      { verbId: 'kontuan-hartu', tense: 'present' },
+      { verbId: 'arreta-eman', tense: 'present' },
     ],
   },
   {
@@ -549,6 +566,13 @@ export const LESSONS = [
       { verbId: 'babestu', tense: 'present' },
       { verbId: 'ziurtatu', tense: 'present' },
       { verbId: 'borobildu', tense: 'present' },
+      { verbId: 'hitz-egin', tense: 'present' },
+      { verbId: 'lan-egin', tense: 'present' },
+      { verbId: 'lo-egin', tense: 'present' },
+      { verbId: 'ahaleginak-egin', tense: 'present' },
+      { verbId: 'parte-hartu', tense: 'present' },
+      { verbId: 'kontuan-hartu', tense: 'present' },
+      { verbId: 'arreta-eman', tense: 'present' },
     ],
   },
   // #286 — the NOR-number axis (`dut` vs `ditut`, plural *object*, not
@@ -673,6 +697,14 @@ export const LESSONS = [
       { verbId: 'babestu', tense: 'past' },
       { verbId: 'ziurtatu', tense: 'past' },
       { verbId: 'borobildu', tense: 'past' },
+      // #440 — see the matching note in `unit-10-present` above.
+      { verbId: 'hitz-egin', tense: 'past' },
+      { verbId: 'lan-egin', tense: 'past' },
+      { verbId: 'lo-egin', tense: 'past' },
+      { verbId: 'ahaleginak-egin', tense: 'past' },
+      { verbId: 'parte-hartu', tense: 'past' },
+      { verbId: 'kontuan-hartu', tense: 'past' },
+      { verbId: 'arreta-eman', tense: 'past' },
     ],
   },
   {
@@ -725,6 +757,13 @@ export const LESSONS = [
       { verbId: 'babestu', tense: 'past' },
       { verbId: 'ziurtatu', tense: 'past' },
       { verbId: 'borobildu', tense: 'past' },
+      { verbId: 'hitz-egin', tense: 'past' },
+      { verbId: 'lan-egin', tense: 'past' },
+      { verbId: 'lo-egin', tense: 'past' },
+      { verbId: 'ahaleginak-egin', tense: 'past' },
+      { verbId: 'parte-hartu', tense: 'past' },
+      { verbId: 'kontuan-hartu', tense: 'past' },
+      { verbId: 'arreta-eman', tense: 'past' },
     ],
   },
   // #286 — `pastPlural` counterpart to `nor-nork-present-plural-pool` above
@@ -831,19 +870,32 @@ export const LESSONS = [
   // the Phase II stage regroup (docs/DECISIONS.md). Dedicated practice +
   // review pair, singular and plural, same shape as Unit 5/7's single-verb
   // `ikusi-present`/`ikusi-present-plural` (+ their own `-review` lessons).
+  // #440 — Unit 30 ("The egin Construction") dissolved; `ados egon` is just
+  // `egon` with an invariant `ados` particle glued on, so its present/past
+  // ride alongside `egon`'s own here rather than a dedicated unit.
+  { id: 'ados-egon-present', verbId: 'ados-egon', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'ados-egon-present-plural', verbId: 'ados-egon', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
   { id: 'egon-past', verbId: 'egon', tense: 'past', persons: PHASE_1_PERSONS },
+  { id: 'ados-egon-past', verbId: 'ados-egon', tense: 'past', persons: PHASE_1_PERSONS },
   {
     id: 'egon-past-review',
     review: true,
     persons: PHASE_1_PERSONS,
-    sources: [{ verbId: 'egon', tense: 'past' }],
+    sources: [
+      { verbId: 'egon', tense: 'past' },
+      { verbId: 'ados-egon', tense: 'past' },
+    ],
   },
   { id: 'egon-past-plural', verbId: 'egon', tense: 'past', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ados-egon-past-plural', verbId: 'ados-egon', tense: 'past', persons: PHASE_1_PLURAL_PERSONS },
   {
     id: 'egon-past-plural-review',
     review: true,
     persons: PHASE_1_PLURAL_PERSONS,
-    sources: [{ verbId: 'egon', tense: 'past' }],
+    sources: [
+      { verbId: 'egon', tense: 'past' },
+      { verbId: 'ados-egon', tense: 'past' },
+    ],
   },
   // Stage 6 — "Talking About the Future (Geroa)", Phase II — zero new verbs,
   // "only the participle-formation rule is new" (`docs/LEARNING_JOURNEY.md`):
@@ -1033,6 +1085,16 @@ export const LESSONS = [
       { verbId: 'babestu', tense: 'future' },
       { verbId: 'ziurtatu', tense: 'future' },
       { verbId: 'borobildu', tense: 'future' },
+      // #440 — Unit 30's 9 verbs fold into this universal future pool.
+      { verbId: 'hitz-egin', tense: 'future' },
+      { verbId: 'lan-egin', tense: 'future' },
+      { verbId: 'lo-egin', tense: 'future' },
+      { verbId: 'ahaleginak-egin', tense: 'future' },
+      { verbId: 'parte-hartu', tense: 'future' },
+      { verbId: 'kontuan-hartu', tense: 'future' },
+      { verbId: 'arreta-eman', tense: 'future' },
+      { verbId: 'ados-egon', tense: 'future' },
+      { verbId: 'arriskuan-jarri', tense: 'future' },
     ],
   },
   {
@@ -1099,6 +1161,15 @@ export const LESSONS = [
       { verbId: 'babestu', tense: 'future' },
       { verbId: 'ziurtatu', tense: 'future' },
       { verbId: 'borobildu', tense: 'future' },
+      { verbId: 'hitz-egin', tense: 'future' },
+      { verbId: 'lan-egin', tense: 'future' },
+      { verbId: 'lo-egin', tense: 'future' },
+      { verbId: 'ahaleginak-egin', tense: 'future' },
+      { verbId: 'parte-hartu', tense: 'future' },
+      { verbId: 'kontuan-hartu', tense: 'future' },
+      { verbId: 'arreta-eman', tense: 'future' },
+      { verbId: 'ados-egon', tense: 'future' },
+      { verbId: 'arriskuan-jarri', tense: 'future' },
     ],
   },
   // Unit 19 (#148) — `behar` ("need to / have to"), riding `ukan`'s present/
@@ -1489,177 +1560,6 @@ export const LESSONS = [
       { verbId: 'adierazi-dative', tense: 'future' },
       { verbId: 'eskatu-dative', tense: 'future' },
       { verbId: 'galdetu-dative', tense: 'future' },
-    ],
-  },
-  // #325 — the `egin`/`hartu`/`eman`/`egon`/`jarri` fixed noun+verb
-  // expressions (see the matching `VERBS` block above), moved here from the
-  // end of the array (#306's original placement) now that egin/hartu
-  // (Units 13-14) and eman (Units 27-28) are all individually taught —
-  // lesson unlocking is driven by this array's order, so the lessons had to
-  // move along with journey.js's Unit 29 renumber, not just journey.js.
-  // #331 — collapsed the former `egin-construction-{present,past}-2`/
-  // `-plural` siblings (arreta-eman/ados-egon/arriskuan-jarri) into these
-  // canonical pools.
-  {
-    id: 'egin-construction-present',
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'hitz-egin', tense: 'present' },
-      { verbId: 'lan-egin', tense: 'present' },
-      { verbId: 'lo-egin', tense: 'present' },
-      { verbId: 'ahaleginak-egin', tense: 'present' },
-      { verbId: 'parte-hartu', tense: 'present' },
-      { verbId: 'kontuan-hartu', tense: 'present' },
-      { verbId: 'arreta-eman', tense: 'present' },
-      { verbId: 'ados-egon', tense: 'present' },
-      { verbId: 'arriskuan-jarri', tense: 'present' },
-    ],
-  },
-  {
-    id: 'egin-construction-present-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'hitz-egin', tense: 'present' },
-      { verbId: 'lan-egin', tense: 'present' },
-      { verbId: 'lo-egin', tense: 'present' },
-      { verbId: 'ahaleginak-egin', tense: 'present' },
-      { verbId: 'parte-hartu', tense: 'present' },
-      { verbId: 'kontuan-hartu', tense: 'present' },
-      { verbId: 'arreta-eman', tense: 'present' },
-      { verbId: 'ados-egon', tense: 'present' },
-      { verbId: 'arriskuan-jarri', tense: 'present' },
-    ],
-  },
-  {
-    id: 'egin-construction-past',
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'hitz-egin', tense: 'past' },
-      { verbId: 'lan-egin', tense: 'past' },
-      { verbId: 'lo-egin', tense: 'past' },
-      { verbId: 'ahaleginak-egin', tense: 'past' },
-      { verbId: 'parte-hartu', tense: 'past' },
-      { verbId: 'kontuan-hartu', tense: 'past' },
-      { verbId: 'arreta-eman', tense: 'past' },
-      { verbId: 'ados-egon', tense: 'past' },
-      { verbId: 'arriskuan-jarri', tense: 'past' },
-    ],
-  },
-  {
-    id: 'egin-construction-past-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'hitz-egin', tense: 'past' },
-      { verbId: 'lan-egin', tense: 'past' },
-      { verbId: 'lo-egin', tense: 'past' },
-      { verbId: 'ahaleginak-egin', tense: 'past' },
-      { verbId: 'parte-hartu', tense: 'past' },
-      { verbId: 'kontuan-hartu', tense: 'past' },
-      { verbId: 'arreta-eman', tense: 'past' },
-      { verbId: 'ados-egon', tense: 'past' },
-      { verbId: 'arriskuan-jarri', tense: 'past' },
-    ],
-  },
-  // #334 — future forms for the 7 verbs (hitz/lan/lo/ahaleginak egin, parte/
-  // kontuan hartu, arreta eman) left present+past-only since #306/#331;
-  // ados-egon/arriskuan-jarri already had future, so they ride along here too
-  // for parity with the present/past pools above.
-  {
-    id: 'egin-construction-future',
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'hitz-egin', tense: 'future' },
-      { verbId: 'lan-egin', tense: 'future' },
-      { verbId: 'lo-egin', tense: 'future' },
-      { verbId: 'ahaleginak-egin', tense: 'future' },
-      { verbId: 'parte-hartu', tense: 'future' },
-      { verbId: 'kontuan-hartu', tense: 'future' },
-      { verbId: 'arreta-eman', tense: 'future' },
-      { verbId: 'ados-egon', tense: 'future' },
-      { verbId: 'arriskuan-jarri', tense: 'future' },
-    ],
-  },
-  {
-    id: 'egin-construction-future-plural',
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'hitz-egin', tense: 'future' },
-      { verbId: 'lan-egin', tense: 'future' },
-      { verbId: 'lo-egin', tense: 'future' },
-      { verbId: 'ahaleginak-egin', tense: 'future' },
-      { verbId: 'parte-hartu', tense: 'future' },
-      { verbId: 'kontuan-hartu', tense: 'future' },
-      { verbId: 'arreta-eman', tense: 'future' },
-      { verbId: 'ados-egon', tense: 'future' },
-      { verbId: 'arriskuan-jarri', tense: 'future' },
-    ],
-  },
-  {
-    id: 'unit-44-review',
-    review: true,
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'hitz-egin', tense: 'present' },
-      { verbId: 'lan-egin', tense: 'present' },
-      { verbId: 'lo-egin', tense: 'present' },
-      { verbId: 'ahaleginak-egin', tense: 'present' },
-      { verbId: 'parte-hartu', tense: 'present' },
-      { verbId: 'kontuan-hartu', tense: 'present' },
-      { verbId: 'arreta-eman', tense: 'present' },
-      { verbId: 'ados-egon', tense: 'present' },
-      { verbId: 'arriskuan-jarri', tense: 'present' },
-      { verbId: 'hitz-egin', tense: 'past' },
-      { verbId: 'lan-egin', tense: 'past' },
-      { verbId: 'lo-egin', tense: 'past' },
-      { verbId: 'ahaleginak-egin', tense: 'past' },
-      { verbId: 'parte-hartu', tense: 'past' },
-      { verbId: 'kontuan-hartu', tense: 'past' },
-      { verbId: 'arreta-eman', tense: 'past' },
-      { verbId: 'ados-egon', tense: 'past' },
-      { verbId: 'arriskuan-jarri', tense: 'past' },
-      { verbId: 'hitz-egin', tense: 'future' },
-      { verbId: 'lan-egin', tense: 'future' },
-      { verbId: 'lo-egin', tense: 'future' },
-      { verbId: 'ahaleginak-egin', tense: 'future' },
-      { verbId: 'parte-hartu', tense: 'future' },
-      { verbId: 'kontuan-hartu', tense: 'future' },
-      { verbId: 'arreta-eman', tense: 'future' },
-      { verbId: 'ados-egon', tense: 'future' },
-      { verbId: 'arriskuan-jarri', tense: 'future' },
-    ],
-  },
-  {
-    id: 'unit-44-review-plural',
-    review: true,
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'hitz-egin', tense: 'present' },
-      { verbId: 'lan-egin', tense: 'present' },
-      { verbId: 'lo-egin', tense: 'present' },
-      { verbId: 'ahaleginak-egin', tense: 'present' },
-      { verbId: 'parte-hartu', tense: 'present' },
-      { verbId: 'kontuan-hartu', tense: 'present' },
-      { verbId: 'arreta-eman', tense: 'present' },
-      { verbId: 'ados-egon', tense: 'present' },
-      { verbId: 'arriskuan-jarri', tense: 'present' },
-      { verbId: 'hitz-egin', tense: 'past' },
-      { verbId: 'lan-egin', tense: 'past' },
-      { verbId: 'lo-egin', tense: 'past' },
-      { verbId: 'ahaleginak-egin', tense: 'past' },
-      { verbId: 'parte-hartu', tense: 'past' },
-      { verbId: 'kontuan-hartu', tense: 'past' },
-      { verbId: 'arreta-eman', tense: 'past' },
-      { verbId: 'ados-egon', tense: 'past' },
-      { verbId: 'arriskuan-jarri', tense: 'past' },
-      { verbId: 'hitz-egin', tense: 'future' },
-      { verbId: 'lan-egin', tense: 'future' },
-      { verbId: 'lo-egin', tense: 'future' },
-      { verbId: 'ahaleginak-egin', tense: 'future' },
-      { verbId: 'parte-hartu', tense: 'future' },
-      { verbId: 'kontuan-hartu', tense: 'future' },
-      { verbId: 'arreta-eman', tense: 'future' },
-      { verbId: 'ados-egon', tense: 'future' },
-      { verbId: 'arriskuan-jarri', tense: 'future' },
     ],
   },
   // New Unit (#307) — agentive verbs with a covert dative (lagundu/ekin/

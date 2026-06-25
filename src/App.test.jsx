@@ -461,8 +461,9 @@ describe('App', () => {
   })
 
   // #330/#331: `unit-10-present` is a real fixture with far more sources
-  // (45, after #331 collapsed the former `-2/-3/…`/`recognition` siblings
-  // into this single canonical pool) than `CARRIERS_PER_SESSION` (4) — proof
+  // (52, after #331 collapsed the former `-2/-3/…`/`recognition` siblings
+  // into this single canonical pool, and #440 folded in 7 more verbs from
+  // the dissolved Unit 30) than `CARRIERS_PER_SESSION` (4) — proof
   // that `createExerciseState` samples rather than drilling every source
   // every play, the mechanism that lets a pool lesson grow past 4 carriers
   // without the session ballooning past `TARGET_EXERCISE_COUNT` (12) or
@@ -477,14 +478,16 @@ describe('App', () => {
       'aztertu', 'ukatu', 'batu', 'planteatu',
       'hausnartu', 'argudiatu', 'ondorioztatu', 'gaitzetsi', 'aldarrikatu', 'plazaratu',
       'sustatu', 'bultzatu', 'bermatu', 'babestu', 'ziurtatu', 'borobildu',
+      'hitz-egin', 'lan-egin', 'lo-egin', 'ahaleginak-egin',
+      'parte-hartu', 'kontuan-hartu', 'arreta-eman',
     ]
     // `unit-10-present` and `unit-10-present-plural` share the same
     // sources/subtitle text, differing only in which persons they drill —
     // matching on the singular `ni/zu/hura` persons label too disambiguates
     // the singular lesson's button from its plural sibling. The subtitle
-    // shows a collapsed "N verbs" label rather than joining all 45 names
+    // shows a collapsed "N verbs" label rather than joining all 52 names
     // (#343 — joining every name in a pool this large is unreadable).
-    const poolButtonName = /ni\/zu\/hura[\s\S]*45 verbs/
+    const poolButtonName = /ni\/zu\/hura[\s\S]*52 verbs/
 
     it('drills at most CARRIERS_PER_SESSION sources from a larger pool, keeping the session near TARGET_EXERCISE_COUNT', async () => {
       window.history.pushState({}, '', '/?dev=unlock-all')
