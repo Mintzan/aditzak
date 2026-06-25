@@ -2243,8 +2243,9 @@ export const LESSONS = [
   // axis. `zu` is excluded from `persons` (the reflexive gap), and unlike
   // Unit 28, `hura` stays IN scope here — `imperativeByNor` has no flat
   // `imperative` table to be redundant with (see the comment on
-  // `gustatu.conjugations.imperativeByNor` in `verbs.js`). No pooled
-  // cross-verb review, same `objectAxis` limitation as Unit 28.
+  // `gustatu.conjugations.imperativeByNor` in `verbs.js`). #444 later added
+  // jarraitu plus pooled cross-verb reviews for this axis (see below, near
+  // the rest of the `imperativeByNor` solo lessons).
   {
     id: 'gustatu-imperative-axis',
     verbId: 'gustatu',
@@ -4567,6 +4568,85 @@ export const LESSONS = [
     tense: 'imperativeByNor',
     persons: ['hura', 'zu', 'zuek', 'haiek'],
     objectAxis: { vary: 'nor', fixed: 'haiek' },
+  },
+  // #444: the pooled cross-verb review this axis never had — the imperative
+  // twin of #441's `nor-axis-{present,past}-review-*`. Mixes
+  // gustatu/iruditu/ahaztu/jarraitu's `imperativeByNor`, one review per NORI
+  // value, `persons` matching each fixed value's own solo lessons above
+  // (`zu`/`zuek` drop themselves as the reflexive gap; `ni`/`gu` are never
+  // valid NOR values in this table at all). `jario` stays out (thing-NOR,
+  // #442).
+  {
+    id: 'imperative-axis-review-zu',
+    review: true,
+    persons: ['hura', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zu' },
+    sources: [
+      { verbId: 'gustatu', tense: 'imperativeByNor' },
+      { verbId: 'iruditu', tense: 'imperativeByNor' },
+      { verbId: 'ahaztu', tense: 'imperativeByNor' },
+      { verbId: 'jarraitu', tense: 'imperativeByNor' },
+    ],
+  },
+  {
+    id: 'imperative-axis-review-ni',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'gustatu', tense: 'imperativeByNor' },
+      { verbId: 'iruditu', tense: 'imperativeByNor' },
+      { verbId: 'ahaztu', tense: 'imperativeByNor' },
+      { verbId: 'jarraitu', tense: 'imperativeByNor' },
+    ],
+  },
+  {
+    id: 'imperative-axis-review-hura',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'hura' },
+    sources: [
+      { verbId: 'gustatu', tense: 'imperativeByNor' },
+      { verbId: 'iruditu', tense: 'imperativeByNor' },
+      { verbId: 'ahaztu', tense: 'imperativeByNor' },
+      { verbId: 'jarraitu', tense: 'imperativeByNor' },
+    ],
+  },
+  {
+    id: 'imperative-axis-review-gu',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'gu' },
+    sources: [
+      { verbId: 'gustatu', tense: 'imperativeByNor' },
+      { verbId: 'iruditu', tense: 'imperativeByNor' },
+      { verbId: 'ahaztu', tense: 'imperativeByNor' },
+      { verbId: 'jarraitu', tense: 'imperativeByNor' },
+    ],
+  },
+  {
+    id: 'imperative-axis-review-zuek',
+    review: true,
+    persons: ['hura', 'zu', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'zuek' },
+    sources: [
+      { verbId: 'gustatu', tense: 'imperativeByNor' },
+      { verbId: 'iruditu', tense: 'imperativeByNor' },
+      { verbId: 'ahaztu', tense: 'imperativeByNor' },
+      { verbId: 'jarraitu', tense: 'imperativeByNor' },
+    ],
+  },
+  {
+    id: 'imperative-axis-review-haiek',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'haiek' },
+    sources: [
+      { verbId: 'gustatu', tense: 'imperativeByNor' },
+      { verbId: 'iruditu', tense: 'imperativeByNor' },
+      { verbId: 'ahaztu', tense: 'imperativeByNor' },
+      { verbId: 'jarraitu', tense: 'imperativeByNor' },
+    ],
   },
   // #369 — Unit 36, "Purpose & Wishing (Subjuntiboa)". izan/ukan get
   // in-construction production (sentences over the volitional `nahi izan`

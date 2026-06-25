@@ -8,6 +8,12 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-25 — #444: widened Unit 35's imperative NOR-NORI object axis to jarraitu and added pooled cross-verb reviews, the imperative twin of #441
+
+#444 found the same gap #441 fixed on Unit 27, this time on Unit 35's `imperativeByNor` axis: `gustatu`/`iruditu`/`ahaztu` had 18 single-verb lessons (3 verbs × 6 fixed-`nori` slices: `zu`/`ni`/`hura`/`gu`/`zuek`/`haiek`) and zero pooled review. Added `jarraitu.imperativeByNor` — a literal 2D table, byte-identical to `gustatu`'s cells with only the bare-participle prefix swapped to `"jarraitu "` (same auxiliary family `presentByNor`/`pastByNor` already used) — as the axis's 4th pool member, then added one pooled review per `nori` value (`imperative-axis-review-{zu,ni,hura,gu,zuek,haiek}`, 6 lessons; this axis has no present/past split to double that to 12 the way #441's did), each pooling all four verbs via `sources`/`objectAxis`. `persons` per review copies the existing solo lessons' arrays exactly (`zu`/`zuek` drop themselves as the reflexive gap; `ni`/`gu` never appear as NOR values in this table at all). `jario` stays out (thing-NOR, #442) — same as #441.
+
+Same composer scope call as #441: did **not** attempt to extend `getComposedTable` to the `byNor` axis here (it only handles the NOR-NORK `byObject` axis, hardcoded to `presentByObject`/`pastByObject`) — that's still #448's tracked follow-up. `jarraitu.imperativeByNor` is hand-written, matching exactly how `gustatu`/`iruditu`/`ahaztu`'s `imperativeByNor` tables already exist today.
+
 ## 2026-06-25 — `word-order` drills are now opt-in (`wordOrderSafe`), fail-closed
 
 A user flagged a `word-order` drill marking a grammatically-valid order wrong ("Zuek herriko danborrada **goizean** entzuten duzue" — a focus/galdegaia variant of the authored "...danborrada entzuten duzue goizean"). Root cause: `word-order` was auto-generated from *any* sentence in the 4–9 word range and graded against the single authored string, but Basque's focus rule lets constituents compete for the pre-verb slot, so most object+adjunct sentences have several valid orders.
