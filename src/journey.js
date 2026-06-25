@@ -582,14 +582,16 @@ export const JOURNEY = [
           // (the unit's payoff dative person) and varies NOR across
           // `ni`/`gu`/`zuek` — `zu` itself is the reflexive gap, and `hura`
           // as NOR is already covered by Units 25-26's flat tables. No
-          // pooled cross-verb review, same scope limitation #347/#350 found
-          // for `objectAxis` (`generateCrossVerbQuestions` doesn't support
-          // it yet). See `docs/DECISIONS.md` for the placement decision.
+          // #441 widened this unit to a 4-verb pool (gustatu/iruditu/ahaztu/
+          // jarraitu — `jario` stays out, thing-NOR per #442) and added a
+          // pooled cross-verb review per nori value, closing the
+          // `generateCrossVerbQuestions`/`objectAxis` gap #347/#350 left open
+          // here. See `docs/DECISIONS.md` for the placement decision.
           {
             number: 27,
             title: 'The NOR-NORI Object Axis — natzaizu/gatzaizu',
             focus:
-              "the NOR-NORI object axis (natzaizu/gatzaizu/zaizkizu) — gustatu/iruditu/ahaztu's presentByNor/pastByNor tables (#358) shift NOR off the default hura/haiek to ni/gu/zuek, with nori fixed at zu; #419 then drills the rest of the table by fixing nori at ni/hura/gu/zuek/haiek in turn",
+              "the NOR-NORI object axis (natzaizu/gatzaizu/zaizkizu) — gustatu/iruditu/ahaztu's presentByNor/pastByNor tables (#358) shift NOR off the default hura/haiek to ni/gu/zuek, with nori fixed at zu; #419 then drills the rest of the table by fixing nori at ni/hura/gu/zuek/haiek in turn; #441 widens the pool to jarraitu and adds a pooled cross-verb review for each nori value",
             payload: '"Do you like me?" (Gustatzen natzaizu?) / "I like him." (Gustatzen natzaio.)',
             status: 'available',
             lessonIds: [
@@ -599,36 +601,48 @@ export const JOURNEY = [
               'gustatu-nor-axis-past',
               'iruditu-nor-axis-past',
               'ahaztu-nor-axis-past',
+              'nor-axis-present-review-zu',
+              'nor-axis-past-review-zu',
               'gustatu-nor-axis-present-ni',
               'iruditu-nor-axis-present-ni',
               'ahaztu-nor-axis-present-ni',
               'gustatu-nor-axis-past-ni',
               'iruditu-nor-axis-past-ni',
               'ahaztu-nor-axis-past-ni',
+              'nor-axis-present-review-ni',
+              'nor-axis-past-review-ni',
               'gustatu-nor-axis-present-hura',
               'iruditu-nor-axis-present-hura',
               'ahaztu-nor-axis-present-hura',
               'gustatu-nor-axis-past-hura',
               'iruditu-nor-axis-past-hura',
               'ahaztu-nor-axis-past-hura',
+              'nor-axis-present-review-hura',
+              'nor-axis-past-review-hura',
               'gustatu-nor-axis-present-gu',
               'iruditu-nor-axis-present-gu',
               'ahaztu-nor-axis-present-gu',
               'gustatu-nor-axis-past-gu',
               'iruditu-nor-axis-past-gu',
               'ahaztu-nor-axis-past-gu',
+              'nor-axis-present-review-gu',
+              'nor-axis-past-review-gu',
               'gustatu-nor-axis-present-zuek',
               'iruditu-nor-axis-present-zuek',
               'ahaztu-nor-axis-present-zuek',
               'gustatu-nor-axis-past-zuek',
               'iruditu-nor-axis-past-zuek',
               'ahaztu-nor-axis-past-zuek',
+              'nor-axis-present-review-zuek',
+              'nor-axis-past-review-zuek',
               'gustatu-nor-axis-present-haiek',
               'iruditu-nor-axis-present-haiek',
               'ahaztu-nor-axis-present-haiek',
               'gustatu-nor-axis-past-haiek',
               'iruditu-nor-axis-past-haiek',
               'ahaztu-nor-axis-past-haiek',
+              'nor-axis-present-review-haiek',
+              'nor-axis-past-review-haiek',
             ],
           },
         ],

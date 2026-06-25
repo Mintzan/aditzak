@@ -430,8 +430,8 @@ export const JOURNEY_TRANSLATIONS = {
     27: {
       title: { es: 'El eje del objeto NOR-NORI — natzaizu/gatzaizu', eu: 'NOR-NORI objektu-ardatza — natzaizu/gatzaizu' },
       focus: {
-        es: 'el eje NOR-NORI de gustatu/iruditu/ahaztu se extiende: NOR ya no esta fijado en hura/haiek, sino que varia entre ni/zu/gu/zuek mientras NORI permanece fijo — contraste directo con las unidades 25-26',
-        eu: 'gustatu/iruditu/ahaztu-ren NOR-NORI ardatza zabaltzen da: NOR ez dago jada hura/haiek-en finkatuta, ni/zu/gu/zuek artean aldatzen da NORI finko mantenduz — 25-26. unitateekiko alderaketa zuzena',
+        es: 'el eje NOR-NORI de gustatu/iruditu/ahaztu/jarraitu se extiende: NOR ya no esta fijado en hura/haiek, sino que varia entre ni/zu/gu/zuek mientras NORI permanece fijo — contraste directo con las unidades 25-26, con repasos combinados para cada valor de NORI',
+        eu: 'gustatu/iruditu/ahaztu/jarraitu-ren NOR-NORI ardatza zabaltzen da: NOR ez dago jada hura/haiek-en finkatuta, ni/zu/gu/zuek artean aldatzen da NORI finko mantenduz — 25-26. unitateekiko alderaketa zuzena, NORI balio bakoitzeko errepaso konbinatuekin',
       },
       payload: {
         es: '"¿Te gusto?" (Gustatzen natzaizu?) / "Me gusta él." (Gustatzen natzaio.)',
