@@ -303,12 +303,19 @@ export const JOURNEY = [
           // which left it wall-to-wall those two verbs; #435 rotated the
           // practice verb per NORK/tense slot across the full seven-verb set
           // and added a pooled review per NORK value, matching what #381
-          // already did for `fixed: 'ni'`. See `docs/DECISIONS.md`.
+          // already did for `fixed: 'ni'`. #443 then widened the pool
+          // feeding every one of those pooled reviews from seven verbs to
+          // ~37 (every #436-composable periphrastic transitive verb in the
+          // data, gated by #442's `animateObject` flag for the thing-only/
+          // metaphor ones) — standalone practice lessons still rotate a
+          // handful of verbs (no single verb dominates), the wide pool lives
+          // in the reviews' `sources`, not as 30 new single-verb lessons. See
+          // `docs/DECISIONS.md`.
           {
             number: 15,
             title: 'maite izan — Loving Someone (The Non-3rd-Person Object)',
             focus:
-              "ukan/maite/ikusi/jan/edan/erosi/hartu's presentByObject/pastByObject tables (#346/#347/#348/#378/#379) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni, plus a pooled review (#380/#381) drawing distractors across all seven verbs; #416/#435 then drill the reverse direction (someone/something acting on me/us/you) by fixing nork at hura/gu/zu/zuek/haiek in turn, rotating the practice verb across the full seven-verb set and adding a pooled review per NORK value",
+              "ukan/maite/ikusi/jan/edan/erosi/hartu's presentByObject/pastByObject tables (#346/#347/#348/#378/#379) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni, plus a pooled review (#380/#381) drawing distractors across all seven verbs; #416/#435 then drill the reverse direction (someone/something acting on me/us/you) by fixing nork at hura/gu/zu/zuek/haiek in turn, rotating the practice verb across the full seven-verb set and adding a pooled review per NORK value; #443 widens every pooled review's verb pool to ~37 periphrastic transitive verbs",
             payload: '"I love you." (Maite zaitut.) / "It surprised me." (Harritu nau.)',
             status: 'available',
             lessonIds: [

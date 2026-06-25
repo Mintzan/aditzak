@@ -985,6 +985,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'nahi ' },
     conjugations: {
       // #266: `gu`/`zuek`/`haiek` added, riding `ukan`'s exact `dugu`/`duzue`/
       // `dute` present suffixes and `nahiko` + the same suffixes for future —
@@ -1098,6 +1100,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'behar ', past: 'behar ' },
     conjugations: {
       present: {
         ni: 'behar dut',
@@ -4421,6 +4425,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'entzuten ', past: 'entzun ' },
     conjugations: {
       present: {
         ni: 'entzuten dut',
@@ -4547,6 +4553,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'aurkitzen ', past: 'aurkitu ' },
     conjugations: {
       present: {
         ni: 'aurkitzen dut',
@@ -4601,6 +4609,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'bilatzen ', past: 'bilatu ' },
     conjugations: {
       present: {
         ni: 'bilatzen dut',
@@ -4719,6 +4729,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'jasotzen ', past: 'jaso ' },
     conjugations: {
       present: {
         ni: 'jasotzen dut',
@@ -4837,6 +4849,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'itxaroten ', past: 'itxaron ' },
     conjugations: {
       present: {
         ni: 'itxaroten dut',
@@ -5457,6 +5471,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'adierazten ', past: 'adierazi ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     conjugations: {
       present: {
         ni: 'adierazten dut',
@@ -5511,6 +5528,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'bukatzen ', past: 'bukatu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     conjugations: {
       present: {
         ni: 'bukatzen dut',
@@ -5565,6 +5585,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'amaitzen ', past: 'amaitu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     conjugations: {
       present: {
         ni: 'amaitzen dut',
@@ -5619,6 +5642,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'gainditzen ', past: 'gainditu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     conjugations: {
       present: {
         ni: 'gainditzen dut',
@@ -5673,6 +5699,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'bereizten ', past: 'bereiztu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     conjugations: {
       present: {
         ni: 'bereizten dut',
@@ -5727,6 +5756,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'ezagutzen ', past: 'ezagutu ' },
     conjugations: {
       present: {
         ni: 'ezagutzen dut',
@@ -5781,6 +5812,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'sentitzen ', past: 'sentitu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     conjugations: {
       present: {
         ni: 'sentitzen dut',
@@ -5835,6 +5869,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'pentsatzen ', past: 'pentsatu ' },
     conjugations: {
       present: {
         ni: 'pentsatzen dut',
@@ -5889,6 +5925,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'sumatzen ', past: 'sumatu ' },
     conjugations: {
       present: {
         ni: 'sumatzen dut',
@@ -5943,6 +5981,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'ulertzen ', past: 'ulertu ' },
     conjugations: {
       present: {
         ni: 'ulertzen dut',
@@ -5997,6 +6037,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'aztertzen ', past: 'aztertu ' },
     conjugations: {
       present: {
         ni: 'aztertzen dut',
@@ -6051,6 +6093,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'ukatzen ', past: 'ukatu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     conjugations: {
       present: {
         ni: 'ukatzen dut',
@@ -6105,6 +6150,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'batzen ', past: 'batu ' },
     conjugations: {
       present: {
         ni: 'batzen dut',
@@ -6323,6 +6370,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'hausnartzen ', past: 'hausnartu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -6490,6 +6540,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'gaitzesten ', past: 'gaitzetsi ' },
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -6545,6 +6597,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'aldarrikatzen ', past: 'aldarrikatu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -6600,6 +6655,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'plazaratzen ', past: 'plazaratu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -6655,6 +6713,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'sustatzen ', past: 'sustatu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -6710,6 +6771,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'bultzatzen ', past: 'bultzatu ' },
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -6765,6 +6828,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'bermatzen ', past: 'bermatu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -6820,6 +6886,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'babesten ', past: 'babestu ' },
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -6875,6 +6943,9 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'ziurtatzen ', past: 'ziurtatu ' },
+    animateObject: false, // #443: thing-only/abstract object on this verb's typical sense
     recognitionOnly: true,
     conjugations: {
       present: {
@@ -7263,6 +7334,8 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
+    // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
+    byObjectPrefixes: { present: 'kontuan hartzen ', past: 'kontuan hartu ' },
     conjugations: {
       present: {
         ni: 'kontuan hartzen dut',
