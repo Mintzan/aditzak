@@ -514,8 +514,8 @@ export const JOURNEY_TRANSLATIONS = {
     35: {
       title: { es: 'Agintera — Órdenes', eu: 'Agintera — Aginduak' },
       focus: {
-        es: 'el imperativo — producción de izan/ukan para NOR/NOR-NORK; el ditransitivo (iezadazu), solo reconocimiento, queda para más adelante',
-        eu: 'agintera — izan/ukan-en ekoizpena NOR/NOR-NORK-erako; ditransitiboa (iezadazu), ezagutza hutsa, geroago dator',
+        es: 'el imperativo — producción de izan/ukan para NOR/NOR-NORK; el ditransitivo (iezadazu), solo reconocimiento, queda para más adelante; #444 añade jarraitu al grupo del eje objeto NOR-NORI de gustatu/iruditu/ahaztu y un repaso conjunto por cada valor de NORI',
+        eu: 'agintera — izan/ukan-en ekoizpena NOR/NOR-NORK-erako; ditransitiboa (iezadazu), ezagutza hutsa, geroago dator; #444-k jarraitu gehitzen du gustatu/iruditu/ahaztu-ren NOR-NORI objektu-ardatzaren multzora, eta NORI balio bakoitzeko errepaso bateratu bat',
       },
       payload: {
         es: '"¡Ven aquí!" (Hadi hona!)',

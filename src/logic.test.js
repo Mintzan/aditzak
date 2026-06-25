@@ -3115,6 +3115,28 @@ describe('generateCrossVerbQuestions', () => {
     })
     expect(verbIds.size).toBeGreaterThan(1)
   })
+
+  it('pools the imperative NOR-NORI axis (#444) across gustatu/iruditu/ahaztu/jarraitu, with fixedArgument.role nori not nork', () => {
+    const verbs = ['gustatu', 'iruditu', 'ahaztu', 'jarraitu'].map((id) => VERBS.find((v) => v.id === id))
+    const sources = verbs.map((verb) => ({ verb, tense: 'imperativeByNor' }))
+    const objectAxis = { vary: 'nor', fixed: 'hura' }
+
+    const questions = generateCrossVerbQuestions(sources, { count: 10, objectAxis })
+
+    expect(questions.length).toBeGreaterThan(0)
+    questions.forEach((question) => {
+      expect(question.fixedArgument).toEqual({ role: 'nori', person: 'hura' })
+      expect(question.options).toContain(question.correct)
+    })
+    const verbIds = new Set()
+    questions.forEach((question) => {
+      for (const verb of verbs) {
+        const form = resolveObjectAxisTable(verb.conjugations.imperativeByNor, objectAxis)[question.person]
+        if (question.options.includes(form)) verbIds.add(verb.id)
+      }
+    })
+    expect(verbIds.size).toBeGreaterThan(1)
+  })
 })
 
 describe('generateCaseMixerQuestions', () => {
