@@ -8,6 +8,42 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-25 — #448: extended `getComposedTable` to NOR-NORI flat/`byNor` and ditransitive NOR-NORI-NORK
+
+Closed out #436's deferred scope: the NOR-NORI flat `present`/`past`/`future`
+(`gustatu`/`iruditu`/`ahaztu`/`jarraitu`), NOR-NORI `presentByNor`/`pastByNor`
+(same four), and ditransitive `present`/`past`/`future`
+(`esan`/`eman`/`saldu-dative`/`utzi-dative`/`adierazi-dative`/
+`eskatu-dative`/`galdetu-dative`) literal tables are now composed at read
+time via `getComposedTable`, against new `OBJECT_AXIS_SKELETONS.dativeIzan`/
+`dativeIzanByNor`/`diot` skeletons plus each verb's `byNoriPrefixes`/
+`ditransitivePrefixes` field — mirroring #436's `byObjectPrefixes`/`edun`
+scheme. `jario` is a deliberate, permanent exception: it's fully
+irregular/suppletive (no shared skeleton row to decompose against), so it
+keeps its literal table, same as #442 already assumed.
+
+While auditing every remaining direct `verb.conjugations[tense]` access
+(the same sweep #436 did, but this time catching one site #436 missed):
+`scripts/validforGapAudit.mjs`'s `computeGapSlots` read conjugations
+directly rather than through `getComposedTable`, so it wasn't on anyone's
+radar as a "consumer" until this issue's audit found it. More importantly,
+collapsing the composed verbs' `conjugations.future`/`.past` to `{}` silently
+broke a *different* mechanism: the `sentences.future`/`.past` reuse-by-
+reference fallback loops at the bottom of `verbs.js` gate on
+`verb.conjugations.future`/`.past` being truthy, so they stopped firing for
+these verbs and `esan` (among others) lost its future/past example sentences
+entirely — caught by `npm test`'s validFor-gap-audit baseline test failing
+with a ~383-slot drop concentrated on `esan`'s `future`/`ni` sentence. Fixed
+by adding a `verbHasComposedTense(verb, tense)` helper that also checks
+`byNoriPrefixes`/`ditransitivePrefixes`, used by all three fallback loops.
+Once fixed, the gap-audit baseline needed no regeneration — counts came back
+byte-identical to pre-#448, confirming the whole refactor is behavior-
+preserving rather than a deliberate change to the gap surface. Lesson for any
+future axis-generification: a verb's literal-table fields can be read by
+more than the obvious lesson-generation call sites, and collapsing a table
+to `{}` is observable to any code that checks "does this field exist" rather
+than "what does `getComposedTable` return for this tense."
+
 ## 2026-06-25 — #446: collapsed Unit 32's 54 single-verb Ahalera (potential) NOR-NORI lessons into 18 pooled cross-verb reviews
 
 Same shape as #441/#444/#445: `gustatu`/`iruditu`/`ahaztu`'s `potentialByNor`/

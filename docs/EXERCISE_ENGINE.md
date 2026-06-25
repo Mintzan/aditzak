@@ -484,6 +484,38 @@ value: `potential-axis-review-*`, `potential-alegiazkoa-axis-review-*`,
 `potential-lehenaldia-axis-review-*`), replacing all 54 single-verb lessons.
 `jario` stays excluded, same reasoning as #441/#444/#445.
 
+**Update (#448)**: extended `getComposedTable` to the three table families
+#436 deliberately left out of scope — NOR-NORI flat `present`/`past`/`future`,
+NOR-NORI `presentByNor`/`pastByNor`, and the ditransitive NOR-NORI-NORK
+`present`/`past`/`future`. `gustatu`/`iruditu`/`ahaztu`/`jarraitu`'s flat and
+`byNor` tables now compose from a `byNoriPrefixes: { present, past, future }`
+field against `OBJECT_AXIS_SKELETONS.dativeIzan`/`dativeIzanByNor`, the same
+shared-skeleton-plus-per-verb-prefix scheme `byObjectPrefixes` uses. The
+ditransitive family (`esan`/`eman`/`saldu-dative`/`utzi-dative`/
+`adierazi-dative`/`eskatu-dative`/`galdetu-dative`) composes from a
+`ditransitivePrefixes: { present, past, future }` field against
+`OBJECT_AXIS_SKELETONS.diot`, resolved through `getFixedArgument`/
+`resolveObjectAxisTable` (whichever of NORI/NORK the verb fixes via its
+`recipient`/`agent` field becomes the table's fixed cell; the other varies).
+`jario` stays a literal table on purpose — fully irregular/suppletive, no
+shared skeleton to decompose against (matches #442's note that it gates
+rather than composes). Every remaining direct `verb.conjugations[tense]`
+read for these tenses — `lessonLogic.js`'s lure/distractor helpers,
+`App.jsx`'s `ConjugationTable`, `logic.test.js`'s assertions, and (a genuinely
+new finding, not part of #436's original call-site list)
+`scripts/validforGapAudit.mjs`'s `computeGapSlots` — now goes through
+`getComposedTable` instead. One non-obvious follow-up bug this surfaced: the
+`sentences.future`/`.past` reuse-by-reference fallback loops at the bottom of
+`verbs.js` keyed their "does this verb have a future/past?" check off
+`verb.conjugations.future`/`.past` directly — once those collapsed to `{}`
+for the composed verbs, the loops silently stopped firing, dropping `esan`'s
+(and siblings') future/past example sentences entirely. Fixed by routing that
+check through a small `verbHasComposedTense` helper that also checks
+`byNoriPrefixes`/`ditransitivePrefixes`; `npm test`'s validFor-gap-audit
+baseline (`scripts/validfor-gap-baseline.json`) needed no regeneration once
+this was fixed — the gap counts came back byte-identical to the pre-#448
+baseline, confirming the composer is fully behavior-preserving.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

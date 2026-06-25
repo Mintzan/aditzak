@@ -8,7 +8,7 @@
 // offered as a "wrong" distractor. See docs/DISTRACTOR_STRATEGY.md §4.2 and
 // issue [A1] for the exact definition this replicates.
 
-import { agreementsCompatible, normalizeSentence } from '../src/lessonLogic.js'
+import { agreementsCompatible, getComposedTable, normalizeSentence } from '../src/lessonLogic.js'
 
 const TAGGED_FIELDS = ['sentences', 'negativeSentences']
 
@@ -46,9 +46,9 @@ export function computeGapSlots(verbs) {
         for (const gapVerb of verbs) {
           if (gapVerb.id === hostVerb.id) continue
           if (!agreementsCompatible(gapVerb.agreement, hostVerb.agreement)) continue
-          const gapForm = gapVerb.conjugations[tense]?.[person]
+          const gapForm = getComposedTable(gapVerb, tense)?.[person]
           if (!gapForm) continue
-          const hostForm = hostVerb.conjugations[tense]?.[person]
+          const hostForm = getComposedTable(hostVerb, tense)?.[person]
           if (gapForm === hostForm) continue
           if (validFor.includes(gapVerb.id)) continue
           slots.push({

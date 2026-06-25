@@ -13,6 +13,7 @@ import {
   generateReadingQuestions,
   generateSuffixChoiceQuestions,
   getActiveStreak,
+  getComposedTable,
   getCrossVerbCandidates,
   getExplanation,
   getEncouragement,
@@ -1434,7 +1435,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   const extraSources = lesson.review && sources.length < 3 ? getIntroducedSources(LESSONS, lesson.id) : []
   const questions = sampledSources.flatMap(({ verbId, tense }) => {
     const verb = VERBS.find((v) => v.id === verbId)
-    const personCount = (lesson.persons ?? Object.keys(verb.conjugations[tense])).length
+    const personCount = (lesson.persons ?? Object.keys(getComposedTable(verb, tense))).length
     const rounds = Math.max(1, Math.round(targetPerSource / personCount))
     // Review lessons widen the distractor pool with sibling sources' forms
     // for the same person (see `getCrossVerbCandidates`) — occasionally
@@ -1517,7 +1518,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
 // spot-the-error are introduced.
 function ConjugationTable({ verb, tense }) {
   const { t } = useLanguage()
-  const table = verb.conjugations[tense]
+  const table = getComposedTable(verb, tense)
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200">
       {Object.entries(table).map(([person, form], index) => (

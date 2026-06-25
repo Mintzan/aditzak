@@ -1097,7 +1097,7 @@ describe('generateQuestions', () => {
         const presentQuestions = generateQuestions(candidate, 'presentByNor', { objectAxis: { vary: 'nor', fixed: 'zu' } })
         expect(presentQuestions.length).toBeGreaterThan(0)
         presentQuestions.forEach((question) => {
-          expect(question.correct).toBe(candidate.conjugations.presentByNor.zu[question.person])
+          expect(question.correct).toBe(getComposedTable(candidate, 'presentByNor').zu[question.person])
           expect(question.options).toContain(question.correct)
           expect(question.fixedArgument).toEqual({ role: 'nori', person: 'zu' })
         })
@@ -1105,7 +1105,7 @@ describe('generateQuestions', () => {
         const pastQuestions = generateQuestions(candidate, 'pastByNor', { objectAxis: { vary: 'nor', fixed: 'zu' } })
         expect(pastQuestions.length).toBeGreaterThan(0)
         pastQuestions.forEach((question) => {
-          expect(question.correct).toBe(candidate.conjugations.pastByNor.zu[question.person])
+          expect(question.correct).toBe(getComposedTable(candidate, 'pastByNor').zu[question.person])
           expect(question.options).toContain(question.correct)
           expect(question.fixedArgument).toEqual({ role: 'nori', person: 'zu' })
         })
@@ -1114,10 +1114,9 @@ describe('generateQuestions', () => {
 
     it("resolveObjectAxisTable drills gustatu's presentByNor the same way it drills ukan's presentByObject", () => {
       const gustatu = VERBS.find((v) => v.id === 'gustatu')
-      expect(resolveObjectAxisTable(gustatu.conjugations.presentByNor, { vary: 'nor', fixed: 'zu' })).toEqual(
-        gustatu.conjugations.presentByNor.zu,
-      )
-      expect(resolveObjectAxisTable(gustatu.conjugations.presentByNor, { vary: 'nor', fixed: 'zu' })).toEqual({
+      const gustatuPresentByNor = getComposedTable(gustatu, 'presentByNor')
+      expect(resolveObjectAxisTable(gustatuPresentByNor, { vary: 'nor', fixed: 'zu' })).toEqual(gustatuPresentByNor.zu)
+      expect(resolveObjectAxisTable(gustatuPresentByNor, { vary: 'nor', fixed: 'zu' })).toEqual({
         ni: 'gustatzen natzaizu',
         gu: 'gustatzen gatzaizkizu',
         zuek: 'gustatzen zatzaizkizu',
@@ -1137,6 +1136,113 @@ describe('generateQuestions', () => {
         expect(() =>
           generateQuestions(gustatu, tense, { objectAxis: { vary: 'nor', fixed: 'zu' }, verbs: VERBS }),
         ).not.toThrow()
+      }
+    })
+  })
+
+  // #448: `byNoriPrefixes`/`ditransitivePrefixes` widen `getComposedTable` to
+  // also compose the flat NOR-NORI present/past/future tables (and their
+  // presentByNor/pastByNor 2D mirrors), plus the NOR-NORI-NORK ditransitive
+  // tables — the same "prefix + shared skeleton" idea #436/#347/#348 already
+  // applied to ukan/maite's presentByObject/pastByObject. These tests pin the
+  // composed output against the hand-written forms the literal tables used
+  // to carry, verb by verb, so the refactor can't silently change a form.
+  describe('getComposedTable: byNoriPrefixes/ditransitivePrefixes (#448)', () => {
+    it.each([
+      ['gustatu', { ni: 'gustatzen zait', zu: 'gustatzen zaizu', hura: 'gustatzen zaio', gu: 'gustatzen zaigu', zuek: 'gustatzen zaizue', haiek: 'gustatzen zaie' }],
+      ['iruditu', { ni: 'iruditzen zait', zu: 'iruditzen zaizu', hura: 'iruditzen zaio', gu: 'iruditzen zaigu', zuek: 'iruditzen zaizue', haiek: 'iruditzen zaie' }],
+      ['ahaztu', { ni: 'ahaztu zait', zu: 'ahaztu zaizu', hura: 'ahaztu zaio', gu: 'ahaztu zaigu', zuek: 'ahaztu zaizue', haiek: 'ahaztu zaie' }],
+      ['jarraitu', { ni: 'jarraitzen zait', zu: 'jarraitzen zaizu', hura: 'jarraitzen zaio', gu: 'jarraitzen zaigu', zuek: 'jarraitzen zaizue', haiek: 'jarraitzen zaie' }],
+    ])('composes %s present from byNoriPrefixes + dativeIzan', (id, expected) => {
+      const verbDef = VERBS.find((v) => v.id === id)
+      expect(getComposedTable(verbDef, 'present')).toEqual(expected)
+    })
+
+    it("composes ahaztu's past with the same bare-participle prefix as present, against a different skeleton row", () => {
+      const ahaztu = VERBS.find((v) => v.id === 'ahaztu')
+      expect(getComposedTable(ahaztu, 'past')).toEqual({
+        ni: 'ahaztu zitzaidan',
+        zu: 'ahaztu zitzaizun',
+        hura: 'ahaztu zitzaion',
+        gu: 'ahaztu zitzaigun',
+        zuek: 'ahaztu zitzaizuen',
+        haiek: 'ahaztu zitzaien',
+      })
+    })
+
+    it('composes future by reusing the present skeleton row with the future prefix', () => {
+      const gustatu = VERBS.find((v) => v.id === 'gustatu')
+      expect(getComposedTable(gustatu, 'future').ni).toBe('gustatuko zait')
+      expect(getComposedTable(gustatu, 'future').haiek).toBe('gustatuko zaie')
+    })
+
+    it('jarraitu has no byNoriPrefixes.future entry, so composed future is undefined (no future tense for this verb)', () => {
+      const jarraitu = VERBS.find((v) => v.id === 'jarraitu')
+      expect(getComposedTable(jarraitu, 'future')).toBeUndefined()
+    })
+
+    it('composes presentByNor/pastByNor against dativeIzanByNor with the same prefix as the flat tables', () => {
+      const gustatu = VERBS.find((v) => v.id === 'gustatu')
+      expect(getComposedTable(gustatu, 'presentByNor')).toEqual({
+        ni: { zu: 'gustatzen zatzait', gu: 'gustatzen gatzaizkit', zuek: 'gustatzen zatzaizkit' },
+        zu: { ni: 'gustatzen natzaizu', gu: 'gustatzen gatzaizkizu', zuek: 'gustatzen zatzaizkizu' },
+        hura: { ni: 'gustatzen natzaio', zu: 'gustatzen zatzaio', gu: 'gustatzen gatzaizkio', zuek: 'gustatzen zatzaizkio' },
+        gu: { ni: 'gustatzen natzaigu', zu: 'gustatzen zatzaigu', zuek: 'gustatzen zatzaizkigu' },
+        zuek: { ni: 'gustatzen natzaizue', zu: 'gustatzen zatzaizue', gu: 'gustatzen gatzaizkizue' },
+        haiek: { ni: 'gustatzen natzaie', zu: 'gustatzen zatzaie', gu: 'gustatzen gatzaizkie', zuek: 'gustatzen zatzaizkie' },
+      })
+      expect(getComposedTable(gustatu, 'pastByNor').zu).toEqual({ ni: 'gustatu nintzaizun', gu: 'gustatu gintzaizkizun', zuek: 'gustatu zintzaizkizun' })
+    })
+
+    it("composes esan's recipient-fixed present from ditransitivePrefixes + diot (fixedArgument.role 'nori', vary 'nork')", () => {
+      const esan = VERBS.find((v) => v.id === 'esan')
+      expect(getComposedTable(esan, 'present')).toEqual({
+        ni: 'esaten diot',
+        zu: 'esaten diozu',
+        hura: 'esaten dio',
+        gu: 'esaten diogu',
+        zuek: 'esaten diozue',
+        haiek: 'esaten diote',
+      })
+      expect(getComposedTable(esan, 'past').ni).toBe('esan nion')
+      expect(getComposedTable(esan, 'future').ni).toBe('esango diot')
+    })
+
+    it("composes eman's agent-fixed present from ditransitivePrefixes + diot (fixedArgument.role 'nork', vary 'nor')", () => {
+      const eman = VERBS.find((v) => v.id === 'eman')
+      expect(getComposedTable(eman, 'present')).toEqual({
+        zu: 'ematen dizut',
+        hura: 'ematen diot',
+        zuek: 'ematen dizuet',
+        haiek: 'ematen diet',
+      })
+      expect(getComposedTable(eman, 'past').hura).toBe('eman nion')
+      expect(getComposedTable(eman, 'future').hura).toBe('emango diot')
+    })
+
+    it.each(['saldu-dative', 'utzi-dative', 'adierazi-dative', 'eskatu-dative', 'galdetu-dative'])(
+      "composes %s's recipient-fixed present/past/future against diot, matching its own conjugations.present-style shape",
+      (id) => {
+        const verbDef = VERBS.find((v) => v.id === id)
+        const present = getComposedTable(verbDef, 'present')
+        expect(present.ni).toBe(`${verbDef.ditransitivePrefixes.present}diot`)
+        expect(present.hura).toBe(`${verbDef.ditransitivePrefixes.present}dio`)
+        expect(getComposedTable(verbDef, 'past').hura).toBe(`${verbDef.ditransitivePrefixes.past}zion`)
+        expect(getComposedTable(verbDef, 'future').hura).toBe(`${verbDef.ditransitivePrefixes.future}dio`)
+      },
+    )
+
+    it('leaves jario as a literal table (deliberate exception — fully irregular, no shared skeleton)', () => {
+      const jario = VERBS.find((v) => v.id === 'jario')
+      expect(jario.byNoriPrefixes).toBeUndefined()
+      expect(getComposedTable(jario, 'present')).toBe(jario.conjugations.present)
+    })
+
+    it('no longer carries literal present/past/future tables in verbs.js for the composed verbs', () => {
+      for (const id of ['gustatu', 'iruditu', 'ahaztu', 'jarraitu', 'esan', 'eman', 'saldu-dative', 'utzi-dative', 'adierazi-dative', 'eskatu-dative', 'galdetu-dative']) {
+        const verbDef = VERBS.find((v) => v.id === id)
+        expect(verbDef.conjugations.present).toBeUndefined()
+        expect(verbDef.conjugations.past).toBeUndefined()
       }
     })
   })
@@ -3109,7 +3215,7 @@ describe('generateCrossVerbQuestions', () => {
     const verbIds = new Set()
     questions.forEach((question) => {
       for (const verb of verbs) {
-        const form = resolveObjectAxisTable(verb.conjugations.presentByNor, objectAxis)[question.person]
+        const form = resolveObjectAxisTable(getComposedTable(verb, 'presentByNor'), objectAxis)[question.person]
         if (question.options.includes(form)) verbIds.add(verb.id)
       }
     })
