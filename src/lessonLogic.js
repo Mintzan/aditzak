@@ -592,7 +592,8 @@ function getCaseFrameSibling(verbs, agreement) {
 // tense conjugated form — `dut` for `naiz`, `nuen` for `nintzen`, etc. — #141's
 // "NOR-NORK present" Slot 3 and "Past pools" Slot 2.
 export function getCaseFrameLure(verbs, verb, tense, person) {
-  return getCaseFrameSibling(verbs, verb.agreement)?.conjugations[tense]?.[person]
+  const sibling = getCaseFrameSibling(verbs, verb.agreement)
+  return sibling && getComposedTable(sibling, tense)?.[person]
 }
 
 // The case-frame-inverse sibling's (see `getCaseFrameSibling`) declined
@@ -609,7 +610,7 @@ export function getCaseFramePronounLure(verbs, verb, person) {
 // `naiz` offered alongside `nintzen`). `undefined` for any tense but `past`.
 export function getCrossTenseLure(verb, tense, person) {
   if (tense !== 'past') return undefined
-  return verb.conjugations.present?.[person]
+  return getComposedTable(verb, 'present')?.[person]
 }
 
 // #283's "recency contrast" lure: present perfect and simple past share the
@@ -623,7 +624,7 @@ export function getCrossTenseLure(verb, tense, person) {
 // without a table for the other tense (every verb except `izan`/`joan`/
 // `etorri`/`ikusi` today, see #281).
 export function getRecencyContrastLure(verb, tense, person) {
-  if (tense === 'presentPerfect') return verb.conjugations.past?.[person]
+  if (tense === 'presentPerfect') return getComposedTable(verb, 'past')?.[person]
   if (tense === 'past') return verb.conjugations.presentPerfect?.[person]
   return undefined
 }
@@ -647,7 +648,8 @@ export function getObjectNumberLure(verb, tense, person) {
 // `ari` today.
 export function getProgressiveBaseLure(verbs, baseVerbId, person) {
   if (!baseVerbId) return undefined
-  return verbs?.find((candidate) => candidate.id === baseVerbId)?.conjugations.present?.[person]
+  const base = verbs?.find((candidate) => candidate.id === baseVerbId)
+  return base && getComposedTable(base, 'present')?.[person]
 }
 
 // #293's "dative overgeneration" sibling: same `nork` status as `agreement`
@@ -772,7 +774,62 @@ const PERSONAL_NOR_VALUES = new Set(['ni', 'hi', 'gu', 'zu', 'zuek'])
 // object axis only ever yields the 3rd-person forms a thing-only object can
 // take — never a grammatically-valid-but-pragmatically-wrong "I read you"
 // form, either as a question's correct answer or as a distractor.
+// #448: same composition idea as the `byObjectPrefixes` branch above, for
+// the 3 remaining axis-generic families — `byNoriPrefixes` (NOR-NORI flat
+// `present`/`past`/`future` against `dativeIzan`, and 2D `presentByNor`/
+// `pastByNor` against `dativeIzanByNor`) and `ditransitivePrefixes`
+// (NOR-NORI-NORK `present`/`past`/`future` against `diot`, resolved through
+// `getFixedArgument`+`resolveObjectAxisTable` since `diot` is keyed
+// NORK-outer/NORI-inner rather than by the flat person the caller wants).
+// `future` has no skeleton row of its own in either `dativeIzan` or `diot`
+// — it reuses the `present` row, since only the participle (the verb's own
+// per-tense prefix) differs between `present` and `future` forms, not the
+// auxiliary.
+function getByNoriComposedTable(verb, tense) {
+  const flatBase = tense === 'present' || tense === 'past' || tense === 'future' ? (tense === 'future' ? 'present' : tense) : undefined
+  if (flatBase) {
+    const prefix = verb.byNoriPrefixes?.[tense]
+    if (prefix === undefined) return undefined
+    const skeleton = OBJECT_AXIS_SKELETONS.dativeIzan[flatBase]
+    const table = {}
+    for (const person of Object.keys(skeleton)) table[person] = prefix + skeleton[person]
+    return table
+  }
+  const byNorBase = tense === 'presentByNor' ? 'present' : tense === 'pastByNor' ? 'past' : undefined
+  if (!byNorBase) return undefined
+  const prefix = verb.byNoriPrefixes?.[byNorBase]
+  if (prefix === undefined) return undefined
+  const skeleton = OBJECT_AXIS_SKELETONS.dativeIzanByNor[byNorBase]
+  const table = {}
+  for (const outer of Object.keys(skeleton)) {
+    table[outer] = {}
+    for (const inner of Object.keys(skeleton[outer])) table[outer][inner] = prefix + skeleton[outer][inner]
+  }
+  return table
+}
+
+function getDitransitiveComposedTable(verb, tense) {
+  if (tense !== 'present' && tense !== 'past' && tense !== 'future') return undefined
+  const prefix = verb.ditransitivePrefixes?.[tense]
+  if (prefix === undefined) return undefined
+  const base = tense === 'future' ? 'present' : tense
+  const fixedArgument = getFixedArgument(verb)
+  const vary = fixedArgument.role === 'nori' ? 'nork' : 'nor'
+  const resolved = resolveObjectAxisTable(OBJECT_AXIS_SKELETONS.diot[base], { vary, fixed: fixedArgument.person })
+  const table = {}
+  for (const person of Object.keys(resolved)) table[person] = prefix + resolved[person]
+  return table
+}
+
 export function getComposedTable(verb, tense) {
+  if (verb.byNoriPrefixes) {
+    const composed = getByNoriComposedTable(verb, tense)
+    if (composed !== undefined) return composed
+  }
+  if (verb.ditransitivePrefixes) {
+    const composed = getDitransitiveComposedTable(verb, tense)
+    if (composed !== undefined) return composed
+  }
   const base = tense === 'presentByObject' ? 'present' : tense === 'pastByObject' ? 'past' : undefined
   const prefix = base && verb.byObjectPrefixes?.[base]
   if (prefix === undefined) return verb.conjugations[tense]
@@ -852,12 +909,12 @@ export function getCrossVerbCandidates(verb, tense, sources, verbs, extraSources
   const pool = [...sources, ...extraSources.filter((source) => source.tense === tense && !known.has(`${source.verbId}:${source.tense}`))]
   const siblings = pool.filter((source) => !(source.verbId === verb.id && source.tense === tense))
   const candidates = {}
-  for (const person of Object.keys(verb.conjugations[tense] ?? {})) {
+  for (const person of Object.keys(getComposedTable(verb, tense) ?? {})) {
     const forms = siblings
       .map(({ verbId, tense: siblingTense }) => {
         const siblingVerb = verbs.find((v) => v.id === verbId)
         if (!siblingVerb || !agreementsCompatible(siblingVerb.agreement, verb.agreement)) return null
-        const form = siblingVerb.conjugations[siblingTense]?.[person]
+        const form = getComposedTable(siblingVerb, siblingTense)?.[person]
         return form ? { verbId: siblingVerb.id, form } : null
       })
       .filter(Boolean)
@@ -885,7 +942,7 @@ function getBorrowedDistractors(verbs, agreement, tense, person, excludeVerbId) 
   if (!verbs || !agreement) return []
   return verbs
     .filter((sibling) => sibling.id !== excludeVerbId && agreementsCompatible(sibling.agreement, agreement))
-    .map((sibling) => ({ verbId: sibling.id, form: sibling.conjugations[tense]?.[person] }))
+    .map((sibling) => ({ verbId: sibling.id, form: getComposedTable(sibling, tense)?.[person] }))
     .filter((candidate) => candidate.form)
 }
 
@@ -908,7 +965,7 @@ function getBorrowedSpotErrorSlots(verbs, agreement, tense, excludeVerbId, exclu
   for (const sibling of verbs) {
     if (sibling.id === excludeVerbId || !agreementsCompatible(sibling.agreement, agreement)) continue
     const siblingSentences = sibling.sentences?.[tense] ?? {}
-    const siblingTable = sibling.conjugations[tense] ?? {}
+    const siblingTable = getComposedTable(sibling, tense) ?? {}
     const siblingPersons = Object.keys(siblingSentences).filter((p) => siblingTable[p])
     if (siblingPersons.length < 2) continue
     for (const p of siblingPersons) {
@@ -1600,7 +1657,7 @@ export const MATCH_PAIRS_QUESTION_COUNT = 1
 export function generateMatchPairsQuestions(resolvedSources, { persons: personsFilter, count = MATCH_PAIRS_QUESTION_COUNT } = {}) {
   const candidates = []
   for (const { verb, tense } of resolvedSources) {
-    const table = verb.conjugations[tense]
+    const table = getComposedTable(verb, tense)
     if (!table) continue
     const persons = personsFilter ?? Object.keys(table)
     const pairs = persons.map((person) => ({ person, form: table[person] })).filter(({ form }) => Boolean(form))
@@ -1701,7 +1758,7 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
     .filter(({ verbId, tense, person }) => {
       if (!sourceKeys.has(`${verbId}:${tense}`)) return false
       const verb = verbs.find((v) => v.id === verbId)
-      return Boolean(verb?.conjugations[tense]?.[person])
+      return Boolean(verb && getComposedTable(verb, tense)?.[person])
     })
     .sort((a, b) => b.count - a.count || new Date(b.lastMissed) - new Date(a.lastMissed))
     .slice(0, count)
@@ -1738,7 +1795,7 @@ export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_R
 // Basque being taught — same split as `getEncouragement`/`describeLesson`.
 export function getExplanation(verb, question, t) {
   if (question.kind === 'negative' || question.kind === 'type-negative') {
-    return t('explanationNegation', { form: verb.conjugations[question.tense][question.person] })
+    return t('explanationNegation', { form: getComposedTable(verb, question.tense)[question.person] })
   }
   if (question.kind === 'verb-choice') {
     return t('explanationVerbChoice', { verb: verb.verb, form: question.correct })
@@ -1753,7 +1810,7 @@ export function getExplanation(verb, question, t) {
   }
   if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
   const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'
-  return t(key, { pronoun: question.correct, verb: verb.verb, form: verb.conjugations[question.tense][question.person] })
+  return t(key, { pronoun: question.correct, verb: verb.verb, form: getComposedTable(verb, question.tense)[question.person] })
 }
 
 // [C2]/#229: makes a wrong-but-deliberate distractor ("lure", see

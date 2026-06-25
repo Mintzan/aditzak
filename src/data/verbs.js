@@ -164,6 +164,74 @@ export const OBJECT_AXIS_SKELETONS = {
       haiek: { ni: 'ninduten', hura: 'zuten', gu: 'gintuzten', zu: 'zintuzten', zuek: 'zintuzteten', haiek: 'zituzten' },
     },
   },
+  // #448: the NOR-NORI dative-`izan` skeleton behind `gustatu`/`iruditu`/
+  // `ahaztu`/`jarraitu`'s flat `present`/`past`/`future` tables (Units 25/26)
+  // — every cell there turns out to be `<per-verb prefix> + this skeleton's
+  // own cell` (e.g. `gustatu.present.ni === 'gustatzen ' + dativeIzan.present
+  // .ni`), composed at runtime via each verb's `byNoriPrefixes` the same way
+  // `edun` above backs `presentByObject`/`pastByObject`. `future` reuses the
+  // `present` row (`gustatuko zait` has the same auxiliary as `gustatzen
+  // zait`, just the `-ko` participle swapped in via the verb's own
+  // `byNoriPrefixes.future`) — there's no separate `dativeIzan.future` entry.
+  dativeIzan: {
+    present: { ni: 'zait', zu: 'zaizu', hura: 'zaio', gu: 'zaigu', zuek: 'zaizue', haiek: 'zaie' },
+    past: { ni: 'zitzaidan', zu: 'zitzaizun', hura: 'zitzaion', gu: 'zitzaigun', zuek: 'zitzaizuen', haiek: 'zitzaien' },
+  },
+  // #448: the 2D NOR-NORI mirror of `dativeIzan` above, backing `gustatu`/
+  // `iruditu`/`ahaztu`/`jarraitu`'s `presentByNor`/`pastByNor` (#358, Unit
+  // 27) — same per-verb `byNoriPrefixes.present`/`.past` composes both the
+  // flat table above and this 2D one, since both turn out to share the exact
+  // same prefix (confirmed cell-for-cell against the verbs' previous literal
+  // tables before this refactor).
+  dativeIzanByNor: {
+    present: {
+      ni: { zu: 'zatzait', gu: 'gatzaizkit', zuek: 'zatzaizkit' },
+      zu: { ni: 'natzaizu', gu: 'gatzaizkizu', zuek: 'zatzaizkizu' },
+      hura: { ni: 'natzaio', zu: 'zatzaio', gu: 'gatzaizkio', zuek: 'zatzaizkio' },
+      gu: { ni: 'natzaigu', zu: 'zatzaigu', zuek: 'zatzaizkigu' },
+      zuek: { ni: 'natzaizue', zu: 'zatzaizue', gu: 'gatzaizkizue' },
+      haiek: { ni: 'natzaie', zu: 'zatzaie', gu: 'gatzaizkie', zuek: 'zatzaizkie' },
+    },
+    past: {
+      ni: { zu: 'zintzaidan', gu: 'gintzaizkidan', zuek: 'zintzaizkidan' },
+      zu: { ni: 'nintzaizun', gu: 'gintzaizkizun', zuek: 'zintzaizkizun' },
+      hura: { ni: 'nintzaion', zu: 'zintzaion', gu: 'gintzaizkion', zuek: 'zintzaizkion' },
+      gu: { ni: 'nintzaigun', zu: 'zintzaigun', zuek: 'zintzaizkigun' },
+      zuek: { ni: 'nintzaizuen', zu: 'zintzaizuen', gu: 'gintzaizkizuen' },
+      haiek: { ni: 'nintzaien', zu: 'zintzaien', gu: 'gintzaizkien', zuek: 'zintzaizkien' },
+    },
+  },
+  // #448: the NOR-NORI-NORK ditransitive ("diot") skeleton behind `esan`/
+  // `eman`/`saldu-dative`/`utzi-dative`/`adierazi-dative`/`eskatu-dative`/
+  // `galdetu-dative`'s recipient-/agent-fixed flat `present`/`past`/`future`
+  // tables (Units 28/29). Outer key is NORK, inner is NORI — the same
+  // outer/inner shape `edun` above uses (NORK outer, NOR inner) — so a
+  // verb's fixed argument resolves through the same `resolveObjectAxisTable`
+  // every other 2D axis table does: a `recipient`-fixed verb (NORI pinned,
+  // `esan`-style) reads `vary: 'nork'`; an `agent`-fixed verb (NORK pinned,
+  // `eman`-style) reads `vary: 'nor'`. Only the cells the 7 verbs above
+  // actually use are populated (`ni`'s full row, from `eman`'s NORK=ni
+  // table; every other NORK's `hura` cell, from the 6 recipient-fixed
+  // verbs' NORI=hura tables) — sparse by construction, same as `edun`
+  // omitting its own reflexive/`hi` gaps.
+  diot: {
+    present: {
+      ni: { zu: 'dizut', hura: 'diot', zuek: 'dizuet', haiek: 'diet' },
+      zu: { hura: 'diozu' },
+      hura: { hura: 'dio' },
+      gu: { hura: 'diogu' },
+      zuek: { hura: 'diozue' },
+      haiek: { hura: 'diote' },
+    },
+    past: {
+      ni: { zu: 'nizun', hura: 'nion', zuek: 'nizuen', haiek: 'nien' },
+      zu: { hura: 'zenion' },
+      hura: { hura: 'zion' },
+      gu: { hura: 'genion' },
+      zuek: { hura: 'zenioten' },
+      haiek: { hura: 'zioten' },
+    },
+  },
 }
 
 // Locate a specific verb: grep for `id: 'verbId'` (e.g. `id: 'izan'`) — each
@@ -3201,37 +3269,18 @@ export const VERBS = [
     // over NORK (25·L1 — "Nik/Zuk/... egia esaten diot/diozu/...").
     recipient: 'hura',
     dialect: 'batua',
+    // #448: composes `present`/`past`/`future` against the `diot` skeleton
+    // (outer=NORK, inner=NORI) via `getFixedArgument`/`resolveObjectAxisTable`
+    // — `recipient` above fixes NORI, so NORK is the varying axis. `nion`/
+    // `zion`/`genion`/`zenion` per CONJUGATIONS.md §5's `hari`/past row; §8's
+    // `esan`-specific table gives `nioen`/`zioen`/`genioen`/`zenioen` instead
+    // for the same cells — flagged in docs/LANGUAGE_DECISIONS.md for
+    // native-speaker confirmation; `nion` was chosen as it matches both §5's
+    // general grid and the LEARNING_JOURNEY_PROPOSED.md N-26 example ("Esan
+    // nion"). `future` reuses `diot.present`'s row (no separate `diot.future`
+    // skeleton entry), matching `present`'s own `-go`-participle future.
+    ditransitivePrefixes: { present: 'esaten ', past: 'esan ', future: 'esango ' },
     conjugations: {
-      present: {
-        ni: 'esaten diot',
-        zu: 'esaten diozu',
-        hura: 'esaten dio',
-        gu: 'esaten diogu',
-        zuek: 'esaten diozue',
-        haiek: 'esaten diote',
-      },
-      // `nion`/`zion`/`genion`/`zenion` per CONJUGATIONS.md §5's `hari`/past
-      // row. §8's `esan`-specific table gives `nioen`/`zioen`/`genioen`/
-      // `zenioen` instead for the same cells — flagged in
-      // docs/LANGUAGE_DECISIONS.md for native-speaker confirmation; `nion`
-      // was chosen as it matches both §5's general grid and the
-      // LEARNING_JOURNEY_PROPOSED.md N-26 example ("Esan nion").
-      past: {
-        ni: 'esan nion',
-        zu: 'esan zenion',
-        hura: 'esan zion',
-        gu: 'esan genion',
-        zuek: 'esan zenioten',
-        haiek: 'esan zioten',
-      },
-      future: {
-        ni: 'esango diot',
-        zu: 'esango diozu',
-        hura: 'esango dio',
-        gu: 'esango diogu',
-        zuek: 'esango diozue',
-        haiek: 'esango diote',
-      },
       // #162: plural-`NOR` object ("I tell him *lies*") — `-zki-`-infixed per
       // CONJUGATIONS.md §5's `NOR`=haiek grids, `hari` row (NORI still fixed,
       // NORK still the varying `person`). Future reuses the present aux
@@ -3436,25 +3485,13 @@ export const VERBS = [
     // distractor-floor fix anticipates.
     agent: 'ni',
     dialect: 'batua',
+    // #448: composes `present`/`past`/`future` against `diot.present.ni`/
+    // `diot.past.ni` (`agent: 'ni'` above fixes NORK, so NORI is the varying
+    // axis — `getFixedArgument`/`resolveObjectAxisTable` resolve this the
+    // same way `ukan.presentByObject`'s agent-fixed verbs do). `future`
+    // reuses `diot.present.ni`'s row, same as `esan.future` above.
+    ditransitivePrefixes: { present: 'ematen ', past: 'eman ', future: 'emango ' },
     conjugations: {
-      present: {
-        zu: 'ematen dizut',
-        hura: 'ematen diot',
-        zuek: 'ematen dizuet',
-        haiek: 'ematen diet',
-      },
-      past: {
-        zu: 'eman nizun',
-        hura: 'eman nion',
-        zuek: 'eman nizuen',
-        haiek: 'eman nien',
-      },
-      future: {
-        zu: 'emango dizut',
-        hura: 'emango diot',
-        zuek: 'emango dizuet',
-        haiek: 'emango diet',
-      },
       // #162: plural-`NOR` object ("I give him *the books*") — `-zki-`-
       // infixed per CONJUGATIONS.md §5's `NOR`=haiek grids, `nik` column
       // (NORK still fixed, NORI still the varying `person`).
@@ -3596,19 +3633,12 @@ export const VERBS = [
     agreement: ['nor', 'nori'],
     object: 'hura',
     dialect: 'batua',
+    // #448: composes `present`/`past`/`future` (against `dativeIzan`) and
+    // `presentByNor`/`pastByNor` (against `dativeIzanByNor`) at runtime —
+    // both families share the same per-tense prefix, confirmed cell-for-cell
+    // against this verb's previous literal tables. See `getComposedTable`.
+    byNoriPrefixes: { present: 'gustatzen ', past: 'gustatu ', future: 'gustatuko ' },
     conjugations: {
-      present: {
-        ni: 'gustatzen zait', zu: 'gustatzen zaizu', hura: 'gustatzen zaio',
-        gu: 'gustatzen zaigu', zuek: 'gustatzen zaizue', haiek: 'gustatzen zaie',
-      },
-      past: {
-        ni: 'gustatu zitzaidan', zu: 'gustatu zitzaizun', hura: 'gustatu zitzaion',
-        gu: 'gustatu zitzaigun', zuek: 'gustatu zitzaizuen', haiek: 'gustatu zitzaien',
-      },
-      future: {
-        ni: 'gustatuko zait', zu: 'gustatuko zaizu', hura: 'gustatuko zaio',
-        gu: 'gustatuko zaigu', zuek: 'gustatuko zaizue', haiek: 'gustatuko zaie',
-      },
       // #164: plural-`NOR` ("they please me") — same `NORI`-suffix family,
       // `-zki-`-infixed per `docs/CONJUGATIONS.md` §4's `haiek`/`NOR` column.
       // `person` here still ranges over `NORI`; the fixed `NOR` argument
@@ -3624,36 +3654,6 @@ export const VERBS = [
       futurePlural: {
         ni: 'gustatuko zaizkit', zu: 'gustatuko zaizkizu', hura: 'gustatuko zaizkio',
         gu: 'gustatuko zaizkigu', zuek: 'gustatuko zaizkizue', haiek: 'gustatuko zaizkie',
-      },
-      // #358: real 2D NOR-NORI table (`{ [nori]: { [nor]: form } }`), the
-      // NORI-NOR mirror of `ukan.presentByObject` (#346) — `nori` is the
-      // existing varying axis from `present` above (outer key, untouched),
-      // `nor` is the newly-introduced one (inner key), core grid only (`nor`
-      // ∈ `ni`/`zu`/`gu`/`zuek`, no `hi`; reflexive diagonal absent).
-      // Transcribed from `docs/CONJUGATIONS.md`'s NOR-NORI present grid
-      // (§4): each `[nori]` row's auxiliary (`natzaio`/`zatzaio`/... for
-      // `nori: 'hura'`, etc.) prefixed with this verb's own participle
-      // (`gustatzen`), the same auxiliary family `present` above already
-      // uses — e.g. `presentByNor.hura.zu === 'gustatzen zatzaio'` uses the
-      // same `zatzaio` cell the past/future tables' citation column implies.
-      presentByNor: {
-        ni: { zu: 'gustatzen zatzait', gu: 'gustatzen gatzaizkit', zuek: 'gustatzen zatzaizkit' },
-        zu: { ni: 'gustatzen natzaizu', gu: 'gustatzen gatzaizkizu', zuek: 'gustatzen zatzaizkizu' },
-        hura: { ni: 'gustatzen natzaio', zu: 'gustatzen zatzaio', gu: 'gustatzen gatzaizkio', zuek: 'gustatzen zatzaizkio' },
-        gu: { ni: 'gustatzen natzaigu', zu: 'gustatzen zatzaigu', zuek: 'gustatzen zatzaizkigu' },
-        zuek: { ni: 'gustatzen natzaizue', zu: 'gustatzen zatzaizue', gu: 'gustatzen gatzaizkizue' },
-        haiek: { ni: 'gustatzen natzaie', zu: 'gustatzen zatzaie', gu: 'gustatzen gatzaizkie', zuek: 'gustatzen zatzaizkie' },
-      },
-      // #358: `past`'s NOR-NORI object axis, same shape/sourcing as
-      // `presentByNor` above, transcribed from `docs/CONJUGATIONS.md`'s
-      // NOR-NORI past grid (§4).
-      pastByNor: {
-        ni: { zu: 'gustatu zintzaidan', gu: 'gustatu gintzaizkidan', zuek: 'gustatu zintzaizkidan' },
-        zu: { ni: 'gustatu nintzaizun', gu: 'gustatu gintzaizkizun', zuek: 'gustatu zintzaizkizun' },
-        hura: { ni: 'gustatu nintzaion', zu: 'gustatu zintzaion', gu: 'gustatu gintzaizkion', zuek: 'gustatu zintzaizkion' },
-        gu: { ni: 'gustatu nintzaigun', zu: 'gustatu zintzaigun', zuek: 'gustatu zintzaizkigun' },
-        zuek: { ni: 'gustatu nintzaizuen', zu: 'gustatu zintzaizuen', gu: 'gustatu gintzaizkizuen' },
-        haiek: { ni: 'gustatu nintzaien', zu: 'gustatu zintzaien', gu: 'gustatu gintzaizkien', zuek: 'gustatu zintzaizkien' },
       },
       // #361: Baldintza's NOR-NORI object axis, transcribed from
       // `docs/CONJUGATIONS.md:468-483` — the future `-ko` participle
@@ -3821,19 +3821,9 @@ export const VERBS = [
     agreement: ['nor', 'nori'],
     object: 'hura',
     dialect: 'batua',
+    // #448: see `gustatu.byNoriPrefixes` above for what this composes.
+    byNoriPrefixes: { present: 'iruditzen ', past: 'iruditu ', future: 'irudituko ' },
     conjugations: {
-      present: {
-        ni: 'iruditzen zait', zu: 'iruditzen zaizu', hura: 'iruditzen zaio',
-        gu: 'iruditzen zaigu', zuek: 'iruditzen zaizue', haiek: 'iruditzen zaie',
-      },
-      past: {
-        ni: 'iruditu zitzaidan', zu: 'iruditu zitzaizun', hura: 'iruditu zitzaion',
-        gu: 'iruditu zitzaigun', zuek: 'iruditu zitzaizuen', haiek: 'iruditu zitzaien',
-      },
-      future: {
-        ni: 'irudituko zait', zu: 'irudituko zaizu', hura: 'irudituko zaio',
-        gu: 'irudituko zaigu', zuek: 'irudituko zaizue', haiek: 'irudituko zaie',
-      },
       // #164: plural-`NOR` counterpart, see `gustatu`'s table above for the
       // `-zki-` derivation.
       presentPlural: {
@@ -3847,25 +3837,6 @@ export const VERBS = [
       futurePlural: {
         ni: 'irudituko zaizkit', zu: 'irudituko zaizkizu', hura: 'irudituko zaizkio',
         gu: 'irudituko zaizkigu', zuek: 'irudituko zaizkizue', haiek: 'irudituko zaizkie',
-      },
-      // #358: see `gustatu.presentByNor`/`pastByNor` above for the shape and
-      // sourcing — same auxiliary family, this verb's own participle
-      // (`iruditzen`/`iruditu`) prefixed instead.
-      presentByNor: {
-        ni: { zu: 'iruditzen zatzait', gu: 'iruditzen gatzaizkit', zuek: 'iruditzen zatzaizkit' },
-        zu: { ni: 'iruditzen natzaizu', gu: 'iruditzen gatzaizkizu', zuek: 'iruditzen zatzaizkizu' },
-        hura: { ni: 'iruditzen natzaio', zu: 'iruditzen zatzaio', gu: 'iruditzen gatzaizkio', zuek: 'iruditzen zatzaizkio' },
-        gu: { ni: 'iruditzen natzaigu', zu: 'iruditzen zatzaigu', zuek: 'iruditzen zatzaizkigu' },
-        zuek: { ni: 'iruditzen natzaizue', zu: 'iruditzen zatzaizue', gu: 'iruditzen gatzaizkizue' },
-        haiek: { ni: 'iruditzen natzaie', zu: 'iruditzen zatzaie', gu: 'iruditzen gatzaizkie', zuek: 'iruditzen zatzaizkie' },
-      },
-      pastByNor: {
-        ni: { zu: 'iruditu zintzaidan', gu: 'iruditu gintzaizkidan', zuek: 'iruditu zintzaizkidan' },
-        zu: { ni: 'iruditu nintzaizun', gu: 'iruditu gintzaizkizun', zuek: 'iruditu zintzaizkizun' },
-        hura: { ni: 'iruditu nintzaion', zu: 'iruditu zintzaion', gu: 'iruditu gintzaizkion', zuek: 'iruditu zintzaizkion' },
-        gu: { ni: 'iruditu nintzaigun', zu: 'iruditu zintzaigun', zuek: 'iruditu zintzaizkigun' },
-        zuek: { ni: 'iruditu nintzaizuen', zu: 'iruditu zintzaizuen', gu: 'iruditu gintzaizkizuen' },
-        haiek: { ni: 'iruditu nintzaien', zu: 'iruditu zintzaien', gu: 'iruditu gintzaizkien', zuek: 'iruditu zintzaizkien' },
       },
       // #361: see `gustatu.baldintzaByNor`/`conditionalByNor`/
       // `conditionalPastByNor` above for the shape, sourcing, and reflexive
@@ -4001,19 +3972,12 @@ export const VERBS = [
     // the resultative reading ("it is [in a state of being] forgotten to
     // me") is what `docs/LEARNING_JOURNEY_PROPOSED.md`'s dedicated `ahaztu`
     // table and Unit 23 example ("Liburua ahaztu zait") both use.
+    // #448: `present` and `past` share the identical bare-participle prefix
+    // string (unlike `gustatu`/`iruditu`, whose `present` uses the `-tzen`
+    // habitual) — they still compose correctly since each pairs with its own
+    // `dativeIzan` skeleton row. See `gustatu.byNoriPrefixes` above.
+    byNoriPrefixes: { present: 'ahaztu ', past: 'ahaztu ', future: 'ahaztuko ' },
     conjugations: {
-      present: {
-        ni: 'ahaztu zait', zu: 'ahaztu zaizu', hura: 'ahaztu zaio',
-        gu: 'ahaztu zaigu', zuek: 'ahaztu zaizue', haiek: 'ahaztu zaie',
-      },
-      past: {
-        ni: 'ahaztu zitzaidan', zu: 'ahaztu zitzaizun', hura: 'ahaztu zitzaion',
-        gu: 'ahaztu zitzaigun', zuek: 'ahaztu zitzaizuen', haiek: 'ahaztu zitzaien',
-      },
-      future: {
-        ni: 'ahaztuko zait', zu: 'ahaztuko zaizu', hura: 'ahaztuko zaio',
-        gu: 'ahaztuko zaigu', zuek: 'ahaztuko zaizue', haiek: 'ahaztuko zaie',
-      },
       // #164: plural-`NOR` counterpart — this is the pairing the issue's own
       // worked example uses ("Giltzak ahaztu zaizkit" = "I forgot the
       // keys"), since `ahaztu` (unlike `gustatu`/`iruditu`) most naturally
@@ -4029,27 +3993,6 @@ export const VERBS = [
       futurePlural: {
         ni: 'ahaztuko zaizkit', zu: 'ahaztuko zaizkizu', hura: 'ahaztuko zaizkio',
         gu: 'ahaztuko zaizkigu', zuek: 'ahaztuko zaizkizue', haiek: 'ahaztuko zaizkie',
-      },
-      // #358: see `gustatu.presentByNor`/`pastByNor` above for the shape and
-      // sourcing — `ahaztu`'s present uses the bare participle (not the
-      // `-tzen` habitual, same as `present` above), so both rows here prefix
-      // the bare `ahaztu` participle, differing only in which auxiliary
-      // tense (present vs. past) follows it.
-      presentByNor: {
-        ni: { zu: 'ahaztu zatzait', gu: 'ahaztu gatzaizkit', zuek: 'ahaztu zatzaizkit' },
-        zu: { ni: 'ahaztu natzaizu', gu: 'ahaztu gatzaizkizu', zuek: 'ahaztu zatzaizkizu' },
-        hura: { ni: 'ahaztu natzaio', zu: 'ahaztu zatzaio', gu: 'ahaztu gatzaizkio', zuek: 'ahaztu zatzaizkio' },
-        gu: { ni: 'ahaztu natzaigu', zu: 'ahaztu zatzaigu', zuek: 'ahaztu zatzaizkigu' },
-        zuek: { ni: 'ahaztu natzaizue', zu: 'ahaztu zatzaizue', gu: 'ahaztu gatzaizkizue' },
-        haiek: { ni: 'ahaztu natzaie', zu: 'ahaztu zatzaie', gu: 'ahaztu gatzaizkie', zuek: 'ahaztu zatzaizkie' },
-      },
-      pastByNor: {
-        ni: { zu: 'ahaztu zintzaidan', gu: 'ahaztu gintzaizkidan', zuek: 'ahaztu zintzaizkidan' },
-        zu: { ni: 'ahaztu nintzaizun', gu: 'ahaztu gintzaizkizun', zuek: 'ahaztu zintzaizkizun' },
-        hura: { ni: 'ahaztu nintzaion', zu: 'ahaztu zintzaion', gu: 'ahaztu gintzaizkion', zuek: 'ahaztu zintzaizkion' },
-        gu: { ni: 'ahaztu nintzaigun', zu: 'ahaztu zintzaigun', zuek: 'ahaztu zintzaizkigun' },
-        zuek: { ni: 'ahaztu nintzaizuen', zu: 'ahaztu zintzaizuen', gu: 'ahaztu gintzaizkizuen' },
-        haiek: { ni: 'ahaztu nintzaien', zu: 'ahaztu zintzaien', gu: 'ahaztu gintzaizkien', zuek: 'ahaztu zintzaizkien' },
       },
       // #361: see `gustatu.baldintzaByNor`/`conditionalByNor`/
       // `conditionalPastByNor` above for the shape, sourcing, and reflexive
@@ -4972,32 +4915,9 @@ export const VERBS = [
     agreement: ['nor', 'nori', 'nork'],
     recipient: 'hura',
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'saltzen diot',
-        zu: 'saltzen diozu',
-        hura: 'saltzen dio',
-        gu: 'saltzen diogu',
-        zuek: 'saltzen diozue',
-        haiek: 'saltzen diote',
-      },
-      past: {
-        ni: 'saldu nion',
-        zu: 'saldu zenion',
-        hura: 'saldu zion',
-        gu: 'saldu genion',
-        zuek: 'saldu zenioten',
-        haiek: 'saldu zioten',
-      },
-      future: {
-        ni: 'salduko diot',
-        zu: 'salduko diozu',
-        hura: 'salduko dio',
-        gu: 'salduko diogu',
-        zuek: 'salduko diozue',
-        haiek: 'salduko diote',
-      },
-    },
+    // #448: see `esan.ditransitivePrefixes` above for what this composes.
+    ditransitivePrefixes: { present: 'saltzen ', past: 'saldu ', future: 'salduko ' },
+    conjugations: {},
     // #312: cultural-bank past item — fresh hake sold to a restaurant; no
     // sibling `-dative` verb plausibly substitutes into this exact combo.
     sentences: {
@@ -5017,32 +4937,10 @@ export const VERBS = [
     agreement: ['nor', 'nori', 'nork'],
     recipient: 'hura',
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'uzten diot',
-        zu: 'uzten diozu',
-        hura: 'uzten dio',
-        gu: 'uzten diogu',
-        zuek: 'uzten diozue',
-        haiek: 'uzten diote',
-      },
-      past: {
-        ni: 'utzi nion',
-        zu: 'utzi zenion',
-        hura: 'utzi zion',
-        gu: 'utzi genion',
-        zuek: 'utzi zenioten',
-        haiek: 'utzi zioten',
-      },
-      future: {
-        ni: 'utziko diot',
-        zu: 'utziko diozu',
-        hura: 'utziko dio',
-        gu: 'utziko diogu',
-        zuek: 'utziko diozue',
-        haiek: 'utziko diote',
-      },
-    },
+    // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot
+    // (see esan/eman above) — no literal table needed.
+    ditransitivePrefixes: { present: 'uzten ', past: 'utzi ', future: 'utziko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
   {
@@ -5058,32 +4956,9 @@ export const VERBS = [
     agreement: ['nor', 'nori', 'nork'],
     recipient: 'hura',
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'adierazten diot',
-        zu: 'adierazten diozu',
-        hura: 'adierazten dio',
-        gu: 'adierazten diogu',
-        zuek: 'adierazten diozue',
-        haiek: 'adierazten diote',
-      },
-      past: {
-        ni: 'adierazi nion',
-        zu: 'adierazi zenion',
-        hura: 'adierazi zion',
-        gu: 'adierazi genion',
-        zuek: 'adierazi zenioten',
-        haiek: 'adierazi zioten',
-      },
-      future: {
-        ni: 'adieraziko diot',
-        zu: 'adieraziko diozu',
-        hura: 'adieraziko dio',
-        gu: 'adieraziko diogu',
-        zuek: 'adieraziko diozue',
-        haiek: 'adieraziko diote',
-      },
-    },
+    // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
+    ditransitivePrefixes: { present: 'adierazten ', past: 'adierazi ', future: 'adieraziko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
   {
@@ -5095,32 +4970,9 @@ export const VERBS = [
     agreement: ['nor', 'nori', 'nork'],
     recipient: 'hura',
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'eskatzen diot',
-        zu: 'eskatzen diozu',
-        hura: 'eskatzen dio',
-        gu: 'eskatzen diogu',
-        zuek: 'eskatzen diozue',
-        haiek: 'eskatzen diote',
-      },
-      past: {
-        ni: 'eskatu nion',
-        zu: 'eskatu zenion',
-        hura: 'eskatu zion',
-        gu: 'eskatu genion',
-        zuek: 'eskatu zenioten',
-        haiek: 'eskatu zioten',
-      },
-      future: {
-        ni: 'eskatuko diot',
-        zu: 'eskatuko diozu',
-        hura: 'eskatuko dio',
-        gu: 'eskatuko diogu',
-        zuek: 'eskatuko diozue',
-        haiek: 'eskatuko diote',
-      },
-    },
+    // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
+    ditransitivePrefixes: { present: 'eskatzen ', past: 'eskatu ', future: 'eskatuko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
   {
@@ -5132,32 +4984,9 @@ export const VERBS = [
     agreement: ['nor', 'nori', 'nork'],
     recipient: 'hura',
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'galdetzen diot',
-        zu: 'galdetzen diozu',
-        hura: 'galdetzen dio',
-        gu: 'galdetzen diogu',
-        zuek: 'galdetzen diozue',
-        haiek: 'galdetzen diote',
-      },
-      past: {
-        ni: 'galdetu nion',
-        zu: 'galdetu zenion',
-        hura: 'galdetu zion',
-        gu: 'galdetu genion',
-        zuek: 'galdetu zenioten',
-        haiek: 'galdetu zioten',
-      },
-      future: {
-        ni: 'galdetuko diot',
-        zu: 'galdetuko diozu',
-        hura: 'galdetuko dio',
-        gu: 'galdetuko diogu',
-        zuek: 'galdetuko diozue',
-        haiek: 'galdetuko diote',
-      },
-    },
+    // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
+    ditransitivePrefixes: { present: 'galdetzen ', past: 'galdetu ', future: 'galdetuko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
   {
@@ -8076,39 +7905,13 @@ export const VERBS = [
     agreement: ['nor', 'nori'],
     object: 'hura',
     dialect: 'batua',
+    // #448: composes `present`/`past` (no `future` — this verb has none) and
+    // `presentByNor`/`pastByNor`. See `gustatu.byNoriPrefixes` above.
+    byNoriPrefixes: { present: 'jarraitzen ', past: 'jarraitu ' },
     conjugations: {
-      present: {
-        ni: 'jarraitzen zait', zu: 'jarraitzen zaizu', hura: 'jarraitzen zaio',
-        gu: 'jarraitzen zaigu', zuek: 'jarraitzen zaizue', haiek: 'jarraitzen zaie',
-      },
-      past: {
-        ni: 'jarraitu zitzaidan', zu: 'jarraitu zitzaizun', hura: 'jarraitu zitzaion',
-        gu: 'jarraitu zitzaigun', zuek: 'jarraitu zitzaizuen', haiek: 'jarraitu zitzaien',
-      },
-      // #441: `jarraitu` joins `gustatu`/`iruditu`/`ahaztu`'s NOR-NORI object
-      // axis pool (Unit 27) as the 4th animate-NOR member — `jario` stays out
-      // (thing-NOR, #442). Same auxiliary family as `gustatu.presentByNor`/
-      // `pastByNor` (byte-identical cells, prefix swapped only): `present`'s
-      // `-tzen` participle prefix ("jarraitzen ") for `presentByNor`, the bare
-      // participle ("jarraitu ", matching `past` above) for `pastByNor`.
-      presentByNor: {
-        ni: { zu: 'jarraitzen zatzait', gu: 'jarraitzen gatzaizkit', zuek: 'jarraitzen zatzaizkit' },
-        zu: { ni: 'jarraitzen natzaizu', gu: 'jarraitzen gatzaizkizu', zuek: 'jarraitzen zatzaizkizu' },
-        hura: { ni: 'jarraitzen natzaio', zu: 'jarraitzen zatzaio', gu: 'jarraitzen gatzaizkio', zuek: 'jarraitzen zatzaizkio' },
-        gu: { ni: 'jarraitzen natzaigu', zu: 'jarraitzen zatzaigu', zuek: 'jarraitzen zatzaizkigu' },
-        zuek: { ni: 'jarraitzen natzaizue', zu: 'jarraitzen zatzaizue', gu: 'jarraitzen gatzaizkizue' },
-        haiek: { ni: 'jarraitzen natzaie', zu: 'jarraitzen zatzaie', gu: 'jarraitzen gatzaizkie', zuek: 'jarraitzen zatzaizkie' },
-      },
-      pastByNor: {
-        ni: { zu: 'jarraitu zintzaidan', gu: 'jarraitu gintzaizkidan', zuek: 'jarraitu zintzaizkidan' },
-        zu: { ni: 'jarraitu nintzaizun', gu: 'jarraitu gintzaizkizun', zuek: 'jarraitu zintzaizkizun' },
-        hura: { ni: 'jarraitu nintzaion', zu: 'jarraitu zintzaion', gu: 'jarraitu gintzaizkion', zuek: 'jarraitu zintzaizkion' },
-        gu: { ni: 'jarraitu nintzaigun', zu: 'jarraitu zintzaigun', zuek: 'jarraitu zintzaizkigun' },
-        zuek: { ni: 'jarraitu nintzaizuen', zu: 'jarraitu zintzaizuen', gu: 'jarraitu gintzaizkizuen' },
-        haiek: { ni: 'jarraitu nintzaien', zu: 'jarraitu zintzaien', gu: 'jarraitu gintzaizkien', zuek: 'jarraitu zintzaizkien' },
-      },
-      // #444: the imperative twin of `presentByNor`/`pastByNor` above — same
-      // `gustatu`/`iruditu`/`ahaztu` auxiliary family (byte-identical cells,
+      // #444: the imperative twin of the now-composed `presentByNor`/
+      // `pastByNor` (see `byNoriPrefixes` above) — same `gustatu`/`iruditu`/
+      // `ahaztu` auxiliary family (byte-identical cells,
       // only the bare participle prefix swapped for "jarraitu "), joining
       // Unit 35's imperative NOR-NORI object axis pool as the 4th member.
       imperativeByNor: {
@@ -8545,6 +8348,15 @@ export const VERBS = [
   },
 ]
 
+// #448: a verb's `future`/`past` can now come from `getComposedTable`'s
+// `byNoriPrefixes`/`ditransitivePrefixes` branches instead of a literal
+// `conjugations.future`/`.past` table — those verbs still *have* the tense,
+// so the fallback loops below must not skip them just because the literal
+// table was collapsed to `{}`.
+function verbHasComposedTense(verb, tense) {
+  return Boolean(verb.conjugations[tense] || verb.byNoriPrefixes?.[tense] || verb.ditransitivePrefixes?.[tense])
+}
+
 // Stage 6 (Units 14-15, "Talking About the Future") gave every verb above (except
 // `ari`, see `docs/LANGUAGE_DECISIONS.md`) a `conjugations.future` table. The blank
 // in a `sentences`/`pronounSentences` template doesn't depend on tense — "Ni
@@ -8553,7 +8365,7 @@ export const VERBS = [
 // under a new `future` key, verbs with a `future` table simply reuse their
 // `present` ones by reference.
 for (const verb of VERBS) {
-  if (!verb.conjugations.future) continue
+  if (!verbHasComposedTense(verb, 'future')) continue
   if (verb.sentences?.present) verb.sentences.future = verb.sentences.present
   if (verb.pronounSentences?.present) verb.pronounSentences.future = verb.pronounSentences.present
 }
@@ -8584,7 +8396,7 @@ for (const verb of VERBS) {
 // otherwise leak into a past-tense lesson; it defines its own
 // `pronounSentences.past`, which this loop must not clobber.
 for (const verb of VERBS) {
-  if (!verb.conjugations.past) continue
+  if (!verbHasComposedTense(verb, 'past')) continue
   if (!verb.sentences?.past && verb.sentences?.present) verb.sentences.past = verb.sentences.present
   if (!verb.pronounSentences?.past && verb.pronounSentences?.present) verb.pronounSentences.past = verb.pronounSentences.present
 }
@@ -8597,7 +8409,7 @@ for (const verb of VERBS) {
 // `negativeSentences` for the present.
 const SINGLE_WORD_PAST_NEGATION = ['izan', 'egon', 'ukan', 'eduki', 'jakin']
 for (const verb of VERBS) {
-  if (!verb.conjugations.past || !SINGLE_WORD_PAST_NEGATION.includes(verb.id)) continue
+  if (!verbHasComposedTense(verb, 'past') || !SINGLE_WORD_PAST_NEGATION.includes(verb.id)) continue
   if (verb.negativeSentences?.present) verb.negativeSentences.past = verb.negativeSentences.present
 }
 
