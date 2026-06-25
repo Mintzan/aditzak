@@ -4628,22 +4628,26 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #457: `bilatu` ("search for") is a genuine sibling on all six —
+    // searching for and finding the same object are both natural, distinct
+    // true claims about the same scene (a shell, a shop, a mushroom, a gift,
+    // a trail sign, a sunken ship).
     sentences: {
       present: {
-        ni: { text: 'Nik hondartzan kontxa polit bat ___.', validFor: [] },
-        zu: { text: 'Zuk Donostiako kale zaharrean dendatxo bat ___?', validFor: [] },
-        hura: { text: 'Hark basoan onddo handi bat ___.', validFor: [] },
-        gu: { text: 'Guk Gernikako azokan opari egokia ___.', validFor: [] },
-        zuek: { text: 'Zuek mendian bide seinale zahar bat ___?', validFor: [] },
-        haiek: { text: 'Haiek itsasoan ontzi hondoratu bat ___.', validFor: [] },
+        ni: { text: 'Nik hondartzan kontxa polit bat ___.', validFor: ['bilatu'] },
+        zu: { text: 'Zuk Donostiako kale zaharrean dendatxo bat ___?', validFor: ['bilatu'] },
+        hura: { text: 'Hark basoan onddo handi bat ___.', validFor: ['bilatu'] },
+        gu: { text: 'Guk Gernikako azokan opari egokia ___.', validFor: ['bilatu'] },
+        zuek: { text: 'Zuek mendian bide seinale zahar bat ___?', validFor: ['bilatu'] },
+        haiek: { text: 'Haiek itsasoan ontzi hondoratu bat ___.', validFor: ['bilatu'] },
       },
       past: {
-        ni: { text: 'Nik atzo hondartzan kontxa polit bat ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun Donostiako kale zaharrean dendatxo bat ___?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean basoan onddo handi bat ___.', validFor: [] },
-        gu: { text: 'Guk iaz Gernikako azokan opari egokia ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun mendian bide seinale zahar bat ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean itsasoan ontzi hondoratu bat ___.', validFor: [] },
+        ni: { text: 'Nik atzo hondartzan kontxa polit bat ___.', validFor: ['bilatu'] },
+        zu: { text: 'Zuk herenegun Donostiako kale zaharrean dendatxo bat ___?', validFor: ['bilatu'] },
+        hura: { text: 'Hark lehengo egunean basoan onddo handi bat ___.', validFor: ['bilatu'] },
+        gu: { text: 'Guk iaz Gernikako azokan opari egokia ___.', validFor: ['bilatu'] },
+        zuek: { text: 'Zuek duela bi egun mendian bide seinale zahar bat ___?', validFor: ['bilatu'] },
+        haiek: { text: 'Haiek joan den astean itsasoan ontzi hondoratu bat ___.', validFor: ['bilatu'] },
       },
     },
   },
@@ -4689,23 +4693,28 @@ export const VERBS = [
       futurePlural: { ni: 'bilatuko ditut', zu: 'bilatuko dituzu', hura: 'bilatuko ditu', gu: 'bilatuko ditugu', zuek: 'bilatuko dituzue', haiek: 'bilatuko dituzte' },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #457: `aurkitu` ("find") is a genuine sibling on the singular-object
+    // slots — see `aurkitu`'s own comment above. `gu`/`zuek` here only exist
+    // in the plural-object table (`opor egokiak`), and `aurkitu` has no
+    // plural-object conjugations, so there's no candidate form to borrow
+    // there.
     sentences: {
       present: {
-        ni: { text: 'Nik liburutegian erreferentzia zahar bat ___.', validFor: [] },
-        zu: { text: 'Zuk Gasteizko kale-mapan helbide bat ___?', validFor: [] },
-        hura: { text: 'Hark basoan galdutako ardia ___.', validFor: [] },
-        zuek: { text: 'Zuek interneten errezeta tradizionala ___?', validFor: [] },
-        haiek: { text: 'Haiek herrian etxe alokagarria ___.', validFor: [] },
+        ni: { text: 'Nik liburutegian erreferentzia zahar bat ___.', validFor: ['aurkitu'] },
+        zu: { text: 'Zuk Gasteizko kale-mapan helbide bat ___?', validFor: ['aurkitu'] },
+        hura: { text: 'Hark basoan galdutako ardia ___.', validFor: ['aurkitu'] },
+        zuek: { text: 'Zuek interneten errezeta tradizionala ___?', validFor: ['aurkitu'] },
+        haiek: { text: 'Haiek herrian etxe alokagarria ___.', validFor: ['aurkitu'] },
       },
       presentPlural: {
         gu: { text: 'Guk azokan opor egokiak ___.', validFor: [] },
       },
       past: {
-        ni: { text: 'Nik atzo liburutegian erreferentzia zahar bat ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun Gasteizko kale-mapan helbide bat ___?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean basoan galdutako ardia ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun interneten errezeta tradizionala ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean herrian etxe alokagarria ___.', validFor: [] },
+        ni: { text: 'Nik atzo liburutegian erreferentzia zahar bat ___.', validFor: ['aurkitu'] },
+        zu: { text: 'Zuk herenegun Gasteizko kale-mapan helbide bat ___?', validFor: ['aurkitu'] },
+        hura: { text: 'Hark lehengo egunean basoan galdutako ardia ___.', validFor: ['aurkitu'] },
+        zuek: { text: 'Zuek duela bi egun interneten errezeta tradizionala ___?', validFor: ['aurkitu'] },
+        haiek: { text: 'Haiek joan den astean herrian etxe alokagarria ___.', validFor: ['aurkitu'] },
       },
       pastPlural: {
         gu: { text: 'Guk iaz azokan opor egokiak ___.', validFor: [] },
@@ -6191,11 +6200,16 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #457: `jaso` ("receive") is a genuine sibling only on `hura` —
+    // "collecting" donations and "receiving" them at the same solidarity
+    // event are both true, distinct claims. The other objects here (a sum
+    // counted by hand, a friend group, one's own strength, a crowd) aren't
+    // things one "receives," so `jaso` doesn't fit them.
     sentences: {
       present: {
         ni: { text: 'Nik diru kopuru osoa ___ eskuz.', validFor: [] },
         zu: { text: 'Zuk lagun talde berria ___ kontzertura?', validFor: [] },
-        hura: { text: 'Hark dirua ___ elkartasun ekitaldian.', validFor: [] },
+        hura: { text: 'Hark dirua ___ elkartasun ekitaldian.', validFor: ['jaso'] },
         gu: { text: 'Guk indar guztia ___ azken tartean.', validFor: [] },
         zuek: { text: 'Zuek jende mordoa ___ manifestaziora?', validFor: [] },
         haiek: { text: 'Haiek diru bilketa handia ___ kanpaina horretan.', validFor: [] },
@@ -6203,7 +6217,7 @@ export const VERBS = [
       past: {
         ni: { text: 'Nik atzo diru kopuru osoa ___ eskuz.', validFor: [] },
         zu: { text: 'Zuk herenegun lagun talde berria ___ kontzertura?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean dirua ___ elkartasun ekitaldian.', validFor: [] },
+        hura: { text: 'Hark lehengo egunean dirua ___ elkartasun ekitaldian.', validFor: ['jaso'] },
         gu: { text: 'Guk iaz indar guztia ___ azken tartean.', validFor: [] },
         zuek: { text: 'Zuek duela bi egun jende mordoa ___ manifestaziora?', validFor: [] },
         haiek: { text: 'Haiek joan den astean diru bilketa handia ___ kanpaina horretan.', validFor: [] },
@@ -6246,22 +6260,27 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #457: `argudiatu` ("argue a case for") is a genuine sibling only on
+    // `gu`/`haiek` — a proposal and a solution are positions one can argue
+    // for, same as `argudiatu`'s own viewpoint/proposal/thesis objects. A
+    // concern, a question, or a problem (`ni`/`zu`/`hura`/`zuek`) aren't
+    // argued, they're raised — `argudiatu` doesn't fit those.
     sentences: {
       present: {
         ni: { text: 'Nik kezka berria ___ bileran.', validFor: [] },
         zu: { text: 'Zuk galdera zuzena ___?', validFor: [] },
         hura: { text: 'Hark arazo larria ___ eztabaidan.', validFor: [] },
-        gu: { text: 'Guk proposamen alternatiboa ___.', validFor: [] },
+        gu: { text: 'Guk proposamen alternatiboa ___.', validFor: ['argudiatu'] },
         zuek: { text: 'Zuek zalantza nagusia ___?', validFor: [] },
-        haiek: { text: 'Haiek beste irtenbide bat ___.', validFor: [] },
+        haiek: { text: 'Haiek beste irtenbide bat ___.', validFor: ['argudiatu'] },
       },
       past: {
         ni: { text: 'Nik atzo kezka berria ___ bileran.', validFor: [] },
         zu: { text: 'Zuk herenegun galdera zuzena ___?', validFor: [] },
         hura: { text: 'Hark lehengo egunean arazo larria ___ eztabaidan.', validFor: [] },
-        gu: { text: 'Guk iaz proposamen alternatiboa ___.', validFor: [] },
+        gu: { text: 'Guk iaz proposamen alternatiboa ___.', validFor: ['argudiatu'] },
         zuek: { text: 'Zuek duela bi egun zalantza nagusia ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean beste irtenbide bat ___.', validFor: [] },
+        haiek: { text: 'Haiek joan den astean beste irtenbide bat ___.', validFor: ['argudiatu'] },
       },
     },
   },
@@ -6474,22 +6493,30 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #457: `planteatu` ("pose/raise") is a genuine sibling on `ni`/`hura`/
+    // `gu`/`haiek` — presenting one's viewpoint, raising the issue of one's
+    // innocence, and presenting a proposal/thesis are all natural alternate
+    // claims to arguing them. `zu`/`zuek`'s "zergatik ___ horrela/hain gogor"
+    // have no concrete object noun (elliptical, leaning on `argudiatu`'s own
+    // intransitive-ish "argue like that" usage) — `planteatu` doesn't carry
+    // that same elliptical register, so left untagged. `ondorioztatu`
+    // ("conclude/deduce") doesn't fit anywhere here — see its own comment.
     sentences: {
       present: {
-        ni: { text: 'Nik nire ikuspuntua arrazoiekin ___.', validFor: [] },
+        ni: { text: 'Nik nire ikuspuntua arrazoiekin ___.', validFor: ['planteatu'] },
         zu: { text: 'Zuk zergatik ___ horrela?', validFor: [] },
-        hura: { text: 'Hark bere erru eza auzitegian ___.', validFor: [] },
-        gu: { text: 'Guk gure proposamena bilkuran ___.', validFor: [] },
+        hura: { text: 'Hark bere erru eza auzitegian ___.', validFor: ['planteatu'] },
+        gu: { text: 'Guk gure proposamena bilkuran ___.', validFor: ['planteatu'] },
         zuek: { text: 'Zuek zergatik ___ hain gogor?', validFor: [] },
-        haiek: { text: 'Haiek beren tesia kongresuan ___.', validFor: [] },
+        haiek: { text: 'Haiek beren tesia kongresuan ___.', validFor: ['planteatu'] },
       },
       past: {
-        ni: { text: 'Nik atzo nire ikuspuntua arrazoiekin ___.', validFor: [] },
+        ni: { text: 'Nik atzo nire ikuspuntua arrazoiekin ___.', validFor: ['planteatu'] },
         zu: { text: 'Zuk herenegun zergatik ___ horrela?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean bere erru eza auzitegian ___.', validFor: [] },
-        gu: { text: 'Guk iaz gure proposamena bilkuran ___.', validFor: [] },
+        hura: { text: 'Hark lehengo egunean bere erru eza auzitegian ___.', validFor: ['planteatu'] },
+        gu: { text: 'Guk iaz gure proposamena bilkuran ___.', validFor: ['planteatu'] },
         zuek: { text: 'Zuek duela bi egun zergatik ___ hain gogor?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean beren tesia kongresuan ___.', validFor: [] },
+        haiek: { text: 'Haiek joan den astean beren tesia kongresuan ___.', validFor: ['planteatu'] },
       },
     },
   },
@@ -6530,6 +6557,13 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #457: stays `validFor: []` throughout, despite the issue's hint
+    // grouping it with `argudiatu`/`planteatu` — "concluding/deducing" is an
+    // evidentiary-inference claim (drawing a conclusion FROM data/research/
+    // results), while "arguing" is a rhetorical-defense claim and "posing"
+    // is introducing a new point; none of those substitute cleanly for
+    // "concluding" without reading as a stretch or, in some slots, an
+    // outright different (even contradictory) claim.
     sentences: {
       present: {
         ni: { text: 'Nik datuetatik gauza bera ___.', validFor: [] },

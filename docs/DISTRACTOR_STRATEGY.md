@@ -362,6 +362,31 @@ The four forks from §4, with their outcomes:
   pure grammatical possibility — flagging here that this batch's
   abstract-cognition vocabulary carries more native-speaker-confirmation
   risk than #455's concrete-object verbs.
+- **#457, resolved (2026-06-25):** backfilled `validFor` on batch 3 of the
+  `nor-nork` cluster — the 13 finding/keeping/discourse verbs `aurkitu,
+  bilatu, galdu, jaso, saldu, itxaron, utzi, ukatu, batu, planteatu,
+  argudiatu, ondorioztatu, bereiztu`. The issue's two hints split
+  differently on contact with the actual sentence text: `aurkitu`/`bilatu`
+  ("find"/"search for") held up exactly as suggested — fully and
+  bidirectionally cross-tagged on all 6 persons, both tenses, since
+  searching for and finding the same concrete object are always distinct
+  true claims. `argudiatu`/`ondorioztatu`/`planteatu` (argue/conclude/pose)
+  fractured: `argudiatu`/`planteatu` partially cross-tag (4 of 6 persons,
+  asymmetric — a viewpoint/innocence-claim/proposal/thesis can be both
+  "argued for" and "raised/presented", but a concern/question/problem can
+  only be "raised", not "argued"), while `ondorioztatu` ("conclude/deduce")
+  doesn't fit either neighbor anywhere — concluding is an
+  evidentiary-inference claim (drawn FROM data/research), distinct in kind
+  from arguing (rhetorical defense) or posing (introducing a new point),
+  not just a near-synonym register shift like the #456 cases. One small
+  unflagged find: `batu`/`jaso` ("gather"/"receive") cross-tag on a single
+  slot (collecting vs. receiving donations at the same solidarity event),
+  asymmetrically (a medal is "received", not "gathered"). `galdu`, `saldu`,
+  `itxaron`, `utzi`, `ukatu`, `bereiztu` confirmed no genuine siblings within
+  this batch — their objects don't substitute for each other (e.g. "missing
+  a bus" and "waiting for a bus" share a plausible context but aren't the
+  same true claim, so `galdu`/`itxaron` were deliberately left untagged
+  despite surface plausibility).
 - Remaining distractor work outside this strategy: **#213** (hi/hitanoa
   wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
   on native-speaker confirmation of #167's toka/noka data, not on engineering.
