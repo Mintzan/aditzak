@@ -472,6 +472,18 @@ pooled reviews (one per mood per NORI value: `baldintza-axis-review-*`,
 `conditional-axis-review-*`, `conditional-past-axis-review-*`), replacing all
 54 single-verb lessons. `jario` stays excluded, same reasoning as #441/#444.
 
+**Update (#446)**: the Ahalera (potential) twin of #441/#444/#445 — Unit 32's
+`potentialByNor`/`potentialAlegiazkoaByNor`/`potentialLehenaldiaByNor` axes
+(`gustatu`/`iruditu`/`ahaztu`, #425) had the same 54-single-verb-lesson/
+no-pooled-review shape (3 verbs × 3 sub-tenses × 6 NORI values). Added
+`jarraitu.potentialByNor`/`potentialAlegiazkoaByNor`/`potentialLehenaldiaByNor`
+(same literal-table, prefix-swapped pattern as #441/#444/#445 — not composed,
+same `getComposedTable` limitation, still tracked as #448's follow-up) as the
+axis's 4th pool member, and 18 pooled reviews (one per sub-tense per NORI
+value: `potential-axis-review-*`, `potential-alegiazkoa-axis-review-*`,
+`potential-lehenaldia-axis-review-*`), replacing all 54 single-verb lessons.
+`jario` stays excluded, same reasoning as #441/#444/#445.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

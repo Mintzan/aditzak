@@ -8,6 +8,28 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-25 — #446: collapsed Unit 32's 54 single-verb Ahalera (potential) NOR-NORI lessons into 18 pooled cross-verb reviews
+
+Same shape as #441/#444/#445: `gustatu`/`iruditu`/`ahaztu`'s `potentialByNor`/
+`potentialAlegiazkoaByNor`/`potentialLehenaldiaByNor` axes (#425) had 54
+single-verb, recognition-only lessons (3 verbs × 3 sub-tenses × 6 NORI
+values) with no pooled cross-verb review. Added
+`jarraitu.potentialByNor`/`potentialAlegiazkoaByNor`/
+`potentialLehenaldiaByNor` to `verbs.js` (hand-written literal tables,
+byte-identical cells to `gustatu`'s with only the bare-participle prefix
+swapped for `jarraitu`'s own — Ahalera takes the bare participle, not the
+`-ko` future participle that Baldintza/Ondorioa use, matching `jarraitu`'s
+own `past` tense's prefix) as the axis's 4th pool member, and replaced all
+54 lessons with 18 pooled reviews (one per sub-tense per NORI value),
+preserving `mode: 'recognition'` and each NORI value's existing
+reflexive-gap `persons` array. `jario` stays excluded (thing-NOR, #442).
+
+Same as #445, the issue's "Unit 33" label is stale (pre-#440-renumbering);
+the actual current unit is Unit 32. And same as #441/#444/#445, "#436's
+composer" isn't actually available for the `byNor` family yet — that's
+still #448's unlanded follow-up — so `jarraitu`'s three tables here are
+hand-written, not composed.
+
 ## 2026-06-25 — #445: collapsed Unit 33's 54 single-verb Baldintza/Ondorioa NOR-NORI lessons into 18 pooled cross-verb reviews
 
 Same shape as #441 (Unit 27 present/past) and #444 (Unit 35 imperative):
