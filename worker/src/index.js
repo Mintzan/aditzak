@@ -13,9 +13,13 @@ const MAX_CONTEXT_LENGTH = 500
 // well above any realistic size while still rejecting anything pathological.
 const MAX_DIAGNOSTICS_LENGTH = 4000
 
-const DIAGNOSTICS_STRING_FIELDS = ['lessonId', 'verbId', 'tense', 'person', 'kind', 'correct', 'outcome', 'language', 'timestamp']
-const DIAGNOSTICS_KEYS = new Set([...DIAGNOSTICS_STRING_FIELDS, 'review', 'userAnswer', 'question'])
-const QUESTION_KEYS = new Set(['sentence', 'options', 'items'])
+const DIAGNOSTICS_REQUIRED_STRING_FIELDS = ['lessonId', 'kind', 'correct', 'outcome', 'language', 'timestamp']
+// `verbId`/`tense`/`person` are absent for question kinds that have no such
+// concept (e.g. `match-pairs` has no single `person`, `reading` has none of
+// the three) — nullable like `userAnswer`, not required.
+const DIAGNOSTICS_NULLABLE_STRING_FIELDS = ['verbId', 'tense', 'person']
+const DIAGNOSTICS_KEYS = new Set([...DIAGNOSTICS_REQUIRED_STRING_FIELDS, ...DIAGNOSTICS_NULLABLE_STRING_FIELDS, 'review', 'userAnswer', 'question'])
+const QUESTION_KEYS = new Set(['sentence', 'options', 'items', 'source', 'pairs', 'tokens', 'punctuation'])
 
 const JSON_HEADERS = { 'content-type': 'application/json' }
 
@@ -27,11 +31,12 @@ function isPlainObject(value) {
 // unknown keys, wrong types, or an oversized `question` sub-object, so a
 // malformed/forged request can't smuggle arbitrary data into the relayed
 // email.
-function isValidDiagnostics(diagnostics) {
+export function isValidDiagnostics(diagnostics) {
   if (!isPlainObject(diagnostics)) return false
   if (JSON.stringify(diagnostics).length > MAX_DIAGNOSTICS_LENGTH) return false
   if (!Object.keys(diagnostics).every((key) => DIAGNOSTICS_KEYS.has(key))) return false
-  if (!DIAGNOSTICS_STRING_FIELDS.every((field) => typeof diagnostics[field] === 'string')) return false
+  if (!DIAGNOSTICS_REQUIRED_STRING_FIELDS.every((field) => typeof diagnostics[field] === 'string')) return false
+  if (!DIAGNOSTICS_NULLABLE_STRING_FIELDS.every((field) => diagnostics[field] === undefined || typeof diagnostics[field] === 'string')) return false
   if (typeof diagnostics.review !== 'boolean') return false
   if (diagnostics.userAnswer !== null && typeof diagnostics.userAnswer !== 'string') return false
 
@@ -44,6 +49,16 @@ function isValidDiagnostics(diagnostics) {
     if (!Array.isArray(question.items)) return false
     if (!question.items.every((item) => isPlainObject(item) && typeof item.person === 'string' && typeof item.sentence === 'string')) return false
   }
+  if (question.source !== undefined && typeof question.source !== 'string') return false
+  if (question.pairs !== undefined) {
+    if (!Array.isArray(question.pairs)) return false
+    if (!question.pairs.every((pair) => isPlainObject(pair) && typeof pair.person === 'string' && typeof pair.form === 'string')) return false
+  }
+  if (question.tokens !== undefined) {
+    if (!Array.isArray(question.tokens)) return false
+    if (!question.tokens.every((token) => isPlainObject(token) && typeof token.id === 'number' && typeof token.text === 'string')) return false
+  }
+  if (question.punctuation !== undefined && typeof question.punctuation !== 'string') return false
 
   return true
 }
@@ -55,7 +70,7 @@ function formatDiagnostics(diagnostics) {
   const lines = [
     '--- Flagged question ---',
     `Lesson: ${diagnostics.lessonId}${diagnostics.review ? ' (review)' : ''}`,
-    `Verb / tense / person: ${diagnostics.verbId} / ${diagnostics.tense} / ${diagnostics.person}`,
+    `Verb / tense / person: ${diagnostics.verbId ?? '(n/a)'} / ${diagnostics.tense ?? '(n/a)'} / ${diagnostics.person ?? '(n/a)'}`,
     `Kind: ${diagnostics.kind}`,
     `Correct answer: ${diagnostics.correct}`,
     `User answer: ${diagnostics.userAnswer ?? '(none)'}`,
@@ -68,6 +83,14 @@ function formatDiagnostics(diagnostics) {
   if (diagnostics.question.items) {
     lines.push('Items:')
     for (const item of diagnostics.question.items) lines.push(`  ${item.person}: ${item.sentence}`)
+  }
+  if (diagnostics.question.source) lines.push(`Source: ${diagnostics.question.source}`)
+  if (diagnostics.question.pairs) {
+    lines.push('Pairs:')
+    for (const pair of diagnostics.question.pairs) lines.push(`  ${pair.person}: ${pair.form}`)
+  }
+  if (diagnostics.question.tokens) {
+    lines.push(`Tokens: ${diagnostics.question.tokens.map((token) => token.text).join(' ')}${diagnostics.question.punctuation}`)
   }
   return lines
 }

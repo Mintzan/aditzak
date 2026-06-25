@@ -6,7 +6,7 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
-## 2026-06-24 — Criterion for `wordOrderSafe` (which sentences are fair to grade as a single-order reorder drill)
+## 2026-06-25 — Criterion for `wordOrderSafe` (which sentences are fair to grade as a single-order reorder drill)
 
 The `word-order` drill (reassemble a scrambled sentence) can only fairly grade
 sentences with a single defensible order, but Basque word order is governed by
@@ -37,6 +37,7 @@ competing for the slot. By complement type:
   *and* an allative (`etorri`'s `zu`/`hura`: "Zu ez zatoz bihar eskolara"),
   has several natural orders — left untagged. Same for the `jakin` past
   `hura`/`haiek` items, whose complement is a whole subordinate clause.
+
 Tagged in the negatives pass: `izan`/`egon`/`ibili` (locative/predicate, all
 persons), `ukan`/`jakin` (object; `jakin` also past `ni`/`zu`), `joan`
 (allative, all persons), `etorri` (`ni` only).
@@ -74,6 +75,12 @@ Deliberately still untagged: five-plus-word affirmatives (trailing adjunct),
 synthetic-verb sentences with two complements, and any `nori` verb. Those
 remain a later, fluent-reviewed pass — each is a naturalness judgment like the
 `validFor` bar in `docs/SENTENCE_FRAMES.md`.
+
+## 2026-06-24 — Open question: `hartu`/`erosi`'s `animateObject` call (#442) needs native-speaker confirmation
+
+#442 added `animateObject: false` to gate a verb's personal-object cells out of its composed NOR-NORK object-axis table, and flagged `hartu`/`erosi` (both `dativeOvergeneration: true`, both already have a composed `presentByObject`/`pastByObject` table from #436) as a borderline call: `hartu` "take [someone]" reads as plausible (escorting/fetching a person), `erosi` "buy [someone]" reads as a metaphor (or worse, human trafficking) rather than the literal sense the table drills — but neither call was made here. Left both unset (default `true`, unfiltered) pending a native speaker confirming which, if either, should flip to `false`. Whoever resolves this should also check whether flipping either one orphans an already-shipped Unit 15 lesson (`src/data/lessons.js`'s `hartu-object-axis-present-zuek`, `erosi-object-axis-past-zu`, and the pooled `object-axis-*-review*` lessons all draw on these verbs' personal-`nor` cells) — same caveat #442 left for `jan`/`edan`, deferred to #443's Unit 15 rework.
+
+**Still open as of #443**: #443 widened Unit 15's pool with ~30 *other* verbs (gating the unambiguous thing-only ones among those) but deliberately did not resolve this specific `jan`/`edan`/`erosi`/`hartu` question — flipping any of the four still requires rewriting the `persons` arrays of the shipped lessons named above in the same change, and `erosi`/`jan`/`edan`'s readings ("buy/eat/drink a person") are sensitive enough that a guess didn't feel right to bundle into an otherwise mechanical widening pass. Still pending a native-speaker call (or an explicit "we accept Claude's best-effort call" from a maintainer) before anyone resolves it.
 
 ## 2026-06-24 — Plural-object (`ditut`/`nituen`) tables for eight long-tail transitive verbs whose example sentences had plural objects
 

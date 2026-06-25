@@ -384,6 +384,74 @@ already-nor-nork `objectAxis` verbs). `App.jsx`'s call site still doesn't
 pass `lesson.objectAxis` through — deferred to #381. See `docs/DECISIONS.md`
 (2026-06-21, #380).
 
+**Update (#435)**: #416 had extended Unit 15's reverse-direction block (NORK
+fixed at `hura`/`gu`/`zu`/`zuek`/`haiek`) but scoped it to `ukan`/`maite`
+only, leaving that half of the unit wall-to-wall those two verbs. #435 closed
+that gap with no engine changes — each remaining NORK value now rotates a
+single practice verb per tense across the full seven-verb object-axis set,
+and gets its own pooled review (one shared `fixed` per review, same shape
+`generateCrossVerbQuestions` already supported since #380).
+
+**Update (#436)**: the seven verbs' `presentByObject`/`pastByObject` literal
+tables above (`ukan`/`maite`/`ikusi`/`jan`/`edan`/`erosi`/`hartu`) are gone —
+each cell was always `<per-verb prefix> + ukan`'s matching cell, so `verbs.js`
+now stores that skeleton once (`OBJECT_AXIS_SKELETONS.edun`, present + past)
+plus each verb's `byObjectPrefixes: { present, past }`, composed at read time
+by `getComposedTable(verb, tense)` (`lessonLogic.js`). Every consumer that
+used to read `verb.conjugations[tense]` for these two tenses
+(`generateQuestions`, `collectCrossSourceCandidates`,
+`getDativeOvergenerationLure`, `hasAmbiguousTypedForm`, plus the
+`journey.test.js`/`logic.test.js` cross-checks) now goes through
+`getComposedTable` instead — behavior-preserving by construction, guarded by
+`logic.test.js`'s existing #347/#348/#378/#379 composition tests, now
+rewritten against `getComposedTable`'s output instead of the literal fields.
+The NOR-NORI flat/`byNor` tables and the ditransitive `diot`-family tables
+flagged in this issue's follow-up comments are out of scope for this pass —
+the composer is intentionally only as axis-generic as this one family needs
+today; widening it to those three remaining families is left to a follow-up
+(#448).
+
+**Update (#442)**: added `animateObject` (default `true`) to the verb model —
+when `false`, `getComposedTable` omits every personal (`ni`/`hi`/`gu`/`zu`/
+`zuek`) `nor` cell from a composed `presentByObject`/`pastByObject` table,
+keeping only the 3rd-person ones, so a thing-only verb's object axis never
+yields (or offers as a distractor) a "[verb] you/me/us" form. Marked on the
+six verbs that are unambiguously thing-only/metaphor and have no composed
+table yet (`irakurri`/`idatzi`/`argudiatu`/`ondorioztatu`/`planteatu`/
+`borobildu`/`saldu`/`galdu`) plus `jario` (gates its future NOR-NORI subject
+slot instead, once #441/#448 builds that composer) — all no-ops today, ready
+for #443/#441 to pick up. `jan`/`edan` (also named as exceptions in #442) and
+the borderline `hartu`/`erosi` were deliberately **not** marked: all four
+already have a composed table wired into shipped Unit 15 lessons that drill
+personal-`nor` cells for them, so flipping the flag now would silently orphan
+those lessons rather than just filter a still-unused one — left to #443's
+Unit 15 rework (`hartu`/`erosi`'s call also needs native-speaker confirmation,
+tracked in `docs/LANGUAGE_DECISIONS.md`).
+
+**Update (#441)**: Unit 27's NOR-NORI `byNor` axis (`gustatu`/`iruditu`/
+`ahaztu`'s `presentByNor`/`pastByNor`, #358/#419) had the same "no pooled
+review" gap #380 had already fixed on the NOR-NORK side — widened the pool to
+4 verbs by adding `jarraitu.presentByNor`/`pastByNor` (literal tables,
+matching the existing per-verb-prefix-over-shared-cells pattern `gustatu`/
+`iruditu`/`ahaztu` already use — not composed, since `getComposedTable` still
+only handles the NOR-NORK `byObject` axis), and added one pooled
+`generateCrossVerbQuestions`/`objectAxis` review per `nori` value per tense
+(12 lessons total). `jario` stays excluded (thing-NOR, #442); its
+`animateObject: false` flag still has no live effect on this axis until #448
+extends the composer to `byNor`.
+
+**Update (#443)**: widened Unit 15's NOR-NORK object-axis pool from 7 verbs to
+~37 — every periphrastic transitive verb in `VERBS` that had no
+`byObjectPrefixes` yet got one (prefix derived from the verb's own flat
+`present.ni`/`past.ni`, per #436's composition scheme — no new literal
+tables), `animateObject: false` where the personal-object reading is
+nonsensical for the verb's modeled sense, and a `sources` entry in every one
+of Unit 15's 12 pooled reviews. No engine changes — #380's `objectAxis`
+pooling already drops a thing-only verb's personal-`nor` cells from a
+review's candidate pool, exactly the case this was built for. `jan`/`edan`/
+`erosi`/`hartu`'s long-open `animateObject` question (`docs/LANGUAGE_DECISIONS.md`,
+2026-06-24) is still unresolved — see `docs/DECISIONS.md`'s #443 entry for why.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

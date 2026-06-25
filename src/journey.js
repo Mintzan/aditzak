@@ -298,11 +298,24 @@ export const JOURNEY = [
           // review spanning all seven verbs, per the #286 "extend the
           // existing unit, don't add a new one" precedent — this is more of
           // what Unit 15 already teaches, not a new grammatical relation.
+          // #416 then extended the reverse-direction block (NORK fixed at
+          // hura/gu/zu/zuek/haiek) but scoped it to `ukan`/`maite` only,
+          // which left it wall-to-wall those two verbs; #435 rotated the
+          // practice verb per NORK/tense slot across the full seven-verb set
+          // and added a pooled review per NORK value, matching what #381
+          // already did for `fixed: 'ni'`. #443 then widened the pool
+          // feeding every one of those pooled reviews from seven verbs to
+          // ~37 (every #436-composable periphrastic transitive verb in the
+          // data, gated by #442's `animateObject` flag for the thing-only/
+          // metaphor ones) — standalone practice lessons still rotate a
+          // handful of verbs (no single verb dominates), the wide pool lives
+          // in the reviews' `sources`, not as 30 new single-verb lessons. See
+          // `docs/DECISIONS.md`.
           {
             number: 15,
             title: 'maite izan — Loving Someone (The Non-3rd-Person Object)',
             focus:
-              "ukan/maite/ikusi/jan/edan/erosi/hartu's presentByObject/pastByObject tables (#346/#347/#348/#378/#379) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni, plus a pooled review (#380/#381) drawing distractors across all seven verbs; #416 then drills the reverse direction (someone/something acting on me/us/you) by fixing nork at hura/gu/zu/zuek/haiek in turn, for ukan/maite",
+              "ukan/maite/ikusi/jan/edan/erosi/hartu's presentByObject/pastByObject tables (#346/#347/#348/#378/#379) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni, plus a pooled review (#380/#381) drawing distractors across all seven verbs; #416/#435 then drill the reverse direction (someone/something acting on me/us/you) by fixing nork at hura/gu/zu/zuek/haiek in turn, rotating the practice verb across the full seven-verb set and adding a pooled review per NORK value; #443 widens every pooled review's verb pool to ~37 periphrastic transitive verbs",
             payload: '"I love you." (Maite zaitut.) / "It surprised me." (Harritu nau.)',
             status: 'available',
             lessonIds: [
@@ -313,25 +326,25 @@ export const JOURNEY = [
               'object-axis-present-review',
               'object-axis-past-review',
               'ukan-object-axis-present-hura',
-              'maite-object-axis-present-hura',
-              'ukan-object-axis-past-hura',
               'maite-object-axis-past-hura',
-              'ukan-object-axis-present-gu',
-              'maite-object-axis-present-gu',
-              'ukan-object-axis-past-gu',
-              'maite-object-axis-past-gu',
-              'ukan-object-axis-present-zu',
-              'maite-object-axis-present-zu',
-              'ukan-object-axis-past-zu',
-              'maite-object-axis-past-zu',
-              'ukan-object-axis-present-zuek',
-              'maite-object-axis-present-zuek',
+              'object-axis-present-review-hura',
+              'object-axis-past-review-hura',
+              'ikusi-object-axis-present-gu',
+              'jan-object-axis-past-gu',
+              'object-axis-present-review-gu',
+              'object-axis-past-review-gu',
+              'edan-object-axis-present-zu',
+              'erosi-object-axis-past-zu',
+              'object-axis-present-review-zu',
+              'object-axis-past-review-zu',
+              'hartu-object-axis-present-zuek',
               'ukan-object-axis-past-zuek',
-              'maite-object-axis-past-zuek',
-              'ukan-object-axis-present-haiek',
+              'object-axis-present-review-zuek',
+              'object-axis-past-review-zuek',
               'maite-object-axis-present-haiek',
-              'ukan-object-axis-past-haiek',
-              'maite-object-axis-past-haiek',
+              'ikusi-object-axis-past-haiek',
+              'object-axis-present-review-haiek',
+              'object-axis-past-review-haiek',
             ],
           },
           // Unit 16 ("Carrying & Bringing") moved here from the Phase VII
@@ -576,14 +589,16 @@ export const JOURNEY = [
           // (the unit's payoff dative person) and varies NOR across
           // `ni`/`gu`/`zuek` — `zu` itself is the reflexive gap, and `hura`
           // as NOR is already covered by Units 25-26's flat tables. No
-          // pooled cross-verb review, same scope limitation #347/#350 found
-          // for `objectAxis` (`generateCrossVerbQuestions` doesn't support
-          // it yet). See `docs/DECISIONS.md` for the placement decision.
+          // #441 widened this unit to a 4-verb pool (gustatu/iruditu/ahaztu/
+          // jarraitu — `jario` stays out, thing-NOR per #442) and added a
+          // pooled cross-verb review per nori value, closing the
+          // `generateCrossVerbQuestions`/`objectAxis` gap #347/#350 left open
+          // here. See `docs/DECISIONS.md` for the placement decision.
           {
             number: 27,
             title: 'The NOR-NORI Object Axis — natzaizu/gatzaizu',
             focus:
-              "the NOR-NORI object axis (natzaizu/gatzaizu/zaizkizu) — gustatu/iruditu/ahaztu's presentByNor/pastByNor tables (#358) shift NOR off the default hura/haiek to ni/gu/zuek, with nori fixed at zu; #419 then drills the rest of the table by fixing nori at ni/hura/gu/zuek/haiek in turn",
+              "the NOR-NORI object axis (natzaizu/gatzaizu/zaizkizu) — gustatu/iruditu/ahaztu's presentByNor/pastByNor tables (#358) shift NOR off the default hura/haiek to ni/gu/zuek, with nori fixed at zu; #419 then drills the rest of the table by fixing nori at ni/hura/gu/zuek/haiek in turn; #441 widens the pool to jarraitu and adds a pooled cross-verb review for each nori value",
             payload: '"Do you like me?" (Gustatzen natzaizu?) / "I like him." (Gustatzen natzaio.)',
             status: 'available',
             lessonIds: [
@@ -593,36 +608,48 @@ export const JOURNEY = [
               'gustatu-nor-axis-past',
               'iruditu-nor-axis-past',
               'ahaztu-nor-axis-past',
+              'nor-axis-present-review-zu',
+              'nor-axis-past-review-zu',
               'gustatu-nor-axis-present-ni',
               'iruditu-nor-axis-present-ni',
               'ahaztu-nor-axis-present-ni',
               'gustatu-nor-axis-past-ni',
               'iruditu-nor-axis-past-ni',
               'ahaztu-nor-axis-past-ni',
+              'nor-axis-present-review-ni',
+              'nor-axis-past-review-ni',
               'gustatu-nor-axis-present-hura',
               'iruditu-nor-axis-present-hura',
               'ahaztu-nor-axis-present-hura',
               'gustatu-nor-axis-past-hura',
               'iruditu-nor-axis-past-hura',
               'ahaztu-nor-axis-past-hura',
+              'nor-axis-present-review-hura',
+              'nor-axis-past-review-hura',
               'gustatu-nor-axis-present-gu',
               'iruditu-nor-axis-present-gu',
               'ahaztu-nor-axis-present-gu',
               'gustatu-nor-axis-past-gu',
               'iruditu-nor-axis-past-gu',
               'ahaztu-nor-axis-past-gu',
+              'nor-axis-present-review-gu',
+              'nor-axis-past-review-gu',
               'gustatu-nor-axis-present-zuek',
               'iruditu-nor-axis-present-zuek',
               'ahaztu-nor-axis-present-zuek',
               'gustatu-nor-axis-past-zuek',
               'iruditu-nor-axis-past-zuek',
               'ahaztu-nor-axis-past-zuek',
+              'nor-axis-present-review-zuek',
+              'nor-axis-past-review-zuek',
               'gustatu-nor-axis-present-haiek',
               'iruditu-nor-axis-present-haiek',
               'ahaztu-nor-axis-present-haiek',
               'gustatu-nor-axis-past-haiek',
               'iruditu-nor-axis-past-haiek',
               'ahaztu-nor-axis-past-haiek',
+              'nor-axis-present-review-haiek',
+              'nor-axis-past-review-haiek',
             ],
           },
         ],

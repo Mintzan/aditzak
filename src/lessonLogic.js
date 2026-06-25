@@ -2,6 +2,8 @@
 // tested directly and so react-refresh only has to reason about components
 // in App.jsx (it warns when a component file also exports plain functions).
 
+import { OBJECT_AXIS_SKELETONS } from './data/verbs.js'
+
 export function computeStars(score, total) {
   if (total === 0) return 0
   const ratio = score / total
@@ -688,7 +690,7 @@ function getDativeOvergenerationSibling(verbs, agreement) {
 export function getDativeOvergenerationLure(verbs, verb, tense, person, objectAxis) {
   if (!verb.dativeOvergeneration) return undefined
   const resolveTable = (v) => {
-    const table = v?.conjugations[tense]
+    const table = v && getComposedTable(v, tense)
     if (!table) return undefined
     return objectAxis ? resolveObjectAxisTable(table, objectAxis) : table
   }
@@ -748,6 +750,44 @@ export function resolveObjectAxisTable(table2D, { vary, fixed }) {
   return table
 }
 
+// #442: the personal (non-3rd-person) `nor` values a composed NOR-NORK
+// by-object table can vary over — every key the `edun` skeleton uses for its
+// varying object slot except the two 3rd-person ones (`hura`/`haiek`, which
+// can name a thing as well as a person). `getComposedTable` omits these for
+// an `animateObject: false` verb (`data/verbs.js` has the field's full doc
+// comment).
+const PERSONAL_NOR_VALUES = new Set(['ni', 'hi', 'gu', 'zu', 'zuek'])
+
+// #436: every consumer of `verb.conjugations[tense]` reads through here
+// instead, so a verb can carry `presentByObject`/`pastByObject` either as a
+// literal 2D table (today, for any verb not yet migrated) or — for `ukan`/
+// `maite`/`ikusi`/`jan`/`edan`/`erosi`/`hartu` — as a `byObjectPrefixes`
+// prefix composed at runtime against the shared `OBJECT_AXIS_SKELETONS.edun`
+// table (see `data/verbs.js`). Composing prepends the verb's per-tense prefix
+// to every leaf string of the skeleton, reproducing exactly what used to be
+// hand-written there. Any other `tense` (or a verb with no `byObjectPrefixes`)
+// just falls through to the literal table, unchanged.
+// #442: a verb with `animateObject: false` additionally drops every
+// personal (`PERSONAL_NOR_VALUES`) `nor` cell from the composed table, so its
+// object axis only ever yields the 3rd-person forms a thing-only object can
+// take — never a grammatically-valid-but-pragmatically-wrong "I read you"
+// form, either as a question's correct answer or as a distractor.
+export function getComposedTable(verb, tense) {
+  const base = tense === 'presentByObject' ? 'present' : tense === 'pastByObject' ? 'past' : undefined
+  const prefix = base && verb.byObjectPrefixes?.[base]
+  if (prefix === undefined) return verb.conjugations[tense]
+  const skeleton = OBJECT_AXIS_SKELETONS[verb.byObjectSkeleton ?? 'edun'][base]
+  const table = {}
+  for (const outer of Object.keys(skeleton)) {
+    table[outer] = {}
+    for (const inner of Object.keys(skeleton[outer])) {
+      if (verb.animateObject === false && PERSONAL_NOR_VALUES.has(inner)) continue
+      table[outer][inner] = prefix + skeleton[outer][inner]
+    }
+  }
+  return table
+}
+
 // Whether `verb`'s `[tense][person]` form is a "particle + auxiliary"
 // compound (e.g. `nahi`'s `nahi dut`) whose trailing word is *itself* a
 // complete, correct form of some other agreement-compatible verb for the same
@@ -774,7 +814,7 @@ export function resolveObjectAxisTable(table2D, { vary, fixed }) {
 // before.
 function hasAmbiguousTypedForm(verb, tense, person, verbs, objectAxis) {
   const resolveTable = (v) => {
-    const table = v.conjugations[tense]
+    const table = getComposedTable(v, tense)
     if (!table) return undefined
     return objectAxis ? resolveObjectAxisTable(table, objectAxis) : table
   }
@@ -1193,7 +1233,7 @@ export function generateQuestions(
   // `{ [nork]: { [nor]: form } }` table (see `resolveObjectAxisTable`)
   // instead of the usual flat one — once resolved, `table` is an ordinary
   // flat table and nothing else below needs to know the difference.
-  const table = objectAxis ? resolveObjectAxisTable(verb.conjugations[tense], objectAxis) : verb.conjugations[tense]
+  const table = objectAxis ? resolveObjectAxisTable(getComposedTable(verb, tense), objectAxis) : getComposedTable(verb, tense)
   const sentences = verb.sentences?.[tense] ?? {}
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const negativeSentences = verb.negativeSentences?.[tense] ?? {}
@@ -1391,7 +1431,7 @@ function collectCrossSourceCandidates(resolvedSources, personsFilter, agreementM
   const known = new Set(resolvedSources.map(({ verb, tense }) => `${verb.id}:${tense}`))
   const extras = extraSiblingSources.filter(({ verb, tense }) => !known.has(`${verb.id}:${tense}`))
   const resolveTable = (verb, tense) => {
-    const table = verb.conjugations[tense]
+    const table = getComposedTable(verb, tense)
     if (!table) return undefined
     return objectAxis ? resolveObjectAxisTable(table, objectAxis) : table
   }

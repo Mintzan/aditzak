@@ -302,8 +302,8 @@ export const JOURNEY_TRANSLATIONS = {
     15: {
       title: { es: 'maite izan — Querer a alguien (el objeto no-3ª persona)', eu: 'maite izan — Norbait maitatzea (3. pertsona ez den objektua)' },
       focus: {
-        es: 'las tablas presentByObject/pastByObject de ukan, maite, ikusi, jan, edan, erosi y hartu (#346/#347/#348/#378/#379) — el objeto (NOR) pasa de hura por defecto a ni/zu/zuek/haiek, con nork fijado en ni, más un repaso conjunto de los siete verbos (#380/#381); #416 practica además la dirección inversa (alguien/algo actuando sobre ni/gu/zu/zuek) fijando nork en hura/gu/zu/zuek/haiek, para ukan/maite',
-        eu: 'ukan, maite, ikusi, jan, edan, erosi eta hartu-ren presentByObject/pastByObject taulak (#346/#347/#348/#378/#379) — objektua (NOR) hura lehenetsitik ni/zu/zuek/haiek-era pasatzen da, nork ni-n finkaturik, gainera zazpi aditzen errepaso bateratua (#380/#381); #416-k alderantzizko norabidea ere lantzen du (norbait/zerbait ni/gu/zu/zuek-engan eragiten), nork hura/gu/zu/zuek/haiek-en finkaturik, ukan/maite-rentzat',
+        es: 'las tablas presentByObject/pastByObject de ukan, maite, ikusi, jan, edan, erosi y hartu (#346/#347/#348/#378/#379) — el objeto (NOR) pasa de hura por defecto a ni/zu/zuek/haiek, con nork fijado en ni, más un repaso conjunto de los siete verbos (#380/#381); #416/#435 practican además la dirección inversa (alguien/algo actuando sobre ni/gu/zu/zuek) fijando nork en hura/gu/zu/zuek/haiek, alternando el verbo de práctica entre los siete y con un repaso conjunto por cada valor de nork; #443 amplía el grupo de cada repaso conjunto a unos 37 verbos transitivos perifrásticos',
+        eu: 'ukan, maite, ikusi, jan, edan, erosi eta hartu-ren presentByObject/pastByObject taulak (#346/#347/#348/#378/#379) — objektua (NOR) hura lehenetsitik ni/zu/zuek/haiek-era pasatzen da, nork ni-n finkaturik, gainera zazpi aditzen errepaso bateratua (#380/#381); #416/#435-ek alderantzizko norabidea ere lantzen dute (norbait/zerbait ni/gu/zu/zuek-engan eragiten), nork hura/gu/zu/zuek/haiek-en finkaturik, zazpi aditzen artean praktika-aditza txandakatuz eta nork balio bakoitzeko errepaso bateratua gehituz; #443-k errepaso bateratu bakoitzaren multzoa ~37 aditz perifrastiko trantsitibora zabaltzen du',
       },
       payload: {
         es: '"Te quiero." (Maite zaitut) / "Me sorprendió." (Harritu nau)',
@@ -430,8 +430,8 @@ export const JOURNEY_TRANSLATIONS = {
     27: {
       title: { es: 'El eje del objeto NOR-NORI — natzaizu/gatzaizu', eu: 'NOR-NORI objektu-ardatza — natzaizu/gatzaizu' },
       focus: {
-        es: 'el eje NOR-NORI de gustatu/iruditu/ahaztu se extiende: NOR ya no esta fijado en hura/haiek, sino que varia entre ni/zu/gu/zuek mientras NORI permanece fijo — contraste directo con las unidades 25-26',
-        eu: 'gustatu/iruditu/ahaztu-ren NOR-NORI ardatza zabaltzen da: NOR ez dago jada hura/haiek-en finkatuta, ni/zu/gu/zuek artean aldatzen da NORI finko mantenduz — 25-26. unitateekiko alderaketa zuzena',
+        es: 'el eje NOR-NORI de gustatu/iruditu/ahaztu/jarraitu se extiende: NOR ya no esta fijado en hura/haiek, sino que varia entre ni/zu/gu/zuek mientras NORI permanece fijo — contraste directo con las unidades 25-26, con repasos combinados para cada valor de NORI',
+        eu: 'gustatu/iruditu/ahaztu/jarraitu-ren NOR-NORI ardatza zabaltzen da: NOR ez dago jada hura/haiek-en finkatuta, ni/zu/gu/zuek artean aldatzen da NORI finko mantenduz — 25-26. unitateekiko alderaketa zuzena, NORI balio bakoitzeko errepaso konbinatuekin',
       },
       payload: {
         es: '"¿Te gusto?" (Gustatzen natzaizu?) / "Me gusta él." (Gustatzen natzaio.)',
