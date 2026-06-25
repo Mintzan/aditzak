@@ -8087,6 +8087,18 @@ export const VERBS = [
         zuek: { ni: 'jarraitu nintzaizuen', zu: 'jarraitu zintzaizuen', gu: 'jarraitu gintzaizkizuen' },
         haiek: { ni: 'jarraitu nintzaien', zu: 'jarraitu zintzaien', gu: 'jarraitu gintzaizkien', zuek: 'jarraitu zintzaizkien' },
       },
+      // #444: the imperative twin of `presentByNor`/`pastByNor` above — same
+      // `gustatu`/`iruditu`/`ahaztu` auxiliary family (byte-identical cells,
+      // only the bare participle prefix swapped for "jarraitu "), joining
+      // Unit 35's imperative NOR-NORI object axis pool as the 4th member.
+      imperativeByNor: {
+        ni: { hura: 'jarraitu bekit', zu: 'jarraitu zakit', zuek: 'jarraitu zakizkit', haiek: 'jarraitu bekizkit' },
+        hura: { hura: 'jarraitu bekio', zu: 'jarraitu zakio', zuek: 'jarraitu zakizkio', haiek: 'jarraitu bekizkio' },
+        gu: { hura: 'jarraitu bekigu', zu: 'jarraitu zakigu', zuek: 'jarraitu zakizkigu', haiek: 'jarraitu bekizkigu' },
+        zu: { hura: 'jarraitu bekizu', zuek: 'jarraitu zakizkizu', haiek: 'jarraitu bekizkizu' },
+        zuek: { hura: 'jarraitu bekizue', zu: 'jarraitu zakizue', haiek: 'jarraitu bekizkizue' },
+        haiek: { hura: 'jarraitu bekie', zu: 'jarraitu zakie', zuek: 'jarraitu zakizkie', haiek: 'jarraitu bekizkie' },
+      },
     },
     sentences: {
       present: {

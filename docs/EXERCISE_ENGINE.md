@@ -392,6 +392,15 @@ only handles the NOR-NORK `byObject` axis), and added one pooled
 `animateObject: false` flag still has no live effect on this axis until #448
 extends the composer to `byNor`.
 
+**Update (#444)**: the imperative twin of #441 — Unit 35's `imperativeByNor`
+axis (`gustatu`/`iruditu`/`ahaztu`, #364/#425) had the same 18-single-verb-
+lesson/no-pooled-review shape. Added `jarraitu.imperativeByNor` (same literal-
+table, prefix-swapped pattern as #441's `presentByNor`/`pastByNor` — not
+composed, same `getComposedTable` limitation) as the axis's 4th pool member,
+and one pooled review per NORI value (`imperative-axis-review-{zu,ni,hura,gu,
+zuek,haiek}`, 6 lessons — this axis has no past/present split to double the
+count). `jario` stays excluded, same reasoning as #441.
+
 **Update (#443)**: widened Unit 15's NOR-NORK object-axis pool from 7 verbs to
 ~37 — every periphrastic transitive verb in `VERBS` that had no
 `byObjectPrefixes` yet got one (prefix derived from the verb's own flat

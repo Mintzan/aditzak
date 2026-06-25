@@ -825,10 +825,15 @@ export const JOURNEY = [
           // esan/eman's ditransitive forms (recognition-only), and
           // egon/etorri/joan's imperative (= present tense). See
           // docs/DECISIONS.md.
+          // #444: the imperative twin of #441 — added jarraitu as this
+          // axis's 4th pool member and one pooled cross-verb review per
+          // NORI value (`imperative-axis-review-{zu,ni,hura,gu,zuek,haiek}`),
+          // mirroring #441's `nor-axis-{present,past}-review-*` for Unit 27.
+          // See docs/DECISIONS.md.
           {
             number: 35,
             title: 'Agintera — Commands',
-            focus: 'the imperative — izan/ukan production for NOR/NOR-NORK (including jussive/hortative and plural-object); egon/etorri/joan production; gustatu/iruditu/ahaztu\'s NOR-NORI object axis (#364, bekio/zakio-type forms, extended to every dative value by #425); esan/eman\'s ditransitive (iezadazu) recognition-only',
+            focus: 'the imperative — izan/ukan production for NOR/NOR-NORK (including jussive/hortative and plural-object); egon/etorri/joan production; gustatu/iruditu/ahaztu/jarraitu\'s NOR-NORI object axis (#364, bekio/zakio-type forms, extended to every dative value by #425, pooled into cross-verb reviews with jarraitu by #444); esan/eman\'s ditransitive (iezadazu) recognition-only',
             payload: 'Hadi hona!',
             status: 'available',
             lessonIds: [
@@ -837,6 +842,7 @@ export const JOURNEY = [
               'gustatu-imperative-axis-ni', 'gustatu-imperative-axis-hura', 'gustatu-imperative-axis-gu', 'gustatu-imperative-axis-zuek', 'gustatu-imperative-axis-haiek',
               'iruditu-imperative-axis-ni', 'iruditu-imperative-axis-hura', 'iruditu-imperative-axis-gu', 'iruditu-imperative-axis-zuek', 'iruditu-imperative-axis-haiek',
               'ahaztu-imperative-axis-ni', 'ahaztu-imperative-axis-hura', 'ahaztu-imperative-axis-gu', 'ahaztu-imperative-axis-zuek', 'ahaztu-imperative-axis-haiek',
+              'imperative-axis-review-zu', 'imperative-axis-review-ni', 'imperative-axis-review-hura', 'imperative-axis-review-gu', 'imperative-axis-review-zuek', 'imperative-axis-review-haiek',
               'egon-imperative', 'etorri-imperative', 'joan-imperative',
               'unit-30-plural-object-review', 'unit-30-ditransitive-review',
             ],
