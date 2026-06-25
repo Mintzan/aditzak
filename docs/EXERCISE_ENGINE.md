@@ -461,6 +461,17 @@ review's candidate pool, exactly the case this was built for. `jan`/`edan`/
 `erosi`/`hartu`'s long-open `animateObject` question (`docs/LANGUAGE_DECISIONS.md`,
 2026-06-24) is still unresolved — see `docs/DECISIONS.md`'s #443 entry for why.
 
+**Update (#445)**: the Baldintza/Ondorioa twin of #441/#444 — Unit 33's
+`baldintzaByNor`/`conditionalByNor`/`conditionalPastByNor` axes (`gustatu`/
+`iruditu`/`ahaztu`, #425) had the same 54-single-verb-lesson/no-pooled-review
+shape (3 verbs × 3 moods × 6 NORI values). Added `jarraitu.baldintzaByNor`/
+`conditionalByNor`/`conditionalPastByNor` (same literal-table, prefix-swapped
+pattern as #441/#444 — not composed, same `getComposedTable` limitation,
+still tracked as #448's follow-up) as the axis's 4th pool member, and 18
+pooled reviews (one per mood per NORI value: `baldintza-axis-review-*`,
+`conditional-axis-review-*`, `conditional-past-axis-review-*`), replacing all
+54 single-verb lessons. `jario` stays excluded, same reasoning as #441/#444.
+
 ### Ditransitive NOR-NORI-NORK (Unit 21 — `esan`/`eman`)
 Confirmed against `CONJUGATIONS.md` §5: these are genuinely **2D** grids
 (NORI rows × NORK columns), unlike Unit 20's NORI-only grids. The journey

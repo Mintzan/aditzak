@@ -8,6 +8,32 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-25 — #445: collapsed Unit 33's 54 single-verb Baldintza/Ondorioa NOR-NORI lessons into 18 pooled cross-verb reviews
+
+Same shape as #441 (Unit 27 present/past) and #444 (Unit 35 imperative):
+`gustatu`/`iruditu`/`ahaztu`'s `baldintzaByNor`/`conditionalByNor`/
+`conditionalPastByNor` axes (#425) had 54 single-verb, recognition-only
+lessons (3 verbs × 3 moods × 6 NORI values) with no pooled cross-verb review.
+Added `jarraitu.baldintzaByNor`/`conditionalByNor`/`conditionalPastByNor` to
+`verbs.js` (hand-written literal tables, byte-identical cells to `gustatu`'s
+with only the bare-future-participle prefix swapped for `jarraitu`'s own,
+matching exactly how its `presentByNor`/`pastByNor`/`imperativeByNor` tables
+already exist) as the axis's 4th pool member, and replaced all 54 lessons
+with 18 pooled reviews (one per mood per NORI value), preserving
+`mode: 'recognition'` and each NORI value's existing reflexive-gap `persons`
+array. `jario` stays excluded (thing-NOR, #442).
+
+The issue text suggested reusing "#436's composer" for `jarraitu`'s new
+tables instead of hand-writing them. That's not actually available:
+`getComposedTable` (`lessonLogic.js`) only composes the NOR-NORK `byObject`
+axis (`presentByObject`/`pastByObject`) — extending it to the NOR-NORI
+`byNor` family is explicitly tracked as its own follow-up, #448, and hasn't
+landed (confirmed via `jario`'s own `animateObject` comment in `verbs.js`
+and the #441/#444 entries above). Hand-writing `jarraitu`'s three tables
+here keeps this issue's scope to the lesson-pooling work it actually
+describes, consistent with #441/#444's prior calls not to bolt half of
+#448's composer work onto an unrelated issue.
+
 ## 2026-06-25 — #440: dissolved Unit 30 ("The egin Construction"), reversing #306; its 9 verbs redistributed into base-paradigm host pools
 
 #440 argued Unit 30's 9 verbs (`hitz-egin`, `lan-egin`, `lo-egin`, `ahaleginak-egin`, `parte-hartu`, `kontuan-hartu`, `arreta-eman`, `ados-egon`, `arriskuan-jarri`) teach no new grammatical relation — each is just an invariant noun/particle glued onto a paradigm already taught elsewhere (`nor-nork` present/past/future for the 7 `egin`/`hartu`/`eman` compounds, `egon`'s own simple-past paradigm for `ados egon`, the `izan`-auxiliary intransitive `nor` paradigm for `arriskuan jarri`). Agreed and reversed #306's decision to give them a dedicated unit (and #325/#331/#334's build-out on top of it): kept all 9 `VERBS` entries and their conjugation tables as-is, deleted Unit 30 and its 8 lessons, and renumbered every later unit down by one (31→30 ... 46→45; Refresh Gates C/D land on Units 31/43).
