@@ -37,17 +37,43 @@ competing for the slot. By complement type:
   *and* an allative (`etorri`'s `zu`/`hura`: "Zu ez zatoz bihar eskolara"),
   has several natural orders — left untagged. Same for the `jakin` past
   `hura`/`haiek` items, whose complement is a whole subordinate clause.
-- **No — affirmatives** (this pass): single-complement affirmatives are mostly
-  below the 4-word floor ("Ni etxean nago"), and the longer ones generally add
-  a time/place adjunct on top of an object — the multiple-order case that
-  prompted this (the danborrada sentence). Deferred to a later pass.
+Tagged in the negatives pass: `izan`/`egon`/`ibili` (locative/predicate, all
+persons), `ukan`/`jakin` (object; `jakin` also past `ni`/`zu`), `joan`
+(allative, all persons), `etorri` (`ni` only).
 
-Tagged in this pass: `izan`/`egon`/`ibili` (locative/predicate, all persons),
-`ukan`/`jakin` (object; `jakin` also past `ni`/`zu`), `joan` (allative, all
-persons), `etorri` (`ni` only). Tagging more of the bank — especially
-affirmatives — is a deliberate per-sentence pass, best done by a fluent
-reviewer, since each call is a naturalness judgment like the `validFor` bar in
-`docs/SENTENCE_FRAMES.md`.
+## 2026-06-25 — `wordOrderSafe` affirmatives pass (4-word periphrastic, single-complement)
+
+Extended the tag to affirmative sentences. The danborrada complaint that
+started this was itself an affirmative, so the bar stayed strict. The safe
+affirmative shape is **a periphrastic clause that fills out to exactly four
+words** — `[subject] [one complement] [participle] [auxiliary]` — which leaves
+the participle+aux as a tight two-word block and a single content slot before
+it. Filter used (scripted, then reviewed):
+
+- `type: 'periphrastic'` (the participle+aux supplies two of the four words, so
+  four words ⇒ exactly one non-subject constituent — a *synthetic* verb at four
+  words would instead mean two complements, e.g. `eduki`'s "Nik giltza
+  poltsikoan daukat", object + locative);
+- `agreement` excludes `nori` (a dative argument reorders freely against the
+  absolutive — `ahaztu`/`gustatu`/`deitu`/`antzeman` etc. are out);
+- **exactly four words** after filling the blank (five-plus almost always means
+  a trailing time/place adjunct — "...adierazten du **kalean**" — i.e. the
+  danborrada ambiguity; those stay untagged).
+
+This yields canonical SOV transitives ("Nik ura edaten dut", "Hark filma
+ikusten du"), the progressive frame (`ari`: "Ni idazten ari naiz", gerund
+locked before `ari`), modal `nahi` ("Zuk etorri nahi duzu"), and `-arazi`
+causatives ("Guk umeak dantzaraziko ditugu"). Verbs covered: `jan`, `edan`,
+`erosi`, `ikusi`, `hartu`, `ari`, `nahi`, `ukatu`, `itzularazi`, `dantzarazi`.
+Because `sentences.future` is aliased to `present` by reference (and `past`
+falls back the same way when there's no adverbial past frame), tagging a
+present template automatically covers its future/past fillings — same
+two-word verb block, same four-word shape.
+
+Deliberately still untagged: five-plus-word affirmatives (trailing adjunct),
+synthetic-verb sentences with two complements, and any `nori` verb. Those
+remain a later, fluent-reviewed pass — each is a naturalness judgment like the
+`validFor` bar in `docs/SENTENCE_FRAMES.md`.
 
 ## 2026-06-24 — Plural-object (`ditut`/`nituen`) tables for eight long-tail transitive verbs whose example sentences had plural objects
 

@@ -241,13 +241,22 @@ that means:
   separate adjunct (time/place) — those are precisely the
   multiple-valid-order cases the focus rule produces (the danborrada bug).
 
-A first curation pass tagged the single-complement *negative* sentences across
-the bank (`izan`/`egon`/`ibili`/`ukan`/`jakin`/`joan` all persons; `etorri`
-`ni` only) — see `docs/LANGUAGE_DECISIONS.md` for the per-verb rationale and
-the exact invariant ("exactly one constituent after the pinned `ez`+aux").
-Affirmatives and multi-constituent negatives are deliberately left untagged;
-expanding to them is a later curation pass (best driven by a fluent reviewer),
-which the gate makes safe to grow incrementally.
+Two curation passes have run (see `docs/LANGUAGE_DECISIONS.md` for per-verb
+rationale and the exact invariants):
+
+1. **Negatives** — single-complement negated sentences ("exactly one
+   constituent after the pinned `ez`+aux"): `izan`/`egon`/`ibili`/`ukan`/
+   `jakin`/`joan` all persons; `etorri` `ni` only.
+2. **Affirmatives** — four-word periphrastic clauses (`[subject] [one
+   complement] [participle] [aux]`), excluding `nori` (dative) verbs and any
+   sentence with a trailing adjunct (five-plus words): `jan`/`edan`/`erosi`/
+   `ikusi`/`hartu`/`ari`/`nahi`/`ukatu`/`itzularazi`/`dantzarazi`.
+
+~212 sentence fillings are now eligible across 17 verbs. Still untagged
+(deliberately): five-plus-word affirmatives with a trailing time/place adjunct
+(the danborrada ambiguity), synthetic-verb sentences with two complements, and
+all `nori` verbs. Expanding to those is a later fluent-reviewed pass, which the
+opt-in gate makes safe to grow incrementally.
 
 ### NOR-NORK object axis (#346 — resolved)
 `ukan`'s `present` table only varied the ergative (NORK) subject against a

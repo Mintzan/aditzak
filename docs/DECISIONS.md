@@ -16,6 +16,12 @@ Considered (a) accepting multiple orders per sentence and (b) auditing/rewriting
 
 Trade-off: until the tagged set grows, `word-order` questions become rare. Accepted — a vetted-but-rare drill beats a frequent-but-unfair one. A first curation pass (see `docs/LANGUAGE_DECISIONS.md`, same date) then tagged the single-complement negatives across the bank (`izan`/`egon`/`ibili`/`ukan`/`jakin`/`joan` all persons, `etorri` `ni` only); affirmatives and multi-constituent negatives stay untagged for a later pass.
 
+## 2026-06-25 — `wordOrderSafe` affirmatives curation pass
+
+Extended `word-order` eligibility to affirmative sentences (see `docs/LANGUAGE_DECISIONS.md` same date for the linguistic criterion). Applied via a scripted, then-reviewed filter — `type: 'periphrastic'` + `agreement` excludes `nori` + exactly four words after filling the blank — which isolates `[subject] [one complement] [participle] [aux]` clauses and excludes synthetic two-complement sentences (`eduki`), dative-reordering verbs, and five-plus-word sentences with a trailing adjunct (the danborrada ambiguity). 87 unique templates tagged across `jan`/`edan`/`erosi`/`ikusi`/`hartu`/`ari`/`nahi`/`ukatu`/`itzularazi`/`dantzarazi`; ~181 affirmative + 31 negative fillings now eligible across 17 verbs.
+
+Used a one-off transform script (not committed) rather than ~90 hand-edits, since the targets were a precise structural set; verified the diff is purely additive (`wordOrderSafe: true` inserted, `validFor`/`baseVerb` untouched) and the `validFor` gap baseline is unchanged (the flag is orthogonal to cross-verb distractor eligibility). Note `sentences.future`/`past` are aliased to `present` by reference (and `negativeSentences.past` for the single-word-past verbs), so tagging a present template auto-covers its other-tense fillings — same two-word verb block, same four-word shape, all safe.
+
 ## 2026-06-24 — Extended the NOR-number object pools (Units 13/14 + future) with 8 long-tail transitive verbs
 
 Fixing the plural-object agreement bug (see `docs/LANGUAGE_DECISIONS.md`, same date) added `presentPlural`/`pastPlural`/`futurePlural` tables to `egin`/`irakurri`/`idatzi`/`ikasi`/`entzun`/`utzi`/`bilatu`/`saldu`. Rather than leave those tables as dead data (reachable only as object-number distractor lures via `getObjectNumberLure`), wired all 8 into the existing object-number pools — `nor-nork-{present,past,future}-plural-pool` and their `-plural` siblings — so the new `ditut`/`nituen` forms are actually drilled.
