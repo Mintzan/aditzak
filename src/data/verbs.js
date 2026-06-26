@@ -1445,7 +1445,12 @@ export const VERBS = [
       // split (`dakik`/`dakin`), matching `ukan`'s pattern — not tabulated
       // in CONJUGATIONS.md §7's own grid (blank `hik` row there), but given
       // in §10's synthetic-verb allocutive table per #144's DECISIONS.md.
-      present: { ni: 'dakit', zu: 'dakizu', hura: 'daki', 'hi-m': 'dakik', 'hi-f': 'dakin' },
+      // #478: `gu`/`zuek`/`haiek` were already documented in
+      // `docs/CONJUGATIONS.md` §7's grid (`dakigu`/`dakizue`/`dakite`,
+      // #245-sourced) but never ported into this table — porting them now
+      // so `presentPlural` below can mirror `present`'s full person set
+      // instead of the pre-#287 gap CONJUGATIONS.md noted.
+      present: { ni: 'dakit', zu: 'dakizu', hura: 'daki', gu: 'dakigu', zuek: 'dakizue', haiek: 'dakite', 'hi-m': 'dakik', 'hi-f': 'dakin' },
       // #245: `hik`/`zuk`/`zuek` were sourced by mapping `ukan`'s past
       // prefix pattern (`nuen`/`huen`/`zenuen`/`zenuten`, per CONJUGATIONS.md
       // §3) onto `jakin`'s already-attested `-ekien`/`-ekiten` stem
@@ -1464,12 +1469,22 @@ export const VERBS = [
       // taking a `-zki-` infix right before its person suffix
       // (`dakidan`→`dakizkidan`, `zekidan`→`zekizkidan`, etc.) — applying the
       // same insertion point to the indicative present/past tables above.
-      // `presentPlural` only covers the persons already present in `present`
-      // (no `gu`/`zuek`/`haiek` there yet, a pre-existing gap, not new here).
+      // #478: `gu`/`zuek`/`haiek` ported alongside `present`'s own (see
+      // above) — `dakizkigu`/`dakizkizue`/`dakizkite`, same `-zki-` infix
+      // applied to the now-complete `present` person set.
       // No `futurePlural`: `future` itself only has 3 persons, same omission
       // precedent as `nahi`'s missing `pastPlural`. Same native-speaker-check
       // caveat as #284 — see docs/LANGUAGE_DECISIONS.md.
-      presentPlural: { ni: 'dakizkit', zu: 'dakizkizu', hura: 'dakizki', 'hi-m': 'dakizkik', 'hi-f': 'dakizkin' },
+      presentPlural: {
+        ni: 'dakizkit',
+        zu: 'dakizkizu',
+        hura: 'dakizki',
+        gu: 'dakizkigu',
+        zuek: 'dakizkizue',
+        haiek: 'dakizkite',
+        'hi-m': 'dakizkik',
+        'hi-f': 'dakizkin',
+      },
       pastPlural: { ni: 'nekizkien', hi: 'hekizkien', zu: 'zenekizkien', hura: 'zekizkien', gu: 'genekizkien', zuek: 'zenekizkiten', haiek: 'zekizkiten' },
     },
     // #124: `validFor` per docs/SENTENCE_FRAMES.md. `jakin`'s candidates are
