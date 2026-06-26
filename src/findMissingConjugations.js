@@ -46,6 +46,46 @@ for (const verb of VERBS) {
       }
     }
   }
+
+  // Also check synthetic tenses from byNoriPrefixes (dative verbs)
+  if (verb.byNoriPrefixes) {
+    for (const tense of ['present', 'past', 'future', 'presentByNor', 'pastByNor']) {
+      const table = getComposedTable(verb, tense)
+      if (!table) continue
+
+      for (const value of Object.values(table)) {
+        if (typeof value === 'string') {
+          definedConjugations.add(value)
+        } else if (typeof value === 'object' && value !== null) {
+          for (const subValue of Object.values(value)) {
+            if (typeof subValue === 'string') {
+              definedConjugations.add(subValue)
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Also check ditransitive tenses
+  if (verb.ditransitivePrefixes) {
+    for (const tense of ['present', 'past', 'future']) {
+      const table = getComposedTable(verb, tense)
+      if (!table) continue
+
+      for (const value of Object.values(table)) {
+        if (typeof value === 'string') {
+          definedConjugations.add(value)
+        } else if (typeof value === 'object' && value !== null) {
+          for (const subValue of Object.values(value)) {
+            if (typeof subValue === 'string') {
+              definedConjugations.add(subValue)
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // Extract all conjugations used in lessons
