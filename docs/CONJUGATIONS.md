@@ -1287,15 +1287,23 @@ auxiliaries per §11's periphrastic matrix.
 | NORI | Present (oraina) | Past (lehenaldia) |
 |---|---|---|
 | niri | datorkit | zetorkidan |
+| zuri | datorkizu | — |
+| guri | datorkigu | — |
 | hari | — | zetorkion |
 
-Only `niri` (to me) and `hari` (to him/her) recipients have confirmed attested
-forms: `datorkit` appears in the song "Argia datorkit" (light comes to me);
-`zetorkidan`/`zetorkion` are confirmed via the idiom "burura/gogora etorri"
-(to come to mind, literally "come to mind/head"). Singular-`NOR` forms only
-— no plural-`NOR` derivation is possible without further evidence. Remaining
-NORI persons (`guri`, `zuri`, `zuei`, `haiei`) and all moods
-(baldintza, ondorioa, ahalera, subjuntiboa) are unattested.
+`niri`, `zuri`, and `guri` (present) have confirmed attested forms:
+`datorkit` appears in the song "Argia datorkit" (light comes to me);
+`datorkizu`/`datorkigu` are confirmed via ordinary native usage ("Zer
+datorkizu burura?", "Gure aldetik datorkizu laguntza", "Uda datorkigu",
+"Zoritxarra datorkigu gainera") — the same "burura etorri" idiom family
+already cited for `niri`/`hari` below, just with different recipients.
+`zetorkidan`/`zetorkion` (past) are confirmed via the idiom "burura/gogora
+etorri" (to come to mind, literally "come to mind/head"); past forms for
+`zuri`/`guri` (`zetorkizun`/`zetorkigun`?) are plausible by the same pattern
+but not yet independently sourced. Singular-`NOR` forms only — no
+plural-`NOR` derivation is possible without further evidence. Remaining
+NORI persons (`hari` present, `zuei`, `haiei`) and all moods (baldintza,
+ondorioa, ahalera, subjuntiboa) are unattested.
 
 ### `ibili` — "to walk around / be (in the process of) doing"
 

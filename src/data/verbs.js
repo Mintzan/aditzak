@@ -1826,6 +1826,19 @@ export const VERBS = [
       // above. No `hura`/`haiek`/`ni`/`gu` cells, same reasoning as `joan`'s
       // imperative above (Radical/Bare-Stem `etor bedi` is out of scope).
       imperative: { hi: 'hator', zu: 'zatoz', zuek: 'zatozte' },
+      // NOR-NORI dative axis (CONJUGATIONS.md §6) — "it comes to [recipient]",
+      // NOR fixed at hura, NORI varying. Keyed by NORI person only (literal
+      // table, not composed via `byNoriPrefixes` — that mechanism is for
+      // *periphrastic* nor-nori verbs like `gustatu`/`iruditu` built on
+      // izan's dative auxiliary; `etorri`'s dative forms are its own
+      // synthetic `-ki-` paradigm). `ni`/`zu`/`gu` confirmed attested
+      // (`datorkit`: song "Argia datorkit"; `datorkizu`/`datorkigu`: native
+      // usage, e.g. "Zer datorkizu burura?", "Uda datorkigu") — `hi`/`hura`/
+      // `zuek`/`haiek` remain unconfirmed, see docs/LANGUAGE_DECISIONS.md.
+      presentByNori: { ni: 'datorkit', zu: 'datorkizu', gu: 'datorkigu' },
+      // Past: only `ni`/`hura` confirmed so far, via the "burura/gogora
+      // etorri" idiom (#499) — `zu`/`gu` past forms not yet sourced.
+      pastByNori: { ni: 'zetorkidan', hura: 'zetorkion' },
     },
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
     // `validFor: ['joan']` — joan's same-person form ("Ni etxera noa" = "I'm

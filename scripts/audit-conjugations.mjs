@@ -27,6 +27,8 @@ const TENSE_MAPPING = {
   // Special cases
   orainaldia_plural: 'presentPlural',
   lehenaldia_plural: 'pastPlural',
+  'nori-orainaldia': 'presentByNori',
+  'nori-lehenaldia': 'pastByNori',
 
   // Archaic/special
   orainaldia_archaic: 'present_archaic',

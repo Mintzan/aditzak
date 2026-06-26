@@ -320,9 +320,9 @@ export const CONJUGATION_COVERAGE = {
         documented: true,
       },
       'nori-orainaldia': {
-        nori_recipients: ['niri'],
+        nori_recipients: ['niri', 'zuri', 'guri'],
         object_variants: ['singular'],
-        persons: ['ni', 'zu', 'hura'],
+        persons: ['ni', 'zu', 'gu'],
         documented: true,
         note: 'NOR-NORI dative forms (present only, confirmed forms)',
       },
