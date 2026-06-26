@@ -3027,11 +3027,13 @@ export const VERBS = [
     dialect: 'batua',
     dativeOvergeneration: true,
     // #260: present/past sourced from docs/CONJUGATIONS.md §7 (`eraman` —
-    // singular-object alternant). `hi` omitted — CONJUGATIONS.md's table has
-    // no `hik` row for `eraman`, unlike `jakin`'s sourced hitanoa split
-    // (#144/#245). `future` derived the same way as `eduki`/`jakin`'s
-    // (`-n`-final root + `-go` + ukan suffixes, mirroring `jakin` →
-    // `jakingo`).
+    // singular-object alternant; the table's `/daramatza`-style plural-object
+    // forms aren't used here, matching `eduki`/`jakin`'s precedent of only
+    // tabulating the singular-object form). `hi` omitted — CONJUGATIONS.md's
+    // table has no `hik` row for `eraman`, unlike `jakin`'s sourced
+    // hitanoa split (#144/#245). `future` derived the same way as
+    // `eduki`/`jakin`'s (`-n`-final root + `-go` + ukan suffixes, mirroring
+    // `jakin` → `jakingo`).
     conjugations: {
       present: { ni: 'daramat', zu: 'daramazu', hura: 'darama', gu: 'daramagu', zuek: 'daramazue', haiek: 'daramate' },
       past: {
@@ -3049,28 +3051,6 @@ export const VERBS = [
         gu: 'eramango dugu',
         zuek: 'eramango duzue',
         haiek: 'eramango dute',
-      },
-      // Plural-object alternants, added to close the same gap #284/#287
-      // closed for `eduki`/`jakin` — the `-tza-` infix straight from
-      // CONJUGATIONS.md §7's `eraman` table's `/daramatza`-style column.
-      // `futurePlural` mirrors `eduki`'s own (`ukan`'s plural-object
-      // suffixes `ditut`/`dituzu`/... swapped onto the singular future).
-      presentPlural: { ni: 'daramatzat', zu: 'daramatzazu', hura: 'daramatza', gu: 'daramatzagu', zuek: 'daramatzazue', haiek: 'daramatzate' },
-      pastPlural: {
-        ni: 'neramatzan',
-        zu: 'zeneramatzan',
-        hura: 'zeramatzan',
-        gu: 'generamatzan',
-        zuek: 'zeneramatzaten',
-        haiek: 'zeramatzaten',
-      },
-      futurePlural: {
-        ni: 'eramango ditut',
-        zu: 'eramango dituzu',
-        hura: 'eramango ditu',
-        gu: 'eramango ditugu',
-        zuek: 'eramango dituzue',
-        haiek: 'eramango dituzte',
       },
     },
     // #261: adapted from docs/SAMPLE_SENTENCES.md's `ERAMAN` bank
@@ -3150,29 +3130,6 @@ export const VERBS = [
         gu: 'ekarriko dugu',
         zuek: 'ekarriko duzue',
         haiek: 'ekarriko dute',
-      },
-      // Plural-object alternants (e.g. `zenekartzan`), added to close the
-      // same gap #284/#287 closed for `eduki`/`jakin` — the `-tza-` infix
-      // straight from CONJUGATIONS.md §7's `ekarri` table's `/dakartza`-
-      // style column. `futurePlural` mirrors `eduki`'s own (`ukan`'s
-      // plural-object suffixes `ditut`/`dituzu`/... swapped onto the
-      // singular future).
-      presentPlural: { ni: 'dakartzat', zu: 'dakartzazu', hura: 'dakartza', gu: 'dakartzagu', zuek: 'dakartzazue', haiek: 'dakartzate' },
-      pastPlural: {
-        ni: 'nekartzan',
-        zu: 'zenekartzan',
-        hura: 'zekartzan',
-        gu: 'genekartzan',
-        zuek: 'zenekartzaten',
-        haiek: 'zekartzaten',
-      },
-      futurePlural: {
-        ni: 'ekarriko ditut',
-        zu: 'ekarriko dituzu',
-        hura: 'ekarriko ditu',
-        gu: 'ekarriko ditugu',
-        zuek: 'ekarriko dituzue',
-        haiek: 'ekarriko dituzte',
       },
     },
     // #261: adapted from docs/SAMPLE_SENTENCES.md's `EKARRI` bank
