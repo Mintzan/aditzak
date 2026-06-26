@@ -15,13 +15,13 @@ const TENSE_MAPPING = {
   orainaldia: 'present',
   lehenaldia: 'past',
   baldintza: 'baldintza',
-  ondorioa_present: 'ondorioa',
-  ondorioa_past: 'ondorioa_past',
-  ahalera_orainaldia: 'ahaleraPossible',
-  ahalera_alegiazkoa: 'ahaleraPossible', // Typically not separated in verbs.js
-  ahalera_lehenaldia: 'ahaleraPast',
-  subjuntiboa_orainaldia: 'subjunctive',
-  subjuntiboa_lehenaldia: 'subjunctive_past',
+  ondorioa_present: 'conditional',
+  ondorioa_past: 'conditionalPast',
+  ahalera_orainaldia: 'potential',
+  ahalera_alegiazkoa: 'potentialAlegiazkoa',
+  ahalera_lehenaldia: 'potentialLehena',
+  subjuntiboa_orainaldia: 'subjunctivePresent',
+  subjuntiboa_lehenaldia: 'subjunctivePast',
   agintera: 'imperative',
 
   // Special cases
