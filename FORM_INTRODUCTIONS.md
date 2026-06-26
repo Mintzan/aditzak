@@ -2,10 +2,53 @@
 
 This document explains how to validate that all grammatical forms are introduced in a pedagogically sound order.
 
+## Quick Start
+
+**Check what forms are missing from the curriculum:**
+```bash
+node src/validateCompleteCoverage.js
+```
+
+**Export all forms as CSV (for spreadsheet analysis):**
+```bash
+node src/exportFormInventory.js csv > form-inventory.csv
+```
+
+**Get a complete JSON export:**
+```bash
+node src/exportFormInventory.js json
+```
+
 ## Tools
 
-### 1. Validation Script
-Run the comprehensive validation report:
+### 1. Complete Coverage Validation
+Check if ALL possible forms (defined in VERBS) are taught somewhere:
+
+```bash
+node src/validateCompleteCoverage.js
+```
+
+**Output includes:**
+- ✅ Forms covered in curriculum vs. total possible
+- ❌ List of forms NOT covered (organized by verb/tense)
+- 📊 Complete inventory of all forms with coverage status
+- 📈 Summary showing which verbs have most gaps
+
+**Current Status:**
+- ✅ **2,500 total possible forms**
+- ✅ **2,326 forms covered** (93.0% coverage)
+- ❌ **174 forms NOT covered** (7.0% gap)
+
+**Known gaps** (by priority):
+1. **Dative/conditional axes** for psych verbs (gustatu, iruditu, ahaztu, jarraitu)
+   - These are newer tenses/axes with limited curriculum time
+2. **Plural forms** for some verbs (ahaztu, gustatu, nahi, jakin)
+3. **maite** verb (completely uncovered) — planned for later curriculum phase
+4. **The `hi` person** — rarely used in modern Basque, only 6 gaps
+5. **behar past** — defined but not yet drilled
+
+### 2. Curriculum Form Validation
+Run the comprehensive validation report of introduced forms:
 
 ```bash
 node src/validateFormIntroductions.js
@@ -21,9 +64,28 @@ node src/validateFormIntroductions.js
 **Current Status:**
 - ✅ **0 violations**: All forms introduced before use
 - ⚠️ **115 pedagogical warnings**: Mostly about axis lessons where plural forms appear before final singular forms
-- Total: 2,982 unique forms across 342 lessons
+- Total: 2,982 taught forms across 342 lessons
 
-### 2. Helper Module
+### 3. Export Complete Form Inventory
+
+Export all forms with coverage status as CSV or JSON:
+
+```bash
+# CSV format (for spreadsheet analysis)
+node src/exportFormInventory.js csv
+
+# JSON format (for programmatic use)
+node src/exportFormInventory.js json
+```
+
+These generate `form-inventory.csv` and `form-inventory.json` containing all 2,500 possible forms with a "Covered" column showing YES/NO.
+
+**Use cases:**
+- Identify exactly which forms need to be added to lessons
+- Plan the next curriculum unit
+- Verify completeness after lesson additions
+
+### 4. Helper Module
 Use the `formIntroductions` module to query form introduction data in code:
 
 ```javascript
@@ -33,6 +95,7 @@ import {
   getFormIntroductionsForVerb,   // All forms for a verb across tenses
   isFormIntroducedBy,            // Check if form is available by lesson N
   getFormStatistics,             // Overall stats
+  getCompleteCoverageStatus,     // Which forms are NOT covered?
 } from './formIntroductions.js'
 
 // Example: When is "ni" form of "izan" present first introduced?
@@ -45,9 +108,16 @@ forms.forEach(f => console.log(`  ${f.person}: Lesson ${f.lessonIdx} (${f.lesson
 
 // Example: Is "joan" future available by lesson 50?
 const isAvailable = isFormIntroducedBy('joan', 'future', 'hura', 50)
+
+// Example: Get coverage status and identify gaps
+const coverage = getCompleteCoverageStatus()
+console.log(`${coverage.coveredForms}/${coverage.allForms} forms covered`)
+coverage.uncoveredForms.forEach(f => {
+  console.log(`  Missing: ${f.verbId} ${f.tense} ${f.person}`)
+})
 ```
 
-### 3. Journey Tests
+### 5. Journey Tests
 The journey validation tests also check form introductions:
 
 ```bash
@@ -55,7 +125,8 @@ npm test -- journey.test.js
 ```
 
 Tests verify:
-- ✅ No form is used before introduction
+- ✅ No form is used before introduction (0 violations currently)
+- ✅ All VERBS conjugations are accounted for in curriculum (some gaps expected)
 - ✅ Pedagogical ordering concerns (logged to console for review)
 
 ## Pedagogical Ordering

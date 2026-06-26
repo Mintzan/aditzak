@@ -6,6 +6,9 @@ import { VERBS } from './data/verbs.js'
 import { getComposedTable } from './lessonLogic.js'
 
 const verbsById = new Map(VERBS.map((verb) => [verb.id, verb]))
+
+// Re-export VERBS and getComposedTable for use in getCompleteCoverageStatus
+export { VERBS, getComposedTable }
 let _cache = null
 
 function buildCache() {
@@ -135,5 +138,42 @@ export function getFormStatistics() {
     totalForms: cache.size,
     uniqueVerbs: verbs.size,
     uniqueTenses: tenses,
+  }
+}
+
+/**
+ * Get complete inventory of all possible forms (from VERBS) with coverage status.
+ * @returns {{ allForms: number, coveredForms: number, uncoveredForms: Array<{verbId, tense, person}> }}
+ */
+export function getCompleteCoverageStatus() {
+  const cache = buildCache()
+  const verbsById = new Map(VERBS.map((verb) => [verb.id, verb]))
+
+  // Collect all possible forms
+  const allPossibleForms = new Map()
+  for (const verb of VERBS) {
+    for (const tense of Object.keys(verb.conjugations || {})) {
+      const table = getComposedTable(verb, tense)
+      if (!table) continue
+      for (const person of Object.keys(table)) {
+        const formKey = `${verb.id}-${tense}-${person}`
+        allPossibleForms.set(formKey, { verbId: verb.id, tense, person })
+      }
+    }
+  }
+
+  // Find uncovered forms
+  const uncovered = []
+  for (const [formKey, info] of allPossibleForms) {
+    if (!cache.has(formKey)) {
+      uncovered.push(info)
+    }
+  }
+
+  return {
+    allForms: allPossibleForms.size,
+    coveredForms: cache.size,
+    uncoveredForms: uncovered,
+    coverage: ((cache.size / allPossibleForms.size) * 100).toFixed(1),
   }
 }
