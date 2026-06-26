@@ -4039,12 +4039,18 @@ export const LESSONS = [
   // would have no sentence frame to drill against.
   { id: 'ihardun-present', verbId: 'ihardun', tense: 'present', persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'] },
   { id: 'ihardun-past', verbId: 'ihardun', tense: 'past', persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'] },
+  // #484: `iraun` joins Unit 46 alongside `ihardun` — same NORK-only shape,
+  // same `persons` filter (no `hi` sentence frame).
+  { id: 'iraun-present', verbId: 'iraun', tense: 'present', persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'] },
+  { id: 'iraun-past', verbId: 'iraun', tense: 'past', persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'] },
   {
     id: 'unit-46-review',
     review: true,
     sources: [
       { verbId: 'ihardun', tense: 'present' },
       { verbId: 'ihardun', tense: 'past' },
+      { verbId: 'iraun', tense: 'present' },
+      { verbId: 'iraun', tense: 'past' },
     ],
   },
 ]

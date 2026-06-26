@@ -8540,9 +8540,10 @@ export const VERBS = [
       present: { ni: 'dihardut', 'hi-m': 'diharduk', 'hi-f': 'dihardun', zu: 'diharduzu', hura: 'dihardu', gu: 'dihardugu', zuek: 'diharduzue', haiek: 'dihardute' },
       past: { ni: 'niharduen', hi: 'hiharduen', zu: 'zeniharduen', hura: 'ziharduen', gu: 'geniharduen', zuek: 'zeniharduten', haiek: 'ziharduten' },
     },
-    // No sibling NORK-only verb yet (#484's `iraun` is the same shape, not
-    // yet implemented) — `validFor: []` throughout, same "no genuine sibling
-    // yet" stance #459 took for `jario`.
+    // #484 added `iraun` as the first `agreementsCompatible` sibling, but its
+    // meaning ("to last/endure") never fits these "busy/engaged" frames, so
+    // `validFor` stays `[]` throughout — same "no genuine sibling" stance
+    // #459 took for `jario`.
     sentences: {
       present: {
         ni: [{ text: 'Nik lanean ___.', validFor: [] }],
@@ -8559,6 +8560,44 @@ export const VERBS = [
         gu: [{ text: 'Guk atzo lanean ___.', validFor: [] }],
         zuek: [{ text: 'Zuek atzo lanean ___?', validFor: [] }],
         haiek: [{ text: 'Haiek atzo lanean ___.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  // #484: `iraun` — same unergative, NORK-only shape as `ihardun` (#481,
+  // CONJUGATIONS.md §8's `di-`/`-en` di-root pattern). Distinct meaning
+  // ("to last/endure") from `ihardun`'s ("to be busy/engaged"), so despite
+  // now being the first `agreementsCompatible` sibling for `ihardun`,
+  // neither verb's sentence frames are added to the other's `validFor` —
+  // "Filmak bi ordu dirau" (the film runs two hours) isn't a frame
+  // "Lanean dihardut" (I'm busy working) could ever complete, and vice versa.
+  {
+    id: 'iraun',
+    verb: 'iraun',
+    meaning: { en: 'to last / endure', es: 'durar / perdurar', eu: 'iraun' },
+    type: 'synthetic',
+    agreement: ['nork'],
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'diraut', 'hi-m': 'dirauk', 'hi-f': 'diraun', zu: 'dirauzu', hura: 'dirau', gu: 'diraugu', zuek: 'dirauzue', haiek: 'diraute' },
+      past: { ni: 'nirauen', hi: 'hirauen', zu: 'zenirauen', hura: 'zirauen', gu: 'genirauen', zuek: 'zenirauten', haiek: 'zirauten' },
+    },
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik bi ordu ___.', validFor: [] }],
+        zu: [{ text: 'Zuk bi ordu ___.', validFor: [] }],
+        hura: [{ text: 'Filmak bi ordu ___.', validFor: [] }],
+        gu: [{ text: 'Guk bi ordu ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek bi ordu ___?', validFor: [] }],
+        haiek: [{ text: 'Kontzertuak bi ordu ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo bi ordu ___.', validFor: [] }],
+        zu: [{ text: 'Zuk atzo bi ordu ___?', validFor: [] }],
+        hura: [{ text: 'Filmak bi ordu ___.', validFor: [] }],
+        gu: [{ text: 'Guk atzo bi ordu ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek atzo bi ordu ___?', validFor: [] }],
+        haiek: [{ text: 'Kontzertuak bi ordu ___.', validFor: [] }],
       },
     },
     pronouns: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },

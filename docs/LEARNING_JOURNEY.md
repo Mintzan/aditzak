@@ -506,7 +506,7 @@ Optional flavor content layered on top of the already-complete core curriculum (
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 46 | **Unergative Curiosities** — `ihardun` (unergative, NORK-only, "dihardut"/"niharduen"); ergative subject, no absolutive argument at all; full present/past production | "I'm busy working." (`Lanean dihardut`) / "What are we engaged in?" (`Zertan zihardugun?`) | CONJUGATIONS §6 | available |
+| 46 | **Unergative Curiosities** — `ihardun` ("dihardut"/"niharduen"), `iraun` ("dirau"/"zirauen"); unergative, NORK-only, ergative subject with no absolutive argument at all; full present/past production | "I'm busy working." (`Lanean dihardut`) / "The film runs two hours." (`Filmak bi ordu dirau`) | CONJUGATIONS §6, §8 | available |
 
 ---
 

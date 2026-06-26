@@ -639,12 +639,12 @@ export const JOURNEY_TRANSLATIONS = {
     46: {
       title: { es: 'Curiosidades inergativas', eu: 'Bitxikeria inergatiboak' },
       focus: {
-        es: 'ihardun (inergativo, solo NORK, "dihardut"/"niharduen") — sujeto ergativo, sin argumento absolutivo',
-        eu: 'ihardun (inergatiboa, NORK soilik, "dihardut"/"niharduen") — subjektu ergatiboa, argumentu absolutiborik gabe',
+        es: 'ihardun ("dihardut"/"niharduen"), iraun ("dirau"/"zirauen") — inergativos, solo NORK, sujeto ergativo sin argumento absolutivo',
+        eu: 'ihardun ("dihardut"/"niharduen"), iraun ("dirau"/"zirauen") — inergatiboak, NORK soilik, subjektu ergatiboa argumentu absolutiborik gabe',
       },
       payload: {
-        es: '"Estoy ocupado trabajando." · "¿En qué andamos?"',
-        eu: '"Lanean dihardut." · "Zertan zihardugun?"',
+        es: '"Estoy ocupado trabajando." · "La película dura dos horas."',
+        eu: '"Lanean dihardut." · "Filmak bi ordu dirau."',
       },
     },
   },
