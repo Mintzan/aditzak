@@ -1157,26 +1157,18 @@ auxiliaries per §11's periphrastic matrix.
 
 #### `etorri` — NOR-NORI dative axis
 
-`(zki)` marks the plural-`NOR` alternant — e.g. `niri` reads as **natorkít** (singular `nor`) / **natorkízkit** (plural `nor`):
-
 | NORI | Present (oraina) | Past (lehenaldia) |
 |---|---|---|
-| niri | natorki(zki)t | nentorr-ki(zki)dan |
-| hiri | hatorki(zki)k/n *(masc./fem.)* | hentorr-ki(zki)(n)an *(masc./fem.)* |
-| hari | datorki(zki)o | zetorr-ki(zki)on |
-| guri | gatoski(zki)gu | gentoz-ki(zki)gun |
-| zuri | zatoski(zki)zu | zentoz-ki(zki)zun |
-| zuei | zatozki(zki)zue | zentoz-ki(zki)zuen |
-| haiei | datoski(zki)e | zetoz-ki(zki)en |
+| niri | datorkit | zetorkidan |
+| hari | — | zetorkion |
 
-The present-tense singular-`NOR` forms (natorkít, datorkit, zatorkit, etc.) are
-attested in contemporary standard Batua (e.g., "Argia datorkit" / light comes to
-me). Past tense (imperfective: zetorkidan, zetorkion, etc.) is likewise attested,
-commonly appearing in the idiom "burura/gogora etorri" (to come to mind).
-
-Plural-`NOR` forms and deeper moods (baldintza, ondorioa, ahalera, subjuntiboa)
-are pattern-derivable via the standard dative formation rule but unconfirmed in
-attested usage, so they are omitted here pending native-speaker verification.
+Only `niri` (to me) and `hari` (to him/her) recipients have confirmed attested
+forms: `datorkit` appears in the song "Argia datorkit" (light comes to me);
+`zetorkidan`/`zetorkion` are confirmed via the idiom "burura/gogora etorri"
+(to come to mind, literally "come to mind/head"). Singular-`NOR` forms only
+— no plural-`NOR` derivation is possible without further evidence. Remaining
+NORI persons (`guri`, `zuri`, `zuei`, `haiei`) and all moods
+(baldintza, ondorioa, ahalera, subjuntiboa) are unattested.
 
 ### `ibili` — "to walk around / be (in the process of) doing"
 
