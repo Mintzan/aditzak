@@ -10,6 +10,7 @@ const verbsById = new Map(VERBS.map((verb) => [verb.id, verb]))
 // Extract all defined conjugations from VERBS
 const definedConjugations = new Set()
 for (const verb of VERBS) {
+  // Check direct conjugations from conjugations tables
   for (const tense of Object.keys(verb.conjugations || {})) {
     const table = getComposedTable(verb, tense)
     if (!table) continue
@@ -21,6 +22,25 @@ for (const verb of VERBS) {
         for (const subValue of Object.values(value)) {
           if (typeof subValue === 'string') {
             definedConjugations.add(subValue)
+          }
+        }
+      }
+    }
+  }
+
+  // Also check synthetic tenses that can be generated from byObjectPrefixes
+  if (verb.byObjectPrefixes) {
+    for (const base of ['present', 'past']) {
+      const syntheticTense = base === 'present' ? 'presentByObject' : 'pastByObject'
+      const table = getComposedTable(verb, syntheticTense)
+      if (!table) continue
+
+      for (const value of Object.values(table)) {
+        if (typeof value === 'object' && value !== null) {
+          for (const subValue of Object.values(value)) {
+            if (typeof subValue === 'string') {
+              definedConjugations.add(subValue)
+            }
           }
         }
       }
