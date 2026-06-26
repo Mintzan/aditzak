@@ -7693,22 +7693,29 @@ export const VERBS = [
         haiek: 'lagunduko diote',
       },
     },
+    // #459: `lagundu`/`deitu`/`mesede-egin`/`kalte-egin` form a mutual
+    // cluster — all four are NORK-varying, NORI-fixed-to-`hura` verbs whose
+    // sentence text supplies an explicit person-denoting dative noun
+    // (lagunari/etsaiari), and "help/call/do a favor for/harm" all read
+    // naturally with either a friend or an enemy as the target, so every
+    // slot cross-tags with the other three. See `docs/DISTRACTOR_STRATEGY.md`
+    // §6 for the dative-matching method note.
     sentences: {
       present: {
-        ni: { text: 'Nik lagunari ___.', validFor: [] },
-        zu: { text: 'Zuk lagunari ___?', validFor: [] },
-        hura: { text: 'Hark lagunari ___.', validFor: [] },
-        gu: { text: 'Guk lagunari ___.', validFor: [] },
-        zuek: { text: 'Zuek lagunari ___?', validFor: [] },
-        haiek: { text: 'Haiek lagunari ___.', validFor: [] },
+        ni: { text: 'Nik lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        zu: { text: 'Zuk lagunari ___?', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        hura: { text: 'Hark lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        gu: { text: 'Guk lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        zuek: { text: 'Zuek lagunari ___?', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        haiek: { text: 'Haiek lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
       },
       past: {
-        ni: { text: 'Nik atzo lagunari ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun lagunari ___?', validFor: [] },
-        hura: { text: 'Hark lehengo astean lagunari ___.', validFor: [] },
-        gu: { text: 'Guk iaz lagunari ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun lagunari ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: [] },
+        ni: { text: 'Nik atzo lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        zu: { text: 'Zuk herenegun lagunari ___?', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        hura: { text: 'Hark lehengo astean lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        gu: { text: 'Guk iaz lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        zuek: { text: 'Zuek duela bi egun lagunari ___?', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
+        haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -7747,6 +7754,12 @@ export const VERBS = [
         haiek: 'ekingo diote',
       },
     },
+    // #459: `validFor: []` throughout, confirmed — `ekin`'s dative noun
+    // (`lanari`, "the work/task") is an abstract-activity object, a
+    // different semantic class from the `lagundu`/`deitu`/`mesede-egin`/
+    // `kalte-egin` cluster's person-denoting dative (a friend/enemy);
+    // "deitu"/"mesede egin"/"kalte egin" don't read naturally with a task as
+    // their target.
     sentences: {
       present: {
         ni: { text: 'Nik lanari ___.', validFor: [] },
@@ -7801,6 +7814,10 @@ export const VERBS = [
         haiek: 'erantzungo diote',
       },
     },
+    // #459: `validFor: []` throughout, confirmed — `erantzun`'s dative noun
+    // (`galderari`, "the question") is an abstract communicative-act object,
+    // not a person, so the `lagundu`/`deitu`/`mesede-egin`/`kalte-egin`
+    // cluster's interpersonal-action verbs don't read naturally with it.
     sentences: {
       present: {
         ni: { text: 'Nik galderari ___.', validFor: [] },
@@ -7855,22 +7872,23 @@ export const VERBS = [
         haiek: 'deituko diote',
       },
     },
+    // #459: see `lagundu`'s sentences above for the cluster rationale.
     sentences: {
       present: {
-        ni: { text: 'Nik lagunari ___.', validFor: [] },
-        zu: { text: 'Zuk lagunari ___?', validFor: [] },
-        hura: { text: 'Hark lagunari ___.', validFor: [] },
-        gu: { text: 'Guk lagunari ___.', validFor: [] },
-        zuek: { text: 'Zuek lagunari ___?', validFor: [] },
-        haiek: { text: 'Haiek lagunari ___.', validFor: [] },
+        ni: { text: 'Nik lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        zu: { text: 'Zuk lagunari ___?', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        hura: { text: 'Hark lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        gu: { text: 'Guk lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        zuek: { text: 'Zuek lagunari ___?', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        haiek: { text: 'Haiek lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
       },
       past: {
-        ni: { text: 'Nik atzo lagunari ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun lagunari ___?', validFor: [] },
-        hura: { text: 'Hark lehengo astean lagunari ___.', validFor: [] },
-        gu: { text: 'Guk iaz lagunari ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun lagunari ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: [] },
+        ni: { text: 'Nik atzo lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        zu: { text: 'Zuk herenegun lagunari ___?', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        hura: { text: 'Hark lehengo astean lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        gu: { text: 'Guk iaz lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        zuek: { text: 'Zuek duela bi egun lagunari ___?', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
+        haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -7909,6 +7927,12 @@ export const VERBS = [
         haiek: 'eragingo diote',
       },
     },
+    // #459: `validFor: []` throughout, confirmed — `eragin`'s sentence text
+    // already bakes in a second fixed object (`barre`, "laughter") alongside
+    // the dative `lagunari`; none of the `lagundu`/`deitu`/`mesede-egin`/
+    // `kalte-egin` cluster's verbs take that extra object, so substituting
+    // any of them produces a broken argument structure regardless of the
+    // dative noun match.
     sentences: {
       present: {
         ni: { text: 'Nik lagunari barre ___.', validFor: [] },
@@ -7963,6 +7987,10 @@ export const VERBS = [
         haiek: 'antzemango diote',
       },
     },
+    // #459: `validFor: []` throughout, confirmed — `antzeman`'s dative noun
+    // (`zerbaiti`, "something") is a generic/vague placeholder rather than a
+    // clearly person-denoting target, so it doesn't read confidently into the
+    // `lagundu`/`deitu`/`mesede-egin`/`kalte-egin` interpersonal-action cluster.
     sentences: {
       present: {
         ni: { text: 'Nik zerbaiti ___.', validFor: [] },
@@ -8020,22 +8048,23 @@ export const VERBS = [
         haiek: 'mesede egingo diote',
       },
     },
+    // #459: see lagundu's sentences above for the cluster rationale.
     sentences: {
       present: {
-        ni: { text: 'Nik lagunari ___.', validFor: [] },
-        zu: { text: 'Zuk lagunari ___?', validFor: [] },
-        hura: { text: 'Hark lagunari ___.', validFor: [] },
-        gu: { text: 'Guk lagunari ___.', validFor: [] },
-        zuek: { text: 'Zuek lagunari ___?', validFor: [] },
-        haiek: { text: 'Haiek lagunari ___.', validFor: [] },
+        ni: { text: 'Nik lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        zu: { text: 'Zuk lagunari ___?', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        hura: { text: 'Hark lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        gu: { text: 'Guk lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        zuek: { text: 'Zuek lagunari ___?', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        haiek: { text: 'Haiek lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
       },
       past: {
-        ni: { text: 'Nik atzo lagunari ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun lagunari ___?', validFor: [] },
-        hura: { text: 'Hark lehengo astean lagunari ___.', validFor: [] },
-        gu: { text: 'Guk iaz lagunari ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun lagunari ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: [] },
+        ni: { text: 'Nik atzo lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        zu: { text: 'Zuk herenegun lagunari ___?', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        hura: { text: 'Hark lehengo astean lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        gu: { text: 'Guk iaz lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        zuek: { text: 'Zuek duela bi egun lagunari ___?', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
+        haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -8074,22 +8103,23 @@ export const VERBS = [
         haiek: 'kalte egingo diote',
       },
     },
+    // #459: see lagundu's sentences above for the cluster rationale.
     sentences: {
       present: {
-        ni: { text: 'Nik etsaiari ___.', validFor: [] },
-        zu: { text: 'Zuk etsaiari ___?', validFor: [] },
-        hura: { text: 'Hark etsaiari ___.', validFor: [] },
-        gu: { text: 'Guk etsaiari ___.', validFor: [] },
-        zuek: { text: 'Zuek etsaiari ___?', validFor: [] },
-        haiek: { text: 'Haiek etsaiari ___.', validFor: [] },
+        ni: { text: 'Nik etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        zu: { text: 'Zuk etsaiari ___?', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        hura: { text: 'Hark etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        gu: { text: 'Guk etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        zuek: { text: 'Zuek etsaiari ___?', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        haiek: { text: 'Haiek etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
       },
       past: {
-        ni: { text: 'Nik atzo etsaiari ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun etsaiari ___?', validFor: [] },
-        hura: { text: 'Hark lehengo astean etsaiari ___.', validFor: [] },
-        gu: { text: 'Guk iaz etsaiari ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun etsaiari ___?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean etsaiari ___.', validFor: [] },
+        ni: { text: 'Nik atzo etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        zu: { text: 'Zuk herenegun etsaiari ___?', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        hura: { text: 'Hark lehengo astean etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        gu: { text: 'Guk iaz etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        zuek: { text: 'Zuek duela bi egun etsaiari ___?', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
+        haiek: { text: 'Haiek joan den astean etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
@@ -8128,6 +8158,10 @@ export const VERBS = [
         haiek: 'aurre egingo diote',
       },
     },
+    // #459: `validFor: []` throughout, confirmed — `aurre-egin`'s dative noun
+    // (`arazoari`, "the problem") is an abstract object, the same semantic
+    // class as `ekin`/`erantzun`, so it doesn't pair with the
+    // `lagundu`/`deitu`/`mesede-egin`/`kalte-egin` person-recipient cluster.
     sentences: {
       present: {
         ni: { text: 'Nik arazoari ___.', validFor: [] },
@@ -8252,6 +8286,11 @@ export const VERBS = [
         haiek: { ni: 'jarraitu nenkiekeen', zu: 'jarraitu zenkiekeen', gu: 'jarraitu genkizkiekeen', zuek: 'jarraitu zenkizkiekeen' },
       },
     },
+    // #459: `validFor: []` throughout, confirmed — `present`'s hardcoded
+    // "jarraitzen" stem in the static text structurally blocks substituting
+    // any other verb's form, and `past`'s narrow named-referent subject
+    // ("Aitorren txanda") is too specific/uncertain for confident cross-
+    // tagging against `gustatu`/`iruditu`/`ahaztu`'s generic frames.
     sentences: {
       present: {
         ni: [{ text: 'Aitorren txanda niri jarraitzen ___.', validFor: [] }],
@@ -8308,6 +8347,9 @@ export const VERBS = [
         gu: 'zerigun', zuek: 'zerizuen', haiek: 'zerien',
       },
     },
+    // #459: `validFor: []` throughout, confirmed — `jario` is a rare/defective
+    // verb with fixed fluid-type subjects ("izerdia"/"malkoak"), with no
+    // genuine sibling among `gustatu`/`iruditu`/`ahaztu`/`jarraitu`'s frames.
     sentences: {
       present: {
         ni: [{ text: 'Izerdia niri ___.', validFor: [] }],
@@ -8512,6 +8554,11 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #459: `validFor: []` throughout, confirmed — `janarazi`'s NOR is plural
+    // ("babarrunak", `-zki-`/`dizkie`-family forms), a number mismatch with
+    // `idatzarazi`'s singular NOR ("hori", non-`zki` `die`-family forms) that
+    // structurally blocks cross-substitution between the two causative
+    // ditransitive verbs, on top of the semantic mismatch.
     sentences: {
       present: {
         ni: [{ text: 'Nik umeei babarrunak ___.', validFor: [] }],
@@ -8581,6 +8628,8 @@ export const VERBS = [
       },
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // #459: see janarazi's sentences above — the NOR-number mismatch (singular
+    // "hori" here vs. plural "babarrunak" there) blocks cross-substitution.
     sentences: {
       present: {
         ni: [{ text: 'Nik ikasleei hori ___.', validFor: [] }],
