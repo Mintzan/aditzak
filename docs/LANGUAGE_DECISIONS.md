@@ -6,6 +6,107 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-26 — Added Subjuntiboa and Agintera (Imperative) NOR-NORI-NORK tables to §5
+
+User requested audit of §5's completeness: all six NOR-NORI-NORK tenses
+should have full conjugation tables. Found that Subjuntiboa (Present and
+Past) and Agintera (Imperative) were documented in §16.1–16.2 but not yet
+tabulated in §5's main grid-reference section. Added:
+- **Subjuntiboa, Orainaldia (Present subjunctive)**: Six NORI recipient rows
+  (niri, hari, guri, zuri, zuei, haiei) with both singular and plural NOR
+  forms, following the drop-`-ke-` + `-n`-suffix-family rule from §16.1.
+  All person-category restrictions (*(refl.)*,  *(hika/zuka)*, *(zu↔zuek)*)
+  preserved from the existing Ahalera grid. Added sample usage examples.
+- **Subjuntiboa, Lehenaldia (Past subjunctive)**: Not tabulated. Documented
+  the policy (mirroring §16.1) that synthetic past forms this far down the
+  ditransitive paradigm are vanishingly rare/unverifiable; real usage favours
+  periphrastic alternatives (`eman ahal izan banio...`).
+- **Agintera (Imperative), ditransitive**: Four sub-tables covering all
+  combinations of addressees (zuk, zuek, hik, haiek) and object numbers
+  (singular, plural with `-zki-`), with NORI recipients (niri, hari, guri,
+  haiei). Noted that jussive 3rd-person forms are restricted to narrative/
+  formal contexts; modern colloquial favours periphrastic `bedi`/`bitez`.
+
+All tabulated forms already documented in §16 — this was a cross-file
+reorganization for completeness in §5's reference layout.
+
+## 2026-06-26 — Added `etorri` NOR-NORI (dative) present+past tables
+
+User asked to verify whether `natorkio` (etorri + dative, to him/her) and
+related forms exist in standard Basque. Web research confirmed:
+- **Present singular-NOR forms** (natorkít, datorkit, zatorkit, etc.):
+  attested in contemporary standard Batua, including in song titles and
+  idiomatic use.
+- **Past singular-NOR forms** (zetorkidan, zetorkion, etc.): attested via
+  the idiom "burura/gogora etorri" (to come to mind), a living feature of
+  standard speech.
+- **Plural-NOR and mood forms** (potential -ke, conditional baldintza/
+  ondorioa): derivable via the standard rule (NOR-prefix + stem + `-ki-` +
+  NORI-suffix) but not independently attested in available sources. `WebFetch`
+  failed on all conjugation-table URLs (ZUZEU, Wiktionary); `WebSearch`
+  returned only single-form hits, not complete paradigms.
+
+Decision: added NOR-NORI present/past tables to CONJUGATIONS.md §6's etorri
+subsection (new subheading), documenting the confirmed singular-NOR forms
+and noting that plural-NOR and moods are omitted pending native-speaker
+verification. App data (`verbs.js`) left unchanged — extending `etorri`'s
+`agreement` to include `'nori'` and wiring dative conjugations into lessons
+is a separate scope, tracked separately (if needed).
+
+## 2026-06-26 — Added `eraman`/`ekarri` plural-object forms (`zenekartzan` etc.)
+
+`eraman` and `ekarri` were the last two `nor-nork` synthetic verbs in
+`VERBS` still missing plural-object (`-tza-` infix) conjugations —
+`eduki` and `jakin` already got theirs via #284/#287, but #260's original
+comment for `eraman`/`ekarri` claimed this matched their "precedent,"
+which was stale by the time #284/#287 landed. Added `presentPlural`/
+`pastPlural`/`futurePlural` for both, sourced directly from
+CONJUGATIONS.md §7's existing `/daramatza`/`/dakartza`-style table
+columns (no new derivation needed — these were already tabulated in the
+docs, just not carried into `verbs.js`). This closes the *zenekartzan*
+gap a user asked about directly.
+
+Ran `scripts/validfor-delta-audit.mjs --verb eraman`/`--verb ekarri` per
+its own convention to review the new gap slots these tenses create (other
+verbs' `presentPlural`/`pastPlural`/`futurePlural` sentences where
+`eraman`/`ekarri`'s new forms are agreement-compatible). None read as a
+natural also-correct completion — `eraman`/`ekarri` ("carry"/"bring")
+don't fit the locative-only or unrelated-verb sentences in the candidate
+list — so no `validFor` tags were added; regenerated
+`scripts/validfor-gap-baseline.json` to reflect the new (reviewed) gap
+count instead.
+
+## 2026-06-26 — Scope of §6/§7's mood-table gap: only add what's confirmed standard, not pattern-derived
+
+Asked to "fill all the possible tenses" for the weaker synthetic verbs
+(`egon`, `joan`, `etorri`, `ibili`, `jakin`, `ekarri`, `eduki`, `erabili`,
+`eraman`, `jario`) the way §2/§3 do for `izan`/`ukan`, with the explicit
+constraint to only include forms "in use in standard basque." Mechanically
+extending `izan`/`ukan`'s mood-formation recipes (stem + `-ke-` for
+ahalera, `ba-` + past-minus-`-n` for baldintza, etc.) to these verbs was
+tempting but unreliable — they don't share `izan`/`ukan`'s root, and even
+`egon`'s own doc citations are inconsistent about which mood a given form
+belongs to (*nengoke* is cited as both ondorioa and ahalera-adjacent
+depending on the passage).
+
+Web research (Euskaltzaindia search results, Basque-grammar blogs) turned
+up isolated forms like *banengo* → *nengoke* (egon), *banindoa* →
+*nindoake* (joan), *banentor* → *nentorke* (etorri), *banenbil* →
+*nenbilke* (ibili) explicitly described as **regional/dialectal**, not
+universally standard — confirming the suspicion rather than resolving it.
+No source was found tabulating a complete 7-person mood paradigm for any
+of these verbs as standard Batua.
+
+Decision: added explanatory notes in §6/§7 (and a §13 cross-reference)
+stating that these verbs have no confirmed-standard mood forms beyond
+present/past — except `egon`'s `ni`-form examples already cited in §13
+(*nagoke*, *banengo*, *nengoke*, *nengokeen*, *nengoen*) — rather than
+adding tables of derived-but-unverified forms. This follows the same
+restraint §7 already applies to `ikusi`/`entzun`/`jan`/`edan`/`erosi`
+(verbs noted as having no productive synthetic paradigm at all): omit and
+explain, don't fabricate. If a native speaker or authoritative source
+later confirms specific fuller paradigms, they can be added then.
+
 ## 2026-06-25 — Criterion for `wordOrderSafe` (which sentences are fair to grade as a single-order reorder drill)
 
 The `word-order` drill (reassemble a scrambled sentence) can only fairly grade
