@@ -156,6 +156,12 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '17. atala — Objekturik gabeko subjektuak',
       },
     },
+    'phase-7-stage-18': {
+      title: {
+        es: 'Etapa 18 — Herramientas y uso',
+        eu: '18. atala — Tresnak eta erabilera',
+      },
+    },
   },
   units: {
     1: {
@@ -645,6 +651,17 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Estoy ocupado trabajando." · "La película dura dos horas."',
         eu: '"Lanean dihardut." · "Filmak bi ordu dirau."',
+      },
+    },
+    47: {
+      title: { es: 'erabili — Usar cosas', eu: 'erabili — Gauzak erabiltzen' },
+      focus: {
+        es: 'erabili ("darabilt"/"nerabilen") — verbo sintético nor-nork en la forma ya enseñada de eduki/jakin, presente + pasado',
+        eu: 'erabili ("darabilt"/"nerabilen") — nor-nork aditz trinkoa, eduki/jakin-en irakatsitako forman, oraina + lehena',
+      },
+      payload: {
+        es: '"Uso el ordenador todos los días."',
+        eu: '"Nik ordenagailua darabilt egunero."',
       },
     },
   },

@@ -3361,6 +3361,53 @@ export const VERBS = [
     },
   },
   {
+    // #483: `erabili` ("to use") — plain nor-nork synthetic in the
+    // already-taught `eduki`/`jakin` shape, no new grammatical relation.
+    // present/past sourced from docs/CONJUGATIONS.md §7. `hi` omitted, same
+    // reason as `ekarri`/`eraman`/`eduki` (no `hik` row sourced there).
+    id: 'erabili',
+    verb: 'erabili',
+    meaning: { en: 'to use', es: 'usar', eu: 'erabili' },
+    type: 'synthetic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'darabilt', zu: 'darabilzu', hura: 'darabil', gu: 'darabilgu', zuek: 'darabilzue', haiek: 'darabilte' },
+      past: {
+        ni: 'nerabilen',
+        zu: 'zenerabilen',
+        hura: 'zerabilen',
+        gu: 'generabilen',
+        zuek: 'zenerabilten',
+        haiek: 'zerabilten',
+      },
+    },
+    // `validFor` left empty throughout: "using" something is a distinct
+    // action from "having"/"bringing"/"taking" it, so `eduki`/`ekarri`/
+    // `eraman`/`ukan`'s forms don't genuinely complete these frames —
+    // confirmed via `scripts/validfor-delta-audit.mjs --verb erabili`.
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik ordenagailua ___ egunero lanerako.', validFor: [] }],
+        zu: [{ text: 'Zuk telefono berria ___ asko.', validFor: [] }],
+        hura: [{ text: 'Medikuak tresna hori ___ ebakuntzetan.', validFor: [] }],
+        gu: [{ text: 'Guk auto bat ___ bidaietarako.', validFor: [] }],
+        zuek: [{ text: 'Zuek tresna hori ___ maiz?', validFor: [] }],
+        haiek: [{ text: 'Ikasleek liburu hori ___ eskolan.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo ordenagailua ___ lanerako.', validFor: [] }],
+        zu: [{ text: 'Zuk lehengo telefonoa ___ urte askotan.', validFor: [] }],
+        hura: [{ text: 'Medikuak tresna zaharra ___ urte askotan.', validFor: [] }],
+        gu: [{ text: 'Guk auto zahar bat ___ bidaietarako.', validFor: [] }],
+        zuek: [{ text: 'Zuek tresna hori ___ atzo?', validFor: [] }],
+        haiek: [{ text: 'Ikasleek liburu zahar hori ___ iaz.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
+  {
     id: 'ibili',
     verb: 'ibili',
     meaning: { en: 'to walk around / be doing', es: 'andar / estar haciendo', eu: 'ibili' },
