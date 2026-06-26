@@ -1270,6 +1270,40 @@ auxiliaries per §11's periphrastic matrix.
 | zuek | zoazte | zindoazten |
 | haiek | doaz | zihoazen |
 
+#### `joan` — NOR-NORI dative axis
+
+| Nor (subject) | Nori (recipient) | Present | Past | Common spoken meaning |
+|---|---|---|---|---|
+| hura | niri | doakit | — | "Denbora doakit" — time flies for me |
+| hura | zuri | doakizu | — | "Hori zuri doakizu" — that applies to you |
+| hura | guri | doakigu | — | "Biziak doakigu" — life goes on for us |
+| haiek | niri | doazkit | — | "Gauzak gaizki doazkit" — things are going badly for me |
+| haiek | zuri | doazkizu | — | "Galtza horiek ondo doazkizu" — those pants suit you |
+| ni | zuri | noakizu | — | "Zuregana noakizu" — I'm heading your way |
+| ni | hari | noakio | — | "Laguntzera noakio" — I'm going to help him/her |
+| gu | zuri | goazkizu | — | "Zuregana goazkizu" — we're heading your way |
+| gu | zuei | goazkizue | — | "Zuengana goazkizue" — we're heading toward you all |
+
+Unlike `etorri` (single NOR, `hura`, varying only NORI), `joan`'s dative
+varies on *both* axes — `haiek` takes the plural-subject `-oaz(k)-` infix
+(cf. `doa`→`doaz` in the plain paradigm) the same way `etorri`'s `datoz`
+would take `-tzk-` if its own plural-NOR dative were attested. All present
+forms above are confirmed via ordinary spoken usage/idiom (not just one
+or two song/idiom citations, unlike `etorri`'s dative — these are
+described as "very common"/"common" in everyday speech).
+
+**Past forms are not yet confirmed.** A first attempt derived them from
+`joan`'s own past stems (`nindoan`/`gindoazen` for `ni`/`gu`; `zihoan`/
+`zihoazen`, with an `h`, for `hura`/`haiek` — see the plain paradigm
+above) + the same `-ki-`/`-zki-` dative infix, but the `hura`→`niri` cell
+alone produced contradictory guesses (`zindoakidan`, `zioakit`, `zhoakit`,
+`zioakidan` were all proposed and rejected in turn), and the rest were
+supplied without the `h` that `joan`'s own past paradigm would predict for
+`hura`/`haiek` (i.e. `zioakizun`/`zioakigun`/`zioazkidan`/`zioazkizun`
+rather than the expected `zihoakizun`/`zihoakigun`/`zihoazkidan`/
+`zihoazkizun`). Given the inconsistency, no past dative form is tabulated
+here pending native-speaker confirmation.
+
 ### `etorri` — "to come"
 
 | Person | Present | Past |

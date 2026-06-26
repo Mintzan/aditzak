@@ -1620,6 +1620,31 @@ export const VERBS = [
       // Radical/Bare-Stem rule's `joan bedi`, out of scope for #368 — see
       // docs/DECISIONS.md).
       imperative: { hi: 'hoa', zu: 'zoaz', zuek: 'zoazte' },
+      // NOR-NORI dative axis (cf. `etorri.conjugations.presentByNori` above)
+      // — "[subject] goes/applies/suits to [recipient]", very common in
+      // spoken Basque for fit/suitability/figurative motion ("Hori zuri
+      // doakizu", "Galtza horiek ondo doazkizu"). Unlike `etorri`, both NOR
+      // and NORI vary here, so this is a literal 2D table (outer = NOR,
+      // inner = NORI), same shape as `dativeIzanByNor` above but not
+      // composed through it — `joan`'s dative is its own synthetic `-oa(k)-`
+      // /`-oaz(k)-` paradigm, not periphrastic. Only cells with a real
+      // attested example are filled in (e.g. "Denbora doakit", "Zuregana
+      // noakizu", "Laguntzera noakio", "Gauzak gaizki doazkit", "Galtza
+      // horiek ondo doazkizu", "Zuregana goazkizu", "Zuengana goazkizue").
+      // Past forms are NOT included — no attested example sentences were
+      // supplied, and deriving them by analogy to `imperfectivePast`
+      // (`zihoan`/`zihoazen` for hura/haiek, with an `h`; `nindoan`/
+      // `gindoazen` for ni/gu, without) turned out to be unreliable: the
+      // hura→niri cell alone produced several different mutually
+      // inconsistent guesses before being abandoned. Needs native-speaker
+      // confirmation before any past dative form is added — see
+      // docs/LANGUAGE_DECISIONS.md.
+      presentByNor: {
+        hura: { ni: 'doakit', zu: 'doakizu', gu: 'doakigu' },
+        haiek: { ni: 'doazkit', zu: 'doazkizu' },
+        ni: { zu: 'noakizu', hura: 'noakio' },
+        gu: { zu: 'goazkizu', zuek: 'goazkizue' },
+      },
     },
     // Every variant here is an allative `-ra` frame ("Ni hondartzara ___." =
     // "I go to the beach"). `etorri`'s same-person form ("Ni hondartzara
