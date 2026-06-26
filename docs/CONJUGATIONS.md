@@ -1120,6 +1120,17 @@ e.g. *zu nire buruari aurkeztu zintudan* ("I introduced you to myself").
 | zuek | zaudete | zeundeten |
 | haiek | daude | zeuden |
 
+Beyond present/past, `egon` is the one verb in this section with any
+mood forms confirmed as standard — but only for `ni`, and only as the
+isolated examples already cited in §13: *nagoke* (ahalera), *banengo*
+(baldintza), *nengoke* (ondorioa), *nengokeen* (ahalera-past), *nengoen*
+(subjuntiboa). Regional/pedagogical sources extend this to other persons
+(e.g. *zeunke*, *legoke*), but those aren't confirmed as standard Batua
+usage, so they're left out rather than guessed at. For every other person/
+mood combination, the productive standard form is periphrastic — `egon
+ahal izan`, `egongo balitz`, etc. — built from §1/§3's `izan`/`ukan` mood
+auxiliaries per §11's periphrastic matrix.
+
 ### `joan` — "to go"
 
 | Person | Present | Past |
@@ -1155,6 +1166,15 @@ e.g. *zu nire buruari aurkeztu zintudan* ("I introduced you to myself").
 | zu | zabiltza | zenbiltzan |
 | zuek | zabiltzate | zenbiltzaten |
 | haiek | dabiltza | zebiltzan |
+
+`joan`, `etorri`, and `ibili` have no standard mood tables to add here:
+unlike `egon`, this doc has found no person/mood form for any of the
+three (e.g. *nindoake*, *nentorke*, *nenbilke*, *banindoa*, *banentor*,
+*banenbil*) that's independently confirmed as standard Batua rather than
+regional or archaic/literary usage. Beyond present/past (and, for `joan`/
+`etorri`, the §9 imperative), mood is expressed periphrastically — *joango
+banintz*, *etorri ahal naiz*, *ibil(tzen) nadin* — via §1/§3's `izan`/
+`ukan` auxiliaries per §11's matrix, same as `mintzatu` below.
 
 ### `ihardun` — "to occupy oneself / be engaged (in something)" (unergative — nork-only)
 
@@ -1287,6 +1307,14 @@ as a variant.
 | zuek | daramazue / daramatzazue | zeneramaten / zeneramatzaten |
 | haiek | daramate / daramatzate | zeramaten / zeramatzaten |
 
+`jakin`, `ekarri`, `eduki`, `erabili`, and `eraman` have no standard mood
+tables to add here either: none of these verbs has a productive synthetic
+baldintza/ondorioa/ahalera/subjuntiboa paradigm in modern standard Batua,
+so there's nothing confirmed to tabulate beyond the present/past above.
+The living standard forms are periphrastic, built from the participle +
+`ukan`'s own mood auxiliary (§3/§13) — *jakingo banu*, *ekarri dezaket*,
+*eduki nezakeen*, *erabil dezadan*, *eramango nuke* — per §11's matrix.
+
 ### `ikusi` — "to see" — nor-nork
 
 `ikusi` has no living synthetic paradigm in modern Batua — an archaic
@@ -1413,6 +1441,10 @@ its own (rough working glosses):
 - *Izerdia dario* — "He/she is sweating"
 - *Adurra dariola dago* — "He/she is drooling"
 - *Iturriari ura dario* — "Water flows from the fountain"
+
+`jario` likewise has no standard mood paradigm beyond present/past — its
+narrow, mostly-descriptive everyday use (above) doesn't call for one, and
+none is attested.
 
 ### `esan` — "to say" (ditransitive forms — same shape as §5's `NOR`=hura/`NORI`=hari grid)
 
@@ -1686,13 +1718,19 @@ field (declined for whichever case that verb's subject takes).
 - **Conditional (baldintza/ondorioa)** — *"banintz"*, *"banu"*, *"banengo"*
   (if-clauses, "baldintza"); *"nintzateke"*, *"nuke"*, *"nengoke"* (the
   "would" result, "ondorioa") — full tables for `izan`/`ukan` in §2/§3 above
-  (`egon`'s own — *"nengoke"* — isn't covered here).
+  (`egon`'s own — *"nengoke"* — isn't covered here; only the `ni`-form is
+  confirmed standard — see §6's note on `egon`).
 - **Potential (ahalera)** — *"naiteke"*, *"dezaket"*, *"nagoke"* (present);
   *"nintekeen"*, *"nezakeen"*, *"nengokeen"* (past). A closed synthetic `-ke`
   set, available only to verbs with full synthetic paradigms.
 - **Subjunctive (subjuntiboa)** — *"nadin"*, *"dezadan"*, *"nengoen"* — mostly
   embedded in subordinate clauses (*"Nahi dut etor dadin"* = "I want him/her
   to come").
+- Other than `izan`/`ukan` (and `egon`'s isolated `ni`-forms above), the
+  synthetic `nor`/`nor-nork` verbs in §6/§7 (`joan`, `etorri`, `ibili`,
+  `jakin`, `ekarri`, `eduki`, `erabili`, `eraman`, `jario`) have no
+  confirmed-standard mood forms beyond present/past — see the notes inline
+  in §6/§7 for why those tables stop where they do.
 - **Imperative (agintera)** — see §9.
 
 For periphrastic verbs, each of the above is actually a (non-finite verb form

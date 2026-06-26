@@ -6,6 +6,37 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-26 — Scope of §6/§7's mood-table gap: only add what's confirmed standard, not pattern-derived
+
+Asked to "fill all the possible tenses" for the weaker synthetic verbs
+(`egon`, `joan`, `etorri`, `ibili`, `jakin`, `ekarri`, `eduki`, `erabili`,
+`eraman`, `jario`) the way §2/§3 do for `izan`/`ukan`, with the explicit
+constraint to only include forms "in use in standard basque." Mechanically
+extending `izan`/`ukan`'s mood-formation recipes (stem + `-ke-` for
+ahalera, `ba-` + past-minus-`-n` for baldintza, etc.) to these verbs was
+tempting but unreliable — they don't share `izan`/`ukan`'s root, and even
+`egon`'s own doc citations are inconsistent about which mood a given form
+belongs to (*nengoke* is cited as both ondorioa and ahalera-adjacent
+depending on the passage).
+
+Web research (Euskaltzaindia search results, Basque-grammar blogs) turned
+up isolated forms like *banengo* → *nengoke* (egon), *banindoa* →
+*nindoake* (joan), *banentor* → *nentorke* (etorri), *banenbil* →
+*nenbilke* (ibili) explicitly described as **regional/dialectal**, not
+universally standard — confirming the suspicion rather than resolving it.
+No source was found tabulating a complete 7-person mood paradigm for any
+of these verbs as standard Batua.
+
+Decision: added explanatory notes in §6/§7 (and a §13 cross-reference)
+stating that these verbs have no confirmed-standard mood forms beyond
+present/past — except `egon`'s `ni`-form examples already cited in §13
+(*nagoke*, *banengo*, *nengoke*, *nengokeen*, *nengoen*) — rather than
+adding tables of derived-but-unverified forms. This follows the same
+restraint §7 already applies to `ikusi`/`entzun`/`jan`/`edan`/`erosi`
+(verbs noted as having no productive synthetic paradigm at all): omit and
+explain, don't fabricate. If a native speaker or authoritative source
+later confirms specific fuller paradigms, they can be added then.
+
 ## 2026-06-25 — Criterion for `wordOrderSafe` (which sentences are fair to grade as a single-order reorder drill)
 
 The `word-order` drill (reassemble a scrambled sentence) can only fairly grade
