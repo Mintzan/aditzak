@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #494-497: `izan`/`ukan` past-subjunctive and hypothetical/past mood gaps sourced from CONJUGATIONS.md, not the issues' own example forms
+
+Issues #494-497 (children of the moods epic #487) asked for flat
+`subjunctivePast`/`conditionalPast`/`potentialAlegiazkoa`/`potentialLehenaldia`
+keys on `izan` and `ukan`. Their example code snippets (auto-generated,
+like the rest of the #481-502 batch) contained linguistically wrong forms
+for several of these (e.g. fabricated-looking `naitekedan`/`zaitezkkedan`
+suffixes for izan's potential moods) — they were not used as a source.
+Instead every value was derived independently from `docs/CONJUGATIONS.md`
+§2 (izan) and §3 (ukan), and the ukan values were additionally
+cross-checked against the existing `*ByObject` 2D tables' `hura` (object)
+column, which already encode the same forms (e.g.
+`potentialAlegiazkoaByObject.ni.hura === 'nezake'` matches the new flat
+`potentialAlegiazkoa.ni`) — all four matched cell-for-cell.
+
+`hi`-inclusion followed each new tense's same-mood-family present-tense
+sibling: `izan`'s `conditionalPast`/`potentialAlegiazkoa`/
+`potentialLehenaldia` include `hi` (matching `conditional`/`potential`,
+which do); `izan`'s `subjunctivePast` omits `hi` (matching
+`subjunctivePresent`'s existing hika-deferral note). `ukan`'s four new
+tables all omit `hi`, matching every existing ukan mood table.
+
+Added a `tenseSubjunctivePast` `TENSE_META`/i18n entry (the other three
+keys already had one, shared with `esan`/`eman`'s existing flat tables).
+
+Related issues #481-486 (ihardun/mintzatu/erabili/iraun/irudi/etzan) and
+#212/#213 remain paused/skipped per earlier session decisions — unrelated
+to this change.
+
 ## 2026-06-26 — #478: `jakin`'s plural-object forms join the existing review pools (not dedicated lessons), after closing its `present`/`presentPlural` gu/zuek/haiek gap
 
 Issue #478 literally asked for dedicated `jakin-present-plural`/
