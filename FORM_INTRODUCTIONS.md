@@ -1,10 +1,25 @@
 # Form Introductions Validation
 
-This document explains how to validate that all grammatical forms are introduced in a pedagogically sound order.
+This document explains how to track and validate that conjugated forms (the actual Basque words) and grammatical forms are introduced in a pedagogically sound order.
 
 ## Quick Start
 
-**Check what forms are missing from the curriculum:**
+### Track Conjugated Forms (Basque Words)
+
+**See when each conjugated form (like "naiz", "dut", "gara") is introduced:**
+```bash
+node src/validateConjugationIntroductions.js
+```
+
+**Export all conjugations with introduction points:**
+```bash
+node src/exportConjugations.js csv  # → conjugations-by-lesson.csv
+node src/exportConjugations.js json # → conjugations-by-lesson.json
+```
+
+### Track Form Combinations (Verb + Tense + Person)
+
+**Check what verb/tense/person combinations are missing from the curriculum:**
 ```bash
 node src/validateCompleteCoverage.js
 ```
@@ -20,6 +35,26 @@ node src/exportFormInventory.js json
 ```
 
 ## Tools
+
+### 0. Conjugation Introduction Tracking
+Track when actual conjugated forms (the Basque words) are introduced:
+
+```bash
+node src/validateConjugationIntroductions.js
+```
+
+**Output includes:**
+- 📋 Timeline of all conjugated forms by first introduction (lesson order)
+- 🔄 Shared conjugations (words appearing in multiple verbs/tenses)
+- 📊 Summary statistics
+
+**Current Status:**
+- ✅ **4,284 conjugated forms taught**
+- ✅ **61 shared conjugations** (e.g., "zaude" in both `egon` present and imperative)
+- ✅ **0 homonyms** (same form with same person in different verbs)
+- Lessons: 283 | Verbs: 104 | Tenses: 46
+
+**Examples of conjugations:** "naiz" (I am), "dut" (I have), "gara" (we are), "zaude" (you are, present), "dago" (he is)
 
 ### 1. Complete Coverage Validation
 Check if ALL possible forms (defined in VERBS) are taught somewhere:
@@ -85,8 +120,38 @@ These generate `form-inventory.csv` and `form-inventory.json` containing all 2,5
 - Plan the next curriculum unit
 - Verify completeness after lesson additions
 
-### 4. Helper Module
-Use the `formIntroductions` module to query form introduction data in code:
+### 4. Helper Modules
+
+#### Conjugation Introductions
+Use the `conjugationIntroductions` module to query when specific Basque words are introduced:
+
+```javascript
+import {
+  getConjugationIntroduction,    // When is "naiz" introduced?
+  getConjugationsForLesson,      // What words are in lesson X?
+  getConjugationsForVerb,        // All conjugations for izan/present?
+  isConjugationIntroducedBy,     // Is "naiz" available by lesson 50?
+  getSharedConjugations,         // Which words appear in multiple verbs?
+  getAllConjugations,            // Complete list with timelines
+} from './conjugationIntroductions.js'
+
+// Example: When is "naiz" first introduced?
+const intro = getConjugationIntroduction('naiz')
+console.log(`"naiz" in: ${intro.verbId}/${intro.tense}/${intro.person} (Lesson ${intro.lessonIdx})`)
+
+// Example: What conjugations are in lesson 3?
+const forms = getConjugationsForLesson('ukan-present')
+console.log(forms) // ["dut", "duzu", "du", ...]
+
+// Example: Find shared forms
+const shared = getSharedConjugations()
+for (const [form, sources] of shared) {
+  console.log(`"${form}" appears in: ${sources.map(s => `${s.verbId}/${s.person}`).join(', ')}`)
+}
+```
+
+#### Form/Person Combinations
+Use the `formIntroductions` module to query verb+tense+person introduction data in code:
 
 ```javascript
 import {
