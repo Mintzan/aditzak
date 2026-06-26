@@ -787,6 +787,77 @@ describe('App', () => {
     })
   })
 
+  describe('lesson navigation confirmation (#464)', () => {
+    afterEach(() => {
+      window.history.replaceState({}, '', '/')
+    })
+
+    it('exits to the lesson list immediately when no progress has been made yet', async () => {
+      const confirmSpy = vi.spyOn(window, 'confirm')
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+      await user.click(screen.getByRole('button', { name: 'Exit lesson' }))
+
+      expect(screen.getByRole('heading', { name: 'Aditzak' })).toBeInTheDocument()
+      expect(confirmSpy).not.toHaveBeenCalled()
+    })
+
+    it('asks for confirmation before abandoning a lesson with progress, and stays if cancelled', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(false)
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+      await user.click(screen.getByRole('button', { name: 'Exit lesson' }))
+
+      expect(confirmSpy).toHaveBeenCalledWith('Leave this lesson? Your progress on it will be lost.')
+      expect(screen.queryByRole('heading', { name: 'Aditzak' })).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Exit lesson' })).toBeInTheDocument()
+    })
+
+    it('leaves the lesson when the learner confirms abandoning', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      vi.spyOn(window, 'confirm').mockReturnValue(true)
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+      await user.click(screen.getByRole('button', { name: 'Exit lesson' }))
+
+      expect(screen.getByRole('heading', { name: 'Aditzak' })).toBeInTheDocument()
+    })
+
+    it('treats the browser back button the same as the exit button', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(false)
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+      await user.click(screen.getByRole('button', { name: 'naiz' }))
+
+      window.dispatchEvent(new PopStateEvent('popstate'))
+      expect(confirmSpy).toHaveBeenCalledWith('Leave this lesson? Your progress on it will be lost.')
+      expect(screen.getByRole('button', { name: 'Exit lesson' })).toBeInTheDocument()
+
+      confirmSpy.mockReturnValue(true)
+      window.dispatchEvent(new PopStateEvent('popstate'))
+
+      await waitFor(() => {
+        expect(screen.getByRole('heading', { name: 'Aditzak' })).toBeInTheDocument()
+      })
+    })
+  })
+
   describe('account sign-in', () => {
     afterEach(() => {
       window.history.replaceState({}, '', '/')

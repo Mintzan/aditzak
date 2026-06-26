@@ -8,6 +8,23 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #464: browser back during a lesson exits via history.pushState + popstate, gated by the same abandon-confirmation as the X button
+
+Browser back during an active lesson should return to the lesson list rather
+than navigate actual browser history (which could leave the app). Implemented
+by pushing a history entry when `ExerciseScreen` mounts, so the back button
+has something of the app's own to pop, and listening for `popstate` to call
+the existing `onExit` (the same callback the in-lesson X button uses). If the
+learner has unsaved progress (`correctCount > 0 || misses.length > 0`) the
+listener shows the same `window.confirm` abandon prompt as the X button; on
+cancel it re-pushes the history entry so back still works as an intercept
+next time. The listener is registered once per lesson mount (effect with `[]`
+deps) and reads `hasProgress`/`onExit`/`t` through refs kept fresh by a
+separate effect, so it doesn't need to be torn down and re-registered on every
+answer. Voluntary exits (X button, lesson completion) deliberately don't pop
+the pushed history entry — a minor, accepted gap rather than risking a
+`history.back()` race with the listener's own cleanup.
+
 ## 2026-06-26 — #469: collapsed Unit 27's 36 single-verb NOR-NORI object-axis lessons into its 12 pooled reviews
 
 #441 widened Unit 27's `gustatu`/`iruditu`/`ahaztu` NOR-NORI object-axis pool
