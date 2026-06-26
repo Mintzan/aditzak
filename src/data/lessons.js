@@ -1399,6 +1399,7 @@ export const LESSONS = [
       { verbId: 'ahaztu', tense: 'present' },
       { verbId: 'jarraitu', tense: 'present' },
       { verbId: 'jario', tense: 'present' },
+      { verbId: 'etorri', tense: 'presentByNori' },
     ],
   },
   // Unit 24 (#146) — NOR-NORI past + future on the same verbs.
@@ -1419,6 +1420,7 @@ export const LESSONS = [
       { verbId: 'ahaztu', tense: 'past' },
       { verbId: 'jarraitu', tense: 'past' },
       { verbId: 'jario', tense: 'past' },
+      { verbId: 'etorri', tense: 'pastByNori' },
     ],
   },
   // Unit 25 (#147) — axis-scaffolded NOR-NORI-NORK: L1 fixes NORI (`esan`,
