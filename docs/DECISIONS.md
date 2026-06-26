@@ -8,6 +8,125 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #494-497: `izan`/`ukan` past-subjunctive and hypothetical/past mood gaps sourced from CONJUGATIONS.md, not the issues' own example forms
+
+Issues #494-497 (children of the moods epic #487) asked for flat
+`subjunctivePast`/`conditionalPast`/`potentialAlegiazkoa`/`potentialLehenaldia`
+keys on `izan` and `ukan`. Their example code snippets (auto-generated,
+like the rest of the #481-502 batch) contained linguistically wrong forms
+for several of these (e.g. fabricated-looking `naitekedan`/`zaitezkkedan`
+suffixes for izan's potential moods) — they were not used as a source.
+Instead every value was derived independently from `docs/CONJUGATIONS.md`
+§2 (izan) and §3 (ukan), and the ukan values were additionally
+cross-checked against the existing `*ByObject` 2D tables' `hura` (object)
+column, which already encode the same forms (e.g.
+`potentialAlegiazkoaByObject.ni.hura === 'nezake'` matches the new flat
+`potentialAlegiazkoa.ni`) — all four matched cell-for-cell.
+
+`hi`-inclusion followed each new tense's same-mood-family present-tense
+sibling: `izan`'s `conditionalPast`/`potentialAlegiazkoa`/
+`potentialLehenaldia` include `hi` (matching `conditional`/`potential`,
+which do); `izan`'s `subjunctivePast` omits `hi` (matching
+`subjunctivePresent`'s existing hika-deferral note). `ukan`'s four new
+tables all omit `hi`, matching every existing ukan mood table.
+
+Added a `tenseSubjunctivePast` `TENSE_META`/i18n entry (the other three
+keys already had one, shared with `esan`/`eman`'s existing flat tables).
+
+Related issues #481-486 (ihardun/mintzatu/erabili/iraun/irudi/etzan) and
+#212/#213 remain paused/skipped per earlier session decisions — unrelated
+to this change.
+
+## 2026-06-26 — #478: `jakin`'s plural-object forms join the existing review pools (not dedicated lessons), after closing its `present`/`presentPlural` gu/zuek/haiek gap
+
+Issue #478 literally asked for dedicated `jakin-present-plural`/
+`jakin-past-plural` lessons wired into the journey. Asked the user, who
+chose to follow the established precedent instead: every other NOR-NORK
+verb's object-plural forms (`ukan`, `eduki`, `eraman`/`ekarri` per #476,
+etc.) are pool-only — no dedicated lesson, just sources in
+`nor-nork-present-plural-pool`/`nor-nork-past-plural-pool` (and their
+`-plural`-suffixed PHASE_1_PLURAL_PERSONS siblings). `jakin` now follows
+the same pattern instead of being a one-off exception.
+
+This surfaced a real, pre-existing data gap blocking that: `jakin`'s
+`presentPlural` table only covered `ni`/`zu`/`hura` (`gu`/`zuek`/`haiek`
+were missing from `present` itself too), which is exactly why
+`nor-nork-past-plural-pool`'s old comment had explicitly left `jakin` out.
+`docs/CONJUGATIONS.md` §7 already documented the missing `present` cells
+(`dakigu`/`dakizue`/`dakite`, #245-sourced) — they just hadn't been ported
+into `verbs.js`. Asked the user whether to treat that as in-scope; chose to
+close it now rather than ship another half-integrated table. Ported both
+`present`'s and `presentPlural`'s missing cells from the documented grid
+(not new speculation), which is what let `jakin` join all four plural
+pools (present and past, both person-range variants) instead of just the
+present-side ones.
+
+Regenerated `scripts/validfor-gap-baseline.json` — the 225-slot increase
+for `jakin` is purely from the newly-populated `gu`/`zuek`/`haiek` cells
+becoming checkable against other hosts' sentences for the first time;
+reviewed via `validfor-delta-audit.mjs --verb jakin` and none are natural
+completions, so no `validFor` additions.
+
+## 2026-06-26 — #477: `etorri`'s NOR-NORI dative forms get `presentByNori`/`pastByNori` tables, folded into the existing `nor-nori-*-pool` reviews
+
+Added `etorri`'s confirmed dative forms (`docs/LANGUAGE_DECISIONS.md`'s
+existing entry on the data: `datorkit`/`zetorkidan`/`zetorkion`, niri/hari
+only) to `verbs.js` and updated `agreement` to `['nor', 'nori']`. Named the
+new tables `presentByNori`/`pastByNori` rather than reusing `gustatu`'s
+`presentByNor`/`pastByNor` convention: those name the *additional* axis
+beyond a verb's usual one, and `etorri`'s usual axis is NOR (the moving
+subject) while NORI is the new one here — the opposite of `gustatu`, whose
+usual axis is NORI and NOR is the new one. These forms are irregular
+synthetic, not decomposable into a `byNoriPrefixes` skeleton like the
+periphrastic dative verbs, so the tables are hand-written literals.
+
+No dedicated practice lessons (mirrors #476's precedent): folded
+`{ verbId: 'etorri', tense: 'presentByNori' }`/`pastByNori` into the existing
+`nor-nori-present-pool`/`nor-nori-past-pool` review lessons in
+`src/data/lessons.js` alongside `gustatu`/`iruditu`/`ahaztu`/`jarraitu`/
+`jario`. `journey.js` is untouched — `etorri`'s Unit 42 placement already
+covers its core present/past, and these pools aren't tied to any unit's
+`lessonIds`.
+
+Fixed a side effect: `getCaseFrameSibling` (`lessonLogic.js`) previously
+matched any verb whose `agreement` included `nori`, assuming that meant its
+*primary* present/past table was dative-keyed. Adding `nori` to `etorri`'s
+agreement made it match ahead of `gustatu` in `VERBS` array order, returning
+`etorri`'s NOR-axis forms as a nonsensical case-frame lure. Fixed by also
+requiring `object`/`recipient`/`agent` (the existing markers for "this verb's
+table fixes one argument, varies the other") whenever the candidate's
+agreement includes `nori` — verbs without `nori` at all (e.g. `izan`) are
+unaffected by the extra check.
+
+Regenerated `scripts/validfor-gap-baseline.json`: widening `etorri`'s
+agreement narrowed `agreementsCompatible` matches against plain NOR-only
+verbs (no longer considered case-compatible) and widened it against other
+NOR-NORI verbs, shifting gap counts across many unrelated verb IDs as an
+expected, symmetric consequence — not a sign of bad data. Reviewed
+`etorri`'s own new 82 gap slots via `validfor-delta-audit.mjs --verb etorri`:
+all are `etorri`'s plain NOR present/past forms leaking into other verbs'
+dative-experiencer sentences (e.g. `dator` offered for "Hari hau ___" =
+"this seems ___ to him"), which aren't natural completions — no `validFor`
+additions made.
+
+## 2026-06-26 — #476: `eraman`/`ekarri`'s plural-object tenses join the existing review pools, no dedicated Unit 42 lessons
+
+`eraman`/`ekarri` gained `presentPlural`/`pastPlural`/`futurePlural` tables
+(see `docs/LANGUAGE_DECISIONS.md`'s entry on the data itself — that data had
+been added once already in an earlier exploratory pass and reverted as
+out-of-scope, then re-added here since #476 needed it). Followed the exact
+precedent set for `eduki`'s own plural-object tenses (#286/#417): folded both
+verbs into the existing `nor-nork-present-plural-pool(-plural)`,
+`nor-nork-past-plural-pool(-plural)`, and `nor-nork-future-plural-pool(-plural)`
+review lessons in `src/data/lessons.js`, rather than adding dedicated
+practice lessons or a new review unit. Reasoning: like `eduki`'s plural-object
+forms, these don't teach a new grammatical relation — the `-tza-` infix rule
+was already taught via the pools' other verbs — so they're reinforcement,
+not new content, matching how Unit 42 itself was scoped as "no new
+grammatical relation" optional flavor content. `journey.js` is untouched:
+the pools aren't tied to Unit 42's `lessonIds`, they're reused across many
+earlier units, so no roadmap change was needed.
+
 ## 2026-06-26 — #464: browser back during a lesson exits via history.pushState + popstate, gated by the same abandon-confirmation as the X button
 
 Browser back during an active lesson should return to the lesson list rather

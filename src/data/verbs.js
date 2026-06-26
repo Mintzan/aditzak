@@ -320,6 +320,52 @@ export const VERBS = [
         zuek: 'zaitezten',
         haiek: 'daitezen',
       },
+      // #494 — Subjuntiboa Lehenaldia, `izan`'s own NOR paradigm per
+      // CONJUGATIONS.md §2 ("Further moods"). `hi` omitted, matching
+      // `subjunctivePresent` above (the journey's hika deferral).
+      subjunctivePast: {
+        ni: 'nendin',
+        zu: 'zintezen',
+        hura: 'zedin',
+        gu: 'gintezen',
+        zuek: 'zintezten',
+        haiek: 'zitezen',
+      },
+      // #495 — Ondorioa Lehenaldia ("would have been"), per CONJUGATIONS.md
+      // §2's Ondorioa past table. `hi` included, matching `conditional`
+      // above (which also carries a `hi` form).
+      conditionalPast: {
+        ni: 'nintzatekeen',
+        hi: 'hintzatekeen',
+        zu: 'zinatekeen',
+        hura: 'zatekeen',
+        gu: 'ginatekeen',
+        zuek: 'zinateketen',
+        haiek: 'ziratekeen',
+      },
+      // #496 — Ahalera Alegiazkoa ("could be" — hypothetical potential),
+      // per CONJUGATIONS.md §2's Ahalera table. `hi` included, matching
+      // `potential` above.
+      potentialAlegiazkoa: {
+        ni: 'ninteke',
+        hi: 'hinteke',
+        zu: 'zintezke',
+        hura: 'liteke',
+        gu: 'gintezke',
+        zuek: 'zintezkete',
+        haiek: 'litezke',
+      },
+      // #497 — Ahalera Lehenaldia ("could have been"), per CONJUGATIONS.md
+      // §2's Ahalera past table. `hi` included, matching `potential` above.
+      potentialLehenaldia: {
+        ni: 'nintekeen',
+        hi: 'hintekeen',
+        zu: 'zintezkeen',
+        hura: 'zitekeen',
+        gu: 'gintezkeen',
+        zuek: 'zintezketen',
+        haiek: 'zitezkeen',
+      },
     },
     // Every variant here is a predicate-nominal/adjective frame ("Ni
     // irakaslea ___." = "I am a teacher", "Txakurra handia ___." = "The dog is
@@ -858,6 +904,51 @@ export const VERBS = [
         gu: 'dezagun',
         zuek: 'dezazuen',
         haiek: 'dezaten',
+      },
+      // #494 — Subjuntiboa Lehenaldia, `NOR` fixed at `hura` (object), `NORK`
+      // varying, per CONJUGATIONS.md §3's past-subjunctive grid. `hi`
+      // omitted, matching `subjunctivePresent` above.
+      subjunctivePast: {
+        ni: 'nezan',
+        zu: 'zenezan',
+        hura: 'zezan',
+        gu: 'genezan',
+        zuek: 'zenezaten',
+        haiek: 'zezaten',
+      },
+      // #495 — Ondorioa Lehenaldia ("would have [verb]ed it"), `NOR` fixed
+      // at `hura`. Cross-checked against `conditionalPastByObject`'s `hura`
+      // column above (`conditionalPastByObject.ni.hura === 'nukeen'`, etc.)
+      // — matches cell-for-cell.
+      conditionalPast: {
+        ni: 'nukeen',
+        zu: 'zenukeen',
+        hura: 'zukeen',
+        gu: 'genukeen',
+        zuek: 'zenuketen',
+        haiek: 'zuketen',
+      },
+      // #496 — Ahalera Alegiazkoa ("could [verb] it" — hypothetical), `NOR`
+      // fixed at `hura`. Cross-checked against `potentialAlegiazkoaByObject`'s
+      // `hura` column above — matches cell-for-cell.
+      potentialAlegiazkoa: {
+        ni: 'nezake',
+        zu: 'zenezake',
+        hura: 'lezake',
+        gu: 'genezake',
+        zuek: 'zenezakete',
+        haiek: 'lezakete',
+      },
+      // #497 — Ahalera Lehenaldia ("could have [verb]ed it"), `NOR` fixed at
+      // `hura`. Cross-checked against `potentialLehenaldiaByObject`'s `hura`
+      // column above — matches cell-for-cell.
+      potentialLehenaldia: {
+        ni: 'nezakeen',
+        zu: 'zenezakeen',
+        hura: 'zezakeen',
+        gu: 'genezakeen',
+        zuek: 'zenezaketen',
+        haiek: 'zezaketen',
       },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
@@ -1445,7 +1536,12 @@ export const VERBS = [
       // split (`dakik`/`dakin`), matching `ukan`'s pattern — not tabulated
       // in CONJUGATIONS.md §7's own grid (blank `hik` row there), but given
       // in §10's synthetic-verb allocutive table per #144's DECISIONS.md.
-      present: { ni: 'dakit', zu: 'dakizu', hura: 'daki', 'hi-m': 'dakik', 'hi-f': 'dakin' },
+      // #478: `gu`/`zuek`/`haiek` were already documented in
+      // `docs/CONJUGATIONS.md` §7's grid (`dakigu`/`dakizue`/`dakite`,
+      // #245-sourced) but never ported into this table — porting them now
+      // so `presentPlural` below can mirror `present`'s full person set
+      // instead of the pre-#287 gap CONJUGATIONS.md noted.
+      present: { ni: 'dakit', zu: 'dakizu', hura: 'daki', gu: 'dakigu', zuek: 'dakizue', haiek: 'dakite', 'hi-m': 'dakik', 'hi-f': 'dakin' },
       // #245: `hik`/`zuk`/`zuek` were sourced by mapping `ukan`'s past
       // prefix pattern (`nuen`/`huen`/`zenuen`/`zenuten`, per CONJUGATIONS.md
       // §3) onto `jakin`'s already-attested `-ekien`/`-ekiten` stem
@@ -1464,12 +1560,22 @@ export const VERBS = [
       // taking a `-zki-` infix right before its person suffix
       // (`dakidan`→`dakizkidan`, `zekidan`→`zekizkidan`, etc.) — applying the
       // same insertion point to the indicative present/past tables above.
-      // `presentPlural` only covers the persons already present in `present`
-      // (no `gu`/`zuek`/`haiek` there yet, a pre-existing gap, not new here).
+      // #478: `gu`/`zuek`/`haiek` ported alongside `present`'s own (see
+      // above) — `dakizkigu`/`dakizkizue`/`dakizkite`, same `-zki-` infix
+      // applied to the now-complete `present` person set.
       // No `futurePlural`: `future` itself only has 3 persons, same omission
       // precedent as `nahi`'s missing `pastPlural`. Same native-speaker-check
       // caveat as #284 — see docs/LANGUAGE_DECISIONS.md.
-      presentPlural: { ni: 'dakizkit', zu: 'dakizkizu', hura: 'dakizki', 'hi-m': 'dakizkik', 'hi-f': 'dakizkin' },
+      presentPlural: {
+        ni: 'dakizkit',
+        zu: 'dakizkizu',
+        hura: 'dakizki',
+        gu: 'dakizkigu',
+        zuek: 'dakizkizue',
+        haiek: 'dakizkite',
+        'hi-m': 'dakizkik',
+        'hi-f': 'dakizkin',
+      },
       pastPlural: { ni: 'nekizkien', hi: 'hekizkien', zu: 'zenekizkien', hura: 'zekizkien', gu: 'genekizkien', zuek: 'zenekizkiten', haiek: 'zekizkiten' },
     },
     // #124: `validFor` per docs/SENTENCE_FRAMES.md. `jakin`'s candidates are
@@ -1784,7 +1890,7 @@ export const VERBS = [
     verb: 'etorri',
     meaning: { en: 'to come', es: 'venir', eu: 'etorri' },
     type: 'synthetic',
-    agreement: ['nor'],
+    agreement: ['nor', 'nori'],
     dialect: 'batua',
     conjugations: {
       present: { ni: 'nator', hi: 'hator', zu: 'zatoz', hura: 'dator', gu: 'gatoz', zuek: 'zatozte', haiek: 'datoz' },
@@ -1851,18 +1957,17 @@ export const VERBS = [
       // above. No `hura`/`haiek`/`ni`/`gu` cells, same reasoning as `joan`'s
       // imperative above (Radical/Bare-Stem `etor bedi` is out of scope).
       imperative: { hi: 'hator', zu: 'zatoz', zuek: 'zatozte' },
-      // NOR-NORI dative axis (CONJUGATIONS.md §6) — "it comes to [recipient]",
-      // NOR fixed at hura, NORI varying. Keyed by NORI person only (literal
-      // table, not composed via `byNoriPrefixes` — that mechanism is for
-      // *periphrastic* nor-nori verbs like `gustatu`/`iruditu` built on
-      // izan's dative auxiliary; `etorri`'s dative forms are its own
-      // synthetic `-ki-` paradigm). `ni`/`zu`/`gu` confirmed attested
-      // (`datorkit`: song "Argia datorkit"; `datorkizu`/`datorkigu`: native
-      // usage, e.g. "Zer datorkizu burura?", "Uda datorkigu") — `hi`/`hura`/
-      // `zuek`/`haiek` remain unconfirmed, see docs/LANGUAGE_DECISIONS.md.
+      // #477: NOR-NORI dative axis (`docs/CONJUGATIONS.md` §6) — irregular
+      // synthetic forms, not decomposable into a prefix+skeleton like the
+      // periphrastic dative verbs (gustatu etc.), so written literally.
+      // `ni`/`zu`/`gu` confirmed attested (`datorkit`: song "Argia datorkit";
+      // `datorkizu`/`datorkigu`: native usage, e.g. "Zer datorkizu burura?",
+      // "Uda datorkigu") — `hi`/`hura`/`zuek`/`haiek` remain unconfirmed, see
+      // docs/LANGUAGE_DECISIONS.md. Past: only `ni`/`hura` confirmed so far,
+      // via the "burura/gogora etorri" idiom (#499) — `zu`/`gu` past forms
+      // not yet sourced. No plural-NORI or other-mood forms are attested —
+      // do not extrapolate them.
       presentByNori: { ni: 'datorkit', zu: 'datorkizu', gu: 'datorkigu' },
-      // Past: only `ni`/`hura` confirmed so far, via the "burura/gogora
-      // etorri" idiom (#499) — `zu`/`gu` past forms not yet sourced.
       pastByNori: { ni: 'zetorkidan', hura: 'zetorkion' },
     },
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
@@ -3065,13 +3170,11 @@ export const VERBS = [
     dialect: 'batua',
     dativeOvergeneration: true,
     // #260: present/past sourced from docs/CONJUGATIONS.md §7 (`eraman` —
-    // singular-object alternant; the table's `/daramatza`-style plural-object
-    // forms aren't used here, matching `eduki`/`jakin`'s precedent of only
-    // tabulating the singular-object form). `hi` omitted — CONJUGATIONS.md's
-    // table has no `hik` row for `eraman`, unlike `jakin`'s sourced
-    // hitanoa split (#144/#245). `future` derived the same way as
-    // `eduki`/`jakin`'s (`-n`-final root + `-go` + ukan suffixes, mirroring
-    // `jakin` → `jakingo`).
+    // singular-object alternant). `hi` omitted — CONJUGATIONS.md's table has
+    // no `hik` row for `eraman`, unlike `jakin`'s sourced hitanoa split
+    // (#144/#245). `future` derived the same way as `eduki`/`jakin`'s
+    // (`-n`-final root + `-go` + ukan suffixes, mirroring `jakin` →
+    // `jakingo`).
     conjugations: {
       present: { ni: 'daramat', zu: 'daramazu', hura: 'darama', gu: 'daramagu', zuek: 'daramazue', haiek: 'daramate' },
       past: {
@@ -3089,6 +3192,28 @@ export const VERBS = [
         gu: 'eramango dugu',
         zuek: 'eramango duzue',
         haiek: 'eramango dute',
+      },
+      // Plural-object alternants, added to close the same gap #284/#287
+      // closed for `eduki`/`jakin` — the `-tza-` infix straight from
+      // CONJUGATIONS.md §7's `eraman` table's `/daramatza`-style column.
+      // `futurePlural` mirrors `eduki`'s own (`ukan`'s plural-object
+      // suffixes `ditut`/`dituzu`/... swapped onto the singular future).
+      presentPlural: { ni: 'daramatzat', zu: 'daramatzazu', hura: 'daramatza', gu: 'daramatzagu', zuek: 'daramatzazue', haiek: 'daramatzate' },
+      pastPlural: {
+        ni: 'neramatzan',
+        zu: 'zeneramatzan',
+        hura: 'zeramatzan',
+        gu: 'generamatzan',
+        zuek: 'zeneramatzaten',
+        haiek: 'zeramatzaten',
+      },
+      futurePlural: {
+        ni: 'eramango ditut',
+        zu: 'eramango dituzu',
+        hura: 'eramango ditu',
+        gu: 'eramango ditugu',
+        zuek: 'eramango dituzue',
+        haiek: 'eramango dituzte',
       },
     },
     // #261: adapted from docs/SAMPLE_SENTENCES.md's `ERAMAN` bank
@@ -3168,6 +3293,29 @@ export const VERBS = [
         gu: 'ekarriko dugu',
         zuek: 'ekarriko duzue',
         haiek: 'ekarriko dute',
+      },
+      // Plural-object alternants (e.g. `zenekartzan`), added to close the
+      // same gap #284/#287 closed for `eduki`/`jakin` — the `-tza-` infix
+      // straight from CONJUGATIONS.md §7's `ekarri` table's `/dakartza`-
+      // style column. `futurePlural` mirrors `eduki`'s own (`ukan`'s
+      // plural-object suffixes `ditut`/`dituzu`/... swapped onto the
+      // singular future).
+      presentPlural: { ni: 'dakartzat', zu: 'dakartzazu', hura: 'dakartza', gu: 'dakartzagu', zuek: 'dakartzazue', haiek: 'dakartzate' },
+      pastPlural: {
+        ni: 'nekartzan',
+        zu: 'zenekartzan',
+        hura: 'zekartzan',
+        gu: 'genekartzan',
+        zuek: 'zenekartzaten',
+        haiek: 'zekartzaten',
+      },
+      futurePlural: {
+        ni: 'ekarriko ditut',
+        zu: 'ekarriko dituzu',
+        hura: 'ekarriko ditu',
+        gu: 'ekarriko ditugu',
+        zuek: 'ekarriko dituzue',
+        haiek: 'ekarriko dituzte',
       },
     },
     // #261: adapted from docs/SAMPLE_SENTENCES.md's `EKARRI` bank
@@ -8846,6 +8994,15 @@ export const TENSE_META = {
   // #369: the subjunctive (Unit 36) — `nadin`/`dezan`/`dakion`/`diezaiodan`-
   // type forms across NOR/NOR-NORK/NOR-NORI/NOR-NORI-NORK.
   subjunctivePresent: { labelKey: 'tenseSubjunctivePresent', basque: 'subjuntiboa' },
+  // #494-497: the moods epic's past-subjunctive sibling to `subjunctivePresent`
+  // above (`nendin`/`zezan`-type forms, CONJUGATIONS.md §2/§3).
+  subjunctivePast: { labelKey: 'tenseSubjunctivePast', basque: 'subjuntiboa, lehenaldia' },
+  // #477: `etorri`'s NOR-NORI dative axis — unlike `presentByNor`/`pastByNor`
+  // above (where NORI is the verb's *usual* varying axis and NOR is the new
+  // one), here NOR is `etorri`'s usual axis (its plain `present`/`past`) and
+  // NORI is the new one, so the suffix names that new axis instead.
+  presentByNori: { labelKey: 'tensePresentByNori', basque: 'oraina (nori-ka)' },
+  pastByNori: { labelKey: 'tensePastByNori', basque: 'lehenaldia (nori-ka)' },
 }
 
 export const TYPE_META = {

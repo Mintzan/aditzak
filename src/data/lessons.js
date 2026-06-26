@@ -604,6 +604,12 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'presentPlural' },
       { verbId: 'bilatu', tense: 'presentPlural' },
       { verbId: 'saldu', tense: 'presentPlural' },
+      // #476 — `eraman`/`ekarri` gained `presentPlural` tables, folded into
+      // this pool the same way as `eduki`'s above.
+      { verbId: 'eraman', tense: 'presentPlural' },
+      { verbId: 'ekarri', tense: 'presentPlural' },
+      // #478 — `jakin`'s own `presentPlural` table, folded in the same way.
+      { verbId: 'jakin', tense: 'presentPlural' },
     ],
   },
   {
@@ -625,6 +631,9 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'presentPlural' },
       { verbId: 'bilatu', tense: 'presentPlural' },
       { verbId: 'saldu', tense: 'presentPlural' },
+      { verbId: 'eraman', tense: 'presentPlural' },
+      { verbId: 'ekarri', tense: 'presentPlural' },
+      { verbId: 'jakin', tense: 'presentPlural' },
     ],
   },
   // Unit 13 ("Looking Back I — The "ukan" Past Pool", Phase II) — `ukan`'s
@@ -768,12 +777,11 @@ export const LESSONS = [
   },
   // #286 — `pastPlural` counterpart to `nor-nork-present-plural-pool` above
   // (`zenituen` vs `zenuten`), same pool of verbs plus `eduki`, mirroring
-  // `ukan-past-pool`'s shape. `jakin` gained a `pastPlural` table in #287,
-  // but stays out of this pool for now: its sibling `presentPlural` table
-  // only covers `ni`/`zu`/`hura` (its own `present` is still missing
-  // `guk`/`zuek`/`haiek` cells, a pre-existing gap), so adding `jakin` here
-  // but not to the present-plural pools above would be an inconsistent
-  // half-integration — left for a follow-up once that gap is closed.
+  // `ukan-past-pool`'s shape. `jakin` gained a `pastPlural` table in #287
+  // but stayed out of this pool while its sibling `presentPlural` table
+  // only covered `ni`/`zu`/`hura` — #478 closed that gap (ported
+  // `present`/`presentPlural`'s missing `guk`/`zuek`/`haiek` cells from
+  // CONJUGATIONS.md), so `jakin` now joins both plural pools below.
   {
     id: 'nor-nork-past-plural-pool',
     persons: PHASE_1_PERSONS,
@@ -795,6 +803,12 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'pastPlural' },
       { verbId: 'bilatu', tense: 'pastPlural' },
       { verbId: 'saldu', tense: 'pastPlural' },
+      // #476 — `eraman`/`ekarri` gained `pastPlural` tables, folded into
+      // this pool the same way as `eduki`'s above.
+      { verbId: 'eraman', tense: 'pastPlural' },
+      { verbId: 'ekarri', tense: 'pastPlural' },
+      // #478 — `jakin`'s own `pastPlural` table, folded in the same way.
+      { verbId: 'jakin', tense: 'pastPlural' },
     ],
   },
   {
@@ -816,6 +830,9 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'pastPlural' },
       { verbId: 'bilatu', tense: 'pastPlural' },
       { verbId: 'saldu', tense: 'pastPlural' },
+      { verbId: 'eraman', tense: 'pastPlural' },
+      { verbId: 'ekarri', tense: 'pastPlural' },
+      { verbId: 'jakin', tense: 'pastPlural' },
     ],
   },
   // Unit 14 ("Physical States & Possessions", Phase II) — `eduki` (nor-nork)
@@ -979,6 +996,10 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'futurePlural' },
       { verbId: 'bilatu', tense: 'futurePlural' },
       { verbId: 'saldu', tense: 'futurePlural' },
+      // #476 — `eraman`/`ekarri` gained `futurePlural` tables, folded into
+      // this pool the same way as `eduki`'s above.
+      { verbId: 'eraman', tense: 'futurePlural' },
+      { verbId: 'ekarri', tense: 'futurePlural' },
     ],
   },
   {
@@ -1001,6 +1022,8 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'futurePlural' },
       { verbId: 'bilatu', tense: 'futurePlural' },
       { verbId: 'saldu', tense: 'futurePlural' },
+      { verbId: 'eraman', tense: 'futurePlural' },
+      { verbId: 'ekarri', tense: 'futurePlural' },
     ],
   },
   // #423 — the rule is already learned, so every other fodder verb with a
@@ -1381,6 +1404,7 @@ export const LESSONS = [
       { verbId: 'ahaztu', tense: 'present' },
       { verbId: 'jarraitu', tense: 'present' },
       { verbId: 'jario', tense: 'present' },
+      { verbId: 'etorri', tense: 'presentByNori' },
     ],
   },
   // Unit 24 (#146) — NOR-NORI past + future on the same verbs.
@@ -1401,6 +1425,7 @@ export const LESSONS = [
       { verbId: 'ahaztu', tense: 'past' },
       { verbId: 'jarraitu', tense: 'past' },
       { verbId: 'jario', tense: 'past' },
+      { verbId: 'etorri', tense: 'pastByNori' },
     ],
   },
   // Unit 25 (#147) — axis-scaffolded NOR-NORI-NORK: L1 fixes NORI (`esan`,
