@@ -1,0 +1,796 @@
+═══════════════════════════════════════════════════════════════════════════════
+ALL CONJUGATED FORMS: ADITZ TRINKOAK & LAGUNTZAILEAK
+═══════════════════════════════════════════════════════════════════════════════
+
+ADOS-EGON
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    gu                   ados egongo gara
+    haiek                ados egongo dira
+    hura                 ados egongo da
+    ni                   ados egongo naiz
+    zu                   ados egongo zara
+    zuek                 ados egongo zarete
+
+  past:
+    gu                   ados geunden
+    haiek                ados zeuden
+    hi                   ados hengoen
+    hura                 ados zegoen
+    ni                   ados nengoen
+    zu                   ados zeunden
+    zuek                 ados zeundeten
+
+  present:
+    gu                   ados gaude
+    haiek                ados daude
+    hi                   ados hago
+    hura                 ados dago
+    ni                   ados nago
+    zu                   ados zaude
+    zuek                 ados zaudete
+
+
+EDUKI
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    gu                   edukiko dugu
+    haiek                edukiko dute
+    hura                 edukiko du
+    ni                   edukiko dut
+    zu                   edukiko duzu
+    zuek                 edukiko duzue
+
+  futurePlural:
+    gu                   edukiko ditugu
+    haiek                edukiko dituzte
+    hura                 edukiko ditu
+    ni                   edukiko ditut
+    zu                   edukiko dituzu
+    zuek                 edukiko dituzue
+
+  past:
+    gu                   geneukan
+    haiek                zeukaten
+    hura                 zeukan
+    ni                   neukan
+    zu                   zeneukan
+    zuek                 zeneukaten
+
+  pastPlural:
+    gu                   geneuzkan
+    haiek                zeuzkaten
+    hura                 zeuzkan
+    ni                   neuzkan
+    zu                   zeneuzkan
+    zuek                 zeneuzkaten
+
+  present:
+    gu                   daukagu
+    haiek                daukate
+    hura                 dauka
+    ni                   daukat
+    zu                   daukazu
+    zuek                 daukazue
+
+  presentPlural:
+    gu                   dauzkagu
+    haiek                dauzkate
+    hura                 dauzka
+    ni                   dauzkat
+    zu                   dauzkazu
+    zuek                 dauzkazue
+
+
+EGON
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    gu                   egongo gara
+    haiek                egongo dira
+    hura                 egongo da
+    ni                   egongo naiz
+    zu                   egongo zara
+    zuek                 egongo zarete
+
+  imperative:
+    haiek                begoz
+    hi                   hago
+    hura                 bego
+    zu                   zaude
+    zuek                 zaudete
+
+  past:
+    gu                   geunden
+    haiek                zeuden
+    hi                   hengoen
+    hura                 zegoen
+    ni                   nengoen
+    zu                   zeunden
+    zuek                 zeundeten
+
+  present:
+    gu                   gaude
+    haiek                daude
+    hi                   hago
+    hura                 dago
+    ni                   nago
+    zu                   zaude
+    zuek                 zaudete
+
+
+EKARRI
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    gu                   ekarriko dugu
+    haiek                ekarriko dute
+    hura                 ekarriko du
+    ni                   ekarriko dut
+    zu                   ekarriko duzu
+    zuek                 ekarriko duzue
+
+  past:
+    gu                   genekarren
+    haiek                zekarten
+    hura                 zekarren
+    ni                   nekarren
+    zu                   zenekarren
+    zuek                 zenekarten
+
+  present:
+    gu                   dakargu
+    haiek                dakarte
+    hura                 dakar
+    ni                   dakart
+    zu                   dakarzu
+    zuek                 dakarzue
+
+
+ERAMAN
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    gu                   eramango dugu
+    haiek                eramango dute
+    hura                 eramango du
+    ni                   eramango dut
+    zu                   eramango duzu
+    zuek                 eramango duzue
+
+  past:
+    gu                   generaman
+    haiek                zeramaten
+    hura                 zeraman
+    ni                   neraman
+    zu                   zeneraman
+    zuek                 zeneramaten
+
+  present:
+    gu                   daramagu
+    haiek                daramate
+    hura                 darama
+    ni                   daramat
+    zu                   daramazu
+    zuek                 daramazue
+
+
+ETORRI
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    gu                   etorriko gara
+    haiek                etorriko dira
+    hura                 etorriko da
+    ni                   etorriko naiz
+    zu                   etorriko zara
+    zuek                 etorriko zarete
+
+  habitualPast:
+    gu                   etortzen ginen
+    haiek                etortzen ziren
+    hura                 etortzen zen
+    ni                   etortzen nintzen
+    zu                   etortzen zinen
+    zuek                 etortzen zineten
+
+  imperative:
+    hi                   hator
+    zu                   zatoz
+    zuek                 zatozte
+
+  imperfectivePast:
+    gu                   gentozen
+    haiek                zetozen
+    hi                   hentorren
+    hura                 zetorren
+    ni                   nentorren
+    zu                   zentozen
+    zuek                 zentozten
+
+  past:
+    gu                   etorri ginen
+    haiek                etorri ziren
+    hi                   etorri hintzen
+    hura                 etorri zen
+    ni                   etorri nintzen
+    zu                   etorri zinen
+    zuek                 etorri zineten
+
+  present:
+    gu                   gatoz
+    haiek                datoz
+    hi                   hator
+    hura                 dator
+    ni                   nator
+    zu                   zatoz
+    zuek                 zatozte
+
+  presentPerfect:
+    gu                   etorri gara
+    haiek                etorri dira
+    hi                   etorri haiz
+    hura                 etorri da
+    ni                   etorri naiz
+    zu                   etorri zara
+    zuek                 etorri zarete
+
+
+IBILI
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    gu                   ibiliko gara
+    haiek                ibiliko dira
+    hura                 ibiliko da
+    ni                   ibiliko naiz
+    zu                   ibiliko zara
+    zuek                 ibiliko zarete
+
+  imperfectivePast:
+    gu                   genbiltzan
+    haiek                zebiltzan
+    hura                 zebilen
+    ni                   nenbilen
+    zu                   zenbiltzan
+    zuek                 zenbiltzaten
+
+  past:
+    gu                   ibili ginen
+    haiek                ibili ziren
+    hi                   ibili hintzen
+    hura                 ibili zen
+    ni                   ibili nintzen
+    zu                   ibili zinen
+    zuek                 ibili zineten
+
+  present:
+    gu                   gabiltza
+    haiek                dabiltza
+    hi                   habil
+    hura                 dabil
+    ni                   nabil
+    zu                   zabiltza
+    zuek                 zabiltzate
+
+
+IZAN
+─────────────────────────────────────────────────────────────────────────────
+
+  baldintza:
+    gu                   bagina
+    haiek                balira
+    hi                   bahintz
+    hura                 balitz
+    ni                   banintz
+    zu                   bazina
+    zuek                 bazinete
+
+  conditional:
+    gu                   ginateke
+    haiek                lirateke
+    hi                   hintzateke
+    hura                 litzateke
+    ni                   nintzateke
+    zu                   zinateke
+    zuek                 zinatekete
+
+  future:
+    gu                   izango gara
+    haiek                izango dira
+    hura                 izango da
+    ni                   izango naiz
+    zu                   izango zara
+    zuek                 izango zarete
+
+  imperative:
+    hi                   hadi
+    zu                   zaitez
+    zuek                 zaitezte
+
+  past:
+    gu                   ginen
+    haiek                ziren
+    hi                   hintzen
+    hura                 zen
+    ni                   nintzen
+    zu                   zinen
+    zuek                 zineten
+
+  pastNoka:
+    haiek                zitunan
+    hura                 zunan
+
+  pastToka:
+    haiek                zituan
+    hura                 zuan
+
+  potential:
+    gu                   gaitezke
+    haiek                daitezke
+    hi                   haiteke
+    hura                 daiteke
+    ni                   naiteke
+    zu                   zaitezke
+    zuek                 zaitezkete
+
+  present:
+    gu                   gara
+    haiek                dira
+    hi                   haiz
+    hura                 da
+    ni                   naiz
+    zu                   zara
+    zuek                 zarete
+
+  presentNoka:
+    haiek                ditun
+    hura                 dun
+
+  presentPerfect:
+    gu                   izan gara
+    haiek                izan dira
+    hi                   izan haiz
+    hura                 izan da
+    ni                   izan naiz
+    zu                   izan zara
+    zuek                 izan zarete
+
+  presentToka:
+    haiek                dituk
+    hura                 duk
+
+  subjunctivePresent:
+    gu                   gaitezen
+    haiek                daitezen
+    hura                 dadin
+    ni                   nadin
+    zu                   zaitezen
+    zuek                 zaitezten
+
+
+JAKIN
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    hura                 jakingo du
+    ni                   jakingo dut
+    zu                   jakingo duzu
+
+  past:
+    gu                   genekien
+    haiek                zekiten
+    hi                   hekien
+    hura                 zekien
+    ni                   nekien
+    zu                   zenekien
+    zuek                 zenekiten
+
+  pastPlural:
+    gu                   genekizkien
+    haiek                zekizkiten
+    hi                   hekizkien
+    hura                 zekizkien
+    ni                   nekizkien
+    zu                   zenekizkien
+    zuek                 zenekizkiten
+
+  present:
+    hi-f                 dakin
+    hi-m                 dakik
+    hura                 daki
+    ni                   dakit
+    zu                   dakizu
+
+  presentPlural:
+    hi-f                 dakizkin
+    hi-m                 dakizkik
+    hura                 dakizki
+    ni                   dakizkit
+    zu                   dakizkizu
+
+
+JARIO
+─────────────────────────────────────────────────────────────────────────────
+
+  past:
+    gu                   zerigun
+    haiek                zerien
+    hura                 zerion
+    ni                   zeridan
+    zu                   zerizun
+    zuek                 zerizuen
+
+  present:
+    gu                   darigu
+    haiek                darie
+    hura                 dario
+    ni                   darit
+    zu                   darizu
+    zuek                 darizue
+
+
+JOAN
+─────────────────────────────────────────────────────────────────────────────
+
+  future:
+    gu                   joango gara
+    haiek                joango dira
+    hura                 joango da
+    ni                   joango naiz
+    zu                   joango zara
+    zuek                 joango zarete
+
+  imperative:
+    hi                   hoa
+    zu                   zoaz
+    zuek                 zoazte
+
+  imperfectivePast:
+    gu                   gindoazen
+    haiek                zihoazen
+    hi                   hindoan
+    hura                 zihoan
+    ni                   nindoan
+    zu                   zindoazen
+    zuek                 zindoazten
+
+  past:
+    gu                   joan ginen
+    haiek                joan ziren
+    hi                   joan hintzen
+    hura                 joan zen
+    ni                   joan nintzen
+    zu                   joan zinen
+    zuek                 joan zineten
+
+  present:
+    gu                   goaz
+    haiek                doaz
+    hi                   hoa
+    hura                 doa
+    ni                   noa
+    zu                   zoaz
+    zuek                 zoazte
+
+  presentPerfect:
+    gu                   joan gara
+    haiek                joan dira
+    hi                   joan haiz
+    hura                 joan da
+    ni                   joan naiz
+    zu                   joan zara
+    zuek                 joan zarete
+
+
+UKAN
+─────────────────────────────────────────────────────────────────────────────
+
+  baldintza:
+    gu                   bagenu
+    haiek                balute
+    hura                 balu
+    ni                   banu
+    zu                   bazenu
+    zuek                 bazenute
+
+  baldintzaByObject: [2D table]
+    gu         → haiek      bagenitu
+    gu         → hura       bagenu
+    gu         → zu         bazintugu
+    gu         → zuek       bazintuztegu
+    haiek      → gu         bagintuzte
+    haiek      → haiek      balituzte
+    haiek      → hura       balute
+    haiek      → ni         banindute
+    haiek      → zu         bazintuzte
+    haiek      → zuek       bazintuztete
+    hura       → gu         bagintu
+    hura       → haiek      balitu
+    hura       → hura       balu
+    hura       → ni         banindu
+    hura       → zu         bazintu
+    hura       → zuek       bazintuzte
+    ni         → haiek      banitu
+    ni         → hura       banu
+    ni         → zu         bazintut
+    ni         → zuek       bazintuztet
+    zu         → gu         bagintuzu
+    zu         → haiek      bazenitu
+    zu         → hura       bazenu
+    zu         → ni         baninduzu
+    zuek       → gu         bagintuzue
+    zuek       → haiek      bazenituzte
+    zuek       → hura       bazenute
+    zuek       → ni         baninduzue
+
+  conditional:
+    gu                   genuke
+    haiek                lukete
+    hura                 luke
+    ni                   nuke
+    zu                   zenuke
+    zuek                 zenukete
+
+  conditionalByObject: [2D table]
+    gu         → haiek      genituzke
+    gu         → hura       genuke
+    gu         → zu         zintukegu
+    gu         → zuek       zintuzketegu
+    haiek      → gu         gintuzkete
+    haiek      → haiek      lituzkete
+    haiek      → hura       lukete
+    haiek      → ni         nindukete
+    haiek      → zu         zintuzkete
+    haiek      → zuek       zintuzketete
+    hura       → gu         gintuke
+    hura       → haiek      lituzke
+    hura       → hura       luke
+    hura       → ni         ninduke
+    hura       → zu         zintuke
+    hura       → zuek       zintuzkete
+    ni         → haiek      nituzke
+    ni         → hura       nuke
+    ni         → zu         zintuket
+    ni         → zuek       zintuzketet
+    zu         → gu         gintukezu
+    zu         → haiek      zenituzke
+    zu         → hura       zenuke
+    zu         → ni         nindukezu
+    zuek       → gu         gintukezue
+    zuek       → haiek      zenituzkete
+    zuek       → hura       zenukete
+    zuek       → ni         nindukezue
+
+  conditionalPastByObject: [2D table]
+    gu         → haiek      genituzkeen
+    gu         → hura       genukeen
+    gu         → zu         zintukegun
+    gu         → zuek       zintuzketegun
+    haiek      → gu         gintuzketen
+    haiek      → haiek      zituzketen
+    haiek      → hura       zuketen
+    haiek      → ni         ninduketen
+    haiek      → zu         zintuzketen
+    haiek      → zuek       zintuzketeten
+    hura       → gu         gintukeen
+    hura       → haiek      zituzkeen
+    hura       → hura       zukeen
+    hura       → ni         nindukeen
+    hura       → zu         zintukeen
+    hura       → zuek       zintuzketen
+    ni         → haiek      nituzkeen
+    ni         → hura       nukeen
+    ni         → zu         zintukedan
+    ni         → zuek       zintuzketedan
+    zu         → gu         gintukezun
+    zu         → haiek      zenituzkeen
+    zu         → hura       zenukeen
+    zu         → ni         nindukezun
+    zuek       → gu         gintukezuen
+    zuek       → haiek      zenituzketen
+    zuek       → hura       zenuketen
+    zuek       → ni         nindukezuen
+
+  future:
+    gu                   izango dugu
+    haiek                izango dute
+    hura                 izango du
+    ni                   izango dut
+    zu                   izango duzu
+    zuek                 izango duzue
+
+  futurePlural:
+    gu                   izango ditugu
+    haiek                izango dituzte
+    hura                 izango ditu
+    ni                   izango ditut
+    zu                   izango dituzu
+    zuek                 izango dituzue
+
+  imperative:
+    gu                   dezagun
+    haiek                bezate
+    hi-f                 ezan
+    hi-m                 ezak
+    hura                 beza
+    zu                   ezazu
+    zuek                 ezazue
+
+  imperativePlural:
+    gu                   ditzagun
+    haiek                bitzate
+    hi-f                 itzan
+    hi-m                 itzak
+    hura                 bitza
+    zu                   itzazu
+    zuek                 itzazue
+
+  past:
+    gu                   genuen
+    haiek                zuten
+    hi                   huen
+    hura                 zuen
+    ni                   nuen
+    zu                   zenuen
+    zuek                 zenuten
+
+  pastNoka:
+    haiek                zitenan
+    hura                 zinan
+
+  pastPlural:
+    gu                   genituen
+    haiek                zituzten
+    hi                   hituen
+    hura                 zituen
+    ni                   nituen
+    zu                   zenituen
+    zuek                 zenituzten
+
+  pastToka:
+    haiek                zitean
+    hura                 zian
+
+  potential:
+    gu                   dezakegu
+    haiek                dezakete
+    hura                 dezake
+    ni                   dezaket
+    zu                   dezakezu
+    zuek                 dezakezue
+
+  potentialAlegiazkoaByObject: [2D table]
+    gu         → haiek      genitzake
+    gu         → hura       genezake
+    gu         → zu         zintzakegu
+    gu         → zuek       zintzaketegu
+    haiek      → gu         gintzakete
+    haiek      → haiek      litzakete
+    haiek      → hura       lezakete
+    haiek      → ni         nintzakete
+    haiek      → zu         zintzakete
+    haiek      → zuek       zintzaketete
+    hura       → gu         gintzake
+    hura       → haiek      litzake
+    hura       → hura       lezake
+    hura       → ni         nintzake
+    hura       → zu         zintzake
+    hura       → zuek       zintzakete
+    ni         → haiek      nitzake
+    ni         → hura       nezake
+    ni         → zu         zintzaket
+    ni         → zuek       zintzaketet
+    zu         → gu         gintzakezu
+    zu         → haiek      zenitzake
+    zu         → hura       zenezake
+    zu         → ni         nintzakezu
+    zuek       → gu         gintzakezue
+    zuek       → haiek      zenitzakete
+    zuek       → hura       zenezakete
+    zuek       → ni         nintzakezue
+
+  potentialByObject: [2D table]
+    gu         → haiek      ditzakegu
+    gu         → hura       dezakegu
+    gu         → zu         zaitzakegu
+    gu         → zuek       zaitzaketegu
+    haiek      → gu         gaitzakete
+    haiek      → haiek      ditzakete
+    haiek      → hura       dezakete
+    haiek      → ni         nazakete
+    haiek      → zu         zaitzakete
+    haiek      → zuek       zaitzaketete
+    hura       → gu         gaitzake
+    hura       → haiek      ditzake
+    hura       → hura       dezake
+    hura       → ni         nazake
+    hura       → zu         zaitzake
+    hura       → zuek       zaitzakete
+    ni         → haiek      ditzaket
+    ni         → hura       dezaket
+    ni         → zu         zaitzaket
+    ni         → zuek       zaitzaketet
+    zu         → gu         gaitzakezu
+    zu         → haiek      ditzakezu
+    zu         → hura       dezakezu
+    zu         → ni         nazakezu
+    zuek       → gu         gaitzakezue
+    zuek       → haiek      ditzakezue
+    zuek       → hura       dezakezue
+    zuek       → ni         nazakezue
+
+  potentialLehenaldiaByObject: [2D table]
+    gu         → haiek      genitzakeen
+    gu         → hura       genezakeen
+    gu         → zu         zintzakegun
+    gu         → zuek       zintzaketegun
+    haiek      → gu         gintzaketen
+    haiek      → haiek      zitzaketen
+    haiek      → hura       zezaketen
+    haiek      → ni         nintzaketen
+    haiek      → zu         zintzaketen
+    haiek      → zuek       zintzaketeten
+    hura       → gu         gintzakeen
+    hura       → haiek      zitzakeen
+    hura       → hura       zezakeen
+    hura       → ni         nintzakeen
+    hura       → zu         zintzakeen
+    hura       → zuek       zintzaketen
+    ni         → haiek      nitzakeen
+    ni         → hura       nezakeen
+    ni         → zu         zintzakedan
+    ni         → zuek       zintzaketedan
+    zu         → gu         gintzakezun
+    zu         → haiek      zenitzakeen
+    zu         → hura       zenezakeen
+    zu         → ni         nintzakezun
+    zuek       → gu         gintzakezuen
+    zuek       → haiek      zenitzaketen
+    zuek       → hura       zenezaketen
+    zuek       → ni         nintzakezuen
+
+  present:
+    gu                   dugu
+    haiek                dute
+    hi-f                 dun
+    hi-m                 duk
+    hura                 du
+    ni                   dut
+    zu                   duzu
+    zuek                 duzue
+
+  presentNoka:
+    haiek                diten
+    hura                 din
+
+  presentPlural:
+    gu                   ditugu
+    haiek                dituzte
+    hi-f                 ditun
+    hi-m                 dituk
+    hura                 ditu
+    ni                   ditut
+    zu                   dituzu
+    zuek                 dituzue
+
+  presentToka:
+    haiek                ditek
+    hura                 dik
+
+  subjunctivePresent:
+    gu                   dezagun
+    haiek                dezaten
+    hura                 dezan
+    ni                   dezadan
+    zu                   dezazun
+    zuek                 dezazuen
+
+  [Object-axis auxiliary forms via byObjectPrefixes]
+
+
+═══════════════════════════════════════════════════════════════════════════════
+TOTAL FORMS: 583
+═══════════════════════════════════════════════════════════════════════════════
