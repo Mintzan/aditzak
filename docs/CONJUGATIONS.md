@@ -632,7 +632,8 @@ family, no trailing `-n`) is the same formula run one more time:
 
 ## 5. `ukan` with dative — NOR-NORI-NORK system
 
-Used with ditransitive verbs — `eman` ("to give"), `esan` ("to say"), etc.
+Used with ditransitive verbs — `eman` ("to give") and similar three-argument
+predicates.
 The full picture has three dimensions (`NOR`/`NORI`/`NORK`); flattened here
 into a `NORI` (indirect object, rows) × `NORK` (subject, columns) grid per
 `NOR` value. Two `NOR` values are covered: `hura` (singular object — "give
@@ -1384,11 +1385,15 @@ its own (rough working glosses):
 narrow, mostly-descriptive everyday use (above) doesn't call for one, and
 none is attested.
 
-### `esan` — "to say" (ditransitive forms — same shape as §5's `NOR`=hura/`NORI`=hari grid)
+### `esan` — "to say" (nor-nork; archaic synthetic forms only)
 
-`NOR` fixed at 3sg (`hura`/"it"), `NORI` fixed at 3sg (`hari`/"to him-her"),
-`NORK` varying. These forms are identical to the `hari` row of §5's `NOR` =
-hura grids — `di-` + `-o-` (the `NORI`=hari suffix) + `NORK`-suffix:
+`esan` in modern standard Basque is conjugated periphrastically: `esaten
+dut`/`esaten du`/`esaten dute` (I am saying / he says / they say), using the
+participle `esaten` + `ukan`'s present auxiliary. The finite forms below
+(`diot`, `dio`, `diote`, etc.) are **archaic/literary** — they originate from a
+historically unrelated verb stem (`-io-`) and lack non-finite forms, making them
+inconsistent with regular verb morphology. They are included for completeness
+but are not productive in contemporary Batua.
 
 | Person (nork) | Present | Past |
 |---|---|---|
@@ -1398,6 +1403,11 @@ hura grids — `di-` + `-o-` (the `NORI`=hari suffix) + `NORK`-suffix:
 | zuk | diozu | zenioen |
 | zuek | diozue | zenioten |
 | haiek | diote | zioten |
+
+**No mood forms** are documented for these archaic finite stems. Modern Basque
+expresses subjunctive, conditional, and other moods periphrastically, via the
+auxiliary (e.g., *esatea daiteke* "it can be said" = participle + potential
+auxiliary).
 
 ### `irudi` — "to seem / give the impression" (unergative — nork-only — *not* `iruditu`'s nor-nori)
 
