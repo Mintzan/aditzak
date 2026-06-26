@@ -508,6 +508,12 @@ Optional flavor content layered on top of the already-complete core curriculum (
 |---|---|---|---|---|---|
 | 46 | **Unergative Curiosities** — `ihardun` ("dihardut"/"niharduen"), `iraun` ("dirau"/"zirauen"); unergative, NORK-only, ergative subject with no absolutive argument at all; full present/past production | "I'm busy working." (`Lanean dihardut`) / "The film runs two hours." (`Filmak bi ordu dirau`) | CONJUGATIONS §6, §8 | available |
 
+#### Stage 18: Tools & Usage
+
+| Unit | Focus | Payload | Coverage | Ref | Data status |
+|---|---|---|---|---|---|
+| 47 | **erabili — Using Things** — `erabili` ("darabilt"/"nerabilen"); nor-nork synthetic verb in the already-taught eduki/jakin shape, present + past | "I use the computer every day." (`Nik ordenagailua darabilt egunero`) | CONJUGATIONS §7 | available |
+
 ---
 
 ## App engine logic — design notes (not part of the content sequence)

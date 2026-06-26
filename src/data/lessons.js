@@ -4053,4 +4053,17 @@ export const LESSONS = [
       { verbId: 'iraun', tense: 'past' },
     ],
   },
+  // #483: `erabili` ("to use") — plain nor-nork synthetic in the
+  // already-taught `eduki`/`jakin` shape, new Unit 47 (Stage 18). No `hi`
+  // sentence frame sourced (matching `ekarri`/`eraman`/`eduki`'s own gap).
+  { id: 'erabili-present', verbId: 'erabili', tense: 'present', persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'] },
+  { id: 'erabili-past', verbId: 'erabili', tense: 'past', persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'] },
+  {
+    id: 'unit-47-review',
+    review: true,
+    sources: [
+      { verbId: 'erabili', tense: 'present' },
+      { verbId: 'erabili', tense: 'past' },
+    ],
+  },
 ]

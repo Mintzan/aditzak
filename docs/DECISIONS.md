@@ -8,6 +8,32 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #483: added `erabili`, new Unit 47 (Stage 18)
+
+Added `erabili` ("to use") as a plain nor-nork synthetic verb in the
+already-taught `eduki`/`jakin` shape — present/past, no `hi` row (matching
+`ekarri`/`eraman`/`eduki`'s own gap, no `hik` form sourced in
+CONJUGATIONS.md §7). Skipped the issue's optional "consider plural object
+forms" bullet: unlike `eraman`/`ekarri` (whose plural-object `-tza-` forms
+feed the cross-verb object-axis review lessons), nothing in the current
+curriculum exercises `erabili` against that review pool, so adding the
+forms now would be data with no consumer — can be added later if a lesson
+actually needs it.
+
+Checked `scripts/validfor-delta-audit.mjs --verb erabili` for cross-verb
+`validFor` candidates: surfaced only the usual `ukan`/`eduki`/`jakin`/`jan`-
+family generic-object sentences ("Nik liburu bat ___", "Nik sagarra ___")
+— "using" something is a distinct action from having/wanting/eating/
+knowing it, so none are genuine; `validFor` stays empty throughout and the
+gap-audit baseline was regenerated to absorb the surface.
+
+Placed in a new Unit 47 ("erabili — Using Things", Stage 18) rather than
+folding into Unit 16 ("eraman/ekarri — More NOR-NORK Synthetics") — Unit 16
+is already complete/gated-past in the core sequence, so a same-shape verb
+added later belongs in its own bonus-tail unit (same reasoning Unit 16
+itself used to justify sitting in Phase VII rather than the renumbered
+core).
+
 ## 2026-06-26 — #484: added `iraun`, extends Unit 46 alongside `ihardun`
 
 Added `iraun` ("to last / endure") as the second `agreement: ['nork']`-only

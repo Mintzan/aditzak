@@ -980,6 +980,25 @@ export const JOURNEY = [
           },
         ],
       },
+      {
+        id: 'phase-7-stage-18',
+        title: 'Stage 18 — Tools & Usage',
+        units: [
+          {
+            // #483: `erabili` ("to use") — plain nor-nork synthetic in the
+            // already-taught eduki/jakin shape, same "no new grammatical
+            // relation" story as Unit 16's eraman/ekarri, so it slots into
+            // Phase VII's bonus tail alongside them rather than the
+            // renumbered core sequence.
+            number: 47,
+            title: 'erabili — Using Things',
+            focus: 'erabili ("darabilt"/"nerabilen") — nor-nork synthetic verb in the already-taught eduki/jakin shape, present + past',
+            payload: 'Nik ordenagailua darabilt egunero.',
+            status: 'available',
+            lessonIds: ['erabili-present', 'erabili-past', 'unit-47-review'],
+          },
+        ],
+      },
     ],
   },
 ]
