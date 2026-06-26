@@ -942,7 +942,11 @@ export const JOURNEY = [
           {
             number: 44,
             title: 'Synthetic Curiosities',
-            focus: 'jario (nor-nori, "dario"/"zerion"), etzan (nor, "datza"), irudi (nor-nork, "dirudi") — rare native-synthetic verbs, recognition-only',
+            // #485: corrected `irudi`'s agreement label — unergative,
+            // NORK-only (ergative subject, no absolutive argument), not
+            // nor-nork. Not `iruditu`'s nor-nori form (CONJUGATIONS.md §8
+            // flags this as a false-friend pairing — distinct verb).
+            focus: 'jario (nor-nori, "dario"/"zerion"), etzan (nor, "datza"), irudi (unergative, nork-only, "dirudi" — not iruditu\'s nor-nori) — rare native-synthetic verbs, recognition-only',
             payload: 'Malkoak dario. · Zertan datza ariketa? · Nekatuta zaude, dirudizu.',
             status: 'pending',
           },

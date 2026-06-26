@@ -8,6 +8,31 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #485: added `irudi`, corrected Unit 44's agreement label, scope intentionally limited to data only
+
+Added `irudi` ("to seem / give the impression") with `agreement: ['nork']`
+(unergative, ergative subject, no absolutive — CONJUGATIONS.md §8) and
+`recognitionOnly: true`, same pattern as `jario`. The original issue had
+mislabeled it `nor-nork`; corrected both the new verb entry and Unit 44's
+own `focus` text in `journey.js`, which carried the same mislabel.
+
+Per #485's explicit scope correction, did **not** create `irudi-present`/
+`irudi-past` lessons and did **not** flip Unit 44 from `pending` to
+`available` — recognition-only bonus content for this unit (jario/etzan/
+irudi together) stays a journey-restructuring decision, not something to
+assume while just backfilling one verb's data. `jario` already established
+this same "data exists, unit stays pending" precedent.
+
+Kept the `iruditu` distinction inline in `meaning`/the comment block:
+`irudi` ("dirudizu" = you give the impression, external appearance) is a
+false-friend of `iruditu` ("iruditzen zait" = it seems to me, nor-nori,
+subjective opinion) — same root, drifted apart in meaning and agreement.
+
+Checked `scripts/validfor-delta-audit.mjs --verb irudi` for cross-verb
+`validFor` candidates — surfaced only the usual `ukan`/`nahi`/`behar`-family
+generic-object frames ("Nik liburu bat ___"), none genuine ("seeming" isn't
+"having/wanting/needing"), so `validFor` stays empty; baseline regenerated.
+
 ## 2026-06-26 — #483: added `erabili`, new Unit 47 (Stage 18)
 
 Added `erabili` ("to use") as a plain nor-nork synthetic verb in the
