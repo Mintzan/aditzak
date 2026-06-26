@@ -1,0 +1,209 @@
+═══════════════════════════════════════════════════════════════════════════════
+CONJUGATION GAPS ANALYSIS
+═══════════════════════════════════════════════════════════════════════════════
+
+All tenses appearing in synthetic verbs:
+  - baldintza
+  - baldintzaByObject
+  - conditional
+  - conditionalByObject
+  - conditionalPastByObject
+  - future
+  - futurePlural
+  - habitualPast
+  - imperative
+  - imperativePlural
+  - imperfectivePast
+  - past
+  - pastNoka
+  - pastPlural
+  - pastToka
+  - potential
+  - potentialAlegiazkoaByObject
+  - potentialByObject
+  - potentialLehenaldiaByObject
+  - present
+  - presentNoka
+  - presentPerfect
+  - presentPlural
+  - presentToka
+  - subjunctivePresent
+
+TENSE COVERAGE BY VERB:
+─────────────────────────────────────────────────────────────────────────────
+
+ADOS-EGON
+  Has: future, past, present
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, futurePlural, habitualPast, imperative, imperativePlural, imperfectivePast, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPerfect, presentPlural, presentToka, subjunctivePresent
+
+EDUKI
+  Has: future, futurePlural, past, pastPlural, present, presentPlural
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, habitualPast, imperative, imperativePlural, imperfectivePast, pastNoka, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPerfect, presentToka, subjunctivePresent
+
+EGON
+  Has: future, imperative, past, present
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, futurePlural, habitualPast, imperativePlural, imperfectivePast, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPerfect, presentPlural, presentToka, subjunctivePresent
+
+EKARRI
+  Has: future, past, present
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, futurePlural, habitualPast, imperative, imperativePlural, imperfectivePast, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPerfect, presentPlural, presentToka, subjunctivePresent
+
+ERAMAN
+  Has: future, past, present
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, futurePlural, habitualPast, imperative, imperativePlural, imperfectivePast, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPerfect, presentPlural, presentToka, subjunctivePresent
+
+ETORRI
+  Has: future, habitualPast, imperative, imperfectivePast, past, present, presentPerfect
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, futurePlural, imperativePlural, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPlural, presentToka, subjunctivePresent
+
+IBILI
+  Has: future, imperfectivePast, past, present
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, futurePlural, habitualPast, imperative, imperativePlural, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPerfect, presentPlural, presentToka, subjunctivePresent
+
+IZAN
+  Has: baldintza, conditional, future, imperative, past, pastNoka, pastToka, potential, present, presentNoka, presentPerfect, presentToka, subjunctivePresent
+  MISSING: baldintzaByObject, conditionalByObject, conditionalPastByObject, futurePlural, habitualPast, imperativePlural, imperfectivePast, pastPlural, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentPlural
+
+JAKIN
+  Has: future, past, pastPlural, present, presentPlural
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, futurePlural, habitualPast, imperative, imperativePlural, imperfectivePast, pastNoka, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPerfect, presentToka, subjunctivePresent
+
+JARIO
+  Has: past, present
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, future, futurePlural, habitualPast, imperative, imperativePlural, imperfectivePast, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPerfect, presentPlural, presentToka, subjunctivePresent
+
+JOAN
+  Has: future, imperative, imperfectivePast, past, present, presentPerfect
+  MISSING: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, futurePlural, habitualPast, imperativePlural, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, presentNoka, presentPlural, presentToka, subjunctivePresent
+
+UKAN
+  Has: baldintza, baldintzaByObject, conditional, conditionalByObject, conditionalPastByObject, future, futurePlural, imperative, imperativePlural, past, pastNoka, pastPlural, pastToka, potential, potentialAlegiazkoaByObject, potentialByObject, potentialLehenaldiaByObject, present, presentNoka, presentPlural, presentToka, subjunctivePresent
+  MISSING: habitualPast, imperfectivePast, presentPerfect
+
+
+SYSTEMATIC GAPS (tenses missing in certain verbs):
+─────────────────────────────────────────────────────────────────────────────
+
+future               (11/12 verbs)
+  Missing in: jario
+
+imperative           (5/12 verbs)
+
+presentPerfect       (3/12 verbs)
+
+presentPlural        (3/12 verbs)
+
+pastPlural           (3/12 verbs)
+
+imperfectivePast     (3/12 verbs)
+
+potential            (2/12 verbs)
+
+baldintza            (2/12 verbs)
+
+conditional          (2/12 verbs)
+
+presentToka          (2/12 verbs)
+
+presentNoka          (2/12 verbs)
+
+pastToka             (2/12 verbs)
+
+pastNoka             (2/12 verbs)
+
+subjunctivePresent   (2/12 verbs)
+
+futurePlural         (2/12 verbs)
+
+imperativePlural     (1/12 verbs)
+
+potentialByObject    (1/12 verbs)
+
+potentialAlegiazkoaByObject (1/12 verbs)
+
+potentialLehenaldiaByObject (1/12 verbs)
+
+baldintzaByObject    (1/12 verbs)
+
+conditionalByObject  (1/12 verbs)
+
+conditionalPastByObject (1/12 verbs)
+
+habitualPast         (1/12 verbs)
+
+
+THEORETICAL FORM ANALYSIS:
+─────────────────────────────────────────────────────────────────────────────
+
+ados-egon:
+  future: missing persons: hi
+
+eduki:
+  present: missing persons: hi
+  past: missing persons: hi
+  future: missing persons: hi
+  presentPlural: missing persons: hi
+  pastPlural: missing persons: hi
+  futurePlural: missing persons: hi
+
+egon:
+  future: missing persons: hi
+  imperative: missing persons: ni, gu
+
+ekarri:
+  present: missing persons: hi
+  past: missing persons: hi
+  future: missing persons: hi
+
+eraman:
+  present: missing persons: hi
+  past: missing persons: hi
+  future: missing persons: hi
+
+etorri:
+  future: missing persons: hi
+  habitualPast: missing persons: hi
+  imperative: missing persons: ni, hura, gu, haiek
+
+ibili:
+  future: missing persons: hi
+  imperfectivePast: missing persons: hi
+
+izan:
+  future: missing persons: hi
+  presentToka: missing persons: ni, hi, gu, zu, zuek
+  presentNoka: missing persons: ni, hi, gu, zu, zuek
+  pastToka: missing persons: ni, hi, gu, zu, zuek
+  pastNoka: missing persons: ni, hi, gu, zu, zuek
+  imperative: missing persons: ni, hura, gu, haiek
+  subjunctivePresent: missing persons: hi
+
+jakin:
+  present: missing persons: hi, gu, zuek, haiek
+  future: missing persons: hi, gu, zuek, haiek
+  presentPlural: missing persons: hi, gu, zuek, haiek
+
+jario:
+  present: missing persons: hi
+  past: missing persons: hi
+
+joan:
+  future: missing persons: hi
+  imperative: missing persons: ni, hura, gu, haiek
+
+ukan:
+  present: missing persons: hi
+  future: missing persons: hi
+  potential: missing persons: hi
+  baldintza: missing persons: hi
+  conditional: missing persons: hi
+  presentToka: missing persons: ni, hi, gu, zu, zuek
+  presentNoka: missing persons: ni, hi, gu, zu, zuek
+  pastToka: missing persons: ni, hi, gu, zu, zuek
+  pastNoka: missing persons: ni, hi, gu, zu, zuek
+  presentPlural: missing persons: hi
+  futurePlural: missing persons: hi
+  imperative: missing persons: ni, hi
+  imperativePlural: missing persons: ni, hi
+  subjunctivePresent: missing persons: hi
+
