@@ -13,20 +13,25 @@ import { VERBS } from '../src/data/verbs.js';
 import { LESSONS } from '../src/data/lessons.js';
 
 const TENSE_MAPPING = {
-  // Map documented tense names to verbs.js keys
+  // Map canonical tense names to verbs.js keys
   orainaldia: 'present',
   lehenaldia: 'past',
   baldintza: 'baldintza',
-  ondorioa_present: 'ondorioa',
-  ondorioa_past: 'ondorioa_past',
-  ahalera_orainaldia: 'ahaleraPossible',
-  ahalera_alegiazkoa: 'ahaleraPossible',
-  ahalera_lehenaldia: 'ahaleraPast',
-  subjuntiboa_orainaldia: 'subjunctive',
-  subjuntiboa_lehenaldia: 'subjunctive_past',
+  ondorioa_present: 'conditional',
+  ondorioa_past: 'conditionalPast',
+  ahalera_orainaldia: 'potential',
+  ahalera_alegiazkoa: 'potentialAlegiazkoa',
+  ahalera_lehenaldia: 'potentialLehenaldia',
+  subjuntiboa_orainaldia: 'subjunctivePresent',
+  subjuntiboa_lehenaldia: 'subjunctivePast',
   agintera: 'imperative',
+
+  // Special cases
   orainaldia_plural: 'presentPlural',
   lehenaldia_plural: 'pastPlural',
+
+  // Archaic/special
+  orainaldia_archaic: 'present_archaic',
 };
 
 // Collect all tenses taught in lessons
