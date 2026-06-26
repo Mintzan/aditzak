@@ -8,6 +8,24 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #476: `eraman`/`ekarri`'s plural-object tenses join the existing review pools, no dedicated Unit 42 lessons
+
+`eraman`/`ekarri` gained `presentPlural`/`pastPlural`/`futurePlural` tables
+(see `docs/LANGUAGE_DECISIONS.md`'s entry on the data itself — that data had
+been added once already in an earlier exploratory pass and reverted as
+out-of-scope, then re-added here since #476 needed it). Followed the exact
+precedent set for `eduki`'s own plural-object tenses (#286/#417): folded both
+verbs into the existing `nor-nork-present-plural-pool(-plural)`,
+`nor-nork-past-plural-pool(-plural)`, and `nor-nork-future-plural-pool(-plural)`
+review lessons in `src/data/lessons.js`, rather than adding dedicated
+practice lessons or a new review unit. Reasoning: like `eduki`'s plural-object
+forms, these don't teach a new grammatical relation — the `-tza-` infix rule
+was already taught via the pools' other verbs — so they're reinforcement,
+not new content, matching how Unit 42 itself was scoped as "no new
+grammatical relation" optional flavor content. `journey.js` is untouched:
+the pools aren't tied to Unit 42's `lessonIds`, they're reused across many
+earlier units, so no roadmap change was needed.
+
 ## 2026-06-26 — #464: browser back during a lesson exits via history.pushState + popstate, gated by the same abandon-confirmation as the X button
 
 Browser back during an active lesson should return to the lesson list rather
