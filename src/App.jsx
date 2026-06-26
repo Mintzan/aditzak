@@ -2289,6 +2289,46 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
   // fit a pool of verbs (pooled practice).
   const [showPreview, setShowPreview] = useState(!lesson.sources && lesson.kind !== 'reading' && attempts === 0)
 
+  // #464: a lesson counts as having unsaved progress once the learner has
+  // gotten at least one question right or wrong — read via refs (rather than
+  // as a dependency) inside the popstate handler below so that handler always
+  // sees the latest value without needing to be torn down and re-registered
+  // on every answer.
+  const hasProgress = state.correctCount > 0 || (state.misses?.length ?? 0) > 0
+  const hasProgressRef = useRef(hasProgress)
+  const onExitRef = useRef(onExit)
+  const tRef = useRef(t)
+  useEffect(() => {
+    hasProgressRef.current = hasProgress
+    onExitRef.current = onExit
+    tRef.current = t
+  }, [hasProgress, onExit, t])
+
+  // #464: pressing the browser back button during a lesson should return to
+  // the lesson list rather than navigate browser history away from the app —
+  // pushing a history entry on mount gives the back button something of ours
+  // to pop, which `popstate` then turns into a (possibly confirmed) exit.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.history.pushState({ aditzakLesson: true }, '')
+    function handlePopState() {
+      if (hasProgressRef.current && !window.confirm(tRef.current('lessonAbandonConfirm'))) {
+        window.history.pushState({ aditzakLesson: true }, '')
+        return
+      }
+      onExitRef.current()
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  function handleExitClick() {
+    if (hasProgressRef.current && typeof window !== 'undefined' && !window.confirm(t('lessonAbandonConfirm'))) {
+      return
+    }
+    onExit()
+  }
+
   // Fires once the learner is actually answering questions — on mount for
   // review/pooled/repeat lessons (which skip the preview), or once the
   // preview's "Start" button is dismissed for a lesson's first attempt.
@@ -2383,7 +2423,7 @@ function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canS
       <div className="flex items-center gap-3 px-4 pt-4">
         <button
           type="button"
-          onClick={onExit}
+          onClick={handleExitClick}
           aria-label={t('exitLessonLabel')}
           style={{ minHeight: 48, minWidth: 48 }}
           className="flex items-center justify-center rounded-full text-2xl text-gray-400 transition hover:bg-gray-100 hover:text-gray-600"
