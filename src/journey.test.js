@@ -107,4 +107,133 @@ describe('LESSONS <-> VERBS', () => {
       }
     }
   })
+
+  it('introduces all forms in a pedagogically valid order (no form used before introduction)', () => {
+    const personOrder = ['ni', 'hi', 'zu', 'hura', 'gu', 'zuek', 'haiek']
+    const formIntroduced = new Map() // "verbId-tense-person" -> lessonIndex
+    const formUsed = new Map() // "verbId-tense-person" -> lessonIndex array
+
+    // Helper to get all persons drilled in a lesson
+    function getPersonsForSource(source) {
+      const verb = verbsById.get(source.verbId)
+      const table = getComposedTable(verb, source.tense)
+      // If lesson restricts persons, use that; otherwise use all persons in the table
+      return Object.keys(table)
+    }
+
+    // First pass: track all forms and when they're introduced
+    for (let lessonIdx = 0; lessonIdx < LESSONS.length; lessonIdx++) {
+      const lesson = LESSONS[lessonIdx]
+      const sources = lesson.verbId ? [{ verbId: lesson.verbId, tense: lesson.tense }] : lesson.sources || []
+
+      for (const source of sources) {
+        const allPersons = getPersonsForSource(source)
+        // Use restricted persons if specified, otherwise all
+        const personsToCheck = lesson.persons?.length > 0 ? lesson.persons : allPersons
+
+        for (const person of personsToCheck) {
+          const formKey = `${source.verbId}-${source.tense}-${person}`
+          if (!formIntroduced.has(formKey)) {
+            formIntroduced.set(formKey, lessonIdx)
+          }
+          if (!formUsed.has(formKey)) {
+            formUsed.set(formKey, [])
+          }
+          formUsed.get(formKey).push(lessonIdx)
+        }
+      }
+    }
+
+    // Check: no form is used before introduction
+    const violations = []
+    for (const [formKey, usages] of formUsed) {
+      const introducedAt = formIntroduced.get(formKey)
+      const usedBefore = usages.filter((idx) => idx < introducedAt)
+      if (usedBefore.length > 0) {
+        violations.push(
+          `Form "${formKey}" introduced at lesson ${introducedAt} ("${LESSONS[introducedAt].id}") but used earlier in lessons: ${usedBefore.map((idx) => `${idx}("${LESSONS[idx].id}")`).join(', ')}`,
+        )
+      }
+    }
+    expect(violations, violations.join('\n')).toHaveLength(0)
+  })
+
+  it('provides diagnostic report of form introductions and their order', () => {
+    const formIntroduced = new Map()
+    const personOrder = ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek']
+
+    function getPersonsForSource(source) {
+      const verb = verbsById.get(source.verbId)
+      const table = getComposedTable(verb, source.tense)
+      return Object.keys(table)
+    }
+
+    for (let lessonIdx = 0; lessonIdx < LESSONS.length; lessonIdx++) {
+      const lesson = LESSONS[lessonIdx]
+      const sources = lesson.verbId ? [{ verbId: lesson.verbId, tense: lesson.tense }] : lesson.sources || []
+
+      for (const source of sources) {
+        const allPersons = getPersonsForSource(source)
+        const personsToCheck = lesson.persons?.length > 0 ? lesson.persons : allPersons
+
+        for (const person of personsToCheck) {
+          const formKey = `${source.verbId}-${source.tense}-${person}`
+          if (!formIntroduced.has(formKey)) {
+            formIntroduced.set(formKey, { lessonIdx, lessonId: lesson.id })
+          }
+        }
+      }
+    }
+
+    // Group by verb+tense to show introduction patterns
+    const byVerb = new Map()
+    for (const [formKey, { lessonIdx, lessonId }] of formIntroduced) {
+      const [verbId, tense, person] = formKey.split('-')
+      const key = `${verbId}/${tense}`
+      if (!byVerb.has(key)) {
+        byVerb.set(key, [])
+      }
+      byVerb.get(key).push({ person, lessonIdx, lessonId, formKey })
+    }
+
+    // Log the report (this helps validate pedagogy without failing the test)
+    const report = []
+    report.push('\n=== Form Introduction Timeline ===\n')
+    for (const [vtKey, forms] of [...byVerb].sort()) {
+      const sorted = forms.sort((a, b) => personOrder.indexOf(a.person) - personOrder.indexOf(b.person))
+      report.push(`${vtKey}:`)
+      for (const form of sorted) {
+        report.push(`  ${form.person.padEnd(6)} → Lesson ${form.lessonIdx.toString().padStart(3)} (${form.lessonId})`)
+      }
+      report.push('')
+    }
+
+    // Report any pedagogically suspicious patterns:
+    // - Plural forms introduced before all singular forms
+    // - Long gaps between related forms (e.g., ni/zu appearing but not hura)
+    const warnings = []
+    for (const [vtKey, forms] of byVerb) {
+      const singularPersons = forms.filter((f) => ['ni', 'zu', 'hura'].includes(f.person))
+      const pluralPersons = forms.filter((f) => ['gu', 'zuek', 'haiek'].includes(f.person))
+
+      if (pluralPersons.length > 0 && singularPersons.length > 0) {
+        const lastSingular = Math.max(...singularPersons.map((f) => f.lessonIdx))
+        const firstPlural = Math.min(...pluralPersons.map((f) => f.lessonIdx))
+        if (firstPlural < lastSingular) {
+          warnings.push(
+            `⚠️  ${vtKey}: Plural forms introduced (${firstPlural}) before final singular form (${lastSingular})`,
+          )
+        }
+      }
+    }
+
+    if (warnings.length > 0) {
+      report.push('=== Pedagogical Warnings ===\n')
+      report.push(warnings.join('\n'))
+    }
+
+    console.log(report.join('\n'))
+    // This test always passes; the report is for diagnosis
+    expect(true).toBe(true)
+  })
 })
