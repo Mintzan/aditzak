@@ -583,6 +583,18 @@ function getCaseFrameSibling(verbs, agreement) {
   return verbs.find(
     (sibling) =>
       sibling.agreement &&
+      // #477: when a candidate sibling's `agreement` includes `nori`, only
+      // treat it as a real NOR-NORI match if `object`/`recipient`/`agent`
+      // confirms its *primary* present/past table is structurally built
+      // around that axis (one argument fixed, the other varying) — excludes
+      // verbs like `etorri` that merely carry an incidental, secondary
+      // `nori` (a sparse `presentByNori`/`pastByNori` table alongside an
+      // unrelated NOR-keyed `present`/`past`). Verbs without `nori` at all
+      // (e.g. `izan`) are unaffected by this check.
+      (!sibling.agreement.includes('nori') ||
+        sibling.object !== undefined ||
+        sibling.recipient !== undefined ||
+        sibling.agent !== undefined) &&
       sibling.agreement.includes('nori') === agreement.includes('nori') &&
       sibling.agreement.includes('nork') !== agreement.includes('nork'),
   )

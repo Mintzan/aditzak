@@ -1759,7 +1759,7 @@ export const VERBS = [
     verb: 'etorri',
     meaning: { en: 'to come', es: 'venir', eu: 'etorri' },
     type: 'synthetic',
-    agreement: ['nor'],
+    agreement: ['nor', 'nori'],
     dialect: 'batua',
     conjugations: {
       present: { ni: 'nator', hi: 'hator', zu: 'zatoz', hura: 'dator', gu: 'gatoz', zuek: 'zatozte', haiek: 'datoz' },
@@ -1826,6 +1826,15 @@ export const VERBS = [
       // above. No `hura`/`haiek`/`ni`/`gu` cells, same reasoning as `joan`'s
       // imperative above (Radical/Bare-Stem `etor bedi` is out of scope).
       imperative: { hi: 'hator', zu: 'zatoz', zuek: 'zatozte' },
+      // #477: NOR-NORI dative axis (`docs/CONJUGATIONS.md` §6) — irregular
+      // synthetic forms, not decomposable into a prefix+skeleton like the
+      // periphrastic dative verbs (gustatu etc.), so written literally.
+      // Only `niri`/`hari` are attested and only for these tenses: `datorkit`
+      // ("Argia datorkit") for present, `zetorkidan`/`zetorkion` (the
+      // "burura/gogora etorri" idiom) for past. No plural-NORI or other-mood
+      // forms are attested — do not extrapolate them.
+      presentByNori: { ni: 'datorkit' },
+      pastByNori: { ni: 'zetorkidan', hura: 'zetorkion' },
     },
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
     // `validFor: ['joan']` — joan's same-person form ("Ni etxera noa" = "I'm
@@ -8851,6 +8860,12 @@ export const TENSE_META = {
   // #369: the subjunctive (Unit 36) — `nadin`/`dezan`/`dakion`/`diezaiodan`-
   // type forms across NOR/NOR-NORK/NOR-NORI/NOR-NORI-NORK.
   subjunctivePresent: { labelKey: 'tenseSubjunctivePresent', basque: 'subjuntiboa' },
+  // #477: `etorri`'s NOR-NORI dative axis — unlike `presentByNor`/`pastByNor`
+  // above (where NORI is the verb's *usual* varying axis and NOR is the new
+  // one), here NOR is `etorri`'s usual axis (its plain `present`/`past`) and
+  // NORI is the new one, so the suffix names that new axis instead.
+  presentByNori: { labelKey: 'tensePresentByNori', basque: 'oraina (nori-ka)' },
+  pastByNori: { labelKey: 'tensePastByNori', basque: 'lehenaldia (nori-ka)' },
 }
 
 export const TYPE_META = {
