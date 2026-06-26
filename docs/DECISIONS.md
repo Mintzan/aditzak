@@ -8,6 +8,32 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #481: added `ihardun`, the first `agreement: ['nork']`-only verb
+
+Added `ihardun` ("to occupy oneself / be engaged in something") as the first
+verb with `agreement: ['nork']` — no `nor` slot at all (unergative: ergative
+subject, no absolutive argument). Verified before writing any data that
+nothing downstream assumes a `nor` slot exists: `AgreementBadge`/
+`AGREEMENT_META` just map over whatever roles are in `agreement`, and
+`getCaseFrameSibling`/`getDativeOvergenerationSibling` (`lessonLogic.js`)
+both require `nori`, which `ihardun` doesn't have either, so they're
+unaffected. `agreementsCompatible(['nork'], ['nor','nork'])` evaluates
+`true` (it only compares `nork`/`nori` status, never `nor`) — confirmed via
+`scripts/validfor-delta-audit.mjs --verb ihardun` that this surfaces several
+hundred new candidate matches against `ukan`'s object-citation sentences
+(e.g. "Nik liburu bat ___." accepting `dihardut`). None of these are
+genuine — `ihardun` has no object slot and a completely different meaning —
+so no `validFor` entries were added for it; the gap-audit baseline was
+regenerated to absorb the new (intentionally unfilled) surface rather than
+suppressing it.
+
+Placed in a new Unit 46 ("Unergative Curiosities", Stage 17) rather than
+folding into Unit 44 ("Synthetic Curiosities") — Unit 44 is scoped
+recognition-only (one example sentence each for `jario`/`etzan`/`irudi`,
+per #485/#486), while `ihardun` gets full present/past production lessons
+per #481's literal ask, so mixing it into Unit 44 would conflate two
+different scopes under one unit.
+
 ## 2026-06-26 — #498/#501/#502: reopened — "ukan-nori" compound-key plan was based on a misread of `esan`'s entry
 
 #498 had decided to add `ukan`-nori/`ukan`-nori-nork forms as literal

@@ -150,6 +150,12 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '16. atala — Eguraldiari buruz hizketan',
       },
     },
+    'phase-7-stage-17': {
+      title: {
+        es: 'Etapa 17 — Sujetos sin objeto',
+        eu: '17. atala — Objekturik gabeko subjektuak',
+      },
+    },
   },
   units: {
     1: {
@@ -628,6 +634,17 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Está lloviendo." · "Hace frío." · "Hace sol."',
         eu: '"Euria ari du." · "Hotz da." · "Eguzkia dago."',
+      },
+    },
+    46: {
+      title: { es: 'Curiosidades inergativas', eu: 'Bitxikeria inergatiboak' },
+      focus: {
+        es: 'ihardun (inergativo, solo NORK, "dihardut"/"niharduen") — sujeto ergativo, sin argumento absolutivo',
+        eu: 'ihardun (inergatiboa, NORK soilik, "dihardut"/"niharduen") — subjektu ergatiboa, argumentu absolutiborik gabe',
+      },
+      payload: {
+        es: '"Estoy ocupado trabajando." · "¿En qué andamos?"',
+        eu: '"Lanean dihardut." · "Zertan zihardugun?"',
       },
     },
   },

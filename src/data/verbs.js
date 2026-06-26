@@ -8512,6 +8512,57 @@ export const VERBS = [
       },
     },
   },
+  // #481: `ihardun`/`jardun` ("to occupy oneself / be engaged in something")
+  // — unergative, ergative (NORK) subject only, **no absolutive (NOR)
+  // argument at all** (CONJUGATIONS.md §6). `agreement: ['nork']` is the
+  // first NORK-only entry in this file; verified directly that nothing
+  // downstream assumes a `nor` slot exists — `AgreementBadge`/`AGREEMENT_META`
+  // just map over whatever roles are in `agreement`, and
+  // `agreementsCompatible`/`getFixedArgument`/`getCaseFrameSibling` (
+  // `lessonLogic.js`) all degrade safely without one (the latter two require
+  // `nori`, which `ihardun` doesn't have either). `agreementsCompatible(
+  // ['nork'], ['nor','nork'])` evaluates `true`, so `ihardun` productively
+  // borrows same-person distractor forms from ordinary nor-nork verbs
+  // (`dakit` offered alongside `dihardut`) — desired, not a bug, per #481.
+  // `present` gender-splits `hi` (`diharduk`/`dihardun`); `past` stays
+  // unsplit (`hiharduen`), matching `ukan`/`jakin`'s own "past stays
+  // unsplit" precedent. No `sentences` entry for `hi` present/past, same
+  // omission `ukan`/`jakin` already have (hi/hitanoa sentence support is
+  // #212/#213's open engine gap, not specific to this verb).
+  {
+    id: 'ihardun',
+    verb: 'ihardun',
+    meaning: { en: 'to occupy oneself / be engaged (in something)', es: 'ocuparse / estar enfrascado (en algo)', eu: 'ihardun (zerbaitetan aritu)' },
+    type: 'synthetic',
+    agreement: ['nork'],
+    dialect: 'batua',
+    conjugations: {
+      present: { ni: 'dihardut', 'hi-m': 'diharduk', 'hi-f': 'dihardun', zu: 'diharduzu', hura: 'dihardu', gu: 'dihardugu', zuek: 'diharduzue', haiek: 'dihardute' },
+      past: { ni: 'niharduen', hi: 'hiharduen', zu: 'zeniharduen', hura: 'ziharduen', gu: 'geniharduen', zuek: 'zeniharduten', haiek: 'ziharduten' },
+    },
+    // No sibling NORK-only verb yet (#484's `iraun` is the same shape, not
+    // yet implemented) — `validFor: []` throughout, same "no genuine sibling
+    // yet" stance #459 took for `jario`.
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik lanean ___.', validFor: [] }],
+        zu: [{ text: 'Zuk lanean ___.', validFor: [] }],
+        hura: [{ text: 'Hark lanean ___.', validFor: [] }],
+        gu: [{ text: 'Guk lanean ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek lanean ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek lanean ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo lanean ___.', validFor: [] }],
+        zu: [{ text: 'Zuk atzo lanean ___?', validFor: [] }],
+        hura: [{ text: 'Hark atzo lanean ___.', validFor: [] }],
+        gu: [{ text: 'Guk atzo lanean ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek atzo lanean ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek atzo lanean ___.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
   // #370 (Unit 42) — causative `nor` → `nor-nork`: per CONJUGATIONS.md §17.2,
   // the original `nor` subject (the climbers/kids) becomes the new plural
   // `nor` object, and the causer (storm/music) fills the new `nork` slot.

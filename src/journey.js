@@ -961,6 +961,25 @@ export const JOURNEY = [
           },
         ],
       },
+      {
+        id: 'phase-7-stage-17',
+        title: 'Stage 17 — Subjects Without Objects',
+        units: [
+          {
+            // #481: `ihardun` (unergative, NORK-only — ergative subject,
+            // no absolutive argument at all). Full present/past production
+            // lessons, unlike Unit 44's recognition-only scope — `ihardun`
+            // has no journey-documented "bonus, one example sentence" plan
+            // the way jario/etzan/irudi do.
+            number: 46,
+            title: 'Unergative Curiosities',
+            focus: 'ihardun (unergative, NORK-only, "dihardut"/"niharduen") — ergative subject, no absolutive argument',
+            payload: 'Lanean dihardut. · Zertan zihardugun?',
+            status: 'available',
+            lessonIds: ['ihardun-present', 'ihardun-past', 'unit-46-review'],
+          },
+        ],
+      },
     ],
   },
 ]

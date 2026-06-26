@@ -4032,4 +4032,19 @@ export const LESSONS = [
       { verbId: 'idatzarazi', tense: 'future' },
     ],
   },
+  // #481 — Unit 46 ("Unergative Curiosities", new Stage 17): `ihardun`'s
+  // first NORK-only verb in the journey. `persons` filters out `hi`/`hi-m`/
+  // `hi-f` — `ihardun.conjugations` has no `sentences` entry for that person
+  // (matching `ukan`/`jakin`'s own gap), so a typed-fill-in question for it
+  // would have no sentence frame to drill against.
+  { id: 'ihardun-present', verbId: 'ihardun', tense: 'present', persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'] },
+  { id: 'ihardun-past', verbId: 'ihardun', tense: 'past', persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'] },
+  {
+    id: 'unit-46-review',
+    review: true,
+    sources: [
+      { verbId: 'ihardun', tense: 'present' },
+      { verbId: 'ihardun', tense: 'past' },
+    ],
+  },
 ]

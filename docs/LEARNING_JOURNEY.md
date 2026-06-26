@@ -502,6 +502,12 @@ Optional flavor content layered on top of the already-complete core curriculum (
 |---|---|---|---|---|---|
 | 45 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | pending |
 
+#### Stage 17: Subjects Without Objects
+
+| Unit | Focus | Payload | Coverage | Ref | Data status |
+|---|---|---|---|---|---|
+| 46 | **Unergative Curiosities** — `ihardun` (unergative, NORK-only, "dihardut"/"niharduen"); ergative subject, no absolutive argument at all; full present/past production | "I'm busy working." (`Lanean dihardut`) / "What are we engaged in?" (`Zertan zihardugun?`) | CONJUGATIONS §6 | available |
+
 ---
 
 ## App engine logic — design notes (not part of the content sequence)
