@@ -5,14 +5,19 @@ import { VERBS } from './data/verbs.js'
 
 const syntheticVerbs = VERBS.filter(v => v.type === 'synthetic')
 
-// Track synthetic verb tense coverage
+// Base tenses that represent core temporal systems (future is periphrastic: participle + auxiliary)
+const BASE_TENSES = new Set(['present', 'past', 'presentPlural', 'pastPlural'])
+
+// Track synthetic verb base tense coverage
 const syntheticCoverage = new Map()
 
 for (const verb of syntheticVerbs) {
-  const definedTenses = new Set(Object.keys(verb.conjugations || {}))
+  const definedBaseTenses = new Set(
+    Object.keys(verb.conjugations || {}).filter(t => BASE_TENSES.has(t))
+  )
   syntheticCoverage.set(verb.id, {
     verb,
-    defined: definedTenses,
+    defined: definedBaseTenses,
     used: new Set(),
   })
 }
@@ -45,7 +50,7 @@ for (const verb of VERBS) {
   }
 
   if (verb.byNoriPrefixes) {
-    for (const base of ['present', 'past', 'future']) {
+    for (const base of ['present', 'past']) {
       const key = `byNoriPrefixes/${base}`
       if (!auxiliaryPatterns.has(key)) {
         auxiliaryPatterns.set(key, { pattern: 'Dative marking (dativeIzan-based)', used: false, verbs: [] })
@@ -55,8 +60,8 @@ for (const verb of VERBS) {
   }
 
   if (verb.ditransitivePrefixes) {
-    for (const tense of ['present', 'past', 'future']) {
-      const key = `ditransitivePrefixes/${tense}`
+    for (const base of ['present', 'past']) {
+      const key = `ditransitivePrefixes/${base}`
       if (!auxiliaryPatterns.has(key)) {
         auxiliaryPatterns.set(key, { pattern: 'Indirect object marking (diot-based)', used: false, verbs: [] })
       }
@@ -77,33 +82,28 @@ for (const lesson of LESSONS) {
 
     // Check byObjectPrefixes
     if (verb.byObjectPrefixes) {
-      if (source.tense === 'presentByObject' || source.tense === 'pastByObject') {
-        const base = source.tense === 'presentByObject' ? 'present' : 'past'
-        const key = `byObjectPrefixes/${base}`
-        if (auxiliaryPatterns.has(key)) {
-          auxiliaryPatterns.get(key).used = true
-        }
+      if (source.tense === 'presentByObject') {
+        auxiliaryPatterns.get('byObjectPrefixes/present').used = true
+      } else if (source.tense === 'pastByObject') {
+        auxiliaryPatterns.get('byObjectPrefixes/past').used = true
       }
     }
 
-    // Check byNoriPrefixes
+    // Check byNoriPrefixes (present, past, or their ByNor variants)
     if (verb.byNoriPrefixes) {
-      if (['present', 'past', 'future', 'presentByNor', 'pastByNor'].includes(source.tense)) {
-        const base = source.tense === 'presentByNor' ? 'present' : source.tense === 'pastByNor' ? 'past' : source.tense
-        const key = `byNoriPrefixes/${base}`
-        if (auxiliaryPatterns.has(key)) {
-          auxiliaryPatterns.get(key).used = true
-        }
+      if (source.tense === 'present' || source.tense === 'presentByNor') {
+        auxiliaryPatterns.get('byNoriPrefixes/present').used = true
+      } else if (source.tense === 'past' || source.tense === 'pastByNor') {
+        auxiliaryPatterns.get('byNoriPrefixes/past').used = true
       }
     }
 
     // Check ditransitivePrefixes
     if (verb.ditransitivePrefixes) {
-      if (['present', 'past', 'future'].includes(source.tense)) {
-        const key = `ditransitivePrefixes/${source.tense}`
-        if (auxiliaryPatterns.has(key)) {
-          auxiliaryPatterns.get(key).used = true
-        }
+      if (source.tense === 'present') {
+        auxiliaryPatterns.get('ditransitivePrefixes/present').used = true
+      } else if (source.tense === 'past') {
+        auxiliaryPatterns.get('ditransitivePrefixes/past').used = true
       }
     }
   }
@@ -114,6 +114,10 @@ for (const lesson of LESSONS) {
 console.log('╔═══════════════════════════════════════════════════════╗')
 console.log('║    ADITZ TRINKOAK & LAGUNTZAILEAK COVERAGE REPORT     ║')
 console.log('╚═══════════════════════════════════════════════════════╝\n')
+
+console.log('Note: Analysis covers BASE TENSES only')
+console.log('(present, past, presentPlural, pastPlural)')
+console.log('Future is periphrastic: participle + auxiliary\n')
 
 // ADITZ TRINKOAK section
 console.log('═══════════════════════════════════════════════════════')
@@ -127,14 +131,18 @@ let verbalWithGaps = 0
 for (const [verbId, coverage] of [...syntheticCoverage.entries()].sort()) {
   const defined = coverage.defined.size
   const used = coverage.used.size
+
   totalDefined += defined
   totalUsed += used
 
-  const percent = (used / defined * 100).toFixed(0)
+  const coverage_pct = defined > 0 ? (used / defined * 100).toFixed(0) : '—'
   const status = used === defined ? '✅' : '⚠️ '
-  if (used < defined) verbalWithGaps++
 
-  console.log(`${status} ${verbId.padEnd(15)} ${used}/${defined} tenses (${percent}%)`)
+  if (used < defined) {
+    verbalWithGaps++
+  }
+
+  console.log(`${status} ${verbId.padEnd(15)} ${used}/${defined} base tenses (${coverage_pct}%)`)
 
   if (used < defined) {
     const unused = [...coverage.defined].filter(t => !coverage.used.has(t))
@@ -142,8 +150,8 @@ for (const [verbId, coverage] of [...syntheticCoverage.entries()].sort()) {
   }
 }
 
-console.log(`\nTOTAL: ${totalUsed}/${totalDefined} tenses (${(totalUsed/totalDefined*100).toFixed(1)}%)`)
-console.log(`Verbs with complete coverage: ${syntheticVerbs.length - verbalWithGaps}/${syntheticVerbs.length}\n`)
+console.log(`\nBase tense coverage: ${totalUsed}/${totalDefined} (${(totalUsed/totalDefined*100).toFixed(1)}%)`)
+console.log(`Verbs with complete base tense coverage: ${syntheticVerbs.length - verbalWithGaps}/${syntheticVerbs.length}\n`)
 
 // ADITZ LAGUNTZAILEAK section
 console.log('═══════════════════════════════════════════════════════')
@@ -181,6 +189,8 @@ console.log('══════════════════════�
 const totalAuxiliaryPatterns = auxiliaryPatterns.size
 const usedAuxiliaryPatterns = [...auxiliaryPatterns.values()].filter(p => p.used).length
 
-console.log(`Synthetic Verbs: ${totalUsed}/${totalDefined} tenses (${(totalUsed/totalDefined*100).toFixed(1)}%)`)
+console.log(`Synthetic Base Tenses: ${totalUsed}/${totalDefined} (${(totalUsed/totalDefined*100).toFixed(1)}%)`)
 console.log(`Auxiliary Systems: ${usedAuxiliaryPatterns}/${totalAuxiliaryPatterns} patterns (${(usedAuxiliaryPatterns/totalAuxiliaryPatterns*100).toFixed(1)}%)`)
-console.log(`\nOverall Grammar Coverage: Strong`)
+console.log(`\nGrammar Coverage: Strong`)
+console.log('\nNote: Future forms (participle + auxiliary) use present base tenses')
+console.log('      Moods (conditional, potential, etc.) use present/past bases')
