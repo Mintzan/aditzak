@@ -6,6 +6,29 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-26 — Added `eraman`/`ekarri` plural-object forms (`zenekartzan` etc.)
+
+`eraman` and `ekarri` were the last two `nor-nork` synthetic verbs in
+`VERBS` still missing plural-object (`-tza-` infix) conjugations —
+`eduki` and `jakin` already got theirs via #284/#287, but #260's original
+comment for `eraman`/`ekarri` claimed this matched their "precedent,"
+which was stale by the time #284/#287 landed. Added `presentPlural`/
+`pastPlural`/`futurePlural` for both, sourced directly from
+CONJUGATIONS.md §7's existing `/daramatza`/`/dakartza`-style table
+columns (no new derivation needed — these were already tabulated in the
+docs, just not carried into `verbs.js`). This closes the *zenekartzan*
+gap a user asked about directly.
+
+Ran `scripts/validfor-delta-audit.mjs --verb eraman`/`--verb ekarri` per
+its own convention to review the new gap slots these tenses create (other
+verbs' `presentPlural`/`pastPlural`/`futurePlural` sentences where
+`eraman`/`ekarri`'s new forms are agreement-compatible). None read as a
+natural also-correct completion — `eraman`/`ekarri` ("carry"/"bring")
+don't fit the locative-only or unrelated-verb sentences in the candidate
+list — so no `validFor` tags were added; regenerated
+`scripts/validfor-gap-baseline.json` to reflect the new (reviewed) gap
+count instead.
+
 ## 2026-06-26 — Scope of §6/§7's mood-table gap: only add what's confirmed standard, not pattern-derived
 
 Asked to "fill all the possible tenses" for the weaker synthetic verbs
