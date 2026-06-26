@@ -1,12 +1,10 @@
-# Form Introductions Validation
+# Conjugation Introduction Tracking
 
-This document explains how to track and validate that conjugated forms (the actual Basque words) and grammatical forms are introduced in a pedagogically sound order.
+This document explains how to track when conjugated forms (actual Basque words like "naiz", "dut", "gara") are introduced in the curriculum.
 
 ## Quick Start
 
-### Track Conjugated Forms (Basque Words)
-
-**See when each conjugated form (like "naiz", "dut", "gara") is introduced:**
+**See when each conjugated form is first introduced:**
 ```bash
 node src/validateConjugationIntroductions.js
 ```
@@ -17,26 +15,10 @@ node src/exportConjugations.js csv  # → conjugations-by-lesson.csv
 node src/exportConjugations.js json # → conjugations-by-lesson.json
 ```
 
-### Track Form Combinations (Verb + Tense + Person)
-
-**Check what verb/tense/person combinations are missing from the curriculum:**
-```bash
-node src/validateCompleteCoverage.js
-```
-
-**Export all forms as CSV (for spreadsheet analysis):**
-```bash
-node src/exportFormInventory.js csv > form-inventory.csv
-```
-
-**Get a complete JSON export:**
-```bash
-node src/exportFormInventory.js json
-```
-
 ## Tools
 
-### 0. Conjugation Introduction Tracking
+### Conjugation Introduction Tracking
+
 Track when actual conjugated forms (the Basque words) are introduced:
 
 ```bash
@@ -56,73 +38,28 @@ node src/validateConjugationIntroductions.js
 
 **Examples of conjugations:** "naiz" (I am), "dut" (I have), "gara" (we are), "zaude" (you are, present), "dago" (he is)
 
-### 1. Complete Coverage Validation
-Check if ALL possible forms (defined in VERBS) are taught somewhere:
+### Export Conjugations
 
-```bash
-node src/validateCompleteCoverage.js
-```
-
-**Output includes:**
-- ✅ Forms covered in curriculum vs. total possible
-- ❌ List of forms NOT covered (organized by verb/tense)
-- 📊 Complete inventory of all forms with coverage status
-- 📈 Summary showing which verbs have most gaps
-
-**Current Status:**
-- ✅ **2,500 total possible forms**
-- ✅ **2,326 forms covered** (93.0% coverage)
-- ❌ **174 forms NOT covered** (7.0% gap)
-
-**Known gaps** (by priority):
-1. **Dative/conditional axes** for psych verbs (gustatu, iruditu, ahaztu, jarraitu)
-   - These are newer tenses/axes with limited curriculum time
-2. **Plural forms** for some verbs (ahaztu, gustatu, nahi, jakin)
-3. **maite** verb (completely uncovered) — planned for later curriculum phase
-4. **The `hi` person** — rarely used in modern Basque, only 6 gaps
-5. **behar past** — defined but not yet drilled
-
-### 2. Curriculum Form Validation
-Run the comprehensive validation report of introduced forms:
-
-```bash
-node src/validateFormIntroductions.js
-```
-
-**Output includes:**
-- ✅ Verification that no form is used before introduction
-- 📋 Timeline of when each form (verb + tense + person) is first introduced
-- ⚠️  Pedagogical warnings (e.g., plural forms before all singular forms)
-- ℹ️  Notes about large gaps between related forms
-- 📊 Summary statistics
-
-**Current Status:**
-- ✅ **0 violations**: All forms introduced before use
-- ⚠️ **115 pedagogical warnings**: Mostly about axis lessons where plural forms appear before final singular forms
-- Total: 2,982 taught forms across 342 lessons
-
-### 3. Export Complete Form Inventory
-
-Export all forms with coverage status as CSV or JSON:
+Export all conjugations with introduction points:
 
 ```bash
 # CSV format (for spreadsheet analysis)
-node src/exportFormInventory.js csv
+node src/exportConjugations.js csv
 
 # JSON format (for programmatic use)
-node src/exportFormInventory.js json
+node src/exportConjugations.js json
 ```
 
-These generate `form-inventory.csv` and `form-inventory.json` containing all 2,500 possible forms with a "Covered" column showing YES/NO.
+These generate `conjugations-by-lesson.csv` and `conjugations-by-lesson.json` containing all taught conjugations with lesson numbers.
 
 **Use cases:**
-- Identify exactly which forms need to be added to lessons
-- Plan the next curriculum unit
-- Verify completeness after lesson additions
+- See exactly which Basque words learners encounter in each lesson
+- Verify no form is taught twice in the same lesson
+- Plan new lessons by checking which words are already introduced
+- Identify shared forms that reinforce learning
 
-### 4. Helper Modules
+### Helper Module
 
-#### Conjugation Introductions
 Use the `conjugationIntroductions` module to query when specific Basque words are introduced:
 
 ```javascript
@@ -150,104 +87,42 @@ for (const [form, sources] of shared) {
 }
 ```
 
-#### Form/Person Combinations
-Use the `formIntroductions` module to query verb+tense+person introduction data in code:
+## Key Insights
 
-```javascript
-import {
-  getFormIntroduction,           // When was a specific form introduced?
-  getFormIntroductionsForTense,  // All forms for a verb+tense
-  getFormIntroductionsForVerb,   // All forms for a verb across tenses
-  isFormIntroducedBy,            // Check if form is available by lesson N
-  getFormStatistics,             // Overall stats
-  getCompleteCoverageStatus,     // Which forms are NOT covered?
-} from './formIntroductions.js'
+### Shared Conjugations
 
-// Example: When is "ni" form of "izan" present first introduced?
-const intro = getFormIntroduction('izan', 'present', 'ni')
-console.log(`Lesson ${intro.lessonIdx}: ${intro.lessonId}`)
+61 conjugations appear in multiple verbs/tenses:
+- **"zaude"** (you are) — used in `egon` present AND imperative
+- **"zoaz"** (you go) — used in `joan` present AND imperative
+- **"zatoz"** (you come) — used in `etorri` present AND imperative
 
-// Example: What's the introduction sequence for "ukan" present?
-const forms = getFormIntroductionsForTense('ukan', 'present')
-forms.forEach(f => console.log(`  ${f.person}: Lesson ${f.lessonIdx} (${f.lessonId})`))
+These are **pedagogically positive** — they reinforce learning through multiple contexts.
 
-// Example: Is "joan" future available by lesson 50?
-const isAvailable = isFormIntroducedBy('joan', 'future', 'hura', 50)
+### Homonyms
 
-// Example: Get coverage status and identify gaps
-const coverage = getCompleteCoverageStatus()
-console.log(`${coverage.coveredForms}/${coverage.allForms} forms covered`)
-coverage.uncoveredForms.forEach(f => {
-  console.log(`  Missing: ${f.verbId} ${f.tense} ${f.person}`)
-})
-```
+**0 homonyms** (no confusing duplicates):
+- No form taught with same person in different verbs
+- Curriculum is clear on meaning and context
 
-### 5. Journey Tests
-The journey validation tests also check form introductions:
+### Coverage
 
-```bash
-npm test -- journey.test.js
-```
-
-Tests verify:
-- ✅ No form is used before introduction (0 violations currently)
-- ✅ All VERBS conjugations are accounted for in curriculum (some gaps expected)
-- ✅ Pedagogical ordering concerns (logged to console for review)
-
-## Pedagogical Ordering
-
-The current curriculum follows these principles:
-
-1. **Singular before plural**: Forms for `ni`/`zu`/`hura` are generally introduced before `gu`/`zuek`/`haiek`
-   - Exception: Some axis-based lessons have plural first
-
-2. **Consistent tense sequences**: For each verb, typically ordered: `present` → `past` → `future` → other tenses
-
-3. **Verb-specific patterns**:
-   - Auxiliaries (`izan`, `ukan`) introduced early
-   - Periphrastic verbs (`joan`, `ikusi`) follow shortly
-   - Content verbs pooled together later
-
-## Known Issues / Warnings
-
-The validation reports 115 pedagogical warnings, mostly in these patterns:
-
-1. **Axis lessons** (object-axis, baldintza-axis, conditional, etc.):
-   - Lessons for `ni` or `zu` persons are split across multiple reviews
-   - Plural forms sometimes appear before all singular forms close together
-
-2. **Large gaps**:
-   - Some imperatives have 100+ lesson gaps between person variants
-   - This is typically acceptable since learners revisit verbs often
-
-## Adding New Lessons
-
-When adding lessons to the curriculum:
-
-1. Run the validation script to ensure no violations:
-   ```bash
-   node src/validateFormIntroductions.js
-   ```
-
-2. Review the pedagogical warnings — while not failures, they indicate ordering worth reconsidering
-
-3. Ensure singular forms generally come before plural for new verbs
-
-4. Consider cross-verb consistency: if `verb-A`'s `ni` form appears in lesson 10, don't introduce `verb-B`'s `gu` form in lesson 5 if possible
+All 4,284 taught conjugations are authentic Basque words:
+- Not abstract combinations
+- Ready for real conversation and comprehension
 
 ## Architecture
 
 ### How It Works
 
-1. **Caching**: Form introduction data is built once on first query and cached
-2. **Form key**: Unique identifier is `{verbId}-{tense}-{person}`
-3. **Introduction point**: Tracked as `{ lessonIdx, lessonId }` — the first lesson where a form appears
-4. **Person restrictions**: Lessons with `persons` filters only count those persons as "introduced"
+1. **Form extraction**: Actual Basque word forms extracted from `VERBS.conjugations`
+2. **Tracking**: First lesson where each form appears is recorded
+3. **Shared forms**: Words appearing in multiple verb/tense combinations identified
+4. **Caching**: Data built once and cached for fast queries
 
 ### Files
 
-- `src/validateFormIntroductions.js` — CLI validation script
-- `src/formIntroductions.js` — Query module for use in code
-- `src/journey.test.js` — Integration tests (include form ordering checks)
-- `src/data/lessons.js` — Curriculum data (source of form usage)
-- `src/data/verbs.js` — Verb conjugation tables
+- `src/conjugationIntroductions.js` — Query module for use in code
+- `src/validateConjugationIntroductions.js` — CLI audit script
+- `src/exportConjugations.js` — CSV/JSON export generator
+- `conjugations-by-lesson.csv` — Exported data (all 4,284 forms)
+- `conjugations-by-lesson.json` — Exported data (structured)

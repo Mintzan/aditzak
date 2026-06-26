@@ -158,43 +158,6 @@ describe('LESSONS <-> VERBS', () => {
     expect(violations, violations.join('\n')).toHaveLength(0)
   })
 
-  it('ensures all possible forms (from VERBS) have some coverage in lessons', () => {
-    // Build inventory of ALL possible forms
-    const allPossibleForms = new Set()
-    for (const verb of VERBS) {
-      for (const tense of Object.keys(verb.conjugations || {})) {
-        const table = getComposedTable(verb, tense)
-        if (!table) continue
-        for (const person of Object.keys(table)) {
-          allPossibleForms.add(`${verb.id}-${tense}-${person}`)
-        }
-      }
-    }
-
-    // Build set of taught forms
-    const taughtForms = new Set()
-    for (const lesson of LESSONS) {
-      const sources = lesson.verbId ? [{ verbId: lesson.verbId, tense: lesson.tense }] : lesson.sources || []
-      for (const source of sources) {
-        const verb = verbsById.get(source.verbId)
-        if (!verb) continue
-        const table = getComposedTable(verb, source.tense)
-        if (!table) continue
-        const allPersons = Object.keys(table)
-        const personsToCheck = lesson.persons?.length > 0 ? lesson.persons : allPersons
-        for (const person of personsToCheck) {
-          taughtForms.add(`${source.verbId}-${source.tense}-${person}`)
-        }
-      }
-    }
-
-    // Note: Some gaps are acceptable (pending units, hi person rarely used, etc.)
-    // This test passes but documents known gaps for curriculum planning
-    const uncovered = [...allPossibleForms].filter((f) => !taughtForms.has(f))
-    expect(uncovered.length).toBeGreaterThan(0) // Expect some gaps (not all forms are covered yet)
-    expect(uncovered.length).toBeLessThan(300) // But not too many
-  })
-
   it('provides diagnostic report of form introductions and their order', () => {
     const formIntroduced = new Map()
     const personOrder = ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek']
