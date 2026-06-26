@@ -8,6 +8,30 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #484: added `iraun`, extends Unit 46 alongside `ihardun`
+
+Added `iraun` ("to last / endure") as the second `agreement: ['nork']`-only
+verb, following #481's `ihardun` pattern exactly: same `di-`/`-en` di-root
+present/past shape, no `nor` slot, `persons` filter excluding `hi` from
+typed-fill-in lessons (neither verb has a `sentences` entry for that
+person, matching `ukan`/`jakin`'s own gap).
+
+`iraun` is now `ihardun`'s first real `agreementsCompatible` sibling (both
+`['nork']`-only), so checked explicitly via
+`scripts/validfor-delta-audit.mjs --verb iraun` whether the two verbs'
+sentence frames should cross-populate each other's `validFor`. They
+shouldn't: "Filmak bi ordu dirau" (the film runs two hours) isn't a frame
+"Lanean dihardut" (I'm busy working) could ever complete, and vice versa —
+different meanings, no shared object/time-extent slot. Left both verbs'
+`validFor` empty and regenerated the gap-audit baseline to absorb the new
+surface, same as #481 did.
+
+Extended Unit 46 ("Unergative Curiosities") to cover both verbs rather than
+giving `iraun` its own unit — it's the same grammatical curiosity
+(unergative, NORK-only) introduced by `ihardun`, just a second example, so
+a single unit covering the pattern with two verbs reads better than two
+near-identical one-verb units.
+
 ## 2026-06-26 — #481: added `ihardun`, the first `agreement: ['nork']`-only verb
 
 Added `ihardun` ("to occupy oneself / be engaged in something") as the first

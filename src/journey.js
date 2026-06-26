@@ -966,17 +966,17 @@ export const JOURNEY = [
         title: 'Stage 17 — Subjects Without Objects',
         units: [
           {
-            // #481: `ihardun` (unergative, NORK-only — ergative subject,
-            // no absolutive argument at all). Full present/past production
-            // lessons, unlike Unit 44's recognition-only scope — `ihardun`
-            // has no journey-documented "bonus, one example sentence" plan
-            // the way jario/etzan/irudi do.
+            // #481/#484: `ihardun`/`iraun` (unergative, NORK-only —
+            // ergative subject, no absolutive argument at all). Full
+            // present/past production lessons, unlike Unit 44's
+            // recognition-only scope — neither verb has a journey-documented
+            // "bonus, one example sentence" plan the way jario/etzan/irudi do.
             number: 46,
             title: 'Unergative Curiosities',
-            focus: 'ihardun (unergative, NORK-only, "dihardut"/"niharduen") — ergative subject, no absolutive argument',
-            payload: 'Lanean dihardut. · Zertan zihardugun?',
+            focus: 'ihardun ("dihardut"/"niharduen"), iraun ("dirau"/"zirauen") — unergative, NORK-only, ergative subject with no absolutive argument',
+            payload: 'Lanean dihardut. · Filmak bi ordu dirau.',
             status: 'available',
-            lessonIds: ['ihardun-present', 'ihardun-past', 'unit-46-review'],
+            lessonIds: ['ihardun-present', 'ihardun-past', 'iraun-present', 'iraun-past', 'unit-46-review'],
           },
         ],
       },
