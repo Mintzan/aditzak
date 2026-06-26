@@ -387,6 +387,37 @@ The four forks from §4, with their outcomes:
   a bus" and "waiting for a bus" share a plausible context but aren't the
   same true claim, so `galdu`/`itxaron` were deliberately left untagged
   despite surface plausibility).
+- **#458, resolved (2026-06-26):** backfilled `validFor` on batch 4 of the
+  `nor-nork` cluster — the 18 civic/causative/idiomatic-light-verb verbs
+  `gaitzetsi, aldarrikatu, plazaratu, sustatu, bultzatu, bermatu, babestu,
+  ziurtatu, borobildu, hitz-egin, lan-egin, lo-egin, ahaleginak-egin,
+  parte-hartu, kontuan-hartu, arreta-eman, itzularazi, dantzarazi`. The
+  9-verb civic/abstract-advocacy cluster fractured further than the issue's
+  own hint suggested: only two pairs held up on close reading of the actual
+  sentence text — `sustatu`/`bultzatu` ("promote/foster" vs. "push/drive
+  forward") cross-tag on 5 of 6 persons each tense, asymmetric (`bultzatu`'s
+  `ni` slot, "proiektu berria aurrera ___", is idiom-locked to "aurrera
+  bultzatu" and doesn't read naturally with "sustatu"), and
+  `bermatu`/`ziurtatu` ("guarantee" vs. "ensure/verify") cross-tag on 5 of 6
+  persons each tense, asymmetric the other direction (`bermatu`'s `gu` slot
+  and `ziurtatu`'s `hura`/`gu` slots are excluded — "bizikidetza auzoan"
+  reads as a guarantee, not a one-off verification, while `ziurtatu`'s "X
+  aldiz" [N times] slots are about repeated checking, not guaranteeing).
+  `gaitzetsi` (condemn), `aldarrikatu` (proclaim), `plazaratu` (make
+  public), `babestu` (protect — its ablative "-tik" "protect FROM X" frame
+  is structurally distinct from the others), and `borobildu` (round off)
+  confirmed no genuine sibling within this batch. The 7 idiomatic
+  light-verb constructions (`hitz-egin, lan-egin, lo-egin,
+  ahaleginak-egin, parte-hartu, kontuan-hartu, arreta-eman`) confirmed the
+  issue's own prediction — each is a fixed noun+`egin`/`hartu`/`eman` idiom
+  with an invariant object (or, for `arreta-eman`, a dative complement
+  incompatible with the others' bare-absolutive frame), leaving no free
+  object slot for a sibling to substitute into. The causative pair
+  `itzularazi`/`dantzarazi` ("make turn back"/"make dance") don't overlap
+  with each other (unrelated meanings) or with the corpus's existing
+  causatives `janarazi`/`idatzarazi`, which have a ditransitive
+  `nor-nori-nork` agreement signature incompatible with this pair's plain
+  `nor-nork` shape.
 - Remaining distractor work outside this strategy: **#213** (hi/hitanoa
   wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
   on native-speaker confirmation of #167's toka/noka data, not on engineering.
