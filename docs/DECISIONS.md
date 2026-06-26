@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #498/#501/#502: reopened — "ukan-nori" compound-key plan was based on a misread of `esan`'s entry
+
+#498 had decided to add `ukan`-nori/`ukan`-nori-nork forms as literal
+compound tense keys (`presentByNori`, `presentByNoriNork`, etc.) directly
+on `ukan`'s own `conjugations`, citing `esan`'s entry as an existing
+precedent for that shape. Checked `esan` directly: it has no such keys.
+It has `recipient: 'hura'` + `ditransitivePrefixes`, composed at runtime
+(`getFixedArgument`/`resolveObjectAxisTable`, `lessonLogic.js`) against
+the shared `OBJECT_AXIS_SKELETONS.diot` table — recorded once, reused by
+seven verbs (`esan`/`eman`/`saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`).
+The dative-only equivalent is `dativeIzan`/`dativeIzanByNor`, composed the
+same way into `gustatu`/`iruditu`/`ahaztu`/`jarraitu` (#448).
+
+Two separate problems, not one:
+1. **"ukan-nori" (dative, no ergative) isn't a real paradigm.** `ukan`
+   always carries an ergative subject; NORI-without-NORK is `izan`'s
+   dative (CONJUGATIONS.md §4), already covered by `dativeIzan`. #501's
+   cited "§3 — ukan-nori" doesn't exist; §3 is plain `ukan` NOR-NORK.
+2. **The ditransitive (NOR-NORI-NORK) forms #502 asks for already exist**
+   as `OBJECT_AXIS_SKELETONS.diot`. Writing them again as literal keys on
+   bare `ukan` would duplicate that table cell-for-cell, backing no
+   distinct lexical meaning `ukan` doesn't already express through the
+   verbs that compose against it.
+
+Reopened #498 with the correction; updated #501/#502 to recommend closing
+as superseded once #498 settles, rather than implementing either as
+originally written. No `verbs.js`/`lessonLogic.js` changes made — this is
+a paused-implementation correction, not a code change.
+
 ## 2026-06-26 — #494-497: `izan`/`ukan` past-subjunctive and hypothetical/past mood gaps sourced from CONJUGATIONS.md, not the issues' own example forms
 
 Issues #494-497 (children of the moods epic #487) asked for flat

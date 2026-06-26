@@ -399,6 +399,14 @@ other `hik`-row cell in either Subjuntiboa grid, which all split via
 Basque imperatives are largely restricted to absolutive-marking commands
 (§9), so a `NOR-NORK` imperative grid isn't given here.
 
+**No "ukan-nori" section exists here on purpose.** `ukan` always carries an
+ergative (`NORK`) subject — a dative axis *without* an ergative one isn't a
+form `ukan` takes; that's `izan`'s dative (§4 below). Add a `NORI` axis on
+top of `ukan`'s own `NORK` subject and you get the ditransitive `NOR-NORI-
+NORK` system (§5), not a third "ukan-nori" paradigm. (#498/#501/#502
+mis-cited this section for a dative-only `ukan` table that doesn't exist —
+see `docs/DECISIONS.md`'s 2026-06-26 entry on that correction.)
+
 ## 4. `izan` with dative — NOR-NORI system
 
 Used with intransitive verbs that take an indirect object — `gustatu`,
