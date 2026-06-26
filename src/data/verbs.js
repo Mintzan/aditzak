@@ -320,6 +320,52 @@ export const VERBS = [
         zuek: 'zaitezten',
         haiek: 'daitezen',
       },
+      // #494 — Subjuntiboa Lehenaldia, `izan`'s own NOR paradigm per
+      // CONJUGATIONS.md §2 ("Further moods"). `hi` omitted, matching
+      // `subjunctivePresent` above (the journey's hika deferral).
+      subjunctivePast: {
+        ni: 'nendin',
+        zu: 'zintezen',
+        hura: 'zedin',
+        gu: 'gintezen',
+        zuek: 'zintezten',
+        haiek: 'zitezen',
+      },
+      // #495 — Ondorioa Lehenaldia ("would have been"), per CONJUGATIONS.md
+      // §2's Ondorioa past table. `hi` included, matching `conditional`
+      // above (which also carries a `hi` form).
+      conditionalPast: {
+        ni: 'nintzatekeen',
+        hi: 'hintzatekeen',
+        zu: 'zinatekeen',
+        hura: 'zatekeen',
+        gu: 'ginatekeen',
+        zuek: 'zinateketen',
+        haiek: 'ziratekeen',
+      },
+      // #496 — Ahalera Alegiazkoa ("could be" — hypothetical potential),
+      // per CONJUGATIONS.md §2's Ahalera table. `hi` included, matching
+      // `potential` above.
+      potentialAlegiazkoa: {
+        ni: 'ninteke',
+        hi: 'hinteke',
+        zu: 'zintezke',
+        hura: 'liteke',
+        gu: 'gintezke',
+        zuek: 'zintezkete',
+        haiek: 'litezke',
+      },
+      // #497 — Ahalera Lehenaldia ("could have been"), per CONJUGATIONS.md
+      // §2's Ahalera past table. `hi` included, matching `potential` above.
+      potentialLehenaldia: {
+        ni: 'nintekeen',
+        hi: 'hintekeen',
+        zu: 'zintezkeen',
+        hura: 'zitekeen',
+        gu: 'gintezkeen',
+        zuek: 'zintezketen',
+        haiek: 'zitezkeen',
+      },
     },
     // Every variant here is a predicate-nominal/adjective frame ("Ni
     // irakaslea ___." = "I am a teacher", "Txakurra handia ___." = "The dog is
@@ -858,6 +904,51 @@ export const VERBS = [
         gu: 'dezagun',
         zuek: 'dezazuen',
         haiek: 'dezaten',
+      },
+      // #494 — Subjuntiboa Lehenaldia, `NOR` fixed at `hura` (object), `NORK`
+      // varying, per CONJUGATIONS.md §3's past-subjunctive grid. `hi`
+      // omitted, matching `subjunctivePresent` above.
+      subjunctivePast: {
+        ni: 'nezan',
+        zu: 'zenezan',
+        hura: 'zezan',
+        gu: 'genezan',
+        zuek: 'zenezaten',
+        haiek: 'zezaten',
+      },
+      // #495 — Ondorioa Lehenaldia ("would have [verb]ed it"), `NOR` fixed
+      // at `hura`. Cross-checked against `conditionalPastByObject`'s `hura`
+      // column above (`conditionalPastByObject.ni.hura === 'nukeen'`, etc.)
+      // — matches cell-for-cell.
+      conditionalPast: {
+        ni: 'nukeen',
+        zu: 'zenukeen',
+        hura: 'zukeen',
+        gu: 'genukeen',
+        zuek: 'zenuketen',
+        haiek: 'zuketen',
+      },
+      // #496 — Ahalera Alegiazkoa ("could [verb] it" — hypothetical), `NOR`
+      // fixed at `hura`. Cross-checked against `potentialAlegiazkoaByObject`'s
+      // `hura` column above — matches cell-for-cell.
+      potentialAlegiazkoa: {
+        ni: 'nezake',
+        zu: 'zenezake',
+        hura: 'lezake',
+        gu: 'genezake',
+        zuek: 'zenezakete',
+        haiek: 'lezakete',
+      },
+      // #497 — Ahalera Lehenaldia ("could have [verb]ed it"), `NOR` fixed at
+      // `hura`. Cross-checked against `potentialLehenaldiaByObject`'s `hura`
+      // column above — matches cell-for-cell.
+      potentialLehenaldia: {
+        ni: 'nezakeen',
+        zu: 'zenezakeen',
+        hura: 'zezakeen',
+        gu: 'genezakeen',
+        zuek: 'zenezaketen',
+        haiek: 'zezaketen',
       },
     },
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
@@ -8875,6 +8966,9 @@ export const TENSE_META = {
   // #369: the subjunctive (Unit 36) — `nadin`/`dezan`/`dakion`/`diezaiodan`-
   // type forms across NOR/NOR-NORK/NOR-NORI/NOR-NORI-NORK.
   subjunctivePresent: { labelKey: 'tenseSubjunctivePresent', basque: 'subjuntiboa' },
+  // #494-497: the moods epic's past-subjunctive sibling to `subjunctivePresent`
+  // above (`nendin`/`zezan`-type forms, CONJUGATIONS.md §2/§3).
+  subjunctivePast: { labelKey: 'tenseSubjunctivePast', basque: 'subjuntiboa, lehenaldia' },
   // #477: `etorri`'s NOR-NORI dative axis — unlike `presentByNor`/`pastByNor`
   // above (where NORI is the verb's *usual* varying axis and NOR is the new
   // one), here NOR is `etorri`'s usual axis (its plain `present`/`past`) and
