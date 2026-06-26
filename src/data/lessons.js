@@ -604,6 +604,10 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'presentPlural' },
       { verbId: 'bilatu', tense: 'presentPlural' },
       { verbId: 'saldu', tense: 'presentPlural' },
+      // #476 — `eraman`/`ekarri` gained `presentPlural` tables, folded into
+      // this pool the same way as `eduki`'s above.
+      { verbId: 'eraman', tense: 'presentPlural' },
+      { verbId: 'ekarri', tense: 'presentPlural' },
     ],
   },
   {
@@ -625,6 +629,8 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'presentPlural' },
       { verbId: 'bilatu', tense: 'presentPlural' },
       { verbId: 'saldu', tense: 'presentPlural' },
+      { verbId: 'eraman', tense: 'presentPlural' },
+      { verbId: 'ekarri', tense: 'presentPlural' },
     ],
   },
   // Unit 13 ("Looking Back I — The "ukan" Past Pool", Phase II) — `ukan`'s
@@ -795,6 +801,10 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'pastPlural' },
       { verbId: 'bilatu', tense: 'pastPlural' },
       { verbId: 'saldu', tense: 'pastPlural' },
+      // #476 — `eraman`/`ekarri` gained `pastPlural` tables, folded into
+      // this pool the same way as `eduki`'s above.
+      { verbId: 'eraman', tense: 'pastPlural' },
+      { verbId: 'ekarri', tense: 'pastPlural' },
     ],
   },
   {
@@ -816,6 +826,8 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'pastPlural' },
       { verbId: 'bilatu', tense: 'pastPlural' },
       { verbId: 'saldu', tense: 'pastPlural' },
+      { verbId: 'eraman', tense: 'pastPlural' },
+      { verbId: 'ekarri', tense: 'pastPlural' },
     ],
   },
   // Unit 14 ("Physical States & Possessions", Phase II) — `eduki` (nor-nork)
@@ -979,6 +991,10 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'futurePlural' },
       { verbId: 'bilatu', tense: 'futurePlural' },
       { verbId: 'saldu', tense: 'futurePlural' },
+      // #476 — `eraman`/`ekarri` gained `futurePlural` tables, folded into
+      // this pool the same way as `eduki`'s above.
+      { verbId: 'eraman', tense: 'futurePlural' },
+      { verbId: 'ekarri', tense: 'futurePlural' },
     ],
   },
   {
@@ -1001,6 +1017,8 @@ export const LESSONS = [
       { verbId: 'utzi', tense: 'futurePlural' },
       { verbId: 'bilatu', tense: 'futurePlural' },
       { verbId: 'saldu', tense: 'futurePlural' },
+      { verbId: 'eraman', tense: 'futurePlural' },
+      { verbId: 'ekarri', tense: 'futurePlural' },
     ],
   },
   // #423 — the rule is already learned, so every other fodder verb with a
