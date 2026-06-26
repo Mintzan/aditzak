@@ -1080,6 +1080,132 @@ The same `-zki-` infix as Orainaldia/Lehenaldia, applied to the forms above:
 | zuei | niezazkizueke | *(hika/zuka)* | liezazkizueke | geniezazkizueke | *(zu↔zuek)* | *(refl.)* | liezazkizuekete |
 | haiei | niezazkieke | hiezazkieke | liezazkieke | geniezazkieke | zeniezazkieke | zeniezazkiekete | liezazkiekete |
 
+### Subjuntiboa, Orainaldia (Present subjunctive), ditransitive
+
+Derived from §5's `Ahalera, Orainaldia` ditransitive grid by dropping the conditional **-ke-** and closing with the `Subjuntiboa` suffix family (`-dan`, `-aan`/`-anan`, `-n`, `-gun`, `-zun`, `-zuen`, `-ten`) instead of `-ke` + the `Ahalera` suffix. See §16.1 for the grammatical context (purpose clauses, volitional contexts, indirect commands).
+
+All NORI recipients (niri, hari, guri, zuri, zuei, haiei) are tabulated with both singular and plural NOR forms.
+
+#### NORI = niri ("...so that [NORK] may give [NOR] to me")
+
+| NORK ↓ | Singular NOR (hura) | Plural NOR (haiek, -zki-) |
+|---|---|---|
+| nik | *(refl.)* | *(refl.)* |
+| hik | diezada**an** / diezada**nan** *(masc./fem.)* | diezazkida**an** / diezazkida**nan** |
+| hark | diezada**n** | diezazkida**n** |
+| guk | diezada**gun** | diezazkida**gun** |
+| zuk | diezada**zun** | diezazkida**zun** |
+| zuek | diezada**zuen** | diezazkida**zuen** |
+| haiek | diezada**ten** | diezazkida**ten** |
+
+#### NORI = hari ("...so that [NORK] may give [NOR] to him/her")
+
+| NORK ↓ | Singular NOR (hura) | Plural NOR (haiek, -zki-) |
+|---|---|---|
+| nik | diezaio**dan** | diezazkio**dan** |
+| hik | diezaio**an** / diezaio**nan** *(masc./fem.)* | diezazkio**an** / diezazkio**nan** |
+| hark | diezaio**n** | diezazkio**n** |
+| guk | diezaio**gun** | diezazkio**gun** |
+| zuk | diezaio**zun** | diezazkio**zun** |
+| zuek | diezaio**zuen** | diezazkio**zuen** |
+| haiek | diezaio**ten** | diezazkio**ten** |
+
+#### NORI = guri ("...so that [NORK] may give [NOR] to us")
+
+| NORK ↓ | Singular NOR (hura) | Plural NOR (haiek, -zki-) |
+|---|---|---|
+| nik | *(refl.)* | *(refl.)* |
+| hik | diezagu**an** / diezagu**nan** *(masc./fem.)* | diezazkigu**an** / diezazkigu**nan** |
+| hark | diezagu**n** | diezazkigu**n** |
+| guk | *(refl.)* | *(refl.)* |
+| zuk | diezagu**zun** | diezazkigu**zun** |
+| zuek | diezagu**zuen** | diezazkigu**zuen** |
+| haiek | diezagu**ten** | diezazkigu**ten** |
+
+#### NORI = zuri ("...so that [NORK] may give [NOR] to you")
+
+| NORK ↓ | Singular NOR (hura) | Plural NOR (haiek, -zki-) |
+|---|---|---|
+| nik | diezazu**dan** | diezazkizu**dan** |
+| hik | *(hika/zuka)* | *(hika/zuka)* |
+| hark | diezazu**n** | diezazkizu**n** |
+| guk | diezazu**gun** | diezazkizu**gun** |
+| zuk | *(refl.)* | *(refl.)* |
+| zuek | *(zu↔zuek)* | *(zu↔zuek)* |
+| haiek | diezazu**ten** | diezazkizu**ten** |
+
+#### NORI = zuei ("...so that [NORK] may give [NOR] to you all")
+
+| NORK ↓ | Singular NOR (hura) | Plural NOR (haiek, -zki-) |
+|---|---|---|
+| nik | diezazue**dan** | diezazkizue**dan** |
+| hik | *(hika/zuka)* | *(hika/zuka)* |
+| hark | diezazue**n** | diezazkizue**n** |
+| guk | diezazue**gun** | diezazkizue**gun** |
+| zuk | *(zu↔zuek)* | *(zu↔zuek)* |
+| zuek | *(refl.)* | *(refl.)* |
+| haiek | diezazue**ten** | diezazkizue**ten** |
+
+#### NORI = haiei ("...so that [NORK] may give [NOR] to them")
+
+| NORK ↓ | Singular NOR (hura) | Plural NOR (haiek, -zki-) |
+|---|---|---|
+| nik | diezaie**dan** | diezazkie**dan** |
+| hik | diezaie**an** / diezaie**nan** *(masc./fem.)* | diezazkie**an** / diezazkie**nan** |
+| hark | diezaie**n** | diezazkie**n** |
+| guk | diezaie**gun** | diezazkie**gun** |
+| zuk | diezaie**zun** | diezazkie**zun** |
+| zuek | diezaie**zuen** | diezazkie**zuen** |
+| haiek | diezaie**ten** | diezazkie**ten** |
+
+*Adibideak:* `Eskertuko nuke norbaitek dirua itzul diezadan` ("I'd be grateful if someone gave the money back to me" — niri/haiek); `Nahi dut zuk argazkiak erakuts diezazkidazun` ("I want you to show me the photos" — niri/zuk, NOR=haiek); `Irakasleak eskatu zidan liburua ikasleari eman diezaiodan` ("The teacher asked me to give the book to the student" — hari/nik).
+
+**Lehenaldia (Past) note:** A synthetic `NOR-NORI-NORK` subjunctive past is morphologically derivable from the Ahalera-Lehenaldia grid by the same drop-`-ke-` transformation, but forms this far down the ditransitive paradigm are vanishingly rare even in formal/literary registers — real usage reaches for a periphrastic alternative (`eman ahal izan banio...`) well before this point. Not tabulated, per this document's standing policy of an honest gap over an unverifiable form (cf. `etzan`, `ikusi`/`entzun` in §§7–8).
+
+### Agintera (Imperative), ditransitive
+
+The ditransitive imperative (2nd/3rd person addressee) is formed from the subjunctive root with the leading `d-` dropped — `diezaiozu` → `iezaiozu`. The reciprocal relationship parallels the singular-object case: `dezazu` ("do it!") vs. `diezaiozu` ("give it to him!"), both dropping the `d-`.
+
+#### Singular object — addressee is `zuk` or `zuek`
+
+| NORI ↓ | NORK = zuk ("you") | NORK = zuek ("you all") |
+|---|---|---|
+| niri | iezada**zu** | iezada**zue** |
+| hari | iezaio**zu** | iezaio**zue** |
+| guri | iezagu**zu** | iezagu**zue** |
+| haiei | iezaie**zu** | iezaie**zue** |
+
+#### Singular object — addressee is `hik` or `haiek`
+
+| NORI ↓ | NORK = hik (masc./fem.) | NORK = haiek ("them", jussive) |
+|---|---|---|
+| niri | iezada**k** / iezada**n** | *(only if NOR=haiek)* |
+| hari | iezaio**k** / iezaio**n** | *(only if NOR=haiek)* |
+| guri | iezagu**k** / iezagu**n** | *(only if NOR=haiek)* |
+| haiei | iezaie**k** / iezaie**n** | *(only if NOR=haiek)* |
+
+Note: For 3rd-person `haiek`-as-addressee (jussive), these forms are restricted to narratives and formal/biblical contexts; modern colloquial Basque prefers periphrastic `bedi`/`bitez` alternatives.
+
+#### Plural object — addressee is `zuk` or `zuek` (adds `-zki-` infix)
+
+| NORI ↓ | NORK = zuk ("you") | NORK = zuek ("you all") |
+|---|---|---|
+| niri | iezazkida**zu** | iezazkida**zue** |
+| hari | iezazkio**zu** | iezazkio**zue** |
+| guri | iezazkigu**zu** | iezazkigu**zue** |
+| haiei | iezazkie**zu** | iezazkie**zue** |
+
+#### Plural object — addressee is `hik` or `haiek` (adds `-zki-` infix)
+
+| NORI ↓ | NORK = hik (masc./fem.) | NORK = haiek ("them", jussive) |
+|---|---|---|
+| niri | iezazkida**k** / iezazkida**n** | *(only if NOR=haiek)* |
+| hari | iezazkio**k** / iezazkio**n** | *(only if NOR=haiek)* |
+| guri | iezazkigu**k** / iezazkigu**n** | *(only if NOR=haiek)* |
+| haiei | iezazkie**k** / iezazkie**n** | *(only if NOR=haiek)* |
+
+*Adibideak:* `Eman iezadazu liburua` ("Give me the book") — one of the most common imperative constructions in everyday Basque; `Eska iezaiozu barkamena` ("Ask him/her for forgiveness"); `Eman iezazkidazue argazkiak` ("Give me the photos" — plural object, zuek addressee).
+
 ### `NOR` = 1st/2nd person
 
 A `NOR` = 1st/2nd person ditransitive ("he gives *me* to him", "you say *me*

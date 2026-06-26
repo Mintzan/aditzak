@@ -6,6 +6,30 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-26 — Added Subjuntiboa and Agintera (Imperative) NOR-NORI-NORK tables to §5
+
+User requested audit of §5's completeness: all six NOR-NORI-NORK tenses
+should have full conjugation tables. Found that Subjuntiboa (Present and
+Past) and Agintera (Imperative) were documented in §16.1–16.2 but not yet
+tabulated in §5's main grid-reference section. Added:
+- **Subjuntiboa, Orainaldia (Present subjunctive)**: Six NORI recipient rows
+  (niri, hari, guri, zuri, zuei, haiei) with both singular and plural NOR
+  forms, following the drop-`-ke-` + `-n`-suffix-family rule from §16.1.
+  All person-category restrictions (*(refl.)*,  *(hika/zuka)*, *(zu↔zuek)*)
+  preserved from the existing Ahalera grid. Added sample usage examples.
+- **Subjuntiboa, Lehenaldia (Past subjunctive)**: Not tabulated. Documented
+  the policy (mirroring §16.1) that synthetic past forms this far down the
+  ditransitive paradigm are vanishingly rare/unverifiable; real usage favours
+  periphrastic alternatives (`eman ahal izan banio...`).
+- **Agintera (Imperative), ditransitive**: Four sub-tables covering all
+  combinations of addressees (zuk, zuek, hik, haiek) and object numbers
+  (singular, plural with `-zki-`), with NORI recipients (niri, hari, guri,
+  haiei). Noted that jussive 3rd-person forms are restricted to narrative/
+  formal contexts; modern colloquial favours periphrastic `bedi`/`bitez`.
+
+All tabulated forms already documented in §16 — this was a cross-file
+reorganization for completeness in §5's reference layout.
+
 ## 2026-06-26 — Added `etorri` NOR-NORI (dative) present+past tables
 
 User asked to verify whether `natorkio` (etorri + dative, to him/her) and
