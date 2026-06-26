@@ -1155,6 +1155,29 @@ auxiliaries per §11's periphrastic matrix.
 | zuek | zatozte | zentozten |
 | haiek | datoz | zetozen |
 
+#### `etorri` — NOR-NORI dative axis
+
+`(zki)` marks the plural-`NOR` alternant — e.g. `niri` reads as **natorkít** (singular `nor`) / **natorkízkit** (plural `nor`):
+
+| NORI | Present (oraina) | Past (lehenaldia) |
+|---|---|---|
+| niri | natorki(zki)t | nentorr-ki(zki)dan |
+| hiri | hatorki(zki)k/n *(masc./fem.)* | hentorr-ki(zki)(n)an *(masc./fem.)* |
+| hari | datorki(zki)o | zetorr-ki(zki)on |
+| guri | gatoski(zki)gu | gentoz-ki(zki)gun |
+| zuri | zatoski(zki)zu | zentoz-ki(zki)zun |
+| zuei | zatozki(zki)zue | zentoz-ki(zki)zuen |
+| haiei | datoski(zki)e | zetoz-ki(zki)en |
+
+The present-tense singular-`NOR` forms (natorkít, datorkit, zatorkit, etc.) are
+attested in contemporary standard Batua (e.g., "Argia datorkit" / light comes to
+me). Past tense (imperfective: zetorkidan, zetorkion, etc.) is likewise attested,
+commonly appearing in the idiom "burura/gogora etorri" (to come to mind).
+
+Plural-`NOR` forms and deeper moods (baldintza, ondorioa, ahalera, subjuntiboa)
+are pattern-derivable via the standard dative formation rule but unconfirmed in
+attested usage, so they are omitted here pending native-speaker verification.
+
 ### `ibili` — "to walk around / be (in the process of) doing"
 
 | Person | Present | Past |

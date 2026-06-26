@@ -6,6 +6,29 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-26 — Added `etorri` NOR-NORI (dative) present+past tables
+
+User asked to verify whether `natorkio` (etorri + dative, to him/her) and
+related forms exist in standard Basque. Web research confirmed:
+- **Present singular-NOR forms** (natorkít, datorkit, zatorkit, etc.):
+  attested in contemporary standard Batua, including in song titles and
+  idiomatic use.
+- **Past singular-NOR forms** (zetorkidan, zetorkion, etc.): attested via
+  the idiom "burura/gogora etorri" (to come to mind), a living feature of
+  standard speech.
+- **Plural-NOR and mood forms** (potential -ke, conditional baldintza/
+  ondorioa): derivable via the standard rule (NOR-prefix + stem + `-ki-` +
+  NORI-suffix) but not independently attested in available sources. `WebFetch`
+  failed on all conjugation-table URLs (ZUZEU, Wiktionary); `WebSearch`
+  returned only single-form hits, not complete paradigms.
+
+Decision: added NOR-NORI present/past tables to CONJUGATIONS.md §6's etorri
+subsection (new subheading), documenting the confirmed singular-NOR forms
+and noting that plural-NOR and moods are omitted pending native-speaker
+verification. App data (`verbs.js`) left unchanged — extending `etorri`'s
+`agreement` to include `'nori'` and wiring dative conjugations into lessons
+is a separate scope, tracked separately (if needed).
+
 ## 2026-06-26 — Added `eraman`/`ekarri` plural-object forms (`zenekartzan` etc.)
 
 `eraman` and `ekarri` were the last two `nor-nork` synthetic verbs in
