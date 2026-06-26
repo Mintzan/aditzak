@@ -632,8 +632,8 @@ family, no trailing `-n`) is the same formula run one more time:
 
 ## 5. `ukan` with dative — NOR-NORI-NORK system
 
-Used with ditransitive verbs — `eman` ("to give") and similar three-argument
-predicates.
+The auxiliary `ukan` conjugated with dative agreement marks three-argument
+predicates (absolutive, dative, ergative).
 The full picture has three dimensions (`NOR`/`NORI`/`NORK`); flattened here
 into a `NORI` (indirect object, rows) × `NORK` (subject, columns) grid per
 `NOR` value. Two `NOR` values are covered: `hura` (singular object — "give
