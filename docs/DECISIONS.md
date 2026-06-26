@@ -8,6 +8,36 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #478: `jakin`'s plural-object forms join the existing review pools (not dedicated lessons), after closing its `present`/`presentPlural` gu/zuek/haiek gap
+
+Issue #478 literally asked for dedicated `jakin-present-plural`/
+`jakin-past-plural` lessons wired into the journey. Asked the user, who
+chose to follow the established precedent instead: every other NOR-NORK
+verb's object-plural forms (`ukan`, `eduki`, `eraman`/`ekarri` per #476,
+etc.) are pool-only — no dedicated lesson, just sources in
+`nor-nork-present-plural-pool`/`nor-nork-past-plural-pool` (and their
+`-plural`-suffixed PHASE_1_PLURAL_PERSONS siblings). `jakin` now follows
+the same pattern instead of being a one-off exception.
+
+This surfaced a real, pre-existing data gap blocking that: `jakin`'s
+`presentPlural` table only covered `ni`/`zu`/`hura` (`gu`/`zuek`/`haiek`
+were missing from `present` itself too), which is exactly why
+`nor-nork-past-plural-pool`'s old comment had explicitly left `jakin` out.
+`docs/CONJUGATIONS.md` §7 already documented the missing `present` cells
+(`dakigu`/`dakizue`/`dakite`, #245-sourced) — they just hadn't been ported
+into `verbs.js`. Asked the user whether to treat that as in-scope; chose to
+close it now rather than ship another half-integrated table. Ported both
+`present`'s and `presentPlural`'s missing cells from the documented grid
+(not new speculation), which is what let `jakin` join all four plural
+pools (present and past, both person-range variants) instead of just the
+present-side ones.
+
+Regenerated `scripts/validfor-gap-baseline.json` — the 225-slot increase
+for `jakin` is purely from the newly-populated `gu`/`zuek`/`haiek` cells
+becoming checkable against other hosts' sentences for the first time;
+reviewed via `validfor-delta-audit.mjs --verb jakin` and none are natural
+completions, so no `validFor` additions.
+
 ## 2026-06-26 — #477: `etorri`'s NOR-NORI dative forms get `presentByNori`/`pastByNori` tables, folded into the existing `nor-nori-*-pool` reviews
 
 Added `etorri`'s confirmed dative forms (`docs/LANGUAGE_DECISIONS.md`'s

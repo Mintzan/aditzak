@@ -1388,12 +1388,12 @@ The plural-object (`-zki-`) column was added per #287, derived by analogy
 from this same `daki-`/`zeki-` stem's attested `-zki-` infix in the
 NOR-NORI subjunctive grid below (`dakidan`→`dakizkidan`,
 `zekidan`→`zekizkidan`) — the infix lands in the same position (right
-before the person suffix) in both paradigms. `VERBS`' `jakin.conjugations`
-only tabulates `presentPlural` for the persons `present` itself already
-has (`ni`/`zu`/`hura`/`hi-m`/`hi-f`) — `present` is missing `guk`/`zuek`/
-`haiek` cells in the data despite them being documented here; that gap
-predates #287 and is left untouched. Like #284's plural-object forms,
-these are grid-derived, not independently speaker-confirmed.
+before the person suffix) in both paradigms. Like #284's plural-object
+forms, these are grid-derived, not independently speaker-confirmed.
+`VERBS`' `jakin.conjugations` originally only tabulated `present`/
+`presentPlural` for `ni`/`zu`/`hura`/`hi-m`/`hi-f` — `guk`/`zuek`/`haiek`
+were documented in this grid but missing from the data. #478 ported them
+into both tables (`dakigu`/`dakizue`/`dakite` and their `-zki-` siblings).
 
 ### `ekarri` — "to bring" — nor-nork
 
