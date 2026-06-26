@@ -44,20 +44,18 @@ Marks both direct and indirect objects in a single conjugation:
 
 ## Synthetic Verb (Aditz Trinkoak) Coverage
 
-All 12 defined synthetic verbs are represented in the curriculum:
-- **izan** - 13 tenses
-- **eduki** - 6 tenses
-- **ukan** - 22 tenses
-- **joan** - 6 tenses
-- **etorri** - 7 tenses
-- **ibili** - 4 tenses
-- **egon** - 4 tenses
-- **ados-egon** - 3 tenses
-- **jakin** - 5 tenses (with minor gaps in plural forms)
-- **jario** - 2 tenses
-- Plus 2 motion verbs
+All 12 defined synthetic verbs are represented in the curriculum.
 
-**Overall Coverage:** 76/78 tenses (97.4%)
+**Analysis focuses on base tenses** (present, past, presentPlural, pastPlural) because:
+- Future is periphrastic: participle + auxiliary (not a synthetic base tense)
+- Moods (conditional, potential, imperative) derive from present/past
+- Only base tenses represent core temporal systems
+
+**Base Tense Coverage:** 11/12 verbs complete
+- **Complete:** ekarri, eraman, jario (all base tenses taught)
+- **Incomplete:** jakin (missing presentPlural, pastPlural)
+
+All other verbs (izan, eduki, ukan, joan, etorri, ibili, egon, ados-egon) have their base tenses fully represented in curriculum.
 
 See `src/analyzeTrinkokLaguntzaileak.js` for detailed breakdown.
 
@@ -116,12 +114,17 @@ This design avoids storing redundant conjugations while maintaining complete cov
 
 ## Validation
 
-`src/findMissingConjugations.js` validates that:
-1. All conjugations used in lessons are properly defined
-2. Synthetic composition mechanisms are functioning correctly
-3. Skeleton-based generation is complete
+Two scripts validate coverage:
 
-Result: **0 missing conjugations** across all 3,996 forms used.
+1. **`src/findMissingConjugations.js`** - Form-level validation
+   - Confirms all 3,996 conjugations used in lessons are properly defined
+   - Accounts for synthetic composition from prefixes + skeletons
+   - Result: **0 missing conjugations**
+
+2. **`src/analyzeTrinkokLaguntzaileak.js`** - Grammar-system validation
+   - Verifies all 12 synthetic verbs have base tenses represented
+   - Verifies all auxiliary verb systems fully covered
+   - Reports jakin as only verb missing some base tenses (presentPlural, pastPlural)
 
 ## Evolution of Understanding
 
