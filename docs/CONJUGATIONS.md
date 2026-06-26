@@ -1270,6 +1270,40 @@ auxiliaries per §11's periphrastic matrix.
 | zuek | zoazte | zindoazten |
 | haiek | doaz | zihoazen |
 
+#### `joan` — NOR-NORI dative axis
+
+| Nor (subject) | Nori (recipient) | Present | Past | Common spoken meaning |
+|---|---|---|---|---|
+| hura | niri | doakit | — | "Denbora doakit" — time flies for me |
+| hura | zuri | doakizu | — | "Hori zuri doakizu" — that applies to you |
+| hura | guri | doakigu | — | "Biziak doakigu" — life goes on for us |
+| haiek | niri | doazkit | — | "Gauzak gaizki doazkit" — things are going badly for me |
+| haiek | zuri | doazkizu | — | "Galtza horiek ondo doazkizu" — those pants suit you |
+| ni | zuri | noakizu | — | "Zuregana noakizu" — I'm heading your way |
+| ni | hari | noakio | — | "Laguntzera noakio" — I'm going to help him/her |
+| gu | zuri | goazkizu | — | "Zuregana goazkizu" — we're heading your way |
+| gu | zuei | goazkizue | — | "Zuengana goazkizue" — we're heading toward you all |
+
+Unlike `etorri` (single NOR, `hura`, varying only NORI), `joan`'s dative
+varies on *both* axes — `haiek` takes the plural-subject `-oaz(k)-` infix
+(cf. `doa`→`doaz` in the plain paradigm) the same way `etorri`'s `datoz`
+would take `-tzk-` if its own plural-NOR dative were attested. All present
+forms above are confirmed via ordinary spoken usage/idiom (not just one
+or two song/idiom citations, unlike `etorri`'s dative — these are
+described as "very common"/"common" in everyday speech).
+
+**Past forms are not yet confirmed.** A first attempt derived them from
+`joan`'s own past stems (`nindoan`/`gindoazen` for `ni`/`gu`; `zihoan`/
+`zihoazen`, with an `h`, for `hura`/`haiek` — see the plain paradigm
+above) + the same `-ki-`/`-zki-` dative infix, but the `hura`→`niri` cell
+alone produced contradictory guesses (`zindoakidan`, `zioakit`, `zhoakit`,
+`zioakidan` were all proposed and rejected in turn), and the rest were
+supplied without the `h` that `joan`'s own past paradigm would predict for
+`hura`/`haiek` (i.e. `zioakizun`/`zioakigun`/`zioazkidan`/`zioazkizun`
+rather than the expected `zihoakizun`/`zihoakigun`/`zihoazkidan`/
+`zihoazkizun`). Given the inconsistency, no past dative form is tabulated
+here pending native-speaker confirmation.
+
 ### `etorri` — "to come"
 
 | Person | Present | Past |
@@ -1287,15 +1321,23 @@ auxiliaries per §11's periphrastic matrix.
 | NORI | Present (oraina) | Past (lehenaldia) |
 |---|---|---|
 | niri | datorkit | zetorkidan |
+| zuri | datorkizu | — |
+| guri | datorkigu | — |
 | hari | — | zetorkion |
 
-Only `niri` (to me) and `hari` (to him/her) recipients have confirmed attested
-forms: `datorkit` appears in the song "Argia datorkit" (light comes to me);
-`zetorkidan`/`zetorkion` are confirmed via the idiom "burura/gogora etorri"
-(to come to mind, literally "come to mind/head"). Singular-`NOR` forms only
-— no plural-`NOR` derivation is possible without further evidence. Remaining
-NORI persons (`guri`, `zuri`, `zuei`, `haiei`) and all moods
-(baldintza, ondorioa, ahalera, subjuntiboa) are unattested.
+`niri`, `zuri`, and `guri` (present) have confirmed attested forms:
+`datorkit` appears in the song "Argia datorkit" (light comes to me);
+`datorkizu`/`datorkigu` are confirmed via ordinary native usage ("Zer
+datorkizu burura?", "Gure aldetik datorkizu laguntza", "Uda datorkigu",
+"Zoritxarra datorkigu gainera") — the same "burura etorri" idiom family
+already cited for `niri`/`hari` below, just with different recipients.
+`zetorkidan`/`zetorkion` (past) are confirmed via the idiom "burura/gogora
+etorri" (to come to mind, literally "come to mind/head"); past forms for
+`zuri`/`guri` (`zetorkizun`/`zetorkigun`?) are plausible by the same pattern
+but not yet independently sourced. Singular-`NOR` forms only — no
+plural-`NOR` derivation is possible without further evidence. Remaining
+NORI persons (`hari` present, `zuei`, `haiei`) and all moods (baldintza,
+ondorioa, ahalera, subjuntiboa) are unattested.
 
 ### `ibili` — "to walk around / be (in the process of) doing"
 

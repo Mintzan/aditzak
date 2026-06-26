@@ -6,6 +6,43 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-06-26 — Added `joan` NOR-NORI dative (present only); past forms rejected as unreliable
+
+User supplied a 2D NOR-NORI dative paradigm for `joan` ("[subject] goes/
+applies/suits to [recipient]" — common for fit/suitability/figurative
+motion: "Hori zuri doakizu", "Galtza horiek ondo doazkizu"). Added the
+present-tense cells with real example sentences as `joan.conjugations
+.presentByNor` in `verbs.js` and a new NOR-NORI subsection in
+CONJUGATIONS.md §6.
+
+Declined to add the supplied past-tense forms: deriving them from `joan`'s
+own already-documented past stems (`zihoan`/`zihoazen` for `hura`/`haiek`,
+with an `h`; `nindoan`/`gindoazen` for `ni`/`gu`, without) should be
+mechanical, but the `hura`→`niri` cell alone went through four mutually
+contradictory guesses in the source material, and the remaining `hura`/
+`haiek` cells were given without the `h` the existing paradigm predicts.
+No past dative form added pending native-speaker confirmation — don't
+backfill these by analogy without checking, since the one cell that *was*
+checked against the analogy turned out unreliable.
+
+## 2026-06-26 — Corrected `etorri` NOR-NORI dative: `zuri`/`guri` present are attested, not just `niri`/`hari`
+
+A prior audit pass (and the GitHub issue tracking it, #499) asserted only
+`niri`/`hari` recipients have confirmed forms for `etorri`'s dative
+("comes to [recipient]") paradigm, with `zuri`/`guri`/`zuei`/`haiei`
+unattested. That was wrong for two of the four: native-speaker-supplied
+examples confirm `datorkizu` ("Zer datorkizu burura?", "Gure aldetik
+datorkizu laguntza") and `datorkigu` ("Uda datorkigu", "Zoritxarra
+datorkigu gainera") as ordinary, productive usage — the same `burura
+etorri` idiom family already cited for `niri`/`hari`, just different
+recipients. Updated CONJUGATIONS.md §6 and added `presentByNori: { ni, zu,
+gu }` to `etorri` in `verbs.js`. Past forms for `zuri`/`guri`
+(`zetorkizun`/`zetorkigun`?) were not supplied with evidence and are left
+unattested pending sourcing — do not assume the same correction applies to
+past without checking. `zuei`/`haiei` and `hari`-present remain genuinely
+unattested as far as this correction goes; don't extend this fix to them
+without independent evidence either.
+
 ## 2026-06-26 — Added Subjuntiboa and Agintera (Imperative) NOR-NORI-NORK tables to §5
 
 User requested audit of §5's completeness: all six NOR-NORI-NORK tenses

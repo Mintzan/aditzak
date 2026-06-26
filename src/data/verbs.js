@@ -1726,6 +1726,31 @@ export const VERBS = [
       // Radical/Bare-Stem rule's `joan bedi`, out of scope for #368 — see
       // docs/DECISIONS.md).
       imperative: { hi: 'hoa', zu: 'zoaz', zuek: 'zoazte' },
+      // NOR-NORI dative axis (cf. `etorri.conjugations.presentByNori` above)
+      // — "[subject] goes/applies/suits to [recipient]", very common in
+      // spoken Basque for fit/suitability/figurative motion ("Hori zuri
+      // doakizu", "Galtza horiek ondo doazkizu"). Unlike `etorri`, both NOR
+      // and NORI vary here, so this is a literal 2D table (outer = NOR,
+      // inner = NORI), same shape as `dativeIzanByNor` above but not
+      // composed through it — `joan`'s dative is its own synthetic `-oa(k)-`
+      // /`-oaz(k)-` paradigm, not periphrastic. Only cells with a real
+      // attested example are filled in (e.g. "Denbora doakit", "Zuregana
+      // noakizu", "Laguntzera noakio", "Gauzak gaizki doazkit", "Galtza
+      // horiek ondo doazkizu", "Zuregana goazkizu", "Zuengana goazkizue").
+      // Past forms are NOT included — no attested example sentences were
+      // supplied, and deriving them by analogy to `imperfectivePast`
+      // (`zihoan`/`zihoazen` for hura/haiek, with an `h`; `nindoan`/
+      // `gindoazen` for ni/gu, without) turned out to be unreliable: the
+      // hura→niri cell alone produced several different mutually
+      // inconsistent guesses before being abandoned. Needs native-speaker
+      // confirmation before any past dative form is added — see
+      // docs/LANGUAGE_DECISIONS.md.
+      presentByNor: {
+        hura: { ni: 'doakit', zu: 'doakizu', gu: 'doakigu' },
+        haiek: { ni: 'doazkit', zu: 'doazkizu' },
+        ni: { zu: 'noakizu', hura: 'noakio' },
+        gu: { zu: 'goazkizu', zuek: 'goazkizue' },
+      },
     },
     // Every variant here is an allative `-ra` frame ("Ni hondartzara ___." =
     // "I go to the beach"). `etorri`'s same-person form ("Ni hondartzara
@@ -1935,11 +1960,14 @@ export const VERBS = [
       // #477: NOR-NORI dative axis (`docs/CONJUGATIONS.md` §6) — irregular
       // synthetic forms, not decomposable into a prefix+skeleton like the
       // periphrastic dative verbs (gustatu etc.), so written literally.
-      // Only `niri`/`hari` are attested and only for these tenses: `datorkit`
-      // ("Argia datorkit") for present, `zetorkidan`/`zetorkion` (the
-      // "burura/gogora etorri" idiom) for past. No plural-NORI or other-mood
-      // forms are attested — do not extrapolate them.
-      presentByNori: { ni: 'datorkit' },
+      // `ni`/`zu`/`gu` confirmed attested (`datorkit`: song "Argia datorkit";
+      // `datorkizu`/`datorkigu`: native usage, e.g. "Zer datorkizu burura?",
+      // "Uda datorkigu") — `hi`/`hura`/`zuek`/`haiek` remain unconfirmed, see
+      // docs/LANGUAGE_DECISIONS.md. Past: only `ni`/`hura` confirmed so far,
+      // via the "burura/gogora etorri" idiom (#499) — `zu`/`gu` past forms
+      // not yet sourced. No plural-NORI or other-mood forms are attested —
+      // do not extrapolate them.
+      presentByNori: { ni: 'datorkit', zu: 'datorkizu', gu: 'datorkigu' },
       pastByNori: { ni: 'zetorkidan', hura: 'zetorkion' },
     },
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
