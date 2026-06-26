@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-26 — #469: collapsed Unit 27's 36 single-verb NOR-NORI object-axis lessons into its 12 pooled reviews
+
+#441 widened Unit 27's `gustatu`/`iruditu`/`ahaztu` NOR-NORI object-axis pool
+to include `jarraitu` and added a pooled cross-verb review per fixed NORI
+value (zu/ni/hura/gu/zuek/haiek × present/past = 12 reviews), but left the
+original 36 single-verb lessons in place instead of removing them, so the
+unit grew to 48 lessons instead of shrinking. Since the 12 reviews already
+draw from all four verbs and cover every person/tense combination the
+single-verb lessons drilled, the single-verb lessons became pure
+redundancy — the same situation #445 and #446 fixed for Units 33 and 32's
+mood-axis pools (54 → 18). Collapsed Unit 27 the same way: deleted the 36
+single-verb lessons from `lessons.js`, kept the 12 pooled reviews, and
+updated `journey.js`'s Unit 27 `lessonIds`/`focus` and the
+`LEARNING_JOURNEY.md` table row to match (`journeyTranslations.js`'s Unit 27
+copy already described the pool generically with no lesson count, so it
+needed no change). Took the issue's default full collapse (48 → 12) over its
+optional ~15-lesson "keep the founding `zu`-anchors" alternative, for
+consistency with how 32/33 were collapsed.
+
 ## 2026-06-25 — #448: extended `getComposedTable` to NOR-NORI flat/`byNor` and ditransitive NOR-NORI-NORK
 
 Closed out #436's deferred scope: the NOR-NORI flat `present`/`past`/`future`
