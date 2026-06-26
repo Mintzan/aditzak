@@ -6796,21 +6796,27 @@ export const VERBS = [
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
+      // #458: `sustatu`/`bultzatu` ("promote/foster" vs "push/drive forward")
+      // are near-synonyms here — "kirola/bertako produktua/parte-hartzea/
+      // elkartasuna bultzatu" reads as naturally as "...sustatu" for each of
+      // these civic objects, so every slot gets `bultzatu` added. Not fully
+      // mutual: see `bultzatu`'s own sentences for why its `ni` slot
+      // ("proiektu berria aurrera ___") doesn't get `sustatu` back.
       present: {
-        ni: { text: 'Nik kirola eskolan ___.', validFor: [] },
-        zu: { text: 'Zuk zer ___ udalean?', validFor: [] },
-        hura: { text: 'Hark bertako produktua azokan ___.', validFor: [] },
-        gu: { text: 'Guk parte-hartzea bilkuran ___.', validFor: [] },
-        zuek: { text: 'Zuek zer ___ programan?', validFor: [] },
-        haiek: { text: 'Haiek elkartasuna kanpainan ___.', validFor: [] },
+        ni: { text: 'Nik kirola eskolan ___.', validFor: ['bultzatu'] },
+        zu: { text: 'Zuk zer ___ udalean?', validFor: ['bultzatu'] },
+        hura: { text: 'Hark bertako produktua azokan ___.', validFor: ['bultzatu'] },
+        gu: { text: 'Guk parte-hartzea bilkuran ___.', validFor: ['bultzatu'] },
+        zuek: { text: 'Zuek zer ___ programan?', validFor: ['bultzatu'] },
+        haiek: { text: 'Haiek elkartasuna kanpainan ___.', validFor: ['bultzatu'] },
       },
       past: {
-        ni: { text: 'Nik atzo kirola eskolan ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun zer ___ udalean?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean bertako produktua azokan ___.', validFor: [] },
-        gu: { text: 'Guk iaz parte-hartzea bilkuran ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun zer ___ programan?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean elkartasuna kanpainan ___.', validFor: [] },
+        ni: { text: 'Nik atzo kirola eskolan ___.', validFor: ['bultzatu'] },
+        zu: { text: 'Zuk herenegun zer ___ udalean?', validFor: ['bultzatu'] },
+        hura: { text: 'Hark lehengo egunean bertako produktua azokan ___.', validFor: ['bultzatu'] },
+        gu: { text: 'Guk iaz parte-hartzea bilkuran ___.', validFor: ['bultzatu'] },
+        zuek: { text: 'Zuek duela bi egun zer ___ programan?', validFor: ['bultzatu'] },
+        haiek: { text: 'Haiek joan den astean elkartasuna kanpainan ___.', validFor: ['bultzatu'] },
       },
     },
   },
@@ -6853,21 +6859,24 @@ export const VERBS = [
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
+      // #458: `bultzatu`/`sustatu` overlap on every slot except `ni`, whose
+      // "proiektu berria aurrera ___" is idiom-locked to "aurrera bultzatu"
+      // (push forward) and doesn't read naturally with "sustatu" substituted.
       present: {
         ni: { text: 'Nik proiektu berria aurrera ___.', validFor: [] },
-        zu: { text: 'Zuk zer ___ erakundean?', validFor: [] },
-        hura: { text: 'Hark aldaketa garrantzitsua ___.', validFor: [] },
-        gu: { text: 'Guk ekimen berria batzordean ___.', validFor: [] },
-        zuek: { text: 'Zuek zer ___ udalerrian?', validFor: [] },
-        haiek: { text: 'Haiek erreforma sakona ___.', validFor: [] },
+        zu: { text: 'Zuk zer ___ erakundean?', validFor: ['sustatu'] },
+        hura: { text: 'Hark aldaketa garrantzitsua ___.', validFor: ['sustatu'] },
+        gu: { text: 'Guk ekimen berria batzordean ___.', validFor: ['sustatu'] },
+        zuek: { text: 'Zuek zer ___ udalerrian?', validFor: ['sustatu'] },
+        haiek: { text: 'Haiek erreforma sakona ___.', validFor: ['sustatu'] },
       },
       past: {
         ni: { text: 'Nik atzo proiektu berria aurrera ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun zer ___ erakundean?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean aldaketa garrantzitsua ___.', validFor: [] },
-        gu: { text: 'Guk iaz ekimen berria batzordean ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun zer ___ udalerrian?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean erreforma sakona ___.', validFor: [] },
+        zu: { text: 'Zuk herenegun zer ___ erakundean?', validFor: ['sustatu'] },
+        hura: { text: 'Hark lehengo egunean aldaketa garrantzitsua ___.', validFor: ['sustatu'] },
+        gu: { text: 'Guk iaz ekimen berria batzordean ___.', validFor: ['sustatu'] },
+        zuek: { text: 'Zuek duela bi egun zer ___ udalerrian?', validFor: ['sustatu'] },
+        haiek: { text: 'Haiek joan den astean erreforma sakona ___.', validFor: ['sustatu'] },
       },
     },
   },
@@ -6911,21 +6920,25 @@ export const VERBS = [
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
+      // #458: `bermatu`/`ziurtatu` overlap on every slot except `gu`, whose
+      // "bizikidetza auzoan ___" (coexistence in the neighborhood) reads as a
+      // guarantee, not as something one repeatedly verifies — "ziurtatu"
+      // doesn't fit naturally there.
       present: {
-        ni: { text: 'Nik segurtasuna kontzertuan ___.', validFor: [] },
-        zu: { text: 'Zuk zer ___ hitzarmenean?', validFor: [] },
-        hura: { text: 'Hark kalitatea produktuan ___.', validFor: [] },
+        ni: { text: 'Nik segurtasuna kontzertuan ___.', validFor: ['ziurtatu'] },
+        zu: { text: 'Zuk zer ___ hitzarmenean?', validFor: ['ziurtatu'] },
+        hura: { text: 'Hark kalitatea produktuan ___.', validFor: ['ziurtatu'] },
         gu: { text: 'Guk bizikidetza auzoan ___.', validFor: [] },
-        zuek: { text: 'Zuek zer ___ legean?', validFor: [] },
-        haiek: { text: 'Haiek gardentasuna prozesuan ___.', validFor: [] },
+        zuek: { text: 'Zuek zer ___ legean?', validFor: ['ziurtatu'] },
+        haiek: { text: 'Haiek gardentasuna prozesuan ___.', validFor: ['ziurtatu'] },
       },
       past: {
-        ni: { text: 'Nik atzo segurtasuna kontzertuan ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun zer ___ hitzarmenean?', validFor: [] },
-        hura: { text: 'Hark lehengo egunean kalitatea produktuan ___.', validFor: [] },
+        ni: { text: 'Nik atzo segurtasuna kontzertuan ___.', validFor: ['ziurtatu'] },
+        zu: { text: 'Zuk herenegun zer ___ hitzarmenean?', validFor: ['ziurtatu'] },
+        hura: { text: 'Hark lehengo egunean kalitatea produktuan ___.', validFor: ['ziurtatu'] },
         gu: { text: 'Guk iaz bizikidetza auzoan ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun zer ___ legean?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean gardentasuna prozesuan ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun zer ___ legean?', validFor: ['ziurtatu'] },
+        haiek: { text: 'Haiek joan den astean gardentasuna prozesuan ___.', validFor: ['ziurtatu'] },
       },
     },
   },
@@ -7026,21 +7039,25 @@ export const VERBS = [
     },
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
+      // #458: `ziurtatu`/`bermatu` overlap except on `hura`/`gu`, whose
+      // "bigarren aldiz"/"hiruzpalau aldiz" (a second/several times) framing
+      // is specifically about repeated verification, not guaranteeing —
+      // "bermatu" doesn't fit naturally there.
       present: {
-        ni: { text: 'Nik informazioa kazetari gisa ___.', validFor: [] },
-        zu: { text: 'Zuk zer ___ erosi aurretik?', validFor: [] },
+        ni: { text: 'Nik informazioa kazetari gisa ___.', validFor: ['bermatu'] },
+        zu: { text: 'Zuk zer ___ erosi aurretik?', validFor: ['bermatu'] },
         hura: { text: 'Hark datua bigarren aldiz ___.', validFor: [] },
         gu: { text: 'Guk emaitza hiruzpalau aldiz ___.', validFor: [] },
-        zuek: { text: 'Zuek zer ___ bidaia aurretik?', validFor: [] },
-        haiek: { text: 'Haiek prozesua azken xehetasunean ___.', validFor: [] },
+        zuek: { text: 'Zuek zer ___ bidaia aurretik?', validFor: ['bermatu'] },
+        haiek: { text: 'Haiek prozesua azken xehetasunean ___.', validFor: ['bermatu'] },
       },
       past: {
-        ni: { text: 'Nik atzo informazioa kazetari gisa ___.', validFor: [] },
-        zu: { text: 'Zuk herenegun zer ___ erosi aurretik?', validFor: [] },
+        ni: { text: 'Nik atzo informazioa kazetari gisa ___.', validFor: ['bermatu'] },
+        zu: { text: 'Zuk herenegun zer ___ erosi aurretik?', validFor: ['bermatu'] },
         hura: { text: 'Hark lehengo egunean datua bigarren aldiz ___.', validFor: [] },
         gu: { text: 'Guk iaz emaitza hiruzpalau aldiz ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun zer ___ bidaia aurretik?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean prozesua azken xehetasunean ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun zer ___ bidaia aurretik?', validFor: ['bermatu'] },
+        haiek: { text: 'Haiek joan den astean prozesua azken xehetasunean ___.', validFor: ['bermatu'] },
       },
     },
   },
