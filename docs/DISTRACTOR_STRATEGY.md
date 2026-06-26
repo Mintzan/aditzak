@@ -418,6 +418,44 @@ The four forks from §4, with their outcomes:
   causatives `janarazi`/`idatzarazi`, which have a ditransitive
   `nor-nori-nork` agreement signature incompatible with this pair's plain
   `nor-nork` shape.
+- **#459, resolved (2026-06-26):** backfilled `validFor` on the 17-verb
+  dative-tail cluster — `esan, eman, iruditu, saldu-dative, lagundu, ekin,
+  erantzun, deitu, eragin, antzeman, mesede-egin, kalte-egin, aurre-egin,
+  jarraitu, jario, janarazi, idatzarazi`. **Method note** (the issue's own
+  ask): for `nor-nori(-nork)` verbs the agreement-based audit script isn't
+  enough, because a sibling's same-person form has to fit not just the
+  direct-object frame but also the dative argument's semantic *role* —
+  concretely, this batch found that genuine cross-tagging tracks whether the
+  dative noun denotes a **person** (a generic interpersonal-action target,
+  e.g. "lagunari"/"etsaiari" — compatible with *any* person-denoting noun
+  regardless of whether the host and sibling's own sentence text use the same
+  noun) vs. an **abstract/activity referent** (e.g. "lanari"/"galderari"/
+  "arazoari"/"zerbaiti" — incompatible with the interpersonal-action verbs).
+  `esan`/`eman`/`iruditu`/`saldu-dative` were already correctly handled by
+  prior issues (#265, #263, #312) and needed no changes. Applying the
+  person-vs-abstract test surfaced one genuine 4-way cluster:
+  `lagundu`/`deitu`/`mesede-egin`/`kalte-egin` ("help"/"call"/"do a
+  favor for"/"harm (someone)") all take a person-denoting dative and now
+  mutually cross-tag, even though `kalte-egin`'s sentence text uses "etsaiari"
+  (enemy) while the other three use "lagunari" (friend) — the substitution
+  direction only cares whether the *sibling's form*, inserted into the
+  *host's* text, reads naturally, not whether the two verbs' own example
+  sentences share the same noun. `ekin` (lanari — task), `erantzun`
+  (galderari — question), and `aurre-egin` (arazoari — problem) all take an
+  abstract dative and stayed `validFor: []`; `antzeman`'s dative
+  ("zerbaiti") is too generic/vague a placeholder to confidently pair with
+  the person-recipient cluster either. `eragin` stayed isolated for a
+  different reason — its sentence text bakes in a second fixed object
+  ("barre", laughter) alongside the dative, so no sibling's plain
+  interpersonal-action frame fits regardless of the dative match. `jarraitu`
+  (hardcoded verb stem in its present-tense text, plus a narrow named-referent
+  past subject) and `jario` (rare/defective verb, fixed fluid-type subjects)
+  stayed isolated from the `gustatu`/`iruditu`/`ahaztu` `nor-nori` family for
+  structural/rarity reasons unrelated to the person/abstract distinction.
+  `janarazi`/`idatzarazi` (the two ditransitive causatives) don't cross-tag
+  each other due to a NOR-number mismatch (`janarazi`'s NOR is plural —
+  "babarrunak", `-zki-`/`dizkie`-family forms — vs. `idatzarazi`'s singular
+  NOR — "hori", non-`zki` `die`-family forms) on top of the semantic mismatch.
 - Remaining distractor work outside this strategy: **#213** (hi/hitanoa
   wrong-gender/neutral-form lure row) is the last Distractor-Matrix row, blocked
   on native-speaker confirmation of #167's toka/noka data, not on engineering.
