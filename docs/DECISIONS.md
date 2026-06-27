@@ -8,6 +8,24 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — proposed a journey rebalance (`LEARNING_JOURNEY_REBALANCE.md`)
+
+Filling in complete synthetic/auxiliary conjugation coverage left the journey
+badly unbalanced: four units (32 Ahalera/51, 33 Baldintza/46, 34 Agintera/32,
+15 maite izan/26) hold ~half of all lessons while ~30 others hold 2–6. Root
+cause: the object/subject axis (object isn't `hura`, subject isn't 3rd-person)
+is drilled combinatorially inside every tense *and every mood* — each
+`(axis-value × mood)` slice became its own lesson plus a per-value review.
+
+Wrote `docs/LEARNING_JOURNEY_REBALANCE.md` proposing a layout-only
+reorganization (no `verbs.js` change, no `STORAGE_KEY` bump): target 4–8
+lessons/unit; teach each axis once in a dedicated indicative unit; teach moods
+on the core paradigm only; collect every `…ByObject`/`…ByNor` mood permutation
+into an optional late "Mood Mastery" phase as a few wide pooled reviews instead
+of dozens of per-value splits. Deflates 51/46/32/26 → 8/8/6 and (15 → 6+6).
+Kept the four Refresh Gates and the `LEARNING_JOURNEY_PROPOSED.md` pedagogy.
+Proposal only — not yet implemented in `journey.js`/`lessons.js`.
+
 ## 2026-06-27 — re-split `App.*.test.jsx` along the new module boundaries
 
 The four-way test split below (`App.account`/`App.home`/`App.questionTypes`/
