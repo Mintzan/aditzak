@@ -1760,6 +1760,24 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'potential' },
     ],
   },
+  // #517: Ahalera's hypothetical/past sub-tenses (alegiazkoa/lehenaldia) —
+  // `izan`/`ukan` production for NOR/NOR-NORK, same full-persons scope as
+  // `izan-potential`/`ukan-potential` above (data already added by #496/
+  // #497, just unreachable until now).
+  { id: 'izan-potential-alegiazkoa', verbId: 'izan', tense: 'potentialAlegiazkoa' },
+  { id: 'ukan-potential-alegiazkoa', verbId: 'ukan', tense: 'potentialAlegiazkoa' },
+  { id: 'izan-potential-lehenaldia', verbId: 'izan', tense: 'potentialLehenaldia' },
+  { id: 'ukan-potential-lehenaldia', verbId: 'ukan', tense: 'potentialLehenaldia' },
+  {
+    id: 'unit-28-alegiazkoa-lehenaldia-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'potentialAlegiazkoa' },
+      { verbId: 'ukan', tense: 'potentialAlegiazkoa' },
+      { verbId: 'izan', tense: 'potentialLehenaldia' },
+      { verbId: 'ukan', tense: 'potentialLehenaldia' },
+    ],
+  },
   // #352: Ahalera's NOR-NORK object axis (`zaitzaket`-type forms) — the
   // `ukan-potential` lesson above only drills the subject axis (NORK varies,
   // NOR fixed at `hura`); these three lessons drill the object instead,
@@ -1971,6 +1989,20 @@ export const LESSONS = [
       { verbId: 'izan', tense: 'conditional' },
       { verbId: 'ukan', tense: 'baldintza' },
       { verbId: 'ukan', tense: 'conditional' },
+    ],
+  },
+  // #517: Ondorioa Lehenaldia ("would have been") — `izan`/`ukan` production
+  // for NOR/NOR-NORK, same full-persons scope as `izan-conditional`/
+  // `ukan-conditional` above (data already added by #495, just unreachable
+  // until now).
+  { id: 'izan-conditional-past', verbId: 'izan', tense: 'conditionalPast' },
+  { id: 'ukan-conditional-past', verbId: 'ukan', tense: 'conditionalPast' },
+  {
+    id: 'unit-29-conditional-past-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'conditionalPast' },
+      { verbId: 'ukan', tense: 'conditionalPast' },
     ],
   },
   // #353: Baldintza/Ondorioa's NOR-NORK object axis (`bazintut`/`zintuket`-
@@ -3962,6 +3994,30 @@ export const LESSONS = [
     sources: [
       { verbId: 'esan', tense: 'subjunctivePresent' },
       { verbId: 'eman', tense: 'subjunctivePresent' },
+    ],
+  },
+  // #517: Subjuntiboa Lehenaldia — `izan`/`ukan` production, same
+  // `hura`/`haiek` 3rd-person scope as `izan-subjunctive-present`/
+  // `ukan-subjunctive-present` above (data already added by #494, just
+  // unreachable until now).
+  {
+    id: 'izan-subjunctive-past',
+    verbId: 'izan',
+    tense: 'subjunctivePast',
+    persons: ['hura', 'haiek'],
+  },
+  {
+    id: 'ukan-subjunctive-past',
+    verbId: 'ukan',
+    tense: 'subjunctivePast',
+    persons: ['hura', 'haiek'],
+  },
+  {
+    id: 'unit-36-past-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'subjunctivePast' },
+      { verbId: 'ukan', tense: 'subjunctivePast' },
     ],
   },
   // #370 — Unit 42, "Making Someone Do It": causative `nor` → `nor-nork`

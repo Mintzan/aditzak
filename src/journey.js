@@ -718,6 +718,9 @@ export const JOURNEY = [
             status: 'available',
             lessonIds: [
               'izan-potential', 'ukan-potential', 'unit-28-review',
+              'izan-potential-alegiazkoa', 'ukan-potential-alegiazkoa',
+              'izan-potential-lehenaldia', 'ukan-potential-lehenaldia',
+              'unit-28-alegiazkoa-lehenaldia-review',
               'ukan-potential-object-axis-present', 'ukan-potential-object-axis-alegiazkoa',
               'ukan-potential-object-axis-lehenaldia', 'unit-34-object-axis-review',
               'ukan-potential-object-axis-present-hura', 'ukan-potential-object-axis-alegiazkoa-hura',
@@ -746,6 +749,7 @@ export const JOURNEY = [
             status: 'available',
             lessonIds: [
               'izan-baldintza', 'izan-conditional', 'ukan-baldintza', 'ukan-conditional', 'unit-29-review',
+              'izan-conditional-past', 'ukan-conditional-past', 'unit-29-conditional-past-review',
               'ukan-baldintza-object-axis', 'ukan-conditional-object-axis', 'ukan-conditional-past-object-axis',
               'unit-35-object-axis-review',
               'ukan-baldintza-object-axis-hura', 'ukan-conditional-object-axis-hura',
@@ -811,6 +815,7 @@ export const JOURNEY = [
             lessonIds: [
               'izan-subjunctive-present', 'ukan-subjunctive-present', 'unit-36-review',
               'unit-36-dative-review', 'unit-36-ditransitive-review',
+              'izan-subjunctive-past', 'ukan-subjunctive-past', 'unit-36-past-review',
             ],
           },
         ],
