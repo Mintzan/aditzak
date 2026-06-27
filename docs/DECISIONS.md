@@ -8,6 +8,26 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — #518: flipped Unit 44 ("Synthetic Curiosities") to `available`
+
+`jario`/`irudi`/`etzan` already had `recognitionOnly: true` and full
+present/past conjugation+sentence data, but #485/#486 deliberately left
+Unit 44 `pending` with no lessons, deferring the "what should these
+lessons look like" call to a future issue — this is that issue. Went with
+the same shape every other recognition-only-by-flag synthetic verb in this
+file uses (a plain flat lesson, one per verb/tense) rather than inventing
+a lighter "reading" kind, since `verb.recognitionOnly` already forces
+`noProduction` in `generateQuestions` regardless of lesson shape — no new
+engine behavior was needed, just lessons that point at data that already
+exists. Added `mode: 'recognition'` on each new lesson anyway (redundant
+with the verb flag for `noProduction` purposes) purely so `LessonNode`'s
+"Recognition only" badge renders — that badge reads `lesson.mode`, not
+`verb.recognitionOnly` (see `describeLesson` in `App.jsx`), and showing it
+matches the unit's own "recognition-only" framing in `focus`. `irudi`'s
+present (`hi-m`/`hi-f`) and both verbs' `hi` cells are excluded via
+`persons`, matching the established `ihardun`/`iraun`/`erabili` precedent
+of excluding ungrounded `hi` cells that have no `sentences` entry.
+
 ## 2026-06-27 — #517: wired up `izan`/`ukan`'s 4 foundational mood tenses into the journey
 
 `conditionalPast`, `potentialAlegiazkoa`, `potentialLehenaldia`, and

@@ -953,7 +953,13 @@ export const JOURNEY = [
             // flags this as a false-friend pairing — distinct verb).
             focus: 'jario (nor-nori, "dario"/"zerion"), etzan (nor, "datza"), irudi (unergative, nork-only, "dirudi" — not iruditu\'s nor-nori) — rare native-synthetic verbs, recognition-only',
             payload: 'Malkoak dario. · Zertan datza ariketa? · Nekatuta zaude, dirudizu.',
-            status: 'pending',
+            status: 'available',
+            lessonIds: [
+              'jario-present', 'jario-past',
+              'irudi-present', 'irudi-past',
+              'etzan-present', 'etzan-past',
+              'unit-44-curiosities-review',
+            ],
           },
         ],
       },
