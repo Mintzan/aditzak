@@ -2,7 +2,7 @@
 
 **Status: current/authoritative.** Tracks which engine work each journey unit still needs before it can move from `pending` to `available`; update it as units land.
 
-This audits `LEARNING_JOURNEY.md`'s 32-unit sequence against the current
+This audits `LEARNING_JOURNEY.md`'s 47-unit sequence (44 currently `available`) against the current
 exercise engine (`generateQuestions`/`exerciseReducer` in `lessonLogic.js`,
 `LESSONS`/`VERBS` and the screen components in `App.jsx`) and sorts the gaps
 by how much engine work each needs. It supersedes the scattered "Data &

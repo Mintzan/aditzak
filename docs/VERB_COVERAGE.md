@@ -7,8 +7,12 @@ conjugation. A lesson is built from three axes — **verb**, **tense/mood**, and
 across all of them. Each section marks what exists today (✅) vs. open ground
 (🔲), so this can double as a checklist when picking the next verb/tense to add.
 
-Today the app covers exactly one slice of this space: `izan` and `ukan`, in
-`present`/`past`, with `nor` and `nor+nork` agreement, across six persons.
+This opened as a single-verb scoping doc; the per-section ✅/🔲 marks below
+have been kept current as `VERBS` grew (it now covers 100+ verbs across
+`nor`/`nor+nori`/`nor+nork`/`nor+nori+nork` agreement and several tense/mood
+axes) — see §4 onward for the actual state per verb rather than a summary
+count here, since the list changes too often for a single-sentence tally to
+stay accurate.
 
 ## 1. Grammatical persons (pertsonak)
 
