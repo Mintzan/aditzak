@@ -1920,3 +1920,15 @@ export function buildFlagDiagnostics({ lesson, question, selected, status, langu
     },
   }
 }
+
+// Showing a streak nudge every single time someone hits a milestone would
+// get mechanical fast, so it's gated two ways: a session-level cooldown
+// (tracked by `AppShell` in lessons, reset to a random span once a nudge is
+// shown) and, even once eligible, only a chance of actually firing — so it
+// reads as an occasional surprise rather than a predictable popup.
+const STREAK_NUDGE_COOLDOWN_RANGE = [2, 4] // lessons to wait before the next one
+
+export function randomStreakNudgeCooldown() {
+  const [min, max] = STREAK_NUDGE_COOLDOWN_RANGE
+  return min + Math.floor(Math.random() * (max - min + 1))
+}

@@ -8,6 +8,76 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — re-split `App.*.test.jsx` along the new module boundaries
+
+The four-way test split below (`App.account`/`App.home`/`App.questionTypes`/
+`App.sync`) was made purely for Vitest's file-level worker parallelism, along
+the original monolithic `App.test.jsx`'s own pre-existing `describe` blocks —
+before the same-day module split above existed. That left it misaligned with
+the new architecture: `App.account.test.jsx` mixed `ExerciseScreen.jsx` tests
+(question flagging, exit confirmation) with `AppShell`/`HomeScreen.jsx` tests
+(account sign-in), and `App.home.test.jsx` mixed `App.jsx` (language
+onboarding), `HomeScreen.jsx` (feedback form, "share app"), and
+`ExerciseScreen.jsx` (lesson preview, "share result" — `LessonResultsScreen`
+lives in `ExerciseScreen.jsx`, not `HomeScreen.jsx`) despite the file's name.
+
+Re-split along the module boundaries instead: `App.exerciseScreen.test.jsx`
+(question flagging, exit confirmation, lesson preview, share result) and
+`App.exerciseQuestionTypes.test.jsx` (renamed from `App.questionTypes.test.jsx`,
+content unchanged — it was already cleanly `ExerciseScreen.jsx`-scoped) cover
+`screens/ExerciseScreen.jsx`; `App.homeScreen.test.jsx` covers
+`screens/HomeScreen.jsx` (home rendering, feedback form, share app);
+`App.appShell.test.jsx` covers `AppShell`'s own remaining logic in `App.jsx`
+(language onboarding, account sign-in, cross-device sync).
+
+`ExerciseScreen.jsx` has by far the most test surface, so its tests stayed
+split across two files (`App.exerciseScreen.test.jsx` and
+`App.exerciseQuestionTypes.test.jsx`) rather than one — collapsing them would
+have reintroduced the wall-clock imbalance the original test split fixed,
+just along a different axis. `App.homeScreen.test.jsx` ended up comparatively
+small (~115 lines); that's fine, since a small file finishes fast rather than
+becoming a bottleneck. All five files still only `import App from './App'`
+and render the full tree — same as before. `npm run lint`, `npm test`
+(460 tests, same count as before the re-split), and `npm run build` all pass.
+
+## 2026-06-27 — split `App.jsx` into screens/storage/api modules, superseding #194
+
+`App.jsx` had grown to 2910 lines (5 sections behind a section-index comment
+block — see the superseded #194 entry in `docs/DECISIONS_ARCHIVE.md`, which
+explicitly chose *not* to split the file and added that index instead). By
+now the file had grown well past where a navigation aid alone still helped:
+finding and safely editing one section meant holding the whole file's worth
+of unrelated imports/components in view.
+
+Split along the section boundaries the index already named: `storage.js`
+(localStorage helpers — `progressStorage`/`streakStorage`/`errorStorage`/
+`pointsStorage`/`accountSessionStorage`/`getDeviceId`), `api.js` (feedback
+and sync Cloudflare Worker calls/constants), `lessonDisplay.js`
+(`describeLesson` and the small pure helpers around it), `components/badges.jsx`
+(`TypeBadge`/`AgreementBadge`/`Stars`/`ProgressBar`/etc.), `screens/HomeScreen.jsx`,
+and `screens/ExerciseScreen.jsx`. `App.jsx` itself now holds only
+`LanguageOnboardingScreen`, `AppShell` (the sync/account/progress state
+machine), and the default-exported `App` — about 370 lines.
+
+This is also the first time non-test code imports named exports *from*
+former `App.jsx` content (`HomeScreen`, `ExerciseScreen`, `MergeModal`,
+the badge components, the storage/api helpers) — #194's original
+"don't split" rationale was partly that nothing outside `App.jsx` needed
+to import its internals, since tests only used the default `App` export.
+That's no longer true now that the pieces live in their own files; existing
+tests (`App.*.test.jsx`) were unaffected since they still only import the
+default `App` export.
+
+`randomStreakNudgeCooldown` moved from `App.jsx` into `lessonLogic.js`
+(rather than being exported from `screens/ExerciseScreen.jsx`, where it was
+first extracted to) because `react-refresh/only-export-components` forbids
+a `.jsx` file from exporting non-component values alongside a component —
+`lessonLogic.js` already holds pure question/progress logic with no JSX, so
+it was the natural home.
+
+`npm run lint`, `npm test` (460 tests), and `npm run build` all pass
+unchanged after the split.
+
 ## 2026-06-27 — split `App.test.jsx` into four files for real test-run parallelism
 
 Profiling `npm test` showed `App.test.jsx` alone accounted for 95 of the

@@ -5,14 +5,172 @@ import App from './App'
 
 describe('App', () => {
   beforeEach(() => {
-    // Bypass the one-time language-onboarding screen for tests that exercise
-    // the lesson flow — see the dedicated onboarding test below.
+    // Bypass the one-time language-onboarding screen for tests that don't
+    // exercise it directly — see the dedicated onboarding test below.
     localStorage.setItem('aditzak:lang:v1', 'en')
   })
 
   afterEach(() => {
     localStorage.clear()
     vi.restoreAllMocks()
+  })
+
+  it('shows a language selector before the home screen on first launch, then remembers the choice', async () => {
+    localStorage.removeItem('aditzak:lang:v1')
+    const user = userEvent.setup()
+    render(<App />)
+
+    expect(screen.queryByRole('heading', { name: 'Aditzak' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Euskara/ })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /English/ }))
+
+    expect(screen.getByRole('heading', { name: 'Aditzak' })).toBeInTheDocument()
+    expect(localStorage.getItem('aditzak:lang:v1')).toBe('en')
+  })
+
+  describe('account sign-in', () => {
+    afterEach(() => {
+      window.history.replaceState({}, '', '/')
+    })
+
+    it('requests a magic link and shows the "check your email" step', async () => {
+      const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: true, status: 200 })
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
+      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
+      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
+
+      expect(await screen.findByText('Check your email')).toBeInTheDocument()
+      expect(screen.getByText("We'll sign you in automatically once you click the link.")).toBeInTheDocument()
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.stringContaining('/auth/request-link'),
+        expect.objectContaining({ method: 'POST', body: JSON.stringify({ email: 'learner@example.com' }) }),
+      )
+    })
+
+    it('shows a rate-limit error from the request-link endpoint', async () => {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false, status: 429 })
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
+      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
+      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
+
+      expect(await screen.findByText('Too many attempts. Please wait a bit and try again.')).toBeInTheDocument()
+    })
+
+    it('shows an invalid-email error from the request-link endpoint', async () => {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false, status: 400 })
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
+      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
+      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
+
+      expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument()
+    })
+
+    it('shows a generic error for a server-side failure from the request-link endpoint', async () => {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false, status: 502 })
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
+      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
+      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
+
+      expect(await screen.findByText('Something went wrong. Please try again later.')).toBeInTheDocument()
+    })
+
+    it('shows a network error if the request-link call fails', async () => {
+      vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('offline'))
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
+      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
+      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
+
+      expect(await screen.findByText('Something went wrong. Please try again later.')).toBeInTheDocument()
+    })
+
+    it('completes sign-in from a magic-link URL, persists the session, and signs out', async () => {
+      window.history.pushState({}, '', '/?authToken=test-token')
+      const fetchMock = vi.spyOn(globalThis, 'fetch').mockImplementation((url) => {
+        if (String(url).includes('/auth/verify')) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve({ sessionToken: 'session-token', email: 'learner@example.com', hasCloudData: false }),
+          })
+        }
+        return Promise.resolve({ ok: true, status: 200 })
+      })
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      expect(await screen.findByText('learner@example.com')).toBeInTheDocument()
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.stringContaining('/auth/verify'),
+        expect.objectContaining({ method: 'POST', body: JSON.stringify({ token: 'test-token' }) }),
+      )
+      expect(window.location.search).toBe('')
+
+      const stored = JSON.parse(localStorage.getItem('aditzak:session:v1'))
+      expect(stored).toMatchObject({ token: 'session-token', email: 'learner@example.com' })
+
+      await user.click(screen.getByRole('button', { name: 'Sign out' }))
+
+      expect(await screen.findByRole('button', { name: 'Sign in / create account' })).toBeInTheDocument()
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.stringContaining('/auth/signout'),
+        expect.objectContaining({ headers: expect.objectContaining({ Authorization: 'Bearer session-token' }) }),
+      )
+      expect(localStorage.getItem('aditzak:session:v1')).toBeNull()
+    })
+
+    it('restores a signed-in session from localStorage and pulls/pushes the sync snapshot', async () => {
+      localStorage.setItem(
+        'aditzak:session:v1',
+        JSON.stringify({ token: 'session-token', email: 'learner@example.com', expiresAt: Date.now() + 1000 * 60 * 60 }),
+      )
+      const fetchMock = vi.spyOn(globalThis, 'fetch').mockImplementation((url, options) => {
+        if (options?.method === 'PUT') return Promise.resolve({ ok: true, status: 200 })
+        return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve({ payload: null }) })
+      })
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      expect(await screen.findByText('learner@example.com')).toBeInTheDocument()
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.stringContaining('/sync'),
+        expect.objectContaining({ headers: expect.objectContaining({ Authorization: 'Bearer session-token' }) }),
+      )
+      expect(await screen.findByText('Synced just now')).toBeInTheDocument()
+    })
+
+    it('treats an expired stored session as signed out', async () => {
+      localStorage.setItem(
+        'aditzak:session:v1',
+        JSON.stringify({ token: 'session-token', email: 'learner@example.com', expiresAt: Date.now() - 1000 }),
+      )
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /Profile/ }))
+      expect(screen.getByRole('button', { name: 'Sign in / create account' })).toBeInTheDocument()
+    })
   })
 
   describe('cross-device sync', () => {

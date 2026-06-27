@@ -20,7 +20,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture
 
-Most of the app's screens/components live in `src/App.jsx`, organized top-to-bottom into clearly delimited sections (look for the `===` banner comments). The curriculum data — `VERBS` (`src/data/verbs.js`), `LESSONS` (`src/data/lessons.js`), and the roadmap (`src/journey.js`'s `JOURNEY`) — lives in its own files, so a journey change never requires touching `App.jsx`'s UI code. See "Working on the learning journey" below.
+`App.jsx` itself only holds the state-machine shell now (`LanguageOnboardingScreen`, `AppShell`, the default-exported `App`) — the two screens and their supporting helpers live in their own files (2026-06-27, see `docs/DECISIONS.md`, superseding the earlier #194 "don't split" call):
+
+- `src/storage.js` — `localStorage` helpers (`progressStorage`/`streakStorage`/`errorStorage`/`pointsStorage`/`accountSessionStorage`/`getDeviceId`).
+- `src/api.js` — feedback and account/sync Cloudflare Worker endpoints/constants/helpers.
+- `src/lessonDisplay.js` — `describeLesson` and the small pure display helpers around it (`verbMeaning`, `personsLabel`, `journeyText`).
+- `src/components/badges.jsx` — shared presentational bits (`TypeBadge`, `AgreementBadge`, `FixedArgumentBadge`, `DialectBadge`, `VerbBadgeRow`, `Stars`, `ProgressBar`).
+- `src/screens/HomeScreen.jsx` — the `home`/`progress`/`profile` tabs, lesson list, feedback/account modals (also exports `MergeModal`, used by `AppShell`).
+- `src/screens/ExerciseScreen.jsx` — the multiple-choice/typed-answer exercise flow, lesson preview, and results screen.
+
+The curriculum data — `VERBS` (`src/data/verbs.js`), `LESSONS` (`src/data/lessons.js`), and the roadmap (`src/journey.js`'s `JOURNEY`) — lives in its own files too, so a journey change never requires touching any UI code. See "Working on the learning journey" below.
 
 1. **Verb data (`VERBS`, `src/data/verbs.js`)** — the source-of-truth data model. Each verb has:
    - `type`: `synthetic` ("aditz trinkoa", conjugated directly) vs `periphrastic` ("aditz perifrastikoa", participle + auxiliary — not yet present in the data but accounted for in the type system/badges)
@@ -37,7 +46,7 @@ Most of the app's screens/components live in `src/App.jsx`, organized top-to-bot
 
 5. **Question generation** — `generateQuestions` builds one multiple-choice question per grammatical person in a lesson's conjugation table; the three distractor options are the *other* conjugated forms from that same table (so every option is a plausible Basque verb form, not a random string).
 
-6. **Screens / state machine** — `App` is a simple two-state shell: either `activeLessonId` is set (renders `MultipleChoiceScreen` for that lesson, keyed by lesson id so it remounts/resets between lessons) or it isn't (renders `HomeScreen`). `HomeScreen` itself switches between three tabs (`home`/`progress`/`profile`) via local `tab` state and `BottomNav`. The exercise flow within `MultipleChoiceScreen` is driven by `exerciseReducer` (a `useReducer` with `answer`/`next` actions tracking `index`, `selected`, `status`, `correctCount`).
+6. **Screens / state machine** — `AppShell` (`App.jsx`) is a simple two-state shell: either `activeLessonId` is set (renders `ExerciseScreen`, `src/screens/ExerciseScreen.jsx`, for that lesson, keyed by lesson id so it remounts/resets between lessons) or it isn't (renders `HomeScreen`, `src/screens/HomeScreen.jsx`). `HomeScreen` itself switches between three tabs (`home`/`progress`/`profile`) via local `tab` state and `BottomNav`. The exercise flow within `ExerciseScreen` is driven by `exerciseReducer` (a `useReducer` with `answer`/`next` actions tracking `index`, `selected`, `status`, `correctCount`).
 
 7. **Shared presentational bits** — small badge/indicator components (`TypeBadge`, `AgreementBadge`, `DialectBadge`, `Stars`, `ProgressBar`) are driven by lookup-table metadata objects (`TYPE_META`, `AGREEMENT_META`, `TENSE_META`, `DIALECT_LABELS`, `PERSON_LABEL_KEYS`) exported from `src/data/verbs.js` — extend those tables rather than hardcoding labels/styles inline.
 
@@ -45,7 +54,7 @@ Styling is Tailwind utility classes throughout (Tailwind 4 via the `@tailwindcss
 
 ## Working on the learning journey
 
-`JOURNEY` (`src/journey.js`), `LESSONS` (`src/data/lessons.js`), and `VERBS` (`src/data/verbs.js`) are a self-contained trio with no dependency on `App.jsx`'s UI code — a journey change (reordering/splitting units, adding a verb or tense, retranslating) can usually be done by reading just these three files plus the docs below, without opening `App.jsx` at all.
+`JOURNEY` (`src/journey.js`), `LESSONS` (`src/data/lessons.js`), and `VERBS` (`src/data/verbs.js`) are a self-contained trio with no dependency on any UI code — a journey change (reordering/splitting units, adding a verb or tense, retranslating) can usually be done by reading just these three files plus the docs below, without opening `App.jsx` or `src/screens/` at all.
 
 `src/journey.test.js` (run via `npm test`) cross-checks the trio: every `lessonIds` entry resolves to a `LESSONS` id and vice versa (each referenced exactly once), and every practice/review lesson's `verbId`/`tense`/`persons` resolves into `VERBS`. **Run it after any journey change** — a renumbering or reorder that leaves something dangling fails fast instead of silently.
 
