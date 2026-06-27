@@ -19,7 +19,7 @@ const TENSE_MAPPING = {
   ondorioa_past: 'conditionalPast',
   ahalera_orainaldia: 'potential',
   ahalera_alegiazkoa: 'potentialAlegiazkoa',
-  ahalera_lehenaldia: 'potentialLehena',
+  ahalera_lehenaldia: 'potentialLehenaldia',
   subjuntiboa_orainaldia: 'subjunctivePresent',
   subjuntiboa_lehenaldia: 'subjunctivePast',
   agintera: 'imperative',
@@ -65,8 +65,16 @@ function hasAllPersons(conjugationData, expectedPersons) {
   if (!conjugationData) return false;
   if (typeof conjugationData !== 'object') return false;
 
-  // For simple person-based conjugations
-  return expectedPersons.every(person => conjugationData[person] !== undefined);
+  // For simple person-based conjugations. Generic 'hi' is satisfied by
+  // either a plain `hi` key or a sourced `hi-m`/`hi-f` hitanoa split (#144) —
+  // both are valid representations of the same person, not a gap.
+  return expectedPersons.every(person => {
+    if (person === 'hi') {
+      return conjugationData['hi'] !== undefined ||
+        (conjugationData['hi-m'] !== undefined && conjugationData['hi-f'] !== undefined);
+    }
+    return conjugationData[person] !== undefined;
+  });
 }
 
 // Generate report
@@ -80,6 +88,12 @@ const report = {
 };
 
 for (const [verbId, coverage] of Object.entries(CONJUGATION_COVERAGE)) {
+  // Skip pseudo-verb-ids like `ukan-nori`/`ukan-nori-nork` — these aren't
+  // real Basque paradigms (ukan always carries an ergative subject; see
+  // docs/DECISIONS.md's 2026-06-26 #498 entry), so they're never expected
+  // to appear in verbs.js as their own entries.
+  if (verbId.includes('-')) continue;
+
   const verb = findVerbInVerbs(verbId);
   const verb_report = {
     documented: true,

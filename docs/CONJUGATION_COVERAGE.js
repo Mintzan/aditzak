@@ -58,7 +58,7 @@ export const CONJUGATION_COVERAGE = {
         documented: true,
       },
       agintera: {
-        persons: ['hi', 'zu', 'zuek', 'hara', 'haiek'],
+        persons: ['hi', 'zu', 'zuek', 'hura', 'haiek'],
         documented: true,
         note: 'Imperative (no 1st person ni/gu)',
       },
@@ -124,7 +124,7 @@ export const CONJUGATION_COVERAGE = {
       },
       agintera: {
         variants: ['singular', 'plural'],
-        persons: ['hi', 'zu', 'zuek', 'hara', 'haiek'],
+        persons: ['hi', 'zu', 'zuek', 'hura', 'haiek'],
         documented: true,
         note: 'Imperative',
       },
@@ -194,7 +194,7 @@ export const CONJUGATION_COVERAGE = {
       },
       agintera: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuei', 'haiei'],
-        persons: ['hi', 'zu', 'zuek', 'hara', 'haiek'],
+        persons: ['hi', 'zu', 'zuek', 'hura', 'haiek'],
         documented: true,
         note: 'Imperative',
       },
@@ -214,56 +214,56 @@ export const CONJUGATION_COVERAGE = {
       baldintza: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuri', 'zuei', 'haiei'],
         object_variants: ['singular', 'plural'],
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       ondorioa_present: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuri', 'zuei', 'haiei'],
         object_variants: ['singular', 'plural'],
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       ondorioa_past: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuri', 'zuei', 'haiei'],
         object_variants: ['singular', 'plural'],
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       ahalera_orainaldia: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuri', 'zuei', 'haiei'],
         object_variants: ['singular', 'plural'],
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       ahalera_alegiazkoa: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuri', 'zuei', 'haiei'],
         object_variants: ['singular', 'plural'],
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       ahalera_lehenaldia: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuri', 'zuei', 'haiei'],
         object_variants: ['singular', 'plural'],
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       subjuntiboa_orainaldia: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuri', 'zuei', 'haiei'],
         object_variants: ['singular', 'plural'],
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       subjuntiboa_lehenaldia: {
         nori_recipients: ['niri', 'hari', 'guri', 'zuri', 'zuei', 'haiei'],
         object_variants: ['singular', 'plural'],
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: false,
         note: 'Morphologically derivable but not tabulated: forms vanishingly rare/unverifiable',
       },
       agintera: {
         nori_recipients: ['niri', 'hari', 'guri', 'haiei'],
         object_variants: ['singular', 'plural'],
-        addressees: ['zuk', 'zuek', 'hik', 'haiek'],
+        addressees: ['zu', 'zuek', 'hi', 'haiek'],
         documented: true,
         note: 'Imperative (2nd/3rd person addressee only)',
       },
@@ -523,11 +523,11 @@ export const CONJUGATION_COVERAGE = {
     note: 'Unergative (nork-only, absolutive is implicit/fixed)',
     tenses: {
       orainaldia: {
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       lehenaldia: {
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
     },
@@ -574,11 +574,11 @@ export const CONJUGATION_COVERAGE = {
     note: 'Unergative (nork-only)',
     tenses: {
       orainaldia: {
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
       lehenaldia: {
-        persons: ['nik', 'hik', 'hark', 'guk', 'zuk', 'zuek', 'haiek'],
+        persons: ['ni', 'hi', 'hura', 'gu', 'zu', 'zuek', 'haiek'],
         documented: true,
       },
     },
