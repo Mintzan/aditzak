@@ -8,6 +8,28 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — #490: added `ukan`'s `subjunctivePresentByObject`/`subjunctivePastByObject` 2D tables
+
+Added the full NORK×NOR object-axis grids for `ukan`'s subjunctive mood,
+mirroring `potentialByObject`/`conditionalByObject`'s existing shape and
+gap conventions (`hi` omitted as both subject and object; `ni`<->`gu` and
+`zu`<->`zuek` reflexive-like pairs omitted). Sourced from
+`CONJUGATIONS.md` §3's full "Subjuntiboa, Orainaldia"/"Subjuntiboa,
+Lehenaldia" grids — each table's `hura` column was cross-checked
+cell-for-cell against the existing flat `subjunctivePresent`/
+`subjunctivePast` tables (already added by #494) and matches exactly.
+
+The issue's own example data was internally inconsistent — it mixed
+ditransitive (`NOR-NORI-NORK`) forms like `diezadan`/`diezaan` with plain
+`NOR-NORK` forms like `dezan`/`dezaten` under the same table, and labeled
+present-tense ditransitive citation forms (`§16.1`'s `NORI`=`niri` present
+column) as `subjunctivePast`. Used `CONJUGATIONS.md` §3's actual NOR-NORK
+grids directly instead of the issue's example, since those are unambiguous
+and already-established as this verb's source of truth.
+
+Added `tenseSubjunctivePresentByObject`/`tenseSubjunctivePastByObject`
+`TENSE_META` entries and matching `en`/`es`/`eu` translation strings.
+
 ## 2026-06-27 — #486: added `etzan`, third and final Unit 44 verb, scope intentionally limited to data only
 
 Added `etzan` ("to lie (in) / consist of") with `agreement: ['nor']`
