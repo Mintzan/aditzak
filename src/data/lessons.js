@@ -4122,4 +4122,58 @@ export const LESSONS = [
       { verbId: 'erabili', tense: 'past' },
     ],
   },
+  // #518: Unit 44 ("Synthetic Curiosities") — `jario`/`irudi`/`etzan` all
+  // carry `recognitionOnly: true` on their `VERBS` entries already (so
+  // `generateQuestions` forces no-typing regardless), but `mode:
+  // 'recognition'` is set explicitly too so `LessonNode`'s "Recognition
+  // only" badge shows (that badge reads `lesson.mode`, not the verb flag —
+  // see `describeLesson` in `App.jsx`), matching the unit's own
+  // "recognition-only" framing. `irudi`/`etzan` restrict `persons` to
+  // exclude `hi`/`hi-m`/`hi-f` — neither has a `sentences` entry for that
+  // person (same gap `ihardun`/`iraun`/`erabili` above have), so a 'form'-
+  // kind-only fallback question there would add nothing. `jario`'s table
+  // has no `hi` cell at all, so no restriction needed.
+  { id: 'jario-present', verbId: 'jario', tense: 'present', mode: 'recognition' },
+  { id: 'jario-past', verbId: 'jario', tense: 'past', mode: 'recognition' },
+  {
+    id: 'irudi-present',
+    verbId: 'irudi',
+    tense: 'present',
+    mode: 'recognition',
+    persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'],
+  },
+  {
+    id: 'irudi-past',
+    verbId: 'irudi',
+    tense: 'past',
+    mode: 'recognition',
+    persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'],
+  },
+  {
+    id: 'etzan-present',
+    verbId: 'etzan',
+    tense: 'present',
+    mode: 'recognition',
+    persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'],
+  },
+  {
+    id: 'etzan-past',
+    verbId: 'etzan',
+    tense: 'past',
+    mode: 'recognition',
+    persons: ['ni', 'zu', 'hura', 'gu', 'zuek', 'haiek'],
+  },
+  {
+    id: 'unit-44-curiosities-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'jario', tense: 'present' },
+      { verbId: 'jario', tense: 'past' },
+      { verbId: 'irudi', tense: 'present' },
+      { verbId: 'irudi', tense: 'past' },
+      { verbId: 'etzan', tense: 'present' },
+      { verbId: 'etzan', tense: 'past' },
+    ],
+  },
 ]
