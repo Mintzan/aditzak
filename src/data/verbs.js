@@ -889,6 +889,30 @@ export const VERBS = [
         zuek: { ni: 'nindukezuen', hura: 'zenuketen', gu: 'gintukezuen', haiek: 'zenituzketen' },
         haiek: { ni: 'ninduketen', hura: 'zuketen', gu: 'gintuzketen', zu: 'zintuzketen', zuek: 'zintuzketeten', haiek: 'zituzketen' },
       },
+      // #490: Subjuntiboa's NOR-NORK object axis, same shape/sourcing
+      // convention as `potentialByObject`/`conditionalByObject` above, from
+      // CONJUGATIONS.md §3's "Subjuntiboa, Orainaldia"/"Subjuntiboa,
+      // Lehenaldia" full NORK×NOR grids. `hi` omitted (both as subject and
+      // object), and the same same-person-category reflexive-like gaps
+      // apply (`ni`<->`gu`, `zu`<->`zuek`) — see the `potentialByObject`
+      // comment above for why. `hura` column of each matches the flat
+      // `subjunctivePresent`/`subjunctivePast` tables below cell-for-cell.
+      subjunctivePresentByObject: {
+        ni: { hura: 'dezadan', zu: 'zaitzadan', zuek: 'zaitzatedan', haiek: 'ditzadan' },
+        hura: { ni: 'nazan', hura: 'dezan', gu: 'gaitzan', zu: 'zaitzan', zuek: 'zaitzaten', haiek: 'ditzan' },
+        gu: { hura: 'dezagun', zu: 'zaitzagun', zuek: 'zaitzategun', haiek: 'ditzagun' },
+        zu: { ni: 'nazazun', hura: 'dezazun', gu: 'gaitzazun', haiek: 'ditzazun' },
+        zuek: { ni: 'nazazuen', hura: 'dezazuen', gu: 'gaitzazuen', haiek: 'ditzazuen' },
+        haiek: { ni: 'nazaten', hura: 'dezaten', gu: 'gaitzaten', zu: 'zaitzaten', zuek: 'zaitzateten', haiek: 'ditzaten' },
+      },
+      subjunctivePastByObject: {
+        ni: { hura: 'nezan', zu: 'zintzadan', zuek: 'zintzatedan', haiek: 'nitzan' },
+        hura: { ni: 'nintzan', hura: 'zezan', gu: 'gintzan', zu: 'zintzan', zuek: 'zintzaten', haiek: 'zitzan' },
+        gu: { hura: 'genezan', zu: 'zintzagun', zuek: 'zintzategun', haiek: 'genitzan' },
+        zu: { ni: 'nintzazun', hura: 'zenezan', gu: 'gintzazun', haiek: 'zenitzan' },
+        zuek: { ni: 'nintzazuen', hura: 'zenezaten', gu: 'gintzazuen', haiek: 'zenitzaten' },
+        haiek: { ni: 'nintzaten', hura: 'zezaten', gu: 'gintzaten', zu: 'zintzaten', zuek: 'zintzateten', haiek: 'zitzaten' },
+      },
       // #369 — Subjuntiboa Present (Unit 36), `NOR` fixed at `hura` (object),
       // `NORK` varying — same shape/sourcing convention as `potential`/
       // `baldintza`/`conditional` above, per CONJUGATIONS.md §3's
@@ -9228,6 +9252,11 @@ export const TENSE_META = {
   // #494-497: the moods epic's past-subjunctive sibling to `subjunctivePresent`
   // above (`nendin`/`zezan`-type forms, CONJUGATIONS.md §2/§3).
   subjunctivePast: { labelKey: 'tenseSubjunctivePast', basque: 'subjuntiboa, lehenaldia' },
+  // #490: Subjuntiboa's NOR-NORK object axis — the `subjunctivePresent`/
+  // `subjunctivePast` mirror of `potentialByObject`/`conditionalByObject`
+  // above, full NORK×NOR grids instead of the `NOR`=`hura` citation slice.
+  subjunctivePresentByObject: { labelKey: 'tenseSubjunctivePresentByObject', basque: 'subjuntiboa (objektuka)' },
+  subjunctivePastByObject: { labelKey: 'tenseSubjunctivePastByObject', basque: 'subjuntiboa, lehenaldia (objektuka)' },
   // #477: `etorri`'s NOR-NORI dative axis — unlike `presentByNor`/`pastByNor`
   // above (where NORI is the verb's *usual* varying axis and NOR is the new
   // one), here NOR is `etorri`'s usual axis (its plain `present`/`past`) and
