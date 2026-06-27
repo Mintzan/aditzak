@@ -8605,6 +8605,54 @@ export const VERBS = [
     },
     pronouns: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
   },
+  // #486: `etzan` ("to lie (in) / consist of") — plain `nor` agreement
+  // (absolutive subject only, no ergative/dative), per CONJUGATIONS.md §8.
+  // Rare and largely archaic/literary in modern Euskara Batua — its
+  // everyday-use successor is the periphrastic "etzanda egon"; the synthetic
+  // form survives mainly in the fixed idiom "zertan datza X?" ("what does X
+  // consist of?"), which is the only sentence theme used below.
+  // `recognitionOnly: true` — same Unit 44 ("Synthetic Curiosities") bonus,
+  // exposure-only scope as `jario`/`irudi` above: per #486, do NOT add
+  // `etzan-present`/`etzan-past` lessons and do NOT flip Unit 44's `status`
+  // from `pending` — that's deferred to a future journey-restructuring
+  // decision, not this issue. Pronouns use the bare-absolutive style
+  // (`Ni`/`Hi`/`Zu`/...), matching other `nor`-only verbs (e.g. `egon`) —
+  // distinct from `irudi`'s ergative-style pronouns just above, since
+  // `etzan` has no `nork` argument.
+  {
+    id: 'etzan',
+    verb: 'etzan',
+    meaning: { en: 'to lie (in) / consist of', es: 'consistir en / radicar en', eu: 'etzan (zerbaitetan oinarritu)' },
+    type: 'synthetic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    recognitionOnly: true,
+    conjugations: {
+      present: { ni: 'natza', hi: 'hatza', zu: 'zautza', hura: 'datza', gu: 'gautza', zuek: 'zautzate', haiek: 'dautza' },
+      past: { ni: 'nentzan', hi: 'hentzan', zu: 'zeuntzan', hura: 'zetzan', gu: 'geuntzan', zuek: 'zeuntzaten', haiek: 'zeutzan' },
+    },
+    // `validFor: []` throughout — "consisting of X" doesn't fit any other
+    // verb's sentence frame, same stance taken for `jario`/`irudi` above.
+    sentences: {
+      present: {
+        ni: [{ text: 'Arazoa ___ nik dakidan baino gehiagotan.', validFor: [] }],
+        zu: [{ text: 'Zure indarra ___ jakitean noiz isildu.', validFor: [] }],
+        hura: [{ text: 'Zertan ___ ariketa?', validFor: [] }],
+        gu: [{ text: 'Gure arazoa ___ denbora faltan.', validFor: [] }],
+        zuek: [{ text: 'Zuen indarra zertan ___?', validFor: [] }],
+        haiek: [{ text: 'Arazoak ___ koordinazio faltan.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nire akatsa ___ presaz ibiltzean.', validFor: [] }],
+        zu: [{ text: 'Zure meritua ___ ez amore ematean.', validFor: [] }],
+        hura: [{ text: 'Zertan ___ ariketa?', validFor: [] }],
+        gu: [{ text: 'Gure porrota ___ prestaketa eskasean.', validFor: [] }],
+        zuek: [{ text: 'Zuen arrakasta zertan ___?', validFor: [] }],
+        haiek: [{ text: 'Akatsak ___ presa gehiegitan.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+  },
   // #481: `ihardun`/`jardun` ("to occupy oneself / be engaged in something")
   // — unergative, ergative (NORK) subject only, **no absolutive (NOR)
   // argument at all** (CONJUGATIONS.md §6). `agreement: ['nork']` is the
