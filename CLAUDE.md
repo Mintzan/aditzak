@@ -16,7 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build` — production build
 - `npm run preview` — preview the production build locally
 - `npm run lint` — run ESLint over the project
-- `npm test` — run the Vitest suite (`src/logic.test.js`, `src/journey.test.js`, `src/App.test.jsx`, `src/shareUtils.test.js`)
+- `npm test` — run the Vitest suite (`src/logic.test.js`, `src/journey.test.js`, `src/App.*.test.jsx`, `src/shareUtils.test.js`)
 
 ## Architecture
 
