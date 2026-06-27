@@ -8,6 +8,22 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — docs relevance audit: deleted stale docs, fixed stale summaries
+
+Audited `docs/` for staleness. Deleted `docs/CONJUGATION_COVERAGE.js` (an
+unimported, never-updated snapshot of ~16 verbs vs. `VERBS`'s 100+ — fully
+superseded by `VERB_COVERAGE.md`, which has been kept current) and
+`docs/reviews/sentence-review-sample-izan-egon-ukan.md` (a one-off sample
+review artifact, not a living doc). Fixed two stale summary lines that hadn't
+kept pace with the rest of their docs: `EXERCISE_ENGINE.md`'s header said
+"32-unit sequence" (now 47, 44 `available`); `VERB_COVERAGE.md`'s intro said
+the app covers only `izan`/`ukan` even though every section below it had been
+kept current — reworded to point at §4 instead of repeating a summary count
+that goes stale every time a verb is added. `LEARNING_JOURNEY_PROPOSED.md`/
+`LEARNING_JOURNEY_EVALUATION.md`/`EXERCISE_VARIETY_PLAN.md` were reviewed and
+left as-is — they already self-label as proposal/historical/shipped and are
+still the right reference for "why" a given journey/engine decision was made.
+
 ## 2026-06-27 — #518: flipped Unit 44 ("Synthetic Curiosities") to `available`
 
 `jario`/`irudi`/`etzan` already had `recognitionOnly: true` and full
