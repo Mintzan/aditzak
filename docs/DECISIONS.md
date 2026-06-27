@@ -8,6 +8,33 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — #486: added `etzan`, third and final Unit 44 verb, scope intentionally limited to data only
+
+Added `etzan` ("to lie (in) / consist of") with `agreement: ['nor']`
+(plain absolutive subject, CONJUGATIONS.md §8) and `recognitionOnly: true`,
+completing the `jario`/`irudi`/`etzan` trio Unit 44 ("Synthetic
+Curiosities") plans as bonus content. Unlike `irudi`, #486's agreement
+label in `journey.js`'s existing `focus` text was already correct
+(`'etzan (nor, "datza")'`) — no `journey.js` edit needed this time.
+
+`etzan` is rare and largely archaic/literary in modern Euskara Batua; noted
+that inline as a usage caveat, since the everyday equivalent is the
+periphrastic "etzanda egon". Its only sentence theme is the fixed idiom
+"zertan datza X?" ("what does X consist of?"), already foreshadowed in
+Unit 44's `payload` field — built present/past sentences for all persons
+around that theme. Pronouns use the bare-absolutive style (`Ni`/`Hi`/`Zu`/
+...), matching other `nor`-only verbs like `egon`, not `irudi`'s
+ergative-style pronouns (`irudi` has `nork`, `etzan` doesn't).
+
+Per #486, did **not** create `etzan-present`/`etzan-past` lessons and did
+**not** flip Unit 44 from `pending` to `available` — same deferred
+journey-restructuring stance as `jario`/`irudi`.
+
+Checked `scripts/validfor-delta-audit.mjs --verb etzan` — surfaced only
+`izan`/`egon` identity/location frames ("Ni irakaslea ___", "Ni etxean
+___"); none genuine ("consisting of X" isn't "being X" or "being located
+at X"), so `validFor` stays empty; baseline regenerated.
+
 ## 2026-06-26 — #485: added `irudi`, corrected Unit 44's agreement label, scope intentionally limited to data only
 
 Added `irudi` ("to seem / give the impression") with `agreement: ['nork']`
