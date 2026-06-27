@@ -2,11 +2,13 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
+import { generateMatchPairsQuestions, generateQuestions } from './lessonLogic'
+import { VERBS } from './data/verbs'
 
 describe('App', () => {
   beforeEach(() => {
     // Bypass the one-time language-onboarding screen for tests that exercise
-    // the lesson flow — see the dedicated onboarding test below.
+    // the lesson flow — see the dedicated onboarding test in App.appShell.test.jsx.
     localStorage.setItem('aditzak:lang:v1', 'en')
   })
 
@@ -173,147 +175,152 @@ describe('App', () => {
     })
   })
 
-  describe('account sign-in', () => {
+  it('shows a conjugation preview before a lesson’s first attempt, then starts the exercise on "Start"', async () => {
+    // A roll just under 1 keeps `rollQuestionKind` on the 'form' framing
+    // (roll >= SPECIAL_QUESTION_CHANCE) without disturbing `shuffle`'s
+    // Fisher-Yates swaps (Math.floor(0.99 * (i + 1)) === i for every i).
+    vi.spyOn(Math, 'random').mockReturnValue(0.99)
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+
+    expect(screen.getByText('Take a look before you start')).toBeInTheDocument()
+    expect(screen.getByText('naiz')).toBeInTheDocument()
+    expect(screen.getByText('zara')).toBeInTheDocument()
+    expect(screen.getByText('da')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Start' }))
+
+    expect(screen.queryByText('Take a look before you start')).not.toBeInTheDocument()
+    expect(screen.getByText('Which form is correct?')).toBeInTheDocument()
+  })
+
+  it('skips the preview but already shows sentence-based questions on a lesson’s second attempt', async () => {
+    localStorage.setItem(
+      'aditzak:progress:v1',
+      JSON.stringify({
+        'izan-present': { attempts: 1, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: new Date().toISOString() },
+      }),
+    )
+    // A roll of 0 picks the 'sentence' framing — allowed even during the
+    // no-typing ramp (see `NO_TYPING_ATTEMPTS`), unlike `type-verb`/
+    // `type-pronoun`/`spot-error`.
+    vi.spyOn(Math, 'random').mockReturnValue(0)
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+
+    expect(screen.queryByText('Take a look before you start')).not.toBeInTheDocument()
+    expect(screen.getByText('Which word completes the sentence?')).toBeInTheDocument()
+  })
+
+  describe('share result', () => {
     afterEach(() => {
-      window.history.replaceState({}, '', '/')
+      vi.unstubAllGlobals()
     })
 
-    it('requests a magic link and shows the "check your email" step', async () => {
-      const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: true, status: 200 })
-      const user = userEvent.setup()
+    // With `Math.random` pinned to 0.99, `generateQuestions` and
+    // `generateMatchPairsQuestions` are both deterministic — replicate
+    // `createExerciseState`'s calls for the "izan-present" lesson (12 form/
+    // sentence/pronoun questions, plus the one real match-pairs question
+    // appended after them) so each question's `correct` answer — or, for the
+    // match-pairs question, its `pairs` — is known up front.
+    function izanPresentQuestions() {
+      const verb = VERBS.find((v) => v.id === 'izan')
+      const questions = generateQuestions(verb, 'present', { noTyping: true, rounds: 4, persons: ['ni', 'zu', 'hura'] })
+      const matchPairsQuestions = generateMatchPairsQuestions([{ verb, tense: 'present' }], { persons: ['ni', 'zu', 'hura'] })
+      return [...questions, ...matchPairsQuestions]
+    }
+
+    // `izan`'s own (Basque) pronouns, matching `MatchPairsBoard`'s
+    // `verb.pronouns`-based tile labels (#201) rather than the generic
+    // translated `PERSON_LABEL_KEYS` text.
+    const PERSON_LABEL = { ni: 'ni', zu: 'zu', hura: 'hura' }
+
+    // Plays a single match-pairs question to completion by tapping each
+    // pair's person tile then its matching form tile, in order — mirroring
+    // `MatchPairsBoard`'s own match-then-lock behavior with no mistakes.
+    async function playMatchPairsQuestion(user, question) {
+      for (const { person, form } of question.pairs) {
+        await user.click(screen.getByRole('button', { name: PERSON_LABEL[person] }))
+        await user.click(screen.getByRole('button', { name: form }))
+      }
+    }
+
+    // Mirrors `exerciseReducer`'s `queue`: an incorrect first attempt is
+    // pushed to the back of the queue for a retry, so `wrongFirst` adds one
+    // extra round at the end (answered correctly) rather than just swapping
+    // one answer for another.
+    async function playLesson(user, { wrongFirst = false } = {}) {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      const queue = izanPresentQuestions()
       render(<App />)
 
-      await user.click(screen.getByRole('button', { name: /Profile/ }))
-      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
-      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
-      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
 
-      expect(await screen.findByText('Check your email')).toBeInTheDocument()
-      expect(screen.getByText("We'll sign you in automatically once you click the link.")).toBeInTheDocument()
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining('/auth/request-link'),
-        expect.objectContaining({ method: 'POST', body: JSON.stringify({ email: 'learner@example.com' }) }),
-      )
-    })
-
-    it('shows a rate-limit error from the request-link endpoint', async () => {
-      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false, status: 429 })
-      const user = userEvent.setup()
-      render(<App />)
-
-      await user.click(screen.getByRole('button', { name: /Profile/ }))
-      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
-      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
-      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
-
-      expect(await screen.findByText('Too many attempts. Please wait a bit and try again.')).toBeInTheDocument()
-    })
-
-    it('shows an invalid-email error from the request-link endpoint', async () => {
-      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false, status: 400 })
-      const user = userEvent.setup()
-      render(<App />)
-
-      await user.click(screen.getByRole('button', { name: /Profile/ }))
-      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
-      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
-      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
-
-      expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument()
-    })
-
-    it('shows a generic error for a server-side failure from the request-link endpoint', async () => {
-      vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false, status: 502 })
-      const user = userEvent.setup()
-      render(<App />)
-
-      await user.click(screen.getByRole('button', { name: /Profile/ }))
-      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
-      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
-      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
-
-      expect(await screen.findByText('Something went wrong. Please try again later.')).toBeInTheDocument()
-    })
-
-    it('shows a network error if the request-link call fails', async () => {
-      vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('offline'))
-      const user = userEvent.setup()
-      render(<App />)
-
-      await user.click(screen.getByRole('button', { name: /Profile/ }))
-      await user.click(screen.getByRole('button', { name: 'Sign in / create account' }))
-      await user.type(screen.getByLabelText('Email'), 'learner@example.com')
-      await user.click(screen.getByRole('button', { name: 'Send sign-in link' }))
-
-      expect(await screen.findByText('Something went wrong. Please try again later.')).toBeInTheDocument()
-    })
-
-    it('completes sign-in from a magic-link URL, persists the session, and signs out', async () => {
-      window.history.pushState({}, '', '/?authToken=test-token')
-      const fetchMock = vi.spyOn(globalThis, 'fetch').mockImplementation((url) => {
-        if (String(url).includes('/auth/verify')) {
-          return Promise.resolve({
-            ok: true,
-            json: () => Promise.resolve({ sessionToken: 'session-token', email: 'learner@example.com', hasCloudData: false }),
-          })
+      let first = true
+      while (queue.length > 0) {
+        const question = queue[0]
+        const isLast = queue.length === 1
+        if (question.kind === 'match-pairs') {
+          await playMatchPairsQuestion(user, question)
+          await user.click(await screen.findByRole('button', { name: isLast ? 'Finish' : 'Continue' }))
+          queue.shift()
+          first = false
+          continue
         }
-        return Promise.resolve({ ok: true, status: 200 })
-      })
+        const answer = wrongFirst && first ? question.options.find((o) => o !== question.correct) : question.correct
+        const isCorrect = answer === question.correct
+        await user.click(screen.getByRole('button', { name: answer }))
+        await user.click(screen.getByRole('button', { name: isLast && isCorrect ? 'Finish' : 'Continue' }))
+        if (isCorrect) {
+          queue.shift()
+        } else {
+          queue.push(queue.shift())
+        }
+        first = false
+      }
+    }
+
+    it('shows a "Share" button on a 3-star result and shares via the native share sheet', async () => {
+      const share = vi.fn().mockResolvedValue(undefined)
+      vi.stubGlobal('navigator', { ...navigator, share })
       const user = userEvent.setup()
-      render(<App />)
+      await playLesson(user)
 
-      await user.click(screen.getByRole('button', { name: /Profile/ }))
-      expect(await screen.findByText('learner@example.com')).toBeInTheDocument()
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining('/auth/verify'),
-        expect.objectContaining({ method: 'POST', body: JSON.stringify({ token: 'test-token' }) }),
-      )
-      expect(window.location.search).toBe('')
+      const shareButton = await screen.findByRole('button', { name: 'Share' })
+      await user.click(shareButton)
 
-      const stored = JSON.parse(localStorage.getItem('aditzak:session:v1'))
-      expect(stored).toMatchObject({ token: 'session-token', email: 'learner@example.com' })
-
-      await user.click(screen.getByRole('button', { name: 'Sign out' }))
-
-      expect(await screen.findByRole('button', { name: 'Sign in / create account' })).toBeInTheDocument()
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining('/auth/signout'),
-        expect.objectContaining({ headers: expect.objectContaining({ Authorization: 'Bearer session-token' }) }),
-      )
-      expect(localStorage.getItem('aditzak:session:v1')).toBeNull()
+      expect(share).toHaveBeenCalledWith({
+        title: 'Aditzak — Basque Verb Conjugation',
+        text: 'I just got 3/3 ⭐ on izan · Present (ni/zu/hura) in Aditzak, a Basque verb conjugation app. Think you can do better?',
+        url: `${window.location.origin}${import.meta.env.BASE_URL}`,
+      })
     })
 
-    it('restores a signed-in session from localStorage and pulls/pushes the sync snapshot', async () => {
-      localStorage.setItem(
-        'aditzak:session:v1',
-        JSON.stringify({ token: 'session-token', email: 'learner@example.com', expiresAt: Date.now() + 1000 * 60 * 60 }),
-      )
-      const fetchMock = vi.spyOn(globalThis, 'fetch').mockImplementation((url, options) => {
-        if (options?.method === 'PUT') return Promise.resolve({ ok: true, status: 200 })
-        return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve({ payload: null }) })
-      })
+    it('falls back to copying the link and shows a brief confirmation', async () => {
       const user = userEvent.setup()
-      render(<App />)
+      const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue(undefined)
+      await playLesson(user)
 
-      await user.click(screen.getByRole('button', { name: /Profile/ }))
-      expect(await screen.findByText('learner@example.com')).toBeInTheDocument()
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining('/sync'),
-        expect.objectContaining({ headers: expect.objectContaining({ Authorization: 'Bearer session-token' }) }),
+      const shareButton = await screen.findByRole('button', { name: 'Share' })
+      await user.click(shareButton)
+
+      expect(writeText).toHaveBeenCalledWith(
+        `I just got 3/3 ⭐ on izan · Present (ni/zu/hura) in Aditzak, a Basque verb conjugation app. Think you can do better? ${window.location.origin}${import.meta.env.BASE_URL}`,
       )
-      expect(await screen.findByText('Synced just now')).toBeInTheDocument()
+      expect(await screen.findByRole('button', { name: 'Link copied!' })).toBeInTheDocument()
     })
 
-    it('treats an expired stored session as signed out', async () => {
-      localStorage.setItem(
-        'aditzak:session:v1',
-        JSON.stringify({ token: 'session-token', email: 'learner@example.com', expiresAt: Date.now() - 1000 }),
-      )
+    it('does not show a "Share" button on a less-than-perfect result', async () => {
       const user = userEvent.setup()
-      render(<App />)
+      await playLesson(user, { wrongFirst: true })
 
-      await user.click(screen.getByRole('button', { name: /Profile/ }))
-      expect(screen.getByRole('button', { name: 'Sign in / create account' })).toBeInTheDocument()
+      expect(await screen.findByRole('button', { name: 'Continue' })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Share' })).not.toBeInTheDocument()
     })
   })
 })
