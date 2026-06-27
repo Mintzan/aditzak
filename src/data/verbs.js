@@ -8559,6 +8559,52 @@ export const VERBS = [
       },
     },
   },
+  // #485: `irudi` ("to seem / give the impression") — unergative, NORK-only
+  // (ergative subject, no absolutive argument at all), per CONJUGATIONS.md
+  // §8. A false-friend of `iruditu` ("iruditzen zait" = "it seems to me",
+  // nor-nori, subjective opinion) — `irudi` is about external appearance
+  // instead; cognates that drifted apart in both meaning and agreement, kept
+  // as a clarifying note here. `recognitionOnly: true` — Unit 44 ("Synthetic
+  // Curiosities") plans this as bonus, recognition-only content (one example
+  // sentence, no dedicated lessons), same as `jario` above; per #485, do NOT
+  // add `irudi-present`/`irudi-past` lessons — that's a scope decision for
+  // journey restructuring, not this issue.
+  {
+    id: 'irudi',
+    verb: 'irudi',
+    meaning: { en: 'to seem / give the impression (not iruditu\'s "it seems to me")', es: 'dar la impresión de / parecer (externamente, no es iruditu)', eu: 'irudi (kanpotik halakoa eman, ez iruditu)' },
+    type: 'synthetic',
+    agreement: ['nork'],
+    dialect: 'batua',
+    recognitionOnly: true,
+    conjugations: {
+      present: { ni: 'dirudit', 'hi-m': 'dirudik', 'hi-f': 'dirudin', zu: 'dirudizu', hura: 'dirudi', gu: 'dirudigu', zuek: 'dirudizue', haiek: 'dirudite' },
+      past: { ni: 'nirudien', hi: 'hirudien', zu: 'zenirudien', hura: 'zirudien', gu: 'genirudien', zuek: 'zeniruditen', haiek: 'ziruditen' },
+    },
+    // `validFor: []` throughout, same "no genuine sibling" stance #459/#481
+    // took for `jario`/`ihardun` — "giving the impression of X" doesn't fit
+    // any other verb's frame, and the journey's only planned sentence for
+    // this verb is the fixed `hura`-person example below anyway.
+    sentences: {
+      present: {
+        ni: [{ text: 'Nekatuta, ___.', validFor: [] }],
+        zu: [{ text: 'Nekatuta zaude, ___.', validFor: [] }],
+        hura: [{ text: 'Nekatuta dago, ___.', validFor: [] }],
+        gu: [{ text: 'Nekatuta gaude, ___.', validFor: [] }],
+        zuek: [{ text: 'Nekatuta zaudete, ___?', validFor: [] }],
+        haiek: [{ text: 'Nekatuta daude, ___.', validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nekatuta nengoen, ___.', validFor: [] }],
+        zu: [{ text: 'Nekatuta zeunden, ___?', validFor: [] }],
+        hura: [{ text: 'Nekatuta zegoen, ___.', validFor: [] }],
+        gu: [{ text: 'Nekatuta geunden, ___.', validFor: [] }],
+        zuek: [{ text: 'Nekatuta zeundeten, ___?', validFor: [] }],
+        haiek: [{ text: 'Nekatuta zeuden, ___.', validFor: [] }],
+      },
+    },
+    pronouns: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  },
   // #481: `ihardun`/`jardun` ("to occupy oneself / be engaged in something")
   // — unergative, ergative (NORK) subject only, **no absolutive (NOR)
   // argument at all** (CONJUGATIONS.md §6). `agreement: ['nork']` is the
