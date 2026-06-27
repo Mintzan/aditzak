@@ -8,6 +8,31 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — #517: wired up `izan`/`ukan`'s 4 foundational mood tenses into the journey
+
+`conditionalPast`, `potentialAlegiazkoa`, `potentialLehenaldia`, and
+`subjunctivePast` already had complete conjugation data in `verbs.js`
+(added by #495/#496/#497/#494) but no lesson referenced them, so they were
+unreachable in the app. Added 8 flat practice lessons (`izan`/`ukan` ×
+each tense) plus 3 dedicated review lessons, and extended each tense's
+sibling unit's `lessonIds` rather than creating new units, per the
+issue's own suggested mapping:
+
+- Units 32 (Ahalera): `potentialAlegiazkoa`/`potentialLehenaldia`, full
+  persons — matches `izan-potential`/`ukan-potential`'s own scope.
+- Unit 33 (Baldintza & Ondorioa): `conditionalPast`, full persons —
+  matches `izan-conditional`/`ukan-conditional`.
+- Unit 35 (Subjuntiboa): `subjunctivePast`, restricted to
+  `persons: ['hura', 'haiek']` — matches `izan-subjunctive-present`/
+  `ukan-subjunctive-present`'s established 3rd-person-only production
+  scope for this unit, since the past sub-tense shares the same
+  "subjunctive as a construction" framing as its present sibling.
+
+Each new review lesson pools just its own tense pair, separate from the
+existing reviews for the present-tense siblings, to keep each review
+small and matching the unit's `unit-N-object-axis-review`-style
+granularity already established for these units.
+
 ## 2026-06-27 — #490: added `ukan`'s `subjunctivePresentByObject`/`subjunctivePastByObject` 2D tables
 
 Added the full NORK×NOR object-axis grids for `ukan`'s subjunctive mood,
