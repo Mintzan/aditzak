@@ -8,6 +8,38 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — split `App.test.jsx` into four files for real test-run parallelism
+
+Profiling `npm test` showed `App.test.jsx` alone accounted for 95 of the
+suite's ~97 wall-clock seconds — everything else (the other 6 files, 379
+`logic.test.js` tests included) finished in under a second combined. Vitest
+parallelizes at the *file* level (one worker per file, up to the CPU count),
+so a single dominant file meant the other cores sat idle while one worker
+ran ~80 sequential DOM-rendering tests.
+
+Split `App.test.jsx` along its own existing `describe` block boundaries into
+`App.home.test.jsx` (top-level rendering, share app/result), `App.questionTypes.test.jsx`
+(match-pairs, carrier sampling, word-order, review-form, lure-feedback — the
+block that owns the shared `vi.mock('./lessonLogic', ...)` and its
+`vi.hoisted` flags, since those mocks are only used by this group), `App.account.test.jsx`
+(question flagging, lesson navigation confirmation, account sign-in), and
+`App.sync.test.jsx` (cross-device sync, including the three ~3s merge-modal
+tests). No test bodies changed — pure file split — so the same 460 tests
+still pass; wall-clock time dropped from ~97s to ~55-64s on this 4-core
+machine since the four files now run in separate workers concurrently
+instead of one file serializing most of the suite.
+
+Considered `test.concurrent` instead (no file restructuring needed), but
+rejected it: several `describe` blocks share mutable `vi.hoisted` mock state
+(`matchPairsMock`, `generateQuestionsCalls`, etc.) and a single
+`afterEach`/`beforeEach` resets `localStorage` for the whole file — running
+those tests concurrently within one file risked races and flaky failures
+that a plain file split avoids entirely.
+
+Updated `CLAUDE.md`'s Commands section (`src/App.test.jsx` → `src/App.*.test.jsx`)
+since `npm test` (`vitest run`) picks up test files by glob, not an explicit
+list — no script change needed, just the doc reference.
+
 ## 2026-06-27 — archived 126 entries to bring `DECISIONS.md` back to its ~25-entry policy
 
 `DECISIONS.md` had grown to 151 entries (3,674 lines) spanning just 13 days,
