@@ -40,6 +40,18 @@ Updated `CLAUDE.md`'s Commands section (`src/App.test.jsx` → `src/App.*.test.j
 since `npm test` (`vitest run`) picks up test files by glob, not an explicit
 list — no script change needed, just the doc reference.
 
+## 2026-06-27 — deleted `scripts/audit-conjugations.mjs` and `scripts/audit-journey-coverage.mjs`
+
+Both imported `docs/CONJUGATION_COVERAGE.js`, which the same day's docs-staleness
+audit deleted (superseded by `VERB_COVERAGE.md`) without checking for script
+consumers — both have been crashing with `ERR_MODULE_NOT_FOUND` since, and
+neither is referenced from any other file, `package.json` script, or
+`docs/DECISIONS*.md` entry, unlike the still-active `validfor-*`/`frame-*`
+audit tooling. Removed rather than repointed at `VERB_COVERAGE.md`: that file
+isn't structured data (no `CONJUGATION_COVERAGE`-shaped export), so "fix the
+import" would mean rewriting both scripts from scratch for an audit nobody
+has run in months.
+
 ## 2026-06-27 — archived 126 entries to bring `DECISIONS.md` back to its ~25-entry policy
 
 `DECISIONS.md` had grown to 151 entries (3,674 lines) spanning just 13 days,
