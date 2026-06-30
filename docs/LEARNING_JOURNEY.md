@@ -13,9 +13,13 @@
 > and ditransitive permutations that inflated four units (51/46/32/26 lessons)
 > moved to opt-in `bonus: true` units 48–51; (2) **`gustatu` promotion** — "I
 > like it" (NOR-NORI present) moved from Unit 25 to Unit 14; (3) **short
-> spine** — everything after Agintera (Units 35–47) marked `bonus: true`. The
-> lessons themselves are unchanged (same ids, no `STORAGE_KEY` bump). The full
-> competence-milestone *phase relabel* (A1→B2) is still pending.
+> spine** — everything after Agintera (Units 35–47) marked `bonus: true`;
+> (4) **milestone phases** — the spine phases carry CEFR bands (Phase I·A1 →
+> Phase V·B2) and all bonus units (35–51) were consolidated under one "Bonus —
+> Mastery, Register & Color" phase. The lessons themselves are unchanged (same
+> ids, no `STORAGE_KEY` bump). What remains unimplemented from the proposal is
+> only the further unit *reordering* (the §4 A1→B2 acquisition order, e.g. past
+> after the present cluster), which would require a `LESSONS`-order change.
 
 ## Current implemented structure (authoritative — mirrors `journey.js`)
 

@@ -8,6 +8,30 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — milestone phases + unified Bonus phase (rebalance increment 4)
+
+Closed out the rebalance's presentation work. (1) The five spine phases now
+carry CEFR milestone bands — Phase I·A1 (Survive), II·A2 (Everyday Life),
+III·B1 (Into the Past), IV·B1 (People & Relationships), V·B2 (Nuance &
+Modality). (2) **All bonus units (35–51) were consolidated under one "Bonus —
+Mastery, Register & Color" phase**, instead of rendering inline in the old
+Phases V/VI/VII. Implemented by **redrawing phase/stage boundaries** in
+`journey.js` rather than moving any unit object — units 35–51 were already
+physically contiguous and ascending, so Phase V was closed after Agintera (34),
+the old Phases VI/VII phase-wrappers were dissolved (their stages reparented),
+and the existing Bonus phase header was hoisted to open at Unit 35. Net: units
+stay ascending 1–51, `LESSONS`/unlock order untouched, completability
+invariants re-verified (368 reachable; 194-spine completes without bonus).
+
+Kept the old `phase-5-stage-12`/`phase-6-*`/`phase-7-*` *stage ids* as-is
+(only reparented) so their existing i18n entries keep resolving; added one new
+stage `phase-bonus-stage-subjunctive` (Unit 35) and orphaned the now-unused
+`phase-6`/`phase-7` phase i18n entries (harmless — the test only checks stages
+and unit numbers). Updated an `App.homeScreen` test that asserted the exact
+heading "Phase I" to a `/Phase I\b/` matcher. Full suite (463) + lint + build
+green. The rebalance is now complete bar the §4 unit *reordering* (a
+`LESSONS`-order change, deliberately deferred).
+
 ## 2026-06-27 — short mandatory spine: demoted Units 35–47 to Bonus
 
 Increment 3. Per the rebalance's "short mandatory spine" principle, everything
