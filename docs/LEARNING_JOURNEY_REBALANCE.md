@@ -1,25 +1,23 @@
 # Aditzak — Learning Journey Rebalance (proposal)
 
-**Status: proposal, not yet implemented.** This document proposes a full
-reorganization of the curriculum roadmap (`src/journey.js`'s `JOURNEY` +
-`src/data/lessons.js`'s `LESSONS`). It does *not* change any conjugation data
-(`src/data/verbs.js`) — every conjugation that exists today keeps a home; what
-changes is **how units are grouped, ordered, and sized**.
+**Status: proposal, not yet implemented.** Proposes a full reorganization of
+the curriculum roadmap (`src/journey.js`'s `JOURNEY` + `src/data/lessons.js`'s
+`LESSONS`). It changes **grouping, ordering, sizing, and what is mandatory** —
+it does *not* delete any conjugation data (`src/data/verbs.js`); every
+conjugation that exists keeps a home, but much of it moves to an **optional
+track** that never gates progress.
 
-It supersedes the *layout* of `LEARNING_JOURNEY.md` (the current authoritative
-state) once accepted. The pedagogical principles of
-`LEARNING_JOURNEY_PROPOSED.md` / `LEARNING_JOURNEY_EVALUATION.md` (the
-"Me/You/It" horizon, the ergative on-ramp, production-vs-recognition scoping,
-the Refresh Gates) are **kept** — this proposal only fixes the size/balance
-problems that crept in as the data grew to cover every synthetic and auxiliary
-conjugation.
+It supersedes the *layout* of `LEARNING_JOURNEY.md` once accepted. The
+pedagogical principles of `LEARNING_JOURNEY_PROPOSED.md` /
+`LEARNING_JOURNEY_EVALUATION.md` (the "Me/You/It" horizon, the ergative
+on-ramp, production-vs-recognition scoping, the Refresh Gates) are **kept**.
 
 ---
 
 ## 1. The problem — quantified
 
-The journey grew to 47 units while filling in complete conjugation coverage.
-Counting `lessonIds` per available unit today:
+The journey grew to 47 units while filling in complete synthetic/auxiliary
+conjugation coverage. Counting `lessonIds` per available unit:
 
 | Unit | Title | Lessons |
 |---|---|---:|
@@ -27,226 +25,208 @@ Counting `lessonIds` per available unit today:
 | 33 | Baldintza & Ondorioa — Conditionals | **46** |
 | 34 | Agintera — Commands | **32** |
 | 15 | maite izan — The Non-3rd-Person Object | **26** |
-| 27 / 29 | NOR-NORI object axis / NOR-NORI-NORK past | 12 each |
-| 16 / 18 / 28 | eraman-ekarri / Future / ditransitive present | 10 each |
-| …most others | | **2–6** |
+| …most others | | 2–6 |
 
-Four units hold **155 lessons** between them — roughly **half the entire
-journey** — while ~30 other units hold 2–6 each. The journey has become, in the
-words of the brief, "a catalog of conjugations" rather than "a learning
-experience." A learner who reaches Unit 32 hits a 51-lesson wall; a learner in
-Unit 23 breezes through 2.
+Four units hold ~half the journey; ~30 others hold 2–6. But size imbalance is
+the *symptom*. The deeper problem, read from a **learner's** chair, is two-fold:
 
-## 2. Root cause
+**(a) Encyclopedic completeness is on the mandatory path.** The journey drills
+every `(object/subject-axis value × tense × mood)` permutation — every NORK
+value of `ukan` in the conditional, every NORI value of `gustatu` in the
+imperative, the synthetic curiosities (`jario`/`etzan`/`irudi`), the full
+allocutive register (toka/noka). A learner does not need to *recognize* "it
+could have surprised us (conditional)" to hold a conversation. This is a
+reference grammar, not a course.
 
-The bloat is not spread evenly — it comes from **one structural mistake**: the
-*object/subject axis* (who-acts-on-whom when neither argument is the default
-3rd-person `hura`) is drilled **combinatorially inside every tense and every
-mood**, instead of being taught once as a concept and then reused.
+**(b) The acquisition order buries the most useful forms.** The single most
+useful pattern in everyday Basque — `gustatzen zait` ("I like it") — is
+**Unit 25 of 47**. Past tense starts at Unit 11. A learner can't say "I like
+coffee" or "I went home" until they're most of the way through. Frequency and
+acquisition order are badly misaligned.
 
-Concretely, the data added these cross-cutting axes:
+## 2. Root cause of the size bloat
 
-- **NOR-NORK object axis** (`presentByObject`/`pastByObject`): the object is
-  `ni/zu/zuek/haiek` (e.g. `maite zaitut` "I love you", `harritu nau` "it
-  surprised me"), and the reverse — subject is `hura/gu/zu/zuek/haiek`.
-- **NOR-NORI "nor" axis** (`presentByNor`/`pastByNor`): the subject of a psych
-  verb is `ni/gu/zuek` (`gustatzen natzaizu` "do you like me").
-- The same two axes **repeated inside each mood**: `potentialByObject`,
-  `baldintzaByObject`, `conditionalByObject`, `potentialByNor`,
-  `conditionalByNor`, `imperativeByNor`, … (see `verbs.js`'s tense-key census).
+The object/subject axis (when an argument isn't the default 3rd-person `hura`:
+`maite zaitut` "I love you", `gustatzen natzaizu` "do you like me") is drilled
+**combinatorially inside every tense and every mood** — each
+`(axis-value × mood)` slice is its own lesson plus a per-value review. Unit 32
+alone carries `ukan`'s object axis across 3 potential sub-tenses × 6 NORK
+values × (practice + review), plus the dative axis × 6 NORI values, plus the
+ditransitive: ~45 permutation lessons bolted onto a 6-lesson idea ("I can / I
+can't"). **The axis is the same skill in every mood** — learn "it surprised
+me" once and the conditional version just adds the `-ke-` you already know.
 
-Each `(axis-value × tense/mood)` slice became its own practice lesson **plus** a
-pooled review per fixed person value. Unit 32 alone carries `ukan`'s object
-axis across **three** potential sub-tenses × **six** NORK values × (practice +
-review), plus the dative axis × six NORI values, plus the ditransitive — ~45
-lessons of permutation on top of a 6-lesson core idea ("I can / I can't").
+## 3. Design principles (aggressive)
 
-**The axis is a real skill, but it is the *same* skill in every mood.** Once a
-learner can say "it surprised me" (reverse object axis, indicative), the
-potential version ("it could surprise me") adds the `-ke-` morphology they
-already know from the mood's core lessons — it is not a new relation worth 45
-fresh drills inline.
+1. **Order by frequency / communicative payoff, not by paradigm.** Reorganize
+   the journey into **competence milestones** (≈ A1 → B2): each milestone is
+   "things you can now say." The fastest route to holding a conversation wins.
+2. **Promote the highest-utility forms hard.** `gustatu` ("I like") jumps from
+   Unit 25 to the A1 milestone. Past and future come early.
+3. **A short mandatory spine.** The *required* path to full communicative
+   competence is **~24 tight units (4–8 lessons each)**, not 47. A learner can
+   finish the spine and genuinely converse.
+4. **Everything encyclopedic becomes an opt-in track that never gates.**
+   Allocutive register (hi/toka/noka), the full mood×axis permutation matrix,
+   synthetic/unergative curiosities, weather idioms, and the academic-tier verb
+   tail all move to **Bonus tracks**. They stay available, fully playable, and
+   off the critical path — a learner chooses them, the journey never forces
+   them.
+5. **Teach each relation once, then reuse.** The object axis and the dative
+   "nor" axis each get **one** dedicated indicative unit; moods are taught on
+   the **core paradigm only** (NOR `naiz` + NOR-NORK 3rd-person `dut`).
+6. **Stop mechanically doubling every tense into singular + plural lessons.**
+   `gu`/`zuek`/`haiek` are lower-frequency. Introduce them through the
+   Expansion units and through *review* lessons (which can already span 3
+   plural persons), rather than authoring a dedicated `-plural` practice lesson
+   for every single (verb × tense). This roughly **halves** total lesson count
+   without losing the plural grid. (Engine lever — see §7.)
+7. **Keep wide pools; cut per-value splits.** A pooled review can draw
+   distractors from 37 verbs as a *single* lesson id. The bloat was never the
+   pools — it was splitting one idea into a lesson per axis value.
 
-## 3. Design principles for the rebalance
+## 4. The rebalanced journey — a milestone spine
 
-1. **Target 4–8 lessons per unit.** No mandatory unit exceeds ~8. Units that
-   are pure checkpoints (gates) or bonus flavor may be smaller (2–3); nothing
-   is allowed to be larger.
-2. **Teach each relation once, then reuse.** The object axis and the dative
-   "nor" axis each get their **own dedicated indicative unit** (Phase III / the
-   dative stage). Moods are then taught on the **core paradigm only**
-   (NOR `naiz` + NOR-NORK 3rd-person `dut`, plus the mood's key sub-tenses).
-3. **Axis × mood permutations move to an optional "Mood Mastery" stage.** All
-   the `…ByObject` / `…ByNor` mood slices — which are recognition-only deep
-   drills today — collect into one late, clearly-optional phase. This single
-   move deflates Units 32/33/34 from 51/46/32 to ~8/8/6.
-4. **Order by usefulness, not by paradigm completeness.** High-frequency,
-   high-utility forms come first; rare synthetics and weather idioms stay in
-   the bonus tail (already true, kept).
-5. **Pools stay cheap.** A pooled review can draw distractors from 37 verbs
-   while being a *single* lesson id — wide vocabulary coverage does **not** cost
-   lessons. The bloat was never the pools; it was the per-axis-value lesson
-   *splits*. Keep the wide pools, cut the splits.
-6. **Keep the four Refresh Gates** (A negation, B core tense, C multi-argument,
-   D causative) and the score-gating model unchanged.
+`[P]` production, `[R]` recognition. Bold = lesson count. 🛡️ = Refresh Gate.
 
-## 4. The rebalanced journey
+### 🟢 Milestone A1 — Survive: be, have, go, want
+*"I'm a student. I'm at home. I have a car. I'm going. I don't know."*
+Persons: `ni`/`zu`/`hura`.
 
-Renumbered cleanly 1…49. Every unit lists the **conjugations it introduces**
-(verb × tense/mood × persons) and a lesson breakdown. `[P]` = production,
-`[R]` = recognition-only, as in the existing docs. Lesson counts in **bold**.
-
-### Phase I — Survival Present (`ni`/`zu`/`hura`)
-*Unchanged from today — this phase is already well-balanced.*
-
-| # | Unit | Conjugations introduced | Lessons |
+| # | Unit | Introduces | Lessons |
 |---|---|---|---:|
-| 1 | izan & egon — Who and Where | `izan.present`, `egon.present` (ni/zu/hura) | **3** |
-| 2 | ukan — The Ergative Leap | `ukan.present`, object fixed `hura` | **3** |
-| 3 | 🛡️ "Ni" vs "Nik" — Case-Marking Checkpoint | zero new (sort izan/egon vs ukan subjects) | **3** |
+| 1 | izan & egon — Who and Where | `izan.present`, `egon.present` | **3** |
+| 2 | ukan — The Ergative Leap | `ukan.present` (obj `hura`) | **3** |
+| 3 | 🛡️ "Ni" vs "Nik" Checkpoint | sort bare vs ergative subjects | **3** |
 | 4 | jakin & nahi — Knowing & Wanting | `jakin.present`, `nahi.present` | **4** |
-| 5 | ikusi — First Periphrastic (`-tzen dut`) | `ikusi.present` | **2** |
-| 6 | joan/etorri/ibili — The NOR Present | 3 synthetics + `nor`-fodder pool | **6** |
-| 7 | 🛡️ Expansion: Absolutive Plurals | gu/zuek/haiek for izan/egon/joan/etorri | **3** |
-| 8 | 🛡️ Expansion: Ergative Plurals | gu/zuek/haiek for ukan/ikusi | **4** |
-| 9 | ari — The Immediate Continuous | `ari.present` | **2** |
-| 10 | 🛡️ Refresh Gate A — The "Ez" Trap | negation across Units 1–9 | **3** |
+| 5 | joan/etorri/ibili — Getting Around | NOR present + nor-fodder | **5** |
+| 6 | 🛡️ The "Ez" Trap — Negation | negation across A1 | **3** |
 
-### Phase II — Everyday Transitivity & Tense
+### 🟢 Milestone A2 — Do things & react: see, eat, **like**
+*"I see the mountain. I eat bread. **I like coffee.** I'm working."*
+The big promotion: `gustatu` arrives here, not in the 20s.
 
-| # | Unit | Conjugations introduced | Lessons |
+| # | Unit | Introduces | Lessons |
 |---|---|---|---:|
-| 11 | Present Perfect — What Just Happened | `presentPerfect` (izan/joan/etorri/ikusi) | **5** |
-| 12 | Simple Past I — The izan Pool | `past` for izan/joan/etorri/ibili + nor-fodder | **4** |
-| 13 | NOR-NORK Present — dut/duzu/du | `present` pool (jan/edan/erosi/ikusi/hartu + long tail) + plural-object `ditut` (`presentPlural`) | **4** |
-| 14 | NOR-NORK Past — nuen/zenuen/zuen | `past` pool + plural-object `pastPlural` | **4** |
-| 15 | eduki — Possessions | `eduki.present` (full grid) + `ibili` plural | **5** |
-| 16 | Simple Past II — eduki & egon | `eduki.past`, `egon.past`, `ados-egon` (**merges old Units 18+19**) | **6** |
-| 17 | eraman/ekarri — More NOR-NORK Synthetics | present/past (+ plural) — **trimmed from 10** | **6** |
-| 18 | The Future Rule — `-ko`/`-go` | `izan`/`ukan` `future` core + pooled fodder + suffix-choice + plural-object — **trimmed from 10** | **6** |
-| 19 | behar — Requirements & Obligations | `behar` present + future | **3** |
-| 20 | 🛡️ Refresh Gate B — Core Tense Mixer | present/past/future, ±negation, score-gated | **6** |
+| 7 | ikusi & the NOR-NORK Present | `present` pool (ikusi/jan/edan/erosi/hartu) — dut/duzu/du | **5** |
+| 8 | **gustatu — "I Like It"** (NOR-NORI) | `gustatu`/`iruditu`/`ahaztu` `present`, zait/zaizu/zaio | **6** |
+| 9 | ari — "I'm Doing It" (continuous) | `ari.present` | **2** |
+| 10 | 🛡️ Expansion: We / You-all / They | gu/zuek/haiek for everything so far (absolutive + ergative) | **5** |
+| 11 | 🛡️ Present Checkpoint | cumulative present mixer, ±negation | **4** |
 
-### Phase III — The Object Axis (who acts on whom)
-**Replaces the 26-lesson Unit 15.** The forward and reverse directions become
-two balanced units, both placed right after the NOR-NORK past whose paradigm
-they extend.
+### 🔵 Milestone B1 — Time: past, perfect, future
+*"I went home. I have seen it. I will come. I have to go."*
 
-| # | Unit | Conjugations introduced | Lessons |
+| # | Unit | Introduces | Lessons |
 |---|---|---|---:|
-| 21 | "I Love You" — The Forward Object Axis | `presentByObject`/`pastByObject`, object = ni/zu/zuek/haiek, subject `ni`; carriers ukan/maite/ikusi; one wide pooled review | **6** |
-| 22 | "It Surprised Me" — The Reverse Object Axis | same tables, subject = hura/gu/zu/zuek/haiek acting on me/us; pooled review per direction (wide verb pool, few lesson ids) | **6** |
+| 12 | What Just Happened (Present Perfect) | `presentPerfect` (izan/joan/etorri/ikusi) | **5** |
+| 13 | "I Did It" — Simple Past | `past` pools (izan-branch + ukan-branch) | **6** |
+| 14 | eduki & egon — States, and Their Past | `eduki.present`, `eduki.past`, `egon.past` | **6** |
+| 15 | The Future Rule (`-ko`/`-go`) | `izan`/`ukan` future + pooled fodder | **6** |
+| 16 | behar — "I Have To" | `behar` present + future | **3** |
+| 17 | 🛡️ Tense Checkpoint (score-gated) | present/past/future mixer | **6** |
 
-### Phase IV — Aspect in the Past
+### 🔵 Milestone B1 — People as objects
+*"I love you. I see you. I give it to him. I tell him."*
 
-| # | Unit | Conjugations introduced | Lessons |
+| # | Unit | Introduces | Lessons |
 |---|---|---|---:|
-| 23 | The Imperfective Past — "I Used To…" | `habitualPast` (etorri/ikusi) | **5** |
-| 24 | Motion in Progress (Past) | `imperfectivePast` (joan/etorri/ibili) | **4** |
+| 18 | **"Maite zaitut" — I love/see you** | forward object axis (`presentByObject`, obj=ni/zu/zuek/haiek, subj `ni`), carriers ukan/maite/ikusi + 1 wide pooled review | **6** |
+| 19 | The Dative Across Time | NOR-NORI `past`/`future` + covert-dative agentive verbs (lagundu/deitu/erantzun…), pooled | **7** |
+| 20 | **diot — "I Give/Tell It to Him"** | NOR-NORI-NORK `present` (esan/eman), axis-scaffolded + ditransitive fodder | **7** |
+| 21 | Telling & Giving Across Time | NOR-NORI-NORK `past`/`future`, pooled | **6** |
+| 22 | 🛡️ Multi-Argument Audit (score-gated) | NOR/NORK/NORI role-swaps | **4** |
 
-### Phase V — Dative & Ditransitive
+### 🟣 Milestone B2 — Nuance: can, would, command, aspect
+*"I can come. If I had money… Come here! I used to go."*
+Moods taught on the **core paradigm only**.
 
-| # | Unit | Conjugations introduced | Lessons |
+| # | Unit | Introduces | Lessons |
 |---|---|---|---:|
-| 25 | NOR-NORI Present — zait/zaizu/zaio | `present` (gustatu/iruditu/ahaztu) + number split + case-frame buffer — **trimmed from 9** | **6** |
-| 26 | NOR-NORI Past & Future | `past`/`future`, pooled mixer | **6** |
-| 27 | The NOR-NORI Object Axis — natzaizu | `presentByNor`/`pastByNor`, pooled cross-verb review per NORI value (**consolidated from 12; drop redundant single-verb splits**) | **6** |
-| 28 | NOR-NORI-NORK Present — diot/diozu/dio | `present` (esan/eman), axis-scaffolded, + ditransitive fodder pool — **trimmed from 10** | **8** |
-| 29 | NOR-NORI-NORK Past & Future | `past`/`future`, axis-fixed slices + fodder pool — **trimmed from 12** | **8** |
-| 30 | Covert-Dative Agentive Verbs | lagundu/ekin/erantzun/deitu/eragin/antzeman + dative `egin` compounds, pooled present/past/future | **8** |
-| 31 | 🛡️ Refresh Gate C — Multi-Argument Audit | NOR/NORK/NORI role-swaps, score-gated | **4** |
+| 23 | Ahalera — "I Can / I Can't" | `potential` + `potentialLehenaldia` (izan/ukan 3rd-person) + `ahal`/`ezin` — **core slice of old Unit 32 (51)** | **7** |
+| 24 | Baldintza — "If…, I Would" | `baldintza` + `conditional` + `conditionalPast` (izan/ukan 3rd-person) — **core slice of old Unit 33 (46)** | **7** |
+| 25 | Agintera — Commands | `imperative` (izan/ukan + egon/etorri/joan) — **core slice of old Unit 34 (32)** | **6** |
+| 26 | Aspect — "I Used To / Was Doing" | `habitualPast` + `imperfectivePast` (motion) | **6** |
 
-### Phase VI — Modality & Mood (**core paradigm only**)
-**The deflation.** Each mood is taught on NOR (`naiz`-pattern) + NOR-NORK
-3rd-person (`dut`-pattern) plus the mood's own key sub-tenses. The dative,
-ditransitive, and object-axis versions of each mood are *removed from these
-units* and collected in Phase VII.
+**End of the mandatory spine — 26 units.** A learner who finishes here can
+discuss the present, past, and future; express likes, obligations, ability,
+and hypotheticals; give commands; and handle people-as-objects. That is real,
+broad communicative competence.
 
-| # | Unit | Conjugations introduced | Lessons |
-|---|---|---|---:|
-| 32 | Ahalera — Can / Can't | `potential` + `potentialAlegiazkoa` + `potentialLehenaldia` (izan/ukan, 3rd-person) + periphrastic `ahal izan`/`ezin` — **from 51** | **8** |
-| 33 | Baldintza & Ondorioa — Conditionals | `baldintza` + `conditional` + `conditionalPast` (izan/ukan, 3rd-person) — **from 46** | **8** |
-| 34 | Agintera — Commands | `imperative` (izan/ukan incl. jussive/hortative/plural-object) + egon/etorri/joan — **from 32** | **6** |
-| 35 | Subjuntiboa — Purpose & Wishing | `subjunctivePresent`/`subjunctivePast` as a construction, 3rd-person | **6** |
+### ⚪ Bonus Track I — Deeper morphology (opt-in, never gates)
+| # | Unit | Introduces |
+|---|---|---|
+| B1 | Subjuntiboa — Purpose & Wishing `[R]` | `subjunctivePresent`/`Past` as a construction |
+| B2 | Causatives `-arazi` (intransitive) | itzularazi/dantzarazi present/past/future |
+| B3 | Causatives `-arazi` (transitive) + 🛡️ gate | janarazi/idatzarazi |
+| B4 | The Reverse Object Axis in Depth | "it surprised me" — `…ByObject` full matrix `[R]` |
+| B5 | Axes in the Moods | every `…ByObject`/`…ByNor` mood slice, pooled `[R]` — **absorbs the ~90 permutation lessons that bloated Units 32–34** |
+| B6 | Reading Real Text — the passive nor-shift `[R]` | non-finite, `ireki dut → ireki da` |
 
-### Phase VII — Mood Mastery (**optional deep dives**)
-Holds every `…ByObject` / `…ByNor` / ditransitive mood slice pulled out of
-Phase VI. Recognition-pooled, score-gated *off* the main path so a learner can
-finish the core curriculum without them. This is where the ~70 permutation
-lessons that bloated Units 32–34 live — but as a handful of wide pooled
-reviews, not as per-axis-value splits.
+### ⚪ Bonus Track II — Register & color (opt-in, never gates)
+| # | Unit | Introduces |
+|---|---|---|
+| C1 | Meet "hi" | hi as subject in known paradigms |
+| C2 | Toka (masculine allocutive) | `presentToka`/`pastToka` |
+| C3 | Noka (feminine allocutive) | `presentNoka`/`pastNoka` |
+| C4 | Hitanoa Recombined | mixed register + suppression rules |
+| C5 | Synthetic Curiosities `[R]` | jario, etzan, irudi |
+| C6 | Unergative Curiosities | ihardun, iraun |
+| C7 | erabili — Using Things | erabili present/past |
+| C8 | Talking About Weather | ari+ukan, izan/egon idioms |
 
-| # | Unit | Conjugations introduced | Lessons |
-|---|---|---|---:|
-| 36 | The Object Axis in the Moods | `potentialByObject`/`baldintzaByObject`/`conditionalByObject`/… (ukan), pooled review per direction `[R]` | **~8** |
-| 37 | Dative & Ditransitive in the Moods | `potentialByNor`/`conditionalByNor`/`imperativeByNor`/… (gustatu/iruditu/ahaztu/jarraitu) + esan/eman ditransitive across moods, pooled `[R]` | **~8** |
+## 5. What changed vs the old journey (and why a learner wins)
 
-### Phase VIII — The Intimate Register (`hi` + Hitanoa)
+| Move | From | To | Learner payoff |
+|---|---|---|---|
+| `gustatu` "I like" | Unit 25/47 | **Unit 8** (A2) | Says "I like coffee" in week one |
+| Simple past | Unit 11+ | **Unit 13** (early B1) | Talks about yesterday far sooner |
+| Mandatory spine length | 47 units | **26 units** | Reaches competence ~2× faster |
+| Ahalera | 51 lessons | **7** (core) + Bonus B5 | A digestible "I can," not a wall |
+| Baldintza | 46 | **7** + Bonus B5 | — |
+| maite izan | 26 | **6** + Bonus B4 | — |
+| hi / toka / noka | mandatory Units 36–39 | **Bonus Track II** | Never forced through regional register |
+| jario/etzan/irudi/ihardun | mandatory tail | **Bonus Track II** | Trivia stays optional |
+| per-tense `-plural` lessons | every verb×tense | folded into Expansion + reviews | ~½ the grind for the same grid |
 
-| # | Unit | Conjugations introduced | Lessons |
-|---|---|---|---:|
-| 38 | Meet "hi" | `hi` as subject in known paradigms + hi-as-NORK gender split | **3** |
-| 39 | Toka (Masculine Allocutive) | `presentToka`/`pastToka` (izan/ukan) | **5** |
-| 40 | Noka (Feminine Allocutive) | `presentNoka`/`pastNoka` (izan/ukan) | **5** |
-| 41 | Hitanoa Recombined | mixed toka/noka + suppression rules | *pending* |
+## 6. What is *not* lost
 
-### Phase IX — Causatives (`-arazi`)
-
-| # | Unit | Conjugations introduced | Lessons |
-|---|---|---|---:|
-| 42 | Making Someone Do It | `-arazi` on intransitives (itzularazi/dantzarazi), present/past/future | **7** |
-| 43 | Making Someone Do Something to Someone | `-arazi` on transitives (janarazi/idatzarazi), present/past/future | **7** |
-| 44 | 🛡️ Refresh Gate D — Causative Recombination | -arazi across tenses, score-gated | **2** |
-
-### Phase X — Reading & Curiosities (Bonus)
-
-| # | Unit | Conjugations introduced | Lessons |
-|---|---|---|---:|
-| 45 | The Passive nor-shift — Reading Real Text | non-finite forms, `ireki dut → ireki da` `[R]` | **2** |
-| 46 | Synthetic Curiosities | jario (nor-nori), etzan (nor), irudi (unergative) `[R]` | *pending* |
-| 47 | Unergative Curiosities | ihardun, iraun (NORK-only) present/past | **5** |
-| 48 | erabili — Using Things | `erabili` present/past | **3** |
-| 49 | Talking About Weather | ari+ukan, izan/egon idioms, 3rd-person | *pending* |
-
-## 5. Deflation map (the four monster units)
-
-| Old unit | Old | New home(s) | New size |
-|---|---:|---|---:|
-| 15 maite izan | 26 | **21** Forward axis + **22** Reverse axis | 6 + 6 |
-| 32 Ahalera | 51 | **32** Ahalera (core) + **36** Object axis in moods | 8 + (~8 shared) |
-| 33 Baldintza | 46 | **33** Baldintza (core) + **37** Dative/ditransitive in moods | 8 + (~8 shared) |
-| 34 Agintera | 32 | **34** Agintera (core) + **37** (imperativeByNor slice) | 6 + shared |
-
-No conjugation table is deleted. The object-axis and mood-axis tables that
-exist today (`presentByObject`, `potentialByNor`, `imperativeByNor`, …) all
-keep a home — either in their dedicated indicative unit (Phase III / 27) or in
-the optional Mood Mastery phase (36–37).
-
-## 6. Result
-
-- **Every mandatory unit is 2–8 lessons.** The 51/46/32/26 walls are gone.
-- **Total mandatory lessons drop** (the per-axis-value splits in Units 32–34
-  collapse into ~16 pooled reviews in Phase VII), without losing any coverage —
-  the wide verb pools are preserved as distractor sources.
-- **The journey reads as a learning experience**: a learner moves present →
-  past → object-axis → aspect → dative → ditransitive → moods, each in a
-  digestible unit, with the encyclopedic axis×mood permutations available as
-  opt-in mastery content rather than a mandatory wall.
+No conjugation table is deleted. Every `…ByObject`/`…ByNor`, allocutive,
+causative, and synthetic-curiosity form that exists today still has a playable
+unit — it just lives in a **Bonus track** the learner opts into, rather than a
+mandatory gate. The wide distractor pools (the 37-verb review sources) are
+preserved wholesale; only the per-axis-value lesson *splits* collapse into a
+handful of pooled reviews.
 
 ## 7. Implementation notes (for the follow-up session)
 
-This proposal is **layout only**; turning it into code is mechanical and
-test-guarded:
+Layout + flag work; data-safe and test-guarded:
 
-1. Reorder/regroup units in `src/journey.js`; re-scope `lessonIds`.
-2. Split Unit 15's 26 ids into Units 21/22; pull the `…ByObject`/`…ByNor` mood
-   ids out of Units 32–34 into new Phase VII units 36/37.
-3. No `src/data/verbs.js` change and **no `STORAGE_KEY` bump** (progress is
-   keyed by lesson id; ids can be kept stable across a renumber, per the #137
-   precedent in `DECISIONS.md`).
-4. Run `npm test` — `src/journey.test.js` cross-checks that every `lessonIds`
-   entry resolves to a `LESSONS` id and vice versa, so a dangling reference
-   fails fast.
-5. Keep `docs/LEARNING_JOURNEY.md`, `journeyTranslations.js`, and the gate
-   index (`GATE_LESSON_IDS`) in sync, per `CLAUDE.md`'s "Working on the
-   learning journey".
+1. Reorder/regroup units in `src/journey.js`; re-scope `lessonIds`. Tag Bonus
+   tracks so they unlock off the spine (a `bonus: true` flag on units/stages,
+   read by `getUnlockedLessonIds` so they don't block the next spine unit).
+2. Move `gustatu`'s present lessons up to the A2 milestone; pull the
+   `…ByObject`/`…ByNor` mood ids out of old Units 32–34 into Bonus B4/B5.
+3. **Engine lever (principle 6):** to drop the mechanical singular/plural
+   doubling, either relax "max 3 persons per exercise" for review lessons or
+   make `-plural` siblings auto-generated review variants rather than authored
+   `LESSONS` entries. This is the one change that touches engine logic, not
+   just journey layout — worth its own design pass (see §"App engine logic" in
+   `LEARNING_JOURNEY.md`).
+4. No `src/data/verbs.js` change and **no `STORAGE_KEY` bump** — progress is
+   keyed by lesson id; ids stay stable across the renumber (the #137
+   precedent).
+5. Run `npm test` — `src/journey.test.js` fails fast on any dangling
+   `lessonIds`. Keep `LEARNING_JOURNEY.md`, `journeyTranslations.js`, and
+   `GATE_LESSON_IDS` in sync.
+
+## 8. The one judgment call for the maintainer
+
+The aggressive version **demotes carefully-built content** (hitanoa, the
+mood×axis matrix, curiosities) from "required" to "optional." That content
+isn't wasted — it's still playable — but it stops counting toward "finishing
+the course." If the goal is a *reference app* where completion means "every
+form drilled," keep more of it mandatory (the conservative rebalance in this
+file's git history does that). If the goal is the brief's stated one — "a
+learning experience," fastest route to actually speaking — the short spine
+above is the answer.

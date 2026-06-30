@@ -8,23 +8,30 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
-## 2026-06-27 — proposed a journey rebalance (`LEARNING_JOURNEY_REBALANCE.md`)
+## 2026-06-27 — proposed an aggressive journey rebalance (`LEARNING_JOURNEY_REBALANCE.md`)
 
 Filling in complete synthetic/auxiliary conjugation coverage left the journey
-badly unbalanced: four units (32 Ahalera/51, 33 Baldintza/46, 34 Agintera/32,
-15 maite izan/26) hold ~half of all lessons while ~30 others hold 2–6. Root
-cause: the object/subject axis (object isn't `hura`, subject isn't 3rd-person)
-is drilled combinatorially inside every tense *and every mood* — each
+badly unbalanced (four units — 32 Ahalera/51, 33 Baldintza/46, 34 Agintera/32,
+15 maite izan/26 — hold ~half of all lessons) *and* mis-ordered: the single
+most useful pattern, `gustatzen zait` ("I like it"), was Unit 25 of 47, and the
+mandatory path was padded with encyclopedic content (the full mood×object-axis
+matrix, hitanoa, synthetic curiosities). Root size cause: the object/subject
+axis is drilled combinatorially inside every tense *and every mood* — each
 `(axis-value × mood)` slice became its own lesson plus a per-value review.
 
-Wrote `docs/LEARNING_JOURNEY_REBALANCE.md` proposing a layout-only
-reorganization (no `verbs.js` change, no `STORAGE_KEY` bump): target 4–8
-lessons/unit; teach each axis once in a dedicated indicative unit; teach moods
-on the core paradigm only; collect every `…ByObject`/`…ByNor` mood permutation
-into an optional late "Mood Mastery" phase as a few wide pooled reviews instead
-of dozens of per-value splits. Deflates 51/46/32/26 → 8/8/6 and (15 → 6+6).
-Kept the four Refresh Gates and the `LEARNING_JOURNEY_PROPOSED.md` pedagogy.
-Proposal only — not yet implemented in `journey.js`/`lessons.js`.
+Wrote `docs/LEARNING_JOURNEY_REBALANCE.md` proposing a layout-only,
+data-preserving reorganization (no `verbs.js` change, no `STORAGE_KEY` bump)
+around **competence milestones** (A1→B2): a short ~26-unit mandatory spine that
+front-loads usefulness (`gustatu` promoted to Unit 8; past/future early), with
+everything encyclopedic — mood×axis permutations, hitanoa (hi/toka/noka),
+synthetic/unergative curiosities, weather, reading — demoted to opt-in **Bonus
+tracks** that never gate progress (a `bonus: true` unit flag). Moods are taught
+on the core paradigm only; the ~90 `…ByObject`/`…ByNor` mood splits collapse
+into a few wide pooled reviews in Bonus track I. Also flags an engine lever:
+stop mechanically doubling every (verb × tense) into singular + `-plural`
+lessons (~halves lesson count). The doc keeps a conservative
+non-aggressive alternative in its git history (first commit) for a
+"reference app" framing. Proposal only — not yet implemented.
 
 ## 2026-06-27 — re-split `App.*.test.jsx` along the new module boundaries
 
