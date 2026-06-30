@@ -120,6 +120,11 @@ function UnitLessons({ unit, progress, unlockedIds, onSelect }) {
     <div>
       <p className="font-semibold text-gray-900">
         {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
+        {unit.bonus && (
+          <span className="ml-2 inline-block rounded-full bg-violet-100 px-2 py-0.5 align-middle text-xs font-semibold text-violet-700">
+            ✨ {t('bonusLabel')}
+          </span>
+        )}
       </p>
       <p className="mt-0.5 mb-2 text-sm text-gray-500 break-words">{focus}</p>
       <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />

@@ -10,9 +10,16 @@
   from Unit 25 to **Unit 14** (right after the NOR-NORK present), with the
   spine renumbered to stay a contiguous 1–47 and the i18n keys rotated to
   match. The NOR-NORI past/future stays later (Unit 26).
+- **Increment 3 — short mandatory spine.** Everything after Agintera (Unit 34)
+  — subjunctive, the hitanoa stage (hi/toka/noka), reading, causatives,
+  curiosities, weather, erabili (Units 35–47) — is now `bonus: true`. The
+  **mandatory spine is Units 1–34 (194 lessons)**; 174 lessons (bonus units
+  35–51) are opt-in and never gate. A "✨ Bonus · optional" badge marks them in
+  the UI. Verified: the spine completes without touching any bonus lesson.
 
-Still to do: the full competence-milestone (A1→B2) renumber/relabel of the
-whole journey (§4, §7) — the larger structural + i18n pass.
+Still to do (cosmetic): relocate bonus Units 35–47 into the "Bonus — Mastery &
+Depth" phase (they currently render inline in Phases V–VII, badged), and the
+full competence-milestone (A1→B2) phase relabel (§4, §7).
 
 Proposes a full reorganization of
 the curriculum roadmap (`src/journey.js`'s `JOURNEY` + `src/data/lessons.js`'s

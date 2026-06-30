@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — short mandatory spine: demoted Units 35–47 to Bonus
+
+Increment 3. Per the rebalance's "short mandatory spine" principle, everything
+after **Agintera (Unit 34)** — subjunctive (35), the whole hitanoa stage
+(36–39: hi/toka/noka), reading (40), causatives (41–43, incl. Gate D),
+synthetic/unergative curiosities (44/46), weather (45), erabili (47) — is now
+`bonus: true`. The mandatory spine is Units 1–34 (194 lessons); the rest
+(174 lessons across bonus units 35–51) is opt-in and never gates.
+
+Verified by simulation: no deadlock (all 368 reachable) and the full 194-lesson
+spine completes **without ever touching a bonus lesson**. Added a visible
+"✨ Bonus · optional" badge (`bonusLabel` i18n key, violet pill) to bonus unit
+headers in `HomeScreen` so the optionality is legible — previously bonus only
+affected unlock behaviour invisibly. Full suite (463) + lint + build green.
+
+Known cosmetic gap: bonus units 35–47 still render inline in Phases V–VII
+(badged) rather than relocated into the "Bonus — Mastery & Depth" phase with
+48–51 — deferred to the milestone phase reorg.
+
 ## 2026-06-27 — promoted `gustatu` ("I like it") into the present cluster
 
 Increment 2 of the rebalance. The NOR-NORI present unit (`gustatu`/`iruditu`/

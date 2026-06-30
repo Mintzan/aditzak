@@ -790,6 +790,7 @@ export const JOURNEY = [
           },
           {
             number: 35,
+            bonus: true,
             title: 'Purpose & Wishing (Subjuntiboa)',
             focus: 'the subjunctive as a construction (matrix verb + subordinate clause) — NOR/NOR-NORK 3rd-person in-construction production, dative/ditransitive recognition-only',
             payload: 'Nahi dut etor dadin. · Esan dio etor dadila. · ...ikus dezan.',
@@ -808,6 +809,7 @@ export const JOURNEY = [
         units: [
           {
             number: 36,
+            bonus: true,
             title: 'hi — Meet "hi"',
             focus: 'hi as a subject in known paradigms, plus hi-as-NORK\'s own gender split',
             payload: 'Hi ikaslea haiz.',
@@ -816,6 +818,7 @@ export const JOURNEY = [
           },
           {
             number: 37,
+            bonus: true,
             title: 'Toka (Masculine Allocutive)',
             focus: 'addressee-agreement on 3rd-person statements, masculine register',
             payload: 'Lanean dik.',
@@ -824,6 +827,7 @@ export const JOURNEY = [
           },
           {
             number: 38,
+            bonus: true,
             title: 'Noka (Feminine Allocutive)',
             focus: 'taught as the -k → -n transform of Unit 34\'s toka forms, feminine register',
             payload: 'Lanean din.',
@@ -832,6 +836,7 @@ export const JOURNEY = [
           },
           {
             number: 39,
+            bonus: true,
             title: 'Hitanoa Recombined',
             focus: 'mixed toka/noka chosen by addressee gender, plus when not to use it — suppressed in subordinate clauses and formal -ke- moods',
             status: 'pending',
@@ -844,6 +849,7 @@ export const JOURNEY = [
         units: [
           {
             number: 40,
+            bonus: true,
             title: 'The Passive nor-shift — Reading Real Text',
             focus: 'non-finite forms, nor-shift (ireki dut → ireki da) — comprehension over real sentences, recognition-only throughout',
             payload: 'Nik atea ireki dut. → Atea ireki da.',
@@ -865,6 +871,7 @@ export const JOURNEY = [
         units: [
           {
             number: 41,
+            bonus: true,
             title: 'Making Someone Do It',
             focus: '-arazi on intransitives (nor → nor-nork), present/past/future',
             payload: 'Ekaitzak mendizaleak itzularazi zituen. · Musikak umeak dantzarazi ditu.',
@@ -881,6 +888,7 @@ export const JOURNEY = [
           },
           {
             number: 42,
+            bonus: true,
             title: 'Making Someone Do Something to Someone',
             focus: '-arazi on transitives (nor-nork → nor-nori-nork), present/past/future',
             payload: 'Amonak umeei babarrunak janarazi zizkien. · Irakasleak ikasleei hori idatzarazi die.',
@@ -903,6 +911,7 @@ export const JOURNEY = [
         units: [
           {
             number: 43,
+            bonus: true,
             title: 'REFRESH — Causatives Across Tenses & Moods',
             // Scoped to present/past/future (mirroring Unit 22 gate's own
             // scope) rather than also recombining conditional/imperative —
@@ -928,6 +937,7 @@ export const JOURNEY = [
         units: [
           {
             number: 44,
+            bonus: true,
             title: 'Synthetic Curiosities',
             // #485: corrected `irudi`'s agreement label — unergative,
             // NORK-only (ergative subject, no absolutive argument), not
@@ -951,6 +961,7 @@ export const JOURNEY = [
         units: [
           {
             number: 45,
+            bonus: true,
             title: 'Talking About Weather',
             focus: 'ari + ukan ("euria ari du"), izan/egon weather idioms — fixed 3rd person only, zero new conjugation tables',
             payload: 'Euria ari du. · Hotz da. · Eguzkia dago.',
@@ -969,6 +980,7 @@ export const JOURNEY = [
             // recognition-only scope — neither verb has a journey-documented
             // "bonus, one example sentence" plan the way jario/etzan/irudi do.
             number: 46,
+            bonus: true,
             title: 'Unergative Curiosities',
             focus: 'ihardun ("dihardut"/"niharduen"), iraun ("dirau"/"zirauen") — unergative, NORK-only, ergative subject with no absolutive argument',
             payload: 'Lanean dihardut. · Filmak bi ordu dirau.',
@@ -988,6 +1000,7 @@ export const JOURNEY = [
             // Phase VII's bonus tail alongside them rather than the
             // renumbered core sequence.
             number: 47,
+            bonus: true,
             title: 'erabili — Using Things',
             focus: 'erabili ("darabilt"/"nerabilen") — nor-nork synthetic verb in the already-taught eduki/jakin shape, present + past',
             payload: 'Nik ordenagailua darabilt egunero.',
