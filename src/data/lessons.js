@@ -636,6 +636,67 @@ export const LESSONS = [
       { verbId: 'jakin', tense: 'presentPlural' },
     ],
   },
+  // #rebalance — "I Like It" (NOR-NORI present), PROMOTED here from its old
+  // Phase IV position (was Unit 25) into the present cluster, right after the
+  // NOR-NORK present, so a learner can say `gustatzen zait` ("I like it") near
+  // the start of the journey rather than two thirds of the way through. The
+  // NOR-NORI *past/future* (gustatu-past/-future, …) stays later, in the
+  // "Dative Across Time" unit. `person` ranges over NORI (object: 'hura' fixes
+  // NOR = "it"). See `docs/LEARNING_JOURNEY_REBALANCE.md`.
+  { id: 'gustatu-present', verbId: 'gustatu', tense: 'present' },
+  { id: 'iruditu-present', verbId: 'iruditu', tense: 'present' },
+  { id: 'ahaztu-present', verbId: 'ahaztu', tense: 'present' },
+  // #164 — plural-NOR ("they please me") production drills, same three
+  // verbs, `object: 'haiek'` instead of `hura`.
+  { id: 'gustatu-present-plural', verbId: 'gustatu', tense: 'presentPlural' },
+  { id: 'iruditu-present-plural', verbId: 'iruditu', tense: 'presentPlural' },
+  { id: 'ahaztu-present-plural', verbId: 'ahaztu', tense: 'presentPlural' },
+  // #164 — number-split review: each verb's singular and plural present
+  // forms interleaved, recognition-only, drilling the `zait`-vs-`zaizkit`
+  // contrast directly (#164 scope item 2's "number-split" lesson).
+  {
+    id: 'unit-23-number-split-review',
+    review: true,
+    mode: 'recognition',
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'gustatu', tense: 'presentPlural' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'presentPlural' },
+      { verbId: 'ahaztu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'presentPlural' },
+    ],
+  },
+  // #164 — case-frame buffer: `gustatu`/`iruditu`/`ahaztu` mixed and
+  // over-learned (production).
+  {
+    id: 'unit-23-case-frame-buffer',
+    review: true,
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'present' },
+    ],
+  },
+  // #385 — present NOR-NORI mixer review: widens the pool past the three
+  // founding verbs to include `jarraitu` (ordinary production carrier) and
+  // `jario` (`recognitionOnly: true`, #330's "carrier folded into a mixed
+  // pool" mechanism — it stays recognition-only on its own even without a
+  // lesson-level `mode: 'recognition'`), so a learner sees the dative-shift
+  // pattern applied beyond the three lexical examples they already have
+  // dedicated lessons for.
+  {
+    id: 'nor-nori-present-pool',
+    review: true,
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'present' },
+      { verbId: 'jarraitu', tense: 'present' },
+      { verbId: 'jario', tense: 'present' },
+      { verbId: 'etorri', tense: 'presentByNori' },
+    ],
+  },
   // Unit 13 ("Looking Back I — The "ukan" Past Pool", Phase II) — `ukan`'s
   // past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten) is shared *exactly*
   // by `ukan` itself (synthetic) and by `jan`/`edan`/`erosi`/`ikusi`
@@ -1350,64 +1411,10 @@ export const LESSONS = [
       { verbId: 'ibili', tense: 'imperfectivePast' },
     ],
   },
-  // Unit 23 (#146) — present NOR-NORI: `gustatu`/`iruditu`/`ahaztu`, `person`
-  // ranges over NORI (object: 'hura' fixes NOR = "it").
-  { id: 'gustatu-present', verbId: 'gustatu', tense: 'present' },
-  { id: 'iruditu-present', verbId: 'iruditu', tense: 'present' },
-  { id: 'ahaztu-present', verbId: 'ahaztu', tense: 'present' },
-  // #164 — plural-NOR ("they please me") production drills, same three
-  // verbs, `object: 'haiek'` instead of `hura`.
-  { id: 'gustatu-present-plural', verbId: 'gustatu', tense: 'presentPlural' },
-  { id: 'iruditu-present-plural', verbId: 'iruditu', tense: 'presentPlural' },
-  { id: 'ahaztu-present-plural', verbId: 'ahaztu', tense: 'presentPlural' },
-  // #164 — number-split review: each verb's singular and plural present
-  // forms interleaved, recognition-only, drilling the `zait`-vs-`zaizkit`
-  // contrast directly (#164 scope item 2's "number-split" lesson).
-  {
-    id: 'unit-23-number-split-review',
-    review: true,
-    mode: 'recognition',
-    sources: [
-      { verbId: 'gustatu', tense: 'present' },
-      { verbId: 'gustatu', tense: 'presentPlural' },
-      { verbId: 'iruditu', tense: 'present' },
-      { verbId: 'iruditu', tense: 'presentPlural' },
-      { verbId: 'ahaztu', tense: 'present' },
-      { verbId: 'ahaztu', tense: 'presentPlural' },
-    ],
-  },
-  // #164 — case-frame buffer: `gustatu`/`iruditu`/`ahaztu` mixed and
-  // over-learned (production) ahead of Unit 25's ditransitive jump (#164
-  // scope item 2's "case-frame buffer" lesson).
-  {
-    id: 'unit-23-case-frame-buffer',
-    review: true,
-    sources: [
-      { verbId: 'gustatu', tense: 'present' },
-      { verbId: 'iruditu', tense: 'present' },
-      { verbId: 'ahaztu', tense: 'present' },
-    ],
-  },
-  // #385 — present NOR-NORI mixer review: widens Unit 26's pool past the
-  // three founding verbs to include `jarraitu` (ordinary production carrier)
-  // and `jario` (`recognitionOnly: true`, #330's "carrier folded into a
-  // mixed pool" mechanism — it stays recognition-only on its own even
-  // without a lesson-level `mode: 'recognition'`), so a learner sees the
-  // dative-shift pattern applied beyond the three lexical examples they
-  // already have dedicated lessons for.
-  {
-    id: 'nor-nori-present-pool',
-    review: true,
-    sources: [
-      { verbId: 'gustatu', tense: 'present' },
-      { verbId: 'iruditu', tense: 'present' },
-      { verbId: 'ahaztu', tense: 'present' },
-      { verbId: 'jarraitu', tense: 'present' },
-      { verbId: 'jario', tense: 'present' },
-      { verbId: 'etorri', tense: 'presentByNori' },
-    ],
-  },
-  // Unit 24 (#146) — NOR-NORI past + future on the same verbs.
+  // Unit 24 (#146) — NOR-NORI past + future on the same verbs. (The NOR-NORI
+  // *present* block that used to sit here moved earlier — #rebalance promoted
+  // "I like it" up to the present cluster; see the `nor-nori-present` block
+  // after the NOR-NORK present pool above.)
   { id: 'gustatu-past', verbId: 'gustatu', tense: 'past' },
   { id: 'gustatu-future', verbId: 'gustatu', tense: 'future' },
   { id: 'iruditu-past', verbId: 'iruditu', tense: 'past' },

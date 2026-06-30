@@ -1,12 +1,18 @@
 # Aditzak — Learning Journey Rebalance (proposal)
 
-**Status: partially implemented (2026-06-27).** Increment 1 has landed — the
-deflation: the object/subject-axis and ditransitive permutations that bloated
-Units 15/32/33/34 (26/51/46/32 lessons) were relocated to a new opt-in
-**Bonus — Mastery & Depth** phase (`bonus: true` units 48–51), deflating those
-units to 6/13/8/8 with a `bonusLessonIds` engine change so they never gate the
-spine. Still to do (the riskier `LESSONS`-reorder + i18n-rekey parts): the
-`gustatu` promotion to A2 and the full competence-milestone renumber (§4, §7).
+**Status: partially implemented (2026-06-27).** Two increments have landed:
+- **Increment 1 — deflation.** The object/subject-axis and ditransitive
+  permutations that bloated Units 15/32/33/34 (26/51/46/32 lessons) were
+  relocated to a new opt-in **Bonus — Mastery & Depth** phase (`bonus: true`
+  units 48–51), deflating those units to 6/13/8/8, with a `bonusLessonIds`
+  engine change so they never gate the spine.
+- **Increment 2 — `gustatu` promotion.** "I like it" (NOR-NORI present) moved
+  from Unit 25 to **Unit 14** (right after the NOR-NORK present), with the
+  spine renumbered to stay a contiguous 1–47 and the i18n keys rotated to
+  match. The NOR-NORI past/future stays later (Unit 26).
+
+Still to do: the full competence-milestone (A1→B2) renumber/relabel of the
+whole journey (§4, §7) — the larger structural + i18n pass.
 
 Proposes a full reorganization of
 the curriculum roadmap (`src/journey.js`'s `JOURNEY` + `src/data/lessons.js`'s

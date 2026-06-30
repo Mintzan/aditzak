@@ -265,8 +265,34 @@ export const JOURNEY = [
               'nor-nork-present-plural-pool-plural',
             ],
           },
+          // #rebalance — "I Like It" promoted from its old Phase IV slot
+          // (was Unit 25) into the present cluster, right after the NOR-NORK
+          // present. `gustatzen zait` ("I like it") is one of the highest-
+          // frequency things in everyday Basque, so it arrives near the start
+          // of the journey instead of two thirds of the way through. NOR-NORI
+          // *past/future* stays later (Unit 26, "Dative Across Time"). See
+          // `docs/LEARNING_JOURNEY_REBALANCE.md`.
           {
             number: 14,
+            title: 'gustatu — "I Like It" (NOR-NORI Present)',
+            focus:
+              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; a case-frame buffer and a pooled mixer review widening past the three founding verbs to jarraitu/jario',
+            payload: '"I like this." (Hau gustatzen zait)',
+            status: 'available',
+            lessonIds: [
+              'gustatu-present',
+              'iruditu-present',
+              'ahaztu-present',
+              'gustatu-present-plural',
+              'iruditu-present-plural',
+              'ahaztu-present-plural',
+              'unit-23-number-split-review',
+              'unit-23-case-frame-buffer',
+              'nor-nori-present-pool',
+            ],
+          },
+          {
+            number: 15,
             title: 'The NOR-NORK Past — nuen/zenuen/zuen',
             focus:
               'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi, jakin; plus the NOR-number axis in the past (zenuen vs. zenituen) across ukan, jan, edan, erosi, hartu, ikusi, eduki',
@@ -314,7 +340,7 @@ export const JOURNEY = [
           // in the reviews' `sources`, not as 30 new single-verb lessons. See
           // `docs/DECISIONS.md`.
           {
-            number: 15,
+            number: 16,
             title: 'maite izan — Loving Someone (The Non-3rd-Person Object)',
             focus:
               "ukan/maite/ikusi/jan/edan/erosi/hartu's presentByObject/pastByObject tables (#346/#347/#348/#378/#379) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni, plus a pooled review (#380/#381) drawing distractors across all seven verbs; #416/#435 then drill the reverse direction (someone/something acting on me/us/you) by fixing nork at hura/gu/zu/zuek/haiek in turn, rotating the practice verb across the full seven-verb set and adding a pooled review per NORK value; #443 widens every pooled review's verb pool to ~37 periphrastic transitive verbs",
@@ -347,7 +373,7 @@ export const JOURNEY = [
           // renumber, per the "lesson ids stay stable across renumbers"
           // precedent (#137).
           {
-            number: 16,
+            number: 17,
             title: 'eraman/ekarri — More NOR-NORK Synthetics',
             focus: 'eraman ("to carry/take") + ekarri ("to bring") — nor-nork synthetic verbs in the already-taught eduki/jakin shape, present + past',
             payload: 'Nik nire txakurra daramat mendira.',
@@ -372,7 +398,7 @@ export const JOURNEY = [
         title: 'Stage 5 — Possessions & Looking Back II',
         units: [
           {
-            number: 17,
+            number: 18,
             title: 'eduki — Physical States & Possessions',
             focus: 'eduki — full 6-person grid; ibili gains gu/zuek/haiek (present introduced in Unit 6)',
             payload: '"I have the keys in my pocket."',
@@ -386,7 +412,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 18,
+            number: 19,
             title: 'eduki — "I Had It" (Simple Past)',
             focus: 'eduki — simple past, its own synthetic paradigm (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
             payload: '"I had the keys."',
@@ -394,7 +420,7 @@ export const JOURNEY = [
             lessonIds: ['eduki-past', 'eduki-past-review', 'eduki-past-plural', 'eduki-past-plural-review'],
           },
           {
-            number: 19,
+            number: 20,
             title: 'egon — "I Was There" (Simple Past)',
             focus: 'egon — simple past, its own synthetic paradigm (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden); #440 folds in ados egon\'s present + past (same paradigm, invariant particle glued on) since Unit 30 was dissolved',
             payload: '"I was at home."',
@@ -437,7 +463,7 @@ export const JOURNEY = [
           // excluded from those specifically, since its future isn't actually
           // derived from its own stem. See `docs/DECISIONS.md`.
           {
-            number: 20,
+            number: 21,
             title: 'izan/ukan — The Future Rule, Across Every Verb',
             focus:
               'forming the future with -ko/-go + present auxiliaries — first -ko/-go minimal pair (izango vs. etorriko), ukan called out as the one suppletive exception (izango, not "ukango"); #417 adds the NOR-number axis (izango dut vs. izango ditut); #423 pools the rule across every fodder verb\'s future table plus a dedicated -ko/-go suffix-choice question',
@@ -457,7 +483,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 21,
+            number: 22,
             title: 'behar — Requirements & Obligations',
             focus: 'behar + ukan, present and future',
             payload: '"I have to go." (Joan behar dut)',
@@ -471,7 +497,7 @@ export const JOURNEY = [
         title: 'Refresh Gate B — The Core Tense Checkpoint',
         units: [
           {
-            number: 22,
+            number: 23,
             title: 'REFRESH — Cumulative Present/Past/Future Mixer',
             focus:
               'Synthetic + periphrastic, positive + negative, present + past + future — zero new verbs, score-gated (bestStars >= 2 to continue)',
@@ -500,7 +526,7 @@ export const JOURNEY = [
         title: 'Stage 7 — Aspect in the Past',
         units: [
           {
-            number: 23,
+            number: 24,
             title: 'The Imperfective Past — "I Used To..."',
             focus:
               'imperfective/habitual past (etortzen nintzen, "I used to come / I was coming") — distinct from the simple past taught in Units 12/14/17/18',
@@ -515,7 +541,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 24,
+            number: 25,
             title: 'joan/etorri/ibili — Motion in Progress (Past)',
             focus: "joan/etorri/ibili's native imperfective past forms (nindoan, zetorren)",
             payload: '"I was on my way (when...)."',
@@ -535,25 +561,11 @@ export const JOURNEY = [
         id: 'phase-4-stage-8',
         title: 'Stage 8 — The Dative Shift (NOR-NORI)',
         units: [
-          {
-            number: 25,
-            title: 'The NOR-NORI Present — zait/zaizu/zaio',
-            focus:
-              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; ends with a case-frame buffer lesson and a pooled mixer review (#385) widening the pattern past the three founding verbs to jarraitu/jario, ahead of Unit 28\'s ditransitive jump',
-            payload: '"I like this." (Hau gustatzen zait)',
-            status: 'available',
-            lessonIds: [
-              'gustatu-present',
-              'iruditu-present',
-              'ahaztu-present',
-              'gustatu-present-plural',
-              'iruditu-present-plural',
-              'ahaztu-present-plural',
-              'unit-23-number-split-review',
-              'unit-23-case-frame-buffer',
-              'nor-nori-present-pool',
-            ],
-          },
+          // #rebalance: the NOR-NORI *present* unit ("I Like It") was promoted
+          // out of here into Phase II (right after the NOR-NORK present, as
+          // Unit 14) so a learner meets `gustatzen zait` near the start. This
+          // stage now opens on the dative past/future, recombining that
+          // already-known present grid with the past and future tenses.
           {
             number: 26,
             title: 'NOR-NORI Past & Future — Dative Across Time',

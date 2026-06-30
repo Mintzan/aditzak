@@ -8,6 +8,32 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — promoted `gustatu` ("I like it") into the present cluster
+
+Increment 2 of the rebalance. The NOR-NORI present unit (`gustatu`/`iruditu`/
+`ahaztu`, "I like it" — `gustatzen zait`) was the journey's single most useful
+pattern but sat at Unit 25 of 47. Moved it to **Unit 14**, right after the
+NOR-NORK present, so a learner can say "I like coffee" near the start instead
+of two-thirds in. The NOR-NORI *past/future* stays later (Unit 26, "Dative
+Across Time") — the present/past split is intentional per the milestone design.
+
+Mechanics: moved the 9-lesson `gustatu`-present block in `LESSONS` (now index
+44/368, right after the NOR-NORK present pool, before the past pools) so the
+unlock chain reaches it early — this is the one genuinely-reordering change,
+since `getUnlockedLessonIds` unlocks in `LESSONS` order. Relocated the unit
+object in `journey.js` from Phase IV Stage 8 into Phase II Stage 4 and did a
+local renumber (new gustatu = 14; old 14–24 shift to 15–25; units 26+
+unchanged — the spine stays a contiguous 1–47). Rotated the matching
+`journeyTranslations.units` keys 14–25 (verified every unit's translation
+realigns with its new number) and gave Unit 14 a "Me gusta / Gustatzen zait"
+title. No `verbs.js` change, no `STORAGE_KEY` bump (lesson ids unchanged). Full
+suite (463) + lint + build green; an unlock simulation confirms gustatu-present
+opens once Unit 13 is cleared.
+
+Still deferred: the full competence-milestone (A1→B2) renumber/relabel of the
+whole journey — a much larger i18n + structure pass. See
+`LEARNING_JOURNEY_REBALANCE.md` §4.
+
 ## 2026-06-27 — implemented the journey-rebalance deflation (Bonus tracks)
 
 Landed the first, highest-value increment of the rebalance proposal below:
