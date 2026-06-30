@@ -2,6 +2,16 @@
 
 **Status: current/authoritative.** Mirrors what's actually implemented in `journey.js`/`LESSONS`. For the still-pending redesign, see `LEARNING_JOURNEY_PROPOSED.md` (spec) and `LEARNING_JOURNEY_EVALUATION.md` (why).
 
+> **⚠️ Rebalance in progress (2026-06-27, `LEARNING_JOURNEY_REBALANCE.md`).**
+> The first increment has landed: the object/subject-axis and ditransitive
+> permutations that used to inflate Units 15/32/33/34 (26/51/46/32 lessons) were
+> moved to a new opt-in **Bonus — Mastery & Depth** phase (units 48–51,
+> `bonus: true`), deflating those units to 6/13/8/8. The "Coverage"/"Data
+> status" notes for those units below still describe the pre-deflation
+> contents — the lessons themselves are unchanged, just regrouped under the
+> Bonus phase. A later increment will promote `gustatu` and renumber into the
+> competence-milestone spine. See the rebalance doc for the full target shape.
+
 > **47-unit core layout** (renumbered 2026-06-14/15, issues #137/#149/#151;
 > present perfect inserted as Unit 11 on 2026-06-19; "Carrying & Bringing"
 > repositioned from the Phase VII bonus tail to Unit 15 on 2026-06-19, #296;

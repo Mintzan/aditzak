@@ -49,6 +49,13 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'Bonusa: Bitxikeriak eta kolorea',
       },
     },
+    'phase-bonus': {
+      title: { es: 'Bonus — Maestría y profundidad', eu: 'Bonusa — Maisutza eta sakontasuna' },
+      subtitle: {
+        es: 'Inmersiones opcionales, fuera del camino principal',
+        eu: 'Hautazko sakontzeak, bide nagusitik kanpo',
+      },
+    },
   },
   stages: {
     'phase-1-stage-1': {
@@ -160,6 +167,18 @@ export const JOURNEY_TRANSLATIONS = {
       title: {
         es: 'Etapa 18 — Herramientas y uso',
         eu: '18. atala — Tresnak eta erabilera',
+      },
+    },
+    'phase-bonus-stage-axes': {
+      title: {
+        es: 'El eje del objeto en profundidad',
+        eu: 'Objektuaren ardatza sakonean',
+      },
+    },
+    'phase-bonus-stage-moods': {
+      title: {
+        es: 'Los ejes dentro de los modos',
+        eu: 'Ardatzak moduen barruan',
       },
     },
   },
@@ -662,6 +681,62 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Uso el ordenador todos los días."',
         eu: '"Nik ordenagailua darabilt egunero."',
+      },
+    },
+    48: {
+      title: {
+        es: 'El eje del objeto en profundidad — Actuando sobre mí/nosotros/ti',
+        eu: 'Objektuaren ardatza sakonean — Niri/guri/zuri eragiten',
+      },
+      focus: {
+        es: 'el eje de objeto NOR-NORK con NORK fijado en hura/gu/zu/zuek/haiek (alguien/algo actuando sobre mí/nosotros/ti) — la práctica profunda de la Unidad 15, solo reconocimiento',
+        eu: 'NOR-NORK objektu-ardatza, NORK hura/gu/zu/zuek/haiek-en finkatuta (norbaitek/zerbaitek niri/guri/zuri eragiten) — 15. unitatearen praktika sakona, ezagutza soilik',
+      },
+      payload: {
+        es: '"Me sorprendió." (Harritu nau) · "Nos vieron." (Ikusi gaituzte)',
+        eu: '"Harritu nau." · "Ikusi gaituzte."',
+      },
+    },
+    49: {
+      title: {
+        es: 'Ahalera — Los ejes en profundidad',
+        eu: 'Ahalera — Ardatzak sakonean',
+      },
+      focus: {
+        es: 'el eje de objeto NOR-NORK, el eje dativo NOR-NORI y el ditransitivo a través de los tres subtiempos de Ahalera — solo reconocimiento; la práctica profunda de la unidad de Ahalera',
+        eu: 'NOR-NORK objektu-ardatza, NOR-NORI datibo-ardatza eta ditrantsitiboa Ahaleraren hiru azpialdietan — ezagutza soilik; Ahalera unitatearen praktika sakona',
+      },
+      payload: {
+        es: '"Podría sorprenderme." · "Podría gustarme él."',
+        eu: '"Harri nintzake." · "Gustatu nintzaioke."',
+      },
+    },
+    50: {
+      title: {
+        es: 'Condicionales — Los ejes en profundidad',
+        eu: 'Baldintzazkoak — Ardatzak sakonean',
+      },
+      focus: {
+        es: 'el eje de objeto NOR-NORK, el eje dativo NOR-NORI y el ditransitivo en Baldintza y Ondorioa presente/pasado — solo reconocimiento; la práctica profunda de la unidad de condicionales',
+        eu: 'NOR-NORK objektu-ardatza, NOR-NORI datibo-ardatza eta ditrantsitiboa Baldintza eta Ondorioa orain/lehenaldian — ezagutza soilik; baldintzazkoen unitatearen praktika sakona',
+      },
+      payload: {
+        es: '"Si me quisieras…" · "Me gustaría él."',
+        eu: '"Maite baninduzu…" · "Gustatuko litzaidake."',
+      },
+    },
+    51: {
+      title: {
+        es: 'Órdenes — Los ejes en profundidad',
+        eu: 'Aginduak — Ardatzak sakonean',
+      },
+      focus: {
+        es: 'el eje dativo NOR-NORI del imperativo de gustatu/iruditu/ahaztu/jarraitu (formas bekio/zakio) para cada valor dativo — solo reconocimiento; la práctica profunda de la unidad de Agintera',
+        eu: 'gustatu/iruditu/ahaztu/jarraitu-ren NOR-NORI datibo-ardatzeko agintera (bekio/zakio formak) datibo-balio bakoitzeko — ezagutza soilik; Agintera unitatearen praktika sakona',
+      },
+      payload: {
+        es: '"¡Que me guste!" (bekit)',
+        eu: '"Bekit!"',
       },
     },
   },

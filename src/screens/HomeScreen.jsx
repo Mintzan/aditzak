@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { trackEvent } from '../analytics'
 import { getShareUrl, shareContent } from '../shareUtils'
 import { LESSONS } from '../data/lessons'
-import { GATE_LESSON_IDS, JOURNEY } from '../journey'
+import { BONUS_LESSON_IDS, GATE_LESSON_IDS, JOURNEY } from '../journey'
 import {
   canRepairStreak,
   getActiveStreak,
@@ -169,7 +169,7 @@ function PhaseSection({ phase, progress, unlockedIds, onSelect }) {
 // `LessonNode`s and pending units rendering locked `PendingUnitCard`s.
 function JourneyTab({ progress, onSelectLesson }) {
   const { t } = useLanguage()
-  const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress, undefined, GATE_LESSON_IDS), [progress])
+  const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress, undefined, GATE_LESSON_IDS, BONUS_LESSON_IDS), [progress])
 
   return (
     <div>

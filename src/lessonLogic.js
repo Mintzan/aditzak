@@ -323,25 +323,43 @@ export const GATE_PASS_STARS = 2
 // `journey.js`'s `GATE_LESSON_IDS`), it must additionally reach
 // `GATE_PASS_STARS` — merely attempting the gate isn't enough.
 //
+// `bonusLessonIds` (optional — the lessons of `bonus: true` units, see
+// `journey.js`'s `BONUS_LESSON_IDS`) are opt-in "Mastery & Depth" content that
+// must never gate the main spine: a spine lesson's predecessor is the most
+// recent *spine* lesson before it, skipping any bonus lessons that physically
+// sit in between (so finishing a bonus track is never required to advance).
+// A bonus lesson itself still unlocks linearly off whatever lesson immediately
+// precedes it — usually the spine lesson its track hangs off, then the prior
+// bonus lesson — so a bonus track opens up once the learner reaches the point
+// it branches from, without blocking anything downstream. With an empty
+// `bonusLessonIds` (the default) `prevSpine` is always `lessons[index - 1]`,
+// so this reduces exactly to the original "previous lesson attempted" rule.
+//
 // Undocumented `?dev=unlock-all` query param bypasses this entirely and
 // unlocks every lesson — for trying out/demoing any lesson without grinding
 // through the journey. No UI toggle by design.
-export function getUnlockedLessonIds(lessons, progress, search = window.location.search, gateLessonIds = new Set()) {
+export function getUnlockedLessonIds(lessons, progress, search = window.location.search, gateLessonIds = new Set(), bonusLessonIds = new Set()) {
   if (new URLSearchParams(search).get('dev') === 'unlock-all') {
     return new Set(lessons.map((lesson) => lesson.id))
   }
 
   const unlocked = new Set()
-  lessons.forEach((lesson, index) => {
-    const previous = lessons[index - 1]
+  let prevSpine = null
+  let prevBonusOrSpine = null
+  lessons.forEach((lesson) => {
+    const isBonus = bonusLessonIds.has(lesson.id)
+    const previous = isBonus ? prevBonusOrSpine : prevSpine
     const previousCleared =
-      index === 0 ||
-      (gateLessonIds.has(previous.id)
-        ? (progress[previous.id]?.bestStars ?? 0) >= GATE_PASS_STARS
-        : (progress[previous.id]?.attempts ?? 0) > 0)
+      previous == null
+        ? true
+        : gateLessonIds.has(previous.id)
+          ? (progress[previous.id]?.bestStars ?? 0) >= GATE_PASS_STARS
+          : (progress[previous.id]?.attempts ?? 0) > 0
     if (previousCleared || (progress[lesson.id]?.attempts ?? 0) > 0) {
       unlocked.add(lesson.id)
     }
+    prevBonusOrSpine = lesson
+    if (!isBonus) prevSpine = lesson
   })
   return unlocked
 }

@@ -8,6 +8,30 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — implemented the journey-rebalance deflation (Bonus tracks)
+
+Landed the first, highest-value increment of the rebalance proposal below:
+deflated the four monster units by relocating their object/subject-axis and
+ditransitive permutations onto a new opt-in **Bonus — Mastery & Depth** phase.
+Unit sizes: **15 maite izan 26→6, 32 Ahalera 51→13, 33 Baldintza 46→8,
+34 Agintera 32→8**; 120 lessons moved to four `bonus: true` units (48 "Reverse
+Object Axis", 49/50/51 "…Axes in Depth" for potential/conditional/imperative).
+
+Engine support: `getUnlockedLessonIds` gained a `bonusLessonIds` param
+(`journey.js` exports `BONUS_LESSON_IDS`). A spine lesson's predecessor now
+skips any bonus lessons physically between it and the previous spine lesson, so
+a bonus track never gates spine progression; a bonus lesson itself unlocks
+linearly off whatever immediately precedes it (the spine point it branches
+from). Empty `bonusLessonIds` reduces exactly to the old behaviour. No
+`verbs.js`/`lessons.js` change (the move is sequence-preserving — bonus lessons
+keep their original `LESSONS` positions) and **no `STORAGE_KEY` bump** (lesson
+ids unchanged). Added a `bonusLessonIds` contract test to `logic.test.js`; full
+suite (460) + lint + build green.
+
+Deferred to a follow-up increment (the riskier, `LESSONS`-reorder + i18n-rekey
+heavy parts): the `gustatu` promotion to the A2 milestone and the full
+competence-milestone renumber. See `LEARNING_JOURNEY_REBALANCE.md` §7.
+
 ## 2026-06-27 — proposed an aggressive journey rebalance (`LEARNING_JOURNEY_REBALANCE.md`)
 
 Filling in complete synthetic/auxiliary conjugation coverage left the journey

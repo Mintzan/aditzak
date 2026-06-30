@@ -1,6 +1,14 @@
 # Aditzak — Learning Journey Rebalance (proposal)
 
-**Status: proposal, not yet implemented.** Proposes a full reorganization of
+**Status: partially implemented (2026-06-27).** Increment 1 has landed — the
+deflation: the object/subject-axis and ditransitive permutations that bloated
+Units 15/32/33/34 (26/51/46/32 lessons) were relocated to a new opt-in
+**Bonus — Mastery & Depth** phase (`bonus: true` units 48–51), deflating those
+units to 6/13/8/8 with a `bonusLessonIds` engine change so they never gate the
+spine. Still to do (the riskier `LESSONS`-reorder + i18n-rekey parts): the
+`gustatu` promotion to A2 and the full competence-milestone renumber (§4, §7).
+
+Proposes a full reorganization of
 the curriculum roadmap (`src/journey.js`'s `JOURNEY` + `src/data/lessons.js`'s
 `LESSONS`). It changes **grouping, ordering, sizing, and what is mandatory** —
 it does *not* delete any conjugation data (`src/data/verbs.js`); every
