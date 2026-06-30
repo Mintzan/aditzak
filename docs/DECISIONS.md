@@ -8,6 +8,100 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-06-27 — short mandatory spine: demoted Units 35–47 to Bonus
+
+Increment 3. Per the rebalance's "short mandatory spine" principle, everything
+after **Agintera (Unit 34)** — subjunctive (35), the whole hitanoa stage
+(36–39: hi/toka/noka), reading (40), causatives (41–43, incl. Gate D),
+synthetic/unergative curiosities (44/46), weather (45), erabili (47) — is now
+`bonus: true`. The mandatory spine is Units 1–34 (194 lessons); the rest
+(174 lessons across bonus units 35–51) is opt-in and never gates.
+
+Verified by simulation: no deadlock (all 368 reachable) and the full 194-lesson
+spine completes **without ever touching a bonus lesson**. Added a visible
+"✨ Bonus · optional" badge (`bonusLabel` i18n key, violet pill) to bonus unit
+headers in `HomeScreen` so the optionality is legible — previously bonus only
+affected unlock behaviour invisibly. Full suite (463) + lint + build green.
+
+Known cosmetic gap: bonus units 35–47 still render inline in Phases V–VII
+(badged) rather than relocated into the "Bonus — Mastery & Depth" phase with
+48–51 — deferred to the milestone phase reorg.
+
+## 2026-06-27 — promoted `gustatu` ("I like it") into the present cluster
+
+Increment 2 of the rebalance. The NOR-NORI present unit (`gustatu`/`iruditu`/
+`ahaztu`, "I like it" — `gustatzen zait`) was the journey's single most useful
+pattern but sat at Unit 25 of 47. Moved it to **Unit 14**, right after the
+NOR-NORK present, so a learner can say "I like coffee" near the start instead
+of two-thirds in. The NOR-NORI *past/future* stays later (Unit 26, "Dative
+Across Time") — the present/past split is intentional per the milestone design.
+
+Mechanics: moved the 9-lesson `gustatu`-present block in `LESSONS` (now index
+44/368, right after the NOR-NORK present pool, before the past pools) so the
+unlock chain reaches it early — this is the one genuinely-reordering change,
+since `getUnlockedLessonIds` unlocks in `LESSONS` order. Relocated the unit
+object in `journey.js` from Phase IV Stage 8 into Phase II Stage 4 and did a
+local renumber (new gustatu = 14; old 14–24 shift to 15–25; units 26+
+unchanged — the spine stays a contiguous 1–47). Rotated the matching
+`journeyTranslations.units` keys 14–25 (verified every unit's translation
+realigns with its new number) and gave Unit 14 a "Me gusta / Gustatzen zait"
+title. No `verbs.js` change, no `STORAGE_KEY` bump (lesson ids unchanged). Full
+suite (463) + lint + build green; an unlock simulation confirms gustatu-present
+opens once Unit 13 is cleared.
+
+Still deferred: the full competence-milestone (A1→B2) renumber/relabel of the
+whole journey — a much larger i18n + structure pass. See
+`LEARNING_JOURNEY_REBALANCE.md` §4.
+
+## 2026-06-27 — implemented the journey-rebalance deflation (Bonus tracks)
+
+Landed the first, highest-value increment of the rebalance proposal below:
+deflated the four monster units by relocating their object/subject-axis and
+ditransitive permutations onto a new opt-in **Bonus — Mastery & Depth** phase.
+Unit sizes: **15 maite izan 26→6, 32 Ahalera 51→13, 33 Baldintza 46→8,
+34 Agintera 32→8**; 120 lessons moved to four `bonus: true` units (48 "Reverse
+Object Axis", 49/50/51 "…Axes in Depth" for potential/conditional/imperative).
+
+Engine support: `getUnlockedLessonIds` gained a `bonusLessonIds` param
+(`journey.js` exports `BONUS_LESSON_IDS`). A spine lesson's predecessor now
+skips any bonus lessons physically between it and the previous spine lesson, so
+a bonus track never gates spine progression; a bonus lesson itself unlocks
+linearly off whatever immediately precedes it (the spine point it branches
+from). Empty `bonusLessonIds` reduces exactly to the old behaviour. No
+`verbs.js`/`lessons.js` change (the move is sequence-preserving — bonus lessons
+keep their original `LESSONS` positions) and **no `STORAGE_KEY` bump** (lesson
+ids unchanged). Added a `bonusLessonIds` contract test to `logic.test.js`; full
+suite (460) + lint + build green.
+
+Deferred to a follow-up increment (the riskier, `LESSONS`-reorder + i18n-rekey
+heavy parts): the `gustatu` promotion to the A2 milestone and the full
+competence-milestone renumber. See `LEARNING_JOURNEY_REBALANCE.md` §7.
+
+## 2026-06-27 — proposed an aggressive journey rebalance (`LEARNING_JOURNEY_REBALANCE.md`)
+
+Filling in complete synthetic/auxiliary conjugation coverage left the journey
+badly unbalanced (four units — 32 Ahalera/51, 33 Baldintza/46, 34 Agintera/32,
+15 maite izan/26 — hold ~half of all lessons) *and* mis-ordered: the single
+most useful pattern, `gustatzen zait` ("I like it"), was Unit 25 of 47, and the
+mandatory path was padded with encyclopedic content (the full mood×object-axis
+matrix, hitanoa, synthetic curiosities). Root size cause: the object/subject
+axis is drilled combinatorially inside every tense *and every mood* — each
+`(axis-value × mood)` slice became its own lesson plus a per-value review.
+
+Wrote `docs/LEARNING_JOURNEY_REBALANCE.md` proposing a layout-only,
+data-preserving reorganization (no `verbs.js` change, no `STORAGE_KEY` bump)
+around **competence milestones** (A1→B2): a short ~26-unit mandatory spine that
+front-loads usefulness (`gustatu` promoted to Unit 8; past/future early), with
+everything encyclopedic — mood×axis permutations, hitanoa (hi/toka/noka),
+synthetic/unergative curiosities, weather, reading — demoted to opt-in **Bonus
+tracks** that never gate progress (a `bonus: true` unit flag). Moods are taught
+on the core paradigm only; the ~90 `…ByObject`/`…ByNor` mood splits collapse
+into a few wide pooled reviews in Bonus track I. Also flags an engine lever:
+stop mechanically doubling every (verb × tense) into singular + `-plural`
+lessons (~halves lesson count). The doc keeps a conservative
+non-aggressive alternative in its git history (first commit) for a
+"reference app" framing. Proposal only — not yet implemented.
+
 ## 2026-06-27 — re-split `App.*.test.jsx` along the new module boundaries
 
 The four-way test split below (`App.account`/`App.home`/`App.questionTypes`/

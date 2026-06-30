@@ -521,6 +521,33 @@ describe('getUnlockedLessonIds', () => {
       expect(getUnlockedLessonIds(lessons, progress, '', gateLessonIds)).toEqual(new Set(['a', 'b']))
     })
   })
+
+  describe('with bonus lessons', () => {
+    // `b` is an opt-in bonus lesson sitting between spine lessons `a` and `c`.
+    // Finishing `b` must never be required to reach `c`, and `b` itself opens
+    // up once the spine lesson it branches from (`a`) is attempted.
+    const lessons = [{ id: 'a' }, { id: 'b' }, { id: 'c' }]
+    const bonusLessonIds = new Set(['b'])
+
+    it('unlocks the bonus lesson once its preceding spine lesson is attempted', () => {
+      const progress = { a: { attempts: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', new Set(), bonusLessonIds)).toEqual(new Set(['a', 'b', 'c']))
+    })
+
+    it('lets the spine advance past a never-touched bonus lesson', () => {
+      // `a` attempted, bonus `b` never touched — `c` still unlocks, because a
+      // spine lesson's predecessor skips bonus lessons.
+      const progress = { a: { attempts: 1 } }
+      const unlocked = getUnlockedLessonIds(lessons, progress, '', new Set(), bonusLessonIds)
+
+      expect(unlocked.has('c')).toBe(true)
+    })
+
+    it('keeps the bonus lesson locked until its spine branch point is reached', () => {
+      expect(getUnlockedLessonIds(lessons, {}, '', new Set(), bonusLessonIds)).toEqual(new Set(['a']))
+    })
+  })
 })
 
 describe('isLockedByGateScore', () => {

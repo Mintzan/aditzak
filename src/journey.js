@@ -265,8 +265,34 @@ export const JOURNEY = [
               'nor-nork-present-plural-pool-plural',
             ],
           },
+          // #rebalance — "I Like It" promoted from its old Phase IV slot
+          // (was Unit 25) into the present cluster, right after the NOR-NORK
+          // present. `gustatzen zait` ("I like it") is one of the highest-
+          // frequency things in everyday Basque, so it arrives near the start
+          // of the journey instead of two thirds of the way through. NOR-NORI
+          // *past/future* stays later (Unit 26, "Dative Across Time"). See
+          // `docs/LEARNING_JOURNEY_REBALANCE.md`.
           {
             number: 14,
+            title: 'gustatu — "I Like It" (NOR-NORI Present)',
+            focus:
+              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; a case-frame buffer and a pooled mixer review widening past the three founding verbs to jarraitu/jario',
+            payload: '"I like this." (Hau gustatzen zait)',
+            status: 'available',
+            lessonIds: [
+              'gustatu-present',
+              'iruditu-present',
+              'ahaztu-present',
+              'gustatu-present-plural',
+              'iruditu-present-plural',
+              'ahaztu-present-plural',
+              'unit-23-number-split-review',
+              'unit-23-case-frame-buffer',
+              'nor-nori-present-pool',
+            ],
+          },
+          {
+            number: 15,
             title: 'The NOR-NORK Past — nuen/zenuen/zuen',
             focus:
               'the ukan past auxiliary (nuen/zenuen/zuen/genuen/zenuten/zuten), mixed across ukan, jan, edan, erosi, ikusi, jakin; plus the NOR-number axis in the past (zenuen vs. zenituen) across ukan, jan, edan, erosi, hartu, ikusi, eduki',
@@ -314,11 +340,18 @@ export const JOURNEY = [
           // in the reviews' `sources`, not as 30 new single-verb lessons. See
           // `docs/DECISIONS.md`.
           {
-            number: 15,
+            number: 16,
             title: 'maite izan — Loving Someone (The Non-3rd-Person Object)',
             focus:
               "ukan/maite/ikusi/jan/edan/erosi/hartu's presentByObject/pastByObject tables (#346/#347/#348/#378/#379) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni, plus a pooled review (#380/#381) drawing distractors across all seven verbs; #416/#435 then drill the reverse direction (someone/something acting on me/us/you) by fixing nork at hura/gu/zu/zuek/haiek in turn, rotating the practice verb across the full seven-verb set and adding a pooled review per NORK value; #443 widens every pooled review's verb pool to ~37 periphrastic transitive verbs",
             payload: '"I love you." (Maite zaitut.) / "It surprised me." (Harritu nau.)',
+            // #rebalance: the "reverse direction" object-axis blocks (someone/
+            // something acting on me/us/you — NORK fixed at hura/gu/zu/zuek/
+            // haiek) moved out of this spine unit into the opt-in Bonus unit
+            // "The Object Axis in Depth" (`phase-bonus-stage-axes`), leaving
+            // Unit 15 as the tight forward-direction unit ("Maite zaitut") it
+            // was meant to be (was 26 lessons; now 6). See
+            // `docs/LEARNING_JOURNEY_REBALANCE.md`.
             status: 'available',
             lessonIds: [
               'ukan-object-axis-present',
@@ -327,26 +360,6 @@ export const JOURNEY = [
               'maite-object-axis-past',
               'object-axis-present-review',
               'object-axis-past-review',
-              'ukan-object-axis-present-hura',
-              'maite-object-axis-past-hura',
-              'object-axis-present-review-hura',
-              'object-axis-past-review-hura',
-              'ikusi-object-axis-present-gu',
-              'jan-object-axis-past-gu',
-              'object-axis-present-review-gu',
-              'object-axis-past-review-gu',
-              'edan-object-axis-present-zu',
-              'erosi-object-axis-past-zu',
-              'object-axis-present-review-zu',
-              'object-axis-past-review-zu',
-              'hartu-object-axis-present-zuek',
-              'ukan-object-axis-past-zuek',
-              'object-axis-present-review-zuek',
-              'object-axis-past-review-zuek',
-              'maite-object-axis-present-haiek',
-              'ikusi-object-axis-past-haiek',
-              'object-axis-present-review-haiek',
-              'object-axis-past-review-haiek',
             ],
           },
           // Unit 16 ("Carrying & Bringing") moved here from the Phase VII
@@ -360,7 +373,7 @@ export const JOURNEY = [
           // renumber, per the "lesson ids stay stable across renumbers"
           // precedent (#137).
           {
-            number: 16,
+            number: 17,
             title: 'eraman/ekarri — More NOR-NORK Synthetics',
             focus: 'eraman ("to carry/take") + ekarri ("to bring") — nor-nork synthetic verbs in the already-taught eduki/jakin shape, present + past',
             payload: 'Nik nire txakurra daramat mendira.',
@@ -385,7 +398,7 @@ export const JOURNEY = [
         title: 'Stage 5 — Possessions & Looking Back II',
         units: [
           {
-            number: 17,
+            number: 18,
             title: 'eduki — Physical States & Possessions',
             focus: 'eduki — full 6-person grid; ibili gains gu/zuek/haiek (present introduced in Unit 6)',
             payload: '"I have the keys in my pocket."',
@@ -399,7 +412,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 18,
+            number: 19,
             title: 'eduki — "I Had It" (Simple Past)',
             focus: 'eduki — simple past, its own synthetic paradigm (neukan, zeneukan, zeukan, geneukan, zeneukaten, zeukaten)',
             payload: '"I had the keys."',
@@ -407,7 +420,7 @@ export const JOURNEY = [
             lessonIds: ['eduki-past', 'eduki-past-review', 'eduki-past-plural', 'eduki-past-plural-review'],
           },
           {
-            number: 19,
+            number: 20,
             title: 'egon — "I Was There" (Simple Past)',
             focus: 'egon — simple past, its own synthetic paradigm (nengoen, zeunden, zegoen, geunden, zeundeten, zeuden); #440 folds in ados egon\'s present + past (same paradigm, invariant particle glued on) since Unit 30 was dissolved',
             payload: '"I was at home."',
@@ -450,7 +463,7 @@ export const JOURNEY = [
           // excluded from those specifically, since its future isn't actually
           // derived from its own stem. See `docs/DECISIONS.md`.
           {
-            number: 20,
+            number: 21,
             title: 'izan/ukan — The Future Rule, Across Every Verb',
             focus:
               'forming the future with -ko/-go + present auxiliaries — first -ko/-go minimal pair (izango vs. etorriko), ukan called out as the one suppletive exception (izango, not "ukango"); #417 adds the NOR-number axis (izango dut vs. izango ditut); #423 pools the rule across every fodder verb\'s future table plus a dedicated -ko/-go suffix-choice question',
@@ -470,7 +483,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 21,
+            number: 22,
             title: 'behar — Requirements & Obligations',
             focus: 'behar + ukan, present and future',
             payload: '"I have to go." (Joan behar dut)',
@@ -484,7 +497,7 @@ export const JOURNEY = [
         title: 'Refresh Gate B — The Core Tense Checkpoint',
         units: [
           {
-            number: 22,
+            number: 23,
             title: 'REFRESH — Cumulative Present/Past/Future Mixer',
             focus:
               'Synthetic + periphrastic, positive + negative, present + past + future — zero new verbs, score-gated (bestStars >= 2 to continue)',
@@ -513,7 +526,7 @@ export const JOURNEY = [
         title: 'Stage 7 — Aspect in the Past',
         units: [
           {
-            number: 23,
+            number: 24,
             title: 'The Imperfective Past — "I Used To..."',
             focus:
               'imperfective/habitual past (etortzen nintzen, "I used to come / I was coming") — distinct from the simple past taught in Units 12/14/17/18',
@@ -528,7 +541,7 @@ export const JOURNEY = [
             ],
           },
           {
-            number: 24,
+            number: 25,
             title: 'joan/etorri/ibili — Motion in Progress (Past)',
             focus: "joan/etorri/ibili's native imperfective past forms (nindoan, zetorren)",
             payload: '"I was on my way (when...)."',
@@ -548,25 +561,11 @@ export const JOURNEY = [
         id: 'phase-4-stage-8',
         title: 'Stage 8 — The Dative Shift (NOR-NORI)',
         units: [
-          {
-            number: 25,
-            title: 'The NOR-NORI Present — zait/zaizu/zaio',
-            focus:
-              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; ends with a case-frame buffer lesson and a pooled mixer review (#385) widening the pattern past the three founding verbs to jarraitu/jario, ahead of Unit 28\'s ditransitive jump',
-            payload: '"I like this." (Hau gustatzen zait)',
-            status: 'available',
-            lessonIds: [
-              'gustatu-present',
-              'iruditu-present',
-              'ahaztu-present',
-              'gustatu-present-plural',
-              'iruditu-present-plural',
-              'ahaztu-present-plural',
-              'unit-23-number-split-review',
-              'unit-23-case-frame-buffer',
-              'nor-nori-present-pool',
-            ],
-          },
+          // #rebalance: the NOR-NORI *present* unit ("I Like It") was promoted
+          // out of here into Phase II (right after the NOR-NORK present, as
+          // Unit 14) so a learner meets `gustatzen zait` near the start. This
+          // stage now opens on the dative past/future, recombining that
+          // already-known present grid with the past and future tenses.
           {
             number: 26,
             title: 'NOR-NORI Past & Future — Dative Across Time',
@@ -715,28 +714,19 @@ export const JOURNEY = [
             title: 'Ahalera — Permissions & Capability',
             focus: 'dezaket/naiteke contrasted with periphrastic ahal izan/ezin (#410/#411) — production for NOR/NOR-NORK; plus ukan\'s NOR-NORK object axis (zaitzaket-type forms, #352, extended to every NORK value by #424) across all three Ahalera sub-tenses — present, hypothetical, and past; gustatu/iruditu/ahaztu/jarraitu\'s NOR-NORI object axis across the same three sub-tenses, recognition-only for every dative value (#425, pooled into cross-verb reviews with jarraitu by #446); esan/eman\'s ditransitive Ahalera (diezaioket-type forms, #366) recognition-only',
             payload: '"I can come." / "I can\'t come."',
+            // #rebalance: the NOR-NORK object-axis, NOR-NORI dative-axis, and
+            // ditransitive permutations of the potential mood moved out of this
+            // spine unit into the opt-in Bonus unit "Potential — The Axes in
+            // Depth" (`phase-bonus-stage-moods`). What stays is the core
+            // communicative slice: izan/ukan potential across all three
+            // sub-tenses plus the periphrastic ahal/ezin (was 51 lessons; now
+            // 13). See `docs/LEARNING_JOURNEY_REBALANCE.md`.
             status: 'available',
             lessonIds: [
               'izan-potential', 'ukan-potential', 'unit-28-review',
               'izan-potential-alegiazkoa', 'ukan-potential-alegiazkoa',
               'izan-potential-lehenaldia', 'ukan-potential-lehenaldia',
               'unit-28-alegiazkoa-lehenaldia-review',
-              'ukan-potential-object-axis-present', 'ukan-potential-object-axis-alegiazkoa',
-              'ukan-potential-object-axis-lehenaldia', 'unit-34-object-axis-review',
-              'ukan-potential-object-axis-present-hura', 'ukan-potential-object-axis-alegiazkoa-hura',
-              'ukan-potential-object-axis-lehenaldia-hura',
-              'ukan-potential-object-axis-present-gu', 'ukan-potential-object-axis-alegiazkoa-gu',
-              'ukan-potential-object-axis-lehenaldia-gu',
-              'ukan-potential-object-axis-present-zu', 'ukan-potential-object-axis-alegiazkoa-zu',
-              'ukan-potential-object-axis-lehenaldia-zu',
-              'ukan-potential-object-axis-present-zuek', 'ukan-potential-object-axis-alegiazkoa-zuek',
-              'ukan-potential-object-axis-lehenaldia-zuek',
-              'ukan-potential-object-axis-present-haiek', 'ukan-potential-object-axis-alegiazkoa-haiek',
-              'ukan-potential-object-axis-lehenaldia-haiek',
-              'potential-axis-review-ni', 'potential-axis-review-zu', 'potential-axis-review-hura', 'potential-axis-review-gu', 'potential-axis-review-zuek', 'potential-axis-review-haiek',
-              'potential-alegiazkoa-axis-review-ni', 'potential-alegiazkoa-axis-review-zu', 'potential-alegiazkoa-axis-review-hura', 'potential-alegiazkoa-axis-review-gu', 'potential-alegiazkoa-axis-review-zuek', 'potential-alegiazkoa-axis-review-haiek',
-              'potential-lehenaldia-axis-review-ni', 'potential-lehenaldia-axis-review-zu', 'potential-lehenaldia-axis-review-hura', 'potential-lehenaldia-axis-review-gu', 'potential-lehenaldia-axis-review-zuek', 'potential-lehenaldia-axis-review-haiek',
-              'unit-34-ditransitive-review',
               'ahal-izan-present', 'ahal-ukan-present', 'ezin-izan-present', 'ezin-ukan-present',
               'unit-34-ahal-ezin-review',
             ],
@@ -746,26 +736,16 @@ export const JOURNEY = [
             title: 'Baldintza & Ondorioa — Conditionals',
             focus: 'ba- protasis + -ke apodosis — production for NOR/NOR-NORK; plus ukan\'s NOR-NORK object axis (bazintut/zintuket-type forms, #353, extended to every NORK value by #424) across Baldintza and Ondorioa present/past; gustatu/iruditu/ahaztu/jarraitu\'s NOR-NORI object axis across Baldintza and Ondorioa present/past, recognition-only for every dative value (#425, pooled into cross-verb reviews with jarraitu by #445); esan/eman\'s ditransitive Baldintza/Ondorioa (balio/nioke-type forms, #366) recognition-only',
             payload: '"If I had money, I would buy that" (Dirua banu, hori erosiko nuke)',
+            // #rebalance: the NOR-NORK object-axis, NOR-NORI dative-axis, and
+            // ditransitive permutations of the conditional moved out of this
+            // spine unit into the opt-in Bonus unit "Conditionals — The Axes in
+            // Depth" (`phase-bonus-stage-moods`). What stays is the core
+            // izan/ukan ba-/-ke conditional across present and past (was 46
+            // lessons; now 8). See `docs/LEARNING_JOURNEY_REBALANCE.md`.
             status: 'available',
             lessonIds: [
               'izan-baldintza', 'izan-conditional', 'ukan-baldintza', 'ukan-conditional', 'unit-29-review',
               'izan-conditional-past', 'ukan-conditional-past', 'unit-29-conditional-past-review',
-              'ukan-baldintza-object-axis', 'ukan-conditional-object-axis', 'ukan-conditional-past-object-axis',
-              'unit-35-object-axis-review',
-              'ukan-baldintza-object-axis-hura', 'ukan-conditional-object-axis-hura',
-              'ukan-conditional-past-object-axis-hura',
-              'ukan-baldintza-object-axis-gu', 'ukan-conditional-object-axis-gu',
-              'ukan-conditional-past-object-axis-gu',
-              'ukan-baldintza-object-axis-zu', 'ukan-conditional-object-axis-zu',
-              'ukan-conditional-past-object-axis-zu',
-              'ukan-baldintza-object-axis-zuek', 'ukan-conditional-object-axis-zuek',
-              'ukan-conditional-past-object-axis-zuek',
-              'ukan-baldintza-object-axis-haiek', 'ukan-conditional-object-axis-haiek',
-              'ukan-conditional-past-object-axis-haiek',
-              'baldintza-axis-review-ni', 'baldintza-axis-review-zu', 'baldintza-axis-review-hura', 'baldintza-axis-review-gu', 'baldintza-axis-review-zuek', 'baldintza-axis-review-haiek',
-              'conditional-axis-review-ni', 'conditional-axis-review-zu', 'conditional-axis-review-hura', 'conditional-axis-review-gu', 'conditional-axis-review-zuek', 'conditional-axis-review-haiek',
-              'conditional-past-axis-review-ni', 'conditional-past-axis-review-zu', 'conditional-past-axis-review-hura', 'conditional-past-axis-review-gu', 'conditional-past-axis-review-zuek', 'conditional-past-axis-review-haiek',
-              'unit-35-ditransitive-review',
             ],
           },
         ],
@@ -794,20 +774,23 @@ export const JOURNEY = [
             title: 'Agintera — Commands',
             focus: 'the imperative — izan/ukan production for NOR/NOR-NORK (including jussive/hortative and plural-object); egon/etorri/joan production; gustatu/iruditu/ahaztu/jarraitu\'s NOR-NORI object axis (#364, bekio/zakio-type forms, extended to every dative value by #425, pooled into cross-verb reviews with jarraitu by #444); esan/eman\'s ditransitive (iezadazu) recognition-only',
             payload: 'Hadi hona!',
+            // #rebalance: the gustatu/iruditu/ahaztu NOR-NORI dative-axis
+            // imperative permutations moved out of this spine unit into the
+            // opt-in Bonus unit "Commands — The Axes in Depth"
+            // (`phase-bonus-stage-moods`). What stays is the core imperative —
+            // izan/ukan (incl. plural-object and ditransitive review) plus
+            // egon/etorri/joan (was 32 lessons; now 8). See
+            // `docs/LEARNING_JOURNEY_REBALANCE.md`.
             status: 'available',
             lessonIds: [
               'izan-imperative', 'ukan-imperative', 'unit-30-review',
-              'gustatu-imperative-axis', 'iruditu-imperative-axis', 'ahaztu-imperative-axis',
-              'gustatu-imperative-axis-ni', 'gustatu-imperative-axis-hura', 'gustatu-imperative-axis-gu', 'gustatu-imperative-axis-zuek', 'gustatu-imperative-axis-haiek',
-              'iruditu-imperative-axis-ni', 'iruditu-imperative-axis-hura', 'iruditu-imperative-axis-gu', 'iruditu-imperative-axis-zuek', 'iruditu-imperative-axis-haiek',
-              'ahaztu-imperative-axis-ni', 'ahaztu-imperative-axis-hura', 'ahaztu-imperative-axis-gu', 'ahaztu-imperative-axis-zuek', 'ahaztu-imperative-axis-haiek',
-              'imperative-axis-review-zu', 'imperative-axis-review-ni', 'imperative-axis-review-hura', 'imperative-axis-review-gu', 'imperative-axis-review-zuek', 'imperative-axis-review-haiek',
               'egon-imperative', 'etorri-imperative', 'joan-imperative',
               'unit-30-plural-object-review', 'unit-30-ditransitive-review',
             ],
           },
           {
             number: 35,
+            bonus: true,
             title: 'Purpose & Wishing (Subjuntiboa)',
             focus: 'the subjunctive as a construction (matrix verb + subordinate clause) — NOR/NOR-NORK 3rd-person in-construction production, dative/ditransitive recognition-only',
             payload: 'Nahi dut etor dadin. · Esan dio etor dadila. · ...ikus dezan.',
@@ -826,6 +809,7 @@ export const JOURNEY = [
         units: [
           {
             number: 36,
+            bonus: true,
             title: 'hi — Meet "hi"',
             focus: 'hi as a subject in known paradigms, plus hi-as-NORK\'s own gender split',
             payload: 'Hi ikaslea haiz.',
@@ -834,6 +818,7 @@ export const JOURNEY = [
           },
           {
             number: 37,
+            bonus: true,
             title: 'Toka (Masculine Allocutive)',
             focus: 'addressee-agreement on 3rd-person statements, masculine register',
             payload: 'Lanean dik.',
@@ -842,6 +827,7 @@ export const JOURNEY = [
           },
           {
             number: 38,
+            bonus: true,
             title: 'Noka (Feminine Allocutive)',
             focus: 'taught as the -k → -n transform of Unit 34\'s toka forms, feminine register',
             payload: 'Lanean din.',
@@ -850,6 +836,7 @@ export const JOURNEY = [
           },
           {
             number: 39,
+            bonus: true,
             title: 'Hitanoa Recombined',
             focus: 'mixed toka/noka chosen by addressee gender, plus when not to use it — suppressed in subordinate clauses and formal -ke- moods',
             status: 'pending',
@@ -862,6 +849,7 @@ export const JOURNEY = [
         units: [
           {
             number: 40,
+            bonus: true,
             title: 'The Passive nor-shift — Reading Real Text',
             focus: 'non-finite forms, nor-shift (ireki dut → ireki da) — comprehension over real sentences, recognition-only throughout',
             payload: 'Nik atea ireki dut. → Atea ireki da.',
@@ -883,6 +871,7 @@ export const JOURNEY = [
         units: [
           {
             number: 41,
+            bonus: true,
             title: 'Making Someone Do It',
             focus: '-arazi on intransitives (nor → nor-nork), present/past/future',
             payload: 'Ekaitzak mendizaleak itzularazi zituen. · Musikak umeak dantzarazi ditu.',
@@ -899,6 +888,7 @@ export const JOURNEY = [
           },
           {
             number: 42,
+            bonus: true,
             title: 'Making Someone Do Something to Someone',
             focus: '-arazi on transitives (nor-nork → nor-nori-nork), present/past/future',
             payload: 'Amonak umeei babarrunak janarazi zizkien. · Irakasleak ikasleei hori idatzarazi die.',
@@ -921,6 +911,7 @@ export const JOURNEY = [
         units: [
           {
             number: 43,
+            bonus: true,
             title: 'REFRESH — Causatives Across Tenses & Moods',
             // Scoped to present/past/future (mirroring Unit 22 gate's own
             // scope) rather than also recombining conditional/imperative —
@@ -946,6 +937,7 @@ export const JOURNEY = [
         units: [
           {
             number: 44,
+            bonus: true,
             title: 'Synthetic Curiosities',
             // #485: corrected `irudi`'s agreement label — unergative,
             // NORK-only (ergative subject, no absolutive argument), not
@@ -969,6 +961,7 @@ export const JOURNEY = [
         units: [
           {
             number: 45,
+            bonus: true,
             title: 'Talking About Weather',
             focus: 'ari + ukan ("euria ari du"), izan/egon weather idioms — fixed 3rd person only, zero new conjugation tables',
             payload: 'Euria ari du. · Hotz da. · Eguzkia dago.',
@@ -987,6 +980,7 @@ export const JOURNEY = [
             // recognition-only scope — neither verb has a journey-documented
             // "bonus, one example sentence" plan the way jario/etzan/irudi do.
             number: 46,
+            bonus: true,
             title: 'Unergative Curiosities',
             focus: 'ihardun ("dihardut"/"niharduen"), iraun ("dirau"/"zirauen") — unergative, NORK-only, ergative subject with no absolutive argument',
             payload: 'Lanean dihardut. · Filmak bi ordu dirau.',
@@ -1006,11 +1000,146 @@ export const JOURNEY = [
             // Phase VII's bonus tail alongside them rather than the
             // renumbered core sequence.
             number: 47,
+            bonus: true,
             title: 'erabili — Using Things',
             focus: 'erabili ("darabilt"/"nerabilen") — nor-nork synthetic verb in the already-taught eduki/jakin shape, present + past',
             payload: 'Nik ordenagailua darabilt egunero.',
             status: 'available',
             lessonIds: ['erabili-present', 'erabili-past', 'unit-47-review'],
+          },
+        ],
+      },
+    ],
+  },
+  // =========================================================================
+  // Bonus — Mastery & Depth (#rebalance, see `docs/LEARNING_JOURNEY_REBALANCE.md`)
+  //
+  // Opt-in "deep dive" content pulled OFF the main spine: the object/subject-
+  // axis and ditransitive permutations that used to bloat Units 15, 32, 33,
+  // and 34 (51/46/32/26 lessons). Every unit here carries `bonus: true`, which
+  // `getUnlockedLessonIds` (`src/lessonLogic.js`) reads via `BONUS_LESSON_IDS`
+  // so these lessons never gate the next spine unit — a learner can finish the
+  // whole core curriculum without them, and dip into them for mastery. No
+  // conjugation data was deleted: these are the exact same lesson ids, just
+  // regrouped here instead of inflating their origin units. The lessons still
+  // sit in their original `LESSONS` positions, so each one unlocks (per the
+  // bonus rule) once the learner reaches the spine point it branches from.
+  // =========================================================================
+  {
+    id: 'phase-bonus',
+    title: 'Bonus — Mastery & Depth',
+    subtitle: 'Optional deep dives, off the main path',
+    stages: [
+      {
+        id: 'phase-bonus-stage-axes',
+        title: 'The Object Axis in Depth',
+        units: [
+          {
+            number: 48,
+            title: 'The Reverse Object Axis — Acting on Me / Us / You',
+            focus:
+              'the NOR-NORK object axis with NORK fixed at hura/gu/zu/zuek/haiek in turn (someone/something acting on me/us/you) — the deep-practice half of Unit 15, recognition-pooled across ~37 transitive verbs',
+            payload: '"It surprised me." (Harritu nau.) / "They saw us." (Ikusi gaituzte.)',
+            status: 'available',
+            bonus: true,
+            lessonIds: [
+              'ukan-object-axis-present-hura',
+              'maite-object-axis-past-hura',
+              'object-axis-present-review-hura',
+              'object-axis-past-review-hura',
+              'ikusi-object-axis-present-gu',
+              'jan-object-axis-past-gu',
+              'object-axis-present-review-gu',
+              'object-axis-past-review-gu',
+              'edan-object-axis-present-zu',
+              'erosi-object-axis-past-zu',
+              'object-axis-present-review-zu',
+              'object-axis-past-review-zu',
+              'hartu-object-axis-present-zuek',
+              'ukan-object-axis-past-zuek',
+              'object-axis-present-review-zuek',
+              'object-axis-past-review-zuek',
+              'maite-object-axis-present-haiek',
+              'ikusi-object-axis-past-haiek',
+              'object-axis-present-review-haiek',
+              'object-axis-past-review-haiek',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'phase-bonus-stage-moods',
+        title: 'The Axes Inside the Moods',
+        units: [
+          {
+            number: 49,
+            title: 'Potential — The Axes in Depth',
+            focus:
+              "ukan's NOR-NORK object axis, gustatu/iruditu/ahaztu/jarraitu's NOR-NORI dative axis, and esan/eman's ditransitive — across all three Ahalera sub-tenses (present/hypothetical/past), recognition-pooled. The deep-practice half of Unit 23 (Ahalera).",
+            payload: '"It could surprise me." / "I could like him."',
+            status: 'available',
+            bonus: true,
+            lessonIds: [
+              'ukan-potential-object-axis-present', 'ukan-potential-object-axis-alegiazkoa',
+              'ukan-potential-object-axis-lehenaldia', 'unit-34-object-axis-review',
+              'ukan-potential-object-axis-present-hura', 'ukan-potential-object-axis-alegiazkoa-hura',
+              'ukan-potential-object-axis-lehenaldia-hura',
+              'ukan-potential-object-axis-present-gu', 'ukan-potential-object-axis-alegiazkoa-gu',
+              'ukan-potential-object-axis-lehenaldia-gu',
+              'ukan-potential-object-axis-present-zu', 'ukan-potential-object-axis-alegiazkoa-zu',
+              'ukan-potential-object-axis-lehenaldia-zu',
+              'ukan-potential-object-axis-present-zuek', 'ukan-potential-object-axis-alegiazkoa-zuek',
+              'ukan-potential-object-axis-lehenaldia-zuek',
+              'ukan-potential-object-axis-present-haiek', 'ukan-potential-object-axis-alegiazkoa-haiek',
+              'ukan-potential-object-axis-lehenaldia-haiek',
+              'potential-axis-review-ni', 'potential-axis-review-zu', 'potential-axis-review-hura', 'potential-axis-review-gu', 'potential-axis-review-zuek', 'potential-axis-review-haiek',
+              'potential-alegiazkoa-axis-review-ni', 'potential-alegiazkoa-axis-review-zu', 'potential-alegiazkoa-axis-review-hura', 'potential-alegiazkoa-axis-review-gu', 'potential-alegiazkoa-axis-review-zuek', 'potential-alegiazkoa-axis-review-haiek',
+              'potential-lehenaldia-axis-review-ni', 'potential-lehenaldia-axis-review-zu', 'potential-lehenaldia-axis-review-hura', 'potential-lehenaldia-axis-review-gu', 'potential-lehenaldia-axis-review-zuek', 'potential-lehenaldia-axis-review-haiek',
+              'unit-34-ditransitive-review',
+            ],
+          },
+          {
+            number: 50,
+            title: 'Conditionals — The Axes in Depth',
+            focus:
+              "ukan's NOR-NORK object axis, the NOR-NORI dative axis, and esan/eman's ditransitive — across Baldintza and Ondorioa present/past, recognition-pooled. The deep-practice half of Unit 24 (Baldintza).",
+            payload: '"If you loved me…" / "I would like him."',
+            status: 'available',
+            bonus: true,
+            lessonIds: [
+              'ukan-baldintza-object-axis', 'ukan-conditional-object-axis', 'ukan-conditional-past-object-axis',
+              'unit-35-object-axis-review',
+              'ukan-baldintza-object-axis-hura', 'ukan-conditional-object-axis-hura',
+              'ukan-conditional-past-object-axis-hura',
+              'ukan-baldintza-object-axis-gu', 'ukan-conditional-object-axis-gu',
+              'ukan-conditional-past-object-axis-gu',
+              'ukan-baldintza-object-axis-zu', 'ukan-conditional-object-axis-zu',
+              'ukan-conditional-past-object-axis-zu',
+              'ukan-baldintza-object-axis-zuek', 'ukan-conditional-object-axis-zuek',
+              'ukan-conditional-past-object-axis-zuek',
+              'ukan-baldintza-object-axis-haiek', 'ukan-conditional-object-axis-haiek',
+              'ukan-conditional-past-object-axis-haiek',
+              'baldintza-axis-review-ni', 'baldintza-axis-review-zu', 'baldintza-axis-review-hura', 'baldintza-axis-review-gu', 'baldintza-axis-review-zuek', 'baldintza-axis-review-haiek',
+              'conditional-axis-review-ni', 'conditional-axis-review-zu', 'conditional-axis-review-hura', 'conditional-axis-review-gu', 'conditional-axis-review-zuek', 'conditional-axis-review-haiek',
+              'conditional-past-axis-review-ni', 'conditional-past-axis-review-zu', 'conditional-past-axis-review-hura', 'conditional-past-axis-review-gu', 'conditional-past-axis-review-zuek', 'conditional-past-axis-review-haiek',
+              'unit-35-ditransitive-review',
+            ],
+          },
+          {
+            number: 51,
+            title: 'Commands — The Axes in Depth',
+            focus:
+              "gustatu/iruditu/ahaztu/jarraitu's NOR-NORI dative-axis imperative (bekio/zakio-type) across every dative value, recognition-pooled. The deep-practice half of Unit 25 (Agintera).",
+            payload: '"Let it appeal to me!" (bekit)',
+            status: 'available',
+            bonus: true,
+            lessonIds: [
+              'gustatu-imperative-axis', 'iruditu-imperative-axis', 'ahaztu-imperative-axis',
+              'gustatu-imperative-axis-ni', 'gustatu-imperative-axis-hura', 'gustatu-imperative-axis-gu', 'gustatu-imperative-axis-zuek', 'gustatu-imperative-axis-haiek',
+              'iruditu-imperative-axis-ni', 'iruditu-imperative-axis-hura', 'iruditu-imperative-axis-gu', 'iruditu-imperative-axis-zuek', 'iruditu-imperative-axis-haiek',
+              'ahaztu-imperative-axis-ni', 'ahaztu-imperative-axis-hura', 'ahaztu-imperative-axis-gu', 'ahaztu-imperative-axis-zuek', 'ahaztu-imperative-axis-haiek',
+              'imperative-axis-review-zu', 'imperative-axis-review-ni', 'imperative-axis-review-hura', 'imperative-axis-review-gu', 'imperative-axis-review-zuek', 'imperative-axis-review-haiek',
+            ],
           },
         ],
       },
@@ -1028,4 +1157,15 @@ export const GATE_LESSON_IDS = new Set(
   JOURNEY.flatMap((phase) => phase.stages.flatMap((stage) => stage.units))
     .filter((unit) => unit.gate && unit.lessonIds?.length)
     .map((unit) => unit.lessonIds[unit.lessonIds.length - 1]),
+)
+
+// Every lesson id belonging to a `bonus: true` unit (the "Bonus — Mastery &
+// Depth" phase above). `getUnlockedLessonIds` (`src/lessonLogic.js`) uses this
+// so bonus lessons never gate the main spine — see its `bonusLessonIds` doc
+// comment. A learner reaches a bonus track once they pass the spine lesson it
+// branches from, but never has to complete it to advance.
+export const BONUS_LESSON_IDS = new Set(
+  JOURNEY.flatMap((phase) => phase.stages.flatMap((stage) => stage.units))
+    .filter((unit) => unit.bonus && unit.lessonIds?.length)
+    .flatMap((unit) => unit.lessonIds),
 )
