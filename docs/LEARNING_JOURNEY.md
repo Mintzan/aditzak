@@ -2,20 +2,91 @@
 
 **Status: current/authoritative.** Mirrors what's actually implemented in `journey.js`/`LESSONS`. For the still-pending redesign, see `LEARNING_JOURNEY_PROPOSED.md` (spec) and `LEARNING_JOURNEY_EVALUATION.md` (why).
 
-> **⚠️ Rebalance in progress (2026-06-27, `LEARNING_JOURNEY_REBALANCE.md`).**
-> Two increments have landed, so the unit numbers in the tables below are now
-> **stale from Unit 14 onward**:
-> 1. **Deflation** — the object/subject-axis and ditransitive permutations that
->    inflated Units 15/32/33/34 (26/51/46/32 lessons) moved to a new opt-in
->    **Bonus — Mastery & Depth** phase (units 48–51, `bonus: true`), deflating
->    those units to 6/13/8/8.
-> 2. **`gustatu` promotion** — "I like it" (NOR-NORI present) moved from Unit 25
->    to **Unit 14** (right after the NOR-NORK present); old Units 14–24 shifted
->    to 15–25, units 26+ unchanged. NOR-NORI past/future stays at Unit 26.
->
-> The lessons themselves are unchanged — just regrouped/renumbered. A later
-> increment will renumber into the full competence-milestone spine. See the
-> rebalance doc for the target shape and `journey.js` for the live numbering.
+> **Rebalanced 2026-06-27 (`LEARNING_JOURNEY_REBALANCE.md`).** The
+> **"Current implemented structure" table immediately below is the authoritative
+> map** — it is generated from `journey.js`'s live numbering, `bonus`/`gate`
+> flags, and lesson counts. The detailed per-phase prose tables further down
+> (from "## The journey" onward) preserve the original *design rationale* but
+> use the **pre-rebalance numbering** and pre-deflation unit contents; trust
+> them for *why* each unit exists, not for its current number or size. The
+> three rebalance increments were: (1) **deflation** — the object/subject-axis
+> and ditransitive permutations that inflated four units (51/46/32/26 lessons)
+> moved to opt-in `bonus: true` units 48–51; (2) **`gustatu` promotion** — "I
+> like it" (NOR-NORI present) moved from Unit 25 to Unit 14; (3) **short
+> spine** — everything after Agintera (Units 35–47) marked `bonus: true`;
+> (4) **milestone phases** — the spine phases carry CEFR bands (Phase I·A1 →
+> Phase V·B2) and all bonus units (35–51) were consolidated under one "Bonus —
+> Mastery, Register & Color" phase. The lessons themselves are unchanged (same
+> ids, no `STORAGE_KEY` bump). What remains unimplemented from the proposal is
+> only the further unit *reordering* (the §4 A1→B2 acquisition order, e.g. past
+> after the present cluster), which would require a `LESSONS`-order change.
+
+## Current implemented structure (authoritative — mirrors `journey.js`)
+
+The **mandatory spine is Units 1–34** (194 lessons). Units 35–51 are
+`bonus: true` (✨): opt-in "Mastery & Depth" content that never gates spine
+progression — a learner can finish the whole core curriculum without them. 🛡️
+marks score-gated Refresh Gates.
+
+| # | Unit | Lessons |
+|---|---|---|
+| **Phase I — Survival Present** | | |
+| 1 | izan & egon — Who and Where | 3 |
+| 2 | ukan — The Ergative Leap | 3 |
+| 3 | "Ni" vs. "Nik" — Case-Marking Checkpoint | 3 |
+| 4 | jakin & nahi — Knowing & Wanting | 4 |
+| 5 | ikusi — First Periphrastic (-tzen dut) | 2 |
+| 6 | joan/etorri/ibili — The NOR Present | 6 |
+| 7 🛡️ | Expansion: Absolutive Plurals | 3 |
+| 8 | Expansion: Ergative Plurals | 4 |
+| 9 | ari + izan — The Immediate Continuous | 2 |
+| 10 🛡️ | REFRESH — The Inversion Matrix | 3 |
+| **Phase II — Transitivity & Everyday Life** | | |
+| 11 | The Present Perfect — What Just Happened | 5 |
+| 12 | The "izan" Past Pool — Looking Back I | 2 |
+| 13 | The NOR-NORK Present — dut/duzu/du | 4 |
+| **14** | **gustatu — "I Like It" (NOR-NORI Present)** ⬅ promoted | 9 |
+| 15 | The NOR-NORK Past — nuen/zenuen/zuen | 4 |
+| 16 | maite izan — Loving Someone (forward object axis) | 6 |
+| 17 | eraman/ekarri — More NOR-NORK Synthetics | 10 |
+| 18 | eduki — Physical States & Possessions | 5 |
+| 19 | eduki — "I Had It" (Simple Past) | 4 |
+| 20 | egon — "I Was There" (Simple Past) | 8 |
+| 21 | izan/ukan — The Future Rule | 10 |
+| 22 | behar — Requirements & Obligations | 3 |
+| 23 🛡️ | REFRESH — Present/Past/Future Mixer | 6 |
+| **Phase III — Shifting to the Past** | | |
+| 24 | The Imperfective Past — "I Used To…" | 5 |
+| 25 | joan/etorri/ibili — Motion in Progress (Past) | 2 |
+| **Phase IV — Interpersonal Dynamics** | | |
+| 26 | NOR-NORI Past & Future — Dative Across Time | 7 |
+| 27 | The NOR-NORI Object Axis — natzaizu/gatzaizu | 12 |
+| 28 | The NOR-NORI-NORK Present — diot/diozu/dio | 10 |
+| 29 | NOR-NORI-NORK Past & Future | 12 |
+| 30 | Covert-Dative NOR-NORI-NORK — Agentive Verbs | 8 |
+| 31 🛡️ | REFRESH — The Case-Ending Mixer | *pending* |
+| **Phase V — Nuance & Modality** | | |
+| 32 | Ahalera — Permissions & Capability (core) | 13 |
+| 33 | Baldintza & Ondorioa — Conditionals (core) | 8 |
+| 34 | Agintera — Commands (core) | 8 |
+| **— end of mandatory spine —** | | |
+| 35 ✨ | Purpose & Wishing (Subjuntiboa) | 8 |
+| 36–39 ✨ | hi + Hitanoa (hi / Toka / Noka / Recombined) | 3/5/5/* |
+| 40 ✨ | The Passive nor-shift — Reading Real Text | 2 |
+| **Phase VI — Causatives** | | |
+| 41 ✨ | Making Someone Do It (-arazi intransitive) | 7 |
+| 42 ✨ | Making Someone Do Something to Someone | 7 |
+| 43 ✨🛡️ | REFRESH — Causatives Across Tenses | 2 |
+| **Phase VII — Curiosities & Color** | | |
+| 44 ✨ | Synthetic Curiosities (jario/etzan/irudi) | 7 |
+| 45 ✨ | Talking About Weather | *pending* |
+| 46 ✨ | Unergative Curiosities (ihardun/iraun) | 5 |
+| 47 ✨ | erabili — Using Things | 3 |
+| **Bonus — Mastery & Depth** (the deflated axis/mood permutations) | | |
+| 48 ✨ | The Reverse Object Axis — Acting on Me/Us/You | 20 |
+| 49 ✨ | Potential — The Axes in Depth | 38 |
+| 50 ✨ | Conditionals — The Axes in Depth | 38 |
+| 51 ✨ | Commands — The Axes in Depth | 24 |
 
 > **47-unit core layout** (renumbered 2026-06-14/15, issues #137/#149/#151;
 > present perfect inserted as Unit 11 on 2026-06-19; "Carrying & Bringing"

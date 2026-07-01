@@ -1,35 +1,35 @@
 export const JOURNEY_TRANSLATIONS = {
   phases: {
     'phase-1': {
-      title: { es: 'Fase I', eu: 'I. fasea' },
+      title: { es: 'Fase I · A1 — Sobrevivir', eu: 'I. fasea · A1 — Bizirik iraun' },
       subtitle: {
         es: 'Presente de supervivencia (Yo, tú y ello)',
         eu: 'Oraina, lehen urratsak (Ni, hi eta hura)',
       },
     },
     'phase-2': {
-      title: { es: 'Fase II', eu: 'II. fasea' },
+      title: { es: 'Fase II · A2 — Vida cotidiana', eu: 'II. fasea · A2 — Eguneroko bizitza' },
       subtitle: {
         es: 'Transitividad y vida cotidiana',
         eu: 'Iragankortasuna eta eguneroko bizitza',
       },
     },
     'phase-3': {
-      title: { es: 'Fase III', eu: 'III. fasea' },
+      title: { es: 'Fase III · B1 — Hacia el pasado', eu: 'III. fasea · B1 — Iraganera' },
       subtitle: {
         es: 'El paso al pasado',
         eu: 'Iraganera salto',
       },
     },
     'phase-4': {
-      title: { es: 'Fase IV', eu: 'IV. fasea' },
+      title: { es: 'Fase IV · B1 — Personas y relaciones', eu: 'IV. fasea · B1 — Pertsonak eta harremanak' },
       subtitle: {
         es: 'Dinámicas interpersonales y de relación',
         eu: 'Harremanak eta pertsonen arteko dinamikak',
       },
     },
     'phase-5': {
-      title: { es: 'Fase V', eu: 'V. fasea' },
+      title: { es: 'Fase V · B2 — Matices y modalidad', eu: 'V. fasea · B2 — Ñabardurak eta modalitatea' },
       subtitle: {
         es: 'Matices, modalidad y contexto social',
         eu: 'Ñabardurak, modalitatea eta testuinguru soziala',
@@ -50,7 +50,7 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     'phase-bonus': {
-      title: { es: 'Bonus — Maestría y profundidad', eu: 'Bonusa — Maisutza eta sakontasuna' },
+      title: { es: 'Bonus — Maestría, registro y color', eu: 'Bonusa — Maisutza, erregistroa eta kolorea' },
       subtitle: {
         es: 'Inmersiones opcionales, fuera del camino principal',
         eu: 'Hautazko sakontzeak, bide nagusitik kanpo',
@@ -122,7 +122,13 @@ export const JOURNEY_TRANSLATIONS = {
       title: { es: 'Etapa 10 — Hipótesis y posibilidades', eu: '10. atala — Hipotesiak eta gaitasunak' },
     },
     'phase-5-stage-11': {
-      title: { es: 'Etapa 11 — Directivas y deseos', eu: '11. atala — Aginduak eta nahiak' },
+      title: { es: 'Etapa 11 — Agintera (Órdenes)', eu: '11. atala — Agintera' },
+    },
+    'phase-bonus-stage-subjunctive': {
+      title: {
+        es: 'Directivas y deseos — El subjuntivo',
+        eu: 'Aginduak eta nahiak — Subjuntiboa',
+      },
     },
     'phase-5-stage-12': {
       title: {

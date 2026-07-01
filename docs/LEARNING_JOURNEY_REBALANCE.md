@@ -1,6 +1,10 @@
 # Aditzak — Learning Journey Rebalance (proposal)
 
-**Status: partially implemented (2026-06-27).** Two increments have landed:
+**Status: implemented (2026-06-27).** All increments have landed; the journey
+now matches the milestone-spine + bonus-track shape this doc proposed (modulo
+the further unit *reordering* that the §4 ideal would need, e.g. moving the
+past system after the present cluster — deliberately not done, as it requires a
+risky `LESSONS`-order change for diminishing returns). Increments:
 - **Increment 1 — deflation.** The object/subject-axis and ditransitive
   permutations that bloated Units 15/32/33/34 (26/51/46/32 lessons) were
   relocated to a new opt-in **Bonus — Mastery & Depth** phase (`bonus: true`
@@ -16,10 +20,17 @@
   **mandatory spine is Units 1–34 (194 lessons)**; 174 lessons (bonus units
   35–51) are opt-in and never gate. A "✨ Bonus · optional" badge marks them in
   the UI. Verified: the spine completes without touching any bonus lesson.
+- **Increment 4 — milestone phases + unified Bonus phase.** The spine phases
+  carry CEFR milestone bands (Phase I·A1 → Phase V·B2) and **all bonus units
+  (35–51) now live under one "Bonus — Mastery, Register & Color" phase**,
+  instead of rendering inline in Phases V–VII. Done by redrawing phase/stage
+  boundaries — no unit object moved, so unlock order and `LESSONS` are
+  untouched (units stay ascending 1–51, completability invariants re-verified).
 
-Still to do (cosmetic): relocate bonus Units 35–47 into the "Bonus — Mastery &
-Depth" phase (they currently render inline in Phases V–VII, badged), and the
-full competence-milestone (A1→B2) phase relabel (§4, §7).
+The result: a clean **A1→B2 spine of Units 1–34** followed by a single Bonus
+phase of Units 35–51. The only thing *not* done from §4 is the further unit
+*reordering* (e.g. moving the past system after the present cluster), which
+would need a `LESSONS`-order change for marginal benefit — see §7.
 
 Proposes a full reorganization of
 the curriculum roadmap (`src/journey.js`'s `JOURNEY` + `src/data/lessons.js`'s

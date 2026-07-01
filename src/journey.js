@@ -54,7 +54,7 @@
 export const JOURNEY = [
   {
     id: 'phase-1',
-    title: 'Phase I',
+    title: 'Phase I · A1 — Survive',
     subtitle: 'Survival Present (Me, You, & It)',
     stages: [
       {
@@ -201,7 +201,7 @@ export const JOURNEY = [
   },
   {
     id: 'phase-2',
-    title: 'Phase II',
+    title: 'Phase II · A2 — Everyday Life',
     subtitle: 'Transitivity & Everyday Life',
     stages: [
       {
@@ -518,7 +518,7 @@ export const JOURNEY = [
   },
   {
     id: 'phase-3',
-    title: 'Phase III',
+    title: 'Phase III · B1 — Into the Past',
     subtitle: 'Shifting to the Past',
     stages: [
       {
@@ -554,7 +554,7 @@ export const JOURNEY = [
   },
   {
     id: 'phase-4',
-    title: 'Phase IV',
+    title: 'Phase IV · B1 — People & Relationships',
     subtitle: 'Interpersonal & Relationship Dynamics',
     stages: [
       {
@@ -702,7 +702,7 @@ export const JOURNEY = [
   },
   {
     id: 'phase-5',
-    title: 'Phase V',
+    title: 'Phase V · B2 — Nuance & Modality',
     subtitle: 'Nuance, Modality, & Social Context',
     stages: [
       {
@@ -752,7 +752,7 @@ export const JOURNEY = [
       },
       {
         id: 'phase-5-stage-11',
-        title: 'Stage 11 — Directives & Wishes',
+        title: 'Stage 11 — Agintera (Commands)',
         units: [
           // #364: extended (not split into a new unit) with gustatu/iruditu/
           // ahaztu's NOR-NORI object axis (imperativeByNor, "bekio"/"zakio"-
@@ -788,6 +788,30 @@ export const JOURNEY = [
               'unit-30-plural-object-review', 'unit-30-ditransitive-review',
             ],
           },
+        ],
+      },
+    ],
+  },
+  // =========================================================================
+  // Bonus — Mastery, Register & Color (#rebalance, see
+  // `docs/LEARNING_JOURNEY_REBALANCE.md`). Everything past Agintera (Unit 34)
+  // lives here: it is all `bonus: true`, so `getUnlockedLessonIds` (via
+  // `BONUS_LESSON_IDS`) never lets it gate the main spine — a learner finishes
+  // the core curriculum at Unit 34 and dips into these for deeper morphology
+  // (subjunctive, causatives, the axis/mood permutations), register
+  // (hi/hitanoa), and color (curiosities, weather). Units stay in ascending
+  // order; the lessons keep their original `LESSONS` positions, so each one
+  // unlocks once the learner reaches the spine point it branches from.
+  // =========================================================================
+  {
+    id: 'phase-bonus',
+    title: 'Bonus — Mastery, Register & Color',
+    subtitle: 'Optional deep dives, off the main path — never required to finish the core',
+    stages: [
+      {
+        id: 'phase-bonus-stage-subjunctive',
+        title: 'Directives & Wishes — The Subjunctive',
+        units: [
           {
             number: 35,
             bonus: true,
@@ -858,13 +882,6 @@ export const JOURNEY = [
           },
         ],
       },
-    ],
-  },
-  {
-    id: 'phase-6',
-    title: 'Phase VI',
-    subtitle: 'Making Things Happen (Causatives)',
-    stages: [
       {
         id: 'phase-6-stage-14',
         title: 'Stage 14 — The Causative Suffix (-arazi)',
@@ -924,13 +941,6 @@ export const JOURNEY = [
           },
         ],
       },
-    ],
-  },
-  {
-    id: 'phase-7',
-    title: 'Phase VII',
-    subtitle: 'Bonus: Curiosities & Color',
-    stages: [
       {
         id: 'phase-7-stage-15',
         title: 'Stage 15 — Verbs That Don\'t Need an Auxiliary',
@@ -1009,27 +1019,6 @@ export const JOURNEY = [
           },
         ],
       },
-    ],
-  },
-  // =========================================================================
-  // Bonus — Mastery & Depth (#rebalance, see `docs/LEARNING_JOURNEY_REBALANCE.md`)
-  //
-  // Opt-in "deep dive" content pulled OFF the main spine: the object/subject-
-  // axis and ditransitive permutations that used to bloat Units 15, 32, 33,
-  // and 34 (51/46/32/26 lessons). Every unit here carries `bonus: true`, which
-  // `getUnlockedLessonIds` (`src/lessonLogic.js`) reads via `BONUS_LESSON_IDS`
-  // so these lessons never gate the next spine unit — a learner can finish the
-  // whole core curriculum without them, and dip into them for mastery. No
-  // conjugation data was deleted: these are the exact same lesson ids, just
-  // regrouped here instead of inflating their origin units. The lessons still
-  // sit in their original `LESSONS` positions, so each one unlocks (per the
-  // bonus rule) once the learner reaches the spine point it branches from.
-  // =========================================================================
-  {
-    id: 'phase-bonus',
-    title: 'Bonus — Mastery & Depth',
-    subtitle: 'Optional deep dives, off the main path',
-    stages: [
       {
         id: 'phase-bonus-stage-axes',
         title: 'The Object Axis in Depth',
