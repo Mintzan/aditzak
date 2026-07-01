@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   addPoints,
+  applyHeartRegen,
   computeLessonPoints,
   computeStars,
+  deductHeart,
   getLastPlayedLessonId,
   getLocalDateString,
   mergeSyncPayload,
@@ -20,6 +22,7 @@ import {
   progressStorage,
   streakStorage,
   errorStorage,
+  heartsStorage,
   getDeviceId,
   pointsStorage,
   accountSessionStorage,
@@ -85,6 +88,11 @@ function AppShell() {
   const [dailyStreak, setDailyStreak] = useState(streakStorage.load)
   const [points, setPoints] = useState(pointsStorage.load)
   const [errorStats, setErrorStats] = useState(errorStorage.load)
+  // Regen is recomputed against `Date.now()` right at load (not just stored
+  // raw) so a session that was closed for a while already shows any hearts
+  // regenerated while the app was shut, without waiting for the
+  // `visibilitychange` effect below to fire.
+  const [hearts, setHearts] = useState(() => applyHeartRegen(heartsStorage.load(), Date.now()))
   const [deviceId] = useState(getDeviceId)
   const [tab, setTab] = useState('home')
   const [activeLessonId, setActiveLessonId] = useState(null)
@@ -121,11 +129,13 @@ function AppShell() {
     return lastLessonId ? { type: 'lastLesson', lessonId: lastLessonId } : null
   })
   const scrollBeforeLessonRef = useRef(null)
-  // Mirrors `progress`/`dailyStreak`/`points`/`errorStats` for the async sync
-  // handlers below, which need the *current* values at the time a network
-  // call resolves rather than whatever was current when the handler was
-  // created.
-  const dataRef = useRef({ progress, dailyStreak, points, errorStats })
+  // Mirrors `progress`/`dailyStreak`/`points`/`errorStats`/`hearts` for the
+  // async sync handlers below, which need the *current* values at the time a
+  // network call resolves rather than whatever was current when the handler
+  // was created. (`hearts` isn't part of the sync payload yet — that's a
+  // separate follow-up — but is kept here so that follow-up doesn't need to
+  // touch this ref again.)
+  const dataRef = useRef({ progress, dailyStreak, points, errorStats, hearts })
   // Background `PUT /sync` debounce timer (ongoing sync, see below).
   const syncTimeoutRef = useRef(null)
   // Guards the background-sync effect until the initial reconcile (push/pull/
@@ -135,7 +145,7 @@ function AppShell() {
   const skipNextPushRef = useRef(true)
 
   useEffect(() => {
-    dataRef.current = { progress, dailyStreak, points, errorStats }
+    dataRef.current = { progress, dailyStreak, points, errorStats, hearts }
   })
 
   useEffect(() => {
@@ -153,6 +163,25 @@ function AppShell() {
   useEffect(() => {
     errorStorage.save(errorStats)
   }, [errorStats])
+
+  useEffect(() => {
+    heartsStorage.save(hearts)
+  }, [hearts])
+
+  // No background regen timer by design (see `docs/HEART_ECONOMY_ANALYSIS.md`)
+  // — instead, recompute the lazy catch-up formula whenever the tab regains
+  // focus, so a session left open across a regen boundary catches up without
+  // needing a reload.
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'visible') {
+        setHearts((previous) => applyHeartRegen(previous, Date.now()))
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [])
 
   const pushSnapshot = useCallback((token) => {
     setSyncStatus('syncing')
@@ -347,6 +376,7 @@ function AppShell() {
     setDailyStreak({})
     setPoints({})
     setErrorStats({})
+    setHearts({})
   }
 
   function handleRepairStreak() {
@@ -386,6 +416,7 @@ function AppShell() {
         onExit={handleReturnToHome}
         canShowStreakNudge={streakNudgeCooldown === 0}
         onStreakNudgeShown={handleStreakNudgeShown}
+        onWrongAnswer={() => setHearts((previous) => deductHeart(previous, Date.now()))}
         onComplete={(result) => {
           const isRepeat = (progress[lesson.id]?.attempts ?? 0) > 0
           const pointsEarned = computeLessonPoints(result.correctCount, result.total, isRepeat)

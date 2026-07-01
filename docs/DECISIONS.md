@@ -8,6 +8,31 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Resolved issue #531: wired hearts into App.jsx (load, focus-regen, wrong-answer deduction)
+
+Second implementation slice of the heart economy epic (#529), building on
+#530's pure logic. `AppShell` now loads `hearts` via `heartsStorage.load()`
+run immediately through `applyHeartRegen(_, Date.now())` (so a session
+reopened after a while shows any regen that happened while it was closed,
+without waiting on the focus listener), persists it the same way as
+`points`/`dailyStreak`/etc., and recomputes regen again on
+`document.visibilitychange` (no background timer, per
+`docs/HEART_ECONOMY_ANALYSIS.md`). `ExerciseScreen` gained an `onWrongAnswer`
+callback, called on **every** incorrect submission including retries of the
+same question — a deliberate difference from `misses`/scoring, which only
+count a question's first attempt; the heart economy's trigger is "an
+incorrect answer is submitted," full stop, matching the original spec's
+literal wording. `hearts` also resets alongside `progress`/`points`/etc. in
+"Reset progress," and was folded into `dataRef.current` (unused by the sync
+payload yet — that's #535 — but the plumbing is there so #535 doesn't need
+to touch `App.jsx`'s state wiring again).
+
+Manually verified in the dev server (Playwright): a wrong answer visibly
+takes `aditzak:hearts:v1` from `{currentHearts:5,...:null}` to
+`{currentHearts:4,...:<timestamp>}`. No visible heart-count UI yet (#534) —
+no lockout (#532) or mid-lesson cancellation (#533) either, both deliberately
+deferred to their own issues. Full suite (484 tests) + lint + build green.
+
 ## 2026-07-01 — Resolved issue #530: hearts data model + pure regen/deduct/buy/lockout logic
 
 First implementation slice of the heart economy epic (#529). Added
