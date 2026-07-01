@@ -8,6 +8,41 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Resolved issue #534: hearts display badge + purchase UI
+
+Fifth implementation slice of the heart economy epic (#529). New
+`getHeartsRegenRemainingMs(hearts, now)` in `lessonLogic.js` — pure,
+display-only ms-until-next-heart — backs a new `HeartsBadge`
+(`components/badges.jsx`, alongside `Stars`/`ProgressBar`) that renders a
+count pill plus, when `showCountdown` and below `MAX_HEARTS`, a "Next heart
+in Xh Ym" line. The countdown ticks live via a plain `setInterval` local to
+the component (60s cadence) that only calls `setState` on itself — it never
+touches `hearts` or calls `applyHeartRegen`, so it doesn't reintroduce a
+background regen timer (the actual mechanic stays exactly as lazy as
+`docs/HEART_ECONOMY_ANALYSIS.md` specifies); it's purely cosmetic re-render
+plumbing for a value that's already fully derived from props.
+
+`HeartsBadge` is used two ways: compact (no countdown) as a fourth pill in
+`HomeScreen`'s header, alongside the existing streak/stars/points pills; and
+with `showCountdown` in a new dedicated "Hearts" card in `ProfileTab`
+(matching the streak-repair card's shape), which also carries the "Buy a
+heart — 50 points" button (`canBuyHeart`-gated, calls the same
+`handleBuyHeart` from #533 — no new App.jsx logic needed, just new plumbing
+to reach it from `ProfileTab` too). Rejected an earlier draft that put a
+manual `{currentHearts}/{MAX_HEARTS}` text *and* the `HeartsBadge` pill in
+the same profile card — redundant, dropped the manual text in favor of the
+badge alone.
+
+Manually verified in the dev server (Playwright): header pill shows 5/5 at
+a fresh profile with no buy button in the profile card; seeding a partial,
+regenerating state (2/5, 90 min into a 4h interval) shows "Next heart in 2h
+30m" and an enabled buy button; buying immediately updates both the header
+pill and the profile card (3/5, points spent) with no reload, and — matching
+`buyHeart`'s tested behavior from #530 — leaves the countdown anchored to
+the original regen timestamp (only cleared once a purchase reaches
+`MAX_HEARTS`). New `getHeartsRegenRemainingMs` unit tests in `logic.test.js`.
+Full suite (490 tests) + lint + build green.
+
 ## 2026-07-01 — Resolved issue #533: mid-lesson force-cancellation on depletion (ExerciseScreen)
 
 Fourth implementation slice of the heart economy epic (#529) — the one

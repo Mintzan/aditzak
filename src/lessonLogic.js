@@ -284,6 +284,16 @@ export function isLockedOut(hearts, lessonId, progress, now = Date.now()) {
   return applyHeartRegen(hearts, now).currentHearts === 0 && !alreadyAttempted
 }
 
+// Milliseconds until the next heart, purely for display (e.g. `HeartsBadge`,
+// `components/badges.jsx`) — 0 once full or once regen is already overdue.
+// Never mutates/reads back `hearts` itself, so a caller ticking `now` on an
+// interval to keep this counting down live doesn't need to touch the actual
+// (lazily-recomputed) hearts state at all.
+export function getHeartsRegenRemainingMs(hearts, now = Date.now()) {
+  if (!hearts?.lastHeartChangeTimestamp) return 0
+  return Math.max(0, hearts.lastHeartChangeTimestamp + HEART_REGEN_TIME_MS - now)
+}
+
 // =============================================================================
 // Cross-device sync: PN-Counter balance + per-field "keep the best of both" merge
 // =============================================================================

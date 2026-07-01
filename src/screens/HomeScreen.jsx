@@ -5,17 +5,20 @@ import { getShareUrl, shareContent } from '../shareUtils'
 import { LESSONS } from '../data/lessons'
 import { BONUS_LESSON_IDS, GATE_LESSON_IDS, JOURNEY } from '../journey'
 import {
+  canBuyHeart,
   canRepairStreak,
   getActiveStreak,
   getLocalDateString,
   getPointsBalance,
   getUnlockedLessonIds,
+  HEART_COST_POINTS,
   isLockedByGateScore,
   isLockedOut,
+  MAX_HEARTS,
   STREAK_REPAIR_COST,
 } from '../lessonLogic'
 import { describeLesson, journeyText } from '../lessonDisplay'
-import { FixedArgumentBadge, Stars } from '../components/badges'
+import { FixedArgumentBadge, HeartsBadge, Stars } from '../components/badges'
 import { FEEDBACK_API_URL, FEEDBACK_EMAIL_MAX_LENGTH, FEEDBACK_MESSAGE_MAX_LENGTH, SYNC_API_URL } from '../api'
 
 // `heartLocked` is a *depletion-only* restriction layered on top of `locked`
@@ -633,13 +636,28 @@ function HeartsLockedModal({ onClose }) {
   )
 }
 
-function ProfileTab({ streak, points, account, syncStatus, lastSyncedAt, onOpenSignIn, onSignOut, onResetProgress, onRepairStreak, onOpenFeedback }) {
+function ProfileTab({
+  streak,
+  points,
+  hearts,
+  account,
+  syncStatus,
+  lastSyncedAt,
+  onOpenSignIn,
+  onSignOut,
+  onResetProgress,
+  onRepairStreak,
+  onOpenFeedback,
+  onBuyHeart,
+}) {
   const { t, tCount, language, setLanguage, languages } = useLanguage()
   const today = getLocalDateString()
   const currentStreak = getActiveStreak(streak, today)
   const longestStreak = streak?.longestStreak ?? 0
   const balance = getPointsBalance(points)
   const canRepair = canRepairStreak(streak, points, today)
+  const currentHearts = hearts?.currentHearts ?? MAX_HEARTS
+  const canBuy = canBuyHeart(hearts, points)
 
   // Briefly swaps the "Invite a friend" button's label for `shareCopied`
   // after a clipboard-fallback share (see `shareContent`) — there's no toast
@@ -687,6 +705,23 @@ function ProfileTab({ streak, points, account, syncStatus, lastSyncedAt, onOpenS
           <span className="text-lg font-bold text-gray-900">{balance}</span>
           <span className="text-xs text-gray-500">{t('pointsBalance')}</span>
         </div>
+      </div>
+      <div className="w-full rounded-2xl border border-gray-200 bg-white p-4">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-semibold text-gray-700">{t('heartsBalance')}</p>
+          <HeartsBadge hearts={hearts} showCountdown />
+        </div>
+        {currentHearts < MAX_HEARTS && (
+          <button
+            type="button"
+            onClick={onBuyHeart}
+            disabled={!canBuy}
+            style={{ minHeight: 48 }}
+            className="mt-3 w-full rounded-2xl bg-rose-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-rose-600 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+          >
+            {t('heartsBuyButton', { cost: HEART_COST_POINTS })}
+          </button>
+        )}
       </div>
       {canRepair && (
         <div className="w-full rounded-2xl border-2 border-dashed border-orange-200 bg-orange-50 p-4">
@@ -802,6 +837,7 @@ export function HomeScreen({
   onSelectLesson,
   onResetProgress,
   onRepairStreak,
+  onBuyHeart,
   scrollTarget,
 }) {
   const { t } = useLanguage()
@@ -861,6 +897,7 @@ export function HomeScreen({
             <span aria-hidden="true">💎</span>
             <span>{balance}</span>
           </div>
+          <HeartsBadge hearts={hearts} />
         </div>
       </header>
 
@@ -878,6 +915,7 @@ export function HomeScreen({
           <ProfileTab
             streak={streak}
             points={points}
+            hearts={hearts}
             account={account}
             syncStatus={syncStatus}
             lastSyncedAt={lastSyncedAt}
@@ -886,6 +924,7 @@ export function HomeScreen({
             onResetProgress={onResetProgress}
             onRepairStreak={onRepairStreak}
             onOpenFeedback={() => setShowFeedback(true)}
+            onBuyHeart={onBuyHeart}
           />
         )}
       </main>
