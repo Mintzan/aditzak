@@ -8,6 +8,21 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Heart economy broken into GitHub issues (#529 epic + #530-536)
+
+Filed the implementation of `docs/HEART_ECONOMY_ANALYSIS.md`/the two prior
+2026-07-01 decisions as GitHub issues, mirroring the #86-epic/#87-91-sub-issue
+pattern used for the account/sync backend: **#529** (epic, holds the
+already-settled product decisions so sub-issues don't relitigate them),
+**#530** (heartsStorage + pure regen/deduct/buy/lockout logic in
+`lessonLogic.js`), **#531** (wires it into `App.jsx`: load/save, lazy regen
+on focus, wrong-answer deduction), **#532** (lesson-list lockout UI),
+**#533** (mid-lesson force-cancellation — the one mechanic not in the
+original spec), **#534** (heart badge + purchase UI), **#535** (cross-device
+sync, `mergeHearts`). **#536** (Phase 2's "recover a life" forced-review
+lessons) is filed separately as future work, deliberately left underspecified
+until the epic ships. No implementation has started yet.
+
 ## 2026-07-01 — Heart/lives economy: lockout/points/motivation questions resolved (still not implemented)
 
 Follow-up to the analysis below. Product decisions: (1) at 0 hearts, only
