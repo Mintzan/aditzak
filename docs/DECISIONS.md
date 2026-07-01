@@ -8,6 +8,32 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Resolved issue #530: hearts data model + pure regen/deduct/buy/lockout logic
+
+First implementation slice of the heart economy epic (#529). Added
+`heartsStorage` (`aditzak:hearts:v1`, `storage.js`) alongside the existing
+`pointsStorage`/`streakStorage`/`errorStorage`, reusing the plain
+`createStorage` helper unchanged — the `{}` empty-object default already
+reads as "full hearts, nothing pending" once run through `applyHeartRegen`,
+so no custom default-value logic was needed. Added `MAX_HEARTS`,
+`HEART_REGEN_TIME_MS`, `HEART_COST_POINTS`, and the pure functions
+`applyHeartRegen`/`deductHeart`/`canBuyHeart`/`buyHeart`/`isLockedOut` to
+`lessonLogic.js`, grouped as their own "Hearts (lives)" section right after
+the existing Points section (they lean on `getPointsBalance`/the
+`addPoints`-style `spent[deviceId]` shape). `buyHeart` mirrors
+`repairStreak`'s return shape (`{ hearts, points }`) for the same reason:
+one call updates two independent pieces of state.
+
+**Scope note:** `mergeHearts` and wiring `hearts` into `mergeSyncPayload`
+were deliberately left out of this PR even though they're natural
+companions to `applyHeartRegen` — they're issue #535's (cross-device sync)
+scope per the epic breakdown, kept separate so each issue lands as an
+independently reviewable PR. No `App.jsx`/UI changes yet either (issue
+#531) — this is data-model-and-logic only, covered by a new `hearts`-focused
+block of unit tests in `logic.test.js` (`applyHeartRegen`/`deductHeart`/
+`canBuyHeart`+`buyHeart`/`isLockedOut`). Full suite (484 tests) + lint +
+build green.
+
 ## 2026-07-01 — Heart economy broken into GitHub issues (#529 epic + #530-536)
 
 Filed the implementation of `docs/HEART_ECONOMY_ANALYSIS.md`/the two prior

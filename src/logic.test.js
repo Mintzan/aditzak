@@ -2,13 +2,17 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   addPoints,
   agreementsCompatible,
+  applyHeartRegen,
   buildFlagDiagnostics,
   buildTaggedOptions,
+  buyHeart,
+  canBuyHeart,
   canRepairStreak,
   computeLessonPoints,
   CASE_MIXER_QUESTION_COUNT,
   computeStars,
   CROSS_VERB_QUESTION_COUNT,
+  deductHeart,
   EXTRA_REVIEW_EXERCISES,
   exerciseReducer,
   generateCaseMixerQuestions,
@@ -36,9 +40,13 @@ import {
   getStreakEncouragement,
   getUnlockedLessonIds,
   getWeakSpotQuestions,
+  HEART_COST_POINTS,
+  HEART_REGEN_TIME_MS,
   isAnswerCorrect,
   isLockedByGateScore,
+  isLockedOut,
   MATCH_PAIRS_QUESTION_COUNT,
+  MAX_HEARTS,
   mergeDailyStreak,
   mergeErrorStats,
   mergePoints,
@@ -343,6 +351,147 @@ describe('repairStreak', () => {
     expect(result.points).toEqual({ earned: { 'device-a': STREAK_REPAIR_COST + 50 }, spent: { 'device-a': STREAK_REPAIR_COST } })
     expect(getPointsBalance(result.points)).toBe(50)
     expect(getActiveStreak(result.streak, '2026-06-12')).toBe(4)
+  })
+})
+
+describe('applyHeartRegen', () => {
+  it('treats a missing/empty hearts object as full, with no pending regen', () => {
+    expect(applyHeartRegen({}, 1000)).toEqual({ currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: null })
+    expect(applyHeartRegen(undefined, 1000)).toEqual({ currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: null })
+  })
+
+  it('is a no-op when no time has elapsed', () => {
+    const hearts = { currentHearts: 3, lastHeartChangeTimestamp: 1000 }
+    expect(applyHeartRegen(hearts, 1000)).toEqual(hearts)
+  })
+
+  it('is a no-op before a full regen interval has passed', () => {
+    const hearts = { currentHearts: 3, lastHeartChangeTimestamp: 1000 }
+    expect(applyHeartRegen(hearts, 1000 + HEART_REGEN_TIME_MS - 1)).toEqual(hearts)
+  })
+
+  it('adds one heart and preserves partial progress toward the next one', () => {
+    const hearts = { currentHearts: 3, lastHeartChangeTimestamp: 1000 }
+    const now = 1000 + HEART_REGEN_TIME_MS + 500
+
+    expect(applyHeartRegen(hearts, now)).toEqual({ currentHearts: 4, lastHeartChangeTimestamp: 1000 + HEART_REGEN_TIME_MS })
+  })
+
+  it('catches up multiple hearts in a single call', () => {
+    const hearts = { currentHearts: 1, lastHeartChangeTimestamp: 1000 }
+    const now = 1000 + 3 * HEART_REGEN_TIME_MS + 500
+
+    expect(applyHeartRegen(hearts, now)).toEqual({ currentHearts: 4, lastHeartChangeTimestamp: 1000 + 3 * HEART_REGEN_TIME_MS })
+  })
+
+  it('caps at MAX_HEARTS and clears the timestamp once full', () => {
+    const hearts = { currentHearts: 4, lastHeartChangeTimestamp: 1000 }
+    const now = 1000 + 10 * HEART_REGEN_TIME_MS
+
+    expect(applyHeartRegen(hearts, now)).toEqual({ currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: null })
+  })
+
+  it('never reduces hearts or throws when the system clock moves backward', () => {
+    const hearts = { currentHearts: 2, lastHeartChangeTimestamp: 5000 }
+    expect(applyHeartRegen(hearts, 1000)).toEqual(hearts)
+  })
+
+  it('ignores a stale non-null timestamp once already at MAX_HEARTS', () => {
+    const hearts = { currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: 1000 }
+    expect(applyHeartRegen(hearts, 1000 + 10 * HEART_REGEN_TIME_MS)).toEqual({
+      currentHearts: MAX_HEARTS,
+      lastHeartChangeTimestamp: null,
+    })
+  })
+})
+
+describe('deductHeart', () => {
+  it('decrements by one at each starting count above 0', () => {
+    for (let currentHearts = 1; currentHearts <= MAX_HEARTS; currentHearts++) {
+      const hearts = { currentHearts, lastHeartChangeTimestamp: currentHearts === MAX_HEARTS ? null : 1000 }
+      expect(deductHeart(hearts, 1000).currentHearts).toBe(currentHearts - 1)
+    }
+  })
+
+  it('is a no-op at 0 hearts', () => {
+    const hearts = { currentHearts: 0, lastHeartChangeTimestamp: 1000 }
+    expect(deductHeart(hearts, 2000)).toEqual({ currentHearts: 0, lastHeartChangeTimestamp: 1000 })
+  })
+
+  it('starts the regen clock only on the MAX_HEARTS -> MAX_HEARTS - 1 transition', () => {
+    const full = { currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: null }
+    expect(deductHeart(full, 5000)).toEqual({ currentHearts: MAX_HEARTS - 1, lastHeartChangeTimestamp: 5000 })
+
+    const partial = { currentHearts: MAX_HEARTS - 1, lastHeartChangeTimestamp: 1000 }
+    expect(deductHeart(partial, 5000)).toEqual({ currentHearts: MAX_HEARTS - 2, lastHeartChangeTimestamp: 1000 })
+  })
+
+  it('regenerates before deducting, so a stale count is corrected first', () => {
+    const hearts = { currentHearts: 2, lastHeartChangeTimestamp: 1000 }
+    const now = 1000 + 2 * HEART_REGEN_TIME_MS
+
+    expect(deductHeart(hearts, now)).toEqual({ currentHearts: 3, lastHeartChangeTimestamp: 1000 + 2 * HEART_REGEN_TIME_MS })
+  })
+})
+
+describe('canBuyHeart / buyHeart', () => {
+  const points = { earned: { 'device-a': HEART_COST_POINTS }, spent: {} }
+
+  it('is false when already at MAX_HEARTS, even with enough points', () => {
+    const hearts = { currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: null }
+    expect(canBuyHeart(hearts, points)).toBe(false)
+  })
+
+  it('is false with insufficient points, even below MAX_HEARTS', () => {
+    const hearts = { currentHearts: 2, lastHeartChangeTimestamp: 1000 }
+    const lowPoints = { earned: { 'device-a': HEART_COST_POINTS - 1 }, spent: {} }
+    expect(canBuyHeart(hearts, lowPoints, 1000)).toBe(false)
+  })
+
+  it('is true below MAX_HEARTS with enough points', () => {
+    const hearts = { currentHearts: 2, lastHeartChangeTimestamp: 1000 }
+    expect(canBuyHeart(hearts, points, 1000)).toBe(true)
+  })
+
+  it('spends HEART_COST_POINTS and adds one heart, clearing the timestamp at MAX_HEARTS', () => {
+    const hearts = { currentHearts: MAX_HEARTS - 1, lastHeartChangeTimestamp: 1000 }
+
+    const result = buyHeart(hearts, points, 'device-a', 1000)
+
+    expect(result.hearts).toEqual({ currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: null })
+    expect(result.points).toEqual({ earned: { 'device-a': HEART_COST_POINTS }, spent: { 'device-a': HEART_COST_POINTS } })
+  })
+
+  it('preserves the regen timestamp when the purchase does not reach MAX_HEARTS', () => {
+    const hearts = { currentHearts: 1, lastHeartChangeTimestamp: 1000 }
+
+    const result = buyHeart(hearts, points, 'device-a', 1000)
+
+    expect(result.hearts).toEqual({ currentHearts: 2, lastHeartChangeTimestamp: 1000 })
+  })
+})
+
+describe('isLockedOut', () => {
+  it('is false whenever hearts remain', () => {
+    const hearts = { currentHearts: 1, lastHeartChangeTimestamp: 1000 }
+    expect(isLockedOut(hearts, 'izan-present', {}, 1000)).toBe(false)
+  })
+
+  it('is true at 0 hearts for a lesson never attempted', () => {
+    const hearts = { currentHearts: 0, lastHeartChangeTimestamp: 1000 }
+    expect(isLockedOut(hearts, 'izan-present', {}, 1000)).toBe(true)
+  })
+
+  it('is false at 0 hearts for a lesson already attempted (stays open for review)', () => {
+    const hearts = { currentHearts: 0, lastHeartChangeTimestamp: 1000 }
+    const progress = { 'izan-present': { attempts: 1, bestScore: 2, totalQuestions: 3, bestStars: 1, lastPlayed: '2026-06-10T00:00:00.000Z' } }
+    expect(isLockedOut(hearts, 'izan-present', progress, 1000)).toBe(false)
+  })
+
+  it('accounts for regen having happened since the timestamp', () => {
+    const hearts = { currentHearts: 0, lastHeartChangeTimestamp: 1000 }
+    const now = 1000 + HEART_REGEN_TIME_MS
+    expect(isLockedOut(hearts, 'izan-present', {}, now)).toBe(false)
   })
 })
 

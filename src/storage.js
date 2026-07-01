@@ -25,10 +25,18 @@ const LEGACY_POINTS_STORAGE_KEY = 'aditzak:points:v1'
 // version bump to `progress`/`STORAGE_KEY`.
 const ERROR_STORAGE_KEY = 'aditzak:errors:v1'
 
-// `progress`/`dailyStreak`/`points`/`errorStats` each live under their own key
-// (see above) but share the same read/write shape: a JSON object, defaulting
-// to `{}` if missing or unparsable, silently no-oping if localStorage itself
-// is unavailable (private browsing, quota).
+// Hearts (lives): `{ currentHearts, lastHeartChangeTimestamp }`. Own key for
+// the same reasons as the streak/points/errors above. The empty-object
+// default (see `createStorage` below) doubles as "full hearts, nothing
+// pending" — `applyHeartRegen`/`deductHeart`/etc. in `lessonLogic.js` treat a
+// missing `currentHearts`/`lastHeartChangeTimestamp` as `MAX_HEARTS`/`null`,
+// so a fresh profile needs no special-cased default here.
+const HEARTS_STORAGE_KEY = 'aditzak:hearts:v1'
+
+// `progress`/`dailyStreak`/`points`/`errorStats`/`hearts` each live under
+// their own key (see above) but share the same read/write shape: a JSON
+// object, defaulting to `{}` if missing or unparsable, silently no-oping if
+// localStorage itself is unavailable (private browsing, quota).
 function createStorage(key) {
   return {
     load() {
@@ -52,6 +60,7 @@ function createStorage(key) {
 export const progressStorage = createStorage(STORAGE_KEY)
 export const streakStorage = createStorage(STREAK_STORAGE_KEY)
 export const errorStorage = createStorage(ERROR_STORAGE_KEY)
+export const heartsStorage = createStorage(HEARTS_STORAGE_KEY)
 
 // A random id generated once per device on first use, identifying this
 // device's counters in the `points` PN-Counter (see `pointsStorage`,
