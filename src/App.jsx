@@ -469,6 +469,7 @@ function AppShell() {
         onSelectLesson={handleSelectLesson}
         onResetProgress={handleResetProgress}
         onRepairStreak={handleRepairStreak}
+        onBuyHeart={handleBuyHeart}
         scrollTarget={homeScrollTarget}
       />
       {pendingMerge && <MergeModal applying={mergeApplying} onChoose={handleResolveMerge} />}

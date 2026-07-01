@@ -30,6 +30,7 @@ import {
   getEncouragement,
   getExplanation,
   getFixedArgument,
+  getHeartsRegenRemainingMs,
   getIntroducedSources,
   getLocalDateString,
   getLureRationale,
@@ -492,6 +493,24 @@ describe('isLockedOut', () => {
     const hearts = { currentHearts: 0, lastHeartChangeTimestamp: 1000 }
     const now = 1000 + HEART_REGEN_TIME_MS
     expect(isLockedOut(hearts, 'izan-present', {}, now)).toBe(false)
+  })
+})
+
+describe('getHeartsRegenRemainingMs', () => {
+  it('is 0 when full (no pending timestamp)', () => {
+    expect(getHeartsRegenRemainingMs({ currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: null }, 1000)).toBe(0)
+    expect(getHeartsRegenRemainingMs({}, 1000)).toBe(0)
+  })
+
+  it('counts down from the timestamp toward one regen interval', () => {
+    const hearts = { currentHearts: 3, lastHeartChangeTimestamp: 1000 }
+    expect(getHeartsRegenRemainingMs(hearts, 1000)).toBe(HEART_REGEN_TIME_MS)
+    expect(getHeartsRegenRemainingMs(hearts, 1000 + HEART_REGEN_TIME_MS / 2)).toBe(HEART_REGEN_TIME_MS / 2)
+  })
+
+  it('floors at 0 once regen is already overdue, never goes negative', () => {
+    const hearts = { currentHearts: 3, lastHeartChangeTimestamp: 1000 }
+    expect(getHeartsRegenRemainingMs(hearts, 1000 + HEART_REGEN_TIME_MS * 5)).toBe(0)
   })
 })
 

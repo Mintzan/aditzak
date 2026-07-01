@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { AGREEMENT_META, DIALECT_LABELS, PERSON_LABEL_KEYS, TYPE_META } from '../data/verbs'
-import { getFixedArgument } from '../lessonLogic'
+import { getFixedArgument, getHeartsRegenRemainingMs, MAX_HEARTS } from '../lessonLogic'
 
 export function TypeBadge({ type }) {
   const { t } = useLanguage()
@@ -68,6 +69,46 @@ export function Stars({ count }) {
           ★
         </span>
       ))}
+    </div>
+  )
+}
+
+// `showCountdown` controls whether the "next heart in Xh Ym" line renders
+// below the count — used compactly (count only) in `HomeScreen`'s header
+// pill row, and with the countdown in the Profile tab's dedicated hearts
+// card. The countdown ticks down live via a plain interval that only ever
+// re-renders this component — it never touches `hearts` itself (that stays
+// exactly the lazily-recomputed value `App.jsx` passed in), so this is
+// purely cosmetic and doesn't fight the "no background regen timer" design
+// (see `docs/HEART_ECONOMY_ANALYSIS.md`).
+export function HeartsBadge({ hearts, showCountdown = false }) {
+  const { t } = useLanguage()
+  const currentHearts = hearts?.currentHearts ?? MAX_HEARTS
+  const [now, setNow] = useState(() => Date.now())
+
+  useEffect(() => {
+    if (!showCountdown || currentHearts >= MAX_HEARTS) return
+    const interval = setInterval(() => setNow(Date.now()), 60_000)
+    return () => clearInterval(interval)
+  }, [showCountdown, currentHearts])
+
+  const remainingMs = showCountdown ? getHeartsRegenRemainingMs(hearts, now) : 0
+  const hours = Math.floor(remainingMs / (60 * 60 * 1000))
+  const minutes = Math.ceil((remainingMs % (60 * 60 * 1000)) / 60000)
+
+  return (
+    <div className="flex flex-col items-end gap-0.5">
+      <div
+        className="flex items-center gap-1.5 rounded-full bg-rose-100 px-3 py-1.5 text-sm font-bold text-rose-600"
+        aria-label={t('heartsLabel', { count: currentHearts, max: MAX_HEARTS })}
+      >
+        <span aria-hidden="true">❤️</span>
+        <span>
+          {currentHearts}
+          <span className="font-normal text-rose-400">/{MAX_HEARTS}</span>
+        </span>
+      </div>
+      {showCountdown && currentHearts < MAX_HEARTS && <span className="text-xs text-gray-400">{t('heartsNextIn', { hours, minutes })}</span>}
     </div>
   )
 }
