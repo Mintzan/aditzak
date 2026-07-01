@@ -8,6 +8,37 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Heart/lives economy: lockout/points/motivation questions resolved (still not implemented)
+
+Follow-up to the analysis below. Product decisions: (1) at 0 hearts, only
+lessons with a recorded attempt stay playable — everything else the linear
+unlock model would allow is additionally blocked until hearts recover; (2) an
+in-progress *fresh* attempt (not a replay of an already-completed lesson) must
+be force-cancelled the moment hearts hit 0, unless the learner buys a heart on
+the spot to continue — a mid-lesson mechanic the original spec didn't cover,
+needing a new interstitial/modal and a "don't score a cancelled attempt"
+rule (so cancelling can't perversely unlock the next lesson); (3) keep
+repeat-lesson points below first-attempt points (already true today), drop
+the spec's flat `POINTS_PER_REVIEW`, tune exact numbers later; (4) motivation
+confirmed, Phase 2 refined to dedicated forced-review "recover a life"
+lessons rather than error-log practice. Recorded in
+`docs/HEART_ECONOMY_ANALYSIS.md`'s "Resolved" section. Still no hearts code —
+implementation is the next step, not done here.
+
+## 2026-07-01 — Heart/lives economy spec: analysis only, not implemented
+
+An external "Player State, Economy, and Heart System" spec proposed a
+hearts/lives mechanic (`MAX_HEARTS`, timestamp-based lazy regen, a
+heart-purchase economy). Wrote up the requested analysis (client-clock/
+multi-device exploit edge cases, architecture fit, step-by-step regen-function
+plan) as `docs/HEART_ECONOMY_ANALYSIS.md` rather than building it — the spec
+conflicts with two things already in the codebase (`POINTS_PER_REVIEW=20`
+duplicates/contradicts the existing `LESSON_POINTS_REPEAT` repeat-lesson
+reward; the proposed lockout rule is a third, unspecified axis on top of the
+existing linear-unlock + gate-score model in `getUnlockedLessonIds`) that need
+a product decision, not an implementer's guess. No hearts code, storage key,
+or UI exists yet — see that doc's "Open questions" before starting.
+
 ## 2026-06-27 — milestone phases + unified Bonus phase (rebalance increment 4)
 
 Closed out the rebalance's presentation work. (1) The five spine phases now
