@@ -1062,7 +1062,7 @@ function rollStreakNudgeChance() {
   return Math.random() < STREAK_NUDGE_CHANCE
 }
 
-export function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canShowStreakNudge, onStreakNudgeShown }) {
+export function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canShowStreakNudge, onStreakNudgeShown, onWrongAnswer }) {
   const { t } = useLanguage()
   const [state, dispatch] = useReducer(exerciseReducer, undefined, () => createExerciseState(lesson, attempts, errorStats))
   const [finished, setFinished] = useState(false)
@@ -1184,6 +1184,11 @@ export function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplet
     const isCorrect = isAnswerCorrect(value, question.correct)
     if (isCorrect) vibrateCorrect()
     else vibrateIncorrect()
+    // Every incorrect submission costs a heart, including retries of the same
+    // question — unlike `misses`/scoring (which only count a question's
+    // first attempt), the heart economy's trigger is "an incorrect answer is
+    // submitted," full stop (see `docs/HEART_ECONOMY_ANALYSIS.md`).
+    if (!isCorrect) onWrongAnswer()
     const milestone = isCorrect ? getStreakEncouragement(state.streak + 1) : null
     const showEncouragement = milestone !== null && canShowStreakNudge && rollStreakNudgeChance()
     setStreakEncouragement(showEncouragement ? milestone : null)
