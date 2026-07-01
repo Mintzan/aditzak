@@ -204,6 +204,87 @@ export function repairStreak(streak, points, today, deviceId) {
 }
 
 // =============================================================================
+// Hearts (lives): deducted on a wrong answer, regenerated passively over
+// time, purchasable with points. See `docs/HEART_ECONOMY_ANALYSIS.md` for the
+// full design rationale (edge cases, why there's no server-side anti-cheat).
+// =============================================================================
+
+export const MAX_HEARTS = 5
+export const HEART_REGEN_TIME_MS = 4 * 60 * 60 * 1000 // 4 hours per heart
+export const HEART_COST_POINTS = 50
+
+// The lazy "catch-up" regen formula: recomputes how many hearts should have
+// regenerated since `lastHeartChangeTimestamp`, given only `now` — no
+// background timer, so this must be called (with a fresh `now`) at every
+// point hearts are read or changed, not just once per session. Two guards
+// matter here: `currentHearts >= MAX_HEARTS` short-circuits *before* looking
+// at the timestamp at all (a stale non-null timestamp on an already-full
+// profile must never be trusted), and `Math.max(0, …)` floors `elapsed` at
+// zero so a backward-set system clock can't produce a negative addition.
+// Advancing the timestamp by exactly `heartsToAdd * HEART_REGEN_TIME_MS`
+// (rather than resetting it to `now`) preserves partial progress toward the
+// *next* heart when regen doesn't reach `MAX_HEARTS`.
+export function applyHeartRegen(hearts, now = Date.now()) {
+  const currentHearts = hearts?.currentHearts ?? MAX_HEARTS
+  if (currentHearts >= MAX_HEARTS) return { currentHearts: MAX_HEARTS, lastHeartChangeTimestamp: null }
+  const elapsed = Math.max(0, now - (hearts?.lastHeartChangeTimestamp ?? now))
+  const heartsToAdd = Math.floor(elapsed / HEART_REGEN_TIME_MS)
+  if (heartsToAdd <= 0) return { currentHearts, lastHeartChangeTimestamp: hearts?.lastHeartChangeTimestamp ?? null }
+  const newHearts = Math.min(MAX_HEARTS, currentHearts + heartsToAdd)
+  const lastHeartChangeTimestamp =
+    newHearts === MAX_HEARTS ? null : hearts.lastHeartChangeTimestamp + heartsToAdd * HEART_REGEN_TIME_MS
+  return { currentHearts: newHearts, lastHeartChangeTimestamp }
+}
+
+// Applies regen first (so a deduction right after reopening the app is
+// computed against fresh state), then removes one heart if any remain. The
+// regen clock only starts on the `MAX_HEARTS` → `MAX_HEARTS - 1` transition —
+// later deductions extend the wait for the *next* heart rather than each
+// starting their own clock.
+export function deductHeart(hearts, now = Date.now()) {
+  const regenerated = applyHeartRegen(hearts, now)
+  if (regenerated.currentHearts <= 0) return regenerated
+  const wasFull = regenerated.currentHearts === MAX_HEARTS
+  return {
+    currentHearts: regenerated.currentHearts - 1,
+    lastHeartChangeTimestamp: wasFull ? now : regenerated.lastHeartChangeTimestamp,
+  }
+}
+
+export function canBuyHeart(hearts, points, now = Date.now()) {
+  return applyHeartRegen(hearts, now).currentHearts < MAX_HEARTS && getPointsBalance(points) >= HEART_COST_POINTS
+}
+
+// Spends `HEART_COST_POINTS` points for one heart, capped at `MAX_HEARTS`.
+// Mirrors `repairStreak`'s shape (returns both updated slices of state) and
+// records the spend as a `spent[deviceId]` increment the same way, so it
+// merges through the existing `mergePoints` PN-Counter merge for free.
+export function buyHeart(hearts, points, deviceId, now = Date.now()) {
+  const regenerated = applyHeartRegen(hearts, now)
+  const newHearts = Math.min(MAX_HEARTS, regenerated.currentHearts + 1)
+  return {
+    hearts: {
+      currentHearts: newHearts,
+      lastHeartChangeTimestamp: newHearts === MAX_HEARTS ? null : regenerated.lastHeartChangeTimestamp,
+    },
+    points: {
+      earned: points?.earned ?? {},
+      spent: { ...(points?.spent ?? {}), [deviceId]: (points?.spent?.[deviceId] ?? 0) + HEART_COST_POINTS },
+    },
+  }
+}
+
+// At 0 hearts, only lessons already attempted at least once stay playable —
+// everything `getUnlockedLessonIds` would otherwise allow (locked, or
+// unlocked but never attempted) is additionally restricted until hearts
+// recover. This is a depletion-only restriction layered on top of that
+// function's result, not a change to it.
+export function isLockedOut(hearts, lessonId, progress, now = Date.now()) {
+  const alreadyAttempted = (progress?.[lessonId]?.attempts ?? 0) > 0
+  return applyHeartRegen(hearts, now).currentHearts === 0 && !alreadyAttempted
+}
+
+// =============================================================================
 // Cross-device sync: PN-Counter balance + per-field "keep the best of both" merge
 // =============================================================================
 
