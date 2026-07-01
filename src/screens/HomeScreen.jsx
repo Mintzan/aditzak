@@ -11,35 +11,44 @@ import {
   getPointsBalance,
   getUnlockedLessonIds,
   isLockedByGateScore,
+  isLockedOut,
   STREAK_REPAIR_COST,
 } from '../lessonLogic'
 import { describeLesson, journeyText } from '../lessonDisplay'
 import { FixedArgumentBadge, Stars } from '../components/badges'
 import { FEEDBACK_API_URL, FEEDBACK_EMAIL_MAX_LENGTH, FEEDBACK_MESSAGE_MAX_LENGTH, SYNC_API_URL } from '../api'
 
-function LessonNode({ lesson, locked, needsGateScore, stars, onSelect }) {
+// `heartLocked` is a *depletion-only* restriction layered on top of `locked`
+// (the existing progression/gate lock) — it only ever applies to a lesson
+// `locked` already says is otherwise available, per
+// `docs/HEART_ECONOMY_ANALYSIS.md`'s "Resolved" point 1. A `locked` lesson
+// keeps its existing (disabled, unclickable) treatment regardless of hearts;
+// only a heart-locked-but-otherwise-unlocked lesson stays clickable so tapping
+// it can surface `onHeartLocked`'s nudge instead of silently doing nothing.
+function LessonNode({ lesson, locked, heartLocked, needsGateScore, stars, onSelect, onHeartLocked }) {
   const { t, language } = useLanguage()
   const { icon, title, subtitle, recognitionOnly, fixedArgument } = describeLesson(lesson, t, language)
+  const unavailable = locked || heartLocked
   return (
     <button
       type="button"
       id={`lesson-${lesson.id}`}
       disabled={locked}
-      onClick={() => onSelect(lesson.id)}
+      onClick={() => (heartLocked ? onHeartLocked() : onSelect(lesson.id))}
       style={{ minHeight: 48 }}
       className={`flex w-full scroll-mt-20 items-center gap-4 rounded-2xl border-2 p-4 text-left transition active:scale-[0.98] ${
-        locked
+        unavailable
           ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-60'
           : 'border-gray-200 bg-white hover:border-green-400 hover:shadow-md'
       }`}
     >
       <div
         className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-xl font-extrabold ${
-          locked ? 'bg-gray-300 text-gray-500' : 'bg-green-500 text-white'
+          unavailable ? 'bg-gray-300 text-gray-500' : 'bg-green-500 text-white'
         }`}
         aria-hidden="true"
       >
-        {locked ? (needsGateScore ? '🛡️' : '🔒') : icon}
+        {locked ? (needsGateScore ? '🛡️' : '🔒') : heartLocked ? '💔' : icon}
       </div>
       <div className="min-w-0 flex-1">
         <p className="font-semibold text-gray-900">
@@ -50,6 +59,7 @@ function LessonNode({ lesson, locked, needsGateScore, stars, onSelect }) {
         </p>
         {recognitionOnly && <p className="mt-1 text-sm font-semibold text-sky-600">{t('recognitionOnly')}</p>}
         {needsGateScore && <p className="mt-1 text-sm font-semibold text-amber-600">{t('gateNeedsScore')}</p>}
+        {heartLocked && <p className="mt-1 text-sm font-semibold text-rose-600">{t('heartsLockedHint')}</p>}
         {fixedArgument && (
           <div className="mt-1">
             <FixedArgumentBadge fixedArgument={fixedArgument} />
@@ -61,19 +71,24 @@ function LessonNode({ lesson, locked, needsGateScore, stars, onSelect }) {
   )
 }
 
-function LessonList({ lessons, progress, unlockedIds, onSelect }) {
+function LessonList({ lessons, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
   return (
     <div className="flex flex-col gap-3">
-      {lessons.map((lesson) => (
-        <LessonNode
-          key={lesson.id}
-          lesson={lesson}
-          locked={!unlockedIds.has(lesson.id)}
-          needsGateScore={isLockedByGateScore(LESSONS, progress, GATE_LESSON_IDS, lesson.id)}
-          stars={progress[lesson.id]?.bestStars ?? 0}
-          onSelect={onSelect}
-        />
-      ))}
+      {lessons.map((lesson) => {
+        const locked = !unlockedIds.has(lesson.id)
+        return (
+          <LessonNode
+            key={lesson.id}
+            lesson={lesson}
+            locked={locked}
+            heartLocked={!locked && isLockedOut(hearts, lesson.id, progress)}
+            needsGateScore={isLockedByGateScore(LESSONS, progress, GATE_LESSON_IDS, lesson.id)}
+            stars={progress[lesson.id]?.bestStars ?? 0}
+            onSelect={onSelect}
+            onHeartLocked={onHeartLocked}
+          />
+        )
+      })}
     </div>
   )
 }
@@ -111,7 +126,7 @@ function PendingUnitCard({ unit }) {
 // An available unit's `lessonIds` point at entries in `LESSONS` — render each
 // as a `LessonNode`, with the unit's title/focus from `journey.js` as a label
 // above them.
-function UnitLessons({ unit, progress, unlockedIds, onSelect }) {
+function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
   const { t, language } = useLanguage()
   const lessons = unit.lessonIds.map((id) => LESSONS.find((lesson) => lesson.id === id))
   const title = journeyText('units', unit.number, 'title', language, unit.title)
@@ -127,12 +142,12 @@ function UnitLessons({ unit, progress, unlockedIds, onSelect }) {
         )}
       </p>
       <p className="mt-0.5 mb-2 text-sm text-gray-500 break-words">{focus}</p>
-      <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
+      <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} hearts={hearts} onSelect={onSelect} onHeartLocked={onHeartLocked} />
     </div>
   )
 }
 
-function StageSection({ stage, progress, unlockedIds, onSelect }) {
+function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
   const { language } = useLanguage()
   const title = journeyText('stages', stage.id, 'title', language, stage.title)
   return (
@@ -141,7 +156,15 @@ function StageSection({ stage, progress, unlockedIds, onSelect }) {
       <div className="flex flex-col gap-4">
         {stage.units.map((unit) =>
           unit.status === 'available' ? (
-            <UnitLessons key={unit.number} unit={unit} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
+            <UnitLessons
+              key={unit.number}
+              unit={unit}
+              progress={progress}
+              unlockedIds={unlockedIds}
+              hearts={hearts}
+              onSelect={onSelect}
+              onHeartLocked={onHeartLocked}
+            />
           ) : (
             <PendingUnitCard key={unit.number} unit={unit} />
           ),
@@ -151,7 +174,7 @@ function StageSection({ stage, progress, unlockedIds, onSelect }) {
   )
 }
 
-function PhaseSection({ phase, progress, unlockedIds, onSelect }) {
+function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
   const { language } = useLanguage()
   const title = journeyText('phases', phase.id, 'title', language, phase.title)
   const subtitle = journeyText('phases', phase.id, 'subtitle', language, phase.subtitle)
@@ -162,7 +185,15 @@ function PhaseSection({ phase, progress, unlockedIds, onSelect }) {
         <p className="text-sm text-gray-500">{subtitle}</p>
       </div>
       {phase.stages.map((stage) => (
-        <StageSection key={stage.id} stage={stage} progress={progress} unlockedIds={unlockedIds} onSelect={onSelect} />
+        <StageSection
+          key={stage.id}
+          stage={stage}
+          progress={progress}
+          unlockedIds={unlockedIds}
+          hearts={hearts}
+          onSelect={onSelect}
+          onHeartLocked={onHeartLocked}
+        />
       ))}
     </section>
   )
@@ -172,7 +203,7 @@ function PhaseSection({ phase, progress, unlockedIds, onSelect }) {
 // than `LESSONS` directly: it walks phases → stages → units so the full
 // curriculum roadmap is visible, with available units rendering their
 // `LessonNode`s and pending units rendering locked `PendingUnitCard`s.
-function JourneyTab({ progress, onSelectLesson }) {
+function JourneyTab({ progress, hearts, onSelectLesson, onHeartLocked }) {
   const { t } = useLanguage()
   const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress, undefined, GATE_LESSON_IDS, BONUS_LESSON_IDS), [progress])
 
@@ -180,7 +211,15 @@ function JourneyTab({ progress, onSelectLesson }) {
     <div>
       <p className="mb-4 text-sm text-gray-500">{t('homeIntro')}</p>
       {JOURNEY.map((phase) => (
-        <PhaseSection key={phase.id} phase={phase} progress={progress} unlockedIds={unlockedIds} onSelect={onSelectLesson} />
+        <PhaseSection
+          key={phase.id}
+          phase={phase}
+          progress={progress}
+          unlockedIds={unlockedIds}
+          hearts={hearts}
+          onSelect={onSelectLesson}
+          onHeartLocked={onHeartLocked}
+        />
       ))}
     </div>
   )
@@ -559,6 +598,41 @@ export function MergeModal({ applying, onChoose }) {
   )
 }
 
+// Shown when tapping a heart-locked lesson (see `LessonNode`'s
+// `onHeartLocked`) — purely informational for now (no purchase affordance
+// yet, that's a separate follow-up), so the learner gets an explicit "why
+// can't I start this" answer instead of the tap silently doing nothing.
+function HeartsLockedModal({ onClose }) {
+  const { t } = useLanguage()
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="hearts-locked-title"
+        className="w-full max-w-md rounded-t-3xl bg-white p-5 text-center sm:rounded-3xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="mb-2 text-4xl" aria-hidden="true">
+          💔
+        </div>
+        <h2 id="hearts-locked-title" className="mb-1 text-lg font-bold text-gray-900">
+          {t('heartsLockedTitle')}
+        </h2>
+        <p className="mb-4 text-sm text-gray-500">{t('heartsLockedBody')}</p>
+        <button
+          type="button"
+          onClick={onClose}
+          style={{ minHeight: 48 }}
+          className="w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+        >
+          {t('heartsLockedClose')}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function ProfileTab({ streak, points, account, syncStatus, lastSyncedAt, onOpenSignIn, onSignOut, onResetProgress, onRepairStreak, onOpenFeedback }) {
   const { t, tCount, language, setLanguage, languages } = useLanguage()
   const today = getLocalDateString()
@@ -718,6 +792,7 @@ export function HomeScreen({
   progress,
   streak,
   points,
+  hearts,
   account,
   syncStatus,
   lastSyncedAt,
@@ -736,6 +811,7 @@ export function HomeScreen({
   const balance = getPointsBalance(points)
   const [showFeedback, setShowFeedback] = useState(false)
   const [showAccountModal, setShowAccountModal] = useState(false)
+  const [showHeartsLocked, setShowHeartsLocked] = useState(false)
 
   // Restores the scroll position the learner had before starting an exercise,
   // or — on the very first load — jumps straight to the last lesson they
@@ -789,7 +865,14 @@ export function HomeScreen({
       </header>
 
       <main className="flex-1 px-5 pt-5 pb-28">
-        {tab === 'home' && <JourneyTab progress={progress} onSelectLesson={onSelectLesson} />}
+        {tab === 'home' && (
+          <JourneyTab
+            progress={progress}
+            hearts={hearts}
+            onSelectLesson={onSelectLesson}
+            onHeartLocked={() => setShowHeartsLocked(true)}
+          />
+        )}
         {tab === 'progress' && <ProgressTab progress={progress} />}
         {tab === 'profile' && (
           <ProfileTab
@@ -811,6 +894,7 @@ export function HomeScreen({
 
       {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
       {showAccountModal && <AccountModal onClose={() => setShowAccountModal(false)} />}
+      {showHeartsLocked && <HeartsLockedModal onClose={() => setShowHeartsLocked(false)} />}
     </div>
   )
 }

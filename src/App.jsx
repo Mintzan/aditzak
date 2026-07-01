@@ -446,6 +446,7 @@ function AppShell() {
         progress={progress}
         streak={dailyStreak}
         points={points}
+        hearts={hearts}
         account={account}
         syncStatus={syncStatus}
         lastSyncedAt={lastSyncedAt}
