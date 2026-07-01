@@ -217,22 +217,60 @@ Pure function, colocated with the other economy logic in `lessonLogic.js`:
    stale-timestamp), `deductHeart` at each starting count, `buyHeart`
    gating, and `mergeHearts`.
 
-## Open questions (product decisions needed before implementation)
+## Resolved (2026-07-01)
 
-1. **How does heart-lockout compose with the existing linear-unlock +
-   gate-score model** (`getUnlockedLessonIds`, `lessonLogic.js:341-`)? Does
-   depletion override it (block *everything* not yet completed, even lessons
-   the linear model would otherwise unlock), or only prevent starting new
-   lessons while leaving the unlock computation itself untouched?
-2. **Reconcile `POINTS_PER_REVIEW` with the existing `LESSON_POINTS_REPEAT`**
-   reward (mismatch #1 above) — one rule, not two.
-3. Is a hearts/lives mechanic even wanted for this app? It's a solo,
-   untimed, no-ads language-learning tool today with no monetization
-   surface — worth confirming the product goal (retention pressure? paid
-   heart refills later?) before building the lockout UX, since it's a
-   meaningful behavior change to the core loop, not just an economy tweak.
+The three open questions above are now settled:
 
-The Phase 2 "practice to earn" idea (spec §5) composes cleanly with the plan
-above — it's just a fourth path into `currentHearts` (`+1`, bypassing points
-entirely) alongside regen/purchase, so nothing here needs to change shape to
-accommodate it later.
+1. **Lockout composition:** at `currentHearts === 0`, availability is the
+   *intersection* of the existing unlock model and completion — i.e. only
+   lessons with at least one recorded attempt (`progress[lessonId].attempts >
+   0`) stay playable; everything else `getUnlockedLessonIds` would otherwise
+   unlock (locked *or* already-unlocked-but-never-attempted) becomes
+   unavailable until hearts recover. This is a depletion-only restriction
+   layered on top of `getUnlockedLessonIds`'s result, not a change to that
+   function's own logic — `isLockedOut`'s definition in Part 3 step 5 already
+   matches this ("no attempts recorded" is exactly "not completed" here).
+2. **New requirement not in the original spec: mid-lesson cancellation.** If
+   `currentHearts` hits 0 *during* an unfinished, never-completed-before
+   lesson (i.e. this is a fresh attempt, not a replay of an already-completed
+   one), the exercise must be cancelled — the learner is bounced back to
+   `HomeScreen` — unless they buy a heart immediately to continue. This needs
+   a spend-check inside `ExerciseScreen`'s wrong-answer path itself (right
+   after `deductHeart`, not just at lesson-selection time), plus a small UI
+   moment offering "buy a heart to continue" before the forced exit. Replaying
+   an already-completed lesson is unaffected by this (per point 1, completed
+   lessons stay playable regardless of heart count) — the copy needs to be
+   careful to only cancel *new* attempts.
+3. **Points:** keep the existing scaled-down repeat reward
+   (`LESSON_POINTS_REPEAT = 5` < `LESSON_POINTS_FIRST_ATTEMPT = 10`,
+   `lessonLogic.js:144-145`); drop the spec's flat `POINTS_PER_REVIEW = 20`
+   entirely rather than reconciling it — the constraint is just "repeat <
+   new," already satisfied, exact numbers to be tuned later.
+4. **Motivation confirmed**, and the Phase 2 idea is now more specific than
+   the original spec's §5: dedicated "recover a life" lessons built from
+   already-studied material (forcing spaced review), not just an
+   error-log-driven session. Still composes cleanly with the plan above — a
+   fourth path into `currentHearts` (`+1`, bypassing points), same as before.
+
+## Consequence for Part 3: one more piece to design
+
+Step 5's `isLockedOut` (lesson-list gating) is unchanged by the above. But
+mid-lesson cancellation needs its own piece, not yet speced in Part 3:
+
+- `ExerciseScreen`'s `exerciseReducer` needs the post-`deductHeart` hearts
+  value available to its `answer` action (or a `useEffect` watching `hearts`
+  after each wrong answer) so it can distinguish "still have hearts, continue
+  as normal" from "just hit 0 on a fresh attempt, must stop."
+- Whether "fresh attempt" is `!(progress[lessonId]?.attempts > 0)` evaluated
+  once at lesson start, or needs to also cover the case where the *lesson in
+  progress* was already-completed before (replay) — in which case hitting 0
+  hearts mid-replay should **not** cancel it, per point 2 above. The reducer
+  needs this fact passed in at mount, not re-derived per question.
+- The cancellation UI is a new state, not one of the existing
+  `exerciseReducer` statuses (`answer`/`next`) — likely a modal/interstitial
+  offering "buy a heart to continue" (calls `buyHeart`, then resumes at the
+  same question) vs. "exit" (discards the in-progress attempt, no partial
+  `recordResult` — cancelled attempts shouldn't count as a scored attempt,
+  otherwise cancelling would perversely unlock the next lesson under the
+  existing linear model). This needs a small new component, not an extension
+  of `LessonResultsScreen` (that screen assumes a *finished* run).

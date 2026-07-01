@@ -8,6 +8,23 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Heart/lives economy: lockout/points/motivation questions resolved (still not implemented)
+
+Follow-up to the analysis below. Product decisions: (1) at 0 hearts, only
+lessons with a recorded attempt stay playable — everything else the linear
+unlock model would allow is additionally blocked until hearts recover; (2) an
+in-progress *fresh* attempt (not a replay of an already-completed lesson) must
+be force-cancelled the moment hearts hit 0, unless the learner buys a heart on
+the spot to continue — a mid-lesson mechanic the original spec didn't cover,
+needing a new interstitial/modal and a "don't score a cancelled attempt"
+rule (so cancelling can't perversely unlock the next lesson); (3) keep
+repeat-lesson points below first-attempt points (already true today), drop
+the spec's flat `POINTS_PER_REVIEW`, tune exact numbers later; (4) motivation
+confirmed, Phase 2 refined to dedicated forced-review "recover a life"
+lessons rather than error-log practice. Recorded in
+`docs/HEART_ECONOMY_ANALYSIS.md`'s "Resolved" section. Still no hearts code —
+implementation is the next step, not done here.
+
 ## 2026-07-01 — Heart/lives economy spec: analysis only, not implemented
 
 An external "Player State, Economy, and Heart System" spec proposed a
