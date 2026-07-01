@@ -8,6 +8,49 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Resolved issue #533: mid-lesson force-cancellation on depletion (ExerciseScreen)
+
+Fourth implementation slice of the heart economy epic (#529) — the one
+mechanic not in the original external spec (see the epic's product decision
+#2). `ExerciseScreen` now takes `hearts`/`points`/`onBuyHeart` props and
+derives `outOfHearts = isFreshAttempt && hearts?.currentHearts === 0` purely
+from props each render — deliberately **no local state or effect**: `hearts`
+already flows down fresh from `App.jsx` on every wrong answer (and on
+regen/purchase), so the moment `currentHearts` moves off 0 the derived
+boolean flips back false on its own, no explicit "resume" handling needed.
+`isFreshAttempt = attempts === 0` is fixed at mount (the existing `attempts`
+prop), so a lesson already complete when the screen mounted stays a "replay"
+— never interrupted — for its whole duration.
+
+New `OutOfHeartsOverlay` renders as a **blocking** overlay (no
+backdrop-dismiss, unlike `HeartsLockedModal` from #532 — this is a forced
+decision point) on top of the still-intact exercise UI underneath, so
+"resume at the same question" falls out for free: buying a heart
+(`handleBuyHeart`, `App.jsx`, no confirm dialog — the overlay's button is
+already the explicit confirmation) doesn't touch `exerciseReducer`'s state
+at all, it just stops the overlay's own condition from being true. "Discard
+and exit" reuses the existing `onExit` prop directly (bypassing
+`handleExitClick`'s unsaved-progress confirm — the overlay itself already
+was the confirmation) — since `onExit`/`handleReturnToHome` never calls
+`recordResult`/`addPoints`, a cancelled attempt was already guaranteed to
+leave no trace without extra code.
+
+One label collision caught before it shipped: the overlay's exit button
+would have read "Exit lesson", identical to the X button's existing
+`exitLessonLabel` aria-label — ambiguous for both learners mid-panic-reading
+and `getByRole` test queries. Renamed to "Discard and exit" (and the
+es/eu equivalents) to make the distinct action *and* the button unique.
+
+Manually verified in the dev server (Playwright): wrong answer at 1 heart
+→ blocking modal → "Discard and exit" → back at the lesson list with empty
+`progress` (and, satisfyingly, #532's lockout immediately shows the lesson
+as heart-locked); same setup with points seeded → "Buy a heart" → modal
+clears, hearts restored, points spent, `Continue` button still there
+mid-feedback; an already-completed lesson at 0 hearts takes a wrong answer
+without any modal at all. New test coverage in `App.exerciseScreen.test.jsx`
+(`describe('out of hearts mid-lesson (#533)')`) covers the same three paths.
+Full suite (487 tests) + lint + build green.
+
 ## 2026-07-01 — Resolved issue #532: lesson-list heart lockout (HomeScreen)
 
 Third implementation slice of the heart economy epic (#529), building on
