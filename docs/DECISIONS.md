@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Resolved issue #532: lesson-list heart lockout (HomeScreen)
+
+Third implementation slice of the heart economy epic (#529), building on
+#530/#531. `LessonNode` gained a `heartLocked` prop, computed in `LessonList`
+as `!locked && isLockedOut(hearts, lesson.id, progress)` — deliberately
+`&&`ed with `!locked` so it only ever applies on top of an already-unlocked
+lesson, never overriding the existing progression/gate lock's own icon
+(🔒/🛡️) or disabled state. A heart-locked lesson gets its own icon (💔), an
+inline hint (`heartsLockedHint`, styled like the existing `gateNeedsScore`
+hint), and — unlike a progression-locked lesson — stays clickable so tapping
+it opens `HeartsLockedModal` instead of silently doing nothing (a
+progression-locked lesson keeps `disabled`, so its tap already did nothing
+before this change and still does). The modal is informational only for now
+("wait or replay a completed lesson") since there's no purchase affordance
+yet (#534). `hearts`/`onHeartLocked` thread down the same prop chain
+`progress`/`unlockedIds`/`onSelect` already use (`JourneyTab` →
+`PhaseSection` → `StageSection` → `UnitLessons` → `LessonList` →
+`LessonNode`) — consistent with the rest of this screen, no context
+introduced. Added `heartsLockedHint`/`heartsLockedTitle`/`heartsLockedBody`/
+`heartsLockedClose` to all three `translations.js` languages.
+
+Manually verified in the dev server (Playwright, seeded `localStorage`): at
+0 hearts, an already-attempted lesson stays fully playable, the next
+unlocked-but-never-attempted lesson shows the 💔 treatment and opens the
+modal on tap, and lessons already progression-locked are unaffected; at full
+hearts the list renders identically to before this change. No heart-count
+badge yet (#534) — `ProgressTab` also untouched (display-only, not a lesson
+launcher). Full suite (484 tests) + lint + build green.
+
 ## 2026-07-01 — Resolved issue #531: wired hearts into App.jsx (load, focus-regen, wrong-answer deduction)
 
 Second implementation slice of the heart economy epic (#529), building on
