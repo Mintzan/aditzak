@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
-import { generateMatchPairsQuestions, generateQuestions } from './lessonLogic'
+import { generateMatchPairsQuestions, generateQuestions, HEART_COST_POINTS } from './lessonLogic'
 import { VERBS } from './data/verbs'
 
 describe('App', () => {
@@ -172,6 +172,80 @@ describe('App', () => {
       await waitFor(() => {
         expect(screen.getByRole('heading', { name: 'Aditzak' })).toBeInTheDocument()
       })
+    })
+  })
+
+  describe('out of hearts mid-lesson (#533)', () => {
+    afterEach(() => {
+      window.history.replaceState({}, '', '/')
+    })
+
+    it('force-stops a fresh attempt that runs out of hearts, and discards it without recording progress on exit', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      localStorage.setItem('aditzak:hearts:v1', JSON.stringify({ currentHearts: 1, lastHeartChangeTimestamp: null }))
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+      await user.click(screen.getByRole('button', { name: 'zara' })) // wrong answer, depletes the only heart
+
+      expect(await screen.findByRole('dialog', { name: "You're out of hearts" })).toBeInTheDocument()
+      // No points seeded, so there's nothing to spend — only "Discard and exit" should show.
+      expect(screen.queryByRole('button', { name: /Buy a heart/ })).not.toBeInTheDocument()
+
+      await user.click(screen.getByRole('button', { name: 'Discard and exit' }))
+
+      expect(screen.getByRole('heading', { name: 'Aditzak' })).toBeInTheDocument()
+      expect(JSON.parse(localStorage.getItem('aditzak:progress:v1') ?? '{}')).toEqual({})
+      expect(JSON.parse(localStorage.getItem('aditzak:hearts:v1')).currentHearts).toBe(0)
+    })
+
+    it('lets the learner buy a heart to continue the same attempt instead of exiting', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      localStorage.setItem('aditzak:hearts:v1', JSON.stringify({ currentHearts: 1, lastHeartChangeTimestamp: null }))
+      localStorage.setItem('aditzak:points:v2', JSON.stringify({ earned: { 'seed-device': HEART_COST_POINTS }, spent: {} }))
+      const user = userEvent.setup()
+      render(<App />)
+
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'Start' }))
+      await user.click(screen.getByRole('button', { name: 'zara' }))
+
+      await user.click(await screen.findByRole('button', { name: `Buy a heart — ${HEART_COST_POINTS} points` }))
+
+      // The heart is spent-and-restored, and the overlay clears — leaving the
+      // still-incorrect feedback for the *same* question showing underneath
+      // exactly as it was (buying doesn't touch the exercise's own state),
+      // so the learner can hit "Continue" and keep going right where they
+      // left off, instead of being dumped back to the lesson list.
+      expect(screen.queryByRole('dialog', { name: "You're out of hearts" })).not.toBeInTheDocument()
+      expect(JSON.parse(localStorage.getItem('aditzak:hearts:v1'))).toEqual({ currentHearts: 1, lastHeartChangeTimestamp: null })
+      const points = JSON.parse(localStorage.getItem('aditzak:points:v2'))
+      expect(Object.values(points.spent).reduce((sum, n) => sum + n, 0)).toBe(HEART_COST_POINTS)
+      expect(screen.getByText("Not quite — you'll see this one again.")).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument()
+    })
+
+    it('does not interrupt a replay of an already-completed lesson even at 0 hearts', async () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      localStorage.setItem(
+        'aditzak:progress:v1',
+        JSON.stringify({
+          'izan-present': { attempts: 1, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: new Date().toISOString() },
+        }),
+      )
+      localStorage.setItem('aditzak:hearts:v1', JSON.stringify({ currentHearts: 0, lastHeartChangeTimestamp: Date.now() }))
+      const user = userEvent.setup()
+      render(<App />)
+
+      // A lesson already completed once stays tappable at 0 hearts (#532) and
+      // skips the preview screen (attempts > 0), straight into questions.
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura izan — to be/ }))
+      await user.click(screen.getByRole('button', { name: 'zara' })) // wrong answer; hearts already 0
+
+      expect(screen.queryByRole('dialog', { name: "You're out of hearts" })).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument()
     })
   })
 

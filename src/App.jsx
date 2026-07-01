@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   addPoints,
   applyHeartRegen,
+  buyHeart,
   computeLessonPoints,
   computeStars,
   deductHeart,
@@ -388,6 +389,15 @@ function AppShell() {
     setPoints(nextPoints)
   }
 
+  // No confirm dialog, unlike `handleRepairStreak` — this is only ever
+  // reachable from `OutOfHeartsOverlay`'s already-explicit "buy" button
+  // (`ExerciseScreen`), not a passive profile-tab action.
+  function handleBuyHeart() {
+    const { hearts: nextHearts, points: nextPoints } = buyHeart(hearts, points, deviceId, Date.now())
+    setHearts(nextHearts)
+    setPoints(nextPoints)
+  }
+
   function handleSelectLesson(lessonId) {
     scrollBeforeLessonRef.current = window.scrollY
     setActiveLessonId(lessonId)
@@ -413,10 +423,13 @@ function AppShell() {
         lesson={lesson}
         attempts={progress[lesson.id]?.attempts ?? 0}
         errorStats={errorStats}
+        hearts={hearts}
+        points={points}
         onExit={handleReturnToHome}
         canShowStreakNudge={streakNudgeCooldown === 0}
         onStreakNudgeShown={handleStreakNudgeShown}
         onWrongAnswer={() => setHearts((previous) => deductHeart(previous, Date.now()))}
+        onBuyHeart={handleBuyHeart}
         onComplete={(result) => {
           const isRepeat = (progress[lesson.id]?.attempts ?? 0) > 0
           const pointsEarned = computeLessonPoints(result.correctCount, result.total, isRepeat)

@@ -8,6 +8,7 @@ import { LESSONS } from '../data/lessons'
 import { READING_ITEMS } from '../data/readingItems'
 import {
   buildFlagDiagnostics,
+  canBuyHeart,
   computeLessonPoints,
   computeStars,
   exerciseReducer,
@@ -23,6 +24,7 @@ import {
   getEncouragement,
   getIntroducedSources,
   getLureRationale,
+  HEART_COST_POINTS,
   isAnswerCorrect,
   pickEncouragementVariantIndex,
   getStreakEncouragement,
@@ -970,6 +972,56 @@ function Celebration({ celebration }) {
   )
 }
 
+// Shown when a *fresh* attempt (never completed before — see `ExerciseScreen`'s
+// `isFreshAttempt`) runs out of hearts partway through. Blocking — no
+// backdrop-dismiss — since it's a forced decision point, not an informational
+// aside like `HeartsLockedModal` (`HomeScreen`). Buying a heart doesn't reset
+// any state here: it's an overlay on top of the still-intact exercise, so
+// once `hearts.currentHearts` moves off 0 the overlay just stops rendering
+// and the learner is exactly where they left off (same question, same
+// feedback state).
+function OutOfHeartsOverlay({ canBuy, onBuyHeart, onExit }) {
+  const { t } = useLanguage()
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="out-of-hearts-title"
+        className="w-full max-w-md rounded-t-3xl bg-white p-5 text-center sm:rounded-3xl"
+      >
+        <div className="mb-2 text-4xl" aria-hidden="true">
+          💔
+        </div>
+        <h2 id="out-of-hearts-title" className="mb-1 text-lg font-bold text-gray-900">
+          {t('outOfHeartsTitle')}
+        </h2>
+        <p className="mb-4 text-sm text-gray-500">{t('outOfHeartsBody')}</p>
+        <div className="flex flex-col gap-2">
+          {canBuy && (
+            <button
+              type="button"
+              onClick={onBuyHeart}
+              style={{ minHeight: 48 }}
+              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+            >
+              {t('outOfHeartsBuy', { cost: HEART_COST_POINTS })}
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onExit}
+            style={{ minHeight: 48 }}
+            className="rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-700 transition hover:border-red-300 hover:text-red-600"
+          >
+            {t('outOfHeartsExit')}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone }) {
   const { t, tCount, language } = useLanguage()
   const stars = computeStars(correctCount, total)
@@ -1062,7 +1114,19 @@ function rollStreakNudgeChance() {
   return Math.random() < STREAK_NUDGE_CHANCE
 }
 
-export function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplete, canShowStreakNudge, onStreakNudgeShown, onWrongAnswer }) {
+export function ExerciseScreen({
+  lesson,
+  attempts,
+  errorStats,
+  hearts,
+  points,
+  onExit,
+  onComplete,
+  canShowStreakNudge,
+  onStreakNudgeShown,
+  onWrongAnswer,
+  onBuyHeart,
+}) {
   const { t } = useLanguage()
   const [state, dispatch] = useReducer(exerciseReducer, undefined, () => createExerciseState(lesson, attempts, errorStats))
   const [finished, setFinished] = useState(false)
@@ -1158,6 +1222,18 @@ export function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplet
   const total = state.total
   const question = state.queue[0]
   const isAnswered = state.status !== 'active'
+  // A fresh attempt (never completed before *this session started* — fixed
+  // at mount via `attempts`, not re-derived per question, so a lesson that
+  // was already complete when this screen mounted stays a "replay" for its
+  // whole duration even though `attempts` only updates in the parent after
+  // `onComplete`) that runs out of hearts gets force-stopped by
+  // `OutOfHeartsOverlay` below; a replay of an already-completed lesson is
+  // never interrupted by hearts. `hearts` is a prop straight from `App.jsx`'s
+  // state, so this is purely derived — no local state/effect needed to track
+  // it, and it clears itself the instant `hearts.currentHearts` moves off 0
+  // (regen or purchase).
+  const isFreshAttempt = attempts === 0
+  const outOfHearts = isFreshAttempt && hearts?.currentHearts === 0
   // Finishing means the queue is about to empty — only true once the *last*
   // remaining question has been answered correctly; an incorrect answer to it
   // sends it back to the queue and the lesson carries on.
@@ -1302,6 +1378,10 @@ export function ExerciseScreen({ lesson, attempts, errorStats, onExit, onComplet
         verb={verb}
         selected={state.selected}
       />
+
+      {outOfHearts && (
+        <OutOfHeartsOverlay canBuy={canBuyHeart(hearts, points)} onBuyHeart={onBuyHeart} onExit={onExit} />
+      )}
     </div>
   )
 }
