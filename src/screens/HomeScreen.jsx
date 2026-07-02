@@ -85,8 +85,8 @@ function LessonNode({ lesson, locked, heartLocked, needsGateScore, stars, onSele
         <p className="truncate text-sm text-gray-500">
           {subtitle.main} — {subtitle.secondary}
         </p>
-        {recognitionOnly && <p className="mt-1 text-sm font-semibold text-sky-600">{t('recognitionOnly')}</p>}
-        {needsGateScore && <p className="mt-1 text-sm font-semibold text-amber-600">{t('gateNeedsScore')}</p>}
+        {recognitionOnly && <p className="mt-1 text-sm font-semibold text-neutral-600">{t('recognitionOnly')}</p>}
+        {needsGateScore && <p className="mt-1 text-sm font-semibold text-semantic-warning">{t('gateNeedsScore')}</p>}
         {heartLocked && <p className="mt-1 text-sm font-semibold text-rose-600">{t('heartsLockedHint')}</p>}
         {fixedArgument && (
           <div className="mt-1">
@@ -164,7 +164,7 @@ function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLoc
       <p className="font-semibold text-gray-900">
         {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
         {unit.bonus && (
-          <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 align-middle text-xs font-semibold text-violet-700">
+          <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2 py-0.5 align-middle text-xs font-semibold text-brand-txakoli-text">
             <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}
           </span>
         )}
@@ -279,7 +279,7 @@ function ProgressTab({ progress }) {
                     ? `${t('progressBest', { best: entry.bestScore, total: entry.totalQuestions })} · ${tCount('attempt', entry.attempts)}`
                     : t('progressNotStarted')}
                 </p>
-                {needsGateScore && <p className="mt-1 text-sm font-semibold text-amber-600">{t('gateNeedsScore')}</p>}
+                {needsGateScore && <p className="mt-1 text-sm font-semibold text-semantic-warning">{t('gateNeedsScore')}</p>}
               </div>
               <Stars count={entry?.bestStars ?? 0} />
             </div>
@@ -711,17 +711,17 @@ function ProfileTab({
       </div>
       <div className="flex w-full gap-3">
         <div className="flex flex-1 flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white p-4">
-          <StreakIcon className="h-6 w-6 text-orange-500" />
+          <StreakIcon className="h-6 w-6 text-brand-clay" />
           <span className="text-lg font-bold text-gray-900">{tCount('streakDays', currentStreak)}</span>
           <span className="text-xs text-gray-500">{t('streakCurrent')}</span>
         </div>
         <div className="flex flex-1 flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white p-4">
-          <TrophyIcon className="h-6 w-6 text-amber-500" />
+          <TrophyIcon className="h-6 w-6 text-brand-clay" />
           <span className="text-lg font-bold text-gray-900">{tCount('streakDays', longestStreak)}</span>
           <span className="text-xs text-gray-500">{t('streakLongest')}</span>
         </div>
         <div className="flex flex-1 flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white p-4">
-          <PointsIcon className="h-6 w-6 text-sky-600" />
+          <PointsIcon className="h-6 w-6 text-brand-txakoli-text" />
           <span className="text-lg font-bold text-gray-900">{balance}</span>
           <span className="text-xs text-gray-500">{t('pointsBalance')}</span>
         </div>
@@ -744,14 +744,14 @@ function ProfileTab({
         )}
       </div>
       {canRepair && (
-        <div className="w-full rounded-2xl border-2 border-dashed border-orange-200 bg-orange-50 p-4">
-          <p className="text-sm font-bold text-orange-700">{t('streakRepairTitle')}</p>
-          <p className="mt-1 text-xs text-orange-600">{t('streakRepairDescription', { cost: STREAK_REPAIR_COST })}</p>
+        <div className="w-full rounded-2xl border-2 border-dashed border-semantic-warning bg-semantic-warning-tint p-4">
+          <p className="text-sm font-bold text-semantic-warning">{t('streakRepairTitle')}</p>
+          <p className="mt-1 text-xs text-semantic-warning">{t('streakRepairDescription', { cost: STREAK_REPAIR_COST })}</p>
           <button
             type="button"
             onClick={onRepairStreak}
             style={{ minHeight: 48 }}
-            className="mt-3 w-full rounded-2xl bg-orange-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-orange-600 active:scale-[0.98]"
+            className="mt-3 w-full rounded-xl bg-semantic-warning text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-semantic-warning-hover active:scale-[0.98]"
           >
             {t('streakRepairButton', { cost: STREAK_REPAIR_COST })}
           </button>
@@ -896,7 +896,7 @@ export function HomeScreen({
           <button
             type="button"
             onClick={() => onChangeTab('profile')}
-            className="flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-1.5 text-sm font-bold text-orange-600 transition active:scale-95"
+            className="flex items-center gap-1 rounded-full bg-brand-clay-tint px-2.5 py-1.5 text-sm font-bold text-brand-clay transition active:scale-95"
             aria-label={t('streakLabel', { count: currentStreak })}
           >
             <StreakIcon className="h-4 w-4" />
@@ -914,7 +914,7 @@ export function HomeScreen({
           <button
             type="button"
             onClick={() => onChangeTab('profile')}
-            className="flex items-center gap-1 rounded-full bg-sky-100 px-2.5 py-1.5 text-sm font-bold text-sky-700 transition active:scale-95"
+            className="flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2.5 py-1.5 text-sm font-bold text-brand-txakoli-text transition active:scale-95"
             aria-label={t('pointsLabel', { count: balance })}
           >
             <PointsIcon className="h-4 w-4" />

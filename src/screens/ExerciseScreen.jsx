@@ -1072,7 +1072,7 @@ function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone
       </div>
       <Stars count={stars} />
       {pointsEarned > 0 && (
-        <p className="flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1.5 text-sm font-bold text-sky-700">
+        <p className="flex items-center gap-1.5 rounded-full bg-brand-txakoli-tint px-3 py-1.5 text-sm font-bold text-brand-txakoli-text">
           <PointsIcon className="h-4 w-4" />
           {tCount('pointsEarned', pointsEarned)}
         </p>
