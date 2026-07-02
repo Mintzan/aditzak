@@ -336,7 +336,7 @@ function TypedAnswerInput({ value, status, onChange, onSubmit }) {
 
 const MATCH_TILE_STYLES = {
   idle: 'border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:bg-gray-50',
-  selected: 'border-blue-400 bg-blue-50 text-blue-700',
+  selected: 'border-neutral-800 bg-neutral-200 text-neutral-900',
   correct: 'border-semantic-correct bg-semantic-correct-tint text-semantic-correct',
   incorrect: 'border-semantic-error bg-semantic-error-tint text-semantic-error animate-shake',
 }

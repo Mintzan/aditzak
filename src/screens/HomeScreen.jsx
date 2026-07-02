@@ -32,6 +32,7 @@ import {
   PointsIcon,
   ProfileIcon,
   ProgressIcon,
+  RepeatIcon,
   StreakIcon,
   TrophyIcon,
 } from '../components/icons'
@@ -56,13 +57,13 @@ function LessonNode({ lesson, locked, heartLocked, needsGateScore, stars, onSele
       style={{ minHeight: 48 }}
       className={`flex w-full scroll-mt-20 items-center gap-4 rounded-2xl border-2 p-4 text-left transition active:scale-[0.98] ${
         unavailable
-          ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-60'
-          : 'border-gray-200 bg-white hover:border-green-400 hover:shadow-md'
+          ? 'cursor-not-allowed border-neutral-800 bg-gray-100 opacity-60'
+          : 'border-neutral-800 bg-white hover:border-green-400 hover:shadow-md'
       }`}
     >
       <div
         className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full font-extrabold ${
-          unavailable ? 'bg-gray-300 text-gray-500' : 'bg-brand-forest text-white'
+          unavailable ? 'bg-neutral-400 text-neutral-600' : 'bg-brand-forest text-white'
         }`}
         aria-hidden="true"
       >
@@ -74,6 +75,8 @@ function LessonNode({ lesson, locked, heartLocked, needsGateScore, stars, onSele
           )
         ) : heartLocked ? (
           <HeartBrokenIcon className="h-6 w-6" />
+        ) : lesson.review ? (
+          <RepeatIcon className="h-6 w-6" />
         ) : (
           <span className="text-xl">{icon}</span>
         )}

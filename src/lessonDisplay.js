@@ -79,7 +79,10 @@ export function describeLesson(lesson, t, language) {
   }
   const reviewName = verbNames.length > 1 ? t('mixedReview') : t('verbReview', { verb: verbNames[0] })
   return {
-    icon: '🔁',
+    // No `icon` here — `LessonNode` renders `RepeatIcon` for review lessons
+    // directly off `lesson.review` instead of a display value from this
+    // function, since a review's icon is fixed (not derived from lesson
+    // content the way the letter/emoji icons above are).
     title: { main: t('reviewLabel'), secondary: persons ? `${tenseLabel} · ${persons}` : tenseLabel },
     subtitle: { main: verbsLabel, secondary: t('mixedPractice') },
     heading: persons ? `${reviewName} · ${tenseLabel} (${persons})` : `${reviewName} · ${tenseLabel}`,
