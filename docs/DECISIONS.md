@@ -8,6 +8,44 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Round 6: mascot system greenlit as a central part of the app
+
+Round 5 explicitly left one question unresolved — whether Aditzak becomes a
+mascot-driven app at all — on the grounds that it's a product-scope call a
+component audit can't make. Product decision: **yes, and centrally**, not
+confined to the two feedback-drawer micro-moments the guide had originally
+scoped.
+
+Turned "central" into a concrete, named placement plan rather than leaving
+it directional — nine placements across five screens, all using the four
+expressions and two mini-avatars already built and reconciled onto the
+canonical palette in round 4, so no new artwork is required to execute it:
+Home tab header and Profile tab avatar (currently a plain 🧑‍🎓 emoji) get
+Pozik; the lesson preview screen (currently no character at all) gets a
+greeting Pozik; the lesson results screen (currently a generic emoji in a
+circle, the app's single biggest per-session moment) maps Gora!/Pozik/
+Nekatuta onto the score bands `getEncouragement`/`computeStars` already
+compute, with the weak-result case deliberately landing on Nekatuta's
+established "let's review together" meaning rather than a scolding face, to
+stay inside the anti-guilt voice rule (§7); onboarding/language-selection
+(not previously in scope) gets a first-impression Pozik; the three
+already-scoped micro-moments (feedback drawer, in-lesson error-pattern
+callout, Progress-tab low-accuracy indicator) carry over unchanged.
+
+Un-hedged every place the guide had written mascot-dependent specs as
+conditional now that the yes/no call is made: §6's mascot-reaction motion
+timing, §8's dual-indicator rule, and §1C's icon-system scope (emoji still
+stay the default everywhere *outside* the nine named placements — this
+isn't a wholesale icon-system replacement, just a much bigger mascot
+footprint than before).
+
+**Deliberately not decided here**: the actual implementation (new avatar
+components across five screens, wiring the results-screen score-band
+mapping) — that's real engineering work belonging to a future session, not
+implied by settling the scope question. `docs/VISUAL_IDENTITY.md`'s
+"Recommended path" now describes two independent tracks (palette/component
+work; mascot placement work) that can ship in either order.
+
 ## 2026-07-02 — Round 5: audited the visual identity guide against the real components, closed every gap that surfaced
 
 Previous rounds only checked the guide's internal consistency (contrast math,
