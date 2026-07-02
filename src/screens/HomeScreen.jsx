@@ -62,7 +62,7 @@ function LessonNode({ lesson, locked, heartLocked, needsGateScore, stars, onSele
     >
       <div
         className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full font-extrabold ${
-          unavailable ? 'bg-gray-300 text-gray-500' : 'bg-green-500 text-white'
+          unavailable ? 'bg-gray-300 text-gray-500' : 'bg-brand-forest text-white'
         }`}
         aria-hidden="true"
       >
@@ -351,7 +351,7 @@ function FeedbackModal({ onClose }) {
               type="button"
               onClick={onClose}
               style={{ minHeight: 48 }}
-              className="w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+              className="w-full rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
             >
               {t('feedbackClose')}
             </button>
@@ -397,7 +397,7 @@ function FeedbackModal({ onClose }) {
               type="submit"
               disabled={status === 'sending' || !message.trim()}
               style={{ minHeight: 48 }}
-              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:opacity-50"
+              className="rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98] disabled:opacity-50"
             >
               {status === 'sending' ? t('feedbackSending') : t('feedbackSubmit')}
             </button>
@@ -494,7 +494,7 @@ function AccountModal({ onClose }) {
               type="submit"
               disabled={!email.trim() || status === 'sending'}
               style={{ minHeight: 48 }}
-              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:opacity-50"
+              className="rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98] disabled:opacity-50"
             >
               {status === 'sending' ? t('accountSending') : t('accountSendLink')}
             </button>
@@ -565,7 +565,7 @@ function AccountSection({ account, syncStatus, lastSyncedAt, onOpenSignIn, onSig
         type="button"
         onClick={onOpenSignIn}
         style={{ minHeight: 48 }}
-        className="mt-3 w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+        className="mt-3 w-full rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
       >
         {t('accountSignIn')}
       </button>
@@ -598,7 +598,7 @@ export function MergeModal({ applying, onChoose }) {
               type="button"
               onClick={() => onChoose('keepBest')}
               style={{ minHeight: 48 }}
-              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+              className="rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
             >
               {t('accountMergeKeepBest')}
             </button>
@@ -651,7 +651,7 @@ function HeartsLockedModal({ onClose }) {
           type="button"
           onClick={onClose}
           style={{ minHeight: 48 }}
-          className="w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+          className="w-full rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
         >
           {t('heartsLockedClose')}
         </button>
@@ -774,9 +774,9 @@ function ProfileTab({
               type="button"
               onClick={() => setLanguage(lang.code)}
               style={{ minHeight: 48 }}
-              className={`flex-1 rounded-2xl border-2 px-3 text-sm font-bold transition ${
+              className={`flex-1 rounded-xl border-2 px-3 text-sm font-bold transition ${
                 language === lang.code
-                  ? 'border-green-500 bg-green-50 text-green-700'
+                  ? 'border-brand-forest bg-brand-forest-tint text-brand-forest'
                   : 'border-gray-200 text-gray-500 hover:border-gray-300'
               }`}
             >

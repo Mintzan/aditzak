@@ -66,15 +66,15 @@ function LanguageOnboardingScreen() {
             type="button"
             onClick={() => setLanguage(lang.code)}
             style={{ minHeight: 64 }}
-            className={`flex items-center justify-between rounded-2xl border-2 px-5 text-left text-lg font-bold transition active:scale-[0.98] ${
+            className={`flex items-center justify-between rounded-xl border-2 px-5 text-left text-lg font-bold transition active:scale-[0.98] ${
               lang.code === 'eu'
-                ? 'border-green-500 bg-green-50 text-green-700'
+                ? 'border-brand-forest bg-brand-forest-tint text-brand-forest'
                 : 'border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:bg-gray-50'
             }`}
           >
             {lang.name}
             {lang.code === 'eu' && (
-              <span className="rounded-full bg-green-500 px-2.5 py-1 text-xs font-bold text-white">{t('onboardingRecommended')}</span>
+              <span className="rounded-full bg-brand-forest px-2.5 py-1 text-xs font-bold text-white">{t('onboardingRecommended')}</span>
             )}
           </button>
         ))}
