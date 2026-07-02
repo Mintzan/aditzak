@@ -8,6 +8,61 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Round 5: audited the visual identity guide against the real components, closed every gap that surfaced
+
+Previous rounds only checked the guide's internal consistency (contrast math,
+palette drift, anatomy). This round read the actual UI code it's meant to be
+applied to (`ExerciseScreen.jsx`, `HomeScreen.jsx`, `badges.jsx`,
+`data/verbs.js`) and found the guide was missing roughly 10 distinct
+Tailwind hues in active use, a button/card geometry that doesn't match
+anything shipped, motion timings invented without reference to the real
+(already-tuned) CSS, no font-loading step despite specifying two fonts, and
+an unscoped icon system. Decided all of it rather than re-flagging:
+
+- **Grammar-badge palette** (`TYPE_META`/`AGREEMENT_META` — 5 more hues:
+  `indigo`/`rose`/`blue`/`purple`/`amber`): NOR/NORI/NORK now reuse the three
+  brand colors instead of getting a fourth arbitrary hue set — ties the
+  grammar-role system to the brand rather than adding to the palette. Verb
+  type (synthetic/periphrastic) moves off color entirely onto a filled-vs-
+  outlined value distinction, which also resolves a real collision: it had
+  been sharing `rose` with `HeartsBadge` for an unrelated meaning.
+- **`accent-hearts`**: formalized `rose` as hearts' own standalone token,
+  closing the open question from the original gap analysis. Now that verb
+  type is off `rose`, it has exactly one meaning in the app.
+- **Streak/points/bonus/repair-card colors**: mapped onto `brand-clay`
+  (streak), `brand-txakoli` (points/bonus — same "reward" association as
+  stars), and `semantic-warning` (streak-repair — it's a "needs attention"
+  prompt, the guide's warning token finally getting a real match).
+- **Button/card geometry**: dropped the original "3px bottom-border-offset
+  keycap" button spec — it doesn't exist anywhere in the app, which
+  consistently uses a flat fill + `active:scale-[0.98]` press pattern across
+  ~20 buttons already. Kept that pattern; buttons move to 12px radius, cards
+  keep their existing 16px, badges stay `rounded-full`.
+- **Motion timings**: the guide's numbers (0.98→1.03→1.0/200ms,
+  ±6px/three-cycle/250ms) didn't match `index.css`'s shipped `animate-flash`
+  (350ms, 1→1.04→1) or `animate-shake` (400ms, asymmetric 5-step wobble).
+  Documented the real values as canonical for the existing answer-feedback
+  micro-interactions; reserved the original invented numbers for a
+  mascot-avatar-specific reaction only, since that's genuinely new motion
+  with nothing to reconcile against. Also explicitly scoped the confetti/
+  firework 3-star celebration's independent 7-color rainbow as deliberately
+  outside the brand palette (a celebration should read as spectacle, not a
+  branded moment) rather than a silent gap.
+- **Fonts**: neither Space Grotesk nor Inter loads today — added the actual
+  `<link>` tags as an implementation step, not left as a token-only mention.
+- **Icon system**: ~15 emoji touchpoints app-wide stay emoji — no vector
+  icon set was ever proposed to replace them, and the mascot's coverage
+  stays scoped to exactly the two feedback-drawer avatars already decided.
+
+**Still open, deliberately not decided here**: whether the mascot/animation
+system gets built at all — that's a product-scope call, not something a
+component audit can resolve, and every other mascot-adjacent question (icon
+scope, motion, triggers) is now fully specified *conditional on* that yes/no.
+Revised the "Recommended path" note to reflect real effort: the palette
+consolidation and button-geometry change touch two screen files' worth of
+working code, not just a token file — bounded and doable, but not the
+"low-risk, incremental" framing the guide had before this round.
+
 ## 2026-07-02 — Fixed header overflow on narrow screens (hearts pill from #534 was clipped)
 
 Real-device screenshot (a ~412 CSS px Android) showed the header's 4th pill
