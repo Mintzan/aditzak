@@ -8,6 +8,12 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Implementation iteration 7: mascot rollout, part 2 — feedback-drawer mini avatars
+
+Wires `latxa-icon-correct.svg`/`latxa-icon-incorrect.svg` into `ExerciseScreen.jsx`'s `FeedbackBar`, per §10 Swatch 3 and §12 Example 3's reconciled spec ("mascot mini-avatar sitting alongside the checkmark rather than replacing it"). Unlike iteration 6's `latxa-logo.svg` (which needed a face-crop to read at avatar sizes), these two assets are already purpose-built for small sizes — 32px viewBox, no body/legs — so wired them in as-is after confirming that at a render test rather than assuming it.
+
+New `FeedbackMascotAvatar` (`src/components/mascot.jsx`) — a 48px circle, white background, 2px `semantic-correct`/`semantic-error` border matching the drawer's own color — sits to the left of the existing check/cross icon + headline, inside the same flex row. Also adds `animate-mascot-react` (`src/index.css`, `0.98→1.03→1.0`/200ms) — the motion §6 reserved specifically for "the mascot's own reaction" at this exact placement, distinct from the answer-option `animate-flash`/`animate-shake` which keep their own already-shipped timings.
+
 ## 2026-07-02 — Implementation iteration 6: mascot rollout, part 1 — static Pozik placements
 
 Starts Track B (the mascot rollout, round 6's "placement plan") — the only major piece left after Track A finished in iteration 5. Ships the 4 lowest-risk placements from the plan: home tab banner (`JourneyTab`), lesson preview greeting (`LessonPreviewScreen`), Profile tab avatar (replacing `ProfileIcon`), and the onboarding screen (replacing the 🌍 emoji). All four use the same asset/component, no new state or logic.

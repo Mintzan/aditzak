@@ -93,6 +93,25 @@ h4 {
   animation: flash 0.35s ease-in-out;
 }
 
+/* docs/VISUAL_IDENTITY.md §6 — reserved specifically for the mascot's own
+   reaction (feedback-drawer mini avatars), not the answer-option
+   flash/shake above, which stay on their own already-shipped timings. */
+@keyframes mascot-react {
+  0% {
+    transform: scale(0.98);
+  }
+  60% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-mascot-react {
+  animation: mascot-react 0.2s ease-out;
+}
+
 @keyframes confetti-fall {
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);

@@ -33,7 +33,7 @@ import {
 } from '../lessonLogic'
 import { describeLesson, verbMeaning } from '../lessonDisplay'
 import { FixedArgumentBadge, ProgressBar, Stars, VerbBadgeRow } from '../components/badges'
-import { MascotAvatar } from '../components/mascot'
+import { FeedbackMascotAvatar, MascotAvatar } from '../components/mascot'
 import { FEEDBACK_API_URL, FEEDBACK_MESSAGE_MAX_LENGTH } from '../api'
 import { CheckIcon, CrossIcon, FlagIcon, HeartBrokenIcon, LightbulbIcon, PointsIcon } from '../components/icons'
 
@@ -836,26 +836,29 @@ function FeedbackBar({
   return (
     <div className={`px-5 pt-4 pb-6 ${isCorrect ? 'bg-semantic-correct-tint' : 'bg-semantic-error-tint'}`}>
       <div className="mb-3 flex items-start justify-between gap-2">
-        <p className={`flex items-center gap-2 text-lg font-extrabold ${isCorrect ? 'text-semantic-correct' : 'text-semantic-error'}`}>
-          {streakEncouragement ? (
-            <span className="text-2xl" aria-hidden="true">
-              {streakEncouragement.icon}
-            </span>
-          ) : isCorrect ? (
-            <CheckIcon className="h-6 w-6 shrink-0" />
-          ) : (
-            <CrossIcon className="h-6 w-6 shrink-0" />
-          )}
-          {streakEncouragement ? (
-            <span>
-              {streakEncouragement.headline} {t(streakEncouragement.messageKey)}
-            </span>
-          ) : isCorrect ? (
-            <span>{t('feedbackCorrect')}</span>
-          ) : (
-            <span>{t('feedbackIncorrect')}</span>
-          )}
-        </p>
+        <div className="flex items-center gap-3">
+          <FeedbackMascotAvatar isCorrect={isCorrect} />
+          <p className={`flex items-center gap-2 text-lg font-extrabold ${isCorrect ? 'text-semantic-correct' : 'text-semantic-error'}`}>
+            {streakEncouragement ? (
+              <span className="text-2xl" aria-hidden="true">
+                {streakEncouragement.icon}
+              </span>
+            ) : isCorrect ? (
+              <CheckIcon className="h-6 w-6 shrink-0" />
+            ) : (
+              <CrossIcon className="h-6 w-6 shrink-0" />
+            )}
+            {streakEncouragement ? (
+              <span>
+                {streakEncouragement.headline} {t(streakEncouragement.messageKey)}
+              </span>
+            ) : isCorrect ? (
+              <span>{t('feedbackCorrect')}</span>
+            ) : (
+              <span>{t('feedbackIncorrect')}</span>
+            )}
+          </p>
+        </div>
         <button
           type="button"
           onClick={() => setShowFlagModal(true)}
