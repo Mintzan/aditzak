@@ -40,6 +40,8 @@ The visual identity of Aditzak centers around the **Latxa sheep**, a rugged bree
 
 Used for splash screens, onboarding, and marketing banners. It features the complete mascot character paired with a geometric, heavy lowercase wordmark **"aditzak"** rendered in Space Grotesk.
 
+Asset file: `public/brand/latxa-logo.svg`
+
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
   <!-- Drop Shadow / Base Plate to anchor the mascot -->
@@ -82,6 +84,8 @@ Rendered and spot-checked in a headless browser during review — reads as a cle
 ### B. Micro-Optimized App Icon & Favicon Mark
 
 To ensure clean rendering at 16×16px or 32×32px, all complex textures (body wool paths, eyebrows, smile lines, and shaggy bangs overlay) are stripped away. This utilizes a high-contrast geometric abstraction of the head, optimized for low-resolution grids.
+
+Asset file: `public/brand/latxa-icon.svg` — **not yet wired up** as the site favicon (`index.html` still points at the placeholder `public/favicon.svg`); swapping it in is an explicit step for whoever implements this guide, not implied by this file existing.
 
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="100%">
@@ -258,6 +262,8 @@ Three production-ready HTML component swatches applying the tokens above, all wi
 ```
 
 ### Swatch 3: Mascot Feedback Drawer (Correct & Incorrect States)
+
+Mini-avatar assets: `public/brand/latxa-icon-correct.svg`, `public/brand/latxa-icon-incorrect.svg`.
 
 ```html
 <!-- Correct Feedback Draw State Module -->
