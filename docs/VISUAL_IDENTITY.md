@@ -1,6 +1,6 @@
 # Visual Identity & Design System Guide
 
-**Status: Track A (palette/typography/component) fully implemented; Track B (mascot) not started.** This started as a from-scratch redesign specification; implementation began 2026-07-02 and is landing in small, independently-shippable PRs rather than one big rewrite. Iteration 1 (fonts + live favicon), iteration 2 (§11's 18-icon system), iteration 3 (§2's primary-button/feedback-triad palette + §5's 12px button radius), iteration 4 (§2's grammar-badge/stat-pill palette), and iteration 5 (§3's neutral-scale leftovers, plus a missed review-lesson icon) have all shipped. Not yet started: the §1C/mascot-placement-plan rollout (Track B), the only major piece left. See "Gap analysis" below for what's changed vs. still pending, and "Open scope questions" for what needs a product decision before Track B starts.
+**Status: Track A (palette/typography/component) fully implemented; Track B (mascot) underway.** This started as a from-scratch redesign specification; implementation began 2026-07-02 and is landing in small, independently-shippable PRs rather than one big rewrite. Iterations 1–5 (fonts/favicon, the 18-icon system, the full §2 palette, and §3's neutral-scale leftovers) shipped Track A in full. Track B (the mascot placement plan) started with iteration 6: the 4 static Pozik placements (home banner, lesson preview, Profile avatar, onboarding) are live; the feedback-drawer avatars, lesson-results score-band mascot, Progress-tab indicator, and in-lesson callout remain (iterations 7–10, the last blocked on a product decision — see "Mascot placement plan" below). See "Gap analysis" below for what's changed vs. still pending.
 
 **Mascot Core:** The Latxa Sheep (*Mutur Beltza* variety)
 **Design Philosophy:** Culturally grounded, structurally precise, and companion-driven.
@@ -24,23 +24,23 @@ The app currently has **no formal design system** — styling is ad hoc Tailwind
 | Fonts | none loaded (browser default) | Space Grotesk/Inter — needs an actual `<link>` addition, not just a token (§4) | **Shipped (iteration 1)** |
 | Icons | ~15 emoji touchpoints app-wide | 18-icon SVG system (§11) wired into every documented touchpoint except the mascot's own nine placements (§1C's "Mascot placement plan") and the celebratory streak-encouragement emoji, which stay as-is | **Shipped (iteration 2)** |
 | Logo / favicon | placeholder `public/favicon.svg`, `public/icons.svg` | full mascot SVG (§1A) + dedicated small-scale mark (§1B) — assets exist in `public/brand/` | **Shipped (iteration 1)** — live favicon only; the full mascot SVG rollout is still the separate Mascot Placement Plan below |
-| Mascot / character | none | full mascot system, **decided (round 6) to be a central part of the app** — see "Mascot placement plan" below, not just the feedback-drawer micro-moments §1C originally scoped | Pending |
+| Mascot / character | none | full mascot system, **decided (round 6) to be a central part of the app** — see "Mascot placement plan" below, not just the feedback-drawer micro-moments §1C originally scoped | **In progress** — 4 of 8 placements shipped (iteration 6) |
 | 3-star confetti/firework celebration | independent 7-color rainbow | **No change, deliberately** — see §6 | N/A |
 
 ## Mascot placement plan (round 6)
 
 **Decision: the mascot is a central part of the app, not an incidental accent.** This supersedes §1C's original framing (mascot = two feedback-drawer avatars, everything else "if and when" greenlit) — it's greenlit, and its footprint is meant to span the app's major screens, not just answer-level micro-feedback. Concrete placements, using the four expressions already built (§1C) with no new artwork required to start:
 
-| Screen / moment | Component | Expression | Notes |
-|---|---|---|---|
-| Home tab header | `HomeScreen.jsx` → `JourneyTab` | Pozik | Currently just "Aditzak" as text + stat pills, no face at all. Becomes the dashboard's visual anchor. |
-| Lesson preview (before a lesson's first attempt) | `ExerciseScreen.jsx` → `LessonPreviewScreen` | Pozik | Currently zero character presence. A "let's do this together" greeting alongside the conjugation-table preview. |
-| Answer feedback drawer | `ExerciseScreen.jsx` → `FeedbackBar` | mini correct/incorrect avatars | Already scoped in §1C/§10 Swatch 3 — replaces the plain ✓/✕ text glyphs. |
-| Lesson results screen | `ExerciseScreen.jsx` → `LessonResultsScreen` | Gora! (strong result) / Pozik (solid) / Nekatuta (weak) | The app's biggest single moment, currently a generic emoji in a circle (`getEncouragement`'s icon) with zero mascot presence. Maps onto the score bands `getEncouragement`/`computeStars` already compute — no new scoring logic needed, just a mascot chosen per existing band. Weak results get Nekatuta's established "let's review together" meaning, not a scolding face — stays inside §7's anti-guilt rule. |
-| In-lesson error-prone-pattern callout | `ExerciseScreen.jsx` (question prompt area) | Haserre | Already scoped in §1C. |
-| Progress tab, low-accuracy indicator | `HomeScreen.jsx` → `ProgressTab` | Nekatuta | Already scoped in §1C, using `bestScore` data `progressStorage` already tracks. |
-| Profile tab avatar | `HomeScreen.jsx` → `ProfileTab` | Pozik | Currently a plain 🧑‍🎓 emoji. Swaps for the mascot as the "this is your companion" anchor on the screen most tied to the learner's own progress. |
-| Onboarding / language selection | `App.jsx` → `LanguageOnboardingScreen` | Pozik | First screen a new user sees — a first-impression mascot moment, not previously in scope at all. |
+| Screen / moment | Component | Expression | Notes | Status |
+|---|---|---|---|---|
+| Home tab header | `HomeScreen.jsx` → `JourneyTab` | Pozik | Currently just "Aditzak" as text + stat pills, no face at all. Becomes the dashboard's visual anchor. | **Shipped (iteration 6)** |
+| Lesson preview (before a lesson's first attempt) | `ExerciseScreen.jsx` → `LessonPreviewScreen` | Pozik | Currently zero character presence. A "let's do this together" greeting alongside the conjugation-table preview. | **Shipped (iteration 6)** |
+| Answer feedback drawer | `ExerciseScreen.jsx` → `FeedbackBar` | mini correct/incorrect avatars | Already scoped in §1C/§10 Swatch 3 — replaces the plain ✓/✕ text glyphs. | Pending (iteration 7) |
+| Lesson results screen | `ExerciseScreen.jsx` → `LessonResultsScreen` | Gora! (strong result) / Pozik (solid) / Nekatuta (weak) | The app's biggest single moment, currently a generic emoji in a circle (`getEncouragement`'s icon) with zero mascot presence. Maps onto the score bands `getEncouragement`/`computeStars` already compute — no new scoring logic needed, just a mascot chosen per existing band. Weak results get Nekatuta's established "let's review together" meaning, not a scolding face — stays inside §7's anti-guilt rule. | Pending (iteration 8) |
+| In-lesson error-prone-pattern callout | `ExerciseScreen.jsx` (question prompt area) | Haserre | Already scoped in §1C. | **Blocked** — "error-prone pattern" trigger not yet defined, needs a product decision (iteration 10) |
+| Progress tab, low-accuracy indicator | `HomeScreen.jsx` → `ProgressTab` | Nekatuta | Already scoped in §1C, using `bestScore` data `progressStorage` already tracks. | Pending (iteration 9) |
+| Profile tab avatar | `HomeScreen.jsx` → `ProfileTab` | Pozik | Currently a plain 🧑‍🎓 emoji. Swaps for the mascot as the "this is your companion" anchor on the screen most tied to the learner's own progress. | **Shipped (iteration 6)** |
+| Onboarding / language selection | `App.jsx` → `LanguageOnboardingScreen` | Pozik | First screen a new user sees — a first-impression mascot moment, not previously in scope at all. | **Shipped (iteration 6)** |
 
 Everything in this table uses the four expressions and two mini-avatars already built and reconciled onto the canonical palette (§1C) — no new artwork is required to execute the plan as listed. If a placement later needs a state none of the four cover (e.g. a dedicated "onboarding wave" pose), that's a new-asset decision to make explicitly when it comes up, not to assume now.
 
