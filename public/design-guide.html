@@ -190,6 +190,13 @@
   .icon-cell svg { width: 26px; height: 26px; }
   .icon-cell .l { font-size: 10.5px; color: var(--neutral-600); margin-top: 6px; }
 
+  .ba-pair { display: flex; gap: 20px; margin: 20px 0 32px; flex-wrap: wrap; }
+  .ba-col { flex: 1; min-width: 260px; }
+  .ba-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .ba-col.before .ba-label { color: var(--semantic-error); }
+  .ba-col.after .ba-label { color: var(--semantic-correct); }
+  .ba-frame { background: var(--neutral-card); border-radius: 12px; padding: 16px; }
+
   footer { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; color: var(--neutral-600); font-size: 13px; }
   footer a { color: var(--brand-forest); }
 </style>
@@ -214,6 +221,7 @@
   <a href="#a11y">Accessibility</a>
   <a href="#darkmode">Dark Mode</a>
   <a href="#icons">Iconography</a>
+  <a href="#before-after">Before/After</a>
   <a href="#appendix">Contrast Appendix</a>
 </nav>
 
@@ -244,7 +252,7 @@
     <p class="tagline">Aditzak — a Basque verb conjugation app. Mascot: the Latxa sheep (<em>mutur beltza</em> variety). Design philosophy: culturally grounded, structurally precise, companion-driven.</p>
     <div class="badges">
       <span class="pill pill-forest">Proposed</span>
-      <span class="pill pill-clay">7 review rounds</span>
+      <span class="pill pill-clay">8 review rounds</span>
       <span class="pill pill-txakoli">Mascot: central</span>
       <span class="pill pill-outline">WCAG-verified</span>
     </div>
@@ -265,6 +273,7 @@
     <li><strong>Round 5</strong> — audited the guide against the actual React components (not just its own internal consistency) and closed every gap that surfaced: the grammar-badge color system, the hearts-palette question, button/card geometry, motion timings, missing font loading, and icon-system scope.</li>
     <li><strong>Round 6</strong> — settled the one question round 5 explicitly couldn't: the mascot system is greenlit, and decided to be a <strong>central</strong>, not incidental, part of the app. See the Mascot Placement Plan below.</li>
     <li><strong>Round 7</strong> — revisits round 5's "emoji stay" call now that the mascot is central, and proposes a 17-icon system to replace every emoji touchpoint. Documented and asset-complete, deliberately not wired into any component yet.</li>
+    <li><strong>Round 8</strong> — adds worked before/after examples showing what the palette, geometry, and icon decisions look like applied together to three real, currently-shipped components, including what deliberately does <em>not</em> change.</li>
   </ul>
   <div class="callout">
     <strong>On the contrast numbers in this document</strong>
@@ -664,6 +673,86 @@
     <strong>Color scoping decision</strong>
     Icons pick up whatever Tailwind color is already present at each usage site (e.g. the streak icon uses the same orange the streak pill already does) &mdash; <strong>not</strong> the brand tokens from &sect;2. The full brand-palette migration (Track A) is still separate and unimplemented; wiring icons to brand hex values now would create visible mismatches until Track A actually ships. Full emoji&rarr;icon&rarr;color&rarr;component mapping is in <code>docs/VISUAL_IDENTITY.md</code> &sect;11.
   </div>
+</section>
+
+<section id="before-after">
+  <div class="kicker">&sect;12 &mdash; Round 8, illustrative</div>
+  <h2>Before/After: Applying the Guide</h2>
+  <p class="lede">Every other section documents individual decisions in isolation. This shows what several of them look like applied <em>together</em> to three real, currently-shipped components &mdash; rendered and verified, not hypothetical. Not implemented in <code>src/</code>.</p>
+
+  <h3 style="font-size:16px;margin-top:24px;">Example 1: Home header pills</h3>
+  <div class="ba-pair">
+    <div class="ba-col before"><div class="ba-label">Before (shipped)</div>
+      <div class="ba-frame" style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#FFEDD5;padding:6px 10px;font-size:13px;font-weight:700;color:#EA580C;">&#128293; 7</span>
+        <span style="display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#FEF3C7;padding:6px 10px;font-size:13px;font-weight:700;color:#B45309;">&#9733; 130</span>
+        <span style="display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#E0F2FE;padding:6px 10px;font-size:13px;font-weight:700;color:#0369A1;">&#128142; 42</span>
+        <span style="display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#FFE4E6;padding:6px 10px;font-size:13px;font-weight:700;color:#E11D48;">&#10084;&#65039; 5/5</span>
+      </div>
+    </div>
+    <div class="ba-col after"><div class="ba-label">After (guide applied)</div>
+      <div class="ba-frame" style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#FBE8E0;padding:6px 10px;font-size:13px;font-weight:700;color:#A63816;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#A63816" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3-3 4-3 7.5a3 3 0 0 0 6 0c1.5 1 2 2.7 2 4.2A6 6 0 0 1 6 15c0-3.5 2-5 3-7 0 0 1.5 1.5 3-5Z"/></svg> 7</span>
+        <span style="display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#FEF3C7;padding:6px 10px;font-size:13px;font-weight:700;color:#B45309;">&#9733; 130</span>
+        <span style="display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#FDF3D1;padding:6px 10px;font-size:13px;font-weight:700;color:#92730B;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#92730B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10l4 5-9 12L3 9l4-5Z"/><path d="M3 9h18"/><path d="M7 4 12 21M17 4 12 21"/></svg> 42</span>
+        <span style="display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#FFE4E6;padding:6px 10px;font-size:13px;font-weight:700;color:#E11D48;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#E11D48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9.5c0 6-8 11-8 11Z"/></svg> 5/5</span>
+      </div>
+    </div>
+  </div>
+  <p class="status-note">Two of four pills are correctly left unchanged: &#9733; is a plain Unicode glyph, never in &sect;11's icon-system scope; <code>accent-hearts</code> was already decided to stay as-is (&sect;2).</p>
+
+  <h3 style="font-size:16px;margin-top:28px;">Example 2: Lesson card (LessonNode)</h3>
+  <div class="ba-pair">
+    <div class="ba-col before"><div class="ba-label">Before (shipped)</div>
+      <div class="ba-frame" style="border:2px solid #E5E7EB;border-radius:16px;display:flex;align-items:center;gap:14px;">
+        <div style="width:48px;height:48px;border-radius:999px;background:#22C55E;color:white;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;">&#128172;</div>
+        <div><p style="margin:0;font-weight:600;color:#111827;font-size:14px;">Present Tense <span style="font-weight:400;color:#9CA3AF;">&middot; Nor-Nork</span></p></div>
+      </div>
+      <div class="ba-frame" style="margin-top:8px;border:2px solid #E5E7EB;border-radius:16px;background:#F3F4F6;display:flex;align-items:center;gap:14px;">
+        <div style="width:48px;height:48px;border-radius:999px;background:#D1D5DB;color:#6B7280;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;">&#128274;</div>
+        <div><p style="margin:0;font-weight:600;color:#6B7280;font-size:14px;">Past Tense</p></div>
+      </div>
+    </div>
+    <div class="ba-col after"><div class="ba-label">After (guide applied)</div>
+      <div class="ba-frame" style="border:2px solid #2D3543;border-radius:16px;display:flex;align-items:center;gap:14px;">
+        <div style="width:48px;height:48px;border-radius:999px;background:#0A4F35;color:white;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;">&#128172;</div>
+        <div><p style="margin:0;font-weight:600;color:#1E2530;font-size:14px;">Present Tense <span style="font-weight:400;color:#525C6C;">&middot; Nor-Nork</span></p></div>
+      </div>
+      <div class="ba-frame" style="margin-top:8px;border:2px solid #2D3543;border-radius:16px;background:#F1F2F4;display:flex;align-items:center;gap:14px;">
+        <div style="width:48px;height:48px;border-radius:999px;background:#CBD1D9;color:#525C6C;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#525C6C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg></div>
+        <div><p style="margin:0;font-weight:600;color:#525C6C;font-size:14px;">Past Tense</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="status-note">Card radius stays 16px unchanged &mdash; &sect;5 only drops <em>buttons</em> to 12px, not cards.</p>
+
+  <h3 style="font-size:16px;margin-top:28px;">Example 3: Exercise feedback</h3>
+  <div class="ba-pair">
+    <div class="ba-col before"><div class="ba-label">Before (shipped)</div>
+      <div class="ba-frame" style="padding:0;overflow:hidden;">
+        <button style="width:100%;text-align:left;padding:12px 16px;border:2px solid #22C55E;border-radius:16px;background:#F0FDF4;color:#15803D;font-weight:600;font-size:14px;">nauzue</button>
+        <div style="background:#F0FDF4;padding:14px;margin-top:8px;">
+          <p style="margin:0 0 8px;font-weight:800;color:#15803D;font-size:14px;">&#10003; Correct!</p>
+          <button style="width:100%;padding:10px;border-radius:16px;background:#22C55E;color:white;font-weight:800;text-transform:uppercase;border:none;font-size:13px;">Continue</button>
+        </div>
+      </div>
+    </div>
+    <div class="ba-col after"><div class="ba-label">After (guide applied)</div>
+      <div class="ba-frame" style="padding:0;overflow:hidden;">
+        <button style="width:100%;text-align:left;padding:12px 16px;border:2px solid #14532D;border-radius:12px;background:#E7F1EA;color:#14532D;font-weight:600;font-size:14px;">nauzue</button>
+        <div style="background:#DCFCE7;padding:14px;margin-top:8px;display:flex;gap:10px;align-items:center;">
+          <div style="width:36px;height:36px;border-radius:999px;background:white;border:2px solid #14532D;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 32 32" width="22" height="22"><path d="M 6,12 C 6,6 26,6 26,12 C 26,20 22,26 16,26 C 10,26 6,20 6,12 Z" fill="#1E2530"/><path d="M 7,11 C 2,10 0,14 2,17 Z" fill="#1E2530"/><path d="M 25,11 C 30,10 32,14 30,17 Z" fill="#1E2530"/><path d="M 9,13 Q 12,10 14,13" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/><path d="M 18,13 Q 20,10 23,13" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div style="flex:1;">
+            <p style="margin:0 0 6px;font-weight:800;color:#14532D;font-size:14px;display:flex;align-items:center;gap:5px;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#14532D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5 9.5 17.5 19.5 6.5"/></svg> Oso ondo!</p>
+            <button style="width:100%;padding:10px;border-radius:12px;background:#0A4F35;color:white;font-weight:800;text-transform:uppercase;border:none;font-size:13px;">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="status-note">The one example where every track (palette, geometry, icons, mascot) stacks on a single component at once.</p>
 </section>
 
 <section id="appendix">

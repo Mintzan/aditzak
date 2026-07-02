@@ -8,6 +8,29 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Round 8: added worked before/after examples to the visual identity guide
+
+Every prior round documented individual decisions in isolation (a color
+token here, a radius change there, an icon mapping table). Added §12 to
+`docs/VISUAL_IDENTITY.md` showing what several of them look like applied
+*together* to three real, currently-shipped components — the home header
+pills, `LessonNode` (lesson card), and the `AnswerOption`/`FeedbackBar`
+exercise feedback — rendered and verified in a headless browser, not just
+described.
+
+Deliberately included what does *not* change alongside what does: the
+header's stars pill and hearts pill are correctly left untouched in the
+"after" state (★ is a plain Unicode glyph never in §11's icon-system scope;
+`accent-hearts` was already decided to stay as-is in §2), and lesson cards
+keep their existing 16px radius since §5 only drops *buttons* to 12px, not
+cards. Showing the "no change" cases alongside the "change" cases was a
+deliberate choice — a before/after that only ever shows things changing
+would misrepresent how narrowly some of these decisions were actually
+scoped.
+
+**Still illustrative, not implemented** — same status as every other
+asset-complete-but-uncoded section (§10, §11): no `src/` file was touched.
+
 ## 2026-07-02 — Round 7: proposed a 17-icon system to replace emoji (docs/assets only)
 
 Revisits round 5's "emoji stay app-wide" call. That decision was reasonable

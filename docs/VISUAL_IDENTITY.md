@@ -5,7 +5,7 @@
 **Mascot Core:** The Latxa Sheep (*Mutur Beltza* variety)
 **Design Philosophy:** Culturally grounded, structurally precise, and companion-driven.
 
-This guide was commissioned from an outside designer as a from-scratch visual identity (no prior brand existed — see "Gap analysis"). It went through seven review rounds before reaching this state: round 1 found a genuine WCAG contrast failure (`brand-clay` on white text, 3.33:1) and a four-way inconsistent dark-neutral scale; round 2 fixed both and added the missing lesson-card mockup and a dedicated favicon-scale mark, but its "mathematically verified" contrast ratios didn't match independent recomputation (always in the safe direction — nothing that claimed to pass actually failed, but the specific decimals were invented); round 3 replaced the fabricated decimals with qualitative AA/AAA bands and fixed a table-column mismatch; round 4 reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with §7's anti-guilt voice principle (see §1C); round 5 audited the guide against the actual React components (`ExerciseScreen.jsx`, `HomeScreen.jsx`, `badges.jsx`, `data/verbs.js`) rather than just the guide's own internal consistency, and closed every gap that surfaced — the grammar-badge color system, the hearts-palette question, the button/card geometry, the motion timings, font loading, and icon-system scope; round 6 settled the one question round 5 explicitly couldn't — the mascot system is greenlit, and is to be a central, not incidental, part of the app (see "Mascot placement plan"). **Round 7 revisits round 5's "emoji stay" call now that the mascot is central**, and proposes a 17-icon system to replace every emoji touchpoint — documented and asset-complete (§11), but deliberately not wired into any component yet, since that's real `src/` engineering work belonging to a separate implementation pass. The content below is the reconciled, component-checked, scope-decided version. If these tokens are ever needed for a compliance artifact, re-verify the specific ratios with a real contrast checker (WebAIM, `axe`) rather than citing the labels here.
+This guide was commissioned from an outside designer as a from-scratch visual identity (no prior brand existed — see "Gap analysis"). It went through eight review rounds before reaching this state: round 1 found a genuine WCAG contrast failure (`brand-clay` on white text, 3.33:1) and a four-way inconsistent dark-neutral scale; round 2 fixed both and added the missing lesson-card mockup and a dedicated favicon-scale mark, but its "mathematically verified" contrast ratios didn't match independent recomputation (always in the safe direction — nothing that claimed to pass actually failed, but the specific decimals were invented); round 3 replaced the fabricated decimals with qualitative AA/AAA bands and fixed a table-column mismatch; round 4 reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with §7's anti-guilt voice principle (see §1C); round 5 audited the guide against the actual React components (`ExerciseScreen.jsx`, `HomeScreen.jsx`, `badges.jsx`, `data/verbs.js`) rather than just the guide's own internal consistency, and closed every gap that surfaced — the grammar-badge color system, the hearts-palette question, the button/card geometry, the motion timings, font loading, and icon-system scope; round 6 settled the one question round 5 explicitly couldn't — the mascot system is greenlit, and is to be a central, not incidental, part of the app (see "Mascot placement plan"). round 7 revisits round 5's "emoji stay" call now that the mascot is central, and proposes a 17-icon system to replace every emoji touchpoint — documented and asset-complete (§11), but deliberately not wired into any component yet, since that's real `src/` engineering work belonging to a separate implementation pass. **Round 8 adds worked before/after examples (§12) showing what §2/§5/§11 look like applied together to three real, currently-shipped components** — rendered and verified, not hypothetical, and explicit about what does *and doesn't* change (two of four header pills are correctly left untouched, card radius stays 16px while only buttons drop to 12px). The content below is the reconciled, component-checked, scope-decided version. If these tokens are ever needed for a compliance artifact, re-verify the specific ratios with a real contrast checker (WebAIM, `axe`) rather than citing the labels here.
 
 ## Gap analysis: what this changes
 
@@ -453,6 +453,51 @@ Every emoji touchpoint found in the round-5 component audit, plus one gap it mis
 ### Implementation note for whoever picks this up
 
 The natural shape for this in a React+Tailwind codebase is a shared `src/components/icons.jsx` exporting one small functional component per icon (props passed through to a wrapping `<svg>`, `stroke="currentColor"` already baked in), not `<img src="...">` tags — that lets the color-scoping table above map directly to `className="h-5 w-5 text-orange-600"`-style usage at each call site, consistent with how the rest of the app already styles everything through Tailwind utility classes. This wasn't built as part of this round since it means touching `HomeScreen.jsx`/`ExerciseScreen.jsx`/`badges.jsx` directly, which was explicitly out of scope for a documentation-only pass.
+
+## 12. Before/After: Applying the Guide to Real Components
+
+**Status: illustrative, not implemented.** Every other section documents individual token/color/geometry decisions in isolation. This section shows what applying several of them *together* actually looks like against three real, currently-shipped components — rendered and verified, not just described. Each "before" is the component's real current markup/classes; each "after" applies §2 (palette), §5 (geometry), §11 (icons), and, for the third example, the mascot mini-avatar already built in §10.
+
+### Example 1: Home header pills
+
+The header's four stat pills (`HomeScreen.jsx`).
+
+| | Streak | Stars | Points | Hearts |
+|---|---|---|---|---|
+| **Before** | 🔥 in `bg-orange-100`/`text-orange-600` | ★ in `bg-amber-100`/`text-amber-700` | 💎 in `bg-sky-100`/`text-sky-700` | ❤️ in `bg-rose-100`/`text-rose-600` (`accent-hearts`) |
+| **After** | `icon-streak` in a `brand-clay` tint pill | **unchanged** — ★ is a plain Unicode glyph, not a pictographic emoji, so it was never in §11's scope; still amber | `icon-points` in a `brand-txakoli` tint pill | **unchanged** — `accent-hearts` already decided to stay as-is (§2) |
+
+```html
+<!-- Before -->
+<span style="border-radius:999px;background:#FFEDD5;padding:6px 10px;color:#EA580C;font-weight:700;">🔥 7</span>
+
+<!-- After -->
+<span style="border-radius:999px;background:#FBE8E0;padding:6px 10px;color:#A63816;font-weight:700;">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#A63816" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3-3 4-3 7.5a3 3 0 0 0 6 0c1.5 1 2 2.7 2 4.2A6 6 0 0 1 6 15c0-3.5 2-5 3-7 0 0 1.5 1.5 3-5Z"/></svg> 7
+</span>
+```
+
+Notably, **not every pill changes** — this is the point of documenting real application rather than a hypothetical: two of the four pills (stars, hearts) are correctly left alone because they were never in scope for either the palette migration or the icon system, and pretending otherwise would overstate what this guide actually calls for.
+
+### Example 2: Lesson card (`LessonNode`)
+
+| | Before | After |
+|---|---|---|
+| Avatar circle (available lesson) | `bg-green-500` | `bg-brand-forest` (`#0A4F35`) |
+| Avatar circle (locked lesson) | `bg-gray-300`, 🔒/🛡️/💔 emoji | `bg-neutral-400`-ish gray, `icon-lock`/`icon-gate`/`icon-heart-broken` in `neutral-600` |
+| Card border/radius | `border-gray-200`, 16px | `border-neutral-800`, 16px — **unchanged radius**, only buttons drop to 12px per §5, not cards |
+| Stars | amber, unchanged | amber, unchanged (same reasoning as Example 1) |
+
+The locked-state icon swap is the clearest single win in this example — three different emoji (🔒/🛡️/💔) sharing one gray circle treatment become three icons sharing one `neutral-600` stroke color, which reads as one coherent "locked" language instead of three unrelated pictures that happen to be gray-adjacent.
+
+### Example 3: Exercise feedback (`AnswerOption` + `FeedbackBar`)
+
+| | Before | After |
+|---|---|---|
+| Correct option | `border-green-500 bg-green-50 text-green-700`, 16px radius | `semantic-correct` triad, **12px radius** (§5) |
+| Feedback drawer | `bg-green-50`, plain "✓" text glyph, `bg-green-500` Continue button | `semantic-correct` drawer, `icon-check` svg, mascot mini-avatar (`latxa-icon-correct.svg`, already built in §10) sitting alongside the checkmark rather than replacing it, `brand-forest` Continue button at 12px radius |
+
+This is the example that most shows the guide's pieces working *together*: the palette shift (bright saturated green → darker forest green) is visually the biggest change, the radius drop is a subtle but consistent structural signal, and the mascot avatar adds the companion-driven personality none of the other tracks provide on their own. None of the three tracks alone produces this result — it's what "central mascot" (round 6) plus "real palette" (§2) plus "real geometry" (§5) look like stacked on one actual component.
 
 ## Appendix: independently verified contrast ratios
 
