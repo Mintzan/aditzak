@@ -8,6 +8,32 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Wrote `docs/VISUAL_IDENTITY.md`: proposed redesign spec, not implemented
+
+Recorded a commissioned visual identity guide (Latxa-sheep mascot, a
+forest/clay/txakoli brand palette, a 5-step neutral scale, type/component/motion
+specs) as a redesign proposal. Went through three review rounds first: round 1
+caught a real WCAG failure (`brand-clay` originally `#DE6B48`, 3.33:1 against
+white text — below the guide's own 4.5:1 mandate) and a four-way inconsistent
+dark-neutral scale (`#374151`/`#111827`/`#1F2937`/`#2D3748` used
+interchangeably); round 2 fixed both, but its "mathematically verified"
+contrast decimals didn't match independent recomputation (always in the safe
+direction, so no false passes, but the numbers were invented rather than
+calculated); round 3 replaced the fabricated decimals with qualitative AA/AAA
+bands. Verified by rendering the mascot/favicon SVGs and running an actual
+WCAG contrast script rather than trusting the pasted numbers or eyeballing the
+XML.
+
+**Explicitly not decided yet**, flagged as open questions in the doc: (1)
+whether Aditzak becomes a mascot/animation-driven app at all — the guide specs
+per-feedback-state expressions and ear animation, which is a product-scope
+decision, not a styling one; (2) how the shipped hearts-economy UI's `rose`
+palette (issues #529-#535, merged same day) reconciles with the new tokens,
+since the guide never considered it; (3) the grammar-category badge colors
+(`TYPE_META`/`AGREEMENT_META`/`DIALECT_LABELS` in `data/verbs.js`) are out of
+this guide's scope and need their own pass. No code changed to implement any
+of this yet.
+
 ## 2026-07-01 — Resolved issue #535: cross-device sync for hearts (final core slice of the hearts epic)
 
 Sixth and final core-buildout slice of the heart economy epic (#529) —
