@@ -8,6 +8,44 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-01 — Resolved issue #535: cross-device sync for hearts (final core slice of the hearts epic)
+
+Sixth and final core-buildout slice of the heart economy epic (#529) —
+#530-534 (data model, `App.jsx` wiring, lockout UI, mid-lesson
+cancellation, badge/purchase UI) are all merged; this closes the loop for
+the optional account/sync feature. Added `mergeHearts(local, cloud)` to
+`lessonLogic.js` (recency-of-`lastHeartChangeTimestamp` wins, `null`/full
+treated as "just regenerated" so a genuinely full side always beats a stale
+partial one — written and reasoned through originally while doing #530,
+then deliberately deferred to this issue so #530 stayed data-model-only),
+folded it into `mergeSyncPayload` as a fifth field, and threaded `hearts`
+through every `App.jsx` sync branch that already touches
+`progress`/`dailyStreak`/`points`/`errorStats`: the returning-signed-in-device
+pull-merge, the fresh-device-via-magic-link wholesale-adopt, both
+`MergeModal` choices (`useAccount`/`keepBest`), and the ongoing background
+push's dependency array. `api.js`'s `buildSyncPayload` now includes `hearts`
+too. No `sync-worker` change needed — `payload_json` is an opaque `TEXT`
+blob.
+
+**Verification note:** the acceptance criteria call for testing against the
+real deployed `sync-worker`, but there's no live backend reachable from this
+sandbox (no D1/wrangler-dev instance stood up, and the magic-link flow needs
+a real emailed token). Substituted three checks that together cover the
+same ground: (1) `mergeHearts`/`mergeSyncPayload` unit tests (recency-wins,
+full-beats-stale-partial); (2) a dev-server run with Playwright route
+interception on `*/sync` (GET returns a synthetic cloud snapshot, PUT
+captured) confirming a returning signed-in device correctly merges and
+re-pushes `hearts` end-to-end, with local's more-recent state legitimately
+beating cloud's stale one per the documented policy; (3) the same technique
+with `/auth/verify` also mocked, confirming a genuinely fresh device (no
+local progress/streak) adopts the cloud's `hearts` wholesale via
+`?authToken=`. Full suite (493 tests, including new `mergeHearts` cases and
+an updated `mergeSyncPayload` test) + lint + build green.
+
+This completes the hearts epic's core buildout (#530-535). #536 (Phase 2's
+"recover a life" forced-review lessons) remains open, deliberately
+underspecified until a follow-up design pass.
+
 ## 2026-07-01 — Resolved issue #534: hearts display badge + purchase UI
 
 Fifth implementation slice of the heart economy epic (#529). New

@@ -385,7 +385,27 @@ export function mergePoints(local, cloud) {
   return { earned: mergeCounters(local?.earned, cloud?.earned), spent: mergeCounters(local?.spent, cloud?.spent) }
 }
 
-// "Keep the best of both" across all four synced fields — used for the
+// Unlike `points`/`progress`, `currentHearts` isn't independently monotonic —
+// it both grows (regen, purchase) and shrinks (wrong answers) on each device
+// independently — so a per-field max/union merge isn't safe here. Mirrors
+// `mergeDailyStreak` instead: the side with the more recent
+// `lastHeartChangeTimestamp` wins wholesale, treating `null` (full, nothing
+// pending) as "just regenerated" so a genuinely full side always beats a
+// stale partial one. This can't fully prevent a multi-device double-spend
+// (deplete hearts on one device, then play on a second device that hasn't
+// synced the depletion yet) — an accepted limitation, see
+// `docs/HEART_ECONOMY_ANALYSIS.md`, not a bug to fix here.
+export function mergeHearts(local, cloud) {
+  const hasLocal = local && Object.keys(local).length > 0
+  const hasCloud = cloud && Object.keys(cloud).length > 0
+  if (!hasLocal) return cloud ?? {}
+  if (!hasCloud) return local
+  const localTimestamp = local.lastHeartChangeTimestamp ?? Infinity
+  const cloudTimestamp = cloud.lastHeartChangeTimestamp ?? Infinity
+  return localTimestamp >= cloudTimestamp ? local : cloud
+}
+
+// "Keep the best of both" across all five synced fields — used for the
 // first-sign-in `keepBest` merge choice and for the pull-merge that runs on
 // every app load while already signed in (so edits made on another device
 // since the last sync aren't lost or overwritten).
@@ -395,6 +415,7 @@ export function mergeSyncPayload(local, cloud) {
     dailyStreak: mergeDailyStreak(local?.dailyStreak, cloud?.dailyStreak),
     points: mergePoints(local?.points, cloud?.points),
     errorStats: mergeErrorStats(local?.errorStats, cloud?.errorStats),
+    hearts: mergeHearts(local?.hearts, cloud?.hearts),
   }
 }
 
