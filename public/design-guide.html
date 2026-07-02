@@ -185,6 +185,11 @@
   ul.tight { margin: 8px 0; padding-left: 20px; }
   ul.tight li { margin-bottom: 6px; font-size: 14px; }
 
+  .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 12px; margin: 20px 0; }
+  .icon-cell { background: var(--neutral-card); border: 1px solid var(--neutral-200); border-radius: 10px; padding: 12px 8px; text-align: center; }
+  .icon-cell svg { width: 26px; height: 26px; }
+  .icon-cell .l { font-size: 10.5px; color: var(--neutral-600); margin-top: 6px; }
+
   footer { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; color: var(--neutral-600); font-size: 13px; }
   footer a { color: var(--brand-forest); }
 </style>
@@ -208,6 +213,7 @@
   <a href="#voice">Voice &amp; Tone</a>
   <a href="#a11y">Accessibility</a>
   <a href="#darkmode">Dark Mode</a>
+  <a href="#icons">Iconography</a>
   <a href="#appendix">Contrast Appendix</a>
 </nav>
 
@@ -238,7 +244,7 @@
     <p class="tagline">Aditzak — a Basque verb conjugation app. Mascot: the Latxa sheep (<em>mutur beltza</em> variety). Design philosophy: culturally grounded, structurally precise, companion-driven.</p>
     <div class="badges">
       <span class="pill pill-forest">Proposed</span>
-      <span class="pill pill-clay">6 review rounds</span>
+      <span class="pill pill-clay">7 review rounds</span>
       <span class="pill pill-txakoli">Mascot: central</span>
       <span class="pill pill-outline">WCAG-verified</span>
     </div>
@@ -258,6 +264,7 @@
     <li><strong>Round 4</strong> — reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with the anti-guilt voice principle (§ Voice &amp; Tone).</li>
     <li><strong>Round 5</strong> — audited the guide against the actual React components (not just its own internal consistency) and closed every gap that surfaced: the grammar-badge color system, the hearts-palette question, button/card geometry, motion timings, missing font loading, and icon-system scope.</li>
     <li><strong>Round 6</strong> — settled the one question round 5 explicitly couldn't: the mascot system is greenlit, and decided to be a <strong>central</strong>, not incidental, part of the app. See the Mascot Placement Plan below.</li>
+    <li><strong>Round 7</strong> — revisits round 5's "emoji stay" call now that the mascot is central, and proposes a 17-icon system to replace every emoji touchpoint. Documented and asset-complete, deliberately not wired into any component yet.</li>
   </ul>
   <div class="callout">
     <strong>On the contrast numbers in this document</strong>
@@ -617,6 +624,45 @@
       <p style="color:#FCA5A5;">&#10007; semantic-error-dark — #FCA5A5</p>
       <p style="color:#FDBA74;">&#9888; semantic-warning-dark — #FDBA74</p>
     </div>
+  </div>
+</section>
+
+<section id="icons">
+  <div class="kicker">&sect;11 &mdash; Round 7, proposed</div>
+  <h2>Iconography System</h2>
+  <p class="lede">Revisits round 5's "emoji stay app-wide" call, now that the mascot is central (round 6) and occupies its own distinct visual register &mdash; bare emoji next to it reads as more inconsistent than it did before.</p>
+  <div class="callout">
+    <strong>Status: documented and asset-complete, not implemented</strong>
+    17 SVG assets exist at <code>public/brand/icons/</code>, verified by rendering (including at 18px, the actual inline size several usages need). No <code>src/</code> component has been touched &mdash; that's a separate, explicit follow-up.
+  </div>
+  <div class="icon-grid">
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M3 11.5 12 4l9 7.5" /> <path d="M5.5 10v9.5a1 1 0 0 0 1 1H10v-6h4v6h3.5a1 1 0 0 0 1-1V10" /> </svg><div class="l">home (nav)</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M4 20V13" /> <path d="M12 20V7" /> <path d="M20 20v-5" /> <path d="M2.5 20h19" /> </svg><div class="l">progress (nav)</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="8" r="3.5" /> <path d="M4.5 20.5c0-4.1 3.4-7.5 7.5-7.5s7.5 3.4 7.5 7.5" /> </svg><div class="l">profile (nav/avatar)</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 3c1 3-3 4-3 7.5a3 3 0 0 0 6 0c1.5 1 2 2.7 2 4.2A6 6 0 0 1 6 15c0-3.5 2-5 3-7 0 0 1.5 1.5 3-5Z" /> </svg><div class="l">streak</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0369A1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M7 4h10l4 5-9 12L3 9l4-5Z" /> <path d="M3 9h18" /> <path d="M7 4 12 21M17 4 12 21" /> </svg><div class="l">points</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#E11D48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 20.5s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9.5c0 6-8 11-8 11Z" /> </svg><div class="l">hearts</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FB7185" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 20.5s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9.5c0 6-8 11-8 11Z" /> <path d="M13 6.5 10.5 11l3 2-2 5.5" stroke-width="1.6" /> </svg><div class="l">hearts (locked)</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="5" y="11" width="14" height="9" rx="2" /> <path d="M8 11V7.5a4 4 0 0 1 8 0V11" /> </svg><div class="l">lock</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 3 4.5 5.5v6c0 5 3.2 8.3 7.5 9.5 4.3-1.2 7.5-4.5 7.5-9.5v-6L12 3Z" /> </svg><div class="l">gate / shield</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M9 18h6" /> <path d="M10 21h4" /> <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9v.2h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3Z" /> </svg><div class="l">lightbulb</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M5.5 20.5V4" /> <path d="M5.5 5l12-2 2.5 3-2.5 3-12-2" /> </svg><div class="l">flag (report)</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M4.5 12.5 9.5 17.5 19.5 6.5" /> </svg><div class="l">check</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M6 6l12 12" /> <path d="M18 6 6 18" /> </svg><div class="l">cross</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="3.5" y="5.5" width="17" height="13" rx="2" /> <path d="M4 6.5 12 13l8-6.5" /> </svg><div class="l">envelope</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M7 17.5a4 4 0 0 1-1-7.9 5 5 0 0 1 9.6-1.8A4.2 4.2 0 0 1 17.5 17.5H7Z" /> </svg><div class="l">cloud (sync)</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M7 4h10v4a5 5 0 0 1-10 0V4Z" /> <path d="M7 5.5H4a2.5 2.5 0 0 0 3 3.9" /> <path d="M17 5.5h3a2.5 2.5 0 0 1-3 3.9" /> <path d="M12 13v3" /> <path d="M9 20.5h6" /> <path d="M9.5 20.5c0-1.8.7-3 2.5-3.5 1.8.5 2.5 1.7 2.5 3.5" /> </svg><div class="l">trophy</div></div>
+    <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 3c.5 3.5 1.5 4.5 5 5-3.5.5-4.5 1.5-5 5-.5-3.5-1.5-4.5-5-5 3.5-.5 4.5-1.5 5-5Z" /> <path d="M19 15c.25 1.75.75 2.25 2 2.5-1.25.25-1.75.75-2 2.5-.25-1.75-.75-2.25-2-2.5 1.25-.25 1.75-.75 2-2.5Z" /> </svg><div class="l">bonus</div></div>
+  </div>
+  <h3 style="font-size:16px;margin-top:24px;">System rules</h3>
+  <ul class="tight">
+    <li>24&times;24 viewBox, 2px stroke (2.5px for check/cross), rounded caps and joins throughout.</li>
+    <li>Stroke-based outlines, not filled glyphs &mdash; a deliberately different register from the mascot's solid-fill illustration style.</li>
+    <li><code>stroke="currentColor"</code> in every file &mdash; color is set by whatever embeds the icon, not baked into the asset.</li>
+  </ul>
+  <div class="callout resolved">
+    <strong>Color scoping decision</strong>
+    Icons pick up whatever Tailwind color is already present at each usage site (e.g. the streak icon uses the same orange the streak pill already does) &mdash; <strong>not</strong> the brand tokens from &sect;2. The full brand-palette migration (Track A) is still separate and unimplemented; wiring icons to brand hex values now would create visible mismatches until Track A actually ships. Full emoji&rarr;icon&rarr;color&rarr;component mapping is in <code>docs/VISUAL_IDENTITY.md</code> &sect;11.
   </div>
 </section>
 
