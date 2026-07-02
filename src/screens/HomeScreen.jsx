@@ -20,6 +20,21 @@ import {
 import { describeLesson, journeyText } from '../lessonDisplay'
 import { FixedArgumentBadge, HeartsBadge, Stars } from '../components/badges'
 import { FEEDBACK_API_URL, FEEDBACK_EMAIL_MAX_LENGTH, FEEDBACK_MESSAGE_MAX_LENGTH, SYNC_API_URL } from '../api'
+import {
+  BonusIcon,
+  CheckIcon,
+  CloudIcon,
+  EnvelopeIcon,
+  GateIcon,
+  HeartBrokenIcon,
+  HomeIcon,
+  LockIcon,
+  PointsIcon,
+  ProfileIcon,
+  ProgressIcon,
+  StreakIcon,
+  TrophyIcon,
+} from '../components/icons'
 
 // `heartLocked` is a *depletion-only* restriction layered on top of `locked`
 // (the existing progression/gate lock) — it only ever applies to a lesson
@@ -46,12 +61,22 @@ function LessonNode({ lesson, locked, heartLocked, needsGateScore, stars, onSele
       }`}
     >
       <div
-        className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-xl font-extrabold ${
+        className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full font-extrabold ${
           unavailable ? 'bg-gray-300 text-gray-500' : 'bg-green-500 text-white'
         }`}
         aria-hidden="true"
       >
-        {locked ? (needsGateScore ? '🛡️' : '🔒') : heartLocked ? '💔' : icon}
+        {locked ? (
+          needsGateScore ? (
+            <GateIcon className="h-6 w-6" />
+          ) : (
+            <LockIcon className="h-6 w-6" />
+          )
+        ) : heartLocked ? (
+          <HeartBrokenIcon className="h-6 w-6" />
+        ) : (
+          <span className="text-xl">{icon}</span>
+        )}
       </div>
       <div className="min-w-0 flex-1">
         <p className="font-semibold text-gray-900">
@@ -109,10 +134,10 @@ function PendingUnitCard({ unit }) {
   return (
     <div className="flex items-start gap-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 opacity-70">
       <div
-        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gray-200 text-xl text-gray-400"
+        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-400"
         aria-hidden="true"
       >
-        {unit.gate ? '🛡️' : '🔒'}
+        {unit.gate ? <GateIcon className="h-6 w-6" /> : <LockIcon className="h-6 w-6" />}
       </div>
       <div className="min-w-0 flex-1">
         <p className="font-semibold text-gray-700">
@@ -139,8 +164,8 @@ function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLoc
       <p className="font-semibold text-gray-900">
         {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
         {unit.bonus && (
-          <span className="ml-2 inline-block rounded-full bg-violet-100 px-2 py-0.5 align-middle text-xs font-semibold text-violet-700">
-            ✨ {t('bonusLabel')}
+          <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 align-middle text-xs font-semibold text-violet-700">
+            <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}
           </span>
         )}
       </p>
@@ -320,9 +345,7 @@ function FeedbackModal({ onClose }) {
 
         {status === 'success' ? (
           <div className="flex flex-col items-center gap-3 py-4 text-center">
-            <span className="text-4xl" aria-hidden="true">
-              ✅
-            </span>
+            <CheckIcon className="h-10 w-10 text-green-600" />
             <p className="text-sm text-gray-700">{t('feedbackSuccess')}</p>
             <button
               type="button"
@@ -480,9 +503,7 @@ function AccountModal({ onClose }) {
 
         {step === 'sent' && (
           <div className="flex flex-col items-center gap-3 py-4 text-center">
-            <span className="text-4xl" aria-hidden="true">
-              📧
-            </span>
+            <EnvelopeIcon className="h-10 w-10 text-gray-400" />
             <p className="text-sm font-bold text-gray-900">{t('accountLinkSentTitle')}</p>
             <p className="text-sm text-gray-500">{t('accountLinkSentBody', { email: email.trim() })}</p>
             <p className="text-xs text-gray-400">{t('accountLinkSentWaiting')}</p>
@@ -514,9 +535,7 @@ function AccountSection({ account, syncStatus, lastSyncedAt, onOpenSignIn, onSig
     return (
       <div className="w-full rounded-2xl border border-gray-200 bg-white p-4 text-left">
         <div className="flex items-center gap-3">
-          <span className="text-3xl" aria-hidden="true">
-            ☁️
-          </span>
+          <CloudIcon className="h-8 w-8 shrink-0 text-sky-500" />
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-gray-700">{account.email}</p>
             <p className="text-xs text-gray-400">{syncStatusText(syncStatus, lastSyncedAt, t, tCount)}</p>
@@ -536,9 +555,7 @@ function AccountSection({ account, syncStatus, lastSyncedAt, onOpenSignIn, onSig
   return (
     <div className="w-full rounded-2xl border border-gray-200 bg-white p-4 text-left">
       <div className="flex items-center gap-3">
-        <span className="text-3xl" aria-hidden="true">
-          ☁️
-        </span>
+        <CloudIcon className="h-8 w-8 shrink-0 text-sky-500" />
         <div>
           <p className="text-sm font-semibold text-gray-700">{t('accountTitle')}</p>
           <p className="text-xs text-gray-400">{t('accountSignedOutHint')}</p>
@@ -623,8 +640,8 @@ function HeartsLockedModal({ onClose }) {
         className="w-full max-w-md rounded-t-3xl bg-white p-5 text-center sm:rounded-3xl"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="mb-2 text-4xl" aria-hidden="true">
-          💔
+        <div className="mb-2 flex justify-center">
+          <HeartBrokenIcon className="h-10 w-10 text-rose-400" />
         </div>
         <h2 id="hearts-locked-title" className="mb-1 text-lg font-bold text-gray-900">
           {t('heartsLockedTitle')}
@@ -685,30 +702,26 @@ function ProfileTab({
 
   return (
     <div className="flex flex-col items-center gap-4 py-12 text-center">
-      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl">🧑‍🎓</div>
+      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
+        <ProfileIcon className="h-10 w-10 text-green-600" />
+      </div>
       <div>
         <h2 className="text-lg font-bold text-gray-900">{t('profileGreeting')}</h2>
         <p className="text-sm text-gray-500">{t('profileAchievements')}</p>
       </div>
       <div className="flex w-full gap-3">
         <div className="flex flex-1 flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white p-4">
-          <span className="text-2xl" aria-hidden="true">
-            🔥
-          </span>
+          <StreakIcon className="h-6 w-6 text-orange-500" />
           <span className="text-lg font-bold text-gray-900">{tCount('streakDays', currentStreak)}</span>
           <span className="text-xs text-gray-500">{t('streakCurrent')}</span>
         </div>
         <div className="flex flex-1 flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white p-4">
-          <span className="text-2xl" aria-hidden="true">
-            🏆
-          </span>
+          <TrophyIcon className="h-6 w-6 text-amber-500" />
           <span className="text-lg font-bold text-gray-900">{tCount('streakDays', longestStreak)}</span>
           <span className="text-xs text-gray-500">{t('streakLongest')}</span>
         </div>
         <div className="flex flex-1 flex-col items-center gap-1 rounded-2xl border border-gray-200 bg-white p-4">
-          <span className="text-2xl" aria-hidden="true">
-            💎
-          </span>
+          <PointsIcon className="h-6 w-6 text-sky-600" />
           <span className="text-lg font-bold text-gray-900">{balance}</span>
           <span className="text-xs text-gray-500">{t('pointsBalance')}</span>
         </div>
@@ -801,29 +814,27 @@ function ProfileTab({
 }
 
 const NAV_ITEMS = [
-  { id: 'home', labelKey: 'navLearn', icon: '🏠' },
-  { id: 'progress', labelKey: 'navProgress', icon: '📊' },
-  { id: 'profile', labelKey: 'navProfile', icon: '🧑‍🎓' },
+  { id: 'home', labelKey: 'navLearn', Icon: HomeIcon },
+  { id: 'progress', labelKey: 'navProgress', Icon: ProgressIcon },
+  { id: 'profile', labelKey: 'navProfile', Icon: ProfileIcon },
 ]
 
 function BottomNav({ active, onSelect }) {
   const { t } = useLanguage()
   return (
     <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto flex w-full max-w-md border-t border-gray-200 bg-white">
-      {NAV_ITEMS.map((item) => (
+      {NAV_ITEMS.map(({ id, labelKey, Icon }) => (
         <button
-          key={item.id}
+          key={id}
           type="button"
-          onClick={() => onSelect(item.id)}
+          onClick={() => onSelect(id)}
           style={{ minHeight: 56 }}
           className={`flex flex-1 flex-col items-center justify-center gap-0.5 py-2 text-xs font-semibold transition ${
-            active === item.id ? 'text-green-600' : 'text-gray-400'
+            active === id ? 'text-green-600' : 'text-gray-400'
           }`}
         >
-          <span className="text-xl leading-none" aria-hidden="true">
-            {item.icon}
-          </span>
-          {t(item.labelKey)}
+          <Icon className="h-5 w-5" />
+          {t(labelKey)}
         </button>
       ))}
     </nav>
@@ -888,7 +899,7 @@ export function HomeScreen({
             className="flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-1.5 text-sm font-bold text-orange-600 transition active:scale-95"
             aria-label={t('streakLabel', { count: currentStreak })}
           >
-            <span aria-hidden="true">🔥</span>
+            <StreakIcon className="h-4 w-4" />
             <span>{currentStreak}</span>
           </button>
           <button
@@ -906,7 +917,7 @@ export function HomeScreen({
             className="flex items-center gap-1 rounded-full bg-sky-100 px-2.5 py-1.5 text-sm font-bold text-sky-700 transition active:scale-95"
             aria-label={t('pointsLabel', { count: balance })}
           >
-            <span aria-hidden="true">💎</span>
+            <PointsIcon className="h-4 w-4" />
             <span>{balance}</span>
           </button>
           <HeartsBadge hearts={hearts} onClick={() => onChangeTab('profile')} />

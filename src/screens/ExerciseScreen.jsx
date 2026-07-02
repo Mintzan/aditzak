@@ -34,6 +34,7 @@ import {
 import { describeLesson, verbMeaning } from '../lessonDisplay'
 import { FixedArgumentBadge, ProgressBar, Stars, VerbBadgeRow } from '../components/badges'
 import { FEEDBACK_API_URL, FEEDBACK_MESSAGE_MAX_LENGTH } from '../api'
+import { CheckIcon, CrossIcon, FlagIcon, HeartBrokenIcon, LightbulbIcon, PointsIcon } from '../components/icons'
 
 // A practice lesson has a single source (itself); a review lesson draws from
 // several. Either way, `generateQuestions` runs once per source and the
@@ -658,9 +659,7 @@ function ExplanationToggle({ explanation, expanded, onToggle }) {
         style={{ minHeight: 48 }}
         className="flex w-full items-center gap-2 rounded-2xl border-2 border-dashed border-green-300 bg-white px-4 text-left text-sm font-bold text-green-700 transition hover:border-green-400 hover:bg-green-50"
       >
-        <span className="text-xl" aria-hidden="true">
-          💡
-        </span>
+        <LightbulbIcon className="h-5 w-5 shrink-0 text-green-600" />
         <span className="flex-1">{t('explanationToggle')}</span>
         <span className={`transition-transform ${expanded ? 'rotate-180' : ''}`} aria-hidden="true">
           ▾
@@ -745,9 +744,7 @@ function FlagQuestionModal({ lesson, question, verb, selected, status, onClose, 
 
         {requestStatus === 'success' ? (
           <div className="flex flex-col items-center gap-3 py-4 text-center">
-            <span className="text-4xl" aria-hidden="true">
-              ✅
-            </span>
+            <CheckIcon className="h-10 w-10 text-green-600" />
             <p className="text-sm text-gray-700">{t('flagSuccess')}</p>
             <button
               type="button"
@@ -834,9 +831,15 @@ function FeedbackBar({
     <div className={`px-5 pt-4 pb-6 ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
       <div className="mb-3 flex items-start justify-between gap-2">
         <p className={`flex items-center gap-2 text-lg font-extrabold ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
-          <span className="text-2xl" aria-hidden="true">
-            {streakEncouragement ? streakEncouragement.icon : isCorrect ? '✓' : '✕'}
-          </span>
+          {streakEncouragement ? (
+            <span className="text-2xl" aria-hidden="true">
+              {streakEncouragement.icon}
+            </span>
+          ) : isCorrect ? (
+            <CheckIcon className="h-6 w-6 shrink-0" />
+          ) : (
+            <CrossIcon className="h-6 w-6 shrink-0" />
+          )}
           {streakEncouragement ? (
             <span>
               {streakEncouragement.headline} {t(streakEncouragement.messageKey)}
@@ -854,9 +857,9 @@ function FeedbackBar({
           aria-label={flagged ? t('flagButtonFlagged') : t('flagButtonLabel')}
           title={flagged ? t('flagButtonFlagged') : t('flagButtonLabel')}
           style={{ minHeight: 44, minWidth: 44 }}
-          className="flex shrink-0 items-center justify-center rounded-full text-lg text-gray-400 transition hover:bg-white hover:text-gray-600 disabled:opacity-50"
+          className="flex shrink-0 items-center justify-center rounded-full text-gray-400 transition hover:bg-white hover:text-gray-600 disabled:opacity-50"
         >
-          🚩
+          <FlagIcon className="h-5 w-5" />
         </button>
       </div>
       {isCorrect && explanation && (
@@ -990,8 +993,8 @@ function OutOfHeartsOverlay({ canBuy, onBuyHeart, onExit }) {
         aria-labelledby="out-of-hearts-title"
         className="w-full max-w-md rounded-t-3xl bg-white p-5 text-center sm:rounded-3xl"
       >
-        <div className="mb-2 text-4xl" aria-hidden="true">
-          💔
+        <div className="mb-2 flex justify-center">
+          <HeartBrokenIcon className="h-10 w-10 text-rose-400" />
         </div>
         <h2 id="out-of-hearts-title" className="mb-1 text-lg font-bold text-gray-900">
           {t('outOfHeartsTitle')}
@@ -1072,7 +1075,7 @@ function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone
       <Stars count={stars} />
       {pointsEarned > 0 && (
         <p className="flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1.5 text-sm font-bold text-sky-700">
-          <span aria-hidden="true">💎</span>
+          <PointsIcon className="h-4 w-4" />
           {tCount('pointsEarned', pointsEarned)}
         </p>
       )}
