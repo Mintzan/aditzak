@@ -40,6 +40,61 @@ stars") is per-lesson and would've read nonsensically applied to a
 curriculum-wide total. Full suite (493 tests) + lint + build green; manually
 verified in the dev server at 360/375/412px.
 
+## 2026-07-02 — Reconciled a second mascot deliverable (expression library) against the accepted visual identity
+
+A separately-delivered "Ardi Latxa Guide" (four mascot expressions: Pozik/happy,
+Gora!/excited, Haserre/determined, Nekatuta/tired) turned out to be built on
+the *pre-fix* round-1 palette (`#374151`/`#111827`/`#1F2937`/`#2D3748`/`#F9FAFB`/
+`#E5E7EB`) — confirmed by diffing its hex values against the committed
+`public/brand/latxa-logo.svg`, which shares only 2 of 11 colors with it. It also
+carried anatomy (visible legs, a muzzle-shadow overlay, inner-ear shading) the
+accepted logo had simplified away, and framed two of its four triggers around
+missed-practice guilt ("appears if the user repeatedly ignores daily goals",
+"used for... missed notifications... to prompt immediate practice") — directly
+against §7's anti-guilt-trip voice principle.
+
+Decided rather than just flagged: (1) recolored all three non-duplicate states
+onto the canonical §3 scale and stripped the anatomy back to match §1A exactly,
+so there's one mascot geometry, not two competing designs — added as
+`public/brand/latxa-expression-{gora,haserre,nekatuta}.svg`; Pozik gets no
+separate file since, corrected, it's identical to the existing logo. (2)
+Formalized the previously-flagged stray `#E2E8F0` shadow color as
+`neutral-200`, extending §3 to 6 steps, since a second independent deliverable
+using it unprompted is a signal it's a real recurring need, not a one-off
+mistake. (3) Rejected the "ignores daily goals" and "missed notifications"
+triggers outright rather than reinterpreting them — kept only the legitimate
+pedagogical halves (Haserre → in-lesson error-prone-pattern callout; Nekatuta →
+Progress-tab low-accuracy indicator, using data `progressStorage` already
+tracks), and left both unwired into any actual screen, consistent with the
+standing "mascot system is a separate scope decision" note. Full reasoning and
+the rejected-trigger table are in `docs/VISUAL_IDENTITY.md` §1C.
+
+## 2026-07-02 — Wrote `docs/VISUAL_IDENTITY.md`: proposed redesign spec, not implemented
+
+Recorded a commissioned visual identity guide (Latxa-sheep mascot, a
+forest/clay/txakoli brand palette, a 5-step neutral scale, type/component/motion
+specs) as a redesign proposal. Went through three review rounds first: round 1
+caught a real WCAG failure (`brand-clay` originally `#DE6B48`, 3.33:1 against
+white text — below the guide's own 4.5:1 mandate) and a four-way inconsistent
+dark-neutral scale (`#374151`/`#111827`/`#1F2937`/`#2D3748` used
+interchangeably); round 2 fixed both, but its "mathematically verified"
+contrast decimals didn't match independent recomputation (always in the safe
+direction, so no false passes, but the numbers were invented rather than
+calculated); round 3 replaced the fabricated decimals with qualitative AA/AAA
+bands. Verified by rendering the mascot/favicon SVGs and running an actual
+WCAG contrast script rather than trusting the pasted numbers or eyeballing the
+XML.
+
+**Explicitly not decided yet**, flagged as open questions in the doc: (1)
+whether Aditzak becomes a mascot/animation-driven app at all — the guide specs
+per-feedback-state expressions and ear animation, which is a product-scope
+decision, not a styling one; (2) how the shipped hearts-economy UI's `rose`
+palette (issues #529-#535, merged same day) reconciles with the new tokens,
+since the guide never considered it; (3) the grammar-category badge colors
+(`TYPE_META`/`AGREEMENT_META`/`DIALECT_LABELS` in `data/verbs.js`) are out of
+this guide's scope and need their own pass. No code changed to implement any
+of this yet.
+
 ## 2026-07-01 — Resolved issue #535: cross-device sync for hearts (final core slice of the hearts epic)
 
 Sixth and final core-buildout slice of the heart economy epic (#529) —

@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aditzak — Visual Identity &amp; Design System Guide</title>
+<meta name="description" content="Proposed visual identity guide for Aditzak: the Latxa sheep mascot, color palette, typography, components, and accessibility verification." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wool-white: #F8FAFC;
+    --neutral-card: #FFFFFF;
+    --brand-forest: #0A4F35;
+    --brand-clay: #A63816;
+    --brand-txakoli: #EAB308;
+    --semantic-correct: #14532D;
+    --semantic-error: #991B1B;
+    --semantic-warning: #9A3412;
+    --neutral-950: #0B0F19;
+    --neutral-900: #1E2530;
+    --neutral-800: #2D3543;
+    --neutral-600: #525C6C;
+    --neutral-400: #94A3B8;
+    --neutral-200: #E2E8F0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--wool-white);
+    color: var(--neutral-900);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+  }
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; color: var(--neutral-900); margin: 0; }
+  a { color: var(--brand-forest); }
+  code { background: var(--neutral-200); padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.9em; }
+
+  .status-banner {
+    background: var(--neutral-900);
+    color: var(--wool-white);
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .status-banner strong { color: var(--brand-txakoli); }
+
+  header.hero {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 56px 24px 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  header.hero .logo-box { width: 140px; height: 140px; flex-shrink: 0; }
+  header.hero .logo-box svg { width: 100%; height: 100%; }
+  header.hero h1 { font-size: 34px; margin-bottom: 8px; }
+  header.hero p.tagline { margin: 0; color: var(--neutral-600); font-size: 16px; max-width: 520px; }
+  header.hero .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .pill-forest { background: var(--brand-forest); color: white; }
+  .pill-clay { background: var(--brand-clay); color: white; }
+  .pill-outline { border: 2px solid var(--neutral-800); color: var(--neutral-900); }
+
+  nav.toc {
+    position: sticky;
+    top: 0;
+    background: rgba(248,250,252,0.96);
+    backdrop-filter: blur(6px);
+    border-bottom: 2px solid var(--neutral-800);
+    z-index: 10;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 24px;
+  }
+  nav.toc a {
+    color: var(--neutral-900);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    margin-right: 20px;
+  }
+  nav.toc a:hover { color: var(--brand-forest); }
+
+  main { max-width: 1000px; margin: 0 auto; padding: 8px 24px 80px; }
+  section { padding: 48px 0; border-bottom: 1px solid var(--neutral-200); }
+  section:last-of-type { border-bottom: none; }
+  section h2 { font-size: 26px; margin-bottom: 6px; }
+  section .kicker { color: var(--brand-clay); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  section > p.lede { color: var(--neutral-600); font-size: 15px; max-width: 720px; margin-top: 4px; margin-bottom: 28px; }
+
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--neutral-200); vertical-align: top; }
+  th { font-family: 'Space Grotesk', sans-serif; background: var(--neutral-900); color: white; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+  tr:hover td { background: rgba(148,163,184,0.08); }
+  .status-aaa { color: var(--semantic-correct); font-weight: 700; }
+  .status-aa { color: var(--brand-clay); font-weight: 700; }
+  .status-note { color: var(--neutral-600); font-size: 12.5px; }
+
+  .callout {
+    border-left: 4px solid var(--brand-clay);
+    background: var(--neutral-card);
+    padding: 14px 18px;
+    border-radius: 0 10px 10px 0;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .callout.resolved { border-left-color: var(--semantic-correct); }
+  .callout strong { display: block; margin-bottom: 4px; font-family: 'Space Grotesk', sans-serif; }
+
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--neutral-200);
+    background: var(--neutral-card);
+  }
+  .swatch .chip { height: 72px; }
+  .swatch .meta { padding: 10px 12px; }
+  .swatch .meta .name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; }
+  .swatch .meta .hex { font-size: 12px; color: var(--neutral-600); }
+  .swatch .meta .use { font-size: 12px; color: var(--neutral-600); margin-top: 4px; }
+
+  .mascot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin: 20px 0; }
+  .mascot-card { background: var(--neutral-card); border: 1px solid var(--neutral-200); border-radius: 14px; padding: 16px; text-align: center; }
+  .mascot-card svg { width: 100%; max-width: 130px; height: auto; }
+  .mascot-card .label { font-family: 'Space Grotesk', sans-serif; font-weight: 700; margin-top: 8px; font-size: 14px; }
+  .mascot-card .sub { font-size: 12px; color: var(--neutral-600); }
+
+  .type-row { display: flex; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--neutral-200); }
+  .type-row .tag { width: 90px; flex-shrink: 0; font-size: 11px; color: var(--neutral-600); font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; }
+  .type-row .sample { font-family: 'Space Grotesk', sans-serif; color: var(--neutral-900); }
+
+  .swatch-frame { max-width: 400px; margin: 20px auto; }
+
+  .motion-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; margin: 20px 0; }
+  .motion-card { background: var(--neutral-card); border: 1px solid var(--neutral-200); border-radius: 12px; padding: 18px; text-align: center; }
+  .motion-card .demo-box { width: 60px; height: 60px; margin: 0 auto 14px; background: var(--brand-forest); border-radius: 12px; }
+  .motion-card h4 { font-size: 14px; margin-bottom: 6px; }
+  .motion-card p { font-size: 12.5px; color: var(--neutral-600); margin: 0; }
+  @keyframes demo-celebrate { 0% { transform: scale(0.98); } 40% { transform: scale(1.03); } 100% { transform: scale(1); } }
+  @keyframes demo-shake { 10%,90% { transform: translateX(-2px);} 20%,80% { transform: translateX(4px);} 30%,50%,70% { transform: translateX(-6px);} 40%,60% { transform: translateX(6px);} }
+  .demo-box.celebrate { animation: demo-celebrate 1.6s ease-in-out infinite; }
+  .demo-box.shake { animation: demo-shake 1.8s ease-in-out infinite; background: var(--semantic-error); }
+  .demo-box.slide { position: relative; overflow: hidden; background: transparent; width: 100%; height: 40px; border-radius: 8px; }
+  .demo-box.slide .bar { position: absolute; inset: 0; background: var(--brand-txakoli); border-radius: 8px; animation: demo-slide 2.4s ease-in-out infinite; }
+  @keyframes demo-slide { 0% { transform: translateX(-110%); } 45%, 55% { transform: translateX(0); } 100% { transform: translateX(110%); } }
+
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .voice-col { border-radius: 12px; padding: 18px; }
+  .voice-col.good { background: #DCFCE7; border: 1px solid var(--semantic-correct); }
+  .voice-col.bad { background: #FEE2E2; border: 1px solid var(--semantic-error); }
+  .voice-col h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
+  .voice-col.good h4 { color: var(--semantic-correct); }
+  .voice-col.bad h4 { color: var(--semantic-error); }
+  .voice-col p { font-style: italic; font-size: 14px; margin: 8px 0; }
+  @media (max-width: 640px) { .voice-grid { grid-template-columns: 1fr; } }
+
+  .darkmode-preview { background: #0F172A; border-radius: 14px; padding: 24px; margin: 20px 0; }
+  .darkmode-preview .card { background: #1E293B; border-radius: 12px; padding: 16px; max-width: 360px; }
+  .darkmode-preview .card h4 { color: #F8FAFC; margin-bottom: 8px; font-size: 15px; }
+  .darkmode-preview .card p { color: #F8FAFC; font-size: 13px; margin: 4px 0; }
+
+  ul.tight { margin: 8px 0; padding-left: 20px; }
+  ul.tight li { margin-bottom: 6px; font-size: 14px; }
+
+  footer { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; color: var(--neutral-600); font-size: 13px; }
+  footer a { color: var(--brand-forest); }
+</style>
+</head>
+<body>
+
+<div class="status-banner">STATUS: <strong>PROPOSED — NOT YET IMPLEMENTED</strong> &nbsp;·&nbsp; This is a redesign specification, not a description of the current app UI.</div>
+
+<nav class="toc" id="toc">
+  <a href="#overview">Overview</a>
+  <a href="#gap">Gap Analysis</a>
+  <a href="#mascot">Mascot</a>
+  <a href="#expressions">Expressions</a>
+  <a href="#color">Color</a>
+  <a href="#neutrals">Neutrals</a>
+  <a href="#type">Typography</a>
+  <a href="#components">Components</a>
+  <a href="#motion">Motion</a>
+  <a href="#voice">Voice &amp; Tone</a>
+  <a href="#a11y">Accessibility</a>
+  <a href="#darkmode">Dark Mode</a>
+  <a href="#appendix">Contrast Appendix</a>
+</nav>
+
+<header class="hero" id="overview">
+  <div class="logo-box">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+      <ellipse cx="200" cy="375" rx="90" ry="12" fill="#E2E8F0" />
+      <path d="M 100,170 C 100,90 300,90 300,170 C 330,210 345,270 325,320 L 295,295 L 265,345 L 235,310 L 200,355 L 165,310 L 135,345 L 105,295 L 75,320 C 55,270 70,210 100,170 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M 105,295 L 135,345 M 165,310 L 200,355 M 235,310 L 265,345" fill="none" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+      <path d="M 130,155 C 85,145 55,175 65,205 C 70,220 95,205 125,180 Z" fill="#1E2530" />
+      <path d="M 270,155 C 315,145 345,175 335,205 C 330,220 305,205 275,180 Z" fill="#1E2530" />
+      <path d="M 135,165 C 135,105 265,105 265,165 C 265,220 240,270 200,270 C 160,270 135,220 135,165 Z" fill="#1E2530" />
+      <circle cx="175" cy="160" r="22" fill="#FFFFFF" />
+      <circle cx="178" cy="160" r="11" fill="#0B0F19" />
+      <circle cx="176" cy="156" r="3.5" fill="#FFFFFF" />
+      <circle cx="225" cy="160" r="22" fill="#FFFFFF" />
+      <circle cx="222" cy="160" r="11" fill="#0B0F19" />
+      <circle cx="224" cy="156" r="3.5" fill="#FFFFFF" />
+      <path d="M 138,140 C 145,105 255,105 262,140 L 245,155 L 230,140 L 200,165 L 170,140 L 155,155 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="3" stroke-linejoin="round" />
+      <path d="M 155,128 Q 170,118 182,126" fill="none" stroke="#1E2530" stroke-width="4.5" stroke-linecap="round" />
+      <path d="M 245,128 Q 230,118 218,126" fill="none" stroke="#1E2530" stroke-width="4.5" stroke-linecap="round" />
+      <path d="M 190,220 L 210,220 C 215,220 213,228 200,231 C 187,228 185,220 190,220 Z" fill="#0B0F19" />
+      <path d="M 184,242 Q 200,254 216,242" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+    </svg>
+  </div>
+  <div>
+    <h1>Visual Identity &amp; Design System Guide</h1>
+    <p class="tagline">Aditzak — a Basque verb conjugation app. Mascot: the Latxa sheep (<em>mutur beltza</em> variety). Design philosophy: culturally grounded, structurally precise, companion-driven.</p>
+    <div class="badges">
+      <span class="pill pill-forest">Proposed</span>
+      <span class="pill pill-clay">4 review rounds</span>
+      <span class="pill pill-outline">WCAG-verified</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="history">
+  <div class="kicker">Provenance</div>
+  <h2>How this guide got here</h2>
+  <p class="lede">Commissioned from an outside designer as a from-scratch visual identity — no prior brand existed. Went through four review rounds before reaching this state.</p>
+  <ul class="tight">
+    <li><strong>Round 1</strong> — found a genuine WCAG contrast failure (<code>brand-clay</code> on white text, 3.33:1, below the guide's own 4.5:1 mandate) and a four-way inconsistent dark-neutral scale.</li>
+    <li><strong>Round 2</strong> — fixed both, added the missing lesson-card mockup and a dedicated favicon-scale mark. Its "mathematically verified" contrast ratios turned out not to match independent recomputation — always in the safe direction, but invented rather than calculated.</li>
+    <li><strong>Round 3</strong> — replaced the fabricated decimals with qualitative AA/AAA bands, fixed a table-column mismatch.</li>
+    <li><strong>Round 4</strong> — reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with the anti-guilt voice principle (§ Voice &amp; Tone).</li>
+  </ul>
+  <div class="callout">
+    <strong>On the contrast numbers in this document</strong>
+    Qualitative AA/AAA bands are used throughout rather than decimals. See the Contrast Appendix at the end for independently computed real ratios — use those, not the labels, for anything citable (e.g. a compliance record).
+  </div>
+</section>
+
+<section id="gap">
+  <div class="kicker">Reality Check</div>
+  <h2>Gap analysis — what this actually changes</h2>
+  <p class="lede">The app currently has no formal design system — styling is ad hoc Tailwind utility classes applied per-component.</p>
+  <div style="overflow-x:auto;"><table>
+    <tr><th>Existing element</th><th>Current styling</th><th>This guide proposes</th></tr>
+    <tr><td>Stars</td><td><code>text-amber-400</code></td><td><code>brand-txakoli</code> (#EAB308) — near-identical hue, low-risk swap</td></tr>
+    <tr><td>Progress bar fill</td><td><code>bg-green-500</code></td><td><code>brand-forest</code> (#0A4F35)</td></tr>
+    <tr><td>Dialect badge</td><td><code>bg-gray-100</code> / <code>text-gray-500</code></td><td><code>neutral-400</code>/<code>neutral-600</code> scale</td></tr>
+    <tr><td>Hearts badge</td><td><code>bg-rose-100</code> / <code>text-rose-600</code> (shipped, issue #534)</td><td><strong>Not covered by this guide</strong> — open question</td></tr>
+    <tr><td>Grammar-category badges</td><td>assorted Tailwind colors</td><td>not addressed — separate pass needed</td></tr>
+    <tr><td>Logo / favicon</td><td>placeholder SVGs</td><td>full mascot + dedicated small-scale mark</td></tr>
+    <tr><td>Mascot / character</td><td>none</td><td>full mascot system with expressions + animation</td></tr>
+  </table></div>
+  <div class="callout">
+    <strong>Timing note</strong>
+    The hearts economy (issues #529–#535) shipped in full while this guide was in review — hearts UI, lockout, purchase flow, and cross-device sync are all live using a <code>rose</code> palette this guide never considered.
+  </div>
+  <h3 style="font-size:16px;margin-top:28px;">Open scope questions</h3>
+  <ol>
+    <li><strong>Mascot/animation is a product decision, not a styling one.</strong> Per-feedback-state expressions and ear-rotation animation are meaningfully more engineering surface than a token swap. Decide explicitly before building it.</li>
+    <li><code>HeartsBadge</code>'s rose palette isn't reconciled — fold into <code>semantic-warning</code>/<code>brand-clay</code>, or keep rose as a deliberate exception.</li>
+    <li>Grammar-category badge colors are out of scope for this guide.</li>
+    <li>Tailwind 4 here has no config file — tokens route through <code>@theme</code> in <code>index.css</code>.</li>
+  </ol>
+  <div class="callout resolved">
+    <strong>Recommended path</strong>
+    Adopt the palette, typography, and component tokens now — a low-risk, incremental upgrade over current ad hoc classes. Treat the mascot/animation system as a separate, explicitly-scoped decision to make later.
+  </div>
+</section>
+
+<section id="mascot">
+  <div class="kicker">§1 — Identity</div>
+  <h2>Logo &amp; Mascot Assets</h2>
+  <p class="lede">The Latxa sheep, a rugged breed native to the Basque Country known for its long coarse wool and dark face (<em>mutur beltza</em>). A "linguistic shepherd" guiding learners through Basque conjugation.</p>
+
+  <div class="mascot-grid">
+    <div class="mascot-card">
+      <svg viewBox="0 0 400 400"><ellipse cx="200" cy="375" rx="90" ry="12" fill="#E2E8F0"/><path d="M 100,170 C 100,90 300,90 300,170 C 330,210 345,270 325,320 L 295,295 L 265,345 L 235,310 L 200,355 L 165,310 L 135,345 L 105,295 L 75,320 C 55,270 70,210 100,170 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="4" stroke-linejoin="round"/><path d="M 105,295 L 135,345 M 165,310 L 200,355 M 235,310 L 265,345" fill="none" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><path d="M 130,155 C 85,145 55,175 65,205 C 70,220 95,205 125,180 Z" fill="#1E2530"/><path d="M 270,155 C 315,145 345,175 335,205 C 330,220 305,205 275,180 Z" fill="#1E2530"/><path d="M 135,165 C 135,105 265,105 265,165 C 265,220 240,270 200,270 C 160,270 135,220 135,165 Z" fill="#1E2530"/><circle cx="175" cy="160" r="22" fill="#FFFFFF"/><circle cx="178" cy="160" r="11" fill="#0B0F19"/><circle cx="176" cy="156" r="3.5" fill="#FFFFFF"/><circle cx="225" cy="160" r="22" fill="#FFFFFF"/><circle cx="222" cy="160" r="11" fill="#0B0F19"/><circle cx="224" cy="156" r="3.5" fill="#FFFFFF"/><path d="M 138,140 C 145,105 255,105 262,140 L 245,155 L 230,140 L 200,165 L 170,140 L 155,155 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="3" stroke-linejoin="round"/><path d="M 155,128 Q 170,118 182,126" fill="none" stroke="#1E2530" stroke-width="4.5" stroke-linecap="round"/><path d="M 245,128 Q 230,118 218,126" fill="none" stroke="#1E2530" stroke-width="4.5" stroke-linecap="round"/><path d="M 190,220 L 210,220 C 215,220 213,228 200,231 C 187,228 185,220 190,220 Z" fill="#0B0F19"/><path d="M 184,242 Q 200,254 216,242" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/></svg>
+      <div class="label">A. Splash Logo</div>
+      <div class="sub">Full scene, 400×400</div>
+    </div>
+    <div class="mascot-card">
+      <svg viewBox="0 0 32 32"><path d="M 6,12 C 6,6 26,6 26,12 C 26,20 22,26 16,26 C 10,26 6,20 6,12 Z" fill="#1E2530"/><path d="M 7,11 C 2,10 0,14 2,17 Z" fill="#1E2530"/><path d="M 25,11 C 30,10 32,14 30,17 Z" fill="#1E2530"/><circle cx="12" cy="12" r="3.5" fill="#FFFFFF"/><circle cx="12" cy="12" r="1.5" fill="#0B0F19"/><circle cx="20" cy="12" r="3.5" fill="#FFFFFF"/><circle cx="20" cy="12" r="1.5" fill="#0B0F19"/></svg>
+      <div class="label">B. Favicon Mark</div>
+      <div class="sub">Simplified, 32×32 — not yet wired up in <code>index.html</code></div>
+    </div>
+  </div>
+
+  <div class="callout resolved">
+    <strong>Resolved</strong>
+    The drop-shadow ellipse's #E2E8F0 is now the named token <code>neutral-200 (Shadow Tint)</code> rather than an undocumented sixth gray.
+  </div>
+</section>
+
+<section id="expressions">
+  <div class="kicker">§1C</div>
+  <h2>Expression Library</h2>
+  <p class="lede">A separately-commissioned four-state catalog arrived on the pre-fix palette and outdated anatomy (visible legs, muzzle shadow, inner-ear shading) — recolored and simplified here to match the primary logo exactly. Two of its four proposed triggers were rejected outright for conflicting with the anti-guilt voice principle (§ Voice &amp; Tone below); only their legitimate pedagogical halves survive.</p>
+
+  <div class="mascot-grid">
+    <div class="mascot-card">
+      <svg viewBox="0 0 400 400"><ellipse cx="200" cy="375" rx="90" ry="12" fill="#E2E8F0"/><path d="M 100,170 C 100,90 300,90 300,170 C 330,210 345,270 325,320 L 295,295 L 265,345 L 235,310 L 200,355 L 165,310 L 135,345 L 105,295 L 75,320 C 55,270 70,210 100,170 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="4" stroke-linejoin="round"/><path d="M 105,295 L 135,345 M 165,310 L 200,355 M 235,310 L 265,345" fill="none" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><path d="M 130,155 C 85,145 55,175 65,205 C 70,220 95,205 125,180 Z" fill="#1E2530"/><path d="M 270,155 C 315,145 345,175 335,205 C 330,220 305,205 275,180 Z" fill="#1E2530"/><path d="M 135,165 C 135,105 265,105 265,165 C 265,220 240,270 200,270 C 160,270 135,220 135,165 Z" fill="#1E2530"/><circle cx="175" cy="160" r="22" fill="#FFFFFF"/><circle cx="178" cy="160" r="11" fill="#0B0F19"/><circle cx="176" cy="156" r="3.5" fill="#FFFFFF"/><circle cx="225" cy="160" r="22" fill="#FFFFFF"/><circle cx="222" cy="160" r="11" fill="#0B0F19"/><circle cx="224" cy="156" r="3.5" fill="#FFFFFF"/><path d="M 138,140 C 145,105 255,105 262,140 L 245,155 L 230,140 L 200,165 L 170,140 L 155,155 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="3" stroke-linejoin="round"/><path d="M 155,128 Q 170,118 182,126" fill="none" stroke="#1E2530" stroke-width="4.5" stroke-linecap="round"/><path d="M 245,128 Q 230,118 218,126" fill="none" stroke="#1E2530" stroke-width="4.5" stroke-linecap="round"/><path d="M 190,220 L 210,220 C 215,220 213,228 200,231 C 187,228 185,220 190,220 Z" fill="#0B0F19"/><path d="M 184,242 Q 200,254 216,242" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/></svg>
+      <div class="label">Pozik</div>
+      <div class="sub">Happy / default — same artwork as the splash logo</div>
+    </div>
+    <div class="mascot-card">
+      <svg viewBox="0 0 400 400"><ellipse cx="200" cy="375" rx="90" ry="12" fill="#E2E8F0"/><path d="M 100,170 C 100,90 300,90 300,170 C 330,210 345,270 325,320 L 295,295 L 265,345 L 235,310 L 200,355 L 165,310 L 135,345 L 105,295 L 75,320 C 55,270 70,210 100,170 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="4" stroke-linejoin="round"/><path d="M 105,295 L 135,345 M 165,310 L 200,355 M 235,310 L 265,345" fill="none" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><path d="M 130,155 C 85,145 55,175 65,205 C 70,220 95,205 125,180 Z" fill="#1E2530"/><path d="M 270,155 C 315,145 345,175 335,205 C 330,220 305,205 275,180 Z" fill="#1E2530"/><path d="M 135,165 C 135,105 265,105 265,165 C 265,220 240,270 200,270 C 160,270 135,220 135,165 Z" fill="#1E2530"/><path d="M 156,166 Q 175,144 192,166" fill="none" stroke="#FFFFFF" stroke-width="6.5" stroke-linecap="round"/><path d="M 208,166 Q 225,144 244,166" fill="none" stroke="#FFFFFF" stroke-width="6.5" stroke-linecap="round"/><path d="M 138,140 C 145,105 255,105 262,140 L 245,155 L 230,140 L 200,165 L 170,140 L 155,155 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="3" stroke-linejoin="round"/><path d="M 150,122 Q 170,105 185,120" fill="none" stroke="#1E2530" stroke-width="5" stroke-linecap="round"/><path d="M 250,122 Q 230,105 215,120" fill="none" stroke="#1E2530" stroke-width="5" stroke-linecap="round"/><path d="M 190,220 L 210,220 C 215,220 213,228 200,231 C 187,228 185,220 190,220 Z" fill="#0B0F19"/><path d="M 182,234 Q 200,264 218,234 Z" fill="#991B1B" stroke="#FFFFFF" stroke-width="1.5"/><path d="M 188,248 Q 200,239 212,248 Q 200,261 188,248" fill="#F43F5E"/></svg>
+      <div class="label">Gora!</div>
+      <div class="sub">Excited — lesson-complete / streak milestone</div>
+    </div>
+    <div class="mascot-card">
+      <svg viewBox="0 0 400 400"><ellipse cx="200" cy="375" rx="90" ry="12" fill="#E2E8F0"/><path d="M 100,170 C 100,90 300,90 300,170 C 330,210 345,270 325,320 L 295,295 L 265,345 L 235,310 L 200,355 L 165,310 L 135,345 L 105,295 L 75,320 C 55,270 70,210 100,170 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="4" stroke-linejoin="round"/><path d="M 105,295 L 135,345 M 165,310 L 200,355 M 235,310 L 265,345" fill="none" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><path d="M 130,155 C 85,145 55,175 65,205 C 70,220 95,205 125,180 Z" fill="#1E2530"/><path d="M 270,155 C 315,145 345,175 335,205 C 330,220 305,205 275,180 Z" fill="#1E2530"/><path d="M 135,165 C 135,105 265,105 265,165 C 265,220 240,270 200,270 C 160,270 135,220 135,165 Z" fill="#1E2530"/><path d="M 154,162 L 190,174 C 190,188 154,188 154,162 Z" fill="#FFFFFF"/><circle cx="174" cy="173" r="6" fill="#0B0F19"/><path d="M 246,162 L 210,174 C 210,188 246,188 246,162 Z" fill="#FFFFFF"/><circle cx="226" cy="173" r="6" fill="#0B0F19"/><path d="M 138,140 C 145,105 255,105 262,140 L 245,155 L 230,140 L 200,165 L 170,140 L 155,155 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="3" stroke-linejoin="round"/><path d="M 148,130 L 184,146" fill="none" stroke="#0B0F19" stroke-width="5.5" stroke-linecap="round"/><path d="M 252,130 L 216,146" fill="none" stroke="#0B0F19" stroke-width="5.5" stroke-linecap="round"/><path d="M 190,220 L 210,220 C 215,220 213,228 200,231 C 187,228 185,220 190,220 Z" fill="#0B0F19"/><path d="M 186,246 Q 200,234 214,246" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/></svg>
+      <div class="label">Haserre</div>
+      <div class="sub">Focused — in-lesson error-prone pattern callout</div>
+    </div>
+    <div class="mascot-card">
+      <svg viewBox="0 0 400 400"><ellipse cx="200" cy="375" rx="90" ry="12" fill="#E2E8F0"/><path d="M 100,170 C 100,90 300,90 300,170 C 330,210 345,270 325,320 L 295,295 L 265,345 L 235,310 L 200,355 L 165,310 L 135,345 L 105,295 L 75,320 C 55,270 70,210 100,170 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="4" stroke-linejoin="round"/><path d="M 105,295 L 135,345 M 165,310 L 200,355 M 235,310 L 265,345" fill="none" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/><path d="M 130,155 C 85,145 55,175 65,205 C 70,220 95,205 125,180 Z" fill="#1E2530"/><path d="M 270,155 C 315,145 345,175 335,205 C 330,220 305,205 275,180 Z" fill="#1E2530"/><path d="M 135,165 C 135,105 265,105 265,165 C 265,220 240,270 200,270 C 160,270 135,220 135,165 Z" fill="#1E2530"/><path d="M 154,162 L 190,162 A 18,18 0 0,1 154,162 Z" fill="#FFFFFF"/><circle cx="172" cy="170" r="5" fill="#0B0F19"/><path d="M 210,162 L 246,162 A 18,18 0 0,1 210,162 Z" fill="#FFFFFF"/><circle cx="228" cy="170" r="5" fill="#0B0F19"/><path d="M 138,140 C 145,105 255,105 262,140 L 245,155 L 230,140 L 200,165 L 170,140 L 155,155 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="3" stroke-linejoin="round"/><path d="M 152,138 L 182,135" fill="none" stroke="#1E2530" stroke-width="4" stroke-linecap="round"/><path d="M 248,138 L 218,135" fill="none" stroke="#1E2530" stroke-width="4" stroke-linecap="round"/><path d="M 190,220 L 210,220 C 215,220 213,228 200,231 C 187,228 185,220 190,220 Z" fill="#0B0F19"/><line x1="188" y1="240" x2="212" y2="240" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><text x="295" y="140" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#94A3B8" transform="rotate(-15, 295, 140)">Z</text><text x="315" y="115" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#94A3B8" transform="rotate(-15, 315, 115)">Z</text></svg>
+      <div class="label">Nekatuta</div>
+      <div class="sub">Tired — Progress-tab low-accuracy indicator</div>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;"><table>
+    <tr><th>State</th><th>Rejected trigger (as originally proposed)</th><th>Adopted instead</th></tr>
+    <tr>
+      <td>Haserre</td>
+      <td>"Appears if the user repeatedly ignores daily goals... time-attack validation modes"</td>
+      <td>Callout for a genuinely error-prone conjugation pattern within a lesson — pedagogical, not behavioral</td>
+    </tr>
+    <tr>
+      <td>Nekatuta</td>
+      <td>"Used for... missed notifications... to prompt immediate practice"</td>
+      <td>Accuracy-based Progress-tab indicator using existing <code>bestScore</code> data — not a re-engagement nag</td>
+    </tr>
+  </table></div>
+  <p class="status-note">Neither trigger is wired into any screen yet — this only settles what the mascot is <em>allowed</em> to represent if the mascot system is built.</p>
+</section>
+
+<section id="color">
+  <div class="kicker">§2</div>
+  <h2>Color Palette &amp; Design Tokens</h2>
+  <p class="lede">Natural Latxa coloring paired with saturated accents from the Basque landscape — coastal oaks, terracotta roofing tiles, Txakoli vineyards.</p>
+
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#F8FAFC;border-bottom:1px solid #E2E8F0;"></div><div class="meta"><div class="name">wool-white</div><div class="hex">#F8FAFC</div><div class="use">App background canvas</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid #E2E8F0;"></div><div class="meta"><div class="name">neutral-card</div><div class="hex">#FFFFFF</div><div class="use">Lesson cards</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#0A4F35;"></div><div class="meta"><div class="name">brand-forest</div><div class="hex">#0A4F35</div><div class="use">Headers, primary actions</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#A63816;"></div><div class="meta"><div class="name">brand-clay</div><div class="hex">#A63816</div><div class="use">Streaks, achievements</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#EAB308;"></div><div class="meta"><div class="name">brand-txakoli</div><div class="hex">#EAB308</div><div class="use">Stars, points, rewards</div></div></div>
+  </div>
+  <div class="callout resolved">
+    <strong>Fixed in round 1</strong>
+    <code>brand-clay</code> was originally <code>#DE6B48</code> and failed its own accessibility mandate (3.33:1 against white text). <code>#A63816</code> is the corrected value (6.57:1, independently verified).
+  </div>
+
+  <h3 style="font-size:16px;margin-top:32px;">Semantic system</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#14532D;"></div><div class="meta"><div class="name">semantic-correct</div><div class="hex">#14532D</div><div class="use">Correct answer drawer</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#991B1B;"></div><div class="meta"><div class="name">semantic-error</div><div class="hex">#991B1B</div><div class="use">Incorrect answer drawer</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#9A3412;"></div><div class="meta"><div class="name">semantic-warning</div><div class="hex">#9A3412</div><div class="use">Streak-in-jeopardy frame</div></div></div>
+  </div>
+</section>
+
+<section id="neutrals">
+  <div class="kicker">§3</div>
+  <h2>Canonical Neutral Scale</h2>
+  <p class="lede">One 6-step scale, replacing four inconsistent ad hoc darks plus an undocumented shadow gray that a later deliverable reused unprompted. Do not introduce gray values outside this list.</p>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#0B0F19;"></div><div class="meta"><div class="name">neutral-950</div><div class="hex">#0B0F19</div><div class="use">Ink black — code bg, deep borders</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#1E2530;"></div><div class="meta"><div class="name">neutral-900</div><div class="hex">#1E2530</div><div class="use">Text Main — mascot face</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#2D3543;"></div><div class="meta"><div class="name">neutral-800</div><div class="hex">#2D3543</div><div class="use">Borders, button offsets</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#525C6C;"></div><div class="meta"><div class="name">neutral-600</div><div class="hex">#525C6C</div><div class="use">Muted text, hints</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#94A3B8;"></div><div class="meta"><div class="name">neutral-400</div><div class="hex">#94A3B8</div><div class="use">UI borders, dividers</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#E2E8F0;"></div><div class="meta"><div class="name">neutral-200</div><div class="hex">#E2E8F0</div><div class="use">Shadow tint only</div></div></div>
+  </div>
+</section>
+
+<section id="type">
+  <div class="kicker">§4</div>
+  <h2>Typography System</h2>
+  <p class="lede"><strong>Space Grotesk</strong> for headings; <strong>Inter</strong> for body and UI labels. Root 16px, mobile scale.</p>
+  <div class="type-row"><div class="tag">2xl / 24px</div><div class="sample" style="font-size:24px;font-weight:600;">Oso ondo! Lesson complete.</div></div>
+  <div class="type-row"><div class="tag">xl / 20px</div><div class="sample" style="font-size:20px;font-weight:700;">Zuek ni kalean ikusi ________.</div></div>
+  <div class="type-row"><div class="tag">lg / 18px</div><div class="sample" style="font-size:18px;font-weight:500;">Present Tense: Nor-Nork</div></div>
+  <div class="type-row"><div class="tag">base / 16px</div><div class="sample" style="font-size:16px;font-family:'Inter',sans-serif;">Transitive verbs mark the ergative subject.</div></div>
+  <div class="type-row"><div class="tag">sm / 14px</div><div class="sample" style="font-size:14px;font-family:'Inter',sans-serif;font-weight:600;">nauzue</div></div>
+  <div class="type-row" style="border-bottom:none;"><div class="tag">xs / 12px</div><div class="sample" style="font-size:12px;font-family:'Inter',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">NOR · NORK · NORI</div></div>
+</section>
+
+<section id="components">
+  <div class="kicker">§5 &amp; §10</div>
+  <h2>Component Swatches</h2>
+  <p class="lede">Live-rendered, not screenshots — these are the actual tokens above applied to real markup, capped at the app's 400px mobile layout.</p>
+
+  <div class="swatch-frame">
+    <div style="background-color: #F8FAFC; padding: 16px; font-family: 'Inter', sans-serif; border-radius: 8px;">
+      <div style="background-color: #FFFFFF; border: 2px solid #2D3543; border-radius: 16px; padding: 16px; box-shadow: 0 4px 0px 0px #2D3543; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; gap: 14px; align-items: center;">
+          <div style="width: 48px; height: 48px; background-color: #0A4F35; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #2D3543;">
+            <span style="color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px;">02</span>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: #1E2530;">Present Tense: Nor-Nork</h3>
+            <p style="margin: 2px 0 0 0; font-size: 13px; color: #525C6C;">Transitive Verbs (Du / Dut / Dit)</p>
+          </div>
+        </div>
+        <div style="background-color: #F8FAFC; border: 2px solid #2D3543; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #1E2530;">60%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="swatch-frame">
+    <div style="background-color: #F8FAFC; padding: 16px; font-family: 'Inter', sans-serif; border: 1px solid #94A3B8; border-radius: 8px;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: #1E2530; letter-spacing: 0.05em;">NOR-NORK DRILL</span>
+        <div style="flex-grow: 1; background-color: #94A3B8; height: 10px; border-radius: 999px; overflow: hidden;">
+          <div style="background-color: #0A4F35; width: 40%; height: 100%; border-radius: 999px;"></div>
+        </div>
+        <span style="font-size: 12px; font-weight: 600; color: #1E2530;">4/10</span>
+      </div>
+      <div style="background-color: #FFFFFF; border: 2px solid #2D3543; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 0px 0px #2D3543;">
+        <div style="background-color: #2D3543; height: 8px; width: 100%;"></div>
+        <div style="padding: 20px;">
+          <span style="font-size: 11px; font-weight: 700; color: #A63816; text-transform: uppercase; letter-spacing: 0.05em;">Complete the Sentence</span>
+          <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; color: #0B0F19; margin: 6px 0 12px 0; line-height: 1.2;">Zuek ni kalean ikusi ________.</h2>
+          <p style="font-size: 14px; color: #1E2530; font-style: italic; margin: 0;">Context: "You (plural) saw me on the street."</p>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button style="width: 100%; height: 52px; text-align: left; padding: 0 16px; background-color: #FFFFFF; border: 2px solid #94A3B8; border-bottom: 4px solid #94A3B8; border-radius: 12px; font-size: 15px; font-weight: 600; color: #1E2530; cursor: pointer;">nuzue</button>
+        <button style="width: 100%; height: 52px; text-align: left; padding: 0 16px; background-color: #FFFFFF; border: 2px solid #0A4F35; border-bottom: 4px solid #0A4F35; border-radius: 12px; font-size: 15px; font-weight: 600; color: #0A4F35; cursor: pointer;">nauzue</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="swatch-frame">
+    <div style="background-color: #DCFCE7; border-top: 4px solid #14532D; padding: 16px; font-family: 'Inter', sans-serif; display: flex; gap: 16px; align-items: center; border-radius: 8px 8px 0 0;">
+      <div style="width: 56px; height: 56px; flex-shrink: 0; background-color: #FFFFFF; border-radius: 50%; border: 2px solid #14532D; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+        <svg viewBox="0 0 32 32" width="44" height="44"><path d="M 6,12 C 6,6 26,6 26,12 C 26,20 22,26 16,26 C 10,26 6,20 6,12 Z" fill="#1E2530" /><path d="M 7,11 C 2,10 0,14 2,17 Z" fill="#1E2530" /><path d="M 25,11 C 30,10 32,14 30,17 Z" fill="#1E2530" /><path d="M 9,13 Q 12,10 14,13" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/><path d="M 18,13 Q 20,10 23,13" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div><span style="font-weight: 800; color: #14532D; font-size: 16px; display: block;">&#10003; Oso ondo! (Correct)</span><p style="margin: 2px 0 0 0; color: #14532D; font-size: 13px; line-height: 1.4;">Excellent choice. You verified the transitive singular direct object marker correctly.</p></div>
+    </div>
+    <div style="background-color: #FEE2E2; border-top: 4px solid #991B1B; padding: 16px; font-family: 'Inter', sans-serif; display: flex; gap: 16px; align-items: center; margin-top: 2px; border-radius: 0 0 8px 8px;">
+      <div style="width: 56px; height: 56px; flex-shrink: 0; background-color: #FFFFFF; border-radius: 50%; border: 2px solid #991B1B; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+        <svg viewBox="0 0 32 32" width="44" height="44"><path d="M 6,12 C 6,6 26,6 26,12 C 26,20 22,26 16,26 C 10,26 6,20 6,12 Z" fill="#1E2530" /><path d="M 7,11 C 2,10 0,14 2,17 Z" fill="#1E2530" /><path d="M 25,11 C 30,10 32,14 30,17 Z" fill="#1E2530" /><circle cx="12" cy="13" r="2.5" fill="#FFFFFF" /><circle cx="12" cy="13" r="1" fill="#0B0F19" /><circle cx="20" cy="13" r="2.5" fill="#FFFFFF" /><circle cx="20" cy="13" r="1" fill="#0B0F19" /></svg>
+      </div>
+      <div><span style="font-weight: 800; color: #991B1B; font-size: 16px; display: block;">&#10007; Berrikusi (Review)</span><p style="margin: 2px 0 0 0; color: #991B1B; font-size: 13px; line-height: 1.4;">"Nuzue" indicates an intransitive root state. Transitive actions require the "nau-" structural base prefix.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="motion">
+  <div class="kicker">§6</div>
+  <h2>Motion Principles</h2>
+  <div class="motion-grid">
+    <div class="motion-card">
+      <div class="demo-box celebrate"></div>
+      <h4>Celebration</h4>
+      <p>Scale 0.98 → 1.03 → 1.0 over 200ms; mascot ears tilt up 10°.</p>
+    </div>
+    <div class="motion-card">
+      <div class="demo-box shake"></div>
+      <h4>Correction</h4>
+      <p>Horizontal shake, ±6px, three cycles, 250ms.</p>
+    </div>
+    <div class="motion-card">
+      <div class="demo-box slide"><div class="bar"></div></div>
+      <h4>Navigation</h4>
+      <p>Content slides right-to-left over 300ms on screen change.</p>
+    </div>
+  </div>
+</section>
+
+<section id="voice">
+  <div class="kicker">§7</div>
+  <h2>Voice &amp; Tone</h2>
+  <p class="lede">Calm, grounded, encouraging — respecting the learner's intelligence and the language's cultural weight. No cartoonish guilt trips.</p>
+  <div class="voice-grid">
+    <div class="voice-col good">
+      <h4>Acceptable</h4>
+      <p>"Oso ondo! You accurately matched the plural Nork marker."</p>
+      <p>"Hurbil! Take another look at the dative suffix before trying again."</p>
+    </div>
+    <div class="voice-col bad">
+      <h4>Avoid</h4>
+      <p>"Wow! Super-duper job! You're a rockstar!"</p>
+      <p>"You missed your session today. Don't make your sheep cry!"</p>
+    </div>
+  </div>
+</section>
+
+<section id="a11y">
+  <div class="kicker">§8</div>
+  <h2>Accessibility Mandates</h2>
+  <ul class="tight">
+    <li><strong>Dual-Indicator Rule</strong> — state changes never rely on color alone; always pair with a vector mark and a mascot-expression change.</li>
+    <li><strong>Contrast Index</strong> — every actionable component meets 4.5:1 minimum.</li>
+    <li><strong>Touch Targets</strong> — minimum 48×48px interactive hit zone.</li>
+  </ul>
+</section>
+
+<section id="darkmode">
+  <div class="kicker">§9</div>
+  <h2>Dark Mode Adaptation</h2>
+  <p class="lede">Palette-only — no component swatches or mascot-dark variants exist yet. Not build-ready.</p>
+  <div class="darkmode-preview">
+    <div class="card">
+      <h4>Present Tense: Nor-Nork</h4>
+      <p style="color:#4ADE80;">&#10003; semantic-correct-dark — #4ADE80</p>
+      <p style="color:#FCA5A5;">&#10007; semantic-error-dark — #FCA5A5</p>
+      <p style="color:#FDBA74;">&#9888; semantic-warning-dark — #FDBA74</p>
+    </div>
+  </div>
+</section>
+
+<section id="appendix">
+  <div class="kicker">Appendix</div>
+  <h2>Independently verified contrast ratios</h2>
+  <p class="lede">Actual WCAG relative-luminance ratios, computed directly from hex values with a real contrast script — not taken from any vendor claim. Use these, not the AA/AAA labels above, for anything citable.</p>
+  <div style="overflow-x:auto;"><table>
+    <tr><th>Pairing</th><th>Actual ratio</th><th>Label used above</th></tr>
+    <tr><td>brand-forest bg + white text</td><td>9.62:1</td><td class="status-aaa">AAA</td></tr>
+    <tr><td>brand-clay bg + white text</td><td>6.57:1</td><td class="status-aa">AA</td></tr>
+    <tr><td>brand-txakoli bg + neutral-900 text</td><td>8.04:1</td><td class="status-aa">AA <span class="status-note">(actually clears AAA)</span></td></tr>
+    <tr><td>semantic-correct bg + white text</td><td>9.11:1</td><td class="status-aaa">AAA</td></tr>
+    <tr><td>semantic-error bg + white text</td><td>8.31:1</td><td class="status-aaa">AAA</td></tr>
+    <tr><td>semantic-warning bg + white text</td><td>7.31:1</td><td class="status-aa">AA <span class="status-note">(actually clears AAA)</span></td></tr>
+    <tr><td>dark text-primary + card base</td><td>13.98:1</td><td class="status-aaa">AAA</td></tr>
+    <tr><td>dark semantic-correct + card base</td><td>8.40:1</td><td class="status-aa">AA <span class="status-note">(actually clears AAA)</span></td></tr>
+    <tr><td>dark semantic-error + card base</td><td>7.71:1</td><td class="status-aa">AA <span class="status-note">(actually clears AAA)</span></td></tr>
+    <tr><td>dark semantic-warning + card base</td><td>8.67:1</td><td class="status-aa">AA <span class="status-note">(actually clears AAA)</span></td></tr>
+    <tr><td>neutral-card white + text-main</td><td>15.41:1</td><td class="status-aaa">AAA</td></tr>
+    <tr><td>wool-white bg + text-main</td><td>14.73:1</td><td class="status-aaa">AAA</td></tr>
+  </table></div>
+  <p class="status-note">Every pairing clears the 4.5:1 AA floor with real margin. Dark-mode rows were only checked against the card surface (#1E293B), not the base page canvas (#0F172A) — very likely fine since the canvas is darker, but unverified.</p>
+</section>
+
+</main>
+
+<footer>
+  <p>Full source of truth: <code>docs/VISUAL_IDENTITY.md</code> in the <a href="https://github.com/Mintzan/aditzak">Mintzan/aditzak</a> repository, with decision history in <code>docs/DECISIONS.md</code>. This page is a rendered view of that document for stakeholder review — the markdown file is authoritative if the two ever diverge.</p>
+</footer>
+
+</body>
+</html>
