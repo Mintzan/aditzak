@@ -30,6 +30,8 @@ The heart economy (issues #529–#535) shipped in full since this guide was draf
 3. **Grammar-category badge colors (`TYPE_META`, `AGREEMENT_META`, `DIALECT_LABELS` in `src/data/verbs.js`) are out of scope for this guide** and will need their own pass to move onto the new neutral/semantic scale.
 4. Tailwind 4 here has no `tailwind.config.js` (theme via the Vite plugin) — implementation will need to route these tokens through `@theme` in `src/index.css`, not a config file.
 
+**Recommended path:** adopt the palette, typography, and component tokens (§2–5) now — that's a low-risk, incremental upgrade over the current ad hoc Tailwind classes. Treat the mascot/animation system (§1, §6) as a separate, explicitly-scoped decision to make later rather than building it as part of the same pass, given the engineering lift called out in question 1.
+
 ---
 
 ## 1. Logo & Mascot Assets
@@ -80,6 +82,8 @@ Asset file: `public/brand/latxa-logo.svg`
 ```
 
 Rendered and spot-checked in a headless browser during review — reads as a clear, recognizable sheep face at 300–400px.
+
+**Known inconsistency:** the drop-shadow ellipse uses `#E2E8F0`, a gray that isn't one of the five tokens in the §3 canonical scale. It's a light shadow tint rather than a "dark neutral" so it doesn't violate §3's letter, but it is an undocumented sixth gray value — worth folding into the scale (or explicitly declaring "shadow tints are exempt from §3") before this becomes a pattern other components copy.
 
 ### B. Micro-Optimized App Icon & Favicon Mark
 
@@ -298,3 +302,24 @@ Mini-avatar assets: `public/brand/latxa-icon-correct.svg`, `public/brand/latxa-i
   </div>
 </div>
 ```
+
+## Appendix: independently verified contrast ratios
+
+The pairing tables in §2 and §9 use qualitative AA/AAA bands rather than decimals (see the note at the top of this doc for why). These are the actual WCAG relative-luminance contrast ratios, computed directly from the hex values with a real contrast script rather than taken from the guide's own claims — use these, not the AA/AAA labels, if a specific number is ever needed (e.g. for a compliance record).
+
+| Pairing | Actual ratio | §2/§9 label |
+|---|---|---|
+| `brand-forest` bg + white text | 9.62:1 | AAA |
+| `brand-clay` bg + white text | 6.57:1 | AA |
+| `brand-txakoli` bg + `neutral-900` text | 8.04:1 | AA *(mislabeled — actually clears AAA's 7:1 line)* |
+| `semantic-correct` bg + white text | 9.11:1 | AAA |
+| `semantic-error` bg + white text | 8.31:1 | AAA |
+| `semantic-warning` bg + white text | 7.31:1 | AA *(mislabeled — actually clears AAA)* |
+| dark `text-primary-dark` + card base | 13.98:1 | AAA |
+| dark `semantic-correct-dark` + card base | 8.40:1 | AA *(mislabeled — actually clears AAA)* |
+| dark `semantic-error-dark` + card base | 7.71:1 | AA *(mislabeled — actually clears AAA)* |
+| dark `semantic-warning-dark` + card base | 8.67:1 | AA *(mislabeled — actually clears AAA)* |
+| `neutral-card` white + `text-main` | 15.41:1 | AAA |
+| `wool-white` bg + `text-main` | 14.73:1 | AAA |
+
+Every pairing clears the 4.5:1 AA floor with real margin — none of the mislabeling above is dangerous, it's all conservative (nothing labeled "passing" is actually failing). The dark-mode rows were only checked against the card surface (`#1E293B`), not the base page canvas (`#0F172A`); since the canvas is darker than the card, contrast against it would only be higher, so this is very likely fine, but it hasn't actually been computed.
