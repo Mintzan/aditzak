@@ -19,6 +19,7 @@ import {
 } from '../lessonLogic'
 import { describeLesson, journeyText } from '../lessonDisplay'
 import { FixedArgumentBadge, HeartsBadge, Stars } from '../components/badges'
+import { MascotAvatar } from '../components/mascot'
 import { FEEDBACK_API_URL, FEEDBACK_EMAIL_MAX_LENGTH, FEEDBACK_MESSAGE_MAX_LENGTH, SYNC_API_URL } from '../api'
 import {
   BonusIcon,
@@ -240,7 +241,10 @@ function JourneyTab({ progress, hearts, onSelectLesson, onHeartLocked }) {
 
   return (
     <div>
-      <p className="mb-4 text-sm text-gray-500">{t('homeIntro')}</p>
+      <div className="mb-4 flex items-center gap-3">
+        <MascotAvatar />
+        <p className="text-sm text-gray-500">{t('homeIntro')}</p>
+      </div>
       {JOURNEY.map((phase) => (
         <PhaseSection
           key={phase.id}
@@ -705,9 +709,7 @@ function ProfileTab({
 
   return (
     <div className="flex flex-col items-center gap-4 py-12 text-center">
-      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
-        <ProfileIcon className="h-10 w-10 text-green-600" />
-      </div>
+      <MascotAvatar size="h-20 w-20" />
       <div>
         <h2 className="text-lg font-bold text-gray-900">{t('profileGreeting')}</h2>
         <p className="text-sm text-gray-500">{t('profileAchievements')}</p>

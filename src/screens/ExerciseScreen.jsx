@@ -33,6 +33,7 @@ import {
 } from '../lessonLogic'
 import { describeLesson, verbMeaning } from '../lessonDisplay'
 import { FixedArgumentBadge, ProgressBar, Stars, VerbBadgeRow } from '../components/badges'
+import { MascotAvatar } from '../components/mascot'
 import { FEEDBACK_API_URL, FEEDBACK_MESSAGE_MAX_LENGTH } from '../api'
 import { CheckIcon, CrossIcon, FlagIcon, HeartBrokenIcon, LightbulbIcon, PointsIcon } from '../components/icons'
 
@@ -227,8 +228,13 @@ function LessonPreviewScreen({ verb, tense, tenseMeta, onStart, onExit }) {
         <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">
           {verb.verb} — {verbMeaning(verb, language)} · {t(tenseMeta.labelKey)}
         </p>
-        <h2 className="mt-2 text-2xl font-extrabold text-gray-900">{t('previewTitle')}</h2>
-        <p className="mt-1 text-gray-500">{t('previewSubtitle')}</p>
+        <div className="mt-2 flex items-center gap-3">
+          <MascotAvatar />
+          <div>
+            <h2 className="text-2xl font-extrabold text-gray-900">{t('previewTitle')}</h2>
+            <p className="mt-1 text-gray-500">{t('previewSubtitle')}</p>
+          </div>
+        </div>
         <div className="mt-6">
           <ConjugationTable verb={verb} tense={tense} />
         </div>

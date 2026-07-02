@@ -39,6 +39,7 @@ import {
 } from './api'
 import { HomeScreen, MergeModal } from './screens/HomeScreen'
 import { ExerciseScreen } from './screens/ExerciseScreen'
+import { MascotAvatar } from './components/mascot'
 
 // Shown once, before anything else, when no source language has been chosen
 // yet (`hasChosenLanguage` is false — see `LanguageContext`) — a "fancy"
@@ -52,9 +53,7 @@ function LanguageOnboardingScreen() {
   const { t, setLanguage, languages } = useLanguage()
   return (
     <div className="mx-auto flex h-dvh w-full max-w-md flex-col items-center justify-center gap-8 bg-gradient-to-b from-green-50 to-white px-6 text-center">
-      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl" aria-hidden="true">
-        🌍
-      </div>
+      <MascotAvatar size="h-20 w-20" />
       <div>
         <h1 className="text-2xl font-extrabold text-gray-900">{t('onboardingTitle')}</h1>
         <p className="mt-2 text-gray-500">{t('onboardingSubtitle')}</p>
