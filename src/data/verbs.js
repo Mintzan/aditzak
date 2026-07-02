@@ -9266,14 +9266,14 @@ export const TENSE_META = {
 }
 
 export const TYPE_META = {
-  synthetic: { labelKey: 'typeSynthetic', basqueLabel: 'trinkoa', className: 'bg-indigo-100 text-indigo-700' },
-  periphrastic: { labelKey: 'typePeriphrastic', basqueLabel: 'perifrastikoa', className: 'bg-rose-100 text-rose-700' },
+  synthetic: { labelKey: 'typeSynthetic', basqueLabel: 'trinkoa', className: 'bg-neutral-900 text-white' },
+  periphrastic: { labelKey: 'typePeriphrastic', basqueLabel: 'perifrastikoa', className: 'border-2 border-neutral-800 bg-white text-neutral-900' },
 }
 
 export const AGREEMENT_META = {
-  nor: { label: 'NOR', titleKey: 'agreementNorTitle', className: 'bg-blue-100 text-blue-700' },
-  nori: { label: 'NORI', titleKey: 'agreementNoriTitle', className: 'bg-purple-100 text-purple-700' },
-  nork: { label: 'NORK', titleKey: 'agreementNorkTitle', className: 'bg-amber-100 text-amber-700' },
+  nor: { label: 'NOR', titleKey: 'agreementNorTitle', className: 'bg-brand-forest-tint text-brand-forest' },
+  nori: { label: 'NORI', titleKey: 'agreementNoriTitle', className: 'bg-brand-txakoli-tint text-brand-txakoli-text' },
+  nork: { label: 'NORK', titleKey: 'agreementNorkTitle', className: 'bg-brand-clay-tint text-brand-clay' },
 }
 
 export const DIALECT_LABELS = {

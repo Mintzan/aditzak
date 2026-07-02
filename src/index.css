@@ -17,6 +17,28 @@
   --color-semantic-correct-tint: #e8eeea;
   --color-semantic-error: #991b1b;
   --color-semantic-error-tint: #f5e8e8;
+  --color-semantic-warning: #9a3412;
+  --color-semantic-warning-hover: #bf4016;
+  --color-semantic-warning-tint: #f5ebe7;
+
+  /* brand-clay/brand-txakoli: iteration 4 (§2's remaining palette rows —
+     grammar badges, stat pills). -tint is the same ~10%-over-white mix as
+     the iteration-3 tokens above. brand-txakoli itself (#EAB308, a bright
+     yellow) fails contrast used as foreground text on its own tint
+     (1.8:1) — §2's tint-triad contrast note calls this out explicitly, so
+     brand-txakoli-text is a darkened same-hue shade (HSL L 47%→27%),
+     verified at 5.0:1 on the tint rather than assumed from the base. */
+  --color-brand-clay: #a63816;
+  --color-brand-clay-tint: #f6ebe8;
+  --color-brand-txakoli: #eab308;
+  --color-brand-txakoli-tint: #fdf7e6;
+  --color-brand-txakoli-text: #856605;
+
+  /* docs/VISUAL_IDENTITY.md §3 — canonical neutral scale, only the steps
+     iteration 4 actually needs (grammar-type badges, hint text). */
+  --color-neutral-900: #1e2530;
+  --color-neutral-800: #2d3543;
+  --color-neutral-600: #525c6c;
 }
 
 body {

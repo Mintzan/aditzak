@@ -203,7 +203,7 @@
 </head>
 <body>
 
-<div class="status-banner">STATUS: <strong>PARTIALLY IMPLEMENTED — STAGED ITERATIONS</strong> &nbsp;·&nbsp; Iteration 1 (fonts + favicon), iteration 2 (17-icon system), and iteration 3 (primary palette + 12px button radius) have shipped. Remaining palette (grammar badges, stat pills) and the mascot rollout are still pending.</div>
+<div class="status-banner">STATUS: <strong>PARTIALLY IMPLEMENTED — STAGED ITERATIONS</strong> &nbsp;·&nbsp; Iterations 1&ndash;4 have shipped (fonts/favicon, 17-icon system, primary palette + 12px button radius, grammar badges + stat pills) &mdash; &sect;2's color mapping table is now fully applied. The &sect;3 neutral scale and the mascot rollout are still pending.</div>
 
 <nav class="toc" id="toc">
   <a href="#overview">Overview</a>
@@ -292,8 +292,8 @@
     <tr><td>Correct/incorrect answer states</td><td><code>border-green-500</code>/<code>border-red-500</code> tint triads</td><td><code>semantic-correct</code>/<code>semantic-error</code></td><td><strong>Shipped (iter. 3)</strong></td></tr>
     <tr><td>Dialect badge</td><td><code>bg-gray-100</code> / <code>text-gray-500</code></td><td><strong>No change</strong> — already an equivalent match</td><td>N/A</td></tr>
     <tr><td>Hearts badge</td><td><code>bg-rose-100</code> / <code>text-rose-600</code> (shipped, issue #534)</td><td><strong>No change</strong> — formalized as <code>accent-hearts</code>, a deliberate standalone exception</td><td>N/A</td></tr>
-    <tr><td>Grammar-category badges (5 more hues: indigo/rose/blue/purple/amber)</td><td>assorted Tailwind colors</td><td>NOR/NORI/NORK reuse the 3 brand colors; verb type moves to a value distinction instead of a hue</td><td>Pending (iter. 4)</td></tr>
-    <tr><td>Streak/points/bonus pills, streak-repair card</td><td>orange/sky/violet</td><td><code>brand-clay</code>/<code>brand-txakoli</code>/<code>semantic-warning</code></td><td>Pending (iter. 4)</td></tr>
+    <tr><td>Grammar-category badges (5 more hues: indigo/rose/blue/purple/amber)</td><td>assorted Tailwind colors</td><td>NOR/NORI/NORK reuse the 3 brand colors; verb type moves to a value distinction instead of a hue</td><td><strong>Shipped (iter. 4)</strong></td></tr>
+    <tr><td>Streak/points/bonus pills, streak-repair card</td><td>orange/sky/violet</td><td><code>brand-clay</code>/<code>brand-txakoli</code>/<code>semantic-warning</code></td><td><strong>Shipped (iter. 4)</strong></td></tr>
     <tr><td>Button/card geometry</td><td>uniform 16px radius everywhere, flat fill + press-scale</td><td>Buttons move to 12px; cards keep 16px; the earlier "keycap" button spec is dropped — it never existed in the app</td><td><strong>Shipped (iter. 3)</strong></td></tr>
     <tr><td>Fonts</td><td>none loaded (browser default)</td><td>Space Grotesk/Inter — needs an actual <code>&lt;link&gt;</code>, not just a token</td><td><strong>Shipped (iter. 1)</strong></td></tr>
     <tr><td>Icons</td><td>~15 emoji touchpoints app-wide</td><td>17-icon system wired in, outside the mascot's nine named placements (see below)</td><td><strong>Shipped (iter. 2)</strong></td></tr>
@@ -678,7 +678,7 @@
 <section id="before-after">
   <div class="kicker">&sect;12 &mdash; Round 8, mostly shipped</div>
   <h2>Before/After: Applying the Guide</h2>
-  <p class="lede">Every other section documents individual decisions in isolation. This shows what several of them look like applied <em>together</em> to three real, currently-shipped components &mdash; rendered and verified, not hypothetical. Examples 1&ndash;2's icon swaps and Example 3's palette/radius shift are live (iterations 2&ndash;3); the streak/points pill <em>colors</em> in Example 1 and the mascot mini-avatar in Example 3 are still pending (iteration 4 and the mascot rollout, respectively).</p>
+  <p class="lede">Every other section documents individual decisions in isolation. This shows what several of them look like applied <em>together</em> to three real, currently-shipped components &mdash; rendered and verified, not hypothetical. Examples 1&ndash;3 (icon swaps, the streak/points pill colors, and the palette/radius shift) are all now live (iterations 2&ndash;4); Example 3's mascot mini-avatar is still pending the mascot rollout.</p>
 
   <h3 style="font-size:16px;margin-top:24px;">Example 1: Home header pills</h3>
   <div class="ba-pair">

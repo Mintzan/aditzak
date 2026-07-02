@@ -1,6 +1,6 @@
 # Visual Identity & Design System Guide
 
-**Status: partially implemented, in staged iterations.** This started as a from-scratch redesign specification; implementation began 2026-07-02 and is landing in small, independently-shippable PRs rather than one big rewrite. Iteration 1 (fonts + live favicon), iteration 2 (§11's 17-icon system wired into every documented touchpoint), and iteration 3 (§2's primary-button/feedback-triad palette + §5's 12px button radius) have shipped. Not yet started: the remaining §2 palette (grammar badges, stat pills, neutral scale) and the §1C/mascot-placement-plan rollout. See "Gap analysis" below for what's changed vs. still pending, and "Open scope questions" for what needs a product decision before the rest starts.
+**Status: partially implemented, in staged iterations.** This started as a from-scratch redesign specification; implementation began 2026-07-02 and is landing in small, independently-shippable PRs rather than one big rewrite. Iteration 1 (fonts + live favicon), iteration 2 (§11's 17-icon system), iteration 3 (§2's primary-button/feedback-triad palette + §5's 12px button radius), and iteration 4 (§2's grammar-badge/stat-pill palette) have shipped — §2's color mapping table is now fully applied. Not yet started: the §3 neutral-scale application (card borders, locked-icon color) and the §1C/mascot-placement-plan rollout. See "Gap analysis" below for what's changed vs. still pending, and "Open scope questions" for what needs a product decision before the rest starts.
 
 **Mascot Core:** The Latxa Sheep (*Mutur Beltza* variety)
 **Design Philosophy:** Culturally grounded, structurally precise, and companion-driven.
@@ -18,8 +18,8 @@ The app currently has **no formal design system** — styling is ad hoc Tailwind
 | Correct/incorrect answer states (4 separate style objects in `ExerciseScreen.jsx`) | `border-green-500`/`border-red-500` tint triads | `semantic-correct`/`semantic-error` | **Shipped (iteration 3)** |
 | `DialectBadge` | `bg-gray-100` / `text-gray-500` | **No change** — already an equivalent match | N/A |
 | `HeartsBadge` | `bg-rose-100` / `text-rose-600` | **No change** — formalized as `accent-hearts`, a deliberate standalone exception (§2) | N/A |
-| `TYPE_META`/`AGREEMENT_META` (`data/verbs.js`) — 5 more hues (`indigo`/`rose`/`blue`/`purple`/`amber`) | assorted Tailwind colors | Reuses the 3 brand colors for NOR/NORI/NORK; verb type moves to a value distinction instead of a hue (§2) | Pending (iteration 4) |
-| Streak/points/bonus pills, streak-repair card | `orange`/`sky`/`violet` | `brand-clay`/`brand-txakoli`/`semantic-warning` per §2's mapping table | Pending (iteration 4) |
+| `TYPE_META`/`AGREEMENT_META` (`data/verbs.js`) — 5 more hues (`indigo`/`rose`/`blue`/`purple`/`amber`) | assorted Tailwind colors | Reuses the 3 brand colors for NOR/NORI/NORK; verb type moves to a value distinction instead of a hue (§2) | **Shipped (iteration 4)** |
+| Streak/points/bonus pills, streak-repair card | `orange`/`sky`/`violet` | `brand-clay`/`brand-txakoli`/`semantic-warning` per §2's mapping table | **Shipped (iteration 4)** |
 | Button/card geometry | uniform `rounded-2xl` (16px) everywhere, flat fill + `active:scale-[0.98]` | Buttons move to 12px radius; cards keep 16px; the "keycap" button style from earlier drafts is dropped in favor of the app's existing, working press pattern (§5) | **Shipped (iteration 3)** |
 | Fonts | none loaded (browser default) | Space Grotesk/Inter — needs an actual `<link>` addition, not just a token (§4) | **Shipped (iteration 1)** |
 | Icons | ~15 emoji touchpoints app-wide | 17-icon SVG system (§11) wired into every documented touchpoint except the mascot's own nine placements (§1C's "Mascot placement plan") and the celebratory streak-encouragement emoji, which stay as-is | **Shipped (iteration 2)** |
@@ -203,7 +203,7 @@ Hearts are a distinct player-economy resource (lives), not a brand or semantic-f
 
 The actionable checklist for applying the above — every color actually found in `src/screens/ExerciseScreen.jsx`, `src/screens/HomeScreen.jsx`, `src/components/badges.jsx`, and `src/data/verbs.js`, mapped to its replacement token. Where "no change" is listed, the existing Tailwind class is already an equivalent-enough match (verified during the round-5 component audit) and doesn't need touching.
 
-**Implementation status:** the first two rows (primary buttons, correct/incorrect states) shipped in iteration 3, along with the matching 12px button radius from §5. Everything else in this table — the grammar-badge rows, the streak/points/bonus pills, the two hint-text rows — is still pending (planned as iteration 4, "remaining palette").
+**Implementation status: fully shipped.** Primary buttons and correct/incorrect states landed in iteration 3 (with the matching 12px button radius from §5); the grammar-badge rows, streak/points/bonus pills, and both hint-text rows landed in iteration 4. Every row in this table is now applied in `src/`.
 
 | Current usage | Current classes | New token |
 |---|---|---|
@@ -270,7 +270,7 @@ All structural elements are built to render safely inside tight mobile displays 
 
 **Revised in round 5, against the real component code:** the original "tactile 3px bottom-border-offset" button spec is **dropped**. It doesn't exist anywhere in the current app — every button today is a flat solid fill with `active:scale-[0.98]` press feedback, applied consistently across roughly 20 button instances in `ExerciseScreen.jsx`/`HomeScreen.jsx`. That pattern already works, is already accessible, and replacing it with a heavier bordered "keycap" style would be a real interaction-pattern change for no demonstrated benefit — it was never validated against anything the app actually does. Keep `active:scale-[0.98]` as the standing tactile-feedback convention; the guide's job is the color/radius tokens applied to it, not a new button anatomy.
 
-- **Buttons:** keep the existing flat solid-fill + `active:scale-[0.98]` press pattern. Adopt 12px corner radius (down from the app's current uniform `rounded-2xl`/16px) to differentiate buttons from cards. Minimum 48px height (already the app's standard, `style={{ minHeight: 48 }}` throughout — no change needed there). **Shipped in implementation iteration 3** for the primary-button/feedback-triad interactive elements; the grammar-badge/stat-pill buttons still pending iteration 4.
+- **Buttons:** keep the existing flat solid-fill + `active:scale-[0.98]` press pattern. Adopt 12px corner radius (down from the app's current uniform `rounded-2xl`/16px) to differentiate buttons from cards. Minimum 48px height (already the app's standard, `style={{ minHeight: 48 }}` throughout — no change needed there). **Shipped** across implementation iterations 3 (primary-button/feedback-triad elements) and 4 (the streak-repair button).
 - **Cards & Canvas Framework:** 16px corner radius (matches the app's current `rounded-2xl` — no change needed here, cards keep their existing radius, only buttons shrink to 12px to create the differentiation above).
 - **Grammar Tags / Badges:** capsule shape (`border-radius: 999px`), fixed 24px vertical height — this is a real change from the app's current badges, which use `rounded-full` (equivalent capsule shape, so also effectively no change) at a slightly taller `px-2.5 py-1` padding; fine to standardize on the guide's 24px figure.
 
@@ -458,7 +458,7 @@ The natural shape for this in a React+Tailwind codebase is a shared `src/compone
 
 ## 12. Before/After: Applying the Guide to Real Components
 
-**Status: mostly shipped.** Every other section documents individual token/color/geometry decisions in isolation. This section shows what applying several of them *together* actually looks like against three real, currently-shipped components — rendered and verified, not just described. Each "before" is the component's real pre-migration markup/classes; each "after" applies §2 (palette), §5 (geometry), §11 (icons), and, for the third example, the mascot mini-avatar already built in §10. Examples 1 and 2's icon/color swaps and Example 3's palette+radius shift are now live (iterations 2–3); Example 3's mascot mini-avatar is still pending — the mascot rollout hasn't started.
+**Status: mostly shipped.** Every other section documents individual token/color/geometry decisions in isolation. This section shows what applying several of them *together* actually looks like against three real, currently-shipped components — rendered and verified, not just described. Each "before" is the component's real pre-migration markup/classes; each "after" applies §2 (palette), §5 (geometry), §11 (icons), and, for the third example, the mascot mini-avatar already built in §10. Examples 1–3 (icon swaps, the streak/points pill colors, and the palette+radius shift) are all now live (iterations 2–4); Example 3's mascot mini-avatar is still pending — the mascot rollout hasn't started.
 
 ### Example 1: Home header pills
 
