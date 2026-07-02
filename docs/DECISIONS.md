@@ -8,6 +8,26 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Implementation iteration 2: wired the 17-icon system into real components
+
+`docs/VISUAL_IDENTITY.md` §11 documented the icon system (round 7) without
+touching `src/`. This iteration builds `src/components/icons.jsx` (the
+17 icons as React components, same SVG paths as `public/brand/icons/*.svg`,
+`stroke="currentColor"` so callers control color via className) and wires
+every documented emoji touchpoint in `badges.jsx`, `ExerciseScreen.jsx`, and
+`HomeScreen.jsx` over to it, using each spot's *existing* Tailwind color
+(e.g. `text-rose-400` for the heart-broken states, `text-sky-600`/`-700` for
+points) rather than introducing new tokens — consistent with the
+color-scoping decision from round 7 that decouples the icon rollout from the
+still-unstarted palette migration.
+
+Left untouched, deliberately: the plain `✕`/`×` dismiss glyphs (lesson
+preview exit, modal close buttons) — never part of the 17-icon mapping
+table, since they're navigational punctuation, not iconography. Also
+untouched: the celebratory streak-encouragement emoji set in
+`lessonLogic.js` (🎉🌟🏆👏😄✨💪👍📈🌱🔄🧭🔥⚡🚀) and the header's plain `★`
+stars pill — neither is in the documented mapping table either.
+
 ## 2026-07-02 — Round 8: added worked before/after examples to the visual identity guide
 
 Every prior round documented individual decisions in isolation (a color

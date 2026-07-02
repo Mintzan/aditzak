@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { AGREEMENT_META, DIALECT_LABELS, PERSON_LABEL_KEYS, TYPE_META } from '../data/verbs'
 import { getFixedArgument, getHeartsRegenRemainingMs, MAX_HEARTS } from '../lessonLogic'
+import { HeartIcon } from './icons'
 
 export function TypeBadge({ type }) {
   const { t } = useLanguage()
@@ -111,7 +112,7 @@ export function HeartsBadge({ hearts, showCountdown = false, onClick }) {
         }`}
         aria-label={t('heartsLabel', { count: currentHearts, max: MAX_HEARTS })}
       >
-        <span aria-hidden="true">❤️</span>
+        <HeartIcon className="h-4 w-4" />
         <span>
           {currentHearts}
           <span className="font-normal text-rose-400">/{MAX_HEARTS}</span>
