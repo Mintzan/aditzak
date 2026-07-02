@@ -5,32 +5,54 @@
 **Mascot Core:** The Latxa Sheep (*Mutur Beltza* variety)
 **Design Philosophy:** Culturally grounded, structurally precise, and companion-driven.
 
-This guide was commissioned from an outside designer as a from-scratch visual identity (no prior brand existed — see "Gap analysis"). It went through three review rounds before acceptance: round 1 found a genuine WCAG contrast failure (`brand-clay` on white text, 3.33:1) and a four-way inconsistent dark-neutral scale; round 2 fixed both and added the missing lesson-card mockup and a dedicated favicon-scale mark, but its "mathematically verified" contrast ratios didn't match independent recomputation (always in the safe direction — nothing that claimed to pass actually failed, but the specific decimals were invented); round 3 replaced the fabricated decimals with qualitative AA/AAA bands and fixed a table-column mismatch. A fourth pass reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with §7's anti-guilt voice principle (see §1C). The content below is the reconciled version. If these tokens are ever needed for a compliance artifact, re-verify the specific ratios with a real contrast checker (WebAIM, `axe`) rather than citing the labels here.
+This guide was commissioned from an outside designer as a from-scratch visual identity (no prior brand existed — see "Gap analysis"). It went through six review rounds before reaching this state: round 1 found a genuine WCAG contrast failure (`brand-clay` on white text, 3.33:1) and a four-way inconsistent dark-neutral scale; round 2 fixed both and added the missing lesson-card mockup and a dedicated favicon-scale mark, but its "mathematically verified" contrast ratios didn't match independent recomputation (always in the safe direction — nothing that claimed to pass actually failed, but the specific decimals were invented); round 3 replaced the fabricated decimals with qualitative AA/AAA bands and fixed a table-column mismatch; round 4 reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with §7's anti-guilt voice principle (see §1C); round 5 audited the guide against the actual React components (`ExerciseScreen.jsx`, `HomeScreen.jsx`, `badges.jsx`, `data/verbs.js`) rather than just the guide's own internal consistency, and closed every gap that surfaced — the grammar-badge color system, the hearts-palette question, the button/card geometry, the motion timings, font loading, and icon-system scope. **Round 6 settled the one question round 5 explicitly couldn't: the mascot system is greenlit, and is to be a central, not incidental, part of the app.** See "Mascot placement plan" below. The content below is the reconciled, component-checked, scope-decided version. If these tokens are ever needed for a compliance artifact, re-verify the specific ratios with a real contrast checker (WebAIM, `axe`) rather than citing the labels here.
 
 ## Gap analysis: what this changes
 
-The app currently has **no formal design system** — styling is ad hoc Tailwind utility classes applied per-component. Concretely, as of this writing (`src/components/badges.jsx`):
+The app currently has **no formal design system** — styling is ad hoc Tailwind utility classes applied per-component, spanning roughly 10 distinct hues across `ExerciseScreen.jsx`, `HomeScreen.jsx`, `badges.jsx`, and `data/verbs.js`. Full per-component mapping is in §2's "Full Current-Component Color Mapping" table; summary:
 
 | Existing element | Current styling | This guide proposes |
 |---|---|---|
 | `Stars` | `text-amber-400` | `brand-txakoli` (`#EAB308`) — coincidentally almost the same hue, low-risk swap |
-| `ProgressBar` fill | `bg-green-500` | `brand-forest` (`#0A4F35`) |
-| `DialectBadge` | `bg-gray-100` / `text-gray-500` | `neutral-400`/`neutral-600` scale |
-| `HeartsBadge` | `bg-rose-100` / `text-rose-600` (shipped as of the hearts economy, issue #534) | **Not covered by this guide at all** — see open question below |
-| Everything else (type/agreement/dialect badge colors, `TYPE_META`/`AGREEMENT_META` in `src/data/verbs.js`) | assorted Tailwind palette colors | not addressed — this guide only specifies brand/semantic/neutral tokens, not the grammar-category color-coding system |
-| Logo / favicon | placeholder `public/favicon.svg`, `public/icons.svg` | full mascot SVG (§1A) + dedicated small-scale mark (§1B) |
-| Mascot / character | none | full mascot system with per-state expressions and animation (§1, §6) |
+| Primary buttons (~15 instances), `ProgressBar` fill | `bg-green-500` | `brand-forest` (`#0A4F35`) — a real visual-weight shift, darker/more muted than today; see §2's hover-state note |
+| Correct/incorrect answer states (4 separate style objects in `ExerciseScreen.jsx`) | `border-green-500`/`border-red-500` tint triads | `semantic-correct`/`semantic-error` |
+| `DialectBadge` | `bg-gray-100` / `text-gray-500` | **No change** — already an equivalent match |
+| `HeartsBadge` | `bg-rose-100` / `text-rose-600` | **No change** — formalized as `accent-hearts`, a deliberate standalone exception (§2) |
+| `TYPE_META`/`AGREEMENT_META` (`data/verbs.js`) — 5 more hues (`indigo`/`rose`/`blue`/`purple`/`amber`) | assorted Tailwind colors | Reuses the 3 brand colors for NOR/NORI/NORK; verb type moves to a value distinction instead of a hue (§2) |
+| Streak/points/bonus pills, streak-repair card | `orange`/`sky`/`violet` | `brand-clay`/`brand-txakoli`/`semantic-warning` per §2's mapping table |
+| Button/card geometry | uniform `rounded-2xl` (16px) everywhere, flat fill + `active:scale-[0.98]` | Buttons move to 12px radius; cards keep 16px; the "keycap" button style from earlier drafts is dropped in favor of the app's existing, working press pattern (§5) |
+| Fonts | none loaded (browser default) | Space Grotesk/Inter — needs an actual `<link>` addition, not just a token (§4) |
+| Icons | ~15 emoji touchpoints app-wide | **No change to non-mascot icons** — emoji stay the default icon system everywhere the mascot placement plan doesn't reach (nav bar, lock, gate, lightbulb, flag, envelope, cloud-sync, etc.); mascot gets its own nine dedicated placements per "Mascot placement plan" (§1C) rather than replacing emoji wholesale |
+| Logo / favicon | placeholder `public/favicon.svg`, `public/icons.svg` | full mascot SVG (§1A) + dedicated small-scale mark (§1B) — assets exist in `public/brand/`, not yet wired up as the live favicon |
+| Mascot / character | none | full mascot system, **decided (round 6) to be a central part of the app** — see "Mascot placement plan" below, not just the feedback-drawer micro-moments §1C originally scoped |
+| 3-star confetti/firework celebration | independent 7-color rainbow | **No change, deliberately** — see §6 |
 
-The heart economy (issues #529–#535) shipped in full since this guide was drafted — hearts UI, lockout, purchase flow, and cross-device sync are all live using a `rose` palette this guide never considered. Any implementation pass needs to either fold hearts into the new semantic-warning token or explicitly decide rose stays as a deliberate exception.
+## Mascot placement plan (round 6)
 
-## Open scope questions (resolve before implementing)
+**Decision: the mascot is a central part of the app, not an incidental accent.** This supersedes §1C's original framing (mascot = two feedback-drawer avatars, everything else "if and when" greenlit) — it's greenlit, and its footprint is meant to span the app's major screens, not just answer-level micro-feedback. Concrete placements, using the four expressions already built (§1C) with no new artwork required to start:
 
-1. **Mascot/animation system is a product decision, not a styling decision.** This guide specifies per-feedback-state facial expressions and ear-rotation animation — that's meaningfully more engineering surface than a color/type token swap, and nothing like it exists today. Decide explicitly whether Aditzak becomes a mascot-driven app before building it; don't let it get absorbed silently into a "palette update."
-2. **`HeartsBadge`'s rose palette isn't reconciled.** Either fold hearts styling into `semantic-warning`/`brand-clay`, or document rose as an intentional exception alongside the other tokens.
-3. **Grammar-category badge colors (`TYPE_META`, `AGREEMENT_META`, `DIALECT_LABELS` in `src/data/verbs.js`) are out of scope for this guide** and will need their own pass to move onto the new neutral/semantic scale.
-4. Tailwind 4 here has no `tailwind.config.js` (theme via the Vite plugin) — implementation will need to route these tokens through `@theme` in `src/index.css`, not a config file.
+| Screen / moment | Component | Expression | Notes |
+|---|---|---|---|
+| Home tab header | `HomeScreen.jsx` → `JourneyTab` | Pozik | Currently just "Aditzak" as text + stat pills, no face at all. Becomes the dashboard's visual anchor. |
+| Lesson preview (before a lesson's first attempt) | `ExerciseScreen.jsx` → `LessonPreviewScreen` | Pozik | Currently zero character presence. A "let's do this together" greeting alongside the conjugation-table preview. |
+| Answer feedback drawer | `ExerciseScreen.jsx` → `FeedbackBar` | mini correct/incorrect avatars | Already scoped in §1C/§10 Swatch 3 — replaces the plain ✓/✕ text glyphs. |
+| Lesson results screen | `ExerciseScreen.jsx` → `LessonResultsScreen` | Gora! (strong result) / Pozik (solid) / Nekatuta (weak) | The app's biggest single moment, currently a generic emoji in a circle (`getEncouragement`'s icon) with zero mascot presence. Maps onto the score bands `getEncouragement`/`computeStars` already compute — no new scoring logic needed, just a mascot chosen per existing band. Weak results get Nekatuta's established "let's review together" meaning, not a scolding face — stays inside §7's anti-guilt rule. |
+| In-lesson error-prone-pattern callout | `ExerciseScreen.jsx` (question prompt area) | Haserre | Already scoped in §1C. |
+| Progress tab, low-accuracy indicator | `HomeScreen.jsx` → `ProgressTab` | Nekatuta | Already scoped in §1C, using `bestScore` data `progressStorage` already tracks. |
+| Profile tab avatar | `HomeScreen.jsx` → `ProfileTab` | Pozik | Currently a plain 🧑‍🎓 emoji. Swaps for the mascot as the "this is your companion" anchor on the screen most tied to the learner's own progress. |
+| Onboarding / language selection | `App.jsx` → `LanguageOnboardingScreen` | Pozik | First screen a new user sees — a first-impression mascot moment, not previously in scope at all. |
 
-**Recommended path:** adopt the palette, typography, and component tokens (§2–5) now — that's a low-risk, incremental upgrade over the current ad hoc Tailwind classes. Treat the mascot/animation system (§1, §6) as a separate, explicitly-scoped decision to make later rather than building it as part of the same pass, given the engineering lift called out in question 1.
+Everything in this table uses the four expressions and two mini-avatars already built and reconciled onto the canonical palette (§1C) — no new artwork is required to execute the plan as listed. If a placement later needs a state none of the four cover (e.g. a dedicated "onboarding wave" pose), that's a new-asset decision to make explicitly when it comes up, not to assume now.
+
+## Open scope questions
+
+1. Tailwind 4 here has no `tailwind.config.js` (theme via the Vite plugin) — implementation will need to route these tokens through `@theme` in `src/index.css`, not a config file.
+
+**Resolved in round 5:** the hearts/`rose` palette question (§2, `accent-hearts`), the grammar-category badge colors (§2), the button/card geometry mismatch (§5), the motion-timing mismatch (§6), missing font loading (§4), and icon-system scope (§1C, revised further below).
+
+**Resolved in round 6:** whether the mascot system gets built at all — yes, and centrally (see placement plan above). This was the one item round 5 explicitly couldn't resolve on its own; every mascot-adjacent spec that was previously written as conditional (§6's mascot motion, §8's dual-indicator rule) is now unconditional — see those sections.
+
+**Recommended path, revised:** two independent tracks, neither blocking the other. **Track A (palette/typography/component, §2–5):** apply the §2 color mapping table component-by-component (verifying each new tint/text pairing's contrast as built, not assumed), add font loading (§4), drop button radius to 12px (§5) — bounded, touches two screen files' worth of color/class changes. **Track B (mascot placement, this section):** build/wire the nine placements above — bigger in component-count (new avatar components across five screens) but each individual placement is small and the artwork already exists. Track A can ship first and independently; Track B doesn't need to wait for it, but doing A first means Track B's components are being wired into already-correct colors instead of code that gets touched twice.
 
 ---
 
@@ -125,9 +147,11 @@ Assets: `public/brand/latxa-expression-gora.svg`, `public/brand/latxa-expression
 | Haserre | "Appears if the user repeatedly ignores daily goals... alerts... pops up during time-attack validation modes" | The "ignores daily goals" half is a disappointed-mascot-for-missed-practice mechanic — functionally the guilt pattern §7 names as the thing to avoid, just moved from copy into the mascot's face. "Time-attack validation" references an unbuilt, unscoped feature. | A callout accent for flagging a genuinely error-prone conjugation pattern *within* a lesson (e.g. a commonly-confused irregular form) — pedagogical, not behavioral. |
 | Nekatuta | "Used for weak-skill warnings or missed notifications... to prompt immediate practice" | "Missed notifications... prompt immediate practice" is a re-engagement nag, same guilt-mechanic problem as Haserre. | The "weak-skill" half is legitimate and kept: an accuracy-based indicator in the Progress tab next to a lesson with a low `bestScore` (data that `progressStorage` already tracks), signaling "this needs review" — not "you didn't open the app." |
 
-Neither adopted trigger is wired into any screen yet — this only settles what the mascot is *allowed* to represent if/when someone builds it, consistent with §1's "mascot system is a separate scope decision" note.
+**Round 6 update:** neither trigger was wired into any screen as of round 5, when this only settled what the mascot was *allowed* to represent pending the scope decision. That decision is now made (see "Mascot placement plan" near the top of this doc) — both triggers are on the build list.
 
 **Relationship to the §1B favicon-scale mark:** the mini circular avatars used in §10 Swatch 3 (`latxa-icon-correct.svg`/`latxa-icon-incorrect.svg`) and this expression library are not redundant with each other. The mini avatars are the high-frequency, low-detail, 32px-viewBox icon for the per-answer feedback drawer. The expression library is the low-frequency, high-detail, 400px-viewBox illustration for larger, rarer moments (dashboard/home state, lesson-complete or streak-milestone screens, and — per the adopted triggers above — in-lesson pattern callouts and Progress-tab review indicators). Same character, two deliberately different resolutions for two different UI contexts.
+
+**Icon system scope (round 5, updated round 6):** every icon in the app today — nav bar, streak, points, lock, gate shield, lightbulb, flag, checkmark/cross, envelope, cloud-sync, trophy, bonus sparkle, roughly 15 touchpoints total — is a native emoji, not a vector icon. **Decision: emoji stay as the default icon system everywhere the mascot placement plan doesn't explicitly reach.** They're free, already accessible (paired with `aria-hidden` + adjacent text/`aria-label`, consistently, everywhere already), and replacing working icons with new vector assets has no demonstrated benefit outside the nine screens/moments the placement plan names. The mascot is no longer confined to the two feedback-drawer avatars — as of round 6 it's a deliberate, central presence at nine named placements (see "Mascot placement plan") — but it's still not a wholesale icon-system replacement: the streak flame, points diamond, lock, gate shield, and the rest stay emoji unless a future decision adds them to the placement table by name.
 
 ## 2. Color Palette & Design Tokens
 
@@ -151,7 +175,57 @@ The palette links the natural color properties of the Latxa sheep with deep, sat
 |---|---|---|---|---|
 | semantic-correct | `#14532D` | Correct Answer Bottom Drawer | White Text | Passes AAA |
 | semantic-error | `#991B1B` | Incorrect Answer Bottom Drawer | White Text | Passes AAA |
-| semantic-warning | `#9A3412` | Streak In Jeopardy Outline Frame | White Text | Passes AA |
+| semantic-warning | `#9A3412` | Streak In Jeopardy Outline Frame, Streak-Repair Prompt, Gate-Score-Needed Hint | White Text | Passes AA |
+
+### Grammar-Accent System (NOR/NORI/NORK + Verb Type)
+
+A round-5 addition, added after auditing the actual component code (`data/verbs.js`'s `TYPE_META`/`AGREEMENT_META`, `components/badges.jsx`) — the original guide never accounted for these at all, but they're the single largest block of hardcoded color in the real app (five arbitrary Tailwind hues: `indigo`, `rose`, `blue`, `purple`, `amber`). Rather than invent a fourth unrelated set of hues, the three case-role badges **reuse the three brand colors** — this ties the grammar-role system into the same visual language as the brand instead of adding new arbitrary accents, and it's the one meaningful design improvement this round makes over just recoloring 1:1.
+
+| Role | Token | Rationale |
+|---|---|---|
+| NOR (absolutive) | `brand-forest` | The default/core argument every finite verb has — pairs with the primary brand color. |
+| NORI (dative) | `brand-txakoli` | The "to/for" recipient argument — a secondary accent, distinct from the primary and the ergative. |
+| NORK (ergative) | `brand-clay` | The agent argument — the "acting on" role, paired with the same warm tone used for streaks/achievements (also agency-flavored). |
+
+Verb **type** (synthetic vs. periphrastic) is a binary structural distinction, not a 3-way role, so it doesn't get a hue at all — it's value, not color: synthetic is the majority/default case (filled `neutral-900` badge), periphrastic is the marked case (outlined `neutral-800` badge, `neutral-900` text). This also resolves a real collision the audit found: `TYPE_META.periphrastic` currently uses Tailwind `rose`, the same hue `HeartsBadge` uses for something entirely unrelated — moving type off color entirely frees `rose` for hearts exclusively (see below).
+
+### Accent-Hearts (Standalone Exception)
+
+Answers the open scope question from the original gap analysis ("does `rose` stay or get folded into a token?") — **it stays**, formalized as its own named exception rather than left ambiguous:
+
+| Token Name | Hex Family | Application |
+|---|---|---|
+| accent-hearts | Tailwind `rose-500`/`rose-600`/`rose-100` (unchanged from what's shipped) | Hearts balance badge, out-of-hearts/heart-locked messaging, and nothing else |
+
+Hearts are a distinct player-economy resource (lives), not a brand or semantic-feedback concept — they deserve their own identity the way Duolingo's hearts are red/pink and separate from its green "correct" color, rather than being forced onto `semantic-warning` or `brand-clay` just to shrink the palette further. The Gora! mascot expression's tongue (`#F43F5E`, Tailwind `rose-500`) already happens to land in this family — that overlap is fine to keep now that `rose` has exactly one meaning in the app instead of two.
+
+### Full Current-Component Color Mapping
+
+The actionable checklist for applying the above — every color actually found in `src/screens/ExerciseScreen.jsx`, `src/screens/HomeScreen.jsx`, `src/components/badges.jsx`, and `src/data/verbs.js`, mapped to its replacement token. Where "no change" is listed, the existing Tailwind class is already an equivalent-enough match (verified during the round-5 component audit) and doesn't need touching.
+
+| Current usage | Current classes | New token |
+|---|---|---|
+| Primary buttons (Start/Check/Continue/Sign-in/etc., ~15 instances) | `bg-green-500 hover:bg-green-600` | `brand-forest` (see hover-state note below) |
+| Correct answer/option/input state | `border-green-500 bg-green-50 text-green-700` | `semantic-correct` (border/bg/text triad — see accessibility note below) |
+| Incorrect answer/option/input state | `border-red-500 bg-red-50 text-red-700` | `semantic-error` |
+| Match-tile "selected" (not yet correct/incorrect) | `border-blue-400 bg-blue-50 text-blue-700` | `neutral-800` border / `neutral-200` bg / `neutral-900` text — a transient "chosen" state doesn't need its own hue |
+| `TYPE_META.synthetic` | `bg-indigo-100 text-indigo-700` | `neutral-900` bg / white text (filled) |
+| `TYPE_META.periphrastic` | `bg-rose-100 text-rose-700` | `neutral-800` outline / `neutral-900` text |
+| `AGREEMENT_META.nor` | `bg-blue-100 text-blue-700` | `brand-forest` (light tint bg / saturated text, same tint-pill idiom the badges already use — see contrast note below) |
+| `AGREEMENT_META.nori` | `bg-purple-100 text-purple-700` | `brand-txakoli` |
+| `AGREEMENT_META.nork` | `bg-amber-100 text-amber-700` | `brand-clay` |
+| `DialectBadge` | `bg-gray-100 text-gray-500` | **No change** — already an equivalent match to `neutral-200`/`neutral-600` |
+| Streak pill/stat, streak-repair card | `bg-orange-100 text-orange-600` (pill), `border-orange-200 bg-orange-50 text-orange-700` + `bg-orange-500` button (repair card) | `brand-clay` (pill), `semantic-warning` (repair card — it's a "your streak needs attention" prompt, not a stat display) |
+| Points pill/chip | `bg-sky-100 text-sky-700` | `brand-txakoli` |
+| Bonus unit label | `bg-violet-100 text-violet-700` | `brand-txakoli` (reuses the same "reward/special" association as points/stars) |
+| Recognition-only hint | `text-sky-600` | `neutral-600` — quiet instructional text, not a warning or a brand moment |
+| Gate-needs-score hint | `text-amber-600` | `semantic-warning` |
+| Hearts badge, out-of-hearts/heart-locked hint | `bg-rose-100 text-rose-600` / `text-rose-600` | **No change** — formalized as `accent-hearts` above |
+| 3-star confetti/firework celebration | `CELEBRATION_COLORS` (7-color rainbow, `ExerciseScreen.jsx`) | **No change, deliberately** — see §6 |
+
+**Hover-state note for `brand-forest`:** it's already a dark, low-luminance green (`#0A4F35`) — a `hover:` state that darkens further (the current pattern, `green-500`→`green-600`) would approach unreadable-dark and lose contrast fast. Lighten on hover instead (e.g. toward a `#0D6444`-range tint), not darken.
+
+**Contrast note on the tint-background triads:** `border-<token> bg-<token>-50 text-<token>-700`-style triads (correct/incorrect states, and the new NOR/NORI/NORK badge treatment) need their *own* light-tint background shade generated per brand color, not reused from Tailwind's built-in `-50`/`-700` steps (those don't exist for custom hex tokens). Whoever implements this needs to generate a light tint (≈10% token color over white) and a readable-on-that-tint text shade for each of `brand-forest`/`brand-clay`/`brand-txakoli`, and verify contrast on the actual generated pair — not assumed from the base-token contrast table above, which was only computed for solid-fill/white-text pairings.
 
 ## 3. Canonical Neutral Scale
 
@@ -169,6 +243,16 @@ A single 6-step monochromatic scale (5 dark steps plus one light shadow-tint ste
 - **Heading Font Family:** Space Grotesk (geometric open-source sans-serif).
 - **Body & UI Label Font Family:** Inter (optimized readability inside dense micro-layouts).
 
+**Implementation note (round 5):** neither font loads today — checked `index.html` and `index.css` directly; the app currently renders in each browser's default sans-serif. This isn't an open question, it's a missing step. Add to `index.html`'s `<head>`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+```
+
+(Same tags already used in `public/design-guide.html` §10's live swatches — copy from there rather than re-deriving weights.)
+
 ### Mobile Scale Constraints (root 16px)
 
 - `--text-2xl` (24px, SemiBold): success headings, modal milestone banners.
@@ -182,15 +266,21 @@ A single 6-step monochromatic scale (5 dark steps plus one light shadow-tint ste
 
 All structural elements are built to render safely inside tight mobile displays (**400px maximum width window**, matching the app's existing `max-w-md` layout constraint).
 
-- **Tactile Buttons:** fixed 52px height frame, 12px corner radius. Uses a physical 3px bottom-border offset (`border-bottom: 3px solid <token>`) rather than color gradients, to simulate a tactile click on tap.
-- **Cards & Canvas Framework:** 16px corner radius with a subtle bottom-only flat drop shadow to establish depth layering.
-- **Grammar Tags:** capsule shape (`border-radius: 999px`), fixed 24px vertical height.
+**Revised in round 5, against the real component code:** the original "tactile 3px bottom-border-offset" button spec is **dropped**. It doesn't exist anywhere in the current app — every button today is a flat solid fill with `active:scale-[0.98]` press feedback, applied consistently across roughly 20 button instances in `ExerciseScreen.jsx`/`HomeScreen.jsx`. That pattern already works, is already accessible, and replacing it with a heavier bordered "keycap" style would be a real interaction-pattern change for no demonstrated benefit — it was never validated against anything the app actually does. Keep `active:scale-[0.98]` as the standing tactile-feedback convention; the guide's job is the color/radius tokens applied to it, not a new button anatomy.
+
+- **Buttons:** keep the existing flat solid-fill + `active:scale-[0.98]` press pattern. Adopt 12px corner radius (down from the app's current uniform `rounded-2xl`/16px) to differentiate buttons from cards. Minimum 48px height (already the app's standard, `style={{ minHeight: 48 }}` throughout — no change needed there).
+- **Cards & Canvas Framework:** 16px corner radius (matches the app's current `rounded-2xl` — no change needed here, cards keep their existing radius, only buttons shrink to 12px to create the differentiation above).
+- **Grammar Tags / Badges:** capsule shape (`border-radius: 999px`), fixed 24px vertical height — this is a real change from the app's current badges, which use `rounded-full` (equivalent capsule shape, so also effectively no change) at a slightly taller `px-2.5 py-1` padding; fine to standardize on the guide's 24px figure.
 
 ## 6. Motion Principles
 
-- **Celebration Response:** scale transform (0.98 → 1.03 → 1.0) over 200ms; mascot ear paths tilt up 10°.
-- **Correction Response:** horizontal shake (±6px), three cycles, 250ms.
-- **Layout Navigation Transitions:** content slides right-to-left over 300ms on screen changes, evoking movement along a mountain trail.
+**Revised in round 5:** the original numbers here (0.98→1.03→1.0/200ms celebration, ±6px/three-cycle/250ms correction) were never checked against the app's actual, already-shipped animations and don't match them. Rather than force a rewrite of tuned, working CSS to hit invented numbers, this section now documents what's real and reserves new numbers only for motion that doesn't exist yet.
+
+- **Correction Response (existing, unchanged):** `animate-shake` in `src/index.css` — 400ms, an asymmetric 5-step wobble (−1px, 2px, −4px, 4px, −4px), not a flat ±6px/three-cycle pattern. This is already applied to incorrect answer options/inputs/word-chips app-wide; keep it as-is.
+- **Celebration Response, per-answer (existing, unchanged):** `animate-flash` in `src/index.css` — 350ms, scale 1 → 1.04 → 1. Already applied to correct answer options/inputs.
+- **Celebration Response, mascot-specific (new, not yet built, now planned — round 6):** the mascot's own reaction — ear-tilt on correct, eyebrow/expression change on incorrect — is new motion with no existing precedent to reconcile against. The original 0.98→1.03→1.0/200ms figure is kept here, scoped specifically to a mascot avatar's own reaction (the feedback-drawer mini avatars, per the placement plan), not to the answer-option flash/shake above, which stay on their own already-shipped timings regardless.
+- **3-Star Celebration (existing, unchanged, deliberately out of brand palette):** the confetti/firework system (`createCelebration`, `CELEBRATION_COLORS` in `ExerciseScreen.jsx`) uses its own independent 7-color rainbow, not the brand palette. That's intentional, not an oversight this guide is filling in — a full-screen celebration spectacle reads better as genuinely multicolor than brand-constrained, the same way real confetti isn't tinted to match a logo. If the mascot is added, it can appear *alongside* this effect (e.g. a Gora!-state avatar at the center of the confetti burst) without needing the confetti itself to be recolored.
+- **Layout Navigation Transitions:** content slides right-to-left over 300ms on screen changes, evoking movement along a mountain trail. No existing equivalent in the app today (screen changes are currently instant/unanimated) — this remains a genuinely new addition, not a reconciliation.
 
 ## 7. Voice & Tone Design Pattern
 
@@ -210,7 +300,7 @@ Avoid (childish or threatening):
 
 ## 8. Accessibility Mandates
 
-- **Dual-Indicator Rule:** interface state updates (correct/incorrect/cautionary) are never communicated by color alone — pair with an explicit vector mark (check/×) and a corresponding mascot expression change.
+- **Dual-Indicator Rule:** interface state updates (correct/incorrect/cautionary) are never communicated by color alone — pair with an explicit mark (check/×) and, per the round-6 mascot decision, a corresponding mascot expression change at the placements named in the placement plan, as a third reinforcing signal on top of color and mark.
 - **Contrast Index:** every actionable component must meet 4.5:1 minimum contrast.
 - **Touch Targets:** minimum interactive hit zone of 48×48px.
 
