@@ -81,7 +81,12 @@ export function Stars({ count }) {
 // exactly the lazily-recomputed value `App.jsx` passed in), so this is
 // purely cosmetic and doesn't fight the "no background regen timer" design
 // (see `docs/HEART_ECONOMY_ANALYSIS.md`).
-export function HeartsBadge({ hearts, showCountdown = false }) {
+//
+// `onClick`, when given, renders the pill as a button (e.g. the header usage
+// links through to the Profile tab's full hearts card) instead of a static
+// `div` — the Profile tab's own `showCountdown` usage passes no `onClick`
+// since it's already the destination.
+export function HeartsBadge({ hearts, showCountdown = false, onClick }) {
   const { t } = useLanguage()
   const currentHearts = hearts?.currentHearts ?? MAX_HEARTS
   const [now, setNow] = useState(() => Date.now())
@@ -95,11 +100,15 @@ export function HeartsBadge({ hearts, showCountdown = false }) {
   const remainingMs = showCountdown ? getHeartsRegenRemainingMs(hearts, now) : 0
   const hours = Math.floor(remainingMs / (60 * 60 * 1000))
   const minutes = Math.ceil((remainingMs % (60 * 60 * 1000)) / 60000)
+  const Wrapper = onClick ? 'button' : 'div'
 
   return (
     <div className="flex flex-col items-end gap-0.5">
-      <div
-        className="flex items-center gap-1.5 rounded-full bg-rose-100 px-3 py-1.5 text-sm font-bold text-rose-600"
+      <Wrapper
+        {...(onClick ? { type: 'button', onClick } : {})}
+        className={`flex items-center gap-1 rounded-full bg-rose-100 px-2.5 py-1.5 text-sm font-bold text-rose-600 ${
+          onClick ? 'transition active:scale-95' : ''
+        }`}
         aria-label={t('heartsLabel', { count: currentHearts, max: MAX_HEARTS })}
       >
         <span aria-hidden="true">❤️</span>
@@ -107,7 +116,7 @@ export function HeartsBadge({ hearts, showCountdown = false }) {
           {currentHearts}
           <span className="font-normal text-rose-400">/{MAX_HEARTS}</span>
         </span>
-      </div>
+      </Wrapper>
       {showCountdown && currentHearts < MAX_HEARTS && <span className="text-xs text-gray-400">{t('heartsNextIn', { hours, minutes })}</span>}
     </div>
   )
