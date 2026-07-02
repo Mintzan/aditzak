@@ -5,7 +5,7 @@
 **Mascot Core:** The Latxa Sheep (*Mutur Beltza* variety)
 **Design Philosophy:** Culturally grounded, structurally precise, and companion-driven.
 
-This guide was commissioned from an outside designer as a from-scratch visual identity (no prior brand existed — see "Gap analysis"). It went through six review rounds before reaching this state: round 1 found a genuine WCAG contrast failure (`brand-clay` on white text, 3.33:1) and a four-way inconsistent dark-neutral scale; round 2 fixed both and added the missing lesson-card mockup and a dedicated favicon-scale mark, but its "mathematically verified" contrast ratios didn't match independent recomputation (always in the safe direction — nothing that claimed to pass actually failed, but the specific decimals were invented); round 3 replaced the fabricated decimals with qualitative AA/AAA bands and fixed a table-column mismatch; round 4 reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with §7's anti-guilt voice principle (see §1C); round 5 audited the guide against the actual React components (`ExerciseScreen.jsx`, `HomeScreen.jsx`, `badges.jsx`, `data/verbs.js`) rather than just the guide's own internal consistency, and closed every gap that surfaced — the grammar-badge color system, the hearts-palette question, the button/card geometry, the motion timings, font loading, and icon-system scope. **Round 6 settled the one question round 5 explicitly couldn't: the mascot system is greenlit, and is to be a central, not incidental, part of the app.** See "Mascot placement plan" below. The content below is the reconciled, component-checked, scope-decided version. If these tokens are ever needed for a compliance artifact, re-verify the specific ratios with a real contrast checker (WebAIM, `axe`) rather than citing the labels here.
+This guide was commissioned from an outside designer as a from-scratch visual identity (no prior brand existed — see "Gap analysis"). It went through seven review rounds before reaching this state: round 1 found a genuine WCAG contrast failure (`brand-clay` on white text, 3.33:1) and a four-way inconsistent dark-neutral scale; round 2 fixed both and added the missing lesson-card mockup and a dedicated favicon-scale mark, but its "mathematically verified" contrast ratios didn't match independent recomputation (always in the safe direction — nothing that claimed to pass actually failed, but the specific decimals were invented); round 3 replaced the fabricated decimals with qualitative AA/AAA bands and fixed a table-column mismatch; round 4 reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with §7's anti-guilt voice principle (see §1C); round 5 audited the guide against the actual React components (`ExerciseScreen.jsx`, `HomeScreen.jsx`, `badges.jsx`, `data/verbs.js`) rather than just the guide's own internal consistency, and closed every gap that surfaced — the grammar-badge color system, the hearts-palette question, the button/card geometry, the motion timings, font loading, and icon-system scope; round 6 settled the one question round 5 explicitly couldn't — the mascot system is greenlit, and is to be a central, not incidental, part of the app (see "Mascot placement plan"). **Round 7 revisits round 5's "emoji stay" call now that the mascot is central**, and proposes a 17-icon system to replace every emoji touchpoint — documented and asset-complete (§11), but deliberately not wired into any component yet, since that's real `src/` engineering work belonging to a separate implementation pass. The content below is the reconciled, component-checked, scope-decided version. If these tokens are ever needed for a compliance artifact, re-verify the specific ratios with a real contrast checker (WebAIM, `axe`) rather than citing the labels here.
 
 ## Gap analysis: what this changes
 
@@ -151,7 +151,7 @@ Assets: `public/brand/latxa-expression-gora.svg`, `public/brand/latxa-expression
 
 **Relationship to the §1B favicon-scale mark:** the mini circular avatars used in §10 Swatch 3 (`latxa-icon-correct.svg`/`latxa-icon-incorrect.svg`) and this expression library are not redundant with each other. The mini avatars are the high-frequency, low-detail, 32px-viewBox icon for the per-answer feedback drawer. The expression library is the low-frequency, high-detail, 400px-viewBox illustration for larger, rarer moments (dashboard/home state, lesson-complete or streak-milestone screens, and — per the adopted triggers above — in-lesson pattern callouts and Progress-tab review indicators). Same character, two deliberately different resolutions for two different UI contexts.
 
-**Icon system scope (round 5, updated round 6):** every icon in the app today — nav bar, streak, points, lock, gate shield, lightbulb, flag, checkmark/cross, envelope, cloud-sync, trophy, bonus sparkle, roughly 15 touchpoints total — is a native emoji, not a vector icon. **Decision: emoji stay as the default icon system everywhere the mascot placement plan doesn't explicitly reach.** They're free, already accessible (paired with `aria-hidden` + adjacent text/`aria-label`, consistently, everywhere already), and replacing working icons with new vector assets has no demonstrated benefit outside the nine screens/moments the placement plan names. The mascot is no longer confined to the two feedback-drawer avatars — as of round 6 it's a deliberate, central presence at nine named placements (see "Mascot placement plan") — but it's still not a wholesale icon-system replacement: the streak flame, points diamond, lock, gate shield, and the rest stay emoji unless a future decision adds them to the placement table by name.
+**Icon system scope (round 5, updated round 6, superseded round 7):** every icon in the app today — nav bar, streak, points, lock, gate shield, lightbulb, flag, checkmark/cross, envelope, cloud-sync, trophy, bonus sparkle, roughly 15 touchpoints total — is a native emoji, not a vector icon. Rounds 5–6 decided emoji should stay everywhere the mascot placement plan doesn't explicitly reach, on the grounds that replacing working icons had no demonstrated benefit. **Round 7 revisits that call** — see §11 for the full 17-icon proposal and rationale for why the calculus changed once the mascot became central. §11 is documentation/assets only for now; nothing below this note or in the component code has changed.
 
 ## 2. Color Palette & Design Tokens
 
@@ -414,6 +414,45 @@ Mini-avatar assets: `public/brand/latxa-icon-correct.svg`, `public/brand/latxa-i
   </div>
 </div>
 ```
+
+## 11. Iconography System (round 7 — proposed, not yet wired into components)
+
+**Status: documented and asset-complete, not implemented.** This reverses round 5's "emoji stay app-wide, outside the mascot's placements" decision — that call was reasonable when the mascot was still confined to two micro-moments, but with the mascot now central (round 6) and occupying its own distinct visual register, bare emoji sitting alongside it reads as more inconsistent than it did before. Assets exist (`public/brand/icons/*.svg`, 17 files); no `src/` component has been touched yet — that's an explicit, separate follow-up.
+
+### System rules
+
+- **24×24 viewBox**, 2px stroke (2.5px for `icon-check`/`icon-cross`, which need to read at a glance), rounded caps and joins throughout.
+- **Stroke-based outlines, not filled glyphs** — deliberately a different register from the mascot's solid-fill illustration style, so "character" (mascot) and "function" (icon) don't visually compete for attention.
+- **`stroke="currentColor"`** in every file — color is set by whatever embeds the icon (a wrapping element's `color`/`style`, or a Tailwind `text-*` class once inlined as JSX), not baked into the asset.
+- **Color scoping decision:** icons use whatever Tailwind color is *already* present at each usage site (e.g. the streak icon picks up the same orange the streak pill's background/text already uses) — **not** the brand tokens from §2's color-mapping table. Track A (the full brand-palette migration) is still a separate, unimplemented decision; wiring icons to brand hex values now would create visible mismatches (an icon in brand-clay terracotta sitting inside a still-orange Tailwind pill) until Track A actually ships. Icons and the palette migration are independent tracks that happen to both be about color — treat them as such.
+
+### Full mapping
+
+Every emoji touchpoint found in the round-5 component audit, plus one gap it missed (`FeedbackBar`'s plain-text ✓/✕ status glyphs, included here for consistency since they're adjacent to the flag icon already being swapped).
+
+| Current emoji | Icon asset | Proposed color (existing context) | Where |
+|---|---|---|---|
+| 🏠 | `icon-home.svg` | inherits `BottomNav`'s existing active (`text-green-600`)/inactive (`text-gray-400`) logic | `HomeScreen.jsx` `NAV_ITEMS` |
+| 📊 | `icon-progress.svg` | same as above | `NAV_ITEMS` |
+| 🧑‍🎓 | `icon-profile.svg` | same as above (nav); `text-green-600` (Profile tab avatar, inside its `bg-green-100` circle) | `NAV_ITEMS`; `ProfileTab` |
+| 🔥 | `icon-streak.svg` | `text-orange-600` (header pill, matches its `bg-orange-100`); `text-orange-500` (Profile stat card) | Header streak pill; `ProfileTab` |
+| 💎 | `icon-points.svg` | `text-sky-600`/`text-sky-700` (matches existing `bg-sky-100 text-sky-700` contexts) | Header points pill; `ProfileTab`; `LessonResultsScreen` points chip |
+| ❤️ | `icon-heart.svg` | `text-rose-600` — **no change**, already the color there | `HeartsBadge` (`badges.jsx`) |
+| 💔 | `icon-heart-broken.svg` | `text-gray-500` (small `LessonNode` locked-circle context, matches neighboring lock/gate icons); `text-rose-400` (large standalone icon in `OutOfHeartsOverlay`/`HeartsLockedModal`) | `LessonNode`; `OutOfHeartsOverlay`; `HeartsLockedModal` |
+| 🔒 | `icon-lock.svg` | `text-gray-500` (matches existing locked-circle treatment) | `LessonNode`; `PendingUnitCard` |
+| 🛡️ | `icon-gate.svg` | `text-gray-500` (same context as lock — still a "locked" state, different reason) | `LessonNode`; `PendingUnitCard` |
+| 💡 | `icon-lightbulb.svg` | `text-green-600` (matches `ExplanationToggle`'s existing `text-green-700` button) | `ExplanationToggle` |
+| 🚩 | `icon-flag.svg` | `text-gray-400`, inherits hover via `currentColor` (matches existing `hover:text-gray-600`) | `FeedbackBar` report button |
+| ✓ / ✕ (plain glyphs) | `icon-check.svg` / `icon-cross.svg` | `text-green-700` / `text-red-700` (matches the element's existing text color) | `FeedbackBar` status icon (only when no `streakEncouragement.icon` is present — that's a dynamic per-milestone icon from `lessonLogic.js`, out of scope) |
+| ✅ | `icon-check.svg` | `text-green-600` | `FeedbackModal`, `FlagQuestionModal` success states |
+| 📧 | `icon-envelope.svg` | `text-gray-400` | `AccountModal` "sent" step |
+| ☁️ | `icon-cloud.svg` | `text-sky-500` | `AccountSection` (both signed-in and signed-out variants) |
+| 🏆 | `icon-trophy.svg` | `text-amber-500` | `ProfileTab` longest-streak stat |
+| ✨ | `icon-bonus.svg` | `text-violet-600` (matches existing `bg-violet-100 text-violet-700`) | `UnitLessons` bonus label |
+
+### Implementation note for whoever picks this up
+
+The natural shape for this in a React+Tailwind codebase is a shared `src/components/icons.jsx` exporting one small functional component per icon (props passed through to a wrapping `<svg>`, `stroke="currentColor"` already baked in), not `<img src="...">` tags — that lets the color-scoping table above map directly to `className="h-5 w-5 text-orange-600"`-style usage at each call site, consistent with how the rest of the app already styles everything through Tailwind utility classes. This wasn't built as part of this round since it means touching `HomeScreen.jsx`/`ExerciseScreen.jsx`/`badges.jsx` directly, which was explicitly out of scope for a documentation-only pass.
 
 ## Appendix: independently verified contrast ratios
 

@@ -8,6 +8,44 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Round 7: proposed a 17-icon system to replace emoji (docs/assets only)
+
+Revisits round 5's "emoji stay app-wide" call. That decision was reasonable
+when the mascot was confined to two feedback-drawer micro-moments; with the
+mascot now central (round 6, nine placements across five screens), bare
+emoji sitting next to it reads as more inconsistent than it did before.
+
+Designed and verified (rendered in a headless browser, including at 18px —
+the actual inline size several usages need) a 17-icon set covering every
+emoji touchpoint the round-5 audit found, plus one it missed
+(`FeedbackBar`'s plain-text ✓/✕ status glyphs). System: 24×24 viewBox, 2px
+stroke (2.5px for check/cross), rounded caps/joins, `stroke="currentColor"`
+so color is set by whatever embeds the icon rather than baked into the
+asset. Added `icon-heart-broken.svg` — a heart with a jagged crack — since
+the existing four expressions/mini-avatars had no "depleted hearts" state
+to reuse for 💔's two meanings (locked lesson, out of hearts).
+
+**Color scoping decision, made explicitly rather than left ambiguous:**
+icons pick up whatever Tailwind color is already present at each usage site
+(e.g. the streak icon uses the same orange the streak pill already does),
+not the brand tokens from §2. Track A (the full brand-palette migration)
+is still separate and unimplemented — wiring icons to brand hex values now
+would create visible mismatches (a brand-clay terracotta icon inside a
+still-orange Tailwind pill) until Track A actually ships. Icons and the
+palette migration are independent tracks that happen to both be about
+color; keeping them decoupled avoids forcing Track A's timeline just to
+ship icons.
+
+**Deliberately not decided or implemented here**: the actual component
+wiring. Assets exist at `public/brand/icons/*.svg` (17 files) and the full
+emoji→icon→color→component mapping is documented in
+`docs/VISUAL_IDENTITY.md` §11, but no `src/` file has been touched —
+touching `HomeScreen.jsx`/`ExerciseScreen.jsx`/`badges.jsx` is real
+engineering work for a separate pass, not implied by documenting the
+proposal. The doc also recommends the implementation shape (a shared
+`src/components/icons.jsx` of small SVG-wrapper components, not `<img>`
+tags) without building it.
+
 ## 2026-07-02 — Round 6: mascot system greenlit as a central part of the app
 
 Round 5 explicitly left one question unresolved — whether Aditzak becomes a
