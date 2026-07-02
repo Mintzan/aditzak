@@ -8,6 +8,38 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Fixed header overflow on narrow screens (hearts pill from #534 was clipped)
+
+Real-device screenshot (a ~412 CSS px Android) showed the header's 4th pill
+(hearts, added in #534) clipped off the right edge entirely, with only a
+sliver of the heart icon visible. Root cause: adding a 4th pill to a row
+that was already tight pushed it over, and the stars pill's `{total}/{max}`
+suffix (e.g. `130/1104`) was by far the widest single element in the row.
+
+Fix, in order of what actually bought back width: (1) dropped the `/{max}`
+denominator from the header's stars pill specifically — it now shows the
+bare current count, matching how the streak/points pills already read.
+(2) Made all four header pills tap-through buttons (`onChangeTab`) to the
+tab that still shows full context — stars → Progress, streak/points/hearts
+→ Profile — so stripping the header doesn't actually lose the information,
+just moves it one tap away. Added a `progressStarsSummary` line ("X of Y
+stars earned") to the top of `ProgressTab`, since the aggregate total/max
+had no other home in the app before this. (3) Tightened pill padding
+(`px-3`→`px-2.5`) and internal icon-gap (`gap-1.5`→`gap-1`) uniformly across
+all four, plus the pills' own row gap (`gap-2`→`gap-1.5`) — this is what
+actually closed the remaining gap down to a 360px-wide viewport (verified
+360/375/412px in the dev server via Playwright, all previously the
+`?dev=unlock-all`-style clipping the reported screenshot showed).
+
+`HeartsBadge` (`components/badges.jsx`) gained an optional `onClick` prop —
+renders as a `<button>` (with a press affordance) when given, plain `<div>`
+otherwise, so the Profile tab's own (non-clickable, already-the-destination)
+usage is unaffected. Added a dedicated `totalStarsLabel` i18n key for the
+header's aggregate aria-label — the existing `starsLabel` ("{count} of 3
+stars") is per-lesson and would've read nonsensically applied to a
+curriculum-wide total. Full suite (493 tests) + lint + build green; manually
+verified in the dev server at 360/375/412px.
+
 ## 2026-07-01 — Resolved issue #535: cross-device sync for hearts (final core slice of the hearts epic)
 
 Sixth and final core-buildout slice of the heart economy epic (#529) —

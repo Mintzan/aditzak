@@ -230,9 +230,16 @@ function JourneyTab({ progress, hearts, onSelectLesson, onHeartLocked }) {
 
 function ProgressTab({ progress }) {
   const { t, tCount, language } = useLanguage()
+  // The header's stars pill only shows the bare current count (narrow
+  // screens don't have room for "/max" — see docs/DECISIONS.md) and links
+  // here, so this is now the only place the full "X of Y" curriculum-wide
+  // total lives.
+  const totalStars = LESSONS.reduce((sum, lesson) => sum + (progress[lesson.id]?.bestStars ?? 0), 0)
+  const maxStars = LESSONS.length * 3
   return (
     <div>
-      <h2 className="mb-4 text-lg font-bold text-gray-900">{t('progressTitle')}</h2>
+      <h2 className="mb-1 text-lg font-bold text-gray-900">{t('progressTitle')}</h2>
+      <p className="mb-4 text-sm text-gray-500">{t('progressStarsSummary', { total: totalStars, max: maxStars })}</p>
       <div className="flex flex-col gap-3">
         {LESSONS.map((lesson) => {
           const { heading } = describeLesson(lesson, t, language)
@@ -842,7 +849,6 @@ export function HomeScreen({
 }) {
   const { t } = useLanguage()
   const totalStars = LESSONS.reduce((sum, lesson) => sum + (progress[lesson.id]?.bestStars ?? 0), 0)
-  const maxStars = LESSONS.length * 3
   const currentStreak = getActiveStreak(streak, getLocalDateString())
   const balance = getPointsBalance(points)
   const [showFeedback, setShowFeedback] = useState(false)
@@ -875,29 +881,35 @@ export function HomeScreen({
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-gray-50">
       <header className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white/90 px-5 py-4 backdrop-blur">
         <h1 className="text-xl font-extrabold tracking-tight text-gray-900">Aditzak</h1>
-        <div className="flex items-center gap-2">
-          <div
-            className="flex items-center gap-1.5 rounded-full bg-orange-100 px-3 py-1.5 text-sm font-bold text-orange-600"
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => onChangeTab('profile')}
+            className="flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-1.5 text-sm font-bold text-orange-600 transition active:scale-95"
             aria-label={t('streakLabel', { count: currentStreak })}
           >
             <span aria-hidden="true">🔥</span>
             <span>{currentStreak}</span>
-          </div>
-          <div className="flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1.5 text-sm font-bold text-amber-700">
+          </button>
+          <button
+            type="button"
+            onClick={() => onChangeTab('progress')}
+            className="flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1.5 text-sm font-bold text-amber-700 transition active:scale-95"
+            aria-label={t('totalStarsLabel', { count: totalStars })}
+          >
             <span aria-hidden="true">★</span>
-            <span>
-              {totalStars}
-              <span className="font-normal text-amber-500">/{maxStars}</span>
-            </span>
-          </div>
-          <div
-            className="flex items-center gap-1.5 rounded-full bg-sky-100 px-3 py-1.5 text-sm font-bold text-sky-700"
+            <span>{totalStars}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => onChangeTab('profile')}
+            className="flex items-center gap-1 rounded-full bg-sky-100 px-2.5 py-1.5 text-sm font-bold text-sky-700 transition active:scale-95"
             aria-label={t('pointsLabel', { count: balance })}
           >
             <span aria-hidden="true">💎</span>
             <span>{balance}</span>
-          </div>
-          <HeartsBadge hearts={hearts} />
+          </button>
+          <HeartsBadge hearts={hearts} onClick={() => onChangeTab('profile')} />
         </div>
       </header>
 
