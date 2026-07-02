@@ -239,7 +239,7 @@ function LessonPreviewScreen({ verb, tense, tenseMeta, onStart, onExit }) {
           type="button"
           onClick={onStart}
           style={{ minHeight: 48 }}
-          className="w-full rounded-2xl bg-green-500 text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+          className="w-full rounded-xl bg-brand-forest text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
         >
           {t('start')}
         </button>
@@ -259,8 +259,8 @@ function getOptionStatus(option, question, state) {
 
 const OPTION_STYLES = {
   idle: 'border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:bg-gray-50',
-  correct: 'border-green-500 bg-green-50 text-green-700 animate-flash',
-  incorrect: 'border-red-500 bg-red-50 text-red-700 animate-shake',
+  correct: 'border-semantic-correct bg-semantic-correct-tint text-semantic-correct animate-flash',
+  incorrect: 'border-semantic-error bg-semantic-error-tint text-semantic-error animate-shake',
 }
 
 function AnswerOption({ option, status, disabled, onSelect }) {
@@ -270,7 +270,7 @@ function AnswerOption({ option, status, disabled, onSelect }) {
       onClick={onSelect}
       disabled={disabled}
       style={{ minHeight: 48 }}
-      className={`w-full rounded-2xl border-2 px-5 py-4 text-left text-lg font-semibold transition ${OPTION_STYLES[status]} ${
+      className={`w-full rounded-xl border-2 px-5 py-4 text-left text-lg font-semibold transition ${OPTION_STYLES[status]} ${
         disabled ? 'cursor-default' : 'active:scale-[0.98]'
       } ${disabled && status === 'idle' ? 'opacity-50' : ''}`}
     >
@@ -288,8 +288,8 @@ function AnswerOption({ option, status, disabled, onSelect }) {
 // the learner has to actually recall it when the question resurfaces.
 const TYPED_INPUT_STYLES = {
   active: 'border-gray-200 bg-white text-gray-800 focus:border-green-400',
-  correct: 'border-green-500 bg-green-50 text-green-700 animate-flash',
-  incorrect: 'border-red-500 bg-red-50 text-red-700 animate-shake',
+  correct: 'border-semantic-correct bg-semantic-correct-tint text-semantic-correct animate-flash',
+  incorrect: 'border-semantic-error bg-semantic-error-tint text-semantic-error animate-shake',
 }
 
 function TypedAnswerInput({ value, status, onChange, onSubmit }) {
@@ -316,7 +316,7 @@ function TypedAnswerInput({ value, status, onChange, onSubmit }) {
         disabled={isAnswered}
         onChange={(event) => onChange(event.target.value)}
         style={{ minHeight: 48 }}
-        className={`w-full rounded-2xl border-2 px-5 py-4 text-lg font-semibold transition focus:outline-none ${TYPED_INPUT_STYLES[status]} ${
+        className={`w-full rounded-xl border-2 px-5 py-4 text-lg font-semibold transition focus:outline-none ${TYPED_INPUT_STYLES[status]} ${
           isAnswered ? 'cursor-default' : ''
         }`}
       />
@@ -325,7 +325,7 @@ function TypedAnswerInput({ value, status, onChange, onSubmit }) {
           type="submit"
           disabled={value.trim() === ''}
           style={{ minHeight: 48 }}
-          className="w-full rounded-2xl bg-green-500 px-5 py-4 text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+          className="w-full rounded-xl bg-brand-forest px-5 py-4 text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
         >
           {t('check')}
         </button>
@@ -337,8 +337,8 @@ function TypedAnswerInput({ value, status, onChange, onSubmit }) {
 const MATCH_TILE_STYLES = {
   idle: 'border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:bg-gray-50',
   selected: 'border-blue-400 bg-blue-50 text-blue-700',
-  correct: 'border-green-500 bg-green-50 text-green-700',
-  incorrect: 'border-red-500 bg-red-50 text-red-700 animate-shake',
+  correct: 'border-semantic-correct bg-semantic-correct-tint text-semantic-correct',
+  incorrect: 'border-semantic-error bg-semantic-error-tint text-semantic-error animate-shake',
 }
 
 function MatchTile({ label, status, disabled, onSelect }) {
@@ -348,7 +348,7 @@ function MatchTile({ label, status, disabled, onSelect }) {
       onClick={onSelect}
       disabled={disabled || status === 'correct'}
       style={{ minHeight: 48 }}
-      className={`w-full rounded-2xl border-2 px-4 py-3 text-left font-semibold transition ${MATCH_TILE_STYLES[status]} ${
+      className={`w-full rounded-xl border-2 px-4 py-3 text-left font-semibold transition ${MATCH_TILE_STYLES[status]} ${
         disabled || status === 'correct' ? 'cursor-default' : 'active:scale-[0.98]'
       }`}
     >
@@ -450,8 +450,8 @@ function MatchPairsBoard({ pairs, verb, disabled, onComplete }) {
 
 const WORD_CHIP_STYLES = {
   idle: 'border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:bg-gray-50',
-  correct: 'border-green-500 bg-green-50 text-green-700 animate-flash',
-  incorrect: 'border-red-500 bg-red-50 text-red-700 animate-shake',
+  correct: 'border-semantic-correct bg-semantic-correct-tint text-semantic-correct animate-flash',
+  incorrect: 'border-semantic-error bg-semantic-error-tint text-semantic-error animate-shake',
 }
 
 function WordChip({ text, status, disabled, onSelect }) {
@@ -461,7 +461,7 @@ function WordChip({ text, status, disabled, onSelect }) {
       onClick={onSelect}
       disabled={disabled}
       style={{ minHeight: 44 }}
-      className={`rounded-2xl border-2 px-4 py-2 text-base font-semibold transition ${WORD_CHIP_STYLES[status]} ${
+      className={`rounded-xl border-2 px-4 py-2 text-base font-semibold transition ${WORD_CHIP_STYLES[status]} ${
         disabled ? 'cursor-default' : 'active:scale-[0.98]'
       }`}
     >
@@ -521,7 +521,7 @@ function WordOrderBoard({ tokens, punctuation, status, disabled, onSubmit }) {
           onClick={() => onSubmit(assembled.map((token) => token.text).join(' '))}
           disabled={cloud.length > 0}
           style={{ minHeight: 48 }}
-          className="w-full rounded-2xl bg-green-500 px-5 py-4 text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+          className="w-full rounded-xl bg-brand-forest px-5 py-4 text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
         >
           {t('check')}
         </button>
@@ -750,7 +750,7 @@ function FlagQuestionModal({ lesson, question, verb, selected, status, onClose, 
               type="button"
               onClick={onClose}
               style={{ minHeight: 48 }}
-              className="w-full rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+              className="w-full rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
             >
               {t('flagClose')}
             </button>
@@ -797,7 +797,7 @@ function FlagQuestionModal({ lesson, question, verb, selected, status, onClose, 
               type="submit"
               disabled={requestStatus === 'sending'}
               style={{ minHeight: 48 }}
-              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98] disabled:opacity-50"
+              className="rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98] disabled:opacity-50"
             >
               {requestStatus === 'sending' ? t('flagSending') : t('flagSubmit')}
             </button>
@@ -828,9 +828,9 @@ function FeedbackBar({
   if (status === 'active') return null
   const isCorrect = status === 'correct'
   return (
-    <div className={`px-5 pt-4 pb-6 ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
+    <div className={`px-5 pt-4 pb-6 ${isCorrect ? 'bg-semantic-correct-tint' : 'bg-semantic-error-tint'}`}>
       <div className="mb-3 flex items-start justify-between gap-2">
-        <p className={`flex items-center gap-2 text-lg font-extrabold ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+        <p className={`flex items-center gap-2 text-lg font-extrabold ${isCorrect ? 'text-semantic-correct' : 'text-semantic-error'}`}>
           {streakEncouragement ? (
             <span className="text-2xl" aria-hidden="true">
               {streakEncouragement.icon}
@@ -877,9 +877,7 @@ function FeedbackBar({
         type="button"
         onClick={onContinue}
         style={{ minHeight: 48 }}
-        className={`w-full rounded-2xl text-lg font-extrabold tracking-wide text-white uppercase transition active:scale-[0.98] ${
-          isCorrect ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'
-        }`}
+        className="w-full rounded-xl bg-brand-forest text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
       >
         {isLast ? t('finish') : t('continue')}
       </button>
@@ -1006,7 +1004,7 @@ function OutOfHeartsOverlay({ canBuy, onBuyHeart, onExit }) {
               type="button"
               onClick={onBuyHeart}
               style={{ minHeight: 48 }}
-              className="rounded-2xl bg-green-500 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+              className="rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
             >
               {t('outOfHeartsBuy', { cost: HEART_COST_POINTS })}
             </button>
@@ -1084,7 +1082,7 @@ function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone
         type="button"
         onClick={onDone}
         style={{ minHeight: 48 }}
-        className="w-full rounded-2xl bg-green-500 text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-green-600 active:scale-[0.98]"
+        className="w-full rounded-xl bg-brand-forest text-lg font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
       >
         {t('continue')}
       </button>

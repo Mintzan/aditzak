@@ -127,7 +127,7 @@ export function ProgressBar({ value }) {
   const pct = Math.min(100, Math.max(0, value * 100))
   return (
     <div className="h-3.5 flex-1 overflow-hidden rounded-full bg-gray-200">
-      <div className="h-full rounded-full bg-green-500 transition-all duration-300 ease-out" style={{ width: `${pct}%` }} />
+      <div className="h-full rounded-full bg-brand-forest transition-all duration-300 ease-out" style={{ width: `${pct}%` }} />
     </div>
   )
 }

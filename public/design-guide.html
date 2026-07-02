@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Aditzak — Visual Identity &amp; Design System Guide</title>
-<meta name="description" content="Proposed visual identity guide for Aditzak: the Latxa sheep mascot, color palette, typography, components, and accessibility verification." />
+<meta name="description" content="Visual identity guide for Aditzak (in staged implementation): the Latxa sheep mascot, color palette, typography, components, and accessibility verification." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -203,7 +203,7 @@
 </head>
 <body>
 
-<div class="status-banner">STATUS: <strong>PROPOSED — NOT YET IMPLEMENTED</strong> &nbsp;·&nbsp; This is a redesign specification, not a description of the current app UI.</div>
+<div class="status-banner">STATUS: <strong>PARTIALLY IMPLEMENTED — STAGED ITERATIONS</strong> &nbsp;·&nbsp; Iteration 1 (fonts + favicon), iteration 2 (17-icon system), and iteration 3 (primary palette + 12px button radius) have shipped. Remaining palette (grammar badges, stat pills) and the mascot rollout are still pending.</div>
 
 <nav class="toc" id="toc">
   <a href="#overview">Overview</a>
@@ -286,19 +286,19 @@
   <h2>Gap analysis — what this actually changes</h2>
   <p class="lede">The app currently has no formal design system — styling is ad hoc Tailwind utility classes spanning roughly 10 distinct hues across <code>ExerciseScreen.jsx</code>, <code>HomeScreen.jsx</code>, <code>badges.jsx</code>, and <code>data/verbs.js</code>. Full checklist in the Color Mapping section below; summary:</p>
   <div style="overflow-x:auto;"><table>
-    <tr><th>Existing element</th><th>Current styling</th><th>This guide proposes</th></tr>
-    <tr><td>Stars</td><td><code>text-amber-400</code></td><td><code>brand-txakoli</code> (#EAB308) — near-identical hue, low-risk swap</td></tr>
-    <tr><td>Primary buttons (~15), progress bar</td><td><code>bg-green-500</code></td><td><code>brand-forest</code> (#0A4F35) — a real visual-weight shift, darker/more muted than today</td></tr>
-    <tr><td>Correct/incorrect answer states</td><td><code>border-green-500</code>/<code>border-red-500</code> tint triads</td><td><code>semantic-correct</code>/<code>semantic-error</code></td></tr>
-    <tr><td>Dialect badge</td><td><code>bg-gray-100</code> / <code>text-gray-500</code></td><td><strong>No change</strong> — already an equivalent match</td></tr>
-    <tr><td>Hearts badge</td><td><code>bg-rose-100</code> / <code>text-rose-600</code> (shipped, issue #534)</td><td><strong>No change</strong> — formalized as <code>accent-hearts</code>, a deliberate standalone exception</td></tr>
-    <tr><td>Grammar-category badges (5 more hues: indigo/rose/blue/purple/amber)</td><td>assorted Tailwind colors</td><td>NOR/NORI/NORK reuse the 3 brand colors; verb type moves to a value distinction instead of a hue</td></tr>
-    <tr><td>Streak/points/bonus pills, streak-repair card</td><td>orange/sky/violet</td><td><code>brand-clay</code>/<code>brand-txakoli</code>/<code>semantic-warning</code></td></tr>
-    <tr><td>Button/card geometry</td><td>uniform 16px radius everywhere, flat fill + press-scale</td><td>Buttons move to 12px; cards keep 16px; the earlier "keycap" button spec is dropped — it never existed in the app</td></tr>
-    <tr><td>Fonts</td><td>none loaded (browser default)</td><td>Space Grotesk/Inter — needs an actual <code>&lt;link&gt;</code>, not just a token</td></tr>
-    <tr><td>Icons</td><td>~15 emoji touchpoints app-wide</td><td>emoji stay outside the mascot's nine named placements (see below)</td></tr>
-    <tr><td>Logo / favicon</td><td>placeholder SVGs</td><td>full mascot + dedicated small-scale mark — assets exist, not yet wired up live</td></tr>
-    <tr><td>Mascot / character</td><td>none</td><td><strong>Central</strong> — nine placements across five screens, see below</td></tr>
+    <tr><th>Existing element</th><th>Current styling</th><th>This guide proposes</th><th>Status</th></tr>
+    <tr><td>Stars</td><td><code>text-amber-400</code></td><td><code>brand-txakoli</code> (#EAB308) — near-identical hue, low-risk swap</td><td>Pending</td></tr>
+    <tr><td>Primary buttons (~15), progress bar</td><td><code>bg-green-500</code></td><td><code>brand-forest</code> (#0A4F35) — a real visual-weight shift, darker/more muted than today</td><td><strong>Shipped (iter. 3)</strong></td></tr>
+    <tr><td>Correct/incorrect answer states</td><td><code>border-green-500</code>/<code>border-red-500</code> tint triads</td><td><code>semantic-correct</code>/<code>semantic-error</code></td><td><strong>Shipped (iter. 3)</strong></td></tr>
+    <tr><td>Dialect badge</td><td><code>bg-gray-100</code> / <code>text-gray-500</code></td><td><strong>No change</strong> — already an equivalent match</td><td>N/A</td></tr>
+    <tr><td>Hearts badge</td><td><code>bg-rose-100</code> / <code>text-rose-600</code> (shipped, issue #534)</td><td><strong>No change</strong> — formalized as <code>accent-hearts</code>, a deliberate standalone exception</td><td>N/A</td></tr>
+    <tr><td>Grammar-category badges (5 more hues: indigo/rose/blue/purple/amber)</td><td>assorted Tailwind colors</td><td>NOR/NORI/NORK reuse the 3 brand colors; verb type moves to a value distinction instead of a hue</td><td>Pending (iter. 4)</td></tr>
+    <tr><td>Streak/points/bonus pills, streak-repair card</td><td>orange/sky/violet</td><td><code>brand-clay</code>/<code>brand-txakoli</code>/<code>semantic-warning</code></td><td>Pending (iter. 4)</td></tr>
+    <tr><td>Button/card geometry</td><td>uniform 16px radius everywhere, flat fill + press-scale</td><td>Buttons move to 12px; cards keep 16px; the earlier "keycap" button spec is dropped — it never existed in the app</td><td><strong>Shipped (iter. 3)</strong></td></tr>
+    <tr><td>Fonts</td><td>none loaded (browser default)</td><td>Space Grotesk/Inter — needs an actual <code>&lt;link&gt;</code>, not just a token</td><td><strong>Shipped (iter. 1)</strong></td></tr>
+    <tr><td>Icons</td><td>~15 emoji touchpoints app-wide</td><td>17-icon system wired in, outside the mascot's nine named placements (see below)</td><td><strong>Shipped (iter. 2)</strong></td></tr>
+    <tr><td>Logo / favicon</td><td>placeholder SVGs</td><td>full mascot + dedicated small-scale mark — assets exist</td><td><strong>Shipped (iter. 1)</strong> — live favicon only</td></tr>
+    <tr><td>Mascot / character</td><td>none</td><td><strong>Central</strong> — nine placements across five screens, see below</td><td>Pending</td></tr>
   </table></div>
   <div class="callout">
     <strong>Timing note</strong>
@@ -350,7 +350,7 @@
     <div class="mascot-card">
       <svg viewBox="0 0 32 32"><path d="M 6,12 C 6,6 26,6 26,12 C 26,20 22,26 16,26 C 10,26 6,20 6,12 Z" fill="#1E2530"/><path d="M 7,11 C 2,10 0,14 2,17 Z" fill="#1E2530"/><path d="M 25,11 C 30,10 32,14 30,17 Z" fill="#1E2530"/><circle cx="12" cy="12" r="3.5" fill="#FFFFFF"/><circle cx="12" cy="12" r="1.5" fill="#0B0F19"/><circle cx="20" cy="12" r="3.5" fill="#FFFFFF"/><circle cx="20" cy="12" r="1.5" fill="#0B0F19"/></svg>
       <div class="label">B. Favicon Mark</div>
-      <div class="sub">Simplified, 32×32 — not yet wired up in <code>index.html</code></div>
+      <div class="sub">Simplified, 32×32 — shipped as the live favicon (iteration 1)</div>
     </div>
   </div>
 
@@ -637,12 +637,12 @@
 </section>
 
 <section id="icons">
-  <div class="kicker">&sect;11 &mdash; Round 7, proposed</div>
+  <div class="kicker">&sect;11 &mdash; Round 7, shipped in implementation iteration 2</div>
   <h2>Iconography System</h2>
   <p class="lede">Revisits round 5's "emoji stay app-wide" call, now that the mascot is central (round 6) and occupies its own distinct visual register &mdash; bare emoji next to it reads as more inconsistent than it did before.</p>
-  <div class="callout">
-    <strong>Status: documented and asset-complete, not implemented</strong>
-    17 SVG assets exist at <code>public/brand/icons/</code>, verified by rendering (including at 18px, the actual inline size several usages need). No <code>src/</code> component has been touched &mdash; that's a separate, explicit follow-up.
+  <div class="callout resolved">
+    <strong>Status: implemented</strong>
+    17 SVG assets exist at <code>public/brand/icons/</code> and are wired into <code>src/</code> as React components (<code>src/components/icons.jsx</code>) at every documented touchpoint in <code>badges.jsx</code>, <code>ExerciseScreen.jsx</code>, and <code>HomeScreen.jsx</code>.
   </div>
   <div class="icon-grid">
     <div class="icon-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M3 11.5 12 4l9 7.5" /> <path d="M5.5 10v9.5a1 1 0 0 0 1 1H10v-6h4v6h3.5a1 1 0 0 0 1-1V10" /> </svg><div class="l">home (nav)</div></div>
@@ -676,9 +676,9 @@
 </section>
 
 <section id="before-after">
-  <div class="kicker">&sect;12 &mdash; Round 8, illustrative</div>
+  <div class="kicker">&sect;12 &mdash; Round 8, mostly shipped</div>
   <h2>Before/After: Applying the Guide</h2>
-  <p class="lede">Every other section documents individual decisions in isolation. This shows what several of them look like applied <em>together</em> to three real, currently-shipped components &mdash; rendered and verified, not hypothetical. Not implemented in <code>src/</code>.</p>
+  <p class="lede">Every other section documents individual decisions in isolation. This shows what several of them look like applied <em>together</em> to three real, currently-shipped components &mdash; rendered and verified, not hypothetical. Examples 1&ndash;2's icon swaps and Example 3's palette/radius shift are live (iterations 2&ndash;3); the streak/points pill <em>colors</em> in Example 1 and the mascot mini-avatar in Example 3 are still pending (iteration 4 and the mascot rollout, respectively).</p>
 
   <h3 style="font-size:16px;margin-top:24px;">Example 1: Home header pills</h3>
   <div class="ba-pair">

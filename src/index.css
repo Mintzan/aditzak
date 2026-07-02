@@ -3,6 +3,20 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  /* docs/VISUAL_IDENTITY.md §2 — brand-forest is the primary action color
+     (buttons, the "this is the active brand choice" idiom); hover lightens
+     rather than darkens since the base is already low-luminance (§2's
+     hover-state note). semantic-correct/-error are the feedback triad
+     colors; the -tint shades are a ~10%-over-white mix of the base color,
+     contrast-verified (7.7:1 / 7.0:1) against their own base as text. */
+  --color-brand-forest: #0a4f35;
+  --color-brand-forest-hover: #0d6444;
+  --color-brand-forest-tint: #e6edeb;
+  --color-semantic-correct: #14532d;
+  --color-semantic-correct-tint: #e8eeea;
+  --color-semantic-error: #991b1b;
+  --color-semantic-error-tint: #f5e8e8;
 }
 
 body {

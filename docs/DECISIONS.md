@@ -8,6 +8,16 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Implementation iteration 3: primary palette + button geometry
+
+Wires `docs/VISUAL_IDENTITY.md` §2's primary-button/feedback-triad tokens and §5's 12px button radius into `src/`, following §12 Example 3 (the guide's own worked before/after for exactly this change) as the spec: `bg-green-500`/`hover:bg-green-600` primary buttons become `bg-brand-forest`/`hover:bg-brand-forest-hover` (lightens on hover per §2's note, since the base is already low-luminance), the correct/incorrect answer-option/input/match-tile/word-chip triads become `semantic-correct`/`semantic-error` (border + a computed ~10%-over-white tint background + text, all contrast-verified: 7.7:1 / 7.0:1 text-on-tint, both well past 4.5:1), and every one of those interactive elements drops from `rounded-2xl` (16px) to `rounded-xl` (12px) — cards keep their 16px per §5 (verified `LessonNode`'s own container radius stayed put; only its avatar-circle fill and the feedback/option elements changed).
+
+Per §12 Example 3's explicit "brand-forest Continue button" (not conditionally red), the exercise `FeedbackBar`'s Continue button is now always `brand-forest` regardless of correct/incorrect — previously it flipped to red on a wrong answer, which the guide's own worked example calls out as the pre-migration state to move away from.
+
+Extended slightly beyond §2's literal audited-file table (`ExerciseScreen.jsx`/`HomeScreen.jsx`/`badges.jsx`/`data/verbs.js`) to three more `bg-green-500`-as-"primary/selected-brand-marker" spots the audit didn't enumerate but are the same idiom: the Profile tab's language switcher, the onboarding language picker in `App.jsx` (not part of the round-5 audit scope, but visually the same selectable-pill pattern and would otherwise be left inconsistent with its Profile-tab twin), and the `ProgressBar` fill in `badges.jsx`. Added tokens for these as a light §2-style tint pattern (`brand-forest-tint`, contrast-verified 8.1:1) rather than reusing `semantic-correct` — a language selection isn't a correctness judgment, so it shouldn't borrow that token's meaning.
+
+Not touched this iteration (deferred to iteration 4, "remaining palette"): `TYPE_META`/`AGREEMENT_META` grammar badges, the streak/points/bonus stat pills, the `MATCH_TILE_STYLES.selected` neutral-scale change, and any `neutral-*` scale application (locked-lesson icon color, card borders) — all still on their pre-migration Tailwind hues.
+
 ## 2026-07-02 — Implementation iteration 2: wired the 17-icon system into real components
 
 `docs/VISUAL_IDENTITY.md` §11 documented the icon system (round 7) without
