@@ -226,6 +226,7 @@ function AppShell() {
           setDailyStreak(merged.dailyStreak)
           setPoints(merged.points)
           setErrorStats(merged.errorStats)
+          setHearts(merged.hearts)
           dataRef.current = merged
           return pushSyncSnapshot(session.token, buildSyncPayload(merged))
         })
@@ -274,6 +275,7 @@ function AppShell() {
             setDailyStreak(snapshot.payload.dailyStreak ?? {})
             setPoints(snapshot.payload.points ?? {})
             setErrorStats(snapshot.payload.errorStats ?? {})
+            setHearts(snapshot.payload.hearts ?? {})
           }
           setSyncStatus('synced')
           setLastSyncedAt(Date.now())
@@ -290,7 +292,7 @@ function AppShell() {
       })
   }, [pushSnapshot])
 
-  // Ongoing background sync: after any of the four storage saves above, while
+  // Ongoing background sync: after any of the five storage saves above, while
   // signed in, debounce a `PUT /sync` of the latest data. If it fails, local
   // data stays the source of truth and the next save (or the next app load's
   // pull-merge) retries.
@@ -303,7 +305,7 @@ function AppShell() {
       pushSnapshot(session.token)
     }, SYNC_PUSH_DEBOUNCE_MS)
     return () => clearTimeout(syncTimeoutRef.current)
-  }, [account, progress, dailyStreak, points, errorStats, pushSnapshot])
+  }, [account, progress, dailyStreak, points, errorStats, hearts, pushSnapshot])
 
   // Applies the learner's `MergeModal` choice and clears `pendingMerge`.
   const handleResolveMerge = useCallback(
@@ -325,12 +327,14 @@ function AppShell() {
           setDailyStreak(cloud.dailyStreak ?? {})
           setPoints(cloud.points ?? {})
           setErrorStats(cloud.errorStats ?? {})
+          setHearts(cloud.hearts ?? {})
         } else {
           const merged = mergeSyncPayload(dataRef.current, cloud)
           setProgress(merged.progress)
           setDailyStreak(merged.dailyStreak)
           setPoints(merged.points)
           setErrorStats(merged.errorStats)
+          setHearts(merged.hearts)
           dataRef.current = merged
           await pushSyncSnapshot(session.token, buildSyncPayload(merged))
         }

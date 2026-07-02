@@ -17,13 +17,13 @@ export const SYNC_API_URL = import.meta.env.VITE_SYNC_API_URL || 'https://aditza
 // schema versions (if this ever needs to change) is the frontend's job.
 export const SYNC_SCHEMA_VERSION = 1
 
-// Coalesces the four storage saves a single lesson completion triggers
-// (progress/streak/points/errorStats) into one `PUT /sync`.
+// Coalesces the five storage saves a single lesson completion triggers
+// (progress/streak/points/errorStats/hearts) into one `PUT /sync`.
 export const SYNC_PUSH_DEBOUNCE_MS = 1000
 
-// The four locally-persisted maps, as the shape `/sync` stores/returns.
-export function buildSyncPayload({ progress, dailyStreak, points, errorStats }) {
-  return { progress, dailyStreak, points, errorStats }
+// The five locally-persisted maps, as the shape `/sync` stores/returns.
+export function buildSyncPayload({ progress, dailyStreak, points, errorStats, hearts }) {
+  return { progress, dailyStreak, points, errorStats, hearts }
 }
 
 // `null` means "no cloud snapshot yet" (404).

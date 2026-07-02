@@ -50,6 +50,7 @@ import {
   MAX_HEARTS,
   mergeDailyStreak,
   mergeErrorStats,
+  mergeHearts,
   mergePoints,
   mergeProgress,
   mergeSyncPayload,
@@ -608,18 +609,20 @@ describe('mergePoints', () => {
 })
 
 describe('mergeSyncPayload', () => {
-  it('merges all four fields per their own rules', () => {
+  it('merges all five fields per their own rules', () => {
     const local = {
       progress: { 'izan-present': { attempts: 1, bestScore: 2, totalQuestions: 3, bestStars: 1, lastPlayed: '2026-06-10T00:00:00.000Z' } },
       dailyStreak: { currentStreak: 1, longestStreak: 1, lastActiveDate: '2026-06-13' },
       points: { earned: { 'device-a': 10 }, spent: {} },
       errorStats: {},
+      hearts: { currentHearts: 3, lastHeartChangeTimestamp: 2000 },
     }
     const cloud = {
       progress: { 'izan-present': { attempts: 3, bestScore: 3, totalQuestions: 3, bestStars: 3, lastPlayed: '2026-06-11T00:00:00.000Z' } },
       dailyStreak: { currentStreak: 5, longestStreak: 5, lastActiveDate: '2026-06-11' },
       points: { earned: { 'device-b': 20 }, spent: {} },
       errorStats: { 'egon-present:oraina:hi': { verbId: 'egon', tense: 'oraina', person: 'hi', count: 1, lastMissed: '2026-06-09T00:00:00.000Z' } },
+      hearts: { currentHearts: 1, lastHeartChangeTimestamp: 5000 },
     }
 
     expect(mergeSyncPayload(local, cloud)).toEqual({
@@ -627,7 +630,30 @@ describe('mergeSyncPayload', () => {
       dailyStreak: { currentStreak: 1, longestStreak: 5, lastActiveDate: '2026-06-13' },
       points: { earned: { 'device-a': 10, 'device-b': 20 }, spent: {} },
       errorStats: cloud.errorStats,
+      hearts: cloud.hearts,
     })
+  })
+})
+
+describe('mergeHearts', () => {
+  it('returns the other side unchanged when one side is empty', () => {
+    const hearts = { currentHearts: 3, lastHeartChangeTimestamp: 1000 }
+    expect(mergeHearts({}, hearts)).toEqual(hearts)
+    expect(mergeHearts(hearts, {})).toEqual(hearts)
+  })
+
+  it('takes the side with the more recent lastHeartChangeTimestamp', () => {
+    const local = { currentHearts: 3, lastHeartChangeTimestamp: 5000 }
+    const cloud = { currentHearts: 1, lastHeartChangeTimestamp: 2000 }
+    expect(mergeHearts(local, cloud)).toEqual(local)
+    expect(mergeHearts(cloud, local)).toEqual(local)
+  })
+
+  it('treats a full side (null timestamp) as more recent than any stale partial side', () => {
+    const full = { currentHearts: 5, lastHeartChangeTimestamp: null }
+    const partial = { currentHearts: 2, lastHeartChangeTimestamp: 1000 }
+    expect(mergeHearts(full, partial)).toEqual(full)
+    expect(mergeHearts(partial, full)).toEqual(full)
   })
 })
 
