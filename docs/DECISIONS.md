@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-02 — Reconciled a second mascot deliverable (expression library) against the accepted visual identity
+
+A separately-delivered "Ardi Latxa Guide" (four mascot expressions: Pozik/happy,
+Gora!/excited, Haserre/determined, Nekatuta/tired) turned out to be built on
+the *pre-fix* round-1 palette (`#374151`/`#111827`/`#1F2937`/`#2D3748`/`#F9FAFB`/
+`#E5E7EB`) — confirmed by diffing its hex values against the committed
+`public/brand/latxa-logo.svg`, which shares only 2 of 11 colors with it. It also
+carried anatomy (visible legs, a muzzle-shadow overlay, inner-ear shading) the
+accepted logo had simplified away, and framed two of its four triggers around
+missed-practice guilt ("appears if the user repeatedly ignores daily goals",
+"used for... missed notifications... to prompt immediate practice") — directly
+against §7's anti-guilt-trip voice principle.
+
+Decided rather than just flagged: (1) recolored all three non-duplicate states
+onto the canonical §3 scale and stripped the anatomy back to match §1A exactly,
+so there's one mascot geometry, not two competing designs — added as
+`public/brand/latxa-expression-{gora,haserre,nekatuta}.svg`; Pozik gets no
+separate file since, corrected, it's identical to the existing logo. (2)
+Formalized the previously-flagged stray `#E2E8F0` shadow color as
+`neutral-200`, extending §3 to 6 steps, since a second independent deliverable
+using it unprompted is a signal it's a real recurring need, not a one-off
+mistake. (3) Rejected the "ignores daily goals" and "missed notifications"
+triggers outright rather than reinterpreting them — kept only the legitimate
+pedagogical halves (Haserre → in-lesson error-prone-pattern callout; Nekatuta →
+Progress-tab low-accuracy indicator, using data `progressStorage` already
+tracks), and left both unwired into any actual screen, consistent with the
+standing "mascot system is a separate scope decision" note. Full reasoning and
+the rejected-trigger table are in `docs/VISUAL_IDENTITY.md` §1C.
+
 ## 2026-07-02 — Wrote `docs/VISUAL_IDENTITY.md`: proposed redesign spec, not implemented
 
 Recorded a commissioned visual identity guide (Latxa-sheep mascot, a

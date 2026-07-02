@@ -5,7 +5,7 @@
 **Mascot Core:** The Latxa Sheep (*Mutur Beltza* variety)
 **Design Philosophy:** Culturally grounded, structurally precise, and companion-driven.
 
-This guide was commissioned from an outside designer as a from-scratch visual identity (no prior brand existed — see "Gap analysis"). It went through three review rounds before acceptance: round 1 found a genuine WCAG contrast failure (`brand-clay` on white text, 3.33:1) and a four-way inconsistent dark-neutral scale; round 2 fixed both and added the missing lesson-card mockup and a dedicated favicon-scale mark, but its "mathematically verified" contrast ratios didn't match independent recomputation (always in the safe direction — nothing that claimed to pass actually failed, but the specific decimals were invented); round 3 replaced the fabricated decimals with qualitative AA/AAA bands and fixed a table-column mismatch. The content below is the accepted round-3 version. If these tokens are ever needed for a compliance artifact, re-verify the specific ratios with a real contrast checker (WebAIM, `axe`) rather than citing the labels here.
+This guide was commissioned from an outside designer as a from-scratch visual identity (no prior brand existed — see "Gap analysis"). It went through three review rounds before acceptance: round 1 found a genuine WCAG contrast failure (`brand-clay` on white text, 3.33:1) and a four-way inconsistent dark-neutral scale; round 2 fixed both and added the missing lesson-card mockup and a dedicated favicon-scale mark, but its "mathematically verified" contrast ratios didn't match independent recomputation (always in the safe direction — nothing that claimed to pass actually failed, but the specific decimals were invented); round 3 replaced the fabricated decimals with qualitative AA/AAA bands and fixed a table-column mismatch. A fourth pass reconciled a separately-delivered expression-library catalog that had drifted back onto the pre-fix palette and anatomy, and rejected two of its four proposed mascot triggers for conflicting with §7's anti-guilt voice principle (see §1C). The content below is the reconciled version. If these tokens are ever needed for a compliance artifact, re-verify the specific ratios with a real contrast checker (WebAIM, `axe`) rather than citing the labels here.
 
 ## Gap analysis: what this changes
 
@@ -83,7 +83,7 @@ Asset file: `public/brand/latxa-logo.svg`
 
 Rendered and spot-checked in a headless browser during review — reads as a clear, recognizable sheep face at 300–400px.
 
-**Known inconsistency:** the drop-shadow ellipse uses `#E2E8F0`, a gray that isn't one of the five tokens in the §3 canonical scale. It's a light shadow tint rather than a "dark neutral" so it doesn't violate §3's letter, but it is an undocumented sixth gray value — worth folding into the scale (or explicitly declaring "shadow tints are exempt from §3") before this becomes a pattern other components copy.
+**Resolved:** the drop-shadow ellipse's `#E2E8F0` is now a named token — `neutral-200 (Shadow Tint)`, added to the §3 scale — rather than an undocumented sixth gray. It stays a distinct value rather than being forced onto `neutral-400` because it needs to read as a soft ground-shadow, not a border/divider.
 
 ### B. Micro-Optimized App Icon & Favicon Mark
 
@@ -107,6 +107,27 @@ Asset file: `public/brand/latxa-icon.svg` — **not yet wired up** as the site f
 ```
 
 Verified at true render size during review: clear and legible at 32px and 64px; at true 16px (actual browser favicon size) the eyes compress to small dots — usable, but that's the legibility floor, not a defect to iterate further on.
+
+### C. Expression Library
+
+A separately-commissioned four-state expression catalog (Pozik/happy, Gora!/excited, Haserre/determined, Nekatuta/tired) arrived on the *pre-fix* palette from round 1 (`#374151`/`#111827`/`#1F2937`/`#2D3748`/`#F9FAFB`/`#E5E7EB`) — the exact inconsistent grays §2/§3 replaced. It also carried anatomy (visible legs, a muzzle-shadow overlay, an inner-ear shadow detail) that the accepted §1A logo simplified away, and framed two of its four triggers around missed-practice guilt, which §7 explicitly rejects. Rather than leave that as an open question, here's the reconciliation:
+
+**Color and anatomy — recolored onto the canonical tokens, simplified to match §1A's geometry exactly** (no legs, no muzzle shadow, no inner-ear shadow — one mascot, one anatomy, used at different scales/detail levels for different contexts, not two competing character designs). Two colors outside the neutral scale survive the correction, both deliberately:
+- The Gora! mouth interior keeps `#991B1B` — it happens to already equal the `semantic-error` token, but here it's anatomical (mouth-interior shading), not a status signal, so the coincidence is harmless and no new value was introduced.
+- The Gora! tongue keeps `#F43F5E` — this is Tailwind's `rose-500`, which ties it to the same rose family `HeartsBadge` already uses in the shipped UI (`bg-rose-100`/`text-rose-600`). Treated as an intentional thread connecting the mascot to the one place `rose` already exists in the app, not a new arbitrary accent.
+
+Assets: `public/brand/latxa-expression-gora.svg`, `public/brand/latxa-expression-haserre.svg`, `public/brand/latxa-expression-nekatuta.svg`. **Pozik has no separate file** — once recolored and simplified, it's pixel-for-pixel the same artwork as `public/brand/latxa-logo.svg` (§1A), so that file *is* the Pozik state; a duplicate would just be a second copy to keep in sync.
+
+**Trigger conditions — Haserre and Nekatuta's originally-proposed triggers are rejected, not adopted:**
+
+| State | Rejected trigger (as originally proposed) | Why rejected | Adopted trigger instead |
+|---|---|---|---|
+| Haserre | "Appears if the user repeatedly ignores daily goals... alerts... pops up during time-attack validation modes" | The "ignores daily goals" half is a disappointed-mascot-for-missed-practice mechanic — functionally the guilt pattern §7 names as the thing to avoid, just moved from copy into the mascot's face. "Time-attack validation" references an unbuilt, unscoped feature. | A callout accent for flagging a genuinely error-prone conjugation pattern *within* a lesson (e.g. a commonly-confused irregular form) — pedagogical, not behavioral. |
+| Nekatuta | "Used for weak-skill warnings or missed notifications... to prompt immediate practice" | "Missed notifications... prompt immediate practice" is a re-engagement nag, same guilt-mechanic problem as Haserre. | The "weak-skill" half is legitimate and kept: an accuracy-based indicator in the Progress tab next to a lesson with a low `bestScore` (data that `progressStorage` already tracks), signaling "this needs review" — not "you didn't open the app." |
+
+Neither adopted trigger is wired into any screen yet — this only settles what the mascot is *allowed* to represent if/when someone builds it, consistent with §1's "mascot system is a separate scope decision" note.
+
+**Relationship to the §1B favicon-scale mark:** the mini circular avatars used in §10 Swatch 3 (`latxa-icon-correct.svg`/`latxa-icon-incorrect.svg`) and this expression library are not redundant with each other. The mini avatars are the high-frequency, low-detail, 32px-viewBox icon for the per-answer feedback drawer. The expression library is the low-frequency, high-detail, 400px-viewBox illustration for larger, rarer moments (dashboard/home state, lesson-complete or streak-milestone screens, and — per the adopted triggers above — in-lesson pattern callouts and Progress-tab review indicators). Same character, two deliberately different resolutions for two different UI contexts.
 
 ## 2. Color Palette & Design Tokens
 
@@ -132,15 +153,16 @@ The palette links the natural color properties of the Latxa sheep with deep, sat
 | semantic-error | `#991B1B` | Incorrect Answer Bottom Drawer | White Text | Passes AAA |
 | semantic-warning | `#9A3412` | Streak In Jeopardy Outline Frame | White Text | Passes AA |
 
-## 3. Canonical Dark-Neutral Scale
+## 3. Canonical Neutral Scale
 
-A single 5-step monochromatic scale, replacing what was originally four inconsistent ad hoc dark grays (`#374151`/`#111827`/`#1F2937`/`#2D3748`) across the draft. Do not introduce other dark values.
+A single 6-step monochromatic scale (5 dark steps plus one light shadow-tint step), replacing what was originally four inconsistent ad hoc dark grays (`#374151`/`#111827`/`#1F2937`/`#2D3748`) across the draft, plus an undocumented shadow gray (`#E2E8F0`) that a later expression-library addendum also used unchanged. Do not introduce other gray values outside this list.
 
 - **neutral-950 (Ink Black) → `#0B0F19`** — code snippet backgrounds, deep layout border details, pitch-black line paths.
 - **neutral-900 (Latxa Charcoal / Mascot Face) → `#1E2530`** — canonical **Text Main** token; all primary body text and heavy UI labels.
 - **neutral-800 (Charcoal Border) → `#2D3543`** — interactive element outlines, tactile button border offsets.
 - **neutral-600 (Text Muted) → `#525C6C`** — secondary hints, grammar category labels, metadata descriptions.
 - **neutral-400 (UI Borders) → `#94A3B8`** — decorative lines, inactive card dividers, disabled framework states.
+- **neutral-200 (Shadow Tint) → `#E2E8F0`** — mascot ground-shadow ellipses only; not for borders or text (that's `neutral-400`/`neutral-600`).
 
 ## 4. Typography System
 
