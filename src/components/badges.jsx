@@ -64,7 +64,7 @@ export function VerbBadgeRow({ verb }) {
 export function Stars({ count }) {
   const { t } = useLanguage()
   return (
-    <div className="flex gap-0.5 text-base text-amber-400" aria-label={t('starsLabel', { count })}>
+    <div className="flex gap-0.5 text-base text-brand-txakoli" aria-label={t('starsLabel', { count })}>
       {[0, 1, 2].map((i) => (
         <span key={i} className={i < count ? 'opacity-100' : 'opacity-20'}>
           ★

@@ -1,6 +1,6 @@
 # Visual Identity & Design System Guide
 
-**Status: partially implemented, in staged iterations.** This started as a from-scratch redesign specification; implementation began 2026-07-02 and is landing in small, independently-shippable PRs rather than one big rewrite. Iteration 1 (fonts + live favicon), iteration 2 (§11's 17-icon system), iteration 3 (§2's primary-button/feedback-triad palette + §5's 12px button radius), and iteration 4 (§2's grammar-badge/stat-pill palette) have shipped — §2's color mapping table is now fully applied. Not yet started: the §3 neutral-scale application (card borders, locked-icon color) and the §1C/mascot-placement-plan rollout. See "Gap analysis" below for what's changed vs. still pending, and "Open scope questions" for what needs a product decision before the rest starts.
+**Status: Track A (palette/typography/component) fully implemented; Track B (mascot) not started.** This started as a from-scratch redesign specification; implementation began 2026-07-02 and is landing in small, independently-shippable PRs rather than one big rewrite. Iteration 1 (fonts + live favicon), iteration 2 (§11's 18-icon system), iteration 3 (§2's primary-button/feedback-triad palette + §5's 12px button radius), iteration 4 (§2's grammar-badge/stat-pill palette), and iteration 5 (§3's neutral-scale leftovers, plus a missed review-lesson icon) have all shipped. Not yet started: the §1C/mascot-placement-plan rollout (Track B), the only major piece left. See "Gap analysis" below for what's changed vs. still pending, and "Open scope questions" for what needs a product decision before Track B starts.
 
 **Mascot Core:** The Latxa Sheep (*Mutur Beltza* variety)
 **Design Philosophy:** Culturally grounded, structurally precise, and companion-driven.
@@ -13,7 +13,7 @@ The app currently has **no formal design system** — styling is ad hoc Tailwind
 
 | Existing element | Current styling | This guide proposes | Status |
 |---|---|---|---|
-| `Stars` | `text-amber-400` | `brand-txakoli` (`#EAB308`) — coincidentally almost the same hue, low-risk swap | Pending |
+| `Stars` | `text-amber-400` | `brand-txakoli` (`#EAB308`) — coincidentally almost the same hue, low-risk swap | **Shipped (iteration 5)** |
 | Primary buttons (~15 instances), `ProgressBar` fill | `bg-green-500` | `brand-forest` (`#0A4F35`) — a real visual-weight shift, darker/more muted than today; see §2's hover-state note | **Shipped (iteration 3)** |
 | Correct/incorrect answer states (4 separate style objects in `ExerciseScreen.jsx`) | `border-green-500`/`border-red-500` tint triads | `semantic-correct`/`semantic-error` | **Shipped (iteration 3)** |
 | `DialectBadge` | `bg-gray-100` / `text-gray-500` | **No change** — already an equivalent match | N/A |
@@ -22,7 +22,7 @@ The app currently has **no formal design system** — styling is ad hoc Tailwind
 | Streak/points/bonus pills, streak-repair card | `orange`/`sky`/`violet` | `brand-clay`/`brand-txakoli`/`semantic-warning` per §2's mapping table | **Shipped (iteration 4)** |
 | Button/card geometry | uniform `rounded-2xl` (16px) everywhere, flat fill + `active:scale-[0.98]` | Buttons move to 12px radius; cards keep 16px; the "keycap" button style from earlier drafts is dropped in favor of the app's existing, working press pattern (§5) | **Shipped (iteration 3)** |
 | Fonts | none loaded (browser default) | Space Grotesk/Inter — needs an actual `<link>` addition, not just a token (§4) | **Shipped (iteration 1)** |
-| Icons | ~15 emoji touchpoints app-wide | 17-icon SVG system (§11) wired into every documented touchpoint except the mascot's own nine placements (§1C's "Mascot placement plan") and the celebratory streak-encouragement emoji, which stay as-is | **Shipped (iteration 2)** |
+| Icons | ~15 emoji touchpoints app-wide | 18-icon SVG system (§11) wired into every documented touchpoint except the mascot's own nine placements (§1C's "Mascot placement plan") and the celebratory streak-encouragement emoji, which stay as-is | **Shipped (iteration 2)** |
 | Logo / favicon | placeholder `public/favicon.svg`, `public/icons.svg` | full mascot SVG (§1A) + dedicated small-scale mark (§1B) — assets exist in `public/brand/` | **Shipped (iteration 1)** — live favicon only; the full mascot SVG rollout is still the separate Mascot Placement Plan below |
 | Mascot / character | none | full mascot system, **decided (round 6) to be a central part of the app** — see "Mascot placement plan" below, not just the feedback-drawer micro-moments §1C originally scoped | Pending |
 | 3-star confetti/firework celebration | independent 7-color rainbow | **No change, deliberately** — see §6 | N/A |
@@ -419,7 +419,9 @@ Mini-avatar assets: `public/brand/latxa-icon-correct.svg`, `public/brand/latxa-i
 
 ## 11. Iconography System (round 7 — shipped in implementation iteration 2)
 
-**Status: implemented.** This reverses round 5's "emoji stay app-wide, outside the mascot's placements" decision — that call was reasonable when the mascot was still confined to two micro-moments, but with the mascot now central (round 6) and occupying its own distinct visual register, bare emoji sitting alongside it reads as more inconsistent than it did before. Assets exist (`public/brand/icons/*.svg`, 17 files) and are wired into `src/` as React components (`src/components/icons.jsx`) at every documented touchpoint in `badges.jsx`, `ExerciseScreen.jsx`, and `HomeScreen.jsx` — see `docs/DECISIONS.md`'s iteration-2 entry for the full list and what was deliberately left as emoji (the `✕`/`×` dismiss glyphs, the celebratory streak-encouragement set, the plain `★` stars pill).
+**Status: implemented.** This reverses round 5's "emoji stay app-wide, outside the mascot's placements" decision — that call was reasonable when the mascot was still confined to two micro-moments, but with the mascot now central (round 6) and occupying its own distinct visual register, bare emoji sitting alongside it reads as more inconsistent than it did before. Assets exist (`public/brand/icons/*.svg`, 18 files) and are wired into `src/` as React components (`src/components/icons.jsx`) at every documented touchpoint in `badges.jsx`, `ExerciseScreen.jsx`, and `HomeScreen.jsx` — see `docs/DECISIONS.md`'s iteration-2 entry for the full list and what was deliberately left as emoji (the `✕`/`×` dismiss glyphs, the celebratory streak-encouragement set, the plain `★` stars pill). `icon-repeat.svg`/`RepeatIcon` was added after initial shipping — the round-5 component audit missed `describeLesson`'s review-lesson icon (🔁, `lessonDisplay.js`), a separate emoji touchpoint from the `LessonNode`/`PendingUnitCard` lock/gate/heart-broken icons it did catch.
+
+Also note: the "proposed color (existing context)" column below reflects the icon system's *original* color-scoping decision (ambient Tailwind colors, deliberately not the brand palette — see the scoping note above). Iterations 3–4 have since migrated many of those same elements' colors to `brand-*`/`semantic-*` tokens (the streak/points pills, `TYPE_META`/`AGREEMENT_META`, etc.) — since every icon uses `stroke="currentColor"`, they picked up their container's new color automatically as a side effect, with no icon-file changes needed. `docs/DECISIONS.md`'s iteration 3/4 entries are the authoritative record of current colors; this table's color column is now historical (what iteration 2 shipped), not current-state.
 
 ### System rules
 
@@ -451,6 +453,7 @@ Every emoji touchpoint found in the round-5 component audit, plus one gap it mis
 | ☁️ | `icon-cloud.svg` | `text-sky-500` | `AccountSection` (both signed-in and signed-out variants) |
 | 🏆 | `icon-trophy.svg` | `text-amber-500` | `ProfileTab` longest-streak stat |
 | ✨ | `icon-bonus.svg` | `text-violet-600` (matches existing `bg-violet-100 text-violet-700`) | `UnitLessons` bonus label |
+| 🔁 | `icon-repeat.svg` | inherits `LessonNode`'s existing white-on-`bg-brand-forest` circle (available) / `neutral-600`-on-`neutral-400` circle (locked) — same container the letter/emoji practice-lesson icons already use | `LessonNode`, review lessons only (`lesson.review`) |
 
 ### Implementation note for whoever picks this up
 

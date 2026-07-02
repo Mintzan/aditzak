@@ -34,11 +34,14 @@
   --color-brand-txakoli-tint: #fdf7e6;
   --color-brand-txakoli-text: #856605;
 
-  /* docs/VISUAL_IDENTITY.md §3 — canonical neutral scale, only the steps
-     iteration 4 actually needs (grammar-type badges, hint text). */
+  /* docs/VISUAL_IDENTITY.md §3 — canonical neutral scale. Iteration 5 adds
+     neutral-400/-200: neutral-400 for the locked-lesson avatar fill,
+     neutral-200 for the match-tile "selected" background. */
   --color-neutral-900: #1e2530;
   --color-neutral-800: #2d3543;
   --color-neutral-600: #525c6c;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-200: #e2e8f0;
 }
 
 body {

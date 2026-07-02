@@ -176,3 +176,14 @@ export function BonusIcon(props) {
     </Icon>
   )
 }
+
+export function RepeatIcon(props) {
+  return (
+    <Icon {...props}>
+      <path d="M17 1.5 21 5.5l-4 4" />
+      <path d="M3 11.5v-2a4 4 0 0 1 4-4h14" />
+      <path d="M7 22.5l-4-4 4-4" />
+      <path d="M21 12.5v2a4 4 0 0 1-4 4H3" />
+    </Icon>
+  )
+}
