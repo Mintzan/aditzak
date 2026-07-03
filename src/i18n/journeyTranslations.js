@@ -445,8 +445,8 @@ export const JOURNEY_TRANSLATIONS = {
     14: {
       title: { es: 'gustatu — "Me gusta" (presente NOR-NORI)', eu: 'gustatu — "Gustatzen zait" (NOR-NORI oraina)' },
       focus: {
-        es: 'presente NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, más su división de número NOR plural (zaizkit); termina con una lección "colchón" de marco de caso y una revisión combinada (#385) que amplía el patrón a jarraitu/jario, antes del salto ditransitivo de la unidad 28',
-        eu: 'oraina NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, gehi NOR plural zatiketa (zaizkit); kasu-markoaren "koltxoi" saio batekin eta eredua jarraitu/jario-ra zabaltzen duen errepaso nahasi batekin (#385) amaitzen da, 28. unitatearen jauzi ditransitiboaren aurretik',
+        es: 'presente NOR-NORI (primero zait/zaizu/zaio por verbo, luego zaigu/zaizue/zaie como paso de expansión propio) — gustatu/iruditu/ahaztu, más su división de número NOR plural (zaizkit); termina con una lección "colchón" de marco de caso y una revisión combinada (#385) que amplía el patrón a jarraitu/jario, antes del salto ditransitivo de la unidad 28',
+        eu: 'oraina NOR-NORI (lehenbizi zait/zaizu/zaio aditz bakoitzeko, gero zaigu/zaizue/zaie zabalpen-urrats propio gisa) — gustatu/iruditu/ahaztu, gehi NOR plural zatiketa (zaizkit); kasu-markoaren "koltxoi" saio batekin eta eredua jarraitu/jario-ra zabaltzen duen errepaso nahasi batekin (#385) amaitzen da, 28. unitatearen jauzi ditransitiboaren aurretik',
       },
       payload: {
         es: '"Me gusta esto." (Hau gustatzen zait)',

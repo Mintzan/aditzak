@@ -276,13 +276,16 @@ export const JOURNEY = [
             number: 14,
             title: 'gustatu — "I Like It" (NOR-NORI Present)',
             focus:
-              'present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; a case-frame buffer and a pooled mixer review widening past the three founding verbs to jarraitu/jario',
+              'present NOR-NORI (zait/zaizu/zaio first, per verb, then zaigu/zaizue/zaie as a dedicated expansion step) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; a case-frame buffer and a pooled mixer review widening past the three founding verbs to jarraitu/jario',
             payload: '"I like this." (Hau gustatzen zait)',
             status: 'available',
             lessonIds: [
               'gustatu-present',
               'iruditu-present',
               'ahaztu-present',
+              'gustatu-present-expansion',
+              'iruditu-present-expansion',
+              'ahaztu-present-expansion',
               'gustatu-present-plural',
               'iruditu-present-plural',
               'ahaztu-present-plural',
