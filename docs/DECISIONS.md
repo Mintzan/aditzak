@@ -8,6 +8,12 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — `CURRICULUM_MAP.md` now shows the actual conjugated Basque forms per lesson
+
+The tag-only pass (🆕/📗/✅/➕/review-only) said *that* a lesson was new but never showed *which conjugated words* it actually taught — the literal answer to "what conjugation is introduced here" was still missing. Reworked the generator to resolve real forms straight from `verbs.js`, reusing `lessonLogic.js`'s own `getComposedTable`/`resolveObjectAxisTable` helpers (the same ones `generateQuestions` calls at runtime) rather than reading `conjugations[tense][person]` directly — most axis tenses (`presentByObject`, `presentByNor`, ditransitive `present`/`past`/`future`, …) aren't stored as literal tables at all, they're composed from a shared skeleton plus a per-verb prefix, and a lesson's own `objectAxis` (`{ vary, fixed }`) then has to collapse the composed 2D table down to the flat slice that lesson drills. Reusing the app's real resolution logic instead of reimplementing it means the forms shown are guaranteed to match what a learner actually sees, including every gap (`hi`, reflexive cells) the real tables have.
+
+Every practice lesson now has a `Forms:` line with the actual words (e.g. `izan-present` → **naiz** (ni), **zara** (zu), **da** (hura)); the ✅/➕ new-material tags on pooled/review lessons show forms too, but suppressed for single-verb practice lessons where the `Forms:` line already said the same thing (avoided doubling every line). Wide pools (e.g. Unit 16's 37-verb object-axis review) still cap at 3 example verbs' forms rather than all of them, to keep the file from ballooning into thousands of near-duplicate lines.
+
 ## 2026-07-03 — `CURRICULUM_MAP.md` now tags each lesson with what's actually new
 
 The first cut of `CURRICULUM_MAP.md` listed every lesson's verb/tense/persons but left "is this new material or review?" for the reader to work out by comparing lessons themselves — exactly the question it was meant to answer. Reworked the generator to walk the journey in taught order and diff each lesson's (verb, tense, persons) against everything taught before it, tagging every lesson with one of: 🆕 new grammar pattern (first appearance of a tense/axis for *any* verb), 📗 new verb, ✅ an already-known verb's first exposure to this particular tense, ➕ new persons added to an already-known table, or a plain "review only" note when nothing in the lesson is new.
