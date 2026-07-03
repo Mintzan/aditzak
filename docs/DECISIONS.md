@@ -8,6 +8,41 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — Profile tab: colorful invite/feedback buttons, reset progress demoted to a text link
+
+A user reviewing a Profile-tab screenshot asked for two changes, both scoped
+narrowly rather than the fuller "dedupe the header/body stats" rethink
+discussed in the same conversation (not implemented — no explicit go-ahead
+on that broader piece):
+
+1. **"Invite a friend"/"Send feedback" should be more attractive.** Both
+   used the same flat `border-gray-200 text-gray-700` treatment as every
+   other secondary button, indistinguishable from "Reset progress" below
+   them. Restyled using the app's existing tint-triad idiom (`border-<token>
+   bg-<token>-tint text-<token>`, already used for the language-picker's
+   selected state and the NOR/NORI/NORK badges) rather than inventing a new
+   pattern: invite gets `brand-clay` (warm/social), feedback gets
+   `brand-forest` + the existing `EnvelopeIcon` (already used inside the
+   feedback modal itself, so this reuses rather than introduces an icon
+   association). Both invert to solid-fill/white-text on hover, the same
+   high-contrast pairing the Start/Sign-in buttons already use. Deliberately
+   did *not* reuse `brand-txakoli`/`accent-hearts` (points/hearts) or a solid
+   `brand-forest` fill — those already carry a specific meaning elsewhere
+   (points, hearts, "the one primary CTA on screen") that reusing here would
+   blur.
+2. **"Reset progress" is rare, so it shouldn't compete for attention.** It's
+   already `window.confirm`-gated (`handleResetProgress`, `App.jsx`), so the
+   destructive action itself was never one accidental tap away — the actual
+   problem was purely visual weight, sitting as a bordered button the same
+   size/shape as "Invite a friend" a few pixels above it. Demoted to a plain
+   underlined text link (`text-xs text-gray-400`, no border/background),
+   still a real `<button>` with adequate tap padding, just visually reading
+   as low-priority.
+
+Verified with a Playwright screenshot of the live dev server (English
+locale) rather than just trusting the class names — confirmed contrast and
+layout read correctly before considering this done.
+
 ## 2026-07-03 — Stopped rendering `DialectBadge` — every verb is `batua`, so it never varies
 
 A user flagged a screenshot showing a "Batua" pill on every single exercise —
