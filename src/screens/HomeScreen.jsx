@@ -800,7 +800,7 @@ function ProfileTab({
         type="button"
         onClick={handleShareApp}
         style={{ minHeight: 48 }}
-        className="w-full rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:text-green-600"
+        className="w-full rounded-2xl border-2 border-brand-clay bg-brand-clay-tint px-5 text-sm font-bold text-brand-clay transition hover:bg-brand-clay hover:text-white active:scale-[0.98]"
       >
         {shareCopied ? t('shareCopied') : t('shareInviteButton')}
       </button>
@@ -808,15 +808,18 @@ function ProfileTab({
         type="button"
         onClick={onOpenFeedback}
         style={{ minHeight: 48 }}
-        className="w-full rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:text-green-600"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-brand-forest bg-brand-forest-tint px-5 text-sm font-bold text-brand-forest transition hover:bg-brand-forest hover:text-white active:scale-[0.98]"
       >
+        <EnvelopeIcon className="h-4 w-4" />
         {t('profileFeedback')}
       </button>
+      {/* Rarely used and destructive (confirm-gated in `handleResetProgress`,
+          App.jsx) — kept as a plain text link, well below the actions above
+          it, rather than a bordered button competing with them for attention. */}
       <button
         type="button"
         onClick={onResetProgress}
-        style={{ minHeight: 48 }}
-        className="rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-500 transition hover:border-red-300 hover:text-red-500"
+        className="px-2 py-3 text-xs font-semibold text-gray-400 underline decoration-gray-300 underline-offset-2 transition hover:text-red-500"
       >
         {t('profileResetProgress')}
       </button>
