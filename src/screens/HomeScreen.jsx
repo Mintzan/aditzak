@@ -287,6 +287,12 @@ function ProgressTab({ progress }) {
                     : t('progressNotStarted')}
                 </p>
                 {needsGateScore && <p className="mt-1 text-sm font-semibold text-semantic-warning">{t('gateNeedsScore')}</p>}
+                {entry && entry.bestStars === 0 && (
+                  <p className="mt-1 flex items-center gap-1.5 text-sm font-semibold text-neutral-600">
+                    <MascotAvatar size="h-6 w-6" expression="nekatuta" />
+                    {t('progressNeedsReview')}
+                  </p>
+                )}
               </div>
               <Stars count={entry?.bestStars ?? 0} />
             </div>
