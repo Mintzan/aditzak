@@ -8,6 +8,58 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — Extended composition to the same 14 verbs' plain `present`/`past`/`future` tables too; renamed `pluralPrefixes` → `composedPrefixes`
+
+Follow-up to the entry directly below: a user pointed out the same
+duplication also applies one level up — `jan.conjugations.present.ni`
+("jaten dut") is *itself* mechanically `jan.byObjectPrefixes.present`
+("jaten ") + `ukan.conjugations.present.ni` ("dut"), verified with zero
+exceptions across all 14 verbs and all three of `present`/`past`/`future`.
+Extended `getComposedTable`'s flat-tense branch to also compose these (the
+`hura` column of the same skeleton, vs. plural's `haiek` column), and
+deleted the 14 verbs' literal `present`/`past`/`future` tables too, leaving
+only `nahi`'s/`ukan`'s already-narrower shapes and each verb's
+`composedPrefixes`. Renamed `pluralPrefixes` → `composedPrefixes` (it now
+drives 6 tenses, not just the plural 3) via a global identifier rename —
+purely mechanical, same field, same values, same scoping rationale (kept
+deliberately separate from `byObjectPrefixes` for the reasons below).
+
+**Deliberately scoped to just these 14 verbs**, not all 38 with
+`byObjectPrefixes` — asked the user first, since (a) `present`/`past` are
+the single most-read table in the app, a materially larger blast radius
+than the plural axis, and (b) making them fully computed removes the
+"read the verb entry, see its conjugation" property that makes this data
+file directly reviewable, a real (if debatable) cost the plural axis barely
+had.
+
+**Caught a real data-loss bug during this pass**: the mechanical deletion
+regex matched each verb's *entire* `conjugations: { ... }` object body (not
+just `present`/`past`/`future`), since it stopped at the first top-level
+closing brace — which for most of the 14 was exactly `present`/`past`/
+`future`, but `ikusi` also carries `habitualPast`/`presentPerfect` nested in
+that same object. Those two tables got silently deleted along with the
+intended ones. Caught by `journey.test.js` (`ikusi-present-perfect` lesson
+suddenly pointed at nothing) and confirmed by a full block-diff of all 14
+verbs' original vs. current source (everything outside `conjugations`/the
+prefix fields byte-identical) before restoring `ikusi`'s two tables by
+hand. Lesson: a "remove tense X" edit on a shared container needs to name
+what's *kept*, not just match up to the next closing brace — especially on
+a file where individual verbs accreted tenses over 500+ commits.
+
+Also updated `verbHasComposedTense` (`verbs.js`, gates the "future/past
+sentences reuse present/past's" loops) and the `sentences.futurePlural`
+aliasing loop to check `composedPrefixes` alongside the literal-table and
+`byNoriPrefixes`/`ditransitivePrefixes` checks they already had — same
+"existence-check bypasses `getComposedTable`" gotcha as `getObjectNumberLure`
+below, now the second and third instances of it. Several `logic.test.js`
+assertions that read a touched verb's `.conjugations.present`/`.past`
+directly as "known-good" ground truth (comparing against
+`presentByObject`/`pastByObject`'s citation column, `getRecencyContrastLure`,
+an `ari`-progressive lure test) were updated to read through
+`getComposedTable` instead. Re-verified byte-identical composed output for
+all 6 tenses across all 14 verbs, and an unchanged `validfor-audit.test.js`
+baseline, before relying on `npm test` (493 passing).
+
 ## 2026-07-03 — Composed `presentPlural`/`pastPlural`/`futurePlural` for 14 more `ukan`-auxiliary verbs, dropping their literal tables
 
 A user flagged the exact duplication #436 had already fixed for

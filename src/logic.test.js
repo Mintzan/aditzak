@@ -1115,13 +1115,15 @@ describe('generateQuestions', () => {
       const ikusi = VERBS.find((v) => v.id === 'ikusi')
       const presentByObject = getComposedTable(ikusi, 'presentByObject')
       const pastByObject = getComposedTable(ikusi, 'pastByObject')
-      for (const nork of Object.keys(ikusi.conjugations.present)) {
+      const ikusiPresent = getComposedTable(ikusi, 'present')
+      const ikusiPast = getComposedTable(ikusi, 'past')
+      for (const nork of Object.keys(ikusiPresent)) {
         if (!(nork in presentByObject)) continue
-        expect(presentByObject[nork].hura).toBe(ikusi.conjugations.present[nork])
+        expect(presentByObject[nork].hura).toBe(ikusiPresent[nork])
       }
-      for (const nork of Object.keys(ikusi.conjugations.past)) {
+      for (const nork of Object.keys(ikusiPast)) {
         if (!(nork in pastByObject)) continue
-        expect(pastByObject[nork].hura).toBe(ikusi.conjugations.past[nork])
+        expect(pastByObject[nork].hura).toBe(ikusiPast[nork])
       }
     })
 
@@ -1184,13 +1186,15 @@ describe('generateQuestions', () => {
         const verb = VERBS.find((v) => v.id === verbId)
         const presentByObject = getComposedTable(verb, 'presentByObject')
         const pastByObject = getComposedTable(verb, 'pastByObject')
-        for (const nork of Object.keys(verb.conjugations.present)) {
+        const verbPresent = getComposedTable(verb, 'present')
+        const verbPast = getComposedTable(verb, 'past')
+        for (const nork of Object.keys(verbPresent)) {
           if (!(nork in presentByObject)) continue
-          expect(presentByObject[nork].hura).toBe(verb.conjugations.present[nork])
+          expect(presentByObject[nork].hura).toBe(verbPresent[nork])
         }
-        for (const nork of Object.keys(verb.conjugations.past)) {
+        for (const nork of Object.keys(verbPast)) {
           if (!(nork in pastByObject)) continue
-          expect(pastByObject[nork].hura).toBe(verb.conjugations.past[nork])
+          expect(pastByObject[nork].hura).toBe(verbPast[nork])
         }
       },
     )
@@ -2776,7 +2780,7 @@ describe('generateQuestions', () => {
       it('returns the past form for a presentPerfect question, and vice versa', () => {
         expect(getRecencyContrastLure(etorri, 'presentPerfect', 'ni')).toBe(etorri.conjugations.past.ni)
         expect(getRecencyContrastLure(etorri, 'past', 'ni')).toBe(etorri.conjugations.presentPerfect.ni)
-        expect(getRecencyContrastLure(ikusi, 'presentPerfect', 'hura')).toBe(ikusi.conjugations.past.hura)
+        expect(getRecencyContrastLure(ikusi, 'presentPerfect', 'hura')).toBe(getComposedTable(ikusi, 'past').hura)
         expect(getRecencyContrastLure(ikusi, 'past', 'hura')).toBe(ikusi.conjugations.presentPerfect.hura)
         expect(getRecencyContrastLure(izan, 'past', 'ni')).toBe(izan.conjugations.presentPerfect.ni)
       })
@@ -3101,7 +3105,7 @@ describe('generateQuestions', () => {
       const sentenceQuestion = questions.find((q) => q.kind === 'sentence' && q.sentence === 'Ni jaten ___.')
 
       expect(sentenceQuestion).toBeDefined()
-      expect(sentenceQuestion.options).toContain(jan.conjugations.present.ni)
+      expect(sentenceQuestion.options).toContain(getComposedTable(jan, 'present').ni)
     })
   })
 })

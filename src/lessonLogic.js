@@ -986,30 +986,33 @@ export function getComposedTable(verb, tense) {
     }
     return table
   }
-  // `presentPlural`/`pastPlural`/`futurePlural` are the flat `nor = haiek`
-  // slice of the same object axis — every verb that turned out to need one
-  // was `<own prefix> + ukan's own plural-object cell`, the exact same
-  // relationship `presentByObject`/`pastByObject` already compose above, so
-  // it's derived from a prefix rather than hand-duplicated again. Uses its
-  // own `pluralPrefixes` field, deliberately *not* `byObjectPrefixes` —
-  // the ~30 verbs #443 gave a `byObjectPrefixes` for the present/past 2D
-  // axis never had a plural-object table at all, so reusing that field here
-  // would silently grant them one (and the cross-verb `validFor` slots that
-  // come with it) without the naturalness review that surface requires
-  // (`docs/DISTRACTOR_STRATEGY.md` §4.2). `futurePlural` has no future row
-  // of its own in the skeleton (same reasoning as `getByNoriComposedTable`'s
-  // future handling below) — only the participle differs, so it reuses the
-  // `present` column under the verb's own `future` prefix. Guarded on there
-  // being no literal table already: `ukan` itself keeps its hand-written
-  // one, which carries extra `hi-m`/`hi-f`/`hi` cells the skeleton (no `hi`
-  // row) can't produce.
-  const pluralBase = tense === 'presentPlural' ? 'present' : tense === 'pastPlural' ? 'past' : tense === 'futurePlural' ? 'future' : undefined
-  if (pluralBase !== undefined && verb.conjugations[tense] === undefined) {
-    const pluralPrefix = verb.pluralPrefixes?.[pluralBase]
-    if (pluralPrefix !== undefined) {
-      const skeleton = OBJECT_AXIS_SKELETONS[verb.byObjectSkeleton ?? 'edun'][pluralBase === 'future' ? 'present' : pluralBase]
+  // `present`/`past`/`future` (the citation, `nor = hura` column) and
+  // `presentPlural`/`pastPlural`/`futurePlural` (the `nor = haiek` column)
+  // are both flat slices of the same object axis — for a handful of verbs
+  // *every* cell of all six, not just the plural three, turned out to be
+  // `<own prefix> + ukan's own cell`, hand-duplicated per verb. Composed
+  // from a verb's own `composedPrefixes` field, deliberately *not*
+  // `byObjectPrefixes` — the ~30 verbs #443 gave a `byObjectPrefixes` for
+  // the present/past 2D axis were never verified to have this flat-table
+  // relationship too (and never had a plural-object table at all), so
+  // reusing that field here would silently rewrite their base conjugations
+  // (or manufacture a plural axis, plus the cross-verb `validFor` slots
+  // that come with it) without the check/review that requires
+  // (`docs/DISTRACTOR_STRATEGY.md` §4.2 for the `validFor` half). `future`/
+  // `futurePlural` have no future row of their own in the skeleton (same
+  // reasoning as `getByNoriComposedTable`'s future handling below) — only
+  // the participle differs, so both reuse the `present` column under the
+  // verb's own `future` prefix. Guarded on there being no literal table
+  // already: `ukan` itself keeps its hand-written one, which carries extra
+  // `hi-m`/`hi-f`/`hi` cells the skeleton (no `hi` row) can't produce.
+  const flatBase = tense === 'present' || tense === 'presentPlural' ? 'present' : tense === 'past' || tense === 'pastPlural' ? 'past' : tense === 'future' || tense === 'futurePlural' ? 'future' : undefined
+  if (flatBase !== undefined && verb.conjugations[tense] === undefined) {
+    const flatPrefix = verb.composedPrefixes?.[flatBase]
+    if (flatPrefix !== undefined) {
+      const skeleton = OBJECT_AXIS_SKELETONS[verb.byObjectSkeleton ?? 'edun'][flatBase === 'future' ? 'present' : flatBase]
+      const column = tense === 'presentPlural' || tense === 'pastPlural' || tense === 'futurePlural' ? 'haiek' : 'hura'
       const table = {}
-      for (const outer of Object.keys(skeleton)) table[outer] = pluralPrefix + skeleton[outer].haiek
+      for (const outer of Object.keys(skeleton)) table[outer] = flatPrefix + skeleton[outer][column]
       return table
     }
   }
