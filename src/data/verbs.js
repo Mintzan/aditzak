@@ -4144,6 +4144,11 @@ export const VERBS = [
         haiek: [{ text: 'Haiei joan den astean hau ___.', validFor: ['ahaztu'] }],
       },
     },
+    // NORI is the varying slot for this verb (`agreement: ['nor', 'nori']`,
+    // `object: 'hura'` fixes NOR), so the plain-drill heading needs the
+    // dative-declined pronoun (`niri`/`hari`/`haiei`/...), not the raw
+    // absolutive person key — same fix as `eman.pronouns` above.
+    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
   },
   {
     id: 'iruditu',
@@ -4290,6 +4295,8 @@ export const VERBS = [
         haiek: [{ text: 'Haiei joan den astean ongi ___.', validFor: [] }],
       },
     },
+    // See `gustatu.pronouns` above — same NOR-NORI dative-heading fix.
+    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
   },
   {
     id: 'ahaztu',
@@ -4446,6 +4453,8 @@ export const VERBS = [
         zu: [{ text: 'Zuri ___ etxeko giltzak San Fermin jaietan.', validFor: ['gustatu'] }],
       },
     },
+    // See `gustatu.pronouns` above — same NOR-NORI dative-heading fix.
+    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
   },
   // #319: high-frequency fodder tier (split from #304/#318). Plain `nor-nork`/
   // `nor` regular verbs feeding the pool lessons #318 designated — no new
@@ -8523,6 +8532,8 @@ export const VERBS = [
         haiek: [{ text: 'Aitorren txandak haiei ___.', validFor: [] }],
       },
     },
+    // See `gustatu.pronouns` above — same NOR-NORI dative-heading fix.
+    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
   },
   // `jario` is native synthetic and defective — almost always used with an
   // inanimate `nor` (water, tears, sweat...), so `nor` is fixed (`object:
@@ -8582,6 +8593,8 @@ export const VERBS = [
         haiek: [{ text: 'Malkoak haiei ___.', validFor: [] }],
       },
     },
+    // See `gustatu.pronouns` above — same NOR-NORI dative-heading fix.
+    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
   },
   // #485: `irudi` ("to seem / give the impression") — unergative, NORK-only
   // (ergative subject, no absolutive argument at all), per CONJUGATIONS.md
