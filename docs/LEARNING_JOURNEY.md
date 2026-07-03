@@ -2,6 +2,8 @@
 
 **Status: current/authoritative.** Mirrors what's actually implemented in `journey.js`/`LESSONS`. For the still-pending redesign, see `LEARNING_JOURNEY_PROPOSED.md` (spec) and `LEARNING_JOURNEY_EVALUATION.md` (why).
 
+> **Looking for a plain list of units/lessons — what each one teaches and which conjugations it introduces — rather than the design rationale?** See `docs/CURRICULUM_MAP.md`. That document is generated straight from `journey.js`/`lessons.js`, so it always matches what's actually implemented; this document is kept as the *why* — the pedagogical reasoning, sequencing trade-offs, and data/engine implications behind each unit — split out on 2026-07-03 (see `docs/DECISIONS.md`) once both concerns got too tangled to read as one file.
+
 > **Rebalanced 2026-06-27 (`LEARNING_JOURNEY_REBALANCE.md`).** The
 > **"Current implemented structure" table immediately below is the authoritative
 > map** — it is generated from `journey.js`'s live numbering, `bonus`/`gate`
