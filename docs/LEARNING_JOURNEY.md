@@ -49,7 +49,7 @@ marks score-gated Refresh Gates.
 | 13 | The NOR-NORK Present — dut/duzu/du | 4 |
 | **14** | **gustatu — "I Like It" (NOR-NORI Present)** ⬅ promoted | 6 |
 | 15 | The NOR-NORK Past — nuen/zenuen/zuen | 4 |
-| 16 | maite izan — Loving Someone (forward object axis) | 6 |
+| 16 | maite izan — Loving Someone | 6 |
 | 17 | eraman/ekarri — More NOR-NORK Synthetics | 10 |
 | 18 | eduki — Physical States & Possessions | 5 |
 | 19 | eduki — "I Had It" (Simple Past) | 4 |
@@ -62,7 +62,7 @@ marks score-gated Refresh Gates.
 | 25 | joan/etorri/ibili — Motion in Progress (Past) | 2 |
 | **Phase IV — Interpersonal Dynamics** | | |
 | 26 | NOR-NORI Past & Future — Dative Across Time | 7 |
-| 27 | The NOR-NORI Object Axis — natzaizu/gatzaizu | 12 |
+| 27 | gustatu's Other Direction — natzaizu/gatzaizu | 12 |
 | 28 | The NOR-NORI-NORK Present — diot/diozu/dio | 10 |
 | 29 | NOR-NORI-NORK Past & Future | 12 |
 | 30 | Covert-Dative NOR-NORI-NORK — Agentive Verbs | 8 |
@@ -85,10 +85,10 @@ marks score-gated Refresh Gates.
 | 46 ✨ | Unergative Curiosities (ihardun/iraun) | 5 |
 | 47 ✨ | erabili — Using Things | 3 |
 | **Bonus — Mastery & Depth** (the deflated axis/mood permutations) | | |
-| 48 ✨ | The Reverse Object Axis — Acting on Me/Us/You | 20 |
-| 49 ✨ | Potential — The Axes in Depth | 38 |
-| 50 ✨ | Conditionals — The Axes in Depth | 38 |
-| 51 ✨ | Commands — The Axes in Depth | 24 |
+| 48 ✨ | Acting on Me, Us, and You | 20 |
+| 49 ✨ | Ahalera, in Depth | 38 |
+| 50 ✨ | Conditionals, in Depth | 38 |
+| 51 ✨ | Commands, in Depth | 24 |
 
 > **47-unit core layout** (renumbered 2026-06-14/15, issues #137/#149/#151;
 > present perfect inserted as Unit 11 on 2026-06-19; "Carrying & Bringing"

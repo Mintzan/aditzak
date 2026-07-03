@@ -8,6 +8,51 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — Rewrote all 51 units' roadmap `focus` text (and a handful of `title`s) to be learner-facing, not dev-facing
+
+`unit.focus` (`journey.js`) isn't internal documentation — `HomeScreen.jsx`'s
+`UnitLessons`/`PendingUnitCard` render it directly as the gray subtitle under
+every unit's title, for both playable and locked-preview units. It had
+drifted into engineering shorthand over ~500 commits: issue numbers (`#410`,
+`#446`, …), engine-internal terms (`case-frame buffer`, `cross-verb review`,
+`object axis`, `recognition-pooled`, `carrier`), and multi-clause run-ons
+describing *implementation history* rather than *what a learner is about to
+practice* (Unit 32's old focus: "dezaket/naiteke contrasted with periphrastic
+ahal izan/ezin (#410/#411) — production for NOR/NOR-NORK; plus ukan's
+NOR-NORK object axis (zaitzaket-type forms, #352, extended to every NORK
+value by #424)..."). A user flagged this from a live screenshot.
+
+Rewrote all 51 units' `focus` in `journey.js`, plus the six `title`s that had
+the same leaked-jargon problem (Units 16, 27, 48, 49, 50, 51 — e.g. "The
+Reverse Object Axis — Acting on Me/Us/You" → "Acting on Me, Us, and You").
+Kept genuine grammar vocabulary the app already teaches as badges/tooltips
+(NOR/NORI/NORK, ergative/absolutive/dative, "periphrastic") since learners
+already meet those terms elsewhere with a plain gloss attached
+(`AGREEMENT_META`'s `agreementNorkTitle`: "Ergative — who performs the
+action") — the fix targets implementation jargon, not the app's actual
+grammar terminology. Style: one plain sentence naming the verb(s) and what
+you'll be able to say, not a changelog of which issue added which table.
+
+Also translated the same rewrite into `journeyTranslations.js`'s es/eu
+`focus`/`title` fields, matching tone (requested explicitly — the user chose
+"rewrite all three languages now" over "English first" when asked). These
+are fluent but not native-speaker-reviewed; flagging that honestly rather
+than implying a review that didn't happen.
+
+Incidental fixes found while rewriting: Units 48-51's old focus text
+referenced stale pre-renumber unit numbers for what they're the "deep
+practice" half of (e.g. Unit 48 said "the deep-practice half of Unit 15";
+the actual match, confirmed by identical `payload` text, is Unit 16 — likely
+never updated after a renumber). Corrected to the current numbers.
+
+Updated `docs/LEARNING_JOURNEY.md`'s authoritative unit table to match the
+six retitled units. Left the file's own pre-rebalance-numbering prose
+sections (explicitly marked in the file's preamble as historical-rationale,
+not synced to current numbering) and `docs/LEARNING_JOURNEY_REBALANCE.md`
+untouched, per the same "don't rewrite point-in-time records" reasoning as
+the entry below. `docs/CURRICULUM_MAP.md` remains stale pending regeneration
+(see its own entry and the two entries below).
+
 ## 2026-07-03 — Unit 14 pools gustatu/iruditu/ahaztu into shared lessons instead of one lesson per verb
 
 Follow-up to the entry directly below: a user flagged that Unit 14 having a
