@@ -25,7 +25,7 @@
 
 ## Current implemented structure (authoritative — mirrors `journey.js`)
 
-The **mandatory spine is Units 1–34** (197 lessons). Units 35–51 are
+The **mandatory spine is Units 1–34** (191 lessons). Units 35–51 are
 `bonus: true` (✨): opt-in "Mastery & Depth" content that never gates spine
 progression — a learner can finish the whole core curriculum without them. 🛡️
 marks score-gated Refresh Gates.
@@ -47,7 +47,7 @@ marks score-gated Refresh Gates.
 | 11 | The Present Perfect — What Just Happened | 5 |
 | 12 | The "izan" Past Pool — Looking Back I | 2 |
 | 13 | The NOR-NORK Present — dut/duzu/du | 4 |
-| **14** | **gustatu — "I Like It" (NOR-NORI Present)** ⬅ promoted | 12 |
+| **14** | **gustatu — "I Like It" (NOR-NORI Present)** ⬅ promoted | 6 |
 | 15 | The NOR-NORK Past — nuen/zenuen/zuen | 4 |
 | 16 | maite izan — Loving Someone (forward object axis) | 6 |
 | 17 | eraman/ekarri — More NOR-NORK Synthetics | 10 |

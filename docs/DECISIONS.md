@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — Unit 14 pools gustatu/iruditu/ahaztu into shared lessons instead of one lesson per verb
+
+Follow-up to the entry directly below: a user flagged that Unit 14 having a
+separate `gustatu-present`/`iruditu-present`/`ahaztu-present` (and the
+matching `-expansion`/`-plural` trios) "makes no sense" — the point being
+that NOR-NORI conjugation is one grammatical pattern (`dativeIzan`, composed
+via `byNoriPrefixes`) that all three verbs share cell-for-cell; only the
+prefix word differs. A separate lesson per verb was drilling the same
+pattern three times over with different vocabulary glued on, not three
+different things to learn — the same critique `unit-10-present`'s giant
+pooled `sources` array (jan/edan/erosi/ikusi/hartu/… all sharing one `ukan`
+present table) already settled for the ergative-present cluster, just never
+applied here.
+
+Collapsed the 9 lessons (3 verbs × {base, expansion, plural-NOR}) into 3
+pooled lessons — `unit-14-present`/`unit-14-present-expansion` (`sources`
+listing all three verbs, `persons: PHASE_1_PERSONS`/`PHASE_1_PLURAL_PERSONS`
+respectively) and `unit-14-present-plural` (the `presentPlural`/object-plural
+axis, also pooled, left unsplit by persons same as before) — exactly
+`unit-10-present`/`unit-10-present-plural`'s existing shape, not a new
+pattern. `describeLesson`/`LessonPreviewScreen`/`createExerciseState` needed
+no changes — pooled non-review practice lessons (`lesson.sources` without
+`lesson.review`) were already a supported, tested shape. Unit 14 drops from
+12 lessons to 6; spine total 197 → 191. `journey.js`'s focus text and its
+`journeyTranslations.js` es/eu counterpart reworded from "per verb" to
+"pooled across gustatu/iruditu/ahaztu" to match. `docs/CURRICULUM_MAP.md`
+remains stale pending a regeneration (see its own entry and the match-pairs
+entry below).
+
 ## 2026-07-03 — `gustatu`/`iruditu`/`ahaztu`'s first present lesson restricted to 3 persons, gu/zuek/haiek split into a dedicated expansion lesson
 
 Follow-up to the match-pairs cap above: `gustatu-present`/`iruditu-present`/
