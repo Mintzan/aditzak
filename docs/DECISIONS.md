@@ -8,6 +8,23 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — Stopped rendering `DialectBadge` — every verb is `batua`, so it never varies
+
+A user flagged a screenshot showing a "Batua" pill on every single exercise —
+correctly: `verb.dialect` is `'batua'` for all 109 verbs (`data/verbs.js`
+documents it as a placeholder for future dialect variants, e.g. a
+`dialectVariants: { bizkaiera: {...} }` override on some verb down the
+line). Until that actually exists, the badge conveys zero information — it's
+the same word on every card, pure clutter alongside `TypeBadge`/
+`AgreementBadge`/`FixedArgumentBadge`, which do vary per verb/lesson.
+
+Removed the `<DialectBadge>` line from `VerbBadgeRow` (`src/components/
+badges.jsx`) — the single place both `LessonPreviewScreen` and the active
+exercise header (`ExerciseScreen.jsx`) source their badge row from, so this
+covers every place "Batua" was showing. Kept the `DialectBadge` component,
+`DIALECT_LABELS`, and `verb.dialect` data itself untouched — re-adding the
+one line to `VerbBadgeRow` is all a future dialect variant needs.
+
 ## 2026-07-03 — Rewrote all 51 units' roadmap `focus` text (and a handful of `title`s) to be learner-facing, not dev-facing
 
 `unit.focus` (`journey.js`) isn't internal documentation — `HomeScreen.jsx`'s
