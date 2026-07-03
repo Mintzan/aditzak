@@ -8,6 +8,49 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — Composed `presentPlural`/`pastPlural`/`futurePlural` for 14 more `ukan`-auxiliary verbs, dropping their literal tables
+
+A user flagged the exact duplication #436 had already fixed for
+`presentByObject`/`pastByObject`: `jan`/`edan`/`erosi`/`hartu`/`ikusi`/
+`nahi`/`entzun`/`bilatu`/`irakurri`/`idatzi`/`ikasi`/`utzi`/`saldu`/`egin`
+each hand-carried their own `presentPlural`/`pastPlural`/`futurePlural`
+literal tables — the flat "NOR = haiek" slice of the NOR-NORK object axis —
+every cell of which was mechanically `<verb's own prefix> + ukan's own
+plural-object cell` (verified byte-for-byte before touching anything).
+Extended `getComposedTable` (`lessonLogic.js`) to compose these three tenses
+from `OBJECT_AXIS_SKELETONS.edun`'s `present`/`past` `haiek` column, and
+deleted the 14 verbs' literal tables in `verbs.js`. `ukan` itself keeps its
+own hand-written table (it's the skeleton source, and carries extra
+`hi-m`/`hi-f`/`hi` cells the skeleton can't produce). Also fixed
+`getObjectNumberLure`, which read `verb.conjugations[`${tense}Plural`]`
+directly — the one caller that bypassed `getComposedTable` and would have
+silently gone blind for these 14 verbs.
+
+**Deliberately did not reuse `byObjectPrefixes`** for this, even though it
+already holds the exact same prefix strings for 8 of these verbs. The ~30
+verbs #443 gave a `byObjectPrefixes` for the present/past 2D axis never had
+a plural-object table at all; a first pass reused that field and silently
+manufactured `presentPlural` for all of them too, which also manufactures
+new cross-verb `validFor` gap slots — exactly the surface
+`docs/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness review,
+not an incidental refactor (caught by `validfor-audit.test.js`'s baseline
+diff, not by inspection). Used a new, separate `pluralPrefixes: { present,
+past, future }` field instead, added only to the 14 verbs that actually had
+a plural table before. Also found and fixed a second casualty of the same
+kind: a post-processing loop at the bottom of `verbs.js` that aliases
+`sentences.futurePlural` from `sentences.presentPlural` gated on
+`verb.conjugations.futurePlural` existing as a literal — now also checks
+`verb.pluralPrefixes?.future`. Confirmed both `computeGapCounts`'s baseline
+and every composed cell are byte-identical to pre-refactor via a throwaway
+script before relying on `npm test` (which also passes clean).
+
+Out of scope: `gustatu`/`iruditu`/`ahaztu` (NOR-NORI, `dativeIzan` skeleton)
+and `esan`/`eman` (ditransitive, `diot` skeleton) have their own
+`presentPlural`/`pastPlural`/`futurePlural` literal tables with the same
+shape of duplication, but ride a different auxiliary family — composing
+those would need the same treatment against their own skeletons, left for a
+follow-up rather than guessed at here.
+
 ## 2026-07-03 — `CURRICULUM_MAP.md` now shows the actual conjugated Basque forms per lesson
 
 The tag-only pass (🆕/📗/✅/➕/review-only) said *that* a lesson was new but never showed *which conjugated words* it actually taught — the literal answer to "what conjugation is introduced here" was still missing. Reworked the generator to resolve real forms straight from `verbs.js`, reusing `lessonLogic.js`'s own `getComposedTable`/`resolveObjectAxisTable` helpers (the same ones `generateQuestions` calls at runtime) rather than reading `conjugations[tense][person]` directly — most axis tenses (`presentByObject`, `presentByNor`, ditransitive `present`/`past`/`future`, …) aren't stored as literal tables at all, they're composed from a shared skeleton plus a per-verb prefix, and a lesson's own `objectAxis` (`{ vary, fixed }`) then has to collapse the composed 2D table down to the flat slice that lesson drills. Reusing the app's real resolution logic instead of reimplementing it means the forms shown are guaranteed to match what a learner actually sees, including every gap (`hi`, reflexive cells) the real tables have.
