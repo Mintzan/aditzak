@@ -643,26 +643,44 @@ export const LESSONS = [
   // NOR-NORI *past/future* (gustatu-past/-future, …) stays later, in the
   // "Dative Across Time" unit. `person` ranges over NORI (object: 'hura' fixes
   // NOR = "it"). See `docs/LEARNING_JOURNEY_REBALANCE.md`.
+  // Pooled across gustatu/iruditu/ahaztu (like `unit-10-present`'s verb
+  // pool) instead of one lesson per verb — all three share the exact same
+  // NOR-NORI aux table (`dativeIzan`, composed via `byNoriPrefixes`), only
+  // the prefix word differs, so a learner is drilling one grammatical
+  // pattern with three vocabulary items, not three separate patterns; a
+  // separate lesson per verb taught nothing a pooled one doesn't.
   // "Me, You, and It" first (`persons: PHASE_1_PERSONS` — zait/zaizu/zaio),
   // same restriction every other verb's first lesson gets; gu/zuek/haiek
   // (zaigu/zaizue/zaie) follow immediately below as a dedicated expansion
-  // step, mirroring Units 7/8 rather than — as before this fix — dumping the
-  // full 6-person NORI table into one lesson/match-pairs board on day one.
-  { id: 'gustatu-present', verbId: 'gustatu', tense: 'present', persons: PHASE_1_PERSONS },
-  { id: 'iruditu-present', verbId: 'iruditu', tense: 'present', persons: PHASE_1_PERSONS },
-  { id: 'ahaztu-present', verbId: 'ahaztu', tense: 'present', persons: PHASE_1_PERSONS },
-  // Expansion step: same three verbs, same table, just the gu/zuek/haiek
-  // rows — zero new verbs, exactly Unit 7/8's framing applied per-verb
-  // instead of pooled across a dedicated gate unit (these three didn't exist
-  // yet when Units 7/8 ran).
-  { id: 'gustatu-present-expansion', verbId: 'gustatu', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'iruditu-present-expansion', verbId: 'iruditu', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'ahaztu-present-expansion', verbId: 'ahaztu', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  // step, mirroring `unit-10-present`/`unit-10-present-plural`'s own split.
+  {
+    id: 'unit-14-present',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-14-present-expansion',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'present' },
+    ],
+  },
   // #164 — plural-NOR ("they please me") production drills, same three
   // verbs, `object: 'haiek'` instead of `hura`.
-  { id: 'gustatu-present-plural', verbId: 'gustatu', tense: 'presentPlural' },
-  { id: 'iruditu-present-plural', verbId: 'iruditu', tense: 'presentPlural' },
-  { id: 'ahaztu-present-plural', verbId: 'ahaztu', tense: 'presentPlural' },
+  {
+    id: 'unit-14-present-plural',
+    sources: [
+      { verbId: 'gustatu', tense: 'presentPlural' },
+      { verbId: 'iruditu', tense: 'presentPlural' },
+      { verbId: 'ahaztu', tense: 'presentPlural' },
+    ],
+  },
   // #164 — number-split review: each verb's singular and plural present
   // forms interleaved, recognition-only, drilling the `zait`-vs-`zaizkit`
   // contrast directly (#164 scope item 2's "number-split" lesson).
