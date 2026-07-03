@@ -643,9 +643,21 @@ export const LESSONS = [
   // NOR-NORI *past/future* (gustatu-past/-future, …) stays later, in the
   // "Dative Across Time" unit. `person` ranges over NORI (object: 'hura' fixes
   // NOR = "it"). See `docs/LEARNING_JOURNEY_REBALANCE.md`.
-  { id: 'gustatu-present', verbId: 'gustatu', tense: 'present' },
-  { id: 'iruditu-present', verbId: 'iruditu', tense: 'present' },
-  { id: 'ahaztu-present', verbId: 'ahaztu', tense: 'present' },
+  // "Me, You, and It" first (`persons: PHASE_1_PERSONS` — zait/zaizu/zaio),
+  // same restriction every other verb's first lesson gets; gu/zuek/haiek
+  // (zaigu/zaizue/zaie) follow immediately below as a dedicated expansion
+  // step, mirroring Units 7/8 rather than — as before this fix — dumping the
+  // full 6-person NORI table into one lesson/match-pairs board on day one.
+  { id: 'gustatu-present', verbId: 'gustatu', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'iruditu-present', verbId: 'iruditu', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'ahaztu-present', verbId: 'ahaztu', tense: 'present', persons: PHASE_1_PERSONS },
+  // Expansion step: same three verbs, same table, just the gu/zuek/haiek
+  // rows — zero new verbs, exactly Unit 7/8's framing applied per-verb
+  // instead of pooled across a dedicated gate unit (these three didn't exist
+  // yet when Units 7/8 ran).
+  { id: 'gustatu-present-expansion', verbId: 'gustatu', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'iruditu-present-expansion', verbId: 'iruditu', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ahaztu-present-expansion', verbId: 'ahaztu', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
   // #164 — plural-NOR ("they please me") production drills, same three
   // verbs, `object: 'haiek'` instead of `hura`.
   { id: 'gustatu-present-plural', verbId: 'gustatu', tense: 'presentPlural' },
