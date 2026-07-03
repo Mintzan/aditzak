@@ -1032,12 +1032,26 @@ function OutOfHeartsOverlay({ canBuy, onBuyHeart, onExit }) {
   )
 }
 
+// Maps `computeStars`' 0-3 bands onto the placement plan's three-expression
+// set (Gora!/Pozik/Nekatuta — no new scoring logic, just a choice per band
+// already computed). 3 stars is the strong-result Gora! moment; 0 stars
+// (under 50%) is the only band that reads as genuinely "weak" enough for
+// Nekatuta's tired, "let's review together" meaning — 2 and 1 stars are
+// both still a passing result, so both land on Pozik rather than routing a
+// middling-but-passing 1-star score to a tired-looking mascot, which would
+// read as discouraging and cut against §7's anti-guilt rule.
+function mascotExpressionForStars(stars) {
+  if (stars === 3) return 'gora'
+  if (stars === 0) return 'nekatuta'
+  return 'pozik'
+}
+
 function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone }) {
   const { t, tCount, language } = useLanguage()
   const stars = computeStars(correctCount, total)
   const [variantIndex] = useState(() => pickEncouragementVariantIndex(correctCount, total))
   const [celebration] = useState(() => (stars === 3 ? createCelebration() : null))
-  const { icon, headline, messageKey } = getEncouragement(correctCount, total, variantIndex)
+  const { headline, messageKey } = getEncouragement(correctCount, total, variantIndex)
   const { heading } = describeLesson(lesson, t, language)
 
   // Vibrate once when the results screen first appears, with a pattern that
@@ -1070,9 +1084,7 @@ function LessonResultsScreen({ lesson, correctCount, total, pointsEarned, onDone
   return (
     <div className="mx-auto flex h-dvh w-full max-w-md flex-col items-center justify-center gap-5 bg-white px-8 text-center">
       {celebration && <Celebration celebration={celebration} />}
-      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl" aria-hidden="true">
-        {icon}
-      </div>
+      <MascotAvatar size="h-20 w-20" expression={mascotExpressionForStars(stars)} />
       <div>
         <h2 className="text-2xl font-extrabold text-gray-900">{headline}</h2>
         <p className="mt-1 text-sm text-gray-500">
