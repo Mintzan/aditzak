@@ -190,6 +190,23 @@ export const OBJECT_AXIS_SKELETONS = {
       haiek: { ni: 'ninduten', hura: 'zuten', gu: 'gintuzten', zu: 'zintuzten', zuek: 'zintuzteten', haiek: 'zituzten' },
     },
   },
+  // The NOR-only counterpart to `edun` above: `izan`'s own citation
+  // present/past, backing NOR-only periphrastic verbs (`sartu`/`atera`/
+  // `hasi`/`bizi-izan`/`erori`/`jaiki`/`arriskuan-jarri`/`ahal-izan`/
+  // `ezin-izan`) whose flat `present`/`past`/`future` tables turned out to
+  // be `<own prefix> + izan's own cell` — the same relationship `edun`
+  // captures for NOR-NORK verbs, just without a NORK dimension to vary
+  // over (there's no object, so no `presentByObject`/`presentPlural`
+  // equivalent — `getComposedTable` never composes a `*Plural` tense
+  // against this skeleton). Selected via a verb's `byObjectSkeleton:
+  // 'izan'` (the same selector field `presentByObject`/`pastByObject`
+  // already read, unused until now). Flat, not nested like `edun` —
+  // there's only one argument to conjugate for. No `hi` row, matching
+  // every other periphrastic verb's tables.
+  izan: {
+    present: { ni: 'naiz', zu: 'zara', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
+    past: { ni: 'nintzen', zu: 'zinen', hura: 'zen', gu: 'ginen', zuek: 'zineten', haiek: 'ziren' },
+  },
   // #448: the NOR-NORI dative-`izan` skeleton behind `gustatu`/`iruditu`/
   // `ahaztu`/`jarraitu`'s flat `present`/`past`/`future` tables (Units 25/26)
   // — every cell there turns out to be `<per-verb prefix> + this skeleton's
@@ -1423,9 +1440,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: { ni: 'ahal naiz', zu: 'ahal zara', hura: 'ahal da', gu: 'ahal gara', zuek: 'ahal zarete', haiek: 'ahal dira' },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment near
+    // `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'ahal ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: [{ text: 'Ni gaur etxera joan ___.', validFor: [] }],
@@ -1470,9 +1489,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: { ni: 'ezin naiz', zu: 'ezin zara', hura: 'ezin da', gu: 'ezin gara', zuek: 'ezin zarete', haiek: 'ezin dira' },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment near
+    // `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'ezin ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: [{ text: 'Ni gaur lanera joan ___.', validFor: [] }],
@@ -4948,32 +4969,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'sartzen naiz',
-        zu: 'sartzen zara',
-        hura: 'sartzen da',
-        gu: 'sartzen gara',
-        zuek: 'sartzen zarete',
-        haiek: 'sartzen dira',
-      },
-      past: {
-        ni: 'sartu nintzen',
-        zu: 'sartu zinen',
-        hura: 'sartu zen',
-        gu: 'sartu ginen',
-        zuek: 'sartu zineten',
-        haiek: 'sartu ziren',
-      },
-      future: {
-        ni: 'sartuko naiz',
-        zu: 'sartuko zara',
-        hura: 'sartuko da',
-        gu: 'sartuko gara',
-        zuek: 'sartuko zarete',
-        haiek: 'sartuko dira',
-      },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment
+    // near `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'sartzen ', past: 'sartu ', future: 'sartuko ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: { text: 'Ni Gorbeiako babes-etxean ___ ekaitzetik.', validFor: [] },
@@ -5000,32 +5000,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'ateratzen naiz',
-        zu: 'ateratzen zara',
-        hura: 'ateratzen da',
-        gu: 'ateratzen gara',
-        zuek: 'ateratzen zarete',
-        haiek: 'ateratzen dira',
-      },
-      past: {
-        ni: 'atera nintzen',
-        zu: 'atera zinen',
-        hura: 'atera zen',
-        gu: 'atera ginen',
-        zuek: 'atera zineten',
-        haiek: 'atera ziren',
-      },
-      future: {
-        ni: 'aterako naiz',
-        zu: 'aterako zara',
-        hura: 'aterako da',
-        gu: 'aterako gara',
-        zuek: 'aterako zarete',
-        haiek: 'aterako dira',
-      },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment
+    // near `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'ateratzen ', past: 'atera ', future: 'aterako ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: { text: 'Ni Bilboko Casco Viejotik ___ goizeko hamarretan.', validFor: [] },
@@ -5052,32 +5031,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'hasten naiz',
-        zu: 'hasten zara',
-        hura: 'hasten da',
-        gu: 'hasten gara',
-        zuek: 'hasten zarete',
-        haiek: 'hasten dira',
-      },
-      past: {
-        ni: 'hasi nintzen',
-        zu: 'hasi zinen',
-        hura: 'hasi zen',
-        gu: 'hasi ginen',
-        zuek: 'hasi zineten',
-        haiek: 'hasi ziren',
-      },
-      future: {
-        ni: 'hasiko naiz',
-        zu: 'hasiko zara',
-        hura: 'hasiko da',
-        gu: 'hasiko gara',
-        zuek: 'hasiko zarete',
-        haiek: 'hasiko dira',
-      },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment
+    // near `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'hasten ', past: 'hasi ', future: 'hasiko ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: { text: 'Ni euskara ikastaroarekin ___ irailean.', validFor: [] },
@@ -5109,32 +5067,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'bizi naiz',
-        zu: 'bizi zara',
-        hura: 'bizi da',
-        gu: 'bizi gara',
-        zuek: 'bizi zarete',
-        haiek: 'bizi dira',
-      },
-      past: {
-        ni: 'bizi nintzen',
-        zu: 'bizi zinen',
-        hura: 'bizi zen',
-        gu: 'bizi ginen',
-        zuek: 'bizi zineten',
-        haiek: 'bizi ziren',
-      },
-      future: {
-        ni: 'biziko naiz',
-        zu: 'biziko zara',
-        hura: 'biziko da',
-        gu: 'biziko gara',
-        zuek: 'biziko zarete',
-        haiek: 'biziko dira',
-      },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment
+    // near `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'bizi ', past: 'bizi ', future: 'biziko ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: { text: 'Ni Hondarribiko portu zaharretik gertu ___.', validFor: [] },
@@ -6151,32 +6088,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'erortzen naiz',
-        zu: 'erortzen zara',
-        hura: 'erortzen da',
-        gu: 'erortzen gara',
-        zuek: 'erortzen zarete',
-        haiek: 'erortzen dira',
-      },
-      past: {
-        ni: 'erori nintzen',
-        zu: 'erori zinen',
-        hura: 'erori zen',
-        gu: 'erori ginen',
-        zuek: 'erori zineten',
-        haiek: 'erori ziren',
-      },
-      future: {
-        ni: 'eroriko naiz',
-        zu: 'eroriko zara',
-        hura: 'eroriko da',
-        gu: 'eroriko gara',
-        zuek: 'eroriko zarete',
-        haiek: 'eroriko dira',
-      },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment
+    // near `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'erortzen ', past: 'erori ', future: 'eroriko ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: { text: 'Ni elurretan ___ maiz.', validFor: [] },
@@ -6203,32 +6119,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'jaikitzen naiz',
-        zu: 'jaikitzen zara',
-        hura: 'jaikitzen da',
-        gu: 'jaikitzen gara',
-        zuek: 'jaikitzen zarete',
-        haiek: 'jaikitzen dira',
-      },
-      past: {
-        ni: 'jaiki nintzen',
-        zu: 'jaiki zinen',
-        hura: 'jaiki zen',
-        gu: 'jaiki ginen',
-        zuek: 'jaiki zineten',
-        haiek: 'jaiki ziren',
-      },
-      future: {
-        ni: 'jaikiko naiz',
-        zu: 'jaikiko zara',
-        hura: 'jaikiko da',
-        gu: 'jaikiko gara',
-        zuek: 'jaikiko zarete',
-        haiek: 'jaikiko dira',
-      },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment
+    // near `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'jaikitzen ', past: 'jaiki ', future: 'jaikiko ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: { text: 'Ni goizean goiz ___ lanera joateko.', validFor: [] },
@@ -7425,32 +7320,11 @@ export const VERBS = [
     type: 'periphrastic',
     agreement: ['nor'],
     dialect: 'batua',
-    conjugations: {
-      present: {
-        ni: 'arriskuan jartzen naiz',
-        zu: 'arriskuan jartzen zara',
-        hura: 'arriskuan jartzen da',
-        gu: 'arriskuan jartzen gara',
-        zuek: 'arriskuan jartzen zarete',
-        haiek: 'arriskuan jartzen dira',
-      },
-      past: {
-        ni: 'arriskuan jarri nintzen',
-        zu: 'arriskuan jarri zinen',
-        hura: 'arriskuan jarri zen',
-        gu: 'arriskuan jarri ginen',
-        zuek: 'arriskuan jarri zineten',
-        haiek: 'arriskuan jarri ziren',
-      },
-      future: {
-        ni: 'arriskuan jarriko naiz',
-        zu: 'arriskuan jarriko zara',
-        hura: 'arriskuan jarriko da',
-        gu: 'arriskuan jarriko gara',
-        zuek: 'arriskuan jarriko zarete',
-        haiek: 'arriskuan jarriko dira',
-      },
-    },
+    // Composed against the `izan` skeleton — see its own doc comment
+    // near `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'arriskuan jartzen ', past: 'arriskuan jarri ', future: 'arriskuan jarriko ' },
+    conjugations: {},
     sentences: {
       present: {
         ni: { text: 'Ni mendian ___.', validFor: [] },
