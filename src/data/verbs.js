@@ -146,26 +146,31 @@
 // `byObjectPrefixes: { present: '', past: '' }` — the empty-prefix case —
 // so it's just this table, unchanged from before #436.
 //
-// The same skeleton's `present`/`past` `haiek` column additionally backs
-// `presentPlural`/`pastPlural`/`futurePlural` — the flat "NOR = haiek"
-// slice of this same axis, used wherever a lesson/sentence needs a plural
-// object without drilling the full 2D table (e.g. "jaten ditut" for "I eat
-// them/the apples"). These turned out to be duplicated the same way
-// `presentByObject`/`pastByObject` were pre-#436: every verb's table was
-// `<own prefix> + ukan's own cell`, hand-copied per verb. Composed instead
-// via a verb's `pluralPrefixes: { present, past, future }` — deliberately a
-// *separate* field from `byObjectPrefixes` above, not a reuse of it: many
-// verbs (the ~30 from #443) carry `byObjectPrefixes` purely for the
-// present/past 2D axis and never had a plural-object table, so composing
-// `presentPlural` off that field too would silently manufacture one for
-// them, plus the cross-verb `validFor` gap slots that come with a new axis
-// — exactly the kind of surface `docs/DISTRACTOR_STRATEGY.md` §4.2 says
-// needs a human naturalness review, not an incidental refactor. `future`
-// reuses the `present` column — only the participle differs between
-// `present`/`future`, not the auxiliary, same as `getByNoriComposedTable`'s
-// future handling in `lessonLogic.js`. `ukan` keeps its own literal table
-// rather than composing against itself, since it carries extra
-// `hi-m`/`hi-f`/`hi` cells the skeleton doesn't have.
+// The same skeleton's `hura`/`haiek` columns additionally back a verb's
+// flat `present`/`past`/`future` tables (the `hura` column — the plain
+// citation forms every verb entry starts with) and their `presentPlural`/
+// `pastPlural`/`futurePlural` counterparts (the `haiek` column — the
+// plural-object slice, used wherever a lesson/sentence needs a plural
+// object without drilling the full 2D table, e.g. "jaten ditut" for "I eat
+// them/the apples"). For a subset of verbs, *every* one of those six flat
+// tables turned out to be duplicated the same way `presentByObject`/
+// `pastByObject` were pre-#436: `<own prefix> + ukan's own cell`,
+// hand-copied per verb. Composed instead via a verb's
+// `composedPrefixes: { present, past, future }` — deliberately a *separate*
+// field from `byObjectPrefixes` above, not a reuse of it: many verbs (the
+// ~30 from #443) carry `byObjectPrefixes` purely for the present/past 2D
+// axis and were never verified to have this flat-table relationship too
+// (and never had a plural-object table at all), so composing off that
+// field here would silently rewrite their base conjugations or manufacture
+// a plural axis for them — for the plural axis specifically, that also
+// means new cross-verb `validFor` gap slots, exactly the kind of surface
+// `docs/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness
+// review, not an incidental refactor. `future`/`futurePlural` reuse the
+// `present` column — only the participle differs between `present`/
+// `future`, not the auxiliary, same as `getByNoriComposedTable`'s future
+// handling in `lessonLogic.js`. `ukan` keeps its own literal tables rather
+// than composing against itself, since they carry extra `hi-m`/`hi-f`/`hi`
+// cells the skeleton doesn't have.
 export const OBJECT_AXIS_SKELETONS = {
   edun: {
     present: {
@@ -1202,19 +1207,15 @@ export const VERBS = [
     dialect: 'batua',
     // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
     byObjectPrefixes: { present: 'nahi ' },
-    // Plural-axis (`presentPlural`/`futurePlural`) composition — see
-    // `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`. No
-    // `past` prefix — `nahi` has no `past` table, so `pastPlural` stays
-    // unset too.
-    pluralPrefixes: { present: 'nahi ', future: 'nahiko ' },
-    conjugations: {
-      // #266: `gu`/`zuek`/`haiek` added, riding `ukan`'s exact `dugu`/`duzue`/
-      // `dute` present suffixes and `nahiko` + the same suffixes for future —
-      // same "costs nothing in new suffix patterns" rationale as `ni`/`zu`/
-      // `hura` above.
-      present: { ni: 'nahi dut', zu: 'nahi duzu', hura: 'nahi du', gu: 'nahi dugu', zuek: 'nahi duzue', haiek: 'nahi dute' },
-      future: { ni: 'nahiko dut', zu: 'nahiko duzu', hura: 'nahiko du', gu: 'nahiko dugu', zuek: 'nahiko duzue', haiek: 'nahiko dute' },
-    },
+    // Every flat conjugation table (present/future and their plural-object
+    // counterparts) is composed from this — see `composedPrefixes`' own doc
+    // comment near `OBJECT_AXIS_SKELETONS`. No `past` prefix — `nahi` has
+    // no `past` table, so `pastPlural` stays unset too. #266: `gu`/`zuek`/
+    // `haiek` ride `ukan`'s exact `dugu`/`duzue`/`dute` present suffixes
+    // and `nahiko` + the same suffixes for future — "costs nothing in new
+    // suffix patterns", which is exactly what makes this composable.
+    composedPrefixes: { present: 'nahi ', future: 'nahiko ' },
+    conjugations: {},
     // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by an agentive human subject (coffee,
     // water, book, gift, apple) admit `ukan`/`eduki`/`ikusi`/`erosi`/`behar`
@@ -2313,35 +2314,11 @@ export const VERBS = [
     dialect: 'batua',
     // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
     byObjectPrefixes: { present: 'jaten ', past: 'jan ' },
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
-    pluralPrefixes: { present: 'jaten ', past: 'jan ', future: 'jango ' },
-    conjugations: {
-      present: {
-        ni: 'jaten dut',
-        zu: 'jaten duzu',
-        hura: 'jaten du',
-        gu: 'jaten dugu',
-        zuek: 'jaten duzue',
-        haiek: 'jaten dute',
-      },
-      past: {
-        ni: 'jan nuen',
-        zu: 'jan zenuen',
-        hura: 'jan zuen',
-        gu: 'jan genuen',
-        zuek: 'jan zenuten',
-        haiek: 'jan zuten',
-      },
-      future: {
-        ni: 'jango dut',
-        zu: 'jango duzu',
-        hura: 'jango du',
-        gu: 'jango dugu',
-        zuek: 'jango duzue',
-        haiek: 'jango dute',
-      },
-    },
+    // Every flat conjugation table below (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    composedPrefixes: { present: 'jaten ', past: 'jan ', future: 'jango ' },
+    conjugations: {},
     // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every object
     // here is a concrete food/dish, naturally also something one could
     // *have*/*want*/*hold*/*see*/*buy*/*need* — `ukan`/`nahi`/`eduki`/
@@ -2433,35 +2410,11 @@ export const VERBS = [
     dialect: 'batua',
     // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
     byObjectPrefixes: { present: 'edaten ', past: 'edan ' },
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
-    pluralPrefixes: { present: 'edaten ', past: 'edan ', future: 'edango ' },
-    conjugations: {
-      present: {
-        ni: 'edaten dut',
-        zu: 'edaten duzu',
-        hura: 'edaten du',
-        gu: 'edaten dugu',
-        zuek: 'edaten duzue',
-        haiek: 'edaten dute',
-      },
-      past: {
-        ni: 'edan nuen',
-        zu: 'edan zenuen',
-        hura: 'edan zuen',
-        gu: 'edan genuen',
-        zuek: 'edan zenuten',
-        haiek: 'edan zuten',
-      },
-      future: {
-        ni: 'edango dut',
-        zu: 'edango duzu',
-        hura: 'edango du',
-        gu: 'edango dugu',
-        zuek: 'edango duzue',
-        haiek: 'edango dute',
-      },
-    },
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    composedPrefixes: { present: 'edaten ', past: 'edan ', future: 'edango ' },
+    conjugations: {},
     // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every drink
     // here is naturally something one could also *have*/*want*/*hold*/*see*/
     // *buy*/*need* — `ukan`/`nahi`/`eduki`/`ikusi`/`erosi`/`behar`'s
@@ -2557,35 +2510,11 @@ export const VERBS = [
     dativeOvergeneration: true,
     // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
     byObjectPrefixes: { present: 'erosten ', past: 'erosi ' },
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
-    pluralPrefixes: { present: 'erosten ', past: 'erosi ', future: 'erosiko ' },
-    conjugations: {
-      present: {
-        ni: 'erosten dut',
-        zu: 'erosten duzu',
-        hura: 'erosten du',
-        gu: 'erosten dugu',
-        zuek: 'erosten duzue',
-        haiek: 'erosten dute',
-      },
-      past: {
-        ni: 'erosi nuen',
-        zu: 'erosi zenuen',
-        hura: 'erosi zuen',
-        gu: 'erosi genuen',
-        zuek: 'erosi zenuten',
-        haiek: 'erosi zuten',
-      },
-      future: {
-        ni: 'erosiko dut',
-        zu: 'erosiko duzu',
-        hura: 'erosiko du',
-        gu: 'erosiko dugu',
-        zuek: 'erosiko duzue',
-        haiek: 'erosiko dute',
-      },
-    },
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    composedPrefixes: { present: 'erosten ', past: 'erosi ', future: 'erosiko ' },
+    conjugations: {},
     // #124/#155/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Edible/
     // drinkable objects ("ogia", "sagarrak", "fruta") admit `jan` (#114's
     // confirmed pair) plus `ukan`/`nahi`/`eduki`/`ikusi`/`behar` (#240's
@@ -2682,35 +2611,11 @@ export const VERBS = [
     dativeOvergeneration: true,
     // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
     byObjectPrefixes: { present: 'hartzen ', past: 'hartu ' },
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
-    pluralPrefixes: { present: 'hartzen ', past: 'hartu ', future: 'hartuko ' },
-    conjugations: {
-      present: {
-        ni: 'hartzen dut',
-        zu: 'hartzen duzu',
-        hura: 'hartzen du',
-        gu: 'hartzen dugu',
-        zuek: 'hartzen duzue',
-        haiek: 'hartzen dute',
-      },
-      past: {
-        ni: 'hartu nuen',
-        zu: 'hartu zenuen',
-        hura: 'hartu zuen',
-        gu: 'hartu genuen',
-        zuek: 'hartu zenuten',
-        haiek: 'hartu zuten',
-      },
-      future: {
-        ni: 'hartuko dut',
-        zu: 'hartuko duzu',
-        hura: 'hartuko du',
-        gu: 'hartuko dugu',
-        zuek: 'hartuko duzue',
-        haiek: 'hartuko dute',
-      },
-    },
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    composedPrefixes: { present: 'hartzen ', past: 'hartu ', future: 'hartuko ' },
+    conjugations: {},
     // #143: `hartu` added to the Unit 12 "daily routine" pool to stage the
     // `jaten`(-ten)/`hartzen`(-tzen) minimal pair. Sentence objects
     // (autobusa/trena/taxia/aterkia/katua/erabakia/txanda) are chosen so that
@@ -2772,34 +2677,11 @@ export const VERBS = [
     dialect: 'batua',
     // #436: see `OBJECT_AXIS_SKELETONS` near the top of this file.
     byObjectPrefixes: { present: 'ikusten ', past: 'ikusi ' },
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
-    pluralPrefixes: { present: 'ikusten ', past: 'ikusi ', future: 'ikusiko ' },
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    composedPrefixes: { present: 'ikusten ', past: 'ikusi ', future: 'ikusiko ' },
     conjugations: {
-      present: {
-        ni: 'ikusten dut',
-        zu: 'ikusten duzu',
-        hura: 'ikusten du',
-        gu: 'ikusten dugu',
-        zuek: 'ikusten duzue',
-        haiek: 'ikusten dute',
-      },
-      past: {
-        ni: 'ikusi nuen',
-        zu: 'ikusi zenuen',
-        hura: 'ikusi zuen',
-        gu: 'ikusi genuen',
-        zuek: 'ikusi zenuten',
-        haiek: 'ikusi zuten',
-      },
-      future: {
-        ni: 'ikusiko dut',
-        zu: 'ikusiko duzu',
-        hura: 'ikusiko du',
-        gu: 'ikusiko dugu',
-        zuek: 'ikusiko duzue',
-        haiek: 'ikusiko dute',
-      },
       // Unit 21 ("I Used To..." — periphrastic imperfective/habitual past) —
       // imperfective participle `ikusten` + `ukan`'s past auxiliary, per
       // `docs/CONJUGATIONS.md` §11's "Ondorio Orokorra" formula. Pairs with
@@ -4374,38 +4256,14 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     // No `byObjectPrefixes` — unlike the verbs above, `egin` was never given
     // a `presentByObject`/`pastByObject` 2D table, and this shouldn't grant
     // one as a side effect (see that field's own doc comment).
-    pluralPrefixes: { present: 'egiten ', past: 'egin ', future: 'egingo ' },
-    conjugations: {
-      present: {
-        ni: 'egiten dut',
-        zu: 'egiten duzu',
-        hura: 'egiten du',
-        gu: 'egiten dugu',
-        zuek: 'egiten duzue',
-        haiek: 'egiten dute',
-      },
-      past: {
-        ni: 'egin nuen',
-        zu: 'egin zenuen',
-        hura: 'egin zuen',
-        gu: 'egin genuen',
-        zuek: 'egin zenuten',
-        haiek: 'egin zuten',
-      },
-      future: {
-        ni: 'egingo dut',
-        zu: 'egingo duzu',
-        hura: 'egingo du',
-        gu: 'egingo dugu',
-        zuek: 'egingo duzue',
-        haiek: 'egingo dute',
-      },
-    },
+    composedPrefixes: { present: 'egiten ', past: 'egin ', future: 'egingo ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
@@ -4442,38 +4300,14 @@ export const VERBS = [
     object: 'hura',
     animateObject: false, // #442: thing-only object
     dialect: 'batua',
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     // No `byObjectPrefixes` — unlike the verbs above, `irakurri` was never
     // given a `presentByObject`/`pastByObject` 2D table, and this shouldn't
     // grant one as a side effect (see that field's own doc comment).
-    pluralPrefixes: { present: 'irakurtzen ', past: 'irakurri ', future: 'irakurriko ' },
-    conjugations: {
-      present: {
-        ni: 'irakurtzen dut',
-        zu: 'irakurtzen duzu',
-        hura: 'irakurtzen du',
-        gu: 'irakurtzen dugu',
-        zuek: 'irakurtzen duzue',
-        haiek: 'irakurtzen dute',
-      },
-      past: {
-        ni: 'irakurri nuen',
-        zu: 'irakurri zenuen',
-        hura: 'irakurri zuen',
-        gu: 'irakurri genuen',
-        zuek: 'irakurri zenuten',
-        haiek: 'irakurri zuten',
-      },
-      future: {
-        ni: 'irakurriko dut',
-        zu: 'irakurriko duzu',
-        hura: 'irakurriko du',
-        gu: 'irakurriko dugu',
-        zuek: 'irakurriko duzue',
-        haiek: 'irakurriko dute',
-      },
-    },
+    composedPrefixes: { present: 'irakurtzen ', past: 'irakurri ', future: 'irakurriko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
@@ -4507,38 +4341,14 @@ export const VERBS = [
     object: 'hura',
     animateObject: false, // #442: thing-only object
     dialect: 'batua',
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     // No `byObjectPrefixes` — unlike the verbs above, `idatzi` was never
     // given a `presentByObject`/`pastByObject` 2D table, and this shouldn't
     // grant one as a side effect (see that field's own doc comment).
-    pluralPrefixes: { present: 'idazten ', past: 'idatzi ', future: 'idatziko ' },
-    conjugations: {
-      present: {
-        ni: 'idazten dut',
-        zu: 'idazten duzu',
-        hura: 'idazten du',
-        gu: 'idazten dugu',
-        zuek: 'idazten duzue',
-        haiek: 'idazten dute',
-      },
-      past: {
-        ni: 'idatzi nuen',
-        zu: 'idatzi zenuen',
-        hura: 'idatzi zuen',
-        gu: 'idatzi genuen',
-        zuek: 'idatzi zenuten',
-        haiek: 'idatzi zuten',
-      },
-      future: {
-        ni: 'idatziko dut',
-        zu: 'idatziko duzu',
-        hura: 'idatziko du',
-        gu: 'idatziko dugu',
-        zuek: 'idatziko duzue',
-        haiek: 'idatziko dute',
-      },
-    },
+    composedPrefixes: { present: 'idazten ', past: 'idatzi ', future: 'idatziko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
@@ -4579,38 +4389,14 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     // No `byObjectPrefixes` — unlike the verbs above, `ikasi` was never
     // given a `presentByObject`/`pastByObject` 2D table, and this shouldn't
     // grant one as a side effect (see that field's own doc comment).
-    pluralPrefixes: { present: 'ikasten ', past: 'ikasi ', future: 'ikasiko ' },
-    conjugations: {
-      present: {
-        ni: 'ikasten dut',
-        zu: 'ikasten duzu',
-        hura: 'ikasten du',
-        gu: 'ikasten dugu',
-        zuek: 'ikasten duzue',
-        haiek: 'ikasten dute',
-      },
-      past: {
-        ni: 'ikasi nuen',
-        zu: 'ikasi zenuen',
-        hura: 'ikasi zuen',
-        gu: 'ikasi genuen',
-        zuek: 'ikasi zenuten',
-        haiek: 'ikasi zuten',
-      },
-      future: {
-        ni: 'ikasiko dut',
-        zu: 'ikasiko duzu',
-        hura: 'ikasiko du',
-        gu: 'ikasiko dugu',
-        zuek: 'ikasiko duzue',
-        haiek: 'ikasiko dute',
-      },
-    },
+    composedPrefixes: { present: 'ikasten ', past: 'ikasi ', future: 'ikasiko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
@@ -4645,35 +4431,11 @@ export const VERBS = [
     dialect: 'batua',
     // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
     byObjectPrefixes: { present: 'entzuten ', past: 'entzun ' },
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
-    pluralPrefixes: { present: 'entzuten ', past: 'entzun ', future: 'entzungo ' },
-    conjugations: {
-      present: {
-        ni: 'entzuten dut',
-        zu: 'entzuten duzu',
-        hura: 'entzuten du',
-        gu: 'entzuten dugu',
-        zuek: 'entzuten duzue',
-        haiek: 'entzuten dute',
-      },
-      past: {
-        ni: 'entzun nuen',
-        zu: 'entzun zenuen',
-        hura: 'entzun zuen',
-        gu: 'entzun genuen',
-        zuek: 'entzun zenuten',
-        haiek: 'entzun zuten',
-      },
-      future: {
-        ni: 'entzungo dut',
-        zu: 'entzungo duzu',
-        hura: 'entzungo du',
-        gu: 'entzungo dugu',
-        zuek: 'entzungo duzue',
-        haiek: 'entzungo dute',
-      },
-    },
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    composedPrefixes: { present: 'entzuten ', past: 'entzun ', future: 'entzungo ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
@@ -4706,38 +4468,14 @@ export const VERBS = [
     agreement: ['nor', 'nork'],
     object: 'hura',
     dialect: 'batua',
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     // No `byObjectPrefixes` — unlike the verbs above, `utzi` was never given
     // a `presentByObject`/`pastByObject` 2D table, and this shouldn't grant
     // one as a side effect (see that field's own doc comment).
-    pluralPrefixes: { present: 'uzten ', past: 'utzi ', future: 'utziko ' },
-    conjugations: {
-      present: {
-        ni: 'uzten dut',
-        zu: 'uzten duzu',
-        hura: 'uzten du',
-        gu: 'uzten dugu',
-        zuek: 'uzten duzue',
-        haiek: 'uzten dute',
-      },
-      past: {
-        ni: 'utzi nuen',
-        zu: 'utzi zenuen',
-        hura: 'utzi zuen',
-        gu: 'utzi genuen',
-        zuek: 'utzi zenuten',
-        haiek: 'utzi zuten',
-      },
-      future: {
-        ni: 'utziko dut',
-        zu: 'utziko duzu',
-        hura: 'utziko du',
-        gu: 'utziko dugu',
-        zuek: 'utziko duzue',
-        haiek: 'utziko dute',
-      },
-    },
+    composedPrefixes: { present: 'uzten ', past: 'utzi ', future: 'utziko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
@@ -4832,35 +4570,11 @@ export const VERBS = [
     dialect: 'batua',
     // #443: see `OBJECT_AXIS_SKELETONS` near the top of this file.
     byObjectPrefixes: { present: 'bilatzen ', past: 'bilatu ' },
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
-    pluralPrefixes: { present: 'bilatzen ', past: 'bilatu ', future: 'bilatuko ' },
-    conjugations: {
-      present: {
-        ni: 'bilatzen dut',
-        zu: 'bilatzen duzu',
-        hura: 'bilatzen du',
-        gu: 'bilatzen dugu',
-        zuek: 'bilatzen duzue',
-        haiek: 'bilatzen dute',
-      },
-      past: {
-        ni: 'bilatu nuen',
-        zu: 'bilatu zenuen',
-        hura: 'bilatu zuen',
-        gu: 'bilatu genuen',
-        zuek: 'bilatu zenuten',
-        haiek: 'bilatu zuten',
-      },
-      future: {
-        ni: 'bilatuko dut',
-        zu: 'bilatuko duzu',
-        hura: 'bilatuko du',
-        gu: 'bilatuko dugu',
-        zuek: 'bilatuko duzue',
-        haiek: 'bilatuko dute',
-      },
-    },
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    composedPrefixes: { present: 'bilatzen ', past: 'bilatu ', future: 'bilatuko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     // #457: `aurkitu` ("find") is a genuine sibling on the singular-object
     // slots — see `aurkitu`'s own comment above. `gu`/`zuek` here only exist
@@ -5010,38 +4724,14 @@ export const VERBS = [
     object: 'hura',
     animateObject: false, // #442: object-axis metaphor (human trafficking, not this table's literal sense)
     dialect: 'batua',
-    // Plural-axis (`presentPlural`/`pastPlural`/`futurePlural`) composition
-    // — see `pluralPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
+    // Every flat conjugation table (present/past/future and their
+    // plural-object counterparts) is composed from this — see
+    // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     // No `byObjectPrefixes` — unlike the verbs above, `saldu` was never
     // given a `presentByObject`/`pastByObject` 2D table, and this shouldn't
     // grant one as a side effect (see that field's own doc comment).
-    pluralPrefixes: { present: 'saltzen ', past: 'saldu ', future: 'salduko ' },
-    conjugations: {
-      present: {
-        ni: 'saltzen dut',
-        zu: 'saltzen duzu',
-        hura: 'saltzen du',
-        gu: 'saltzen dugu',
-        zuek: 'saltzen duzue',
-        haiek: 'saltzen dute',
-      },
-      past: {
-        ni: 'saldu nuen',
-        zu: 'saldu zenuen',
-        hura: 'saldu zuen',
-        gu: 'saldu genuen',
-        zuek: 'saldu zenuten',
-        haiek: 'saldu zuten',
-      },
-      future: {
-        ni: 'salduko dut',
-        zu: 'salduko duzu',
-        hura: 'salduko du',
-        gu: 'salduko dugu',
-        zuek: 'salduko duzue',
-        haiek: 'salduko dute',
-      },
-    },
+    composedPrefixes: { present: 'saltzen ', past: 'saldu ', future: 'salduko ' },
+    conjugations: {},
     pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
     sentences: {
       present: {
@@ -8975,12 +8665,14 @@ export const VERBS = [
 ]
 
 // #448: a verb's `future`/`past` can now come from `getComposedTable`'s
-// `byNoriPrefixes`/`ditransitivePrefixes` branches instead of a literal
-// `conjugations.future`/`.past` table — those verbs still *have* the tense,
-// so the fallback loops below must not skip them just because the literal
-// table was collapsed to `{}`.
+// `byNoriPrefixes`/`ditransitivePrefixes`/`composedPrefixes` branches
+// instead of a literal `conjugations.future`/`.past` table — those verbs
+// still *have* the tense, so the fallback loops below must not skip them
+// just because the literal table was collapsed to `{}`.
 function verbHasComposedTense(verb, tense) {
-  return Boolean(verb.conjugations[tense] || verb.byNoriPrefixes?.[tense] || verb.ditransitivePrefixes?.[tense])
+  return Boolean(
+    verb.conjugations[tense] || verb.byNoriPrefixes?.[tense] || verb.ditransitivePrefixes?.[tense] || verb.composedPrefixes?.[tense],
+  )
 }
 
 // Stage 6 (Units 14-15, "Talking About the Future") gave every verb above (except
@@ -9001,10 +8693,10 @@ for (const verb of VERBS) {
 // `sentences.futurePlural` aliased from `presentPlural` for the same reason
 // as the loop above (the blank doesn't care whether the plural-object
 // drill is present or future tense). `futurePlural` can be either a literal
-// table (`ukan`/`eduki`/`eraman`/`ekarri`) or composed from `pluralPrefixes`
+// table (`ukan`/`eduki`/`eraman`/`ekarri`) or composed from `composedPrefixes`
 // (see `OBJECT_AXIS_SKELETONS`'s doc comment) — check both.
 for (const verb of VERBS) {
-  if (!verb.conjugations.futurePlural && !verb.pluralPrefixes?.future) continue
+  if (!verb.conjugations.futurePlural && !verb.composedPrefixes?.future) continue
   if (verb.sentences?.presentPlural) verb.sentences.futurePlural = verb.sentences.presentPlural
 }
 
