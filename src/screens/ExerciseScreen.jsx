@@ -24,6 +24,7 @@ import {
   getEncouragement,
   getIntroducedSources,
   getLureRationale,
+  getMissCount,
   HEART_COST_POINTS,
   isAnswerCorrect,
   pickEncouragementVariantIndex,
@@ -75,6 +76,14 @@ const TARGET_EXERCISE_COUNT = 12
 // (4 carriers × 3 persons × 1 round ≈ `TARGET_EXERCISE_COUNT`); revisit with
 // real use.
 const CARRIERS_PER_SESSION = 4
+
+// Minimum `getMissCount` for the in-lesson Haserre callout (docs/
+// VISUAL_IDENTITY.md §1C's "adopted trigger" — flag a genuinely
+// error-prone pattern, pedagogical rather than a missed-practice nag) to
+// show for the active question's exact verb/tense/person. 2 rather than 1:
+// a single miss is normal first-exposure noise, not yet "commonly
+// confused" for this learner specifically.
+const ERROR_PRONE_THRESHOLD = 2
 
 function createExerciseState(lesson, attempts, errorStats = {}) {
   if (lesson.kind === 'reading') {
@@ -1268,6 +1277,12 @@ export function ExerciseScreen({
   const verb = VERBS.find((v) => v.id === question.verbId)
   const tenseMeta = TENSE_META[question.tense]
   const progressValue = (state.total - state.queue.length + (state.status === 'correct' ? 1 : 0)) / total
+  // `question.person` is absent for match-pairs questions (they drill a
+  // whole table at once, not one form) — those never trigger the callout.
+  const isErrorProne =
+    state.status === 'active' &&
+    Boolean(question.person) &&
+    getMissCount(errorStats, question.verbId, question.tense, question.person) >= ERROR_PRONE_THRESHOLD
 
   // Shared by both interaction styles — a clicked multiple-choice option and a
   // typed-and-submitted string both resolve to "an answer was given for the
@@ -1340,6 +1355,13 @@ export function ExerciseScreen({
         {!lesson.review && (
           <div className="mb-6">
             <VerbBadgeRow verb={verb} />
+          </div>
+        )}
+
+        {isErrorProne && (
+          <div className="mb-4 flex items-center gap-2 rounded-xl border border-neutral-400 bg-neutral-200 px-3 py-2 text-sm font-semibold text-neutral-900">
+            <MascotAvatar size="h-6 w-6" expression="haserre" />
+            {t('errorProneHint')}
           </div>
         )}
 

@@ -1,18 +1,21 @@
 // Latxa mascot placements — docs/VISUAL_IDENTITY.md's "Mascot placement
 // plan" (round 6). `latxa-face-*.svg` are face-only crops of the full
 // 400×400 expression illustrations (`latxa-logo.svg`/`latxa-expression-
-// gora.svg`/`latxa-expression-nekatuta.svg`): the full body/legs/ground-
-// shadow reads as illegible mud at avatar sizes (48-80px), so compact
-// placements use the cropped faces instead — see each crop file's own
-// comment for the viewBox reasoning. `size` controls the circle's
-// Tailwind h-/w- classes; callers size it per context. `expression`
-// selects which cropped face to show — 'pozik' (default) is the only one
-// the 4 static placements from iteration 6 use; 'gora'/'nekatuta' are for
-// the lesson-results score-band mascot (iteration 8).
+// gora.svg`/`latxa-expression-nekatuta.svg`/`latxa-expression-haserre.svg`):
+// the full body/legs/ground-shadow reads as illegible mud at avatar sizes
+// (24-80px), so compact placements use the cropped faces instead — see
+// each crop file's own comment for the viewBox reasoning. `size` controls
+// the circle's Tailwind h-/w- classes; callers size it per context.
+// `expression` selects which cropped face to show — 'pozik' (default) is
+// the 4 static placements from iteration 6; 'gora'/'nekatuta' are the
+// lesson-results score-band mascot (iteration 8) and the Progress-tab
+// indicator (iteration 9); 'haserre' is the in-lesson error-prone-pattern
+// callout (iteration 10).
 const EXPRESSION_ASSETS = {
   pozik: 'latxa-face-pozik.svg',
   gora: 'latxa-face-gora.svg',
   nekatuta: 'latxa-face-nekatuta.svg',
+  haserre: 'latxa-face-haserre.svg',
 }
 
 export function MascotAvatar({ size = 'h-12 w-12', expression = 'pozik' }) {
