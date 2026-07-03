@@ -8,6 +8,12 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — `CURRICULUM_MAP.md` now tags each lesson with what's actually new
+
+The first cut of `CURRICULUM_MAP.md` listed every lesson's verb/tense/persons but left "is this new material or review?" for the reader to work out by comparing lessons themselves — exactly the question it was meant to answer. Reworked the generator to walk the journey in taught order and diff each lesson's (verb, tense, persons) against everything taught before it, tagging every lesson with one of: 🆕 new grammar pattern (first appearance of a tense/axis for *any* verb), 📗 new verb, ✅ an already-known verb's first exposure to this particular tense, ➕ new persons added to an already-known table, or a plain "review only" note when nothing in the lesson is new.
+
+Considered listing every newly-covered verb inline for wide pools (e.g. Unit 16's 37-verb object-axis review) but that produced 30+ line lessons that buried the signal — collapsed to `verb, verb, verb, +N more (N total)` past 4 names, matching the same truncation convention `lessonDisplay.js`'s `describeLesson` already uses in the UI for large pools. Also suppressed the "taught this tense for the first time" tag for verbs that are already flagged brand-new in the same lesson (a new verb's first tense is redundant to call out twice).
+
 ## 2026-07-03 — Split `LEARNING_JOURNEY.md` into rationale (kept) + a generated `CURRICULUM_MAP.md` (new)
 
 `LEARNING_JOURNEY.md` had grown into two different documents wearing one hat: the *why* (pedagogical principles, sequencing trade-offs, data/engine implications — genuinely worth preserving prose) and the *what* (a flat list of every unit's lessons and which verb/tense each one drills — mechanically derivable from `journey.js`/`lessons.js`, and increasingly out of sync with the live numbering as units got renumbered/rebalanced). A learner or contributor asking "what does Unit 27 actually teach, lesson by lesson?" had to wade through renumbering history and design debate to find it.
