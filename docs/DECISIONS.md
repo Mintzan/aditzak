@@ -8,7 +8,17 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
-## 2026-07-03 — Implementation iteration 9: mascot rollout, part 4 — Progress tab low-accuracy indicator
+## 2026-07-03 — Implementation iteration 10: mascot rollout, part 5 — in-lesson error-prone callout (final placement)
+
+Wires the last of the 8 mascot placements — the in-lesson Haserre callout §1C scoped ("a callout accent for flagging a genuinely error-prone conjugation pattern within a lesson... pedagogical, not behavioral") but never resolved to a build-ready trigger. This was explicitly a user-delegated call ("follow your intuition, we'll adjust later"), so documenting the reasoning in full rather than treating it as settled:
+
+**Per-learner, not static.** The guide's own example ("a commonly-confused irregular form") could mean a form that's objectively tricky for everyone (would need a new "commonly confused" annotation added to `verbs.js`) or a form *this learner* has personally struggled with. Went with per-learner: the app already persists per-form miss counts across sessions (`errorStats`/`recordErrors`, `lessonLogic.js`), currently used to inject extra review questions via `getWeakSpotQuestions` — reusing that instead of inventing new static content data, and it's more genuinely "pedagogical" (reacting to this learner's actual history) than a one-size-fits-all flag would be.
+
+**Threshold: 2+ prior misses** on that exact verb/tense/person (new `getMissCount(errorStats, verbId, tense, person)` helper, `ERROR_PRONE_THRESHOLD` in `ExerciseScreen.jsx`). A single miss is ordinary first-exposure noise; 2 is a real, repeated pattern for that learner specifically. Persists once crossed (matching how `getWeakSpotQuestions` already treats cumulative counts) rather than clearing after one correct answer, since a real callout on the third attempt of a form the learner has now gotten right would look like the app doesn't trust them.
+
+**Where/how:** a quiet, neutral-toned banner (`border-neutral-400`/`bg-neutral-200`, not `semantic-warning` — that token already has an established "your streak/gate needs attention" meaning from iteration 4, and reusing it here would blur it into a *user*-behavior warning, exactly the framing §7 rejects) above the question prompt, shown only while the question is still active (not lingering into the feedback state, where `FeedbackBar`'s own mascot avatar already has that slot). Gated on `question.person` existing — match-pairs questions drill a whole table at once and have no single person, so they never trigger it. New `latxa-face-haserre.svg` face crop, same treatment as the other three expressions (the full `latxa-expression-haserre.svg` illustration has the same "illegible at avatar sizes" problem iterations 6/8 already found and fixed for the other three).
+
+**This is the 8th and final mascot placement** — the whole "Mascot placement plan" (round 6) is now fully shipped across iterations 6-10.
 
 Wires the last of the three "adopted trigger" mascot placements from §1C: an accuracy-based Nekatuta indicator in `HomeScreen.jsx`'s `ProgressTab`, next to any attempted lesson with `bestStars === 0` (under 50% correct, the same "weak" threshold iteration 8 used for the lesson-results Nekatuta band, kept consistent app-wide rather than inventing a second cutoff). Deliberately excludes never-attempted lessons — those already read as "not started," and flagging them as "needs review" would be wrong (nothing to review yet).
 

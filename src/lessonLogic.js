@@ -1884,6 +1884,17 @@ export function recordErrors(errorStats, misses) {
   return next
 }
 
+// Same `verbId:tense:person` key `recordErrors` builds — a plain lookup, 0
+// for a form with no recorded misses. Used by `ExerciseScreen.jsx`'s
+// in-lesson "error-prone pattern" mascot callout (docs/VISUAL_IDENTITY.md's
+// §1C "adopted trigger": flag a genuinely error-prone pattern, not a
+// missed-practice nag) — reuses this same persisted-across-sessions data
+// rather than a new static "commonly confused" annotation on `verbs.js`,
+// so the flag reflects *this learner's* actual history with the form.
+export function getMissCount(errorStats, verbId, tense, person) {
+  return errorStats[`${verbId}:${tense}:${person}`]?.count ?? 0
+}
+
 // Picks the learner's most-missed verb/tense/person combinations among this
 // review lesson's `sources` (so a review only ever drills forms it actually
 // covers), and generates one fresh question for each — up to `count`. These
