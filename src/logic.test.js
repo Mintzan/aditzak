@@ -46,6 +46,7 @@ import {
   isAnswerCorrect,
   isLockedByGateScore,
   isLockedOut,
+  MATCH_PAIRS_MAX_PAIRS,
   MATCH_PAIRS_QUESTION_COUNT,
   MAX_HEARTS,
   mergeDailyStreak,
@@ -3602,7 +3603,7 @@ describe('generateMatchPairsQuestions', () => {
   it('produces one match-pairs question with every in-scope person paired to its form', () => {
     const sources = [{ verb: izan, tense: 'present' }]
 
-    const questions = generateMatchPairsQuestions(sources, { count: 10 })
+    const questions = generateMatchPairsQuestions(sources, { count: 10, persons: ['ni', 'zu', 'hura'] })
 
     expect(questions).toHaveLength(1)
     expect(questions[0].kind).toBe('match-pairs')
@@ -3611,6 +3612,16 @@ describe('generateMatchPairsQuestions', () => {
     expect(questions[0].pairs).toEqual(
       expect.arrayContaining([{ person: 'ni', form: 'naiz' }, { person: 'zu', form: 'zara' }, { person: 'hura', form: 'da' }]),
     )
+  })
+
+  it('caps a board at MATCH_PAIRS_MAX_PAIRS when a table has more in-scope persons', () => {
+    const sources = [{ verb: izan, tense: 'present' }]
+
+    const questions = generateMatchPairsQuestions(sources, { count: 10 })
+
+    expect(questions[0].pairs).toHaveLength(MATCH_PAIRS_MAX_PAIRS)
+    const forms = new Set(Object.values(izan.conjugations.present))
+    for (const pair of questions[0].pairs) expect(forms.has(pair.form)).toBe(true)
   })
 
   it('yields no question for a source with fewer than 3 in-scope persons', () => {
