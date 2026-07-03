@@ -8,6 +8,19 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-03 — `MATCH_PAIRS_MAX_PAIRS` caps a match-pairs board at 4 pairs
+
+A user flagged a `gustatu-present` screenshot (6-person NORI table → 12
+tiles, several two-line like "gustatzen zaizue") as overwhelming for a
+tap-to-match board. `generateMatchPairsQuestions` (`src/lessonLogic.js`) now
+randomly samples down to 4 pairs when a table's in-scope persons exceed that
+— eligibility (`>= 3` distinct-form persons) is still checked against the
+*full* table first, so a table doesn't become ineligible by capping. No
+lesson gets a fixed 4-person subset either: each attempt reshuffles which 4
+survive (`shuffle(pairs).slice(0, MAX)`), same as the existing per-attempt
+reshuffle in `MatchPairsBoard`, so repeated attempts eventually cover the
+whole table instead of hiding 2 persons from it permanently.
+
 ## 2026-07-03 — Extended composition to the same 14 verbs' plain `present`/`past`/`future` tables too; renamed `pluralPrefixes` → `composedPrefixes`
 
 Follow-up to the entry directly below: a user pointed out the same
