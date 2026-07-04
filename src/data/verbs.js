@@ -4058,7 +4058,7 @@ export const VERBS = [
         // "needs a predicate" judgment (no sibling fits this frame either).
         haiek: [
           { text: 'Haiei ongi ___.', validFor: [] },
-          { text: 'Atzerriko ikasleei asko ___ euskal kultura zaharra.', validFor: [] },
+          { text: 'Atzerriko ikasleei euskal kultura oso zaharra ___.', validFor: [] },
         ],
       },
       // #164: "ongi" (well/good) is an adverb, not a NOR argument, so the
