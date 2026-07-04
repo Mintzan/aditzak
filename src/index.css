@@ -93,6 +93,21 @@ h4 {
   animation: flash 0.35s ease-in-out;
 }
 
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.25s ease-out;
+}
+
 /* docs/VISUAL_IDENTITY.md §6 — reserved specifically for the mascot's own
    reaction (feedback-drawer mini avatars), not the answer-option
    flash/shake above, which stay on their own already-shipped timings. */

@@ -1176,6 +1176,11 @@ export function ExerciseScreen({
   // state (see `FlagQuestionModal`) resets between questions instead of
   // persisting onto the next one.
   const [answerSeq, setAnswerSeq] = useState(0)
+  // Bumped each time `handleContinue` advances to the next exercise (not on
+  // every answer) — used as the key for the question/answer block below so it
+  // remounts and replays its slide-in-from-right entrance animation for each
+  // new exercise, rather than for every re-render.
+  const [questionSeq, setQuestionSeq] = useState(0)
   // Shown once, before the first attempt at a single-verb practice lesson —
   // see `LessonPreviewScreen`. Review lessons and pooled multi-verb practice
   // lessons (`lesson.sources`, e.g. Unit 10's `unit-10-present`) skip it:
@@ -1320,6 +1325,7 @@ export function ExerciseScreen({
       setFinished(true)
     } else {
       setTypedValue('')
+      setQuestionSeq((n) => n + 1)
       dispatch({ type: 'next' })
     }
   }
@@ -1365,46 +1371,48 @@ export function ExerciseScreen({
           </div>
         )}
 
-        <QuestionPrompt
-          verb={verb}
-          tenseMeta={tenseMeta}
-          question={question}
-          showVerb={!lesson.review || !question.options || question.kind === 'form'}
-        />
-
-        <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{t(QUESTION_PROMPT_KEYS[question.kind])}</p>
-        {question.pairs ? (
-          <MatchPairsBoard
-            key={`match-pairs-${question.verbId}-${question.tense}-${question.attempt ?? 1}`}
-            pairs={question.pairs}
+        <div key={questionSeq} className="animate-slide-in-right">
+          <QuestionPrompt
             verb={verb}
-            disabled={isAnswered}
-            onComplete={(success) => submitAnswer(success ? question.correct : 'incomplete')}
+            tenseMeta={tenseMeta}
+            question={question}
+            showVerb={!lesson.review || !question.options || question.kind === 'form'}
           />
-        ) : question.tokens ? (
-          <WordOrderBoard
-            key={`word-order-${question.verbId}-${question.tense}-${question.person}-${question.attempt ?? 1}`}
-            tokens={question.tokens}
-            punctuation={question.punctuation}
-            status={state.status}
-            disabled={isAnswered}
-            onSubmit={submitAnswer}
-          />
-        ) : question.options ? (
-          <div className="flex flex-col gap-3">
-            {question.options.map((option) => (
-              <AnswerOption
-                key={option}
-                option={option}
-                status={getOptionStatus(option, question, state)}
-                disabled={isAnswered}
-                onSelect={() => submitAnswer(option)}
-              />
-            ))}
-          </div>
-        ) : (
-          <TypedAnswerInput value={typedValue} status={state.status} onChange={setTypedValue} onSubmit={handleSubmitTyped} />
-        )}
+
+          <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{t(QUESTION_PROMPT_KEYS[question.kind])}</p>
+          {question.pairs ? (
+            <MatchPairsBoard
+              key={`match-pairs-${question.verbId}-${question.tense}-${question.attempt ?? 1}`}
+              pairs={question.pairs}
+              verb={verb}
+              disabled={isAnswered}
+              onComplete={(success) => submitAnswer(success ? question.correct : 'incomplete')}
+            />
+          ) : question.tokens ? (
+            <WordOrderBoard
+              key={`word-order-${question.verbId}-${question.tense}-${question.person}-${question.attempt ?? 1}`}
+              tokens={question.tokens}
+              punctuation={question.punctuation}
+              status={state.status}
+              disabled={isAnswered}
+              onSubmit={submitAnswer}
+            />
+          ) : question.options ? (
+            <div className="flex flex-col gap-3">
+              {question.options.map((option) => (
+                <AnswerOption
+                  key={option}
+                  option={option}
+                  status={getOptionStatus(option, question, state)}
+                  disabled={isAnswered}
+                  onSelect={() => submitAnswer(option)}
+                />
+              ))}
+            </div>
+          ) : (
+            <TypedAnswerInput value={typedValue} status={state.status} onChange={setTypedValue} onSubmit={handleSubmitTyped} />
+          )}
+        </div>
       </div>
 
       <FeedbackBar
