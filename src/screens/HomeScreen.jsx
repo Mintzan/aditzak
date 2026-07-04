@@ -130,13 +130,18 @@ function LessonList({ lessons, progress, unlockedIds, hearts, onSelect, onHeartL
 // preview of what's coming, with a "Coming soon" badge in place of stars.
 // Refresh Gate units (`unit.gate`) get a shield icon instead of a lock to set
 // them apart as checkpoints rather than ordinary lessons.
-function PendingUnitCard({ unit }) {
+function PendingUnitCard({ unit, onOpenUnit }) {
   const { t, language } = useLanguage()
   const title = journeyText('units', unit.number, 'title', language, unit.title)
   const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
   const payload = unit.payload ? journeyText('units', unit.number, 'payload', language, unit.payload) : null
   return (
-    <div className="flex items-start gap-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 opacity-70">
+    <button
+      type="button"
+      onClick={() => onOpenUnit(unit)}
+      aria-label={t('unitOverviewOpenLabel')}
+      className="flex w-full items-start gap-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 text-left opacity-70 transition hover:opacity-90"
+    >
       <div
         className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-400"
         aria-hidden="true"
@@ -151,35 +156,127 @@ function PendingUnitCard({ unit }) {
         {payload && <p className="mt-1 text-sm text-gray-400 italic break-words">{payload}</p>}
         <span className="mt-2 inline-block rounded-full bg-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-500">{t('comingSoon')}</span>
       </div>
-    </div>
+    </button>
   )
 }
 
 // An available unit's `lessonIds` point at entries in `LESSONS` — render each
 // as a `LessonNode`, with the unit's title/focus from `journey.js` as a label
-// above them.
-function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
+// above them. The label itself is a button opening `UnitOverviewModal`, which
+// explains what the unit covers in more depth than fits in this inline strip.
+function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLocked, onOpenUnit }) {
   const { t, language } = useLanguage()
   const lessons = unit.lessonIds.map((id) => LESSONS.find((lesson) => lesson.id === id))
   const title = journeyText('units', unit.number, 'title', language, unit.title)
   const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
   return (
     <div>
-      <p className="font-semibold text-gray-900">
-        {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
-        {unit.bonus && (
-          <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2 py-0.5 align-middle text-xs font-semibold text-brand-txakoli-text">
-            <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}
-          </span>
-        )}
-      </p>
-      <p className="mt-0.5 mb-2 text-sm text-gray-500 break-words">{focus}</p>
+      <button
+        type="button"
+        onClick={() => onOpenUnit(unit)}
+        aria-label={t('unitOverviewOpenLabel')}
+        className="w-full rounded-xl text-left transition hover:opacity-80"
+      >
+        <p className="font-semibold text-gray-900">
+          {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
+          {unit.bonus && (
+            <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2 py-0.5 align-middle text-xs font-semibold text-brand-txakoli-text">
+              <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}
+            </span>
+          )}
+        </p>
+        <p className="mt-0.5 mb-2 text-sm text-gray-500 break-words">{focus}</p>
+      </button>
       <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} hearts={hearts} onSelect={onSelect} onHeartLocked={onHeartLocked} />
     </div>
   )
 }
 
-function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
+// Explains what a unit covers — its focus and example sentence, plus (for an
+// available unit) the list of lessons inside it, each described the same way
+// `LessonNode` would but without the lock/star/click affordances, since this
+// is a read-only preview rather than another way to launch a lesson. A
+// `pending` unit has no `lessonIds` yet, so it falls back to a "coming soon"
+// note instead of a lesson list.
+function UnitOverviewModal({ unit, onClose }) {
+  const { t, tCount, language } = useLanguage()
+  const title = journeyText('units', unit.number, 'title', language, unit.title)
+  const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
+  const payload = unit.payload ? journeyText('units', unit.number, 'payload', language, unit.payload) : null
+  const lessons = unit.lessonIds?.map((id) => LESSONS.find((lesson) => lesson.id === id)) ?? []
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="unit-overview-title"
+        className="flex max-h-[85dvh] w-full max-w-md flex-col rounded-t-3xl bg-white p-5 sm:rounded-3xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <div
+            className="mb-3 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-forest-tint text-brand-forest"
+            aria-hidden="true"
+          >
+            {unit.gate ? <GateIcon className="h-6 w-6" /> : <span className="text-xl font-extrabold">{unit.number}</span>}
+          </div>
+          <h2 id="unit-overview-title" className="text-lg font-bold text-gray-900">
+            {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
+          </h2>
+          {unit.bonus && (
+            <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2 py-0.5 text-xs font-semibold text-brand-txakoli-text">
+              <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}
+            </span>
+          )}
+          <p className="mt-3 text-sm text-gray-600 break-words">{focus}</p>
+          {payload && <p className="mt-2 text-sm text-gray-400 italic break-words">{payload}</p>}
+
+          {lessons.length > 0 ? (
+            <div className="mt-5">
+              <h3 className="text-sm font-bold tracking-wide text-gray-400 uppercase">{t('unitOverviewInThisUnit')}</h3>
+              <p className="mt-1 mb-3 text-xs text-gray-400">{tCount('unitOverviewLessonCount', lessons.length, { n: lessons.length })}</p>
+              <div className="flex flex-col gap-2">
+                {lessons.map((lesson) => {
+                  const { icon, title: lessonTitle, subtitle } = describeLesson(lesson, t, language)
+                  return (
+                    <div key={lesson.id} className="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 p-3">
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-gray-500"
+                        aria-hidden="true"
+                      >
+                        {lesson.review ? <RepeatIcon className="h-5 w-5" /> : <span className="text-base">{icon}</span>}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-gray-800">
+                          {lessonTitle.main} <span className="font-normal text-gray-400">· {lessonTitle.secondary}</span>
+                        </p>
+                        <p className="truncate text-xs text-gray-500">
+                          {subtitle.main} — {subtitle.secondary}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ) : (
+            <p className="mt-5 text-sm text-gray-500">{t('unitOverviewComingSoonBody')}</p>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          style={{ minHeight: 48 }}
+          className="mt-4 w-full shrink-0 rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
+        >
+          {t('unitOverviewClose')}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartLocked, onOpenUnit }) {
   const { language } = useLanguage()
   const title = journeyText('stages', stage.id, 'title', language, stage.title)
   return (
@@ -196,9 +293,10 @@ function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartL
               hearts={hearts}
               onSelect={onSelect}
               onHeartLocked={onHeartLocked}
+              onOpenUnit={onOpenUnit}
             />
           ) : (
-            <PendingUnitCard key={unit.number} unit={unit} />
+            <PendingUnitCard key={unit.number} unit={unit} onOpenUnit={onOpenUnit} />
           ),
         )}
       </div>
@@ -206,7 +304,7 @@ function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartL
   )
 }
 
-function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
+function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartLocked, onOpenUnit }) {
   const { language } = useLanguage()
   const title = journeyText('phases', phase.id, 'title', language, phase.title)
   const subtitle = journeyText('phases', phase.id, 'subtitle', language, phase.subtitle)
@@ -225,6 +323,7 @@ function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartL
           hearts={hearts}
           onSelect={onSelect}
           onHeartLocked={onHeartLocked}
+          onOpenUnit={onOpenUnit}
         />
       ))}
     </section>
@@ -234,10 +333,13 @@ function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartL
 // The home tab's lesson list is now driven by `JOURNEY` (`journey.js`) rather
 // than `LESSONS` directly: it walks phases → stages → units so the full
 // curriculum roadmap is visible, with available units rendering their
-// `LessonNode`s and pending units rendering locked `PendingUnitCard`s.
+// `LessonNode`s and pending units rendering locked `PendingUnitCard`s. Tapping
+// a unit's own label/card (rather than one of its lessons) opens
+// `UnitOverviewModal`, a read-only page explaining what that unit works on.
 function JourneyTab({ progress, hearts, onSelectLesson, onHeartLocked }) {
   const { t } = useLanguage()
   const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress, undefined, GATE_LESSON_IDS, BONUS_LESSON_IDS), [progress])
+  const [activeUnit, setActiveUnit] = useState(null)
 
   return (
     <div>
@@ -254,8 +356,10 @@ function JourneyTab({ progress, hearts, onSelectLesson, onHeartLocked }) {
           hearts={hearts}
           onSelect={onSelectLesson}
           onHeartLocked={onHeartLocked}
+          onOpenUnit={setActiveUnit}
         />
       ))}
+      {activeUnit && <UnitOverviewModal unit={activeUnit} onClose={() => setActiveUnit(null)} />}
     </div>
   )
 }

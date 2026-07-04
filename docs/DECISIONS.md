@@ -8,6 +8,33 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-04 — Unit overview page, as a modal rather than a new screen/route
+
+Added a "what's this unit about" page, reachable by tapping a unit's own
+title/card on the home tab (rather than one of its lesson rows). Two choices:
+
+1. **Modal, not a third `AppShell` state.** `App.jsx`'s state machine only
+   toggles between `HomeScreen` and `ExerciseScreen` (`activeLessonId`); adding
+   a unit-overview screen there would mean threading a new
+   `activeUnitNumber` prop through `App.jsx` and `HomeScreen` just to render
+   one more full-page view. Since the content (focus/payload/lesson list) is
+   read-only and dismissable, it fits the existing bottom-sheet modal pattern
+   (`FeedbackModal`/`AccountModal`/`HeartsLockedModal`) instead — state lives
+   locally in `JourneyTab` (`HomeScreen.jsx`), same scope as those other
+   modals, no prop drilling past `PhaseSection`/`StageSection`.
+2. **Informational only — no "jump into a lesson from here" shortcut.** The
+   modal lists each lesson in the unit (verb/tense or review, via the same
+   `describeLesson` `UnitLessons`/`ProgressTab` already use) but the rows
+   aren't clickable. Wiring them to `onSelectLesson` would mean either
+   bypassing the existing lock/gate checks (`getUnlockedLessonIds`,
+   `isLockedByGateScore`) or duplicating them here — out of scope for a page
+   whose job is explaining the unit, not another way to launch it. Tapping a
+   lesson on the home list underneath is still the one way to start it.
+
+A `pending` unit opens the same modal (no `lessonIds` yet, so it falls back
+to a short "coming soon" note) rather than staying inert — the ask was "for
+each unit," not "for each available unit."
+
 ## 2026-07-03 — Profile tab: colorful invite/feedback buttons, reset progress demoted to a text link
 
 A user reviewing a Profile-tab screenshot asked for two changes, both scoped
