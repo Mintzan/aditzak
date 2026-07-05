@@ -6,6 +6,33 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-05 — `izan`/`ukan` toka/noka native-speaker confirmation (#213)
+
+Ran the 8 present/past toka/noka pairs flagged 2026-06-17 (izan's `duk`/`dun`/
+`dituk`/`ditun`/`zuan`/`zunan`/`zituan`/`zitunan`; ukan's `dik`/`din`/`ditek`/
+`diten`/`zian`/`zinan`/`zitean`/`zitenan`) past a native speaker as plain
+example sentences ("Lanean duk"/"Lanean dun", "Diru asko dik"/"Diru asko
+din", etc.), rather than as a bare conjugation table.
+
+**One real fix:** `ukan`'s toka past `haiek` form was `zitean` — missing a
+`k`. Corrected to `zitekan` in `verbs.js` (and the matching assertion in
+`logic.test.js`). Every other one of the 8 pairs came back confirmed as
+already correct, including two whose feedback initially read as a rejection
+but whose own follow-up explanation circled back to the existing form itself
+("zunan is correct... it does sound natural") — treated as confirmations,
+not changes, since neither offered an actually different string:
+
+- izan's `zunan` (past noka, "Lanean zunan") — confirmed as the standard
+  Batua form; a Gipuzkoan/western-dialect variant ("zonan") may exist
+  colloquially but isn't adopted here, per this doc's usual "standard Batua
+  unless there's a reason to branch" stance.
+- ukan's `zitenan` (past noka `haiek`, "Diru asko zitenan") — confirmed as
+  the standard form ("the most natural standard choice").
+
+This resolves #213's blocker (native-speaker confirmation of the toka/noka
+data) for `izan`/`ukan` specifically — the distractor-matrix wrong-gender/
+neutral-form lure work itself is still a separate, unimplemented follow-up.
+
 ## 2026-07-05 — Unit 45 weather idioms; phrasing needs native-speaker confirmation
 
 Added six weather idioms for Unit 45 ("Talking About Weather"), all reusing
