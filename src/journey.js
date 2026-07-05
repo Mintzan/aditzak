@@ -94,7 +94,7 @@ export const JOURNEY = [
             number: 3,
             title: '"Ni" vs. "Nik" — The Case-Marking Checkpoint',
             focus:
-              'No new verbs — practice telling plain subjects (izan/egon) apart from ergative -k subjects (ukan)',
+              'No new verbs — practice telling plain subjects (izan/egon) apart from ergative -k subjects (ukan), so the -k doesn\'t creep onto izan/egon by mistake (✗ "Nik naiz") — the most common beginner slip',
             payload: '"Ni ikaslea naiz" vs. "Nik liburua dut."',
             status: 'available',
             lessonIds: [

@@ -217,7 +217,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Ni" vs. "Nik" — Kasu-markaren azterketa',
       },
       focus: {
-        es: 'Sin verbos nuevos — practica distinguir sujetos absolutivos (izan/egon) de sujetos ergativos con -k (ukan)',
+        es: 'Sin verbos nuevos — practica distinguir sujetos absolutivos (izan/egon) de sujetos ergativos con -k (ukan), para que el -k no se cuele en izan/egon por error (✗ "Nik naiz") — el fallo más común de principiante',
         eu: 'Aditz berririk gabe — subjektu absolutiboak (izan/egon) eta -k subjektu ergatiboak (ukan) bereizten ikasi',
       },
       payload: {

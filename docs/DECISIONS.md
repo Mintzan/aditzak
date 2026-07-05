@@ -8,6 +8,29 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Unit 3's overview: surfaced the "ergative drift" mistake it's actually about
+
+Reviewed Unit 3 ("Ni" vs. "Nik" — The Case-Marking Checkpoint) the same way
+Units 1/2/16 were reviewed. Unlike those, Unit 3 is a zero-new-verb review
+checkpoint — all three of its lessons are `review: true` with `sources`, no
+`verbId`, so `UnitOverviewModal`'s conjugation-table feature correctly shows
+nothing for it (there's no new verb/tense to preview; izan/egon/ukan's
+tables already showed in Units 1-2). That left the modal with only its
+one-line `focus` + `payload` example — and that copy didn't mention what the
+checkpoint is actually targeting.
+
+`journey.js`'s own code comment above this unit already names it precisely:
+"pre-empting 'ergative drift' (†Nik naiz), the most common beginner error
+(F7)" — but that context lived only in a comment, invisible to the learner.
+Added the same framing to the user-facing `focus` string (`✗ "Nik naiz"` as
+the concrete wrong form, "the most common beginner slip" as the why),
+matched in the Spanish translation. Left the Basque translation's `focus`
+un-elaborated rather than write new explanatory Basque prose from scratch —
+same caution as the "Lehenaldiko Burutua" correction earlier today; a
+shorter-but-correct translation is preferable to a confidently-wrong longer
+one, and translations don't need to be verbatim-parallel across languages
+in this app.
+
 ## 2026-07-05 — Fixed a crash opening Unit 16's overview: `ConjugationTable` didn't resolve `objectAxis` tenses
 
 A user reported Unit 16's "help" (the unit overview modal) was broken.
