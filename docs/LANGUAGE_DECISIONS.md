@@ -6,6 +6,32 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-05 — Basque translation of the izan-vs-ukan "why" explanation (needs native-speaker check)
+
+`docs/DECISIONS.md`'s "Explained why izan vs. ukan" entry added an
+explanatory clause to Units 2/3's `focus` text — translated to Spanish with
+confidence, but initially left the Basque (`eu`) translation un-elaborated
+since I wasn't confident enough in fresh explanatory Basque prose (same
+caution as the "Lehenaldiko Burutua" correction). Asked directly to add the
+Basque version anyway, so added it — but unlike the rest of this file's `eu`
+content (which mirrors already-attested `VERBS`/`CONJUGATIONS.md` forms),
+this is original explanatory prose with no existing source to check against.
+Flagged with a `#native-check` code comment at both call sites
+(`i18n/journeyTranslations.js`, units 2 and 3) rather than presenting it as
+verified.
+
+**Unit 2:** `Izan/egon: egotea edo izatea baino ez; ukan: zerbait
+edukitzea — horregatik hartzen du -k` ("Izan/egon: nothing but being or
+staying; ukan: having something — that's why it takes -k").
+
+**Unit 3:** `Izan/egon-ek ez dute -k hartzen, ezer egiten ez dutelako (✗
+"Nik naiz")` ("Izan/egon don't take -k, because they don't do anything").
+
+Kept both simple/telegraphic rather than attempting more natural flowing
+prose, on the theory that shorter, more basic constructions are less likely
+to contain an error than a longer, more elaborate sentence I'd have lower
+confidence in.
+
 ## 2026-07-05 — Four additions from Haase (1992) tense/aspect article
 
 Cross-checking the repo's Basque tense/aspect model against Martin Haase's
