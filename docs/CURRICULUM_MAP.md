@@ -924,11 +924,30 @@ This is generated from live data (`src/journey.js` + `src/data/lessons.js` + `sr
 
 ### Refresh Gate C — The Multi-Argument Audit
 
-#### Unit 31 — REFRESH — The Case-Ending Mixer (Refresh Gate, pending (not yet implemented))
+#### Unit 31 — REFRESH — The Case-Ending Mixer (Refresh Gate, score-gated — 🛡️)
 
-**What you learn:** Drills NOR/NORK/NORI role-swaps plus dative past/future recombination — zero new verbs, score-gated and a mandatory pass before Phase V
+**What you learn:** Drills NOR/NORK/NORI role-swaps plus dative past/future recombination — zero new verbs, mandatory pass before Phase V. Pools `izan` (nor) / `ukan` (nor-nork) / `gustatu` (nor-nori) / `esan` (nor-nori-nork) across present/past/future so every review fires `kind: 'case-mixer'` questions across all three role contrasts at once (a `caseMixerCount` opt-in raises the count above the usual incidental 1), plus a dedicated past/future pool bridging Unit 26's dative verbs (`gustatu`/`iruditu`/`ahaztu`) with Unit 28's ditransitives (`esan`/`eman`).
 
-_Not implemented yet — no lessons._
+**Example:** "Hark egia esaten dio." vs. "Hark egia da." (case-marking mismatch)
+
+**Lessons:**
+
+- `unit-31-mixer-present` — **Review** [ni/zu/hura]: izan, ukan, gustatu, esan pooled — Present
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-present-plural` — **Review** [gu/zuek/haiek]: izan, ukan, gustatu, esan pooled — Present
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-past` — **Review** [ni/zu/hura]: izan, ukan, gustatu, esan pooled — Past
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-past-plural` — **Review** [gu/zuek/haiek]: izan, ukan, gustatu, esan pooled — Past
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-future` — **Review** [ni/zu/hura]: izan, ukan, gustatu, esan pooled — Future
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-future-plural` — **Review** [gu/zuek/haiek]: izan, ukan, gustatu, esan pooled — Future
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-dative-recombination` — **Review**: gustatu, iruditu, ahaztu, esan, eman pooled — Past & Future
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-review` — **Review** (gate — reach 2+ stars to unlock Phase V): izan, ukan, gustatu, esan, lagundu pooled — Present/Past/Future
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
 
 
 ## Phase V · B2 — Nuance & Modality — Nuance, Modality, & Social Context
@@ -1175,11 +1194,22 @@ _Not implemented yet — no lessons._
 - `unit-34-review` — **Review**: izan (Present (noka)), ukan (Present (noka)), izan (Past (noka)), ukan (Past (noka))
   - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
 
-#### Unit 39 — Hitanoa Recombined (Bonus, pending (not yet implemented))
+#### Unit 39 — Hitanoa Recombined (Bonus)
 
-**What you learn:** mixed toka/noka chosen by addressee gender, plus when not to use it — suppressed in subordinate clauses and formal -ke- moods
+**What you learn:** mixed toka/noka chosen by addressee gender, plus when not to use it — suppressed in subordinate clauses and formal -ke- moods. Zero new conjugation forms: pools Units 37-38's toka/noka tables together instead of one register at a time, plus a lesson juxtaposing them against Unit 32's `izan`/`ukan` Ahalera (`potential`) forms — the formal `-ke-` mood that never takes toka/noka marking — so the "leave it out here" rule is taught by contrast rather than a new question mechanic.
 
-_Not implemented yet — no lessons._
+**Example:** Lanean dik. / Lanean din. / Joan naiteke. (no hitanoa here)
+
+**Lessons:**
+
+- `unit-39-recombined-present` — **Review**: izan (Present (toka)), izan (Present (noka)), ukan (Present (toka)), ukan (Present (noka)) pooled
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-39-recombined-past` — **Review**: izan (Past (toka)), izan (Past (noka)), ukan (Past (toka)), ukan (Past (noka)) pooled
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-39-when-not-to-use` — **Review**: izan/ukan's Present (toka/noka) pooled with izan/ukan's Ahalera (potential) — contrasts hitanoa-marked forms against the formal `-ke-` mood that never takes them
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-39-review` — **Review**: all of the above pooled — Present/Past toka/noka plus Ahalera
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
 
 ### Stage 13 — Reading Real Text
 
@@ -1302,13 +1332,18 @@ _Not implemented yet — no lessons._
 
 ### Stage 16 — Talking About Weather
 
-#### Unit 45 — Talking About Weather (Bonus, pending (not yet implemented))
+#### Unit 45 — Talking About Weather (Bonus)
 
-**What you learn:** ari + ukan ("euria ari du"), izan/egon weather idioms — fixed 3rd person only, zero new conjugation tables
+**What you learn:** ari + ukan ("euria ari du"), izan/egon/ibili weather idioms — fixed 3rd person (hura) only, zero new conjugation tables. Reuses `izan`/`egon`/`ibili`/`ukan`'s existing `hura`-present forms (`da`/`dago`/`dabil`/`du`) via 4 small dedicated "weather idiom" `VERBS` entries, each with its own sentence content rather than editing those verbs' own (much larger, unrelated) sentence arrays directly.
 
-**Example:** Euria ari du. · Hotz da. · Eguzkia dago.
+**Example:** Euria ari du. · Hotz da. · Eguzkia dago. · Haizea dabil.
 
-_Not implemented yet — no lessons._
+**Lessons:**
+
+- `unit-45-weather` — **Pooled practice** [hura]: eguraldia-ari, eguraldia-izan, eguraldia-egon, eguraldia-ibili pooled — Present
+  - 📗 **New verbs:** eguraldia-ari (**du**), eguraldia-izan (**da**), eguraldia-egon (**dago**), eguraldia-ibili (**dabil**) — all four forms are the exact `hura`-present cells `ukan`/`izan`/`egon`/`ibili` already teach, reused rather than newly conjugated
+- `unit-45-review` — **Review** [hura]: eguraldia-ari, eguraldia-izan, eguraldia-egon, eguraldia-ibili pooled — Present
+  - _Review/practice only — no new conjugation forms; reinforces what the practice lesson already introduced._
 
 ### Stage 17 — Subjects Without Objects
 

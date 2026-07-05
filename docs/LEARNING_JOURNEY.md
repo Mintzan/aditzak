@@ -25,7 +25,7 @@
 
 ## Current implemented structure (authoritative — mirrors `journey.js`)
 
-The **mandatory spine is Units 1–34** (194 lessons). Units 35–51 are
+The **mandatory spine is Units 1–34** (199 lessons). Units 35–51 are
 `bonus: true` (✨): opt-in "Mastery & Depth" content that never gates spine
 progression — a learner can finish the whole core curriculum without them. 🛡️
 marks score-gated Refresh Gates.
@@ -47,9 +47,9 @@ marks score-gated Refresh Gates.
 | 11 | The Present Perfect — What Just Happened | 5 |
 | 12 | The "izan" Past Pool — Looking Back I | 2 |
 | 13 | The NOR-NORK Present — dut/duzu/du | 4 |
-| **14** | **gustatu — "I Like It" (NOR-NORI Present)** ⬅ promoted | 9 |
+| **14** | **gustatu — "I Like It" (NOR-NORI Present)** ⬅ promoted | 6 |
 | 15 | The NOR-NORK Past — nuen/zenuen/zuen | 4 |
-| 16 | maite izan — Loving Someone (forward object axis) | 6 |
+| 16 | maite izan — Loving Someone | 6 |
 | 17 | eraman/ekarri — More NOR-NORK Synthetics | 10 |
 | 18 | eduki — Physical States & Possessions | 5 |
 | 19 | eduki — "I Had It" (Simple Past) | 4 |
@@ -62,18 +62,18 @@ marks score-gated Refresh Gates.
 | 25 | joan/etorri/ibili — Motion in Progress (Past) | 2 |
 | **Phase IV — Interpersonal Dynamics** | | |
 | 26 | NOR-NORI Past & Future — Dative Across Time | 7 |
-| 27 | The NOR-NORI Object Axis — natzaizu/gatzaizu | 12 |
+| 27 | gustatu's Other Direction — natzaizu/gatzaizu | 12 |
 | 28 | The NOR-NORI-NORK Present — diot/diozu/dio | 10 |
 | 29 | NOR-NORI-NORK Past & Future | 12 |
 | 30 | Covert-Dative NOR-NORI-NORK — Agentive Verbs | 8 |
-| 31 🛡️ | REFRESH — The Case-Ending Mixer | *pending* |
+| 31 🛡️ | REFRESH — The Case-Ending Mixer | 8 |
 | **Phase V — Nuance & Modality** | | |
 | 32 | Ahalera — Permissions & Capability (core) | 13 |
 | 33 | Baldintza & Ondorioa — Conditionals (core) | 8 |
 | 34 | Agintera — Commands (core) | 8 |
 | **— end of mandatory spine —** | | |
 | 35 ✨ | Purpose & Wishing (Subjuntiboa) | 8 |
-| 36–39 ✨ | hi + Hitanoa (hi / Toka / Noka / Recombined) | 3/5/5/* |
+| 36–39 ✨ | hi + Hitanoa (hi / Toka / Noka / Recombined) | 3/5/5/4 |
 | 40 ✨ | The Passive nor-shift — Reading Real Text | 2 |
 | **Phase VI — Causatives** | | |
 | 41 ✨ | Making Someone Do It (-arazi intransitive) | 7 |
@@ -81,14 +81,14 @@ marks score-gated Refresh Gates.
 | 43 ✨🛡️ | REFRESH — Causatives Across Tenses | 2 |
 | **Phase VII — Curiosities & Color** | | |
 | 44 ✨ | Synthetic Curiosities (jario/etzan/irudi) | 7 |
-| 45 ✨ | Talking About Weather | *pending* |
+| 45 ✨ | Talking About Weather | 2 |
 | 46 ✨ | Unergative Curiosities (ihardun/iraun) | 5 |
 | 47 ✨ | erabili — Using Things | 3 |
 | **Bonus — Mastery & Depth** (the deflated axis/mood permutations) | | |
-| 48 ✨ | The Reverse Object Axis — Acting on Me/Us/You | 20 |
-| 49 ✨ | Potential — The Axes in Depth | 38 |
-| 50 ✨ | Conditionals — The Axes in Depth | 38 |
-| 51 ✨ | Commands — The Axes in Depth | 24 |
+| 48 ✨ | Acting on Me, Us, and You | 20 |
+| 49 ✨ | Ahalera, in Depth | 38 |
+| 50 ✨ | Conditionals, in Depth | 38 |
+| 51 ✨ | Commands, in Depth | 24 |
 
 > **47-unit core layout** (renumbered 2026-06-14/15, issues #137/#149/#151;
 > present perfect inserted as Unit 11 on 2026-06-19; "Carrying & Bringing"
@@ -544,7 +544,7 @@ novelties — new person, addressee-agreement, gender — one at a time (see
 | 36 | **hi — Meet "hi"** (no allocutivity) — as a subject in known paradigms, plus `hi`-as-NORK's own gender split | `Hi ikaslea haiz.` / `Hago lasai.` / `Hator hona.` / `Hik badakik?` | §3/§6 | available (#144, #167) |
 | 37 | **Toka (masculine allocutive)** — addressee-agreement on 3rd-person statements, one gender | `Lanean dik.` / `Etorri duk.` / `Ez nauk ondo.` | §10 | available (#167) |
 | 38 | **Noka (feminine allocutive)** — taught as the `-k`→`-n` transform of Unit 37 | `Lanean din.` / `Etorri dun.` / `Ez naun ondo.` | §10 | available (#167) |
-| 39 | **Hitanoa Recombined** — mixed toka/noka + *when not to use it* (subordinate clauses, formal `-ke-` moods) | choose register by addressee gender | §10, `LANGUAGE_DECISIONS.md` 2026-06-11 | pending |
+| 39 | **Hitanoa Recombined** — mixed toka/noka + *when not to use it* (subordinate clauses, formal `-ke-` moods) | choose register by addressee gender | §10, `LANGUAGE_DECISIONS.md` 2026-06-17 | available (2026-07-05) — no new engine mechanic; pools izan/ukan's existing toka/noka tables together, plus a lesson juxtaposing them against izan/ukan's `potential` (formal `-ke-`, no hitanoa) forms |
 
 #### Stage 13: Reading Real Text
 
@@ -588,7 +588,7 @@ Optional flavor content layered on top of the already-complete core curriculum (
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 45 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | pending |
+| 45 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | available (2026-07-05) — reuses `izan`/`egon`/`ibili`/`ukan`'s existing `hura`-present forms via 4 small dedicated "weather idiom" `VERBS` entries (own sentences, no new conjugated forms) rather than editing those verbs' own arrays directly |
 
 #### Stage 17: Subjects Without Objects
 

@@ -1829,6 +1829,13 @@ export function generateCaseMixerQuestions(
 // review-only special case but applies to ordinary practice lessons too.
 export const MATCH_PAIRS_QUESTION_COUNT = 1
 
+// A whole 6-person table (the common case) makes for a 12-tile board —
+// too many to scan on a phone screen, especially once a form wraps to two
+// lines (`gustatzen zaizue`). Capped to a random 4-person subset per board;
+// a full-table pass still happens, just spread across repeated attempts
+// rather than crammed into one round.
+export const MATCH_PAIRS_MAX_PAIRS = 4
+
 // A `kind: 'match-pairs'` question covers a whole source's table in one
 // round, instead of one grammatical person at a time like every other kind:
 // the learner matches every in-scope person to its conjugated form. Eligible
@@ -1849,7 +1856,8 @@ export function generateMatchPairsQuestions(resolvedSources, { persons: personsF
     const pairs = persons.map((person) => ({ person, form: table[person] })).filter(({ form }) => Boolean(form))
     if (pairs.length < 3) continue
     if (new Set(pairs.map((pair) => pair.form)).size !== pairs.length) continue
-    candidates.push({ verbId: verb.id, tense, kind: 'match-pairs', fixedArgument: getFixedArgument(verb), pairs, correct: 'complete' })
+    const boardPairs = pairs.length > MATCH_PAIRS_MAX_PAIRS ? shuffle(pairs).slice(0, MATCH_PAIRS_MAX_PAIRS) : pairs
+    candidates.push({ verbId: verb.id, tense, kind: 'match-pairs', fixedArgument: getFixedArgument(verb), pairs: boardPairs, correct: 'complete' })
   }
   return shuffle(candidates).slice(0, count)
 }

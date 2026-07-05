@@ -3,6 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { trackEvent } from '../analytics'
 import { getShareUrl, shareContent } from '../shareUtils'
 import { LESSONS } from '../data/lessons'
+import { VERBS, TENSE_META } from '../data/verbs'
 import { BONUS_LESSON_IDS, GATE_LESSON_IDS, JOURNEY } from '../journey'
 import {
   canBuyHeart,
@@ -17,8 +18,9 @@ import {
   MAX_HEARTS,
   STREAK_REPAIR_COST,
 } from '../lessonLogic'
-import { describeLesson, journeyText } from '../lessonDisplay'
+import { describeLesson, journeyText, verbMeaning } from '../lessonDisplay'
 import { FixedArgumentBadge, HeartsBadge, Stars } from '../components/badges'
+import { ConjugationTable } from '../components/conjugationTable'
 import { MascotAvatar } from '../components/mascot'
 import { FEEDBACK_API_URL, FEEDBACK_EMAIL_MAX_LENGTH, FEEDBACK_MESSAGE_MAX_LENGTH, SYNC_API_URL } from '../api'
 import {
@@ -130,13 +132,18 @@ function LessonList({ lessons, progress, unlockedIds, hearts, onSelect, onHeartL
 // preview of what's coming, with a "Coming soon" badge in place of stars.
 // Refresh Gate units (`unit.gate`) get a shield icon instead of a lock to set
 // them apart as checkpoints rather than ordinary lessons.
-function PendingUnitCard({ unit }) {
+function PendingUnitCard({ unit, onOpenUnit }) {
   const { t, language } = useLanguage()
   const title = journeyText('units', unit.number, 'title', language, unit.title)
   const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
   const payload = unit.payload ? journeyText('units', unit.number, 'payload', language, unit.payload) : null
   return (
-    <div className="flex items-start gap-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 opacity-70">
+    <button
+      type="button"
+      onClick={() => onOpenUnit(unit)}
+      aria-label={t('unitOverviewOpenLabel')}
+      className="flex w-full items-start gap-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 text-left opacity-70 transition hover:opacity-90"
+    >
       <div
         className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-400"
         aria-hidden="true"
@@ -151,35 +158,121 @@ function PendingUnitCard({ unit }) {
         {payload && <p className="mt-1 text-sm text-gray-400 italic break-words">{payload}</p>}
         <span className="mt-2 inline-block rounded-full bg-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-500">{t('comingSoon')}</span>
       </div>
-    </div>
+    </button>
   )
 }
 
 // An available unit's `lessonIds` point at entries in `LESSONS` — render each
 // as a `LessonNode`, with the unit's title/focus from `journey.js` as a label
-// above them.
-function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
+// above them. The label itself is a button opening `UnitOverviewModal`, which
+// explains what the unit covers in more depth than fits in this inline strip.
+function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLocked, onOpenUnit }) {
   const { t, language } = useLanguage()
   const lessons = unit.lessonIds.map((id) => LESSONS.find((lesson) => lesson.id === id))
   const title = journeyText('units', unit.number, 'title', language, unit.title)
   const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
   return (
     <div>
-      <p className="font-semibold text-gray-900">
-        {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
-        {unit.bonus && (
-          <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2 py-0.5 align-middle text-xs font-semibold text-brand-txakoli-text">
-            <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}
-          </span>
-        )}
-      </p>
-      <p className="mt-0.5 mb-2 text-sm text-gray-500 break-words">{focus}</p>
+      <button
+        type="button"
+        onClick={() => onOpenUnit(unit)}
+        aria-label={t('unitOverviewOpenLabel')}
+        className="w-full rounded-xl text-left transition hover:opacity-80"
+      >
+        <p className="font-semibold text-gray-900">
+          {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
+          {unit.bonus && (
+            <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2 py-0.5 align-middle text-xs font-semibold text-brand-txakoli-text">
+              <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}
+            </span>
+          )}
+        </p>
+        <p className="mt-0.5 mb-2 text-sm text-gray-500 break-words">{focus}</p>
+      </button>
       <LessonList lessons={lessons} progress={progress} unlockedIds={unlockedIds} hearts={hearts} onSelect={onSelect} onHeartLocked={onHeartLocked} />
     </div>
   )
 }
 
-function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
+// Explains what a unit covers — its focus and example sentence. Deliberately
+// doesn't repeat the unit's lesson list: that's already visible right below
+// on the home tab, so restating it here added scroll without adding
+// information (see docs/DECISIONS.md). It does show a conjugation table per
+// verb/tense the unit introduces — the focus/payload copy alone doesn't give
+// a learner the actual forms, and there's no other way to see them without
+// opening a lesson (unless already unlocked). A `pending` unit has no
+// `lessonIds` yet, so it gets a short "coming soon" note instead.
+export function UnitOverviewModal({ unit, onClose }) {
+  const { t, language } = useLanguage()
+  const title = journeyText('units', unit.number, 'title', language, unit.title)
+  const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
+  const payload = unit.payload ? journeyText('units', unit.number, 'payload', language, unit.payload) : null
+  // One table per distinct verb/tense this unit's *practice* lessons cover —
+  // review lessons (`lesson.sources`, no `lesson.verbId`) are skipped since
+  // they only recombine verb/tense pairs a practice lesson already
+  // introduced, so they'd never add a new table, just repeat one.
+  const conjugationEntries = []
+  for (const id of unit.lessonIds ?? []) {
+    const lesson = LESSONS.find((candidate) => candidate.id === id)
+    if (!lesson.verbId) continue
+    const key = `${lesson.verbId}-${lesson.tense}`
+    if (conjugationEntries.some((entry) => entry.key === key)) continue
+    conjugationEntries.push({ key, verb: VERBS.find((v) => v.id === lesson.verbId), tense: lesson.tense })
+  }
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="unit-overview-title"
+        className="flex max-h-[85dvh] w-full max-w-md flex-col rounded-t-3xl bg-white p-5 sm:rounded-3xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <div
+            className="mb-3 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-forest-tint text-brand-forest"
+            aria-hidden="true"
+          >
+            {unit.gate ? <GateIcon className="h-6 w-6" /> : <span className="text-xl font-extrabold">{unit.number}</span>}
+          </div>
+          <h2 id="unit-overview-title" className="text-lg font-bold text-gray-900">
+            {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
+          </h2>
+          {unit.bonus && (
+            <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2 py-0.5 text-xs font-semibold text-brand-txakoli-text">
+              <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}
+            </span>
+          )}
+          <p className="mt-3 text-sm text-gray-600 break-words">{focus}</p>
+          {payload && <p className="mt-2 text-sm text-gray-400 italic break-words">{payload}</p>}
+          {conjugationEntries.length > 0 && (
+            <div className="mt-5 flex flex-col gap-4">
+              {conjugationEntries.map(({ key, verb, tense }) => (
+                <div key={key}>
+                  <p className="mb-2 text-sm font-semibold text-gray-700">
+                    {verb.verb} <span className="font-normal text-gray-400">— {verbMeaning(verb, language)} · {t(TENSE_META[tense].labelKey)}</span>
+                  </p>
+                  <ConjugationTable verb={verb} tense={tense} />
+                </div>
+              ))}
+            </div>
+          )}
+          {!unit.lessonIds?.length && <p className="mt-5 text-sm text-gray-500">{t('unitOverviewComingSoonBody')}</p>}
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          style={{ minHeight: 48 }}
+          className="mt-4 w-full shrink-0 rounded-xl bg-brand-forest text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-brand-forest-hover active:scale-[0.98]"
+        >
+          {t('unitOverviewClose')}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartLocked, onOpenUnit }) {
   const { language } = useLanguage()
   const title = journeyText('stages', stage.id, 'title', language, stage.title)
   return (
@@ -196,9 +289,10 @@ function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartL
               hearts={hearts}
               onSelect={onSelect}
               onHeartLocked={onHeartLocked}
+              onOpenUnit={onOpenUnit}
             />
           ) : (
-            <PendingUnitCard key={unit.number} unit={unit} />
+            <PendingUnitCard key={unit.number} unit={unit} onOpenUnit={onOpenUnit} />
           ),
         )}
       </div>
@@ -206,7 +300,7 @@ function StageSection({ stage, progress, unlockedIds, hearts, onSelect, onHeartL
   )
 }
 
-function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartLocked }) {
+function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartLocked, onOpenUnit }) {
   const { language } = useLanguage()
   const title = journeyText('phases', phase.id, 'title', language, phase.title)
   const subtitle = journeyText('phases', phase.id, 'subtitle', language, phase.subtitle)
@@ -225,6 +319,7 @@ function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartL
           hearts={hearts}
           onSelect={onSelect}
           onHeartLocked={onHeartLocked}
+          onOpenUnit={onOpenUnit}
         />
       ))}
     </section>
@@ -234,10 +329,13 @@ function PhaseSection({ phase, progress, unlockedIds, hearts, onSelect, onHeartL
 // The home tab's lesson list is now driven by `JOURNEY` (`journey.js`) rather
 // than `LESSONS` directly: it walks phases → stages → units so the full
 // curriculum roadmap is visible, with available units rendering their
-// `LessonNode`s and pending units rendering locked `PendingUnitCard`s.
+// `LessonNode`s and pending units rendering locked `PendingUnitCard`s. Tapping
+// a unit's own label/card (rather than one of its lessons) opens
+// `UnitOverviewModal`, a read-only page explaining what that unit works on.
 function JourneyTab({ progress, hearts, onSelectLesson, onHeartLocked }) {
   const { t } = useLanguage()
   const unlockedIds = useMemo(() => getUnlockedLessonIds(LESSONS, progress, undefined, GATE_LESSON_IDS, BONUS_LESSON_IDS), [progress])
+  const [activeUnit, setActiveUnit] = useState(null)
 
   return (
     <div>
@@ -254,8 +352,10 @@ function JourneyTab({ progress, hearts, onSelectLesson, onHeartLocked }) {
           hearts={hearts}
           onSelect={onSelectLesson}
           onHeartLocked={onHeartLocked}
+          onOpenUnit={setActiveUnit}
         />
       ))}
+      {activeUnit && <UnitOverviewModal unit={activeUnit} onClose={() => setActiveUnit(null)} />}
     </div>
   )
 }
@@ -800,7 +900,7 @@ function ProfileTab({
         type="button"
         onClick={handleShareApp}
         style={{ minHeight: 48 }}
-        className="w-full rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:text-green-600"
+        className="w-full rounded-2xl border-2 border-brand-clay bg-brand-clay-tint px-5 text-sm font-bold text-brand-clay transition hover:bg-brand-clay hover:text-white active:scale-[0.98]"
       >
         {shareCopied ? t('shareCopied') : t('shareInviteButton')}
       </button>
@@ -808,15 +908,18 @@ function ProfileTab({
         type="button"
         onClick={onOpenFeedback}
         style={{ minHeight: 48 }}
-        className="w-full rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:text-green-600"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-brand-forest bg-brand-forest-tint px-5 text-sm font-bold text-brand-forest transition hover:bg-brand-forest hover:text-white active:scale-[0.98]"
       >
+        <EnvelopeIcon className="h-4 w-4" />
         {t('profileFeedback')}
       </button>
+      {/* Rarely used and destructive (confirm-gated in `handleResetProgress`,
+          App.jsx) — kept as a plain text link, well below the actions above
+          it, rather than a bordered button competing with them for attention. */}
       <button
         type="button"
         onClick={onResetProgress}
-        style={{ minHeight: 48 }}
-        className="rounded-2xl border-2 border-gray-200 px-5 text-sm font-bold text-gray-500 transition hover:border-red-300 hover:text-red-500"
+        className="px-2 py-3 text-xs font-semibold text-gray-400 underline decoration-gray-300 underline-offset-2 transition hover:text-red-500"
       >
         {t('profileResetProgress')}
       </button>

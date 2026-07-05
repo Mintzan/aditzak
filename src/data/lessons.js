@@ -643,14 +643,44 @@ export const LESSONS = [
   // NOR-NORI *past/future* (gustatu-past/-future, …) stays later, in the
   // "Dative Across Time" unit. `person` ranges over NORI (object: 'hura' fixes
   // NOR = "it"). See `docs/LEARNING_JOURNEY_REBALANCE.md`.
-  { id: 'gustatu-present', verbId: 'gustatu', tense: 'present' },
-  { id: 'iruditu-present', verbId: 'iruditu', tense: 'present' },
-  { id: 'ahaztu-present', verbId: 'ahaztu', tense: 'present' },
+  // Pooled across gustatu/iruditu/ahaztu (like `unit-10-present`'s verb
+  // pool) instead of one lesson per verb — all three share the exact same
+  // NOR-NORI aux table (`dativeIzan`, composed via `byNoriPrefixes`), only
+  // the prefix word differs, so a learner is drilling one grammatical
+  // pattern with three vocabulary items, not three separate patterns; a
+  // separate lesson per verb taught nothing a pooled one doesn't.
+  // "Me, You, and It" first (`persons: PHASE_1_PERSONS` — zait/zaizu/zaio),
+  // same restriction every other verb's first lesson gets; gu/zuek/haiek
+  // (zaigu/zaizue/zaie) follow immediately below as a dedicated expansion
+  // step, mirroring `unit-10-present`/`unit-10-present-plural`'s own split.
+  {
+    id: 'unit-14-present',
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-14-present-expansion',
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'iruditu', tense: 'present' },
+      { verbId: 'ahaztu', tense: 'present' },
+    ],
+  },
   // #164 — plural-NOR ("they please me") production drills, same three
   // verbs, `object: 'haiek'` instead of `hura`.
-  { id: 'gustatu-present-plural', verbId: 'gustatu', tense: 'presentPlural' },
-  { id: 'iruditu-present-plural', verbId: 'iruditu', tense: 'presentPlural' },
-  { id: 'ahaztu-present-plural', verbId: 'ahaztu', tense: 'presentPlural' },
+  {
+    id: 'unit-14-present-plural',
+    sources: [
+      { verbId: 'gustatu', tense: 'presentPlural' },
+      { verbId: 'iruditu', tense: 'presentPlural' },
+      { verbId: 'ahaztu', tense: 'presentPlural' },
+    ],
+  },
   // #164 — number-split review: each verb's singular and plural present
   // forms interleaved, recognition-only, drilling the `zait`-vs-`zaizkit`
   // contrast directly (#164 scope item 2's "number-split" lesson).
@@ -1753,6 +1783,139 @@ export const LESSONS = [
       { verbId: 'itxaron-dative', tense: 'future' },
     ],
   },
+  // Unit 31 (Refresh Gate C — "REFRESH — The Case-Ending Mixer"): zero new
+  // verbs. Pools izan (nor) / ukan (nor-nork) / gustatu (nor-nori) / esan
+  // (nor-nori-nork) across present/past/future so `generateCaseMixerQuestions`
+  // (already agreement-inverse-generic since #165) fires reliably across all
+  // three NOR/NORK/NORI contrasts at once, rather than the incidental
+  // nor-vs-nor-nork pairs earlier gates produce. `caseMixerCount` (new,
+  // opt-in lesson field — see `ExerciseScreen.jsx`'s `createExerciseState`)
+  // raises the per-lesson case-mixer question count above the default
+  // `CASE_MIXER_QUESTION_COUNT` (1), since drilling that exact distinction is
+  // this gate's whole point rather than a side effect.
+  {
+    id: 'unit-31-mixer-present',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'esan', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-present-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'esan', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-past',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'esan', tense: 'past' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-past-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'esan', tense: 'past' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-future',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'gustatu', tense: 'future' },
+      { verbId: 'esan', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-future-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'gustatu', tense: 'future' },
+      { verbId: 'esan', tense: 'future' },
+    ],
+  },
+  // Bridges Units 26 (NOR-NORI past/future) and 28 (NOR-NORI-NORK present) by
+  // pooling the dative-taking verb families' past/future forms together —
+  // the "dative past/future recombination drill" `docs/LEARNING_JOURNEY.md`
+  // calls for alongside the case-ending mixer above. No `persons` filter:
+  // `eman`'s NORI axis (`agent: 'ni'`) only has 4 non-reflexive persons
+  // (zu/hura/zuek/haiek), so each source keeps its own natural person set
+  // rather than forcing a shared restriction across mismatched tables.
+  {
+    id: 'unit-31-dative-recombination',
+    review: true,
+    caseMixerCount: 3,
+    sources: [
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'gustatu', tense: 'future' },
+      { verbId: 'iruditu', tense: 'past' },
+      { verbId: 'iruditu', tense: 'future' },
+      { verbId: 'ahaztu', tense: 'past' },
+      { verbId: 'ahaztu', tense: 'future' },
+      { verbId: 'esan', tense: 'past' },
+      { verbId: 'esan', tense: 'future' },
+      { verbId: 'eman', tense: 'past' },
+      { verbId: 'eman', tense: 'future' },
+    ],
+  },
+  // The gate lesson itself (last in Unit 31's `lessonIds` — see
+  // `GATE_LESSON_IDS` in `journey.js`): a cumulative pool across all three
+  // tenses and all four agreement shapes, plus the covert-dative `lagundu`
+  // family (Unit 30) for variety since it's already "zero new verbs" too.
+  // Reaching `GATE_PASS_STARS` here unlocks Phase V.
+  {
+    id: 'unit-31-review',
+    review: true,
+    caseMixerCount: 6,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'gustatu', tense: 'future' },
+      { verbId: 'esan', tense: 'present' },
+      { verbId: 'esan', tense: 'past' },
+      { verbId: 'esan', tense: 'future' },
+      { verbId: 'lagundu', tense: 'present' },
+      { verbId: 'lagundu', tense: 'past' },
+      { verbId: 'lagundu', tense: 'future' },
+    ],
+  },
   // Unit 28 (#148) — Ahalera (potential): `izan`/`ukan` production for
   // NOR/NOR-NORK. Dative-paradigm (gustatu/iruditu/ahaztu/esan/eman)
   // recognition-only potential is deferred — see the issue filed for #148's
@@ -2353,6 +2516,68 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'presentNoka' },
       { verbId: 'izan', tense: 'pastNoka' },
       { verbId: 'ukan', tense: 'pastNoka' },
+    ],
+  },
+  // Unit 39 ("Hitanoa Recombined"): mixes toka+noka together (present and
+  // past) instead of the register-at-a-time drilling Units 37/38 did, so a
+  // learner has to notice which one a question actually calls for from its
+  // per-question tense badge (`TENSE_META[question.tense]`, already looked up
+  // per question, not per lesson — see `ExerciseScreen.jsx`), rather than
+  // leaning on "the whole lesson is toka" context. `unit-39-when-not-to-use`
+  // pools those hitanoa forms alongside izan/ukan's already-shipped Ahalera
+  // (`potential`) forms — the formal `-ke-` mood that never takes toka/noka
+  // marking (`docs/LANGUAGE_DECISIONS.md`, 2026-06-11: "independently banned
+  // in subordinate clauses and clashes register-wise with the formal -ke-
+  // forms") — so the contrast itself teaches "leave hitanoa out here" by
+  // juxtaposition. No new question kind or distractor mechanic needed (per
+  // `docs/EXERCISE_ENGINE.md`, #213's dedicated wrong-gender/neutral-form
+  // lure stays open, tracked separately, not blocking this).
+  {
+    id: 'unit-39-recombined-present',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'presentToka' },
+      { verbId: 'izan', tense: 'presentNoka' },
+      { verbId: 'ukan', tense: 'presentToka' },
+      { verbId: 'ukan', tense: 'presentNoka' },
+    ],
+  },
+  {
+    id: 'unit-39-recombined-past',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'pastToka' },
+      { verbId: 'izan', tense: 'pastNoka' },
+      { verbId: 'ukan', tense: 'pastToka' },
+      { verbId: 'ukan', tense: 'pastNoka' },
+    ],
+  },
+  {
+    id: 'unit-39-when-not-to-use',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'presentToka' },
+      { verbId: 'izan', tense: 'presentNoka' },
+      { verbId: 'ukan', tense: 'presentToka' },
+      { verbId: 'ukan', tense: 'presentNoka' },
+      { verbId: 'izan', tense: 'potential' },
+      { verbId: 'ukan', tense: 'potential' },
+    ],
+  },
+  {
+    id: 'unit-39-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'presentToka' },
+      { verbId: 'izan', tense: 'presentNoka' },
+      { verbId: 'izan', tense: 'pastToka' },
+      { verbId: 'izan', tense: 'pastNoka' },
+      { verbId: 'ukan', tense: 'presentToka' },
+      { verbId: 'ukan', tense: 'presentNoka' },
+      { verbId: 'ukan', tense: 'pastToka' },
+      { verbId: 'ukan', tense: 'pastNoka' },
+      { verbId: 'izan', tense: 'potential' },
+      { verbId: 'ukan', tense: 'potential' },
     ],
   },
   // Unit 36 (#145) — Stage 13, "Passive & Reading Real Text": a new
@@ -4181,6 +4406,33 @@ export const LESSONS = [
       { verbId: 'irudi', tense: 'past' },
       { verbId: 'etzan', tense: 'present' },
       { verbId: 'etzan', tense: 'past' },
+    ],
+  },
+  // Unit 45 ("Talking About Weather"): pools the four dedicated weather-idiom
+  // entries (see `data/verbs.js`), all fixed at `persons: ['hura']` since
+  // none of them have (or need) any other person. `unit-45-weather` is the
+  // first-exposure practice pass; `unit-45-review` repeats the same pool as
+  // the unit's consolidation lesson, matching every other unit's closing
+  // `-review` convention.
+  {
+    id: 'unit-45-weather',
+    persons: ['hura'],
+    sources: [
+      { verbId: 'eguraldia-ari', tense: 'present' },
+      { verbId: 'eguraldia-izan', tense: 'present' },
+      { verbId: 'eguraldia-egon', tense: 'present' },
+      { verbId: 'eguraldia-ibili', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-45-review',
+    review: true,
+    persons: ['hura'],
+    sources: [
+      { verbId: 'eguraldia-ari', tense: 'present' },
+      { verbId: 'eguraldia-izan', tense: 'present' },
+      { verbId: 'eguraldia-egon', tense: 'present' },
+      { verbId: 'eguraldia-ibili', tense: 'present' },
     ],
   },
 ]

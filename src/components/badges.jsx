@@ -48,6 +48,12 @@ export function DialectBadge({ dialect }) {
   )
 }
 
+// `DialectBadge` is deliberately not rendered here: every verb is currently
+// `dialect: 'batua'` (see `data/verbs.js`'s comment — it's a placeholder for
+// future dialect variants), so showing it today would just repeat the same
+// unchanging "Batua" tag on every single lesson, adding noise with no
+// information. Re-add it once a verb actually carries a `dialectVariants`
+// override and the badge can distinguish something.
 export function VerbBadgeRow({ verb }) {
   return (
     <div className="flex flex-wrap items-center gap-1.5">
@@ -55,7 +61,6 @@ export function VerbBadgeRow({ verb }) {
       {verb.agreement.map((role) => (
         <AgreementBadge key={role} role={role} />
       ))}
-      <DialectBadge dialect={verb.dialect} />
       <FixedArgumentBadge fixedArgument={getFixedArgument(verb)} />
     </div>
   )

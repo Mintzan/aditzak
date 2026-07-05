@@ -34,6 +34,7 @@ import {
 } from '../lessonLogic'
 import { describeLesson, verbMeaning } from '../lessonDisplay'
 import { FixedArgumentBadge, ProgressBar, Stars, VerbBadgeRow } from '../components/badges'
+import { ConjugationTable } from '../components/conjugationTable'
 import { FeedbackMascotAvatar, MascotAvatar } from '../components/mascot'
 import { FEEDBACK_API_URL, FEEDBACK_MESSAGE_MAX_LENGTH } from '../api'
 import { CheckIcon, CrossIcon, FlagIcon, HeartBrokenIcon, LightbulbIcon, PointsIcon } from '../components/icons'
@@ -154,9 +155,16 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // `CASE_MIXER_QUESTION_COUNT` "which form matches this sentence's subject"
   // questions (see `generateCaseMixerQuestions`) — `verb-choice`'s mirror
   // image, framed around `-k` ergative-subject marking. Reviews with no such
-  // mix simply get none.
+  // mix simply get none. `lesson.caseMixerCount` (opt-in, Unit 31/Refresh
+  // Gate C) raises this above the default for reviews whose whole point is
+  // drilling that distinction, rather than picking it up incidentally.
   const caseMixerQuestions = lesson.review
-    ? generateCaseMixerQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources, verbs: VERBS })
+    ? generateCaseMixerQuestions(resolvedSources, {
+        persons: lesson.persons,
+        extraSiblingSources,
+        verbs: VERBS,
+        ...(lesson.caseMixerCount ? { count: lesson.caseMixerCount } : {}),
+      })
     : []
   // A whole-table match-the-pairs round (see `generateMatchPairsQuestions`)
   // — gated off `lesson.negation` lessons (Unit 10's Refresh Gate A and its
@@ -195,24 +203,9 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
 // is asked. Pairs with `NO_TYPING_ATTEMPTS` — the learner sees the full table
 // here, then spends their first attempts recognising those same forms, in
 // isolation and in example sentences, before typed answers and
-// spot-the-error are introduced.
-function ConjugationTable({ verb, tense }) {
-  const { t } = useLanguage()
-  const table = getComposedTable(verb, tense)
-  return (
-    <div className="overflow-hidden rounded-2xl border border-gray-200">
-      {Object.entries(table).map(([person, form], index) => (
-        <div key={person} className={`flex items-center justify-between px-4 py-3 ${index > 0 ? 'border-t border-gray-100' : ''}`}>
-          <div>
-            <p className="font-semibold text-gray-800">{(verb.pronouns?.[person] ?? person).toLowerCase()}</p>
-            <p className="text-xs text-gray-400">{t(PERSON_LABEL_KEYS[person])}</p>
-          </div>
-          <p className="text-xl font-extrabold text-gray-900">{form}</p>
-        </div>
-      ))}
-    </div>
-  )
-}
+// spot-the-error are introduced. `ConjugationTable` itself now lives in
+// `components/conjugationTable.jsx` — `UnitOverviewModal` (`HomeScreen.jsx`)
+// reuses it too.
 
 function LessonPreviewScreen({ verb, tense, tenseMeta, onStart, onExit }) {
   const { t, language } = useLanguage()
@@ -1176,6 +1169,11 @@ export function ExerciseScreen({
   // state (see `FlagQuestionModal`) resets between questions instead of
   // persisting onto the next one.
   const [answerSeq, setAnswerSeq] = useState(0)
+  // Bumped each time `handleContinue` advances to the next exercise (not on
+  // every answer) — used as the key for the question/answer block below so it
+  // remounts and replays its slide-in-from-right entrance animation for each
+  // new exercise, rather than for every re-render.
+  const [questionSeq, setQuestionSeq] = useState(0)
   // Shown once, before the first attempt at a single-verb practice lesson —
   // see `LessonPreviewScreen`. Review lessons and pooled multi-verb practice
   // lessons (`lesson.sources`, e.g. Unit 10's `unit-10-present`) skip it:
@@ -1320,6 +1318,7 @@ export function ExerciseScreen({
       setFinished(true)
     } else {
       setTypedValue('')
+      setQuestionSeq((n) => n + 1)
       dispatch({ type: 'next' })
     }
   }
@@ -1365,46 +1364,48 @@ export function ExerciseScreen({
           </div>
         )}
 
-        <QuestionPrompt
-          verb={verb}
-          tenseMeta={tenseMeta}
-          question={question}
-          showVerb={!lesson.review || !question.options || question.kind === 'form'}
-        />
-
-        <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{t(QUESTION_PROMPT_KEYS[question.kind])}</p>
-        {question.pairs ? (
-          <MatchPairsBoard
-            key={`match-pairs-${question.verbId}-${question.tense}-${question.attempt ?? 1}`}
-            pairs={question.pairs}
+        <div key={questionSeq} className="animate-slide-in-right">
+          <QuestionPrompt
             verb={verb}
-            disabled={isAnswered}
-            onComplete={(success) => submitAnswer(success ? question.correct : 'incomplete')}
+            tenseMeta={tenseMeta}
+            question={question}
+            showVerb={!lesson.review || !question.options || question.kind === 'form'}
           />
-        ) : question.tokens ? (
-          <WordOrderBoard
-            key={`word-order-${question.verbId}-${question.tense}-${question.person}-${question.attempt ?? 1}`}
-            tokens={question.tokens}
-            punctuation={question.punctuation}
-            status={state.status}
-            disabled={isAnswered}
-            onSubmit={submitAnswer}
-          />
-        ) : question.options ? (
-          <div className="flex flex-col gap-3">
-            {question.options.map((option) => (
-              <AnswerOption
-                key={option}
-                option={option}
-                status={getOptionStatus(option, question, state)}
-                disabled={isAnswered}
-                onSelect={() => submitAnswer(option)}
-              />
-            ))}
-          </div>
-        ) : (
-          <TypedAnswerInput value={typedValue} status={state.status} onChange={setTypedValue} onSubmit={handleSubmitTyped} />
-        )}
+
+          <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{t(QUESTION_PROMPT_KEYS[question.kind])}</p>
+          {question.pairs ? (
+            <MatchPairsBoard
+              key={`match-pairs-${question.verbId}-${question.tense}-${question.attempt ?? 1}`}
+              pairs={question.pairs}
+              verb={verb}
+              disabled={isAnswered}
+              onComplete={(success) => submitAnswer(success ? question.correct : 'incomplete')}
+            />
+          ) : question.tokens ? (
+            <WordOrderBoard
+              key={`word-order-${question.verbId}-${question.tense}-${question.person}-${question.attempt ?? 1}`}
+              tokens={question.tokens}
+              punctuation={question.punctuation}
+              status={state.status}
+              disabled={isAnswered}
+              onSubmit={submitAnswer}
+            />
+          ) : question.options ? (
+            <div className="flex flex-col gap-3">
+              {question.options.map((option) => (
+                <AnswerOption
+                  key={option}
+                  option={option}
+                  status={getOptionStatus(option, question, state)}
+                  disabled={isAnswered}
+                  onSelect={() => submitAnswer(option)}
+                />
+              ))}
+            </div>
+          ) : (
+            <TypedAnswerInput value={typedValue} status={state.status} onChange={setTypedValue} onSubmit={handleSubmitTyped} />
+          )}
+        </div>
       </div>
 
       <FeedbackBar

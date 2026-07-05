@@ -8,6 +8,368 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Unit 45 ("Talking About Weather") shipped — last pending unit; curriculum is now 51/51 available
+
+Weather idioms are always 3rd-person-singular (`hura`) and, per
+`docs/LEARNING_JOURNEY.md`'s own framing, reuse `izan`/`egon`/`ibili`/`ukan`'s
+existing `hura`-present forms (`da`/`dago`/`dabil`/`du`) rather than
+introducing any new conjugated form. The open design question was *how* to
+reuse them.
+
+**Rejected: appending weather sentences directly to `izan`/`egon`/`ibili`/
+`ukan`'s own `sentences.present.hura` arrays.** Those arrays already hold
+8-12 unrelated variants each (predicate-nominal frames, location frames,
+motion frames); `pickVariant` picks one at random per question, so a couple
+of new weather entries added there would mostly get *diluted out* — a
+"Talking About Weather" lesson would show a non-weather sentence most of the
+time. It also risks a stray weather sentence surfacing in `izan-present`
+(Unit 1) or `ibili-present` (Unit 6) long before a learner reaches Unit 45,
+for no benefit.
+
+**Chosen: 4 small dedicated "weather idiom" `VERBS` entries**
+(`eguraldia-ari`, `eguraldia-izan`, `eguraldia-egon`, `eguraldia-ibili`),
+each a single-cell `{ present: { hura: '<form>' } }` table copying an
+already-known form verbatim, with its own `sentences.present.hura` array
+holding *only* weather content. This mirrors the existing `lagundu`/
+`mesede-egin`/`kalte-egin` cluster precedent (a new thematic entry whose
+conjugated forms are generated from — or in this case, identical to — an
+already-known paradigm) rather than inventing a new mechanism. Zero new
+conjugation *forms* are taught (the whole point per the unit's spec); the
+"new `VERBS` entries" are just a home for new *sentences*, keeping the
+change's blast radius limited to a bonus unit instead of 40+ existing
+lessons that already draw on `izan`/`egon`/`ibili`/`ukan`'s present tense.
+
+**2 lessons**: `unit-45-weather` (first-exposure pooled practice) and
+`unit-45-review` (capstone), both `persons: ['hura']`, pooling all four
+entries. Reviewed (and accepted) one known side effect: `eguraldia-ari`'s
+`agreement: ['nor', 'nork']` (matching `ukan`'s real class, since the form
+`du` genuinely is `ukan`'s nor-nork `hura` cell, just used impersonally)
+makes it agreement-*incompatible* with the other three (`agreement: ['nor']`)
+under `agreementsCompatible` — so its own `sentence`/`type-verb` questions
+get thinner ordinary cross-verb distractors than the other three, same
+graceful degradation already accepted for Unit 15's `eman` (4-person table).
+`case-mixer` (which wants exactly this kind of agreement mismatch) can
+occasionally surface a richer question for it instead.
+
+**Also confirmed, not a bug:** `spot-error` questions for these thin
+(1-person) sources borrow filler sentences from the entire `VERBS` array via
+`getBorrowedSpotErrorSlots` (only the anchor sentence has to be genuinely
+correct; the deliberately-wrong option's *topic* doesn't matter for a
+"spot the grammar mistake" drill) — this is the same pre-existing, generic
+small-table fallback every other thin unit already relies on (e.g. Unit 25's
+imperative), not something new introduced here.
+
+Regenerated `scripts/validfor-gap-baseline.json` after reviewing the new gap
+slots via `node scripts/validfor-delta-audit.mjs --verb <id>` for all four new
+entries — every listed gap was an unrelated, genuinely-non-interchangeable
+sentence (e.g. `du` correctly *not* validated against "Hark opari bat ___."),
+so nothing needed a `validFor` addition. See `docs/LANGUAGE_DECISIONS.md` for
+the weather-phrasing-specific native-speaker-confirmation flag.
+
+Fixed two tests that hardcoded Unit 45 as "the" example pending unit
+(`App.homeScreen.test.jsx`) — with this unit shipped, **all 51 curriculum
+units are `available`**, so there's no real pending unit left to click
+through to. Exported `UnitOverviewModal` (`HomeScreen.jsx`) so the
+"coming soon" rendering path can still be tested directly with a synthetic
+pending unit, rather than depending on real journey data staying
+permanently incomplete.
+
+## 2026-07-05 — Unit 39 ("Hitanoa Recombined") shipped, content-only
+
+`docs/EXERCISE_ENGINE.md` had already resolved this unit's data shape (toka/
+noka are just two more directly-selectable tense values, same as every other
+tense) and flagged only two open questions, neither blocking: #213 (a
+dedicated wrong-gender/neutral-form distractor row) and a "learner-facing
+addressee-gender selection control." Both stay open, unaddressed here:
+
+**No selection control needed.** `ExerciseScreen.jsx` already looks up
+`TENSE_META[question.tense]` *per question*, not per lesson (confirmed by
+reading the code, not assumed) — every pooled review that mixes tenses
+(present/past/future mixers, Unit 31's case-mixer reviews, etc.) already
+renders each question's own tense badge. Pooling `presentToka`/`presentNoka`
+into one review lesson means the badge itself ("Present (toka)" vs "Present
+(noka)") already tells the learner which register a question wants — nothing
+new to build.
+
+**"When not to use it" via juxtaposition, not a new mechanic.** Basque
+suppresses toka/noka in subordinate clauses and formal `-ke-` moods
+(`docs/LANGUAGE_DECISIONS.md`, 2026-06-17) — a negative rule with no positive
+form to produce, and no existing engine hook for "this construction forbids
+register X." Rather than build one, `unit-39-when-not-to-use` pools the
+hitanoa forms alongside `izan`/`ukan`'s already-shipped Ahalera (`potential`)
+forms in one review: the learner meets both "Present (toka)"-badged and
+"Ahalera"-badged questions back to back, and the *absence* of a toka/noka
+variant on the Ahalera forms is what teaches the rule. `#213`'s stronger
+wrong-gender lure work stays out of scope, same as `docs/EXERCISE_ENGINE.md`
+already flagged.
+
+**4 lessons, zero new verbs/tenses**: `unit-39-recombined-present`/`-past`
+mix toka+noka together (previously drilled one register at a time in Units
+37-38), `unit-39-when-not-to-use` adds the Ahalera contrast, and
+`unit-39-review` pools everything as the unit's capstone (not score-gated —
+this is a bonus unit, not a Refresh Gate).
+
+## 2026-07-05 — Unit 31 (Refresh Gate C, "The Case-Ending Mixer") shipped, no new question kind
+
+`docs/EXERCISE_ENGINE.md` had speculated this gate would need a `spot-error`-
+style "candidate full sentences, pick the right one" mechanism (mirroring the
+negation drill), and deliberately left it `pending` until Units 20-21's
+dative verbs existed. Both turned out unnecessary once those verbs (Units
+26-30) landed:
+
+**`case-mixer` already generalizes to all four agreement shapes.**
+`generateCaseMixerQuestions` filters siblings via the *negation* of
+`agreementsCompatible`, which was generalized past izan/ukan back in #165 —
+so pooling `izan` (nor) / `ukan` (nor-nork) / `gustatu` (nor-nori) / `esan`
+(nor-nori-nork) into one review yields case-mixer questions across every
+pairwise NOR/NORK/NORI contrast, not just nor-vs-nor-nork. No new question
+kind, no new engine mechanic — confirmed empirically (a throwaway script
+generating each new review's questions) before writing this up.
+
+**Added `lesson.caseMixerCount` (opt-in).** `CASE_MIXER_QUESTION_COUNT` (1)
+is deliberately thin everywhere else — case-mixer is normally an incidental
+side effect of a review mixing agreement types, not the point. For Gate C it
+*is* the point, so `createExerciseState` (`ExerciseScreen.jsx`) now honors a
+per-lesson override, used only by Unit 31's 8 lessons (present/past/future
+mixer pairs at 4 each, a dative past/future recombination lesson at 3, the
+final gate review at 6). Every other review is unaffected.
+
+**8 lessons, zero new verbs**, per the unit's own constraint: singular/plural
+mixer pairs for present, past, and future (izan/ukan/gustatu/esan), a
+`unit-31-dative-recombination` lesson bridging Unit 26's dative verbs
+(gustatu/iruditu/ahaztu) with Unit 28's ditransitives (esan/eman) across past
+and future — the "dative past/future recombination" half of the spec — and a
+final cumulative `unit-31-review` (the score-gate checkpoint, adding
+`lagundu` from Unit 30 for variety). All sentence data for these four core
+verbs already carried vetted `validFor` tags from earlier curation passes, so
+no `docs/LANGUAGE_DECISIONS.md` follow-up was needed.
+
+## 2026-07-04 — Unit overview page, as a modal rather than a new screen/route
+
+Added a "what's this unit about" page, reachable by tapping a unit's own
+title/card on the home tab (rather than one of its lesson rows).
+
+**Modal, not a third `AppShell` state.** `App.jsx`'s state machine only
+toggles between `HomeScreen` and `ExerciseScreen` (`activeLessonId`); adding a
+unit-overview screen there would mean threading a new `activeUnitNumber` prop
+through `App.jsx` and `HomeScreen` just to render one more full-page view.
+Since the content (focus/payload) is read-only and dismissable, it fits the
+existing bottom-sheet modal pattern (`FeedbackModal`/`AccountModal`/
+`HeartsLockedModal`) instead — state lives locally in `JourneyTab`
+(`HomeScreen.jsx`), same scope as those other modals, no prop drilling past
+`PhaseSection`/`StageSection`.
+
+**No lesson list in the modal.** The first version also listed every lesson
+in the unit inside the modal, but that's pure duplication — the unit's lesson
+list is already the content directly below it on the home tab, one tap away
+without a modal in front of it. Cut back to just the unit's focus/payload
+copy and its gate/bonus badge. A `pending` unit still opens the same modal (no
+`lessonIds` yet, so it falls back to a short "coming soon" note) rather than
+staying inert — the ask was "for each unit," not "for each available unit."
+
+## 2026-07-05 — Unit overview modal: added a conjugation table per verb/tense
+
+A review of Unit 1's overview found the focus/payload copy alone ("izan and
+egon, present tense — say who and where you are" / "I am a student.") doesn't
+give a learner the actual forms — there was no way to see e.g. `naiz`/`da`/
+`gara` without opening a lesson (and lessons stay locked until the previous
+one's been attempted, so a not-yet-unlocked unit's forms were invisible
+entirely). Added a conjugation table per distinct verb/tense the unit's
+practice lessons cover, reusing the same table `LessonPreviewScreen` already
+shows before a lesson's first attempt — extracted into
+`components/conjugationTable.jsx` so both places import one implementation
+instead of maintaining two copies.
+
+Only *practice* lessons (`lesson.verbId` set) contribute a table; review
+lessons (`lesson.sources`) are skipped, since they only recombine verb/tense
+pairs a practice lesson already introduced — including them would just repeat
+a table already shown earlier in the same modal, not add one. Unit 1 gets two
+tables (`izan` present, `egon` present) from its two practice lessons; a unit
+whose lessons are entirely pooled reviews (e.g. Unit 27, post-#469) shows no
+tables, since there's no single canonical table for a multi-verb pool — moot
+for now, since none of the current spine's practice lessons hit that pool
+shape in the unit's very first table-eligible lesson.
+
+Tables show the full 6-person paradigm regardless of the lesson's `persons`
+restriction (e.g. Unit 1 only drills `ni`/`zu`/`hura`, `PHASE_1_PERSONS`) —
+same behavior `LessonPreviewScreen` already had, kept as-is for consistency
+rather than filtering one copy and not the other.
+
+## 2026-07-03 — Profile tab: colorful invite/feedback buttons, reset progress demoted to a text link
+
+A user reviewing a Profile-tab screenshot asked for two changes, both scoped
+narrowly rather than the fuller "dedupe the header/body stats" rethink
+discussed in the same conversation (not implemented — no explicit go-ahead
+on that broader piece):
+
+1. **"Invite a friend"/"Send feedback" should be more attractive.** Both
+   used the same flat `border-gray-200 text-gray-700` treatment as every
+   other secondary button, indistinguishable from "Reset progress" below
+   them. Restyled using the app's existing tint-triad idiom (`border-<token>
+   bg-<token>-tint text-<token>`, already used for the language-picker's
+   selected state and the NOR/NORI/NORK badges) rather than inventing a new
+   pattern: invite gets `brand-clay` (warm/social), feedback gets
+   `brand-forest` + the existing `EnvelopeIcon` (already used inside the
+   feedback modal itself, so this reuses rather than introduces an icon
+   association). Both invert to solid-fill/white-text on hover, the same
+   high-contrast pairing the Start/Sign-in buttons already use. Deliberately
+   did *not* reuse `brand-txakoli`/`accent-hearts` (points/hearts) or a solid
+   `brand-forest` fill — those already carry a specific meaning elsewhere
+   (points, hearts, "the one primary CTA on screen") that reusing here would
+   blur.
+2. **"Reset progress" is rare, so it shouldn't compete for attention.** It's
+   already `window.confirm`-gated (`handleResetProgress`, `App.jsx`), so the
+   destructive action itself was never one accidental tap away — the actual
+   problem was purely visual weight, sitting as a bordered button the same
+   size/shape as "Invite a friend" a few pixels above it. Demoted to a plain
+   underlined text link (`text-xs text-gray-400`, no border/background),
+   still a real `<button>` with adequate tap padding, just visually reading
+   as low-priority.
+
+Verified with a Playwright screenshot of the live dev server (English
+locale) rather than just trusting the class names — confirmed contrast and
+layout read correctly before considering this done.
+
+## 2026-07-03 — Stopped rendering `DialectBadge` — every verb is `batua`, so it never varies
+
+A user flagged a screenshot showing a "Batua" pill on every single exercise —
+correctly: `verb.dialect` is `'batua'` for all 109 verbs (`data/verbs.js`
+documents it as a placeholder for future dialect variants, e.g. a
+`dialectVariants: { bizkaiera: {...} }` override on some verb down the
+line). Until that actually exists, the badge conveys zero information — it's
+the same word on every card, pure clutter alongside `TypeBadge`/
+`AgreementBadge`/`FixedArgumentBadge`, which do vary per verb/lesson.
+
+Removed the `<DialectBadge>` line from `VerbBadgeRow` (`src/components/
+badges.jsx`) — the single place both `LessonPreviewScreen` and the active
+exercise header (`ExerciseScreen.jsx`) source their badge row from, so this
+covers every place "Batua" was showing. Kept the `DialectBadge` component,
+`DIALECT_LABELS`, and `verb.dialect` data itself untouched — re-adding the
+one line to `VerbBadgeRow` is all a future dialect variant needs.
+
+## 2026-07-03 — Rewrote all 51 units' roadmap `focus` text (and a handful of `title`s) to be learner-facing, not dev-facing
+
+`unit.focus` (`journey.js`) isn't internal documentation — `HomeScreen.jsx`'s
+`UnitLessons`/`PendingUnitCard` render it directly as the gray subtitle under
+every unit's title, for both playable and locked-preview units. It had
+drifted into engineering shorthand over ~500 commits: issue numbers (`#410`,
+`#446`, …), engine-internal terms (`case-frame buffer`, `cross-verb review`,
+`object axis`, `recognition-pooled`, `carrier`), and multi-clause run-ons
+describing *implementation history* rather than *what a learner is about to
+practice* (Unit 32's old focus: "dezaket/naiteke contrasted with periphrastic
+ahal izan/ezin (#410/#411) — production for NOR/NOR-NORK; plus ukan's
+NOR-NORK object axis (zaitzaket-type forms, #352, extended to every NORK
+value by #424)..."). A user flagged this from a live screenshot.
+
+Rewrote all 51 units' `focus` in `journey.js`, plus the six `title`s that had
+the same leaked-jargon problem (Units 16, 27, 48, 49, 50, 51 — e.g. "The
+Reverse Object Axis — Acting on Me/Us/You" → "Acting on Me, Us, and You").
+Kept genuine grammar vocabulary the app already teaches as badges/tooltips
+(NOR/NORI/NORK, ergative/absolutive/dative, "periphrastic") since learners
+already meet those terms elsewhere with a plain gloss attached
+(`AGREEMENT_META`'s `agreementNorkTitle`: "Ergative — who performs the
+action") — the fix targets implementation jargon, not the app's actual
+grammar terminology. Style: one plain sentence naming the verb(s) and what
+you'll be able to say, not a changelog of which issue added which table.
+
+Also translated the same rewrite into `journeyTranslations.js`'s es/eu
+`focus`/`title` fields, matching tone (requested explicitly — the user chose
+"rewrite all three languages now" over "English first" when asked). These
+are fluent but not native-speaker-reviewed; flagging that honestly rather
+than implying a review that didn't happen.
+
+Incidental fixes found while rewriting: Units 48-51's old focus text
+referenced stale pre-renumber unit numbers for what they're the "deep
+practice" half of (e.g. Unit 48 said "the deep-practice half of Unit 15";
+the actual match, confirmed by identical `payload` text, is Unit 16 — likely
+never updated after a renumber). Corrected to the current numbers.
+
+Updated `docs/LEARNING_JOURNEY.md`'s authoritative unit table to match the
+six retitled units. Left the file's own pre-rebalance-numbering prose
+sections (explicitly marked in the file's preamble as historical-rationale,
+not synced to current numbering) and `docs/LEARNING_JOURNEY_REBALANCE.md`
+untouched, per the same "don't rewrite point-in-time records" reasoning as
+the entry below. `docs/CURRICULUM_MAP.md` remains stale pending regeneration
+(see its own entry and the two entries below).
+
+## 2026-07-03 — Unit 14 pools gustatu/iruditu/ahaztu into shared lessons instead of one lesson per verb
+
+Follow-up to the entry directly below: a user flagged that Unit 14 having a
+separate `gustatu-present`/`iruditu-present`/`ahaztu-present` (and the
+matching `-expansion`/`-plural` trios) "makes no sense" — the point being
+that NOR-NORI conjugation is one grammatical pattern (`dativeIzan`, composed
+via `byNoriPrefixes`) that all three verbs share cell-for-cell; only the
+prefix word differs. A separate lesson per verb was drilling the same
+pattern three times over with different vocabulary glued on, not three
+different things to learn — the same critique `unit-10-present`'s giant
+pooled `sources` array (jan/edan/erosi/ikusi/hartu/… all sharing one `ukan`
+present table) already settled for the ergative-present cluster, just never
+applied here.
+
+Collapsed the 9 lessons (3 verbs × {base, expansion, plural-NOR}) into 3
+pooled lessons — `unit-14-present`/`unit-14-present-expansion` (`sources`
+listing all three verbs, `persons: PHASE_1_PERSONS`/`PHASE_1_PLURAL_PERSONS`
+respectively) and `unit-14-present-plural` (the `presentPlural`/object-plural
+axis, also pooled, left unsplit by persons same as before) — exactly
+`unit-10-present`/`unit-10-present-plural`'s existing shape, not a new
+pattern. `describeLesson`/`LessonPreviewScreen`/`createExerciseState` needed
+no changes — pooled non-review practice lessons (`lesson.sources` without
+`lesson.review`) were already a supported, tested shape. Unit 14 drops from
+12 lessons to 6; spine total 197 → 191. `journey.js`'s focus text and its
+`journeyTranslations.js` es/eu counterpart reworded from "per verb" to
+"pooled across gustatu/iruditu/ahaztu" to match. `docs/CURRICULUM_MAP.md`
+remains stale pending a regeneration (see its own entry and the match-pairs
+entry below).
+
+## 2026-07-03 — `gustatu`/`iruditu`/`ahaztu`'s first present lesson restricted to 3 persons, gu/zuek/haiek split into a dedicated expansion lesson
+
+Follow-up to the match-pairs cap above: `gustatu-present`/`iruditu-present`/
+`ahaztu-present` had no `persons` filter, so a learner's very first exposure
+to each verb was the full 6-person NORI table (`zait`/`zaizu`/`zaio`/
+`zaigu`/`zaizue`/`zaie`) — both in `generateQuestions`'s one-question-per-
+person queue and (before the cap above) as a 12-tile match-pairs board. That
+contradicts `docs/LEARNING_JOURNEY.md`'s stated principle ("every verb's
+first lesson is restricted to `ni`/`zu`/`hura`") and the original
+`LEARNING_JOURNEY_REBALANCE.md` plan (line 144: this unit was meant to
+introduce only `zait`/`zaizu`/`zaio`), which the implementation never
+actually matched — these three verbs arrived after Units 7/8 (the general
+`gu`/`zuek`/`haiek` expansion gates), and nothing filled the equivalent
+per-verb expansion step for them.
+
+Fixed by adding `persons: PHASE_1_PERSONS` to the three first-lessons and
+inserting three new lessons (`gustatu-present-expansion`/
+`iruditu-present-expansion`/`ahaztu-present-expansion`, `persons:
+PHASE_1_PLURAL_PERSONS`) directly after them in both `LESSONS` (which is
+what actually drives unlock order, per `getUnlockedLessonIds`) and Unit 14's
+`lessonIds` — same "zero new verbs, just the plural persons" framing Units
+7/8 use, just applied per-verb since these three didn't exist yet when
+7/8 ran. The later reviews in the unit (`unit-23-number-split-review`,
+`unit-23-case-frame-buffer`, `nor-nori-present-pool`) are left unfiltered —
+by the time a learner reaches them both stages are already taught, so
+mixing all 6 persons there is correct. Updated `journey.js`'s focus text,
+`journeyTranslations.js`'s es/eu Unit 14 focus, and `LEARNING_JOURNEY.md`'s
+lesson-count column (9 → 12) and spine total (194 → 197 lessons) to match.
+`docs/CURRICULUM_MAP.md` is generated by an unchecked-in script (see its own
+entry below) and is now stale until someone reruns it — a known, accepted
+gap per that entry, not new to this change.
+
+Not touched: `LEARNING_JOURNEY_REBALANCE.md` and older dated entries in this
+log that mention the pre-fix lesson count — those are historical records of
+what was decided *at the time*, not living docs, so they're left as
+point-in-time snapshots rather than rewritten.
+
+## 2026-07-03 — `MATCH_PAIRS_MAX_PAIRS` caps a match-pairs board at 4 pairs
+
+A user flagged a `gustatu-present` screenshot (6-person NORI table → 12
+tiles, several two-line like "gustatzen zaizue") as overwhelming for a
+tap-to-match board. `generateMatchPairsQuestions` (`src/lessonLogic.js`) now
+randomly samples down to 4 pairs when a table's in-scope persons exceed that
+— eligibility (`>= 3` distinct-form persons) is still checked against the
+*full* table first, so a table doesn't become ineligible by capping. No
+lesson gets a fixed 4-person subset either: each attempt reshuffles which 4
+survive (`shuffle(pairs).slice(0, MAX)`), same as the existing per-attempt
+reshuffle in `MatchPairsBoard`, so repeated attempts eventually cover the
+whole table instead of hiding 2 persons from it permanently.
 ## 2026-07-03 — Same composition treatment for NOR-only (intransitive) verbs riding `izan`
 
 Follow-up to the two entries directly below, this time for the `izan`
