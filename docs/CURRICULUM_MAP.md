@@ -1332,13 +1332,18 @@ This is generated from live data (`src/journey.js` + `src/data/lessons.js` + `sr
 
 ### Stage 16 — Talking About Weather
 
-#### Unit 45 — Talking About Weather (Bonus, pending (not yet implemented))
+#### Unit 45 — Talking About Weather (Bonus)
 
-**What you learn:** ari + ukan ("euria ari du"), izan/egon weather idioms — fixed 3rd person only, zero new conjugation tables
+**What you learn:** ari + ukan ("euria ari du"), izan/egon/ibili weather idioms — fixed 3rd person (hura) only, zero new conjugation tables. Reuses `izan`/`egon`/`ibili`/`ukan`'s existing `hura`-present forms (`da`/`dago`/`dabil`/`du`) via 4 small dedicated "weather idiom" `VERBS` entries, each with its own sentence content rather than editing those verbs' own (much larger, unrelated) sentence arrays directly.
 
-**Example:** Euria ari du. · Hotz da. · Eguzkia dago.
+**Example:** Euria ari du. · Hotz da. · Eguzkia dago. · Haizea dabil.
 
-_Not implemented yet — no lessons._
+**Lessons:**
+
+- `unit-45-weather` — **Pooled practice** [hura]: eguraldia-ari, eguraldia-izan, eguraldia-egon, eguraldia-ibili pooled — Present
+  - 📗 **New verbs:** eguraldia-ari (**du**), eguraldia-izan (**da**), eguraldia-egon (**dago**), eguraldia-ibili (**dabil**) — all four forms are the exact `hura`-present cells `ukan`/`izan`/`egon`/`ibili` already teach, reused rather than newly conjugated
+- `unit-45-review` — **Review** [hura]: eguraldia-ari, eguraldia-izan, eguraldia-egon, eguraldia-ibili pooled — Present
+  - _Review/practice only — no new conjugation forms; reinforces what the practice lesson already introduced._
 
 ### Stage 17 — Subjects Without Objects
 

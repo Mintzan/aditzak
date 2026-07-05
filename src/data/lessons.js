@@ -4408,4 +4408,31 @@ export const LESSONS = [
       { verbId: 'etzan', tense: 'past' },
     ],
   },
+  // Unit 45 ("Talking About Weather"): pools the four dedicated weather-idiom
+  // entries (see `data/verbs.js`), all fixed at `persons: ['hura']` since
+  // none of them have (or need) any other person. `unit-45-weather` is the
+  // first-exposure practice pass; `unit-45-review` repeats the same pool as
+  // the unit's consolidation lesson, matching every other unit's closing
+  // `-review` convention.
+  {
+    id: 'unit-45-weather',
+    persons: ['hura'],
+    sources: [
+      { verbId: 'eguraldia-ari', tense: 'present' },
+      { verbId: 'eguraldia-izan', tense: 'present' },
+      { verbId: 'eguraldia-egon', tense: 'present' },
+      { verbId: 'eguraldia-ibili', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-45-review',
+    review: true,
+    persons: ['hura'],
+    sources: [
+      { verbId: 'eguraldia-ari', tense: 'present' },
+      { verbId: 'eguraldia-izan', tense: 'present' },
+      { verbId: 'eguraldia-egon', tense: 'present' },
+      { verbId: 'eguraldia-ibili', tense: 'present' },
+    ],
+  },
 ]

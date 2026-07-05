@@ -6,6 +6,30 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-05 — Unit 45 weather idioms; phrasing needs native-speaker confirmation
+
+Added six weather idioms for Unit 45 ("Talking About Weather"), all reusing
+already-verified `hura`-present forms rather than any new conjugated form:
+`Euria ari du.` / `Elurra ari du.` (ukan's `du`, the standard "ari izan/ukan"
+progressive construction with a weather noun as notional subject), `Hotz da.`
+/ `Bero da.` (izan's `da`, the same predicate-adjective frame every other
+`izan` sentence already uses), `Eguzkia dago.` (egon's `dago`, matching
+`docs/LEARNING_JOURNEY.md`'s own canonical example), `Haizea dabil.` (ibili's
+`dabil`, "the wind is moving/blowing").
+
+The first three (`Euria ari du.` / `Hotz da.` / `Eguzkia dago.`) come directly
+from `docs/LEARNING_JOURNEY.md`'s own pre-existing unit description, so
+they're treated as already-vetted. `Elurra ari du.` (direct parallel to
+`Euria ari du.`) and `Haizea dabil.` are standard, high-confidence textbook
+Basque. Deliberately **not** added: a "hodeitsu dago" ("it's cloudy") idiom —
+unlike `Eguzkia dago.` (subject "eguzkia" + `dago`), "hodeitsu" is an
+adjective rather than a noun subject, and I wasn't confident the bare
+`[adjective] dago` frame (without an explicit subject like "zerua") is
+actually how this is idiomatically said, so it was left out rather than
+guessed. Per this doc's usual policy, these six should still get a
+native-speaker/grammar-reference confirmation pass before being treated as
+fully authoritative, same as the toka/noka forms flagged 2026-06-17.
+
 ## 2026-06-26 — Added `joan` NOR-NORI dative (present only); past forms rejected as unreliable
 
 User supplied a 2D NOR-NORI dative paradigm for `joan` ("[subject] goes/

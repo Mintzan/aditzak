@@ -8,6 +8,72 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Unit 45 ("Talking About Weather") shipped — last pending unit; curriculum is now 51/51 available
+
+Weather idioms are always 3rd-person-singular (`hura`) and, per
+`docs/LEARNING_JOURNEY.md`'s own framing, reuse `izan`/`egon`/`ibili`/`ukan`'s
+existing `hura`-present forms (`da`/`dago`/`dabil`/`du`) rather than
+introducing any new conjugated form. The open design question was *how* to
+reuse them.
+
+**Rejected: appending weather sentences directly to `izan`/`egon`/`ibili`/
+`ukan`'s own `sentences.present.hura` arrays.** Those arrays already hold
+8-12 unrelated variants each (predicate-nominal frames, location frames,
+motion frames); `pickVariant` picks one at random per question, so a couple
+of new weather entries added there would mostly get *diluted out* — a
+"Talking About Weather" lesson would show a non-weather sentence most of the
+time. It also risks a stray weather sentence surfacing in `izan-present`
+(Unit 1) or `ibili-present` (Unit 6) long before a learner reaches Unit 45,
+for no benefit.
+
+**Chosen: 4 small dedicated "weather idiom" `VERBS` entries**
+(`eguraldia-ari`, `eguraldia-izan`, `eguraldia-egon`, `eguraldia-ibili`),
+each a single-cell `{ present: { hura: '<form>' } }` table copying an
+already-known form verbatim, with its own `sentences.present.hura` array
+holding *only* weather content. This mirrors the existing `lagundu`/
+`mesede-egin`/`kalte-egin` cluster precedent (a new thematic entry whose
+conjugated forms are generated from — or in this case, identical to — an
+already-known paradigm) rather than inventing a new mechanism. Zero new
+conjugation *forms* are taught (the whole point per the unit's spec); the
+"new `VERBS` entries" are just a home for new *sentences*, keeping the
+change's blast radius limited to a bonus unit instead of 40+ existing
+lessons that already draw on `izan`/`egon`/`ibili`/`ukan`'s present tense.
+
+**2 lessons**: `unit-45-weather` (first-exposure pooled practice) and
+`unit-45-review` (capstone), both `persons: ['hura']`, pooling all four
+entries. Reviewed (and accepted) one known side effect: `eguraldia-ari`'s
+`agreement: ['nor', 'nork']` (matching `ukan`'s real class, since the form
+`du` genuinely is `ukan`'s nor-nork `hura` cell, just used impersonally)
+makes it agreement-*incompatible* with the other three (`agreement: ['nor']`)
+under `agreementsCompatible` — so its own `sentence`/`type-verb` questions
+get thinner ordinary cross-verb distractors than the other three, same
+graceful degradation already accepted for Unit 15's `eman` (4-person table).
+`case-mixer` (which wants exactly this kind of agreement mismatch) can
+occasionally surface a richer question for it instead.
+
+**Also confirmed, not a bug:** `spot-error` questions for these thin
+(1-person) sources borrow filler sentences from the entire `VERBS` array via
+`getBorrowedSpotErrorSlots` (only the anchor sentence has to be genuinely
+correct; the deliberately-wrong option's *topic* doesn't matter for a
+"spot the grammar mistake" drill) — this is the same pre-existing, generic
+small-table fallback every other thin unit already relies on (e.g. Unit 25's
+imperative), not something new introduced here.
+
+Regenerated `scripts/validfor-gap-baseline.json` after reviewing the new gap
+slots via `node scripts/validfor-delta-audit.mjs --verb <id>` for all four new
+entries — every listed gap was an unrelated, genuinely-non-interchangeable
+sentence (e.g. `du` correctly *not* validated against "Hark opari bat ___."),
+so nothing needed a `validFor` addition. See `docs/LANGUAGE_DECISIONS.md` for
+the weather-phrasing-specific native-speaker-confirmation flag.
+
+Fixed two tests that hardcoded Unit 45 as "the" example pending unit
+(`App.homeScreen.test.jsx`) — with this unit shipped, **all 51 curriculum
+units are `available`**, so there's no real pending unit left to click
+through to. Exported `UnitOverviewModal` (`HomeScreen.jsx`) so the
+"coming soon" rendering path can still be tested directly with a synthetic
+pending unit, rather than depending on real journey data staying
+permanently incomplete.
+
 ## 2026-07-05 — Unit 39 ("Hitanoa Recombined") shipped, content-only
 
 `docs/EXERCISE_ENGINE.md` had already resolved this unit's data shape (toka/

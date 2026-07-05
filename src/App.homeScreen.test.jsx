@@ -2,6 +2,8 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
+import { UnitOverviewModal } from './screens/HomeScreen'
+import { LanguageProvider } from './i18n/LanguageContext'
 
 describe('App', () => {
   beforeEach(() => {
@@ -23,7 +25,6 @@ describe('App', () => {
     expect(screen.getByText(/Who and Where/)).toBeInTheDocument()
     expect(screen.getAllByText(/^izan — to be/).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/egon — to be/).length).toBeGreaterThan(0)
-    expect(screen.getAllByText('Coming soon').length).toBeGreaterThan(0)
   })
 
   it('lets a learner open a unit overview explaining an available unit', async () => {
@@ -66,17 +67,26 @@ describe('App', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
-  it('lets a learner open a unit overview explaining a pending (coming soon) unit', async () => {
+  it('shows a "coming soon" note for a pending unit', async () => {
+    // Every unit in the curriculum is `available` as of 2026-07-05 (see
+    // docs/DECISIONS.md), so there's no real pending unit left to click
+    // through to any more — this exercises `UnitOverviewModal` directly with
+    // a synthetic pending unit instead, the same "no lessonIds yet" shape a
+    // future unit would have.
     const user = userEvent.setup()
-    render(<App />)
-
-    await user.click(screen.getByText(/Weather idioms/).closest('button'))
+    const onClose = vi.fn()
+    const pendingUnit = { number: 99, title: 'A Future Unit', focus: 'Not built yet', status: 'pending' }
+    render(
+      <LanguageProvider>
+        <UnitOverviewModal unit={pendingUnit} onClose={onClose} />
+      </LanguageProvider>,
+    )
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toHaveTextContent("hasn't been built yet")
 
     await user.click(screen.getByRole('button', { name: 'Close' }))
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(onClose).toHaveBeenCalled()
   })
 
   it('lets a learner open the feedback form from the Profile tab and submit it', async () => {

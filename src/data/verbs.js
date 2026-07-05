@@ -8284,6 +8284,91 @@ export const VERBS = [
     },
     pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
   },
+  // Unit 45 ("Talking About Weather"): weather idioms, always 3rd-person
+  // singular (`hura`) — Basque impersonal-weather constructions have no
+  // learnable person paradigm of their own, so per `docs/LEARNING_JOURNEY.md`
+  // this reuses the exact `hura`-present forms `izan`/`egon`/`ibili`/`ukan`
+  // already teach (`da`/`dago`/`dabil`/`du`), rather than inventing a new
+  // conjugation table. Each idiom gets its own small entry (mirroring the
+  // `lagundu`/`mesede-egin`/`kalte-egin` cluster's "new thematic entry, forms
+  // borrowed from an existing paradigm" precedent) instead of appending these
+  // sentences onto `izan`/`egon`/`ibili`/`ukan`'s own arrays directly — those
+  // arrays already hold many unrelated variants, so adding a couple of
+  // weather ones there would mostly get *diluted out* by `pickVariant`'s
+  // random pick rather than reliably surfacing in a lesson meant to be about
+  // weather. See `docs/DECISIONS.md` (2026-07-05) and
+  // `docs/LANGUAGE_DECISIONS.md` (phrasing flagged for native-speaker
+  // confirmation, same as other idiom clusters).
+  {
+    id: 'eguraldia-ari',
+    verb: 'euria/elurra ari izan',
+    meaning: { en: 'to rain / to snow', es: 'llover / nevar', eu: 'euria/elurra ari izan (eguraldia)' },
+    type: 'synthetic',
+    agreement: ['nor', 'nork'],
+    dialect: 'batua',
+    conjugations: {
+      present: { hura: 'du' },
+    },
+    sentences: {
+      present: {
+        hura: [
+          { text: 'Euria ari ___.', validFor: [] },
+          { text: 'Elurra ari ___.', validFor: [] },
+        ],
+      },
+    },
+  },
+  {
+    id: 'eguraldia-izan',
+    verb: 'hotz/bero izan',
+    meaning: { en: 'to be cold / to be hot (weather)', es: 'hacer frío / hacer calor', eu: 'hotz/bero izan (eguraldia)' },
+    type: 'synthetic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    conjugations: {
+      present: { hura: 'da' },
+    },
+    sentences: {
+      present: {
+        hura: [
+          { text: 'Hotz ___.', validFor: [] },
+          { text: 'Bero ___.', validFor: [] },
+        ],
+      },
+    },
+  },
+  {
+    id: 'eguraldia-egon',
+    verb: 'eguzkia egon',
+    meaning: { en: 'to be sunny (weather)', es: 'hacer sol', eu: 'eguzkia egon (eguraldia)' },
+    type: 'synthetic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    conjugations: {
+      present: { hura: 'dago' },
+    },
+    sentences: {
+      present: {
+        hura: [{ text: 'Eguzkia ___.', validFor: [] }],
+      },
+    },
+  },
+  {
+    id: 'eguraldia-ibili',
+    verb: 'haizea ibili',
+    meaning: { en: 'to be windy (weather)', es: 'hacer viento', eu: 'haizea ibili (eguraldia)' },
+    type: 'synthetic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    conjugations: {
+      present: { hura: 'dabil' },
+    },
+    sentences: {
+      present: {
+        hura: [{ text: 'Haizea ___.', validFor: [] }],
+      },
+    },
+  },
   // #481: `ihardun`/`jardun` ("to occupy oneself / be engaged in something")
   // — unergative, ergative (NORK) subject only, **no absolutive (NOR)
   // argument at all** (CONJUGATIONS.md §6). `agreement: ['nork']` is the
