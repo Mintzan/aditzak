@@ -8,6 +8,41 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Unit 39 ("Hitanoa Recombined") shipped, content-only
+
+`docs/EXERCISE_ENGINE.md` had already resolved this unit's data shape (toka/
+noka are just two more directly-selectable tense values, same as every other
+tense) and flagged only two open questions, neither blocking: #213 (a
+dedicated wrong-gender/neutral-form distractor row) and a "learner-facing
+addressee-gender selection control." Both stay open, unaddressed here:
+
+**No selection control needed.** `ExerciseScreen.jsx` already looks up
+`TENSE_META[question.tense]` *per question*, not per lesson (confirmed by
+reading the code, not assumed) — every pooled review that mixes tenses
+(present/past/future mixers, Unit 31's case-mixer reviews, etc.) already
+renders each question's own tense badge. Pooling `presentToka`/`presentNoka`
+into one review lesson means the badge itself ("Present (toka)" vs "Present
+(noka)") already tells the learner which register a question wants — nothing
+new to build.
+
+**"When not to use it" via juxtaposition, not a new mechanic.** Basque
+suppresses toka/noka in subordinate clauses and formal `-ke-` moods
+(`docs/LANGUAGE_DECISIONS.md`, 2026-06-17) — a negative rule with no positive
+form to produce, and no existing engine hook for "this construction forbids
+register X." Rather than build one, `unit-39-when-not-to-use` pools the
+hitanoa forms alongside `izan`/`ukan`'s already-shipped Ahalera (`potential`)
+forms in one review: the learner meets both "Present (toka)"-badged and
+"Ahalera"-badged questions back to back, and the *absence* of a toka/noka
+variant on the Ahalera forms is what teaches the rule. `#213`'s stronger
+wrong-gender lure work stays out of scope, same as `docs/EXERCISE_ENGINE.md`
+already flagged.
+
+**4 lessons, zero new verbs/tenses**: `unit-39-recombined-present`/`-past`
+mix toka+noka together (previously drilled one register at a time in Units
+37-38), `unit-39-when-not-to-use` adds the Ahalera contrast, and
+`unit-39-review` pools everything as the unit's capstone (not score-gated —
+this is a bonus unit, not a Refresh Gate).
+
 ## 2026-07-05 — Unit 31 (Refresh Gate C, "The Case-Ending Mixer") shipped, no new question kind
 
 `docs/EXERCISE_ENGINE.md` had speculated this gate would need a `spot-error`-
