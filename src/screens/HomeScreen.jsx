@@ -192,18 +192,16 @@ function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLoc
   )
 }
 
-// Explains what a unit covers — its focus and example sentence, plus (for an
-// available unit) the list of lessons inside it, each described the same way
-// `LessonNode` would but without the lock/star/click affordances, since this
-// is a read-only preview rather than another way to launch a lesson. A
-// `pending` unit has no `lessonIds` yet, so it falls back to a "coming soon"
-// note instead of a lesson list.
+// Explains what a unit covers — its focus and example sentence. Deliberately
+// doesn't repeat the unit's lesson list: that's already visible right below
+// on the home tab, so restating it here added scroll without adding
+// information (see docs/DECISIONS.md). A `pending` unit has no `lessonIds`
+// yet, so it gets a short "coming soon" note instead.
 function UnitOverviewModal({ unit, onClose }) {
-  const { t, tCount, language } = useLanguage()
+  const { t, language } = useLanguage()
   const title = journeyText('units', unit.number, 'title', language, unit.title)
   const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
   const payload = unit.payload ? journeyText('units', unit.number, 'payload', language, unit.payload) : null
-  const lessons = unit.lessonIds?.map((id) => LESSONS.find((lesson) => lesson.id === id)) ?? []
   return (
     <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
       <div
@@ -230,38 +228,7 @@ function UnitOverviewModal({ unit, onClose }) {
           )}
           <p className="mt-3 text-sm text-gray-600 break-words">{focus}</p>
           {payload && <p className="mt-2 text-sm text-gray-400 italic break-words">{payload}</p>}
-
-          {lessons.length > 0 ? (
-            <div className="mt-5">
-              <h3 className="text-sm font-bold tracking-wide text-gray-400 uppercase">{t('unitOverviewInThisUnit')}</h3>
-              <p className="mt-1 mb-3 text-xs text-gray-400">{tCount('unitOverviewLessonCount', lessons.length, { n: lessons.length })}</p>
-              <div className="flex flex-col gap-2">
-                {lessons.map((lesson) => {
-                  const { icon, title: lessonTitle, subtitle } = describeLesson(lesson, t, language)
-                  return (
-                    <div key={lesson.id} className="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 p-3">
-                      <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-gray-500"
-                        aria-hidden="true"
-                      >
-                        {lesson.review ? <RepeatIcon className="h-5 w-5" /> : <span className="text-base">{icon}</span>}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-gray-800">
-                          {lessonTitle.main} <span className="font-normal text-gray-400">· {lessonTitle.secondary}</span>
-                        </p>
-                        <p className="truncate text-xs text-gray-500">
-                          {subtitle.main} — {subtitle.secondary}
-                        </p>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          ) : (
-            <p className="mt-5 text-sm text-gray-500">{t('unitOverviewComingSoonBody')}</p>
-          )}
+          {!unit.lessonIds?.length && <p className="mt-5 text-sm text-gray-500">{t('unitOverviewComingSoonBody')}</p>}
         </div>
         <button
           type="button"

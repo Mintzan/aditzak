@@ -34,9 +34,6 @@ describe('App', () => {
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toHaveTextContent('say who and where you are')
-    expect(dialog).toHaveTextContent('In this unit')
-    expect(dialog).toHaveTextContent('3 lessons')
-    expect(dialog).toHaveTextContent('izan — to be')
 
     await user.click(screen.getByRole('button', { name: 'Close' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
