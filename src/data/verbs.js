@@ -322,8 +322,8 @@ export const VERBS = [
       // `hura`/`haiek` are tabulated there — a full grid (every person) isn't
       // given, so this stays a 2-person table like the doc itself. Past
       // inserts `-a-`/`-na-` before the final `-n` (`zen` -> `zuan`/`zunan`,
-      // `ziren` -> `zituan`/`zitunan`). Flagged in LANGUAGE_DECISIONS.md for
-      // native-speaker confirmation.
+      // `ziren` -> `zituan`/`zitunan`). Native-speaker-confirmed 2026-07-05,
+      // all four forms as-is (see docs/LANGUAGE_DECISIONS.md).
       presentToka: { hura: 'duk', haiek: 'dituk' },
       presentNoka: { hura: 'dun', haiek: 'ditun' },
       pastToka: { hura: 'zuan', haiek: 'zituan' },
@@ -807,11 +807,12 @@ export const VERBS = [
       // per CONJUGATIONS.md §10. `du`/`dute` undergo a `u`->`i` shift before
       // adding `-k`/`-n` (`dik`/`din`, `ditek`/`diten`) specifically to stay
       // distinct from `hi`-as-`NORK`'s own `duk`/`dun` above — same
-      // `-a-`/`-na-` past insertion as `izan`'s. Flagged in
-      // LANGUAGE_DECISIONS.md for native-speaker confirmation.
+      // `-a-`/`-na-` past insertion as `izan`'s. Native-speaker-confirmed
+      // 2026-07-05 (see docs/LANGUAGE_DECISIONS.md) — `haiek`'s toka past
+      // corrected to `zitekan` (a missing `k`; `zitean` was wrong).
       presentToka: { hura: 'dik', haiek: 'ditek' },
       presentNoka: { hura: 'din', haiek: 'diten' },
-      pastToka: { hura: 'zian', haiek: 'zitean' },
+      pastToka: { hura: 'zian', haiek: 'zitekan' },
       pastNoka: { hura: 'zinan', haiek: 'zitenan' },
       // #284: plural-object (`NOR` = `haiek`) forms, per CONJUGATIONS.md §3's
       // "`NOR` = 1st/2nd person" grid's `haiek` column — the same `dit-`-stem

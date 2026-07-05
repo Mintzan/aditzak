@@ -3006,7 +3006,7 @@ describe('generateQuestions', () => {
 
       expect(ukan.conjugations.presentToka).toEqual({ hura: 'dik', haiek: 'ditek' })
       expect(ukan.conjugations.presentNoka).toEqual({ hura: 'din', haiek: 'diten' })
-      expect(ukan.conjugations.pastToka).toEqual({ hura: 'zian', haiek: 'zitean' })
+      expect(ukan.conjugations.pastToka).toEqual({ hura: 'zian', haiek: 'zitekan' })
       expect(ukan.conjugations.pastNoka).toEqual({ hura: 'zinan', haiek: 'zitenan' })
     })
 
