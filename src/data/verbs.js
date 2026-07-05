@@ -328,7 +328,7 @@ export const VERBS = [
       presentNoka: { hura: 'dun', haiek: 'ditun' },
       pastToka: { hura: 'zuan', haiek: 'zituan' },
       pastNoka: { hura: 'zunan', haiek: 'zitunan' },
-      // #281/Unit 11 — Lehenaldiko Burutua (present perfect): `izan`'s own
+      // #281/Unit 11 — Lehenaldi Burutua (present perfect): `izan`'s own
       // participle (`izan`) + its own present auxiliary, per
       // CONJUGATIONS.md §11/§1 ("izan naiz", "I have been"). Same shape as
       // `past` above, just swapping the past aux for the present one.
@@ -8752,7 +8752,7 @@ export const TENSE_META = {
   pastNoka: { labelKey: 'tensePastNoka', basque: 'lehena (noka)' },
   // #171: imperative (agintera) — second-person only, no ni/hura/gu/haiek cells.
   imperative: { labelKey: 'tenseImperative', basque: 'agintera' },
-  presentPerfect: { labelKey: 'tensePresentPerfect', basque: 'lehenaldiko burutua' },
+  presentPerfect: { labelKey: 'tensePresentPerfect', basque: 'lehenaldi burutua' },
   // Unit 21/22: imperfective/habitual past — `habitualPast` is the general
   // periphrastic rule (participle + past auxiliary, e.g. `ikusten nuen`);
   // `imperfectivePast` is the native synthetic exception specific to

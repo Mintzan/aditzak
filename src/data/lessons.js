@@ -335,7 +335,7 @@ export const LESSONS = [
     ],
   },
   // Unit 11 ("What Just Happened — The Recent Past (Present Perfect)",
-  // Phase II) — the present perfect (Lehenaldiko Burutua) is the perfective
+  // Phase II) — the present perfect (Lehenaldi Burutua) is the perfective
   // participle + a *present* auxiliary (`etorri naiz` / `ikusi dut`), so it
   // teaches the participle while reusing already-known present auxiliaries
   // (Units 1/2/13) — zero new auxiliary forms. Split along the same
