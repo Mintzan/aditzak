@@ -986,12 +986,13 @@ export function getComposedTable(verb, tense) {
     }
     return table
   }
-  // `present`/`past`/`future` (the citation, `nor = hura` column) and
-  // `presentPlural`/`pastPlural`/`futurePlural` (the `nor = haiek` column)
-  // are both flat slices of the same object axis — for a handful of verbs
-  // *every* cell of all six, not just the plural three, turned out to be
-  // `<own prefix> + ukan's own cell`, hand-duplicated per verb. Composed
-  // from a verb's own `composedPrefixes` field, deliberately *not*
+  // `present`/`past`/`future` (the citation, `nor = hura` column for a
+  // NOR-NORK verb, or the whole table for a NOR-only one) and
+  // `presentPlural`/`pastPlural`/`futurePlural` (the `nor = haiek` column —
+  // NOR-NORK only, see below) are flat slices of the object axis — for a
+  // handful of verbs *every* cell of these turned out to be `<own prefix> +
+  // ukan's/izan's own cell`, hand-duplicated per verb. Composed from a
+  // verb's own `composedPrefixes` field, deliberately *not*
   // `byObjectPrefixes` — the ~30 verbs #443 gave a `byObjectPrefixes` for
   // the present/past 2D axis were never verified to have this flat-table
   // relationship too (and never had a plural-object table at all), so
@@ -1003,16 +1004,27 @@ export function getComposedTable(verb, tense) {
   // reasoning as `getByNoriComposedTable`'s future handling below) — only
   // the participle differs, so both reuse the `present` column under the
   // verb's own `future` prefix. Guarded on there being no literal table
-  // already: `ukan` itself keeps its hand-written one, which carries extra
-  // `hi-m`/`hi-f`/`hi` cells the skeleton (no `hi` row) can't produce.
+  // already: `ukan`/`izan` themselves keep their hand-written ones, which
+  // carry extra `hi(-m/-f)` cells the skeletons (no `hi` row) can't produce.
   const flatBase = tense === 'present' || tense === 'presentPlural' ? 'present' : tense === 'past' || tense === 'pastPlural' ? 'past' : tense === 'future' || tense === 'futurePlural' ? 'future' : undefined
-  if (flatBase !== undefined && verb.conjugations[tense] === undefined) {
+  const isPlural = tense === 'presentPlural' || tense === 'pastPlural' || tense === 'futurePlural'
+  const skeletonName = verb.byObjectSkeleton ?? 'edun'
+  // `izan` (NOR-only) has no object argument to vary over, so no
+  // object-number axis exists for it — never compose a `*Plural` tense
+  // against it, even if a verb happens to carry a `composedPrefixes.past`
+  // (would otherwise return a "plural" table identical to the singular
+  // one, offered as a real distractor's own correct answer).
+  if (flatBase !== undefined && !(isPlural && skeletonName === 'izan') && verb.conjugations[tense] === undefined) {
     const flatPrefix = verb.composedPrefixes?.[flatBase]
     if (flatPrefix !== undefined) {
-      const skeleton = OBJECT_AXIS_SKELETONS[verb.byObjectSkeleton ?? 'edun'][flatBase === 'future' ? 'present' : flatBase]
-      const column = tense === 'presentPlural' || tense === 'pastPlural' || tense === 'futurePlural' ? 'haiek' : 'hura'
+      const skeleton = OBJECT_AXIS_SKELETONS[skeletonName][flatBase === 'future' ? 'present' : flatBase]
       const table = {}
-      for (const outer of Object.keys(skeleton)) table[outer] = flatPrefix + skeleton[outer][column]
+      if (skeletonName === 'izan') {
+        for (const person of Object.keys(skeleton)) table[person] = flatPrefix + skeleton[person]
+      } else {
+        const column = isPlural ? 'haiek' : 'hura'
+        for (const outer of Object.keys(skeleton)) table[outer] = flatPrefix + skeleton[outer][column]
+      }
       return table
     }
   }

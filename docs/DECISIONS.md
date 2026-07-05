@@ -370,6 +370,51 @@ lesson gets a fixed 4-person subset either: each attempt reshuffles which 4
 survive (`shuffle(pairs).slice(0, MAX)`), same as the existing per-attempt
 reshuffle in `MatchPairsBoard`, so repeated attempts eventually cover the
 whole table instead of hiding 2 persons from it permanently.
+## 2026-07-03 — Same composition treatment for NOR-only (intransitive) verbs riding `izan`
+
+Follow-up to the two entries directly below, this time for the `izan`
+("to be") side of the auxiliary system instead of `ukan`. `sartu`/`atera`/
+`hasi`/`bizi-izan`/`erori`/`jaiki`/`arriskuan-jarri` (present/past/future)
+and `ahal-izan`/`ezin-izan` (present only) each hand-carried a literal
+table that was mechanically `<own prefix> + izan's own cell` — verified
+byte-for-byte, zero exceptions. Added a new `izan` entry to
+`OBJECT_AXIS_SKELETONS` (flat, not nested like `edun` — a NOR-only verb has
+no second argument to vary over, so no 2D shape is needed) and selected it
+via a verb's `byObjectSkeleton: 'izan'`, the field `presentByObject`/
+`pastByObject` composition already reads but no verb had used before this.
+`getComposedTable`'s flat-tense branch now checks `skeletonName` to decide
+between the nested-2D read (`edun`) and the flat read (`izan`).
+
+**Guarded against composing a `*Plural` tense for `izan`-skeleton verbs**:
+a NOR-only verb has no object, so there's no object-number axis for it at
+all — `presentPlural`/`pastPlural`/`futurePlural` are meaningless concepts
+here, unlike for `ukan`-skeleton verbs. Without this guard, a NOR-only verb
+with a `composedPrefixes.past` would produce a "pastPlural" table
+identical to its own `past` table (same prefix, no `haiek` column to
+distinguish it) — which `getObjectNumberLure` calls unconditionally
+whenever `tense === 'past'`, regardless of a verb's agreement, as an
+"object-number" distractor. That would have offered the *correct* answer
+as its own distractor for every NOR-only verb's past-tense question — a
+duplicate-correct-option bug, not just a manufactured axis. Caught by
+reasoning through `getObjectNumberLure`'s existing call site (`#165`) before
+writing the code, not by a failing test.
+
+**Left `ari` out of scope**: unlike the other 9, its literal `present`
+table only has 3 persons (`ni`/`zu`/`hura`) — deliberate, per the "Phase I's
+3-person horizon, option (a)" convention documented near the top of
+`verbs.js` (its lesson hasn't reached Unit 7's 6-person expansion yet, not
+a linguistic gap). Composing it against the 6-person `izan` skeleton would
+silently *add* `gu`/`zuek`/`haiek` cells that don't exist today — mechanically
+correct forms, almost certainly, but the same kind of incidental widening
+the `byObjectPrefixes`-vs-`composedPrefixes` split two entries below was
+built to avoid. Left as a hand-written 3-cell table; not worth a
+per-verb person-filter just to dedupe 3 cells.
+
+Confirmed byte-identical composed output for all 9 verbs against the
+pre-refactor literals, and a clean full-block diff (only the intended
+`byObjectSkeleton`/`composedPrefixes` lines differ) before relying on
+`npm test` — 493 passing on the first run this time, no casualties like
+`ikusi`'s two nested tenses from the `ukan` pass.
 
 ## 2026-07-03 — Extended composition to the same 14 verbs' plain `present`/`past`/`future` tables too; renamed `pluralPrefixes` → `composedPrefixes`
 
