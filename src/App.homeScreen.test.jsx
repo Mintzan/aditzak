@@ -26,6 +26,35 @@ describe('App', () => {
     expect(screen.getAllByText('Coming soon').length).toBeGreaterThan(0)
   })
 
+  it('lets a learner open a unit overview explaining an available unit', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByText(/Who and Where/).closest('button'))
+
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toHaveTextContent('say who and where you are')
+    expect(dialog).toHaveTextContent('In this unit')
+    expect(dialog).toHaveTextContent('3 lessons')
+    expect(dialog).toHaveTextContent('izan — to be')
+
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('lets a learner open a unit overview explaining a pending (coming soon) unit', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByText(/Weather idioms/).closest('button'))
+
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toHaveTextContent("hasn't been built yet")
+
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   it('lets a learner open the feedback form from the Profile tab and submit it', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: true })
     const user = userEvent.setup()
