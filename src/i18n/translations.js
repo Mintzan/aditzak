@@ -289,6 +289,10 @@ export const TRANSLATIONS = {
       "'{form}' is the plain present ('I eat') — the progressive ('I am eating') is '{correct}'.",
     lureRationaleDativeOvergeneration:
       "'{form}' uses the auxiliary for 'to/for someone' (NOR-NORI-NORK) — but there's no one being given/told/brought anything in this sentence. The correct form here is '{correct}'.",
+    lureRationaleWrongGender:
+      "'{form}' is the wrong hitanoa gender for this listener — toka (masculine) and noka (feminine) don't mix. The correct form here is '{correct}'.",
+    lureRationaleNeutralForm:
+      "'{form}' is the plain, non-hitanoa form — this question wants the familiar register instead. The correct form here is '{correct}'.",
   },
   es: {
     navLearn: 'Aprender',
@@ -549,6 +553,10 @@ export const TRANSLATIONS = {
       "'{form}' es el presente simple ('como') — el progresivo ('estoy comiendo') es '{correct}'.",
     lureRationaleDativeOvergeneration:
       "'{form}' usa el auxiliar de 'a/para alguien' (NOR-NORI-NORK) — pero en esta frase no hay nadie a quien se le dé/diga/lleve algo. La forma correcta aquí es '{correct}'.",
+    lureRationaleWrongGender:
+      "'{form}' es el género de hitanoa equivocado para este oyente — toka (masculino) y noka (femenino) no se mezclan. La forma correcta aquí es '{correct}'.",
+    lureRationaleNeutralForm:
+      "'{form}' es la forma neutra, sin hitanoa — esta pregunta pide el registro cercano/familiar. La forma correcta aquí es '{correct}'.",
   },
   eu: {
     navLearn: 'Ikasi',
@@ -809,5 +817,9 @@ export const TRANSLATIONS = {
       "'{form}' oraina soila da ('jaten dut') — forma jarraitua ('ari naiz') '{correct}' da.",
     lureRationaleDativeOvergeneration:
       "'{form}' formak 'norbaiti' adierazteko laguntzailea darabil (NOR-NORI-NORK) — baina esaldi honetan ez dago zerbait eman/esan/eramaten dion inor. Forma zuzena hemen '{correct}' da.",
+    lureRationaleWrongGender:
+      "'{form}' entzule honentzako hitanoa genero okerra da — tokak (gizonezkoa) eta nokak (emakumezkoa) ez dute nahasten. Forma zuzena hemen '{correct}' da.",
+    lureRationaleNeutralForm:
+      "'{form}' forma arrunta da, hitanoarik gabekoa — galdera honek erregistro hurbila eskatzen du. Forma zuzena hemen '{correct}' da.",
   },
 }

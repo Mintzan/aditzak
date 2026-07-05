@@ -607,8 +607,22 @@ already shows each question's own register badge. "When not to use it" was
 taught by pooling those forms alongside `izan`/`ukan`'s existing Ahalera
 (`potential`, a formal `-ke-` mood with no toka/noka variant) rather than
 building a dedicated "this construction forbids register X" mechanic. #213's
-distractor-matrix row remains open/unaddressed. See `docs/DECISIONS.md`
-(2026-07-05).
+distractor-matrix row remained open/unaddressed at that point.
+
+**Update (2026-07-05, later same day): #213 resolved.** Native-speaker
+confirmation of the toka/noka data landed first (see
+`docs/LANGUAGE_DECISIONS.md`), unblocking the distractor-matrix row itself.
+`getWrongGenderLure`/`getNeutralFormLure` (`lessonLogic.js`) add the two
+lure slots #213 asked for — same verb/person, guaranteed-wrong by
+construction (wrong register, or no register at all), so unlike every other
+lure in this file they don't need a sentence to stay legible. This required
+one narrow exception to the "bare `kind: 'form'` is never grounded" rule
+(`generateQuestions`'s `default` case): a hitanoa-tense `form` question now
+passes `grounded: true` with only these two lures (still `[]` for
+`borrowed`/`formLures`'s general cross-verb pool) — not a loosening of
+groundedness generally, just this one same-verb case. A toka/noka question's
+2-person table now yields up to 4 options (same-table + both lures) instead
+of the previous 2. See `docs/DECISIONS.md` (2026-07-05).
 tense values.
 
 ### Subjunctive constructions (Unit 37 — Subjuntiboa) — resolved (#406)
