@@ -80,7 +80,8 @@ export const JOURNEY = [
           {
             number: 2,
             title: 'ukan — The Ergative Leap',
-            focus: 'ukan (to have), present tense — your first ergative (-k) subject, for ni/zu/hura',
+            focus:
+              'ukan (to have), present tense — your first ergative (-k) subject, for ni/zu/hura. izan/egon\'s subject just is or stays somewhere; ukan\'s subject acts on something else (what you have) — that\'s what earns it the -k',
             payload: '"I have a car." (Nik auto bat dut.)',
             status: 'available',
             lessonIds: ['ukan-present', 'ukan-ni-nik-shift-review', 'unit-2-review'],
@@ -94,7 +95,7 @@ export const JOURNEY = [
             number: 3,
             title: '"Ni" vs. "Nik" — The Case-Marking Checkpoint',
             focus:
-              'No new verbs — practice telling plain subjects (izan/egon) apart from ergative -k subjects (ukan), so the -k doesn\'t creep onto izan/egon by mistake (✗ "Nik naiz") — the most common beginner slip',
+              'No new verbs — practice telling plain subjects (izan/egon) apart from ergative -k subjects (ukan): izan/egon\'s subject isn\'t acting on anything, so the -k shouldn\'t creep onto them by mistake (✗ "Nik naiz") — the most common beginner slip',
             payload: '"Ni ikaslea naiz" vs. "Nik liburua dut."',
             status: 'available',
             lessonIds: [

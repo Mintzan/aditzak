@@ -8,6 +8,37 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Explained *why* izan vs. ukan, not just *that* they differ
+
+A user asked when/how to explain to learners why some verbs take `izan` and
+others take `ukan` — Units 1-3 already drilled the *contrast* (bare subject
+vs. `-k` subject) but never stated the underlying rule, just presented it as
+a fact to memorize. Grounded the explanation in `CONJUGATIONS.md` §11's
+already-established "auxiliary selection by agreement pattern" table (`nor`
+→ `izan`, `nor-nork` → `ukan`) rather than inventing new terminology —
+deliberately avoided framing this as "transitive vs. intransitive" (an
+English-grammar label that doesn't map cleanly onto Basque ergativity; Unit
+46's `ihardun`/`iraun` are unergative — ergative subject, no object at all —
+so "ukan = has an object" would mislead a learner who reaches them). Framed
+it instead as: does the subject act on something else, or does it just *is*
+or *stay* somewhere.
+
+**Unit 2** (ukan's first exposure — the natural place for the "aha" to land)
+now explains *why* this verb's subject gets `-k`: "izan/egon's subject just
+is or stays somewhere; ukan's subject acts on something else (what you have)
+— that's what earns it the -k." **Unit 3** (the case-marking checkpoint,
+already carrying the "ergative drift" mistake callout from the review
+earlier today) now ties the mistake back to the same rule: "izan/egon's
+subject isn't acting on anything, so the -k shouldn't creep onto them by
+mistake." Updated the Spanish translations to match; left Basque
+un-elaborated per the same caution as the last two entries — I'd rather
+under-translate than write confidently-wrong Basque prose.
+
+This is a simplification a beginner unit can live with (real transitivity
+vs. ergativity nuances, e.g. unergative verbs, are deferred to Unit 46's own
+"Unergative Curiosities" framing) rather than a claim meant to hold
+universally from Unit 2 on.
+
 ## 2026-07-05 — Unit 3's overview: surfaced the "ergative drift" mistake it's actually about
 
 Reviewed Unit 3 ("Ni" vs. "Nik" — The Case-Marking Checkpoint) the same way
