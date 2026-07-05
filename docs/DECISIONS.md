@@ -8,6 +8,43 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — #213: toka/noka wrong-gender/neutral-form distractor lures
+
+Now that `izan`/`ukan`'s toka/noka data was native-speaker-confirmed (this
+same day, earlier entry below), built the distractor-matrix row #213 asked
+for: a toka/noka question's options now include the *wrong-gender* form
+(the opposite register, same verb/person — `dun` alongside `duk`) and the
+*neutral-form* (the plain, non-hitanoa form — `da` alongside `duk`), on top
+of the existing same-table (hura vs haiek) distractor.
+
+**Two new pure lure functions**, `getWrongGenderLure`/`getNeutralFormLure`
+(`lessonLogic.js`), mirroring the existing `getCaseFrameLure`/
+`getObjectNumberLure` family: `(verb, tense, person) => form`, driven by two
+small lookup tables (`HITANOA_GENDER_PAIRS`, `HITANOA_NEUTRAL_TENSES`)
+mapping each of the four hitanoa tenses to its opposite-register/neutral
+sibling tense.
+
+**One narrow exception to "bare `form` is never grounded."** Every other
+lure in this file borrows from a *different* verb, so `buildTaggedOptions`
+only trusts them with a sentence to anchor "why this reads as wrong" (the
+`grounded` invariant, #227/[B2]) — a bare `kind: 'form'` question has no
+sentence, so those lures get dropped entirely there. Toka/noka's own lures
+don't have that problem: they're the *same* verb and person, just the wrong
+register or no register at all — guaranteed-wrong by construction, nothing
+to disambiguate. Rather than loosen `grounded` generally (which would also
+surface the *other*, genuinely context-dependent lures on bare `form`
+questions elsewhere — out of scope and unreviewed), `generateQuestions`'s
+`default` case now special-cases the four hitanoa tenses: `grounded: true`
+with only `hitanoaLures` (still `[]` for the general cross-verb pool).
+
+**Effect**: a toka/noka question's 2-person table now yields up to 4 options
+(same-table + both lures) instead of 2 — updated the
+`logic.test.js` test asserting the old 2-option shape accordingly, and added
+dedicated tests for both lure functions plus the `optionRationale`/
+`getLureRationale` wiring. Added `lureRationaleWrongGender`/
+`lureRationaleNeutralForm` translation keys (all 3 locales), following the
+existing `lureRationale*` naming/phrasing convention.
+
 ## 2026-07-05 — Unit 45 ("Talking About Weather") shipped — last pending unit; curriculum is now 51/51 available
 
 Weather idioms are always 3rd-person-singular (`hura`) and, per

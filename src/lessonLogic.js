@@ -672,6 +672,8 @@ const LURE_WHY_KEYS = {
   'object-number': 'lureRationaleObjectNumber',
   'progressive-vs-plain': 'lureRationaleProgressiveVsPlain',
   'dative-overgeneration': 'lureRationaleDativeOvergeneration',
+  'wrong-gender': 'lureRationaleWrongGender',
+  'neutral-form': 'lureRationaleNeutralForm',
 }
 
 function buildOptions(table, persons, person, extraCandidates = [], borrowPool = [], priorityCandidates = [], grounded = true) {
@@ -845,6 +847,37 @@ export function getDativeOvergenerationLure(verbs, verb, tense, person, objectAx
   const participle = ownForm.slice(0, ownForm.lastIndexOf(' '))
   const auxiliary = siblingForm.slice(siblingForm.lastIndexOf(' ') + 1)
   return `${participle} ${auxiliary}`
+}
+
+// #213 (item 5 of #167): a toka/noka question's opposite-gender sibling
+// tense, same verb/person — `dun` offered alongside the correct `duk`, or
+// vice versa. `HITANOA_GENDER_PAIRS` pairs each hitanoa tense with its
+// opposite register; `undefined` for any other tense.
+const HITANOA_GENDER_PAIRS = {
+  presentToka: 'presentNoka',
+  presentNoka: 'presentToka',
+  pastToka: 'pastNoka',
+  pastNoka: 'pastToka',
+}
+export function getWrongGenderLure(verb, tense, person) {
+  const oppositeTense = HITANOA_GENDER_PAIRS[tense]
+  return oppositeTense && getComposedTable(verb, oppositeTense)?.[person]
+}
+
+// #213 (item 5 of #167): a toka/noka question's own *neutral* (non-hitanoa)
+// form, same verb/person/underlying tense — `da` offered alongside the
+// correct `duk`/`dun`, the "forgot to switch register at all" mistake.
+// `HITANOA_NEUTRAL_TENSES` maps each hitanoa tense to the ordinary tense its
+// register layers onto; `undefined` for any other tense.
+const HITANOA_NEUTRAL_TENSES = {
+  presentToka: 'present',
+  presentNoka: 'present',
+  pastToka: 'past',
+  pastNoka: 'past',
+}
+export function getNeutralFormLure(verb, tense, person) {
+  const neutralTense = HITANOA_NEUTRAL_TENSES[tense]
+  return neutralTense && getComposedTable(verb, neutralTense)?.[person]
 }
 
 // For a NOR-NORI-NORK (ditransitive) verb, resolves its axis-fixed metadata
@@ -1531,6 +1564,20 @@ export function generateQuestions(
     const formLures = sentence?.baseVerb
       ? [...baseFormLures, { form: getProgressiveBaseLure(verbs, sentence.baseVerb, person), errorType: 'progressive-vs-plain' }]
       : baseFormLures
+    // #213: toka/noka's own distractor-matrix row. Unlike `baseFormLures`
+    // above (which borrow from a *different* verb, so need a sentence to
+    // stay legible per the `grounded` invariant below), a wrong-gender or
+    // neutral-form lure is the *same* verb/person, guaranteed-wrong by
+    // construction — no sentence needed to tell it apart from a genuinely
+    // correct answer, so these get threaded through even on the otherwise-
+    // ungrounded bare `kind: 'form'` case (see the `default` branch below).
+    const isHitanoaTense = tense in HITANOA_GENDER_PAIRS
+    const hitanoaLures = isHitanoaTense
+      ? [
+          { form: getWrongGenderLure(verb, tense, person), errorType: 'wrong-gender' },
+          { form: getNeutralFormLure(verb, tense, person), errorType: 'neutral-form' },
+        ]
+      : []
     const pronounLures = [{ form: getCaseFramePronounLure(verbs, verb, person), errorType: 'case-frame' }]
     // A sentence only qualifies for `word-order` once (a) it's explicitly
     // tagged `wordOrderSafe: true` and (b) its blank is filled in and its word
@@ -1607,6 +1654,18 @@ export function generateQuestions(
         return { ...source, ...buildWordOrderQuestion(table, wordOrderSentence, person) }
       }
       default: {
+        // #213: a toka/noka question is the one exception to the "bare
+        // `form` is never grounded" rule directly below — its wrong-gender/
+        // neutral-form lures are guaranteed-wrong by construction (same
+        // verb/person, just the wrong register or none at all), so they
+        // stay legible without a sentence or cross-verb pool. `grounded:
+        // true` here only unlocks `hitanoaLures`, not `borrowed`/`formLures`
+        // (passed as `[]`) — this isn't a general loosening of the "form"
+        // kind's groundedness, just this one narrow, same-verb case.
+        if (isHitanoaTense) {
+          const { correct, options, optionRationale } = buildOptions(table, persons, person, [], [], hitanoaLures, true)
+          return { ...source, kind: 'form', person, correct, options, optionRationale }
+        }
         // A bare `kind: 'form'` question has neither a sentence nor a
         // visible verb name to anchor correctness, so it's never grounded
         // (see `buildTaggedOptions`): `borrowed` and `formLures` are passed

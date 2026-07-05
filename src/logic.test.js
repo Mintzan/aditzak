@@ -34,10 +34,12 @@ import {
   getIntroducedSources,
   getLocalDateString,
   getLureRationale,
+  getNeutralFormLure,
   getObjectNumberLure,
   getPointsBalance,
   getProgressiveBaseLure,
   getRecencyContrastLure,
+  getWrongGenderLure,
   getStreakEncouragement,
   getUnlockedLessonIds,
   getWeakSpotQuestions,
@@ -3010,11 +3012,31 @@ describe('generateQuestions', () => {
       expect(ukan.conjugations.pastNoka).toEqual({ hura: 'zinan', haiek: 'zitenan' })
     })
 
-    it('drills toka as a binary (2-option) choice between hura/haiek', () => {
+    it('drills toka with its own hura/haiek table plus wrong-gender/neutral-form lures (#213)', () => {
+      // `person` (hura or haiek) is picked at random, so the expected lure
+      // forms are computed the same way the engine does rather than
+      // hardcoded to one of the two.
       const question = generateQuestions(izan, 'presentToka', { verbs: VERBS })[0]
+      const wrongGender = getWrongGenderLure(izan, 'presentToka', question.person)
+      const neutralForm = getNeutralFormLure(izan, 'presentToka', question.person)
 
-      expect(question.options).toHaveLength(2)
-      expect(question.options).toEqual(expect.arrayContaining(['duk', 'dituk']))
+      expect(question.options).toHaveLength(4)
+      expect(question.options).toEqual(expect.arrayContaining([question.correct, wrongGender, neutralForm]))
+      expect(question.optionRationale[wrongGender]).toEqual({ errorType: 'wrong-gender', whyKey: 'lureRationaleWrongGender' })
+      expect(question.optionRationale[neutralForm]).toEqual({ errorType: 'neutral-form', whyKey: 'lureRationaleNeutralForm' })
+    })
+
+    it('gives getWrongGenderLure/getNeutralFormLure the opposite-register and plain forms for every hitanoa tense', () => {
+      expect(getWrongGenderLure(izan, 'presentToka', 'hura')).toBe('dun')
+      expect(getWrongGenderLure(izan, 'presentNoka', 'hura')).toBe('duk')
+      expect(getWrongGenderLure(izan, 'pastToka', 'haiek')).toBe('zitunan')
+      expect(getWrongGenderLure(ukan, 'pastNoka', 'haiek')).toBe('zitekan')
+      expect(getWrongGenderLure(izan, 'present', 'hura')).toBeUndefined()
+
+      expect(getNeutralFormLure(izan, 'presentToka', 'hura')).toBe('da')
+      expect(getNeutralFormLure(izan, 'presentNoka', 'haiek')).toBe('dira')
+      expect(getNeutralFormLure(ukan, 'pastToka', 'hura')).toBe('zuen')
+      expect(getNeutralFormLure(izan, 'present', 'hura')).toBeUndefined()
     })
 
     it('keeps ukan\'s hi-as-NORK present (duk/dun) distinct from its own presentToka/presentNoka (dik/din)', () => {
