@@ -46,6 +46,26 @@ describe('App', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
+  it("shows ukan's ergative-marked pronouns (Nik/Zuk/Hark) in Unit 2's overview", async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByText(/your first ergative/).closest('button'))
+
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toHaveTextContent('ukan — to have · Present')
+    // The whole point of this unit is the ni -> nik ergative-subject shift, so
+    // the table must show the declined (-k) pronouns, not the bare ones
+    // (ConjugationTable lowercases the display form, hence 'nik' not 'Nik').
+    expect(within(dialog).getByText('nik')).toBeInTheDocument()
+    expect(within(dialog).getByText('zuk')).toBeInTheDocument()
+    expect(within(dialog).getByText('hark')).toBeInTheDocument()
+    expect(within(dialog).getByText('dut')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   it('lets a learner open a unit overview explaining a pending (coming soon) unit', async () => {
     const user = userEvent.setup()
     render(<App />)
