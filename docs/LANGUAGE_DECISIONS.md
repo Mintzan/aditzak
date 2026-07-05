@@ -6,6 +6,33 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-05 — Renamed "Lehenaldiko Burutua" to "Lehenaldi Burutua" (user correction)
+
+A user familiar with the term flagged that they know this tense (the
+present-perfect-shaped periphrastic past — `etorri naiz`/`ikusi dut`,
+`CONJUGATIONS.md` §11, taught as Unit 11) as **"Lehenaldi Burutua"**, not
+**"Lehenaldiko Burutua"** (with the genitive `-ko`) as the app had it
+everywhere. Checked `CONJUGATIONS.md` §11's own tense-matrix table for
+internal consistency first: the neighboring simple-past tenses in that same
+table — **"Lehenaldi Mugatua"** and **"Lehenaldi Ez-mugatua"** — both use the
+bare "Lehenaldi", not "Lehenaldiko". "Lehenaldiko Burutua" was the odd one
+out, with no cited external source in the docs for the `-ko` form
+specifically (this section appears to be original compilation, not sourced
+from a bibliography entry). Given that internal inconsistency plus the
+user's direct correction, changed it to match the other two.
+
+**Scope:** every *live* occurrence — `journey.js` (Unit 11's title + a code
+comment), `data/lessons.js`/`data/verbs.js` (code comments +
+`TENSE_META.presentPerfect.basque`), `i18n/translations.js`
+(`tensePresentPerfect`, `eu`), `i18n/journeyTranslations.js` (Unit 11's
+`es`/`eu` title/focus), and the living docs (`CONJUGATIONS.md`,
+`LEARNING_JOURNEY.md`, `LEARNING_JOURNEY_PROPOSED.md`, `CURRICULUM_MAP.md`).
+**Deliberately left untouched:** the term's occurrences inside already-dated
+entries in `docs/DECISIONS_ARCHIVE.md` and this file's own 2026-06-19
+entries below — those are historical records of what was decided/written at
+the time, not living content, so they keep the original (now-superseded)
+spelling rather than being retroactively rewritten.
+
 ## 2026-07-05 — `izan`/`ukan` toka/noka native-speaker confirmation (#213)
 
 Ran the 8 present/past toka/noka pairs flagged 2026-06-17 (izan's `duk`/`dun`/

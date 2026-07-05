@@ -272,9 +272,9 @@ This is generated from live data (`src/journey.js` + `src/data/lessons.js` + `sr
 
 ### Stage 3 — Looking Back I
 
-#### Unit 11 — The Present Perfect (Lehenaldiko Burutua) — What Just Happened
+#### Unit 11 — The Present Perfect (Lehenaldi Burutua) — What Just Happened
 
-**What you learn:** Lehenaldiko Burutua — perfective participle + present auxiliary (etorri naiz / ikusi dut), taught on a known core (izan/etorri + ikusi); the recency contrast gaur ... da vs. atzo ... zen
+**What you learn:** Lehenaldi Burutua — perfective participle + present auxiliary (etorri naiz / ikusi dut), taught on a known core (izan/etorri + ikusi); the recency contrast gaur ... da vs. atzo ... zen
 
 **Example:** "I have come / I came today." (Gaur etorri naiz)
 

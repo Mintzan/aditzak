@@ -8,6 +8,24 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Unit overview affordance: added a visible "info" badge
+
+Feedback on the unit overview modal (#574): tapping a unit's title/card to
+open it wasn't discoverable — the header was plain text with only a
+`hover:opacity` change, which is invisible on a touch device (no hover) and
+gave no indication there was anything to tap at all. `PendingUnitCard`
+happened to look tappable anyway since it's already a bordered card, but
+`UnitLessons`'s available-unit header sits as bare text above the lesson
+list with no visual separation.
+
+Added a small circular `InfoIcon` badge (`components/icons.jsx`) right next
+to the unit title in both places, plus a persistent tap-target treatment for
+`UnitLessons`'s header (`hover:bg-gray-100` + `active:scale-[0.99]`, matching
+the rest of the app's button feedback) instead of the previous opacity-only
+hover. Chose a dedicated info icon over reusing `LightbulbIcon` (already
+associated with in-exercise hints, a different meaning) or a chevron (implies
+navigating *into* something, not opening an overlay).
+
 ## 2026-07-05 — #213: toka/noka wrong-gender/neutral-form distractor lures
 
 Now that `izan`/`ukan`'s toka/noka data was native-speaker-confirmed (this

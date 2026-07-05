@@ -31,6 +31,7 @@ import {
   GateIcon,
   HeartBrokenIcon,
   HomeIcon,
+  InfoIcon,
   LockIcon,
   PointsIcon,
   ProfileIcon,
@@ -142,7 +143,7 @@ function PendingUnitCard({ unit, onOpenUnit }) {
       type="button"
       onClick={() => onOpenUnit(unit)}
       aria-label={t('unitOverviewOpenLabel')}
-      className="flex w-full items-start gap-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 text-left opacity-70 transition hover:opacity-90"
+      className="flex w-full items-start gap-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 text-left opacity-70 transition hover:opacity-90 active:scale-[0.99]"
     >
       <div
         className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-400"
@@ -153,6 +154,9 @@ function PendingUnitCard({ unit, onOpenUnit }) {
       <div className="min-w-0 flex-1">
         <p className="font-semibold text-gray-700">
           {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
+          <span className="ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 align-middle text-gray-500">
+            <InfoIcon className="h-3 w-3" />
+          </span>
         </p>
         <p className="mt-0.5 text-sm text-gray-500 break-words">{focus}</p>
         {payload && <p className="mt-1 text-sm text-gray-400 italic break-words">{payload}</p>}
@@ -177,10 +181,13 @@ function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLoc
         type="button"
         onClick={() => onOpenUnit(unit)}
         aria-label={t('unitOverviewOpenLabel')}
-        className="w-full rounded-xl text-left transition hover:opacity-80"
+        className="-mx-2 w-[calc(100%+1rem)] rounded-xl px-2 py-1 text-left transition hover:bg-gray-100 active:scale-[0.99]"
       >
         <p className="font-semibold text-gray-900">
           {t('unitLabel', { number: unit.number })} <span className="font-normal text-gray-400">· {title}</span>
+          <span className="ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-forest-tint align-middle text-brand-forest">
+            <InfoIcon className="h-3 w-3" />
+          </span>
           {unit.bonus && (
             <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-brand-txakoli-tint px-2 py-0.5 align-middle text-xs font-semibold text-brand-txakoli-text">
               <BonusIcon className="h-3 w-3" /> {t('bonusLabel')}

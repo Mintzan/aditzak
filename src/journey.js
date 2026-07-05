@@ -209,7 +209,7 @@ export const JOURNEY = [
         title: 'Stage 3 — Looking Back I',
         units: [
           // Unit 11 ("What Just Happened") is the on-ramp into the past
-          // system: the present perfect (Lehenaldiko Burutua) is the
+          // system: the present perfect (Lehenaldi Burutua) is the
           // perfective participle + a *present* auxiliary (`etorri naiz` /
           // `ikusi dut`), so it introduces the participle while reusing the
           // already-known present auxiliaries (Units 1/2) — zero new
@@ -224,7 +224,7 @@ export const JOURNEY = [
           // in #281; lessons in #282.
           {
             number: 11,
-            title: 'The Present Perfect (Lehenaldiko Burutua) — What Just Happened',
+            title: 'The Present Perfect (Lehenaldi Burutua) — What Just Happened',
             focus:
               'The present perfect (etorri naiz, ikusi dut) — say what just happened, and contrast gaur ("today") with atzo ("yesterday")',
             payload: '"I have come / I came today." (Gaur etorri naiz)',

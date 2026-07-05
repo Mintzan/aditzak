@@ -3,7 +3,7 @@
 **Status: open proposal, not yet implemented.** The currently-shipped journey is `LEARNING_JOURNEY.md`; this spec is being adopted incrementally as units move from `pending` to `available` (see `docs/DECISIONS.md`'s renumbering entries).
 
 > **Numbering note (2026-06-19):** the live journey inserted a present-perfect
-> unit (*Lehenaldiko Burutua*) at **Unit 11**, which this spec does not have.
+> unit (*Lehenaldi Burutua*) at **Unit 11**, which this spec does not have.
 > As a result the live unit numbers diverge from this spec's "N-n" from Unit 11
 > on: **live Unit 11 = present perfect (new); live Unit N = this spec's N-n − 1
 > for every N ≥ 12.** This spec keeps its original numbering; see

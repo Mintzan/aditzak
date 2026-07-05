@@ -693,7 +693,7 @@ export const TRANSLATIONS = {
     tensePastToka: 'Lehena (toka)',
     tensePastNoka: 'Lehena (noka)',
     tenseImperative: 'Agintera',
-    tensePresentPerfect: 'Lehenaldiko burutua',
+    tensePresentPerfect: 'Lehenaldi burutua',
     tenseHabitualPast: 'Lehen ohiturazkoa',
     tenseImperfectivePast: 'Lehen burutugabea',
     typeSynthetic: 'Trinkoa',

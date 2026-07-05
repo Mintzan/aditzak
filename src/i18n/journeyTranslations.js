@@ -300,12 +300,12 @@ export const JOURNEY_TRANSLATIONS = {
     },
     11: {
       title: {
-        es: 'El pretérito perfecto (Lehenaldiko Burutua) — Lo que acaba de pasar',
-        eu: 'Lehenaldiko Burutua — Oraintxe gertatua',
+        es: 'El pretérito perfecto (Lehenaldi Burutua) — Lo que acaba de pasar',
+        eu: 'Lehenaldi Burutua — Oraintxe gertatua',
       },
       focus: {
         es: 'El pretérito perfecto (etorri naiz, ikusi dut) — di lo que acaba de pasar, y contrasta gaur ("hoy") con atzo ("ayer")',
-        eu: 'Lehenaldiko Burutua (etorri naiz, ikusi dut) — esan zer gertatu berri den, eta alderatu gaur eta atzo',
+        eu: 'Lehenaldi Burutua (etorri naiz, ikusi dut) — esan zer gertatu berri den, eta alderatu gaur eta atzo',
       },
       payload: {
         es: '"He venido / he venido hoy." (Gaur etorri naiz)',

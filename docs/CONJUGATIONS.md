@@ -1774,7 +1774,7 @@ Basque has. The table below lays out the complete grid for a transitive verb
 | Tense Name | Formula | Example (`ikusi` / `etorri`) | English Translation |
 |---|---|---|---|
 | **Oraina** (Present / Present Habitual) | stem + `-t(z)en` + present aux | *ikusten dut* / *etortzen naiz* | "I see it / I'm seeing it" / "I come / I'm coming" |
-| **Lehenaldiko Burutua** (Present Perfect) | stem + `-i`/`-tu` + present aux | *ikusi dut* / *etorri naiz* | "I have seen it" / "I have come" |
+| **Lehenaldi Burutua** (Present Perfect) | stem + `-i`/`-tu` + present aux | *ikusi dut* / *etorri naiz* | "I have seen it" / "I have come" |
 | **Geroa** (Future / Prospective) | stem + `-ko`/`-go` + present aux | *ikusiko dut* / *etorriko naiz* | "I will see it" / "I will come" |
 | **Ondorioa** (Conditional — "would") | stem + `-ko`/`-go` + ondorioa-present aux (§2/§3) | *ikusiko nuke* / *etorriko nintzateke* | "I would see it" / "I would come" |
 | **Ondorio Orokorra** (Past Habitual / Imperfect) | stem + `-t(z)en` + past aux | *ikusten nuen* / *etortzen nintzen* | "I used to see it / I was seeing it" / "I used to come / I was coming" |
@@ -1868,7 +1868,7 @@ they combine with a finite *auxiliary* to build tenses. This section covers
 the other jobs those same non-finite stems do *without* a finite auxiliary —
 as nouns, adjectives, and adverbs in their own right. All forms below are
 built on the perfective participle (`ikusi`, `etorri`) — the same participle
-§11 uses for `Lehenaldiko Burutua`/`Lehenaldi Mugatua`.
+§11 uses for `Lehenaldi Burutua`/`Lehenaldi Mugatua`.
 
 ### The non-finite form inventory
 
