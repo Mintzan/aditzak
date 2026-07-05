@@ -202,7 +202,7 @@ function UnitLessons({ unit, progress, unlockedIds, hearts, onSelect, onHeartLoc
 // a learner the actual forms, and there's no other way to see them without
 // opening a lesson (unless already unlocked). A `pending` unit has no
 // `lessonIds` yet, so it gets a short "coming soon" note instead.
-function UnitOverviewModal({ unit, onClose }) {
+export function UnitOverviewModal({ unit, onClose }) {
   const { t, language } = useLanguage()
   const title = journeyText('units', unit.number, 'title', language, unit.title)
   const focus = journeyText('units', unit.number, 'focus', language, unit.focus)

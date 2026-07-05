@@ -81,7 +81,7 @@ marks score-gated Refresh Gates.
 | 43 ✨🛡️ | REFRESH — Causatives Across Tenses | 2 |
 | **Phase VII — Curiosities & Color** | | |
 | 44 ✨ | Synthetic Curiosities (jario/etzan/irudi) | 7 |
-| 45 ✨ | Talking About Weather | *pending* |
+| 45 ✨ | Talking About Weather | 2 |
 | 46 ✨ | Unergative Curiosities (ihardun/iraun) | 5 |
 | 47 ✨ | erabili — Using Things | 3 |
 | **Bonus — Mastery & Depth** (the deflated axis/mood permutations) | | |
@@ -588,7 +588,7 @@ Optional flavor content layered on top of the already-complete core curriculum (
 
 | Unit | Focus | Payload | Coverage | Ref | Data status |
 |---|---|---|---|---|---|
-| 45 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | pending |
+| 45 | **Talking About Weather** — `ari` + `ukan` ("euria ari du"), `izan`/`egon` weather idioms; fixed 3rd person only, zero new conjugation tables | "It's raining." (`Euria ari du`) / "It's cold." (`Hotz da`) / "It's sunny." (`Eguzkia dago`) | reuses existing `ari`/`izan`/`egon` entries | available (2026-07-05) — reuses `izan`/`egon`/`ibili`/`ukan`'s existing `hura`-present forms via 4 small dedicated "weather idiom" `VERBS` entries (own sentences, no new conjugated forms) rather than editing those verbs' own arrays directly |
 
 #### Stage 17: Subjects Without Objects
 
