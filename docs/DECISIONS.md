@@ -8,6 +8,37 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Fixed a crash opening Unit 16's overview: `ConjugationTable` didn't resolve `objectAxis` tenses
+
+A user reported Unit 16's "help" (the unit overview modal) was broken.
+Root cause: Unit 16's practice lessons (`ukan-object-axis-present`, etc.) use
+`tense: 'presentByObject'`/`'pastByObject'` with an `objectAxis: { vary,
+fixed }` field — `getComposedTable` returns those as a 2D `{ [outer]: {
+[inner]: form } }` grid, not the flat `{ [person]: form }` shape
+`ConjugationTable` expects. Without resolving through `resolveObjectAxisTable`
+first, `ConjugationTable` tried to render a form-slot object directly,
+throwing "Objects are not valid as a React child" — a hard crash, not just
+wrong content. This bug predated `UnitOverviewModal`: `LessonPreviewScreen`
+(`ExerciseScreen.jsx`) had the exact same gap for any `objectAxis` lesson's
+first-attempt preview, just never surfaced because `ConjugationTable`'s only
+caller before #574 was that preview screen and no bug report had come in for
+it.
+
+**Fix:** `ConjugationTable` (`components/conjugationTable.jsx`) now takes an
+optional `objectAxis` prop and resolves the table through
+`resolveObjectAxisTable` when present, matching how `generateQuestions`
+already handles the same tenses. Threaded `lesson.objectAxis` through both
+call sites — `LessonPreviewScreen` and `UnitOverviewModal`'s
+`conjugationEntries` (whose dedup key now also includes the fixed person, so
+two lessons sharing a verb/tense but pinning a different `objectAxis.fixed`
+each still get their own table).
+
+**Verified it doesn't happen elsewhere:** added a test that renders
+`UnitOverviewModal` for every `available` unit in `JOURNEY` (all 51) —
+confirmed it reproduces the exact crash for Unit 16 before the fix, and
+passes clean for every unit after it, so no other unit is currently hitting
+this gap.
+
 ## 2026-07-05 — Unit overview affordance: added a visible "info" badge
 
 Feedback on the unit overview modal (#574): tapping a unit's title/card to
