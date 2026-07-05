@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
 import { UnitOverviewModal } from './screens/HomeScreen'
 import { LanguageProvider } from './i18n/LanguageContext'
+import { JOURNEY } from './journey'
 
 describe('App', () => {
   beforeEach(() => {
@@ -67,6 +68,27 @@ describe('App', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
+  it("resolves Unit 16's object-axis conjugation tables instead of crashing", async () => {
+    // Unit 16's practice lessons (ukan-object-axis-present, etc.) use
+    // `tense: 'presentByObject'` with `objectAxis: { vary: 'nor', fixed: 'ni' }`
+    // — `getComposedTable` returns those as a 2D grid, so `ConjugationTable`
+    // must resolve them through `objectAxis` before rendering, or `form`
+    // ends up being an object instead of a string.
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByText(/say "I love you" instead of always "I love it"/).closest('button'))
+
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toHaveTextContent('ukan — to have · Present (by object)')
+    expect(dialog).toHaveTextContent('maite izan — to love · Present (by object)')
+    expect(within(dialog).getByText('zaitut')).toBeInTheDocument()
+    expect(within(dialog).getByText('maite zaitut')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   it('shows a "coming soon" note for a pending unit', async () => {
     // Every unit in the curriculum is `available` as of 2026-07-05 (see
     // docs/DECISIONS.md), so there's no real pending unit left to click
@@ -87,6 +109,28 @@ describe('App', () => {
 
     await user.click(screen.getByRole('button', { name: 'Close' }))
     expect(onClose).toHaveBeenCalled()
+  })
+
+  it("renders every available unit's overview modal without crashing", () => {
+    // Unit 16's `objectAxis`-tense lessons (`presentByObject`/`pastByObject`)
+    // crashed `UnitOverviewModal` (see the dedicated Unit 16 test above) —
+    // this walks the *entire* curriculum through the same modal to catch any
+    // other unit whose lessons hit a tense shape `ConjugationTable` doesn't
+    // handle, rather than relying on spot-checking individual units by hand.
+    for (const phase of JOURNEY) {
+      for (const stage of phase.stages) {
+        for (const unit of stage.units) {
+          if (unit.status !== 'available') continue
+          const { unmount } = render(
+            <LanguageProvider>
+              <UnitOverviewModal unit={unit} onClose={() => {}} />
+            </LanguageProvider>,
+          )
+          expect(screen.getByRole('dialog'), `Unit ${unit.number} (${unit.title})`).toBeInTheDocument()
+          unmount()
+        }
+      }
+    }
   })
 
   it('lets a learner open the feedback form from the Profile tab and submit it', async () => {

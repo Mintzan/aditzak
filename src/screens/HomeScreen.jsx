@@ -218,13 +218,25 @@ export function UnitOverviewModal({ unit, onClose }) {
   // review lessons (`lesson.sources`, no `lesson.verbId`) are skipped since
   // they only recombine verb/tense pairs a practice lesson already
   // introduced, so they'd never add a new table, just repeat one.
+  // `lesson.objectAxis` (e.g. Unit 16's `presentByObject`/`pastByObject`
+  // lessons) has to ride along to `ConjugationTable` too — those tenses are
+  // 2D grids, and rendering one without resolving it through `objectAxis`
+  // first crashes (an object where a conjugated form string is expected).
+  // The dedup key includes the fixed person so two lessons that share a
+  // verb/tense but pin a different `objectAxis.fixed` (e.g. Unit 48's deeper
+  // pools) still each get their own table.
   const conjugationEntries = []
   for (const id of unit.lessonIds ?? []) {
     const lesson = LESSONS.find((candidate) => candidate.id === id)
     if (!lesson.verbId) continue
-    const key = `${lesson.verbId}-${lesson.tense}`
+    const key = `${lesson.verbId}-${lesson.tense}-${lesson.objectAxis?.fixed ?? ''}`
     if (conjugationEntries.some((entry) => entry.key === key)) continue
-    conjugationEntries.push({ key, verb: VERBS.find((v) => v.id === lesson.verbId), tense: lesson.tense })
+    conjugationEntries.push({
+      key,
+      verb: VERBS.find((v) => v.id === lesson.verbId),
+      tense: lesson.tense,
+      objectAxis: lesson.objectAxis,
+    })
   }
   return (
     <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
@@ -254,12 +266,12 @@ export function UnitOverviewModal({ unit, onClose }) {
           {payload && <p className="mt-2 text-sm text-gray-400 italic break-words">{payload}</p>}
           {conjugationEntries.length > 0 && (
             <div className="mt-5 flex flex-col gap-4">
-              {conjugationEntries.map(({ key, verb, tense }) => (
+              {conjugationEntries.map(({ key, verb, tense, objectAxis }) => (
                 <div key={key}>
                   <p className="mb-2 text-sm font-semibold text-gray-700">
                     {verb.verb} <span className="font-normal text-gray-400">— {verbMeaning(verb, language)} · {t(TENSE_META[tense].labelKey)}</span>
                   </p>
-                  <ConjugationTable verb={verb} tense={tense} />
+                  <ConjugationTable verb={verb} tense={tense} objectAxis={objectAxis} />
                 </div>
               ))}
             </div>

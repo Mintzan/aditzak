@@ -207,7 +207,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
 // `components/conjugationTable.jsx` — `UnitOverviewModal` (`HomeScreen.jsx`)
 // reuses it too.
 
-function LessonPreviewScreen({ verb, tense, tenseMeta, onStart, onExit }) {
+function LessonPreviewScreen({ verb, tense, tenseMeta, objectAxis, onStart, onExit }) {
   const { t, language } = useLanguage()
   return (
     <div className="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-white">
@@ -238,7 +238,7 @@ function LessonPreviewScreen({ verb, tense, tenseMeta, onStart, onExit }) {
           </div>
         </div>
         <div className="mt-6">
-          <ConjugationTable verb={verb} tense={tense} />
+          <ConjugationTable verb={verb} tense={tense} objectAxis={objectAxis} />
         </div>
       </div>
 
@@ -1242,6 +1242,7 @@ export function ExerciseScreen({
         verb={verb}
         tense={lesson.tense}
         tenseMeta={TENSE_META[lesson.tense]}
+        objectAxis={lesson.objectAxis}
         onStart={() => setShowPreview(false)}
         onExit={onExit}
       />
