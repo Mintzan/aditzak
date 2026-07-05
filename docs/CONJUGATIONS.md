@@ -1780,9 +1780,10 @@ Basque has. The table below lays out the complete grid for a transitive verb
 | **Ondorio Orokorra** (Past Habitual / Imperfect) | stem + `-t(z)en` + past aux | *ikusten nuen* / *etortzen nintzen* | "I used to see it / I was seeing it" / "I used to come / I was coming" |
 | **Lehenaldi Mugatua** (Simple/Definite Past) | stem + `-i`/`-tu` + past aux | *ikusi nuen* / *etorri nintzen* | "I saw it" / "I came" |
 | **Lehenaldi Ez-mugatua** (Pluperfect) | stem + `-i`/`-tu` + `izan` + past aux | *ikusi izan nuen* / *etorri izan nintzen* | "I had seen it" / "I had come" |
+| **Iraganeko Geroa** (Future-of-the-past) | stem + `-ko`/`-go` + past aux | *ikusiko nuen* / *etorriko nintzen* | "I would see it" / "I would come" (viewed from a past vantage point) |
 | **Ez-ohiko Baldintza** (Past Conditional — "would have") | stem + `-ko`/`-go` + ondorioa-past aux (§2/§3) | *ikusiko nukeen* / *etorriko nintzatekeen* | "I would have seen it" / "I would have come" |
 
-Notes on the four "compound" rows:
+Notes on the five "compound" rows:
 
 - **Ondorio Orokorra** ("general result", past habitual/imperfect) reuses the
   *imperfective* `-t(z)en` suffix — same as **Oraina** — but swaps the
@@ -1800,6 +1801,20 @@ Notes on the four "compound" rows:
   [before X happened]"), the same role English "had + past participle"
   plays. `izan` here doesn't conjugate — it's the same invariant non-finite
   form regardless of person, mirroring `ukan`/`izan`'s own participles (§14).
+  An older, still-encountered formation achieves the same meaning via the
+  §14 resultative participle (`-a`) combined directly with the *past* auxiliary
+  instead of the present: *egina nuen* / *mintzatua nintzen* — "I had done it"
+  / "I had spoken." The `izan`-insertion form is the standard Batua default;
+  the resultative-past form is more archaic/formal but may appear in classical
+  and northern texts (Haase 1992).
+- **Iraganeko Geroa** ("past future", future-of-the-past) pairs the
+  *prospective* `-ko`/`-go` suffix with the **plain past** auxiliary — the
+  same auxiliary **Lehenaldi Mugatua** uses, not the ondorioa forms. It appears
+  in subordinate clauses where the main clause is in the past (consecutio
+  temporum): *Pentsatu zuen etorriko nintzela* ("He thought I would come").
+  Do not confuse with **Ez-ohiko Baldintza** below, which uses the
+  *ondorioa-past* auxiliary and means "would have (if...)" rather than "would
+  (as expected from a past perspective)."
 - **Ez-ohiko Baldintza** ("unusual/non-habitual conditional", past
   conditional) pairs the *prospective* `-ko`/`-go` suffix with the
   **ondorioa-past** auxiliary (`nukeen`/`nintzatekeen`, §2/§3's "Ondorioa,
@@ -1856,6 +1871,20 @@ field (declined for whichever case that verb's subject takes).
   confirmed-standard mood forms beyond present/past — see the notes inline
   in §6/§7 for why those tables stop where they do.
 - **Imperative (agintera)** — see §9.
+- **Synthetic-vs-analytic present contrast (for synthetic verbs only)** — the
+  synthetic present (*noa*, *nago*, *nabil*…) is **aspectually neutral**: it
+  can denote a habitual or general state without committing to ongoing action.
+  The analytic present (*joaten naiz*, *egoten naiz*, *ibiltzen naiz* — same
+  imperfective stem as **Oraina**, but now carrying the full weight of the
+  analytic construction) specifically marks **progressive or habitual aspect**,
+  in contrast to the synthetic default. This opposition is only available for
+  verbs that *have* synthetic forms; for all other verbs the analytic present
+  is just the neutral present. In the past tense the same distinction surfaces
+  as synthetic past (aspectually neutral: *nindoan*, *nengoen*) vs. analytic
+  imperfective past (*joaten nintzen*, *egoten nintzen*) — the distinction our
+  docs and lessons have always tracked on the past side (Unit 19). The
+  present-side version is documented here for completeness; it would only
+  matter for a lesson that explicitly contrasts *noa* with *joaten naiz*.
 
 For periphrastic verbs, each of the above is actually a (non-finite verb form
 × auxiliary tense) pair — e.g. *"ibiltzen naiz"* (present habitual), *"ibili
