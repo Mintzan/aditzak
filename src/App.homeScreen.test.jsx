@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
@@ -34,9 +34,13 @@ describe('App', () => {
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toHaveTextContent('say who and where you are')
-    expect(dialog).toHaveTextContent('In this unit')
-    expect(dialog).toHaveTextContent('3 lessons')
-    expect(dialog).toHaveTextContent('izan — to be')
+    // Unit 1's two practice lessons (izan-present, egon-present) each get
+    // their own conjugation table — unit-1-review doesn't add a third, since
+    // it just recombines those same two verb/tense pairs.
+    expect(dialog).toHaveTextContent('izan — to be · Present')
+    expect(dialog).toHaveTextContent('egon — to be (located / in a state) · Present')
+    expect(within(dialog).getAllByText('naiz').length).toBeGreaterThan(0)
+    expect(within(dialog).getAllByText('nago').length).toBeGreaterThan(0)
 
     await user.click(screen.getByRole('button', { name: 'Close' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()

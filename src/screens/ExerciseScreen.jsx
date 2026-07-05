@@ -34,6 +34,7 @@ import {
 } from '../lessonLogic'
 import { describeLesson, verbMeaning } from '../lessonDisplay'
 import { FixedArgumentBadge, ProgressBar, Stars, VerbBadgeRow } from '../components/badges'
+import { ConjugationTable } from '../components/conjugationTable'
 import { FeedbackMascotAvatar, MascotAvatar } from '../components/mascot'
 import { FEEDBACK_API_URL, FEEDBACK_MESSAGE_MAX_LENGTH } from '../api'
 import { CheckIcon, CrossIcon, FlagIcon, HeartBrokenIcon, LightbulbIcon, PointsIcon } from '../components/icons'
@@ -195,24 +196,9 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
 // is asked. Pairs with `NO_TYPING_ATTEMPTS` — the learner sees the full table
 // here, then spends their first attempts recognising those same forms, in
 // isolation and in example sentences, before typed answers and
-// spot-the-error are introduced.
-function ConjugationTable({ verb, tense }) {
-  const { t } = useLanguage()
-  const table = getComposedTable(verb, tense)
-  return (
-    <div className="overflow-hidden rounded-2xl border border-gray-200">
-      {Object.entries(table).map(([person, form], index) => (
-        <div key={person} className={`flex items-center justify-between px-4 py-3 ${index > 0 ? 'border-t border-gray-100' : ''}`}>
-          <div>
-            <p className="font-semibold text-gray-800">{(verb.pronouns?.[person] ?? person).toLowerCase()}</p>
-            <p className="text-xs text-gray-400">{t(PERSON_LABEL_KEYS[person])}</p>
-          </div>
-          <p className="text-xl font-extrabold text-gray-900">{form}</p>
-        </div>
-      ))}
-    </div>
-  )
-}
+// spot-the-error are introduced. `ConjugationTable` itself now lives in
+// `components/conjugationTable.jsx` — `UnitOverviewModal` (`HomeScreen.jsx`)
+// reuses it too.
 
 function LessonPreviewScreen({ verb, tense, tenseMeta, onStart, onExit }) {
   const { t, language } = useLanguage()

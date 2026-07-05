@@ -11,29 +11,53 @@ instead.
 ## 2026-07-04 — Unit overview page, as a modal rather than a new screen/route
 
 Added a "what's this unit about" page, reachable by tapping a unit's own
-title/card on the home tab (rather than one of its lesson rows). Two choices:
+title/card on the home tab (rather than one of its lesson rows).
 
-1. **Modal, not a third `AppShell` state.** `App.jsx`'s state machine only
-   toggles between `HomeScreen` and `ExerciseScreen` (`activeLessonId`); adding
-   a unit-overview screen there would mean threading a new
-   `activeUnitNumber` prop through `App.jsx` and `HomeScreen` just to render
-   one more full-page view. Since the content (focus/payload/lesson list) is
-   read-only and dismissable, it fits the existing bottom-sheet modal pattern
-   (`FeedbackModal`/`AccountModal`/`HeartsLockedModal`) instead — state lives
-   locally in `JourneyTab` (`HomeScreen.jsx`), same scope as those other
-   modals, no prop drilling past `PhaseSection`/`StageSection`.
-2. **Informational only — no "jump into a lesson from here" shortcut.** The
-   modal lists each lesson in the unit (verb/tense or review, via the same
-   `describeLesson` `UnitLessons`/`ProgressTab` already use) but the rows
-   aren't clickable. Wiring them to `onSelectLesson` would mean either
-   bypassing the existing lock/gate checks (`getUnlockedLessonIds`,
-   `isLockedByGateScore`) or duplicating them here — out of scope for a page
-   whose job is explaining the unit, not another way to launch it. Tapping a
-   lesson on the home list underneath is still the one way to start it.
+**Modal, not a third `AppShell` state.** `App.jsx`'s state machine only
+toggles between `HomeScreen` and `ExerciseScreen` (`activeLessonId`); adding a
+unit-overview screen there would mean threading a new `activeUnitNumber` prop
+through `App.jsx` and `HomeScreen` just to render one more full-page view.
+Since the content (focus/payload) is read-only and dismissable, it fits the
+existing bottom-sheet modal pattern (`FeedbackModal`/`AccountModal`/
+`HeartsLockedModal`) instead — state lives locally in `JourneyTab`
+(`HomeScreen.jsx`), same scope as those other modals, no prop drilling past
+`PhaseSection`/`StageSection`.
 
-A `pending` unit opens the same modal (no `lessonIds` yet, so it falls back
-to a short "coming soon" note) rather than staying inert — the ask was "for
-each unit," not "for each available unit."
+**No lesson list in the modal.** The first version also listed every lesson
+in the unit inside the modal, but that's pure duplication — the unit's lesson
+list is already the content directly below it on the home tab, one tap away
+without a modal in front of it. Cut back to just the unit's focus/payload
+copy and its gate/bonus badge. A `pending` unit still opens the same modal (no
+`lessonIds` yet, so it falls back to a short "coming soon" note) rather than
+staying inert — the ask was "for each unit," not "for each available unit."
+
+## 2026-07-05 — Unit overview modal: added a conjugation table per verb/tense
+
+A review of Unit 1's overview found the focus/payload copy alone ("izan and
+egon, present tense — say who and where you are" / "I am a student.") doesn't
+give a learner the actual forms — there was no way to see e.g. `naiz`/`da`/
+`gara` without opening a lesson (and lessons stay locked until the previous
+one's been attempted, so a not-yet-unlocked unit's forms were invisible
+entirely). Added a conjugation table per distinct verb/tense the unit's
+practice lessons cover, reusing the same table `LessonPreviewScreen` already
+shows before a lesson's first attempt — extracted into
+`components/conjugationTable.jsx` so both places import one implementation
+instead of maintaining two copies.
+
+Only *practice* lessons (`lesson.verbId` set) contribute a table; review
+lessons (`lesson.sources`) are skipped, since they only recombine verb/tense
+pairs a practice lesson already introduced — including them would just repeat
+a table already shown earlier in the same modal, not add one. Unit 1 gets two
+tables (`izan` present, `egon` present) from its two practice lessons; a unit
+whose lessons are entirely pooled reviews (e.g. Unit 27, post-#469) shows no
+tables, since there's no single canonical table for a multi-verb pool — moot
+for now, since none of the current spine's practice lessons hit that pool
+shape in the unit's very first table-eligible lesson.
+
+Tables show the full 6-person paradigm regardless of the lesson's `persons`
+restriction (e.g. Unit 1 only drills `ni`/`zu`/`hura`, `PHASE_1_PERSONS`) —
+same behavior `LessonPreviewScreen` already had, kept as-is for consistency
+rather than filtering one copy and not the other.
 
 ## 2026-07-03 — Profile tab: colorful invite/feedback buttons, reset progress demoted to a text link
 
