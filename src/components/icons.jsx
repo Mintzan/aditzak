@@ -177,6 +177,16 @@ export function BonusIcon(props) {
   )
 }
 
+export function InfoIcon(props) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5" />
+      <path d="M12 7.5h.01" />
+    </Icon>
+  )
+}
+
 export function RepeatIcon(props) {
   return (
     <Icon {...props}>
