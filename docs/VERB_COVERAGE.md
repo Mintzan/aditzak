@@ -319,6 +319,20 @@ field gets its first real use:
 | esan | erran | northern (Lapurdian/Zuberoan) | "to say" |
 | jarraitu | jarraiki | eastern (Lapurdian/Zuberoan) | "to follow" |
 
+A fourth morphological variant worth tracking here: the **`-en` prospective
+suffix** used in Northern dialects (Lapurdian/Zuberoan and some Navarrese) as
+an alternative to standard Batua's `-ko`/`-go` after consonant-final
+participles — e.g. *joanen naiz* (vs. Batua *joango naiz*), *eginen dut* (vs.
+*egingo dut*), *etorriren naiz* (vs. *etorriko naiz*). Structurally it is the
+possessive genitive `-en` attached to the participle, in contrast to the
+delimitative `-ko`/`-go` Batua standardised on. The resulting forms slot into
+the same prospective-participle position in `CONJUGATIONS.md` §11's tense
+matrix (including as the **Iraganeko Geroa** building-block) and would be a
+`dialectVariants` sub-entry rather than a new tense shape. This is a
+*recognition* item for now — `VERBS` uses Batua forms throughout and the
+lessons don't require this variant — but it's worth knowing when reading
+northern texts or hearing northern speakers.
+
 ## 5. Modal & aspectual constructions — `nahi` / `behar` / `ari` / `ahal` (+ `ezin`)
 
 These don't sit anywhere on the verb/tense/agreement grid above — they're not

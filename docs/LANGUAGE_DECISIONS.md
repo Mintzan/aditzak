@@ -6,6 +6,53 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-05 — Four additions from Haase (1992) tense/aspect article
+
+Cross-checking the repo's Basque tense/aspect model against Martin Haase's
+"Tense and Aspect in Basque" (buber.net/Basque/Euskara/tense.php, based on
+Haase 1992 *Sprachkontakt und Sprachwandel im Baskenland*) surfaced four items
+not previously documented:
+
+**1. Iraganeko Geroa (future-of-the-past).** Prospective participle (`-ko`/
+`-go`) + plain past auxiliary — *ikusiko nuen*, *etorriko nintzen* ("he thought
+I would come", *Pentsatu zuen etorriko nintzela*). This uses the *indicative*
+past auxiliary (same as Lehenaldi Mugatua), not the ondorioa-past (which gives
+Ez-ohiko Baldintza = "would have"). Appears in subordinate clauses subject to
+consecutio temporum. Added as a new row to `CONJUGATIONS.md` §11's tense
+matrix; it is the prospective-participle complement of the existing
+Ondorio-Orokorra (imperfective + past) and Lehenaldi-Mugatua (perfective +
+past) rows.
+
+**2. Resultative-based pluperfect.** An older/formal alternative to §11's
+Lehenaldi Ez-mugatua (`ikusi izan nuen`) uses the §14 resultative participle
+(`-a`) combined directly with the past auxiliary: *egina nuen*, *mintzatua
+nintzen* ("I had done it", "I had spoken"). The `izan`-insertion form is
+standard Batua; this resultative-past form is archaic/formal but attested in
+classical and northern texts. Documented as a variant note under Lehenaldi
+Ez-mugatua in §11, not as a separate matrix row since it expresses the same
+temporal relation and is not a distinct tense in modern Batua.
+
+**3. `-en` dialectal prospective suffix.** Northern dialects (Lapurdian/
+Zuberoan, some Navarrese) use the possessive genitive `-en` instead of Batua's
+delimitative `-ko`/`-go` after consonant-final participles: *joanen naiz*,
+*eginen dut*, *etorriren naiz*. Batua standardised on `-ko`/`-go`; this is a
+recognition item. Added to `VERB_COVERAGE.md` §4c alongside the other
+dialectal variants (`erran`, `eroan`, `jarraiki`).
+
+**4. Synthetic-vs-analytic present opposition.** For verbs with synthetic
+forms, the analytic present (*joaten naiz*, *egoten naiz*) specifically marks
+progressive/habitual aspect against the aspectually neutral synthetic (*noa*,
+*nago*). The parallel on the past side (synthetic *nindoan* / analytic
+*joaten nintzen*) was already documented (Unit 19); the present-side version
+was not. Added to `CONJUGATIONS.md` §13's notes. No lesson currently exploits
+this contrast; relevant if a future unit explicitly drills *noa* vs. *joaten
+naiz*.
+
+**What the article gets wrong relative to our sourcing:** it describes `irudi`
+as "third person only" — our `VERB_COVERAGE.md` §2 has a sourced full NOR-NORK
+paradigm showing otherwise. Our version is better researched; the article's
+claim was not adopted.
+
 ## 2026-07-05 — Renamed "Lehenaldiko Burutua" to "Lehenaldi Burutua" (user correction)
 
 A user familiar with the term flagged that they know this tense (the
