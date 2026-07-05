@@ -133,12 +133,15 @@ describe('App', () => {
     expect(onClose).toHaveBeenCalled()
   })
 
-  it("renders every available unit's overview modal without crashing", () => {
+  it("renders every available unit's overview modal without crashing, and never leads with app-behavior trivia", () => {
     // Unit 16's `objectAxis`-tense lessons (`presentByObject`/`pastByObject`)
     // crashed `UnitOverviewModal` (see the dedicated Unit 16 test above) —
     // this walks the *entire* curriculum through the same modal to catch any
     // other unit whose lessons hit a tense shape `ConjugationTable` doesn't
     // handle, rather than relying on spot-checking individual units by hand.
+    // Also guards against "No new verbs" creeping back into any unit's focus
+    // text — a curriculum-authoring fact, not a concept a learner needs (see
+    // docs/DECISIONS.md).
     for (const phase of JOURNEY) {
       for (const stage of phase.stages) {
         for (const unit of stage.units) {
@@ -149,10 +152,28 @@ describe('App', () => {
             </LanguageProvider>,
           )
           expect(screen.getByRole('dialog'), `Unit ${unit.number} (${unit.title})`).toBeInTheDocument()
+          expect(unit.focus, `Unit ${unit.number} (${unit.title})`).not.toMatch(/no new verbs/i)
           unmount()
         }
       }
     }
+  })
+
+  it("explains the negation word-order flip in Unit 10's overview (zero-new-verb Refresh Gate)", async () => {
+    // Unit 10 ("REFRESH — The Inversion Matrix") used to just say "No new
+    // verbs — practice turning Units 1–9's sentences negative", describing
+    // what the exercises do rather than the actual grammar point the title
+    // names ("Inversion").
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByText(/the finite verb flips ahead of the participle/).closest('button'))
+
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toHaveTextContent('"ez" enters the sentence')
+
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
   it('lets a learner open the feedback form from the Profile tab and submit it', async () => {

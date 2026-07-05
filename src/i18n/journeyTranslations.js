@@ -221,9 +221,9 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Ni" vs. "Nik" — Kasu-markaren azterketa',
       },
       focus: {
-        es: 'Sin verbos nuevos — practica distinguir sujetos absolutivos (izan/egon) de sujetos ergativos con -k (ukan): el sujeto de izan/egon no actúa sobre nada, así que el -k no debería colarse en ellos por error (✗ "Nik naiz") — el fallo más común de principiante',
+        es: 'Practica distinguir sujetos absolutivos (izan/egon) de sujetos ergativos con -k (ukan): el sujeto de izan/egon no actúa sobre nada, así que el -k no debería colarse en ellos por error (✗ "Nik naiz") — el fallo más común de principiante',
         // #native-check: same caveat as Unit 2's `eu` focus above.
-        eu: 'Aditz berririk gabe — subjektu absolutiboak (izan/egon) eta -k subjektu ergatiboak (ukan) bereizten ikasi. Izan/egon-ek ez dute -k hartzen, ezer egiten ez dutelako (✗ "Nik naiz")',
+        eu: 'Subjektu absolutiboak (izan/egon) eta -k subjektu ergatiboak (ukan) bereizten ikasi. Izan/egon-ek ez dute -k hartzen, ezer egiten ez dutelako (✗ "Nik naiz")',
       },
       payload: {
         es: '"Ni ikaslea naiz" (Yo soy estudiante) frente a "Nik liburua dut" (Yo tengo el libro)',
@@ -266,8 +266,8 @@ export const JOURNEY_TRANSLATIONS = {
     7: {
       title: { es: 'Ampliación: plurales absolutivos', eu: 'Zabalpena: plural absolutiboa' },
       focus: {
-        es: 'Sin verbos nuevos — añade gu/zuek/haiek (nosotros/vosotros/ellos) a izan, egon, ukan, joan, etorri e ikusi',
-        eu: 'Aditz berririk gabe — gu/zuek/haiek gehitzen dizkie izan, egon, ukan, joan, etorri eta ikusi aditzei',
+        es: 'Añade gu/zuek/haiek (nosotros/vosotros/ellos) a izan, egon, ukan, joan, etorri e ikusi',
+        eu: 'Gu/zuek/haiek gehitzen dizkie izan, egon, ukan, joan, etorri eta ikusi aditzei',
       },
       payload: {
         es: '"Somos profesores." (Irakasleak gara)',
@@ -299,8 +299,10 @@ export const JOURNEY_TRANSLATIONS = {
     10: {
       title: { es: 'REPASO — La matriz de inversión', eu: 'BERRIKUSPENA — Aldrebeskeriaren matrizea' },
       focus: {
-        es: 'Sin verbos nuevos — practica poner en negativo las frases de las unidades 1–9',
-        eu: 'Aditz berririk gabe — 1–9 unitateetako esaldiak ezezko bihurtzen praktikatu',
+        es: 'Poner en negativo las frases de las unidades 1–9 con "ez" — el verbo conjugado pasa al frente, por delante del participio, en cuanto aparece "ez"',
+        // #native-check: extended past a prefix-strip with a new clause —
+        // see docs/DECISIONS.md.
+        eu: '1–9 unitateetako esaldiak "ez"-ekin ezezko bihurtzen praktikatu',
       },
     },
     11: {
@@ -430,8 +432,8 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'BERRIKUSPENA — Oraina, iragana eta geroa, dena nahasian',
       },
       focus: {
-        es: 'Sin verbos nuevos — mezcla presente, pasado y futuro, afirmativo y negativo. Consigue al menos 2 estrellas para continuar',
-        eu: 'Aditz berririk gabe — oraina, iragana eta geroa nahasten ditu, baiezkoak eta ezezkoak. Gutxienez 2 izar behar dituzu jarraitzeko',
+        es: 'Mezcla presente, pasado y futuro, afirmativo y negativo, para distinguir los tres tiempos en vez de adivinarlos por el contexto. Consigue al menos 2 estrellas para continuar',
+        eu: 'Oraina, iragana eta geroa nahasten ditu, baiezkoak eta ezezkoak. Gutxienez 2 izar behar dituzu jarraitzeko',
       },
     },
     24: {
@@ -525,8 +527,8 @@ export const JOURNEY_TRANSLATIONS = {
     31: {
       title: { es: 'REPASO — La mezcladora de declinación', eu: 'BERRIKUSPENA — Kasu-marken nahasketa' },
       focus: {
-        es: 'Sin verbos nuevos — practica distinguir sujeto, objeto y destinatario. Aprobación obligatoria antes de la Fase V',
-        eu: 'Aditz berririk gabe — subjektua, objektua eta hartzailea bereizten praktikatu. V. fasearen aurretik nahitaez gainditu beharrekoa',
+        es: 'Distingue quién es el sujeto (-k), el objeto y el destinatario por su marca de caso, en verbos NOR, NOR-NORK, NOR-NORI y NOR-NORI-NORK. Aprobación obligatoria antes de la Fase V',
+        eu: 'Subjektua, objektua eta hartzailea kasu-marken arabera bereizten praktikatu. V. fasearen aurretik nahitaez gainditu beharrekoa',
       },
     },
     32: {
@@ -655,8 +657,8 @@ export const JOURNEY_TRANSLATIONS = {
         eu: 'BERRIKUSPENA — Kausatiboak denbora eta moduetan zehar',
       },
       focus: {
-        es: 'Sin verbos nuevos — practica -arazi en presente, pasado y futuro',
-        eu: 'Aditz berririk gabe — -arazi orainean, iraganean eta geroan praktikatu',
+        es: 'El causativo -arazi (hacer que alguien haga algo) en presente, pasado y futuro, todo junto',
+        eu: '-arazi orainean, iraganean eta geroan praktikatu, batera',
       },
     },
     44: {

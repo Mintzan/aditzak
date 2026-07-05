@@ -8,6 +8,42 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Dropped "No new verbs —" from every unit's focus text; it's app trivia, not a concept
+
+Feedback: "Sin verbos nuevos" (Unit 3's Spanish focus) "don't offer any value
+to the learner." Right — "no new verbs this unit" is a fact about how the
+curriculum is *authored* (whether a unit's lessons carry their own `verbId`
+vs. reusing earlier verbs via `sources`), not something a learner needs to
+know to do the exercises. Six units had this same prefix: 3, 7, 10, 23, 31,
+43 — all zero-new-verb checkpoints/Refresh Gates.
+
+Stripped the prefix from all six (English, Spanish, and — where already
+present — Basque) and, where the remaining sentence was still just
+mechanics ("practice turning sentences negative", "mixes present, past, and
+future") rather than a concept, added the actual grammar point instead:
+
+- **Unit 10** ("The Inversion Matrix"): now names the actual inversion — the
+  finite verb flips ahead of the participle once "ez" enters the sentence —
+  instead of just "you'll do negation drills."
+- **Unit 31** ("The Case-Ending Mixer"): now names the four agreement
+  patterns being contrasted (NOR/NOR-NORK/NOR-NORI/NOR-NORI-NORK), not just
+  "subject, object, recipient."
+- **Unit 43** (causative Refresh Gate): ties back to what `-arazi` actually
+  means ("making someone do something"), which Units 41-42 already
+  introduced but this gate's own copy never restated.
+- Units 7/23 already stated a real fact once the prefix was gone (which
+  persons get added, which tenses get mixed) — left those with only the
+  prefix removed.
+
+**Basque:** matched the low-risk edits (prefix removal) everywhere, but only
+added new explanatory clauses (Units 10, 31, 43) where I had reasonable
+confidence — flagged those with `#native-check` comments in
+`i18n/journeyTranslations.js`, same convention as the last few entries.
+
+Added a standing test (`App.homeScreen.test.jsx`) asserting no `available`
+unit's `focus` text matches `/no new verbs/i`, so this doesn't quietly creep
+back in on a future unit.
+
 ## 2026-07-05 — Explained *why* izan vs. ukan, not just *that* they differ
 
 A user asked when/how to explain to learners why some verbs take `izan` and
