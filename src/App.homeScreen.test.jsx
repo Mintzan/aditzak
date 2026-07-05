@@ -56,6 +56,8 @@ describe('App', () => {
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toHaveTextContent('ukan — to have · Present')
+    // Explains *why* ukan takes -k and izan/egon don't, not just that it does.
+    expect(dialog).toHaveTextContent("that's what earns it the -k")
     // The whole point of this unit is the ni -> nik ergative-subject shift, so
     // the table must show the declined (-k) pronouns, not the bare ones
     // (ConjugationTable lowercases the display form, hence 'nik' not 'Nik').
@@ -98,7 +100,7 @@ describe('App', () => {
     const user = userEvent.setup()
     render(<App />)
 
-    await user.click(screen.getByText(/creep onto izan\/egon by mistake/).closest('button'))
+    await user.click(screen.getByText(/isn't acting on anything/).closest('button'))
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toHaveTextContent('Nik naiz')

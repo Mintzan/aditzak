@@ -203,7 +203,7 @@ export const JOURNEY_TRANSLATIONS = {
     2: {
       title: { es: 'ukan — El salto ergativo', eu: 'ukan — Jauzi ergatiboa' },
       focus: {
-        es: 'ukan (tener), presente — tu primer sujeto ergativo (-k), para ni/zu/hura',
+        es: 'ukan (tener), presente — tu primer sujeto ergativo (-k), para ni/zu/hura. El sujeto de izan/egon simplemente es o está en algún sitio; el sujeto de ukan actúa sobre otra cosa (lo que tienes) — por eso se marca con -k',
         eu: 'ukan, oraina — zure lehen subjektu ergatiboa (-k), ni/zu/hura-rako',
       },
       payload: {
@@ -217,7 +217,7 @@ export const JOURNEY_TRANSLATIONS = {
         eu: '"Ni" vs. "Nik" — Kasu-markaren azterketa',
       },
       focus: {
-        es: 'Sin verbos nuevos — practica distinguir sujetos absolutivos (izan/egon) de sujetos ergativos con -k (ukan), para que el -k no se cuele en izan/egon por error (✗ "Nik naiz") — el fallo más común de principiante',
+        es: 'Sin verbos nuevos — practica distinguir sujetos absolutivos (izan/egon) de sujetos ergativos con -k (ukan): el sujeto de izan/egon no actúa sobre nada, así que el -k no debería colarse en ellos por error (✗ "Nik naiz") — el fallo más común de principiante',
         eu: 'Aditz berririk gabe — subjektu absolutiboak (izan/egon) eta -k subjektu ergatiboak (ukan) bereizten ikasi',
       },
       payload: {
