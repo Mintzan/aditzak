@@ -1783,6 +1783,139 @@ export const LESSONS = [
       { verbId: 'itxaron-dative', tense: 'future' },
     ],
   },
+  // Unit 31 (Refresh Gate C — "REFRESH — The Case-Ending Mixer"): zero new
+  // verbs. Pools izan (nor) / ukan (nor-nork) / gustatu (nor-nori) / esan
+  // (nor-nori-nork) across present/past/future so `generateCaseMixerQuestions`
+  // (already agreement-inverse-generic since #165) fires reliably across all
+  // three NOR/NORK/NORI contrasts at once, rather than the incidental
+  // nor-vs-nor-nork pairs earlier gates produce. `caseMixerCount` (new,
+  // opt-in lesson field — see `ExerciseScreen.jsx`'s `createExerciseState`)
+  // raises the per-lesson case-mixer question count above the default
+  // `CASE_MIXER_QUESTION_COUNT` (1), since drilling that exact distinction is
+  // this gate's whole point rather than a side effect.
+  {
+    id: 'unit-31-mixer-present',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'esan', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-present-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'esan', tense: 'present' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-past',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'esan', tense: 'past' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-past-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'esan', tense: 'past' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-future',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'gustatu', tense: 'future' },
+      { verbId: 'esan', tense: 'future' },
+    ],
+  },
+  {
+    id: 'unit-31-mixer-future-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    caseMixerCount: 4,
+    sources: [
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'gustatu', tense: 'future' },
+      { verbId: 'esan', tense: 'future' },
+    ],
+  },
+  // Bridges Units 26 (NOR-NORI past/future) and 28 (NOR-NORI-NORK present) by
+  // pooling the dative-taking verb families' past/future forms together —
+  // the "dative past/future recombination drill" `docs/LEARNING_JOURNEY.md`
+  // calls for alongside the case-ending mixer above. No `persons` filter:
+  // `eman`'s NORI axis (`agent: 'ni'`) only has 4 non-reflexive persons
+  // (zu/hura/zuek/haiek), so each source keeps its own natural person set
+  // rather than forcing a shared restriction across mismatched tables.
+  {
+    id: 'unit-31-dative-recombination',
+    review: true,
+    caseMixerCount: 3,
+    sources: [
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'gustatu', tense: 'future' },
+      { verbId: 'iruditu', tense: 'past' },
+      { verbId: 'iruditu', tense: 'future' },
+      { verbId: 'ahaztu', tense: 'past' },
+      { verbId: 'ahaztu', tense: 'future' },
+      { verbId: 'esan', tense: 'past' },
+      { verbId: 'esan', tense: 'future' },
+      { verbId: 'eman', tense: 'past' },
+      { verbId: 'eman', tense: 'future' },
+    ],
+  },
+  // The gate lesson itself (last in Unit 31's `lessonIds` — see
+  // `GATE_LESSON_IDS` in `journey.js`): a cumulative pool across all three
+  // tenses and all four agreement shapes, plus the covert-dative `lagundu`
+  // family (Unit 30) for variety since it's already "zero new verbs" too.
+  // Reaching `GATE_PASS_STARS` here unlocks Phase V.
+  {
+    id: 'unit-31-review',
+    review: true,
+    caseMixerCount: 6,
+    sources: [
+      { verbId: 'izan', tense: 'present' },
+      { verbId: 'izan', tense: 'past' },
+      { verbId: 'izan', tense: 'future' },
+      { verbId: 'ukan', tense: 'present' },
+      { verbId: 'ukan', tense: 'past' },
+      { verbId: 'ukan', tense: 'future' },
+      { verbId: 'gustatu', tense: 'present' },
+      { verbId: 'gustatu', tense: 'past' },
+      { verbId: 'gustatu', tense: 'future' },
+      { verbId: 'esan', tense: 'present' },
+      { verbId: 'esan', tense: 'past' },
+      { verbId: 'esan', tense: 'future' },
+      { verbId: 'lagundu', tense: 'present' },
+      { verbId: 'lagundu', tense: 'past' },
+      { verbId: 'lagundu', tense: 'future' },
+    ],
+  },
   // Unit 28 (#148) — Ahalera (potential): `izan`/`ukan` production for
   // NOR/NOR-NORK. Dative-paradigm (gustatu/iruditu/ahaztu/esan/eman)
   // recognition-only potential is deferred — see the issue filed for #148's
