@@ -89,6 +89,26 @@ describe('App', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
+  it('calls out the ergative-drift mistake in Unit 3\'s overview (zero-new-verb checkpoint)', async () => {
+    // Unit 3 is a review-only checkpoint (no lesson has its own `verbId`), so
+    // it gets no conjugation table — its whole value is the focus/payload
+    // copy. The checkpoint's actual target (journey.js's own code comment:
+    // pre-empting "ergative drift", the most common beginner error) wasn't
+    // surfaced to the learner at all before this was added to `focus`.
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByText(/creep onto izan\/egon by mistake/).closest('button'))
+
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toHaveTextContent('Nik naiz')
+    expect(dialog).toHaveTextContent('most common beginner slip')
+    expect(dialog).toHaveTextContent('Ni ikaslea naiz')
+
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   it('shows a "coming soon" note for a pending unit', async () => {
     // Every unit in the curriculum is `available` as of 2026-07-05 (see
     // docs/DECISIONS.md), so there's no real pending unit left to click
