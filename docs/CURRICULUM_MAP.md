@@ -1194,11 +1194,22 @@ This is generated from live data (`src/journey.js` + `src/data/lessons.js` + `sr
 - `unit-34-review` — **Review**: izan (Present (noka)), ukan (Present (noka)), izan (Past (noka)), ukan (Past (noka))
   - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
 
-#### Unit 39 — Hitanoa Recombined (Bonus, pending (not yet implemented))
+#### Unit 39 — Hitanoa Recombined (Bonus)
 
-**What you learn:** mixed toka/noka chosen by addressee gender, plus when not to use it — suppressed in subordinate clauses and formal -ke- moods
+**What you learn:** mixed toka/noka chosen by addressee gender, plus when not to use it — suppressed in subordinate clauses and formal -ke- moods. Zero new conjugation forms: pools Units 37-38's toka/noka tables together instead of one register at a time, plus a lesson juxtaposing them against Unit 32's `izan`/`ukan` Ahalera (`potential`) forms — the formal `-ke-` mood that never takes toka/noka marking — so the "leave it out here" rule is taught by contrast rather than a new question mechanic.
 
-_Not implemented yet — no lessons._
+**Example:** Lanean dik. / Lanean din. / Joan naiteke. (no hitanoa here)
+
+**Lessons:**
+
+- `unit-39-recombined-present` — **Review**: izan (Present (toka)), izan (Present (noka)), ukan (Present (toka)), ukan (Present (noka)) pooled
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-39-recombined-past` — **Review**: izan (Past (toka)), izan (Past (noka)), ukan (Past (toka)), ukan (Past (noka)) pooled
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-39-when-not-to-use` — **Review**: izan/ukan's Present (toka/noka) pooled with izan/ukan's Ahalera (potential) — contrasts hitanoa-marked forms against the formal `-ke-` mood that never takes them
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-39-review` — **Review**: all of the above pooled — Present/Past toka/noka plus Ahalera
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
 
 ### Stage 13 — Reading Real Text
 

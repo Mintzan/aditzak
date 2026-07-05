@@ -599,6 +599,18 @@ addressee-gender *selection* control for Unit 41 — a UI-state question, not a
 data-shape one, since toka/noka already exist as two directly-selectable
 tense values.
 
+**Update (2026-07-05): shipped as (current numbering) Unit 39, confirming
+both open questions above were non-blocking.** No selection control was
+needed — `ExerciseScreen.jsx` already looks up `TENSE_META[question.tense]`
+per question, so a review pooling `presentToka`/`presentNoka` together
+already shows each question's own register badge. "When not to use it" was
+taught by pooling those forms alongside `izan`/`ukan`'s existing Ahalera
+(`potential`, a formal `-ke-` mood with no toka/noka variant) rather than
+building a dedicated "this construction forbids register X" mechanic. #213's
+distractor-matrix row remains open/unaddressed. See `docs/DECISIONS.md`
+(2026-07-05).
+tense values.
+
 ### Subjunctive constructions (Unit 37 — Subjuntiboa) — resolved (#406)
 #369 frames this as construction-based (matrix verb + subordinate clause:
 final/purpose, volitional via `nahi izan`, indirect commands —

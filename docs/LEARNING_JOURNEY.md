@@ -73,7 +73,7 @@ marks score-gated Refresh Gates.
 | 34 | Agintera — Commands (core) | 8 |
 | **— end of mandatory spine —** | | |
 | 35 ✨ | Purpose & Wishing (Subjuntiboa) | 8 |
-| 36–39 ✨ | hi + Hitanoa (hi / Toka / Noka / Recombined) | 3/5/5/* |
+| 36–39 ✨ | hi + Hitanoa (hi / Toka / Noka / Recombined) | 3/5/5/4 |
 | 40 ✨ | The Passive nor-shift — Reading Real Text | 2 |
 | **Phase VI — Causatives** | | |
 | 41 ✨ | Making Someone Do It (-arazi intransitive) | 7 |
@@ -544,7 +544,7 @@ novelties — new person, addressee-agreement, gender — one at a time (see
 | 36 | **hi — Meet "hi"** (no allocutivity) — as a subject in known paradigms, plus `hi`-as-NORK's own gender split | `Hi ikaslea haiz.` / `Hago lasai.` / `Hator hona.` / `Hik badakik?` | §3/§6 | available (#144, #167) |
 | 37 | **Toka (masculine allocutive)** — addressee-agreement on 3rd-person statements, one gender | `Lanean dik.` / `Etorri duk.` / `Ez nauk ondo.` | §10 | available (#167) |
 | 38 | **Noka (feminine allocutive)** — taught as the `-k`→`-n` transform of Unit 37 | `Lanean din.` / `Etorri dun.` / `Ez naun ondo.` | §10 | available (#167) |
-| 39 | **Hitanoa Recombined** — mixed toka/noka + *when not to use it* (subordinate clauses, formal `-ke-` moods) | choose register by addressee gender | §10, `LANGUAGE_DECISIONS.md` 2026-06-11 | pending |
+| 39 | **Hitanoa Recombined** — mixed toka/noka + *when not to use it* (subordinate clauses, formal `-ke-` moods) | choose register by addressee gender | §10, `LANGUAGE_DECISIONS.md` 2026-06-17 | available (2026-07-05) — no new engine mechanic; pools izan/ukan's existing toka/noka tables together, plus a lesson juxtaposing them against izan/ukan's `potential` (formal `-ke-`, no hitanoa) forms |
 
 #### Stage 13: Reading Real Text
 

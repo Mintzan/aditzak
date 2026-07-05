@@ -867,7 +867,11 @@ export const JOURNEY = [
             bonus: true,
             title: 'Hitanoa Recombined',
             focus: 'Put toka and noka together — choose the right one for your listener, and learn when to leave hitanoa out',
-            status: 'pending',
+            status: 'available',
+            lessonIds: [
+              'unit-39-recombined-present', 'unit-39-recombined-past',
+              'unit-39-when-not-to-use', 'unit-39-review',
+            ],
           },
         ],
       },

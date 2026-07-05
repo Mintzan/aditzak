@@ -2518,6 +2518,68 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'pastNoka' },
     ],
   },
+  // Unit 39 ("Hitanoa Recombined"): mixes toka+noka together (present and
+  // past) instead of the register-at-a-time drilling Units 37/38 did, so a
+  // learner has to notice which one a question actually calls for from its
+  // per-question tense badge (`TENSE_META[question.tense]`, already looked up
+  // per question, not per lesson — see `ExerciseScreen.jsx`), rather than
+  // leaning on "the whole lesson is toka" context. `unit-39-when-not-to-use`
+  // pools those hitanoa forms alongside izan/ukan's already-shipped Ahalera
+  // (`potential`) forms — the formal `-ke-` mood that never takes toka/noka
+  // marking (`docs/LANGUAGE_DECISIONS.md`, 2026-06-11: "independently banned
+  // in subordinate clauses and clashes register-wise with the formal -ke-
+  // forms") — so the contrast itself teaches "leave hitanoa out here" by
+  // juxtaposition. No new question kind or distractor mechanic needed (per
+  // `docs/EXERCISE_ENGINE.md`, #213's dedicated wrong-gender/neutral-form
+  // lure stays open, tracked separately, not blocking this).
+  {
+    id: 'unit-39-recombined-present',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'presentToka' },
+      { verbId: 'izan', tense: 'presentNoka' },
+      { verbId: 'ukan', tense: 'presentToka' },
+      { verbId: 'ukan', tense: 'presentNoka' },
+    ],
+  },
+  {
+    id: 'unit-39-recombined-past',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'pastToka' },
+      { verbId: 'izan', tense: 'pastNoka' },
+      { verbId: 'ukan', tense: 'pastToka' },
+      { verbId: 'ukan', tense: 'pastNoka' },
+    ],
+  },
+  {
+    id: 'unit-39-when-not-to-use',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'presentToka' },
+      { verbId: 'izan', tense: 'presentNoka' },
+      { verbId: 'ukan', tense: 'presentToka' },
+      { verbId: 'ukan', tense: 'presentNoka' },
+      { verbId: 'izan', tense: 'potential' },
+      { verbId: 'ukan', tense: 'potential' },
+    ],
+  },
+  {
+    id: 'unit-39-review',
+    review: true,
+    sources: [
+      { verbId: 'izan', tense: 'presentToka' },
+      { verbId: 'izan', tense: 'presentNoka' },
+      { verbId: 'izan', tense: 'pastToka' },
+      { verbId: 'izan', tense: 'pastNoka' },
+      { verbId: 'ukan', tense: 'presentToka' },
+      { verbId: 'ukan', tense: 'presentNoka' },
+      { verbId: 'ukan', tense: 'pastToka' },
+      { verbId: 'ukan', tense: 'pastNoka' },
+      { verbId: 'izan', tense: 'potential' },
+      { verbId: 'ukan', tense: 'potential' },
+    ],
+  },
   // Unit 36 (#145) — Stage 13, "Passive & Reading Real Text": a new
   // `kind: 'reading'` lesson, comprehension questions over real sentences
   // rather than a conjugation table. `itemIds` resolve into
