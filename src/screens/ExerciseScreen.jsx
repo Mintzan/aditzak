@@ -155,9 +155,16 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // `CASE_MIXER_QUESTION_COUNT` "which form matches this sentence's subject"
   // questions (see `generateCaseMixerQuestions`) — `verb-choice`'s mirror
   // image, framed around `-k` ergative-subject marking. Reviews with no such
-  // mix simply get none.
+  // mix simply get none. `lesson.caseMixerCount` (opt-in, Unit 31/Refresh
+  // Gate C) raises this above the default for reviews whose whole point is
+  // drilling that distinction, rather than picking it up incidentally.
   const caseMixerQuestions = lesson.review
-    ? generateCaseMixerQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources, verbs: VERBS })
+    ? generateCaseMixerQuestions(resolvedSources, {
+        persons: lesson.persons,
+        extraSiblingSources,
+        verbs: VERBS,
+        ...(lesson.caseMixerCount ? { count: lesson.caseMixerCount } : {}),
+      })
     : []
   // A whole-table match-the-pairs round (see `generateMatchPairsQuestions`)
   // — gated off `lesson.negation` lessons (Unit 10's Refresh Gate A and its

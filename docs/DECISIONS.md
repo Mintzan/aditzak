@@ -8,6 +8,41 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-05 — Unit 31 (Refresh Gate C, "The Case-Ending Mixer") shipped, no new question kind
+
+`docs/EXERCISE_ENGINE.md` had speculated this gate would need a `spot-error`-
+style "candidate full sentences, pick the right one" mechanism (mirroring the
+negation drill), and deliberately left it `pending` until Units 20-21's
+dative verbs existed. Both turned out unnecessary once those verbs (Units
+26-30) landed:
+
+**`case-mixer` already generalizes to all four agreement shapes.**
+`generateCaseMixerQuestions` filters siblings via the *negation* of
+`agreementsCompatible`, which was generalized past izan/ukan back in #165 —
+so pooling `izan` (nor) / `ukan` (nor-nork) / `gustatu` (nor-nori) / `esan`
+(nor-nori-nork) into one review yields case-mixer questions across every
+pairwise NOR/NORK/NORI contrast, not just nor-vs-nor-nork. No new question
+kind, no new engine mechanic — confirmed empirically (a throwaway script
+generating each new review's questions) before writing this up.
+
+**Added `lesson.caseMixerCount` (opt-in).** `CASE_MIXER_QUESTION_COUNT` (1)
+is deliberately thin everywhere else — case-mixer is normally an incidental
+side effect of a review mixing agreement types, not the point. For Gate C it
+*is* the point, so `createExerciseState` (`ExerciseScreen.jsx`) now honors a
+per-lesson override, used only by Unit 31's 8 lessons (present/past/future
+mixer pairs at 4 each, a dative past/future recombination lesson at 3, the
+final gate review at 6). Every other review is unaffected.
+
+**8 lessons, zero new verbs**, per the unit's own constraint: singular/plural
+mixer pairs for present, past, and future (izan/ukan/gustatu/esan), a
+`unit-31-dative-recombination` lesson bridging Unit 26's dative verbs
+(gustatu/iruditu/ahaztu) with Unit 28's ditransitives (esan/eman) across past
+and future — the "dative past/future recombination" half of the spec — and a
+final cumulative `unit-31-review` (the score-gate checkpoint, adding
+`lagundu` from Unit 30 for variety). All sentence data for these four core
+verbs already carried vetted `validFor` tags from earlier curation passes, so
+no `docs/LANGUAGE_DECISIONS.md` follow-up was needed.
+
 ## 2026-07-04 — Unit overview page, as a modal rather than a new screen/route
 
 Added a "what's this unit about" page, reachable by tapping a unit's own

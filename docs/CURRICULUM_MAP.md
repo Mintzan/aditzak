@@ -924,11 +924,30 @@ This is generated from live data (`src/journey.js` + `src/data/lessons.js` + `sr
 
 ### Refresh Gate C — The Multi-Argument Audit
 
-#### Unit 31 — REFRESH — The Case-Ending Mixer (Refresh Gate, pending (not yet implemented))
+#### Unit 31 — REFRESH — The Case-Ending Mixer (Refresh Gate, score-gated — 🛡️)
 
-**What you learn:** Drills NOR/NORK/NORI role-swaps plus dative past/future recombination — zero new verbs, score-gated and a mandatory pass before Phase V
+**What you learn:** Drills NOR/NORK/NORI role-swaps plus dative past/future recombination — zero new verbs, mandatory pass before Phase V. Pools `izan` (nor) / `ukan` (nor-nork) / `gustatu` (nor-nori) / `esan` (nor-nori-nork) across present/past/future so every review fires `kind: 'case-mixer'` questions across all three role contrasts at once (a `caseMixerCount` opt-in raises the count above the usual incidental 1), plus a dedicated past/future pool bridging Unit 26's dative verbs (`gustatu`/`iruditu`/`ahaztu`) with Unit 28's ditransitives (`esan`/`eman`).
 
-_Not implemented yet — no lessons._
+**Example:** "Hark egia esaten dio." vs. "Hark egia da." (case-marking mismatch)
+
+**Lessons:**
+
+- `unit-31-mixer-present` — **Review** [ni/zu/hura]: izan, ukan, gustatu, esan pooled — Present
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-present-plural` — **Review** [gu/zuek/haiek]: izan, ukan, gustatu, esan pooled — Present
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-past` — **Review** [ni/zu/hura]: izan, ukan, gustatu, esan pooled — Past
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-past-plural` — **Review** [gu/zuek/haiek]: izan, ukan, gustatu, esan pooled — Past
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-future` — **Review** [ni/zu/hura]: izan, ukan, gustatu, esan pooled — Future
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-mixer-future-plural` — **Review** [gu/zuek/haiek]: izan, ukan, gustatu, esan pooled — Future
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-dative-recombination` — **Review**: gustatu, iruditu, ahaztu, esan, eman pooled — Past & Future
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
+- `unit-31-review` — **Review** (gate — reach 2+ stars to unlock Phase V): izan, ukan, gustatu, esan, lagundu pooled — Present/Past/Future
+  - _Review/practice only — no new conjugation forms; reinforces what earlier lessons already introduced._
 
 
 ## Phase V · B2 — Nuance & Modality — Nuance, Modality, & Social Context

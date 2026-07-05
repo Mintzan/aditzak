@@ -165,6 +165,24 @@ fit `sentences`/`type-verb`. Needs:
   deliberately left Unit 22 itself `pending`: its full NOR/NORI/NORK scope
   needs Units 20-21's dative verbs, which don't exist yet. See
   `docs/DECISIONS.md` (2026-06-13, Delivery 3).
+  - **Update (2026-07-05): Refresh Gate C (now Unit 31) shipped without the
+    speculated `spot-error`-style mechanism.** `agreementsCompatible`'s
+    negated predicate (already used by `case-mixer` since #165) turned out to
+    generalize to the full NOR/NOR-NORI/NOR-NORK/NOR-NORI-NORK space for
+    free — any two sources whose `agreement` differs on either the `nork` or
+    `nori` axis already qualify as case-mixer siblings, so pooling `izan`
+    (nor) / `ukan` (nor-nork) / `gustatu` (nor-nori) / `esan` (nor-nori-nork)
+    into one review produces case-mixer questions across every pairwise role
+    contrast, not just nor-vs-nor-nork. No new question kind was needed. The
+    one real gap: `CASE_MIXER_QUESTION_COUNT` (1) is deliberately thin for an
+    *incidental* mix in an ordinary review, but Gate C's whole point is that
+    drill — so `createExerciseState` (`ExerciseScreen.jsx`) now reads an
+    opt-in `lesson.caseMixerCount` to override the default per-lesson, used
+    only by Unit 31's 8 lessons. A separate `unit-31-dative-recombination`
+    lesson (no case-mixer emphasis of its own, though it gets some for free)
+    covers the "dative past/future recombination bridging Units 26/28" half
+    of the spec by pooling `gustatu`/`iruditu`/`ahaztu` and `esan`/`eman`'s
+    past/future forms together. See `docs/DECISIONS.md` (2026-07-05).
 
 ### Word-order question contract (#185 — resolved)
 `kind: 'word-order'`: the learner taps a shuffled "cloud" of a sentence's
@@ -699,8 +717,9 @@ Roughly cheapest-and-most-unblocking first:
    3-person horizon" above.
 3. **`buildOptions` distractor-floor fix** — small, unblocks Unit 25
    (imperative) and removes a latent landmine for any future small table.
-4. **Negation question kind** — resolved for Unit 6 (Gate A); Gate C (22)
-   likely reuses the same machinery later.
+4. **Negation question kind** — resolved for Unit 6 (Gate A); Gate C (now
+   Unit 31), shipped 2026-07-05, ended up reusing `case-mixer` instead — see
+   its "Negation drills" update above.
 5. **Score-gating** — needed before Gate B (17), independent of the above.
 6. **Ditransitive data-shape decision** — needed before Unit 21.
 7. **Allocutive/hitanoa shape** — resolved and shipped (#144/#167, Units
