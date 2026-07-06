@@ -6,6 +6,20 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-06 — `sartu`'s "mountain hut" sentence: "babes-etxea" → "aterpe" (user correction)
+
+A user flagged that `sartu`'s `ni` example sentences ("Ni Gorbeiako
+babes-etxean sartzen naiz ekaitzetik." — "I take shelter at Gorbeia's
+mountain hut from the storm.") used the wrong word for "mountain hut/
+refuge": Basque says **aterpe**, not "babes-etxea" (literally
+"protection-house" — plausible-looking but not the real term). Fixed both
+the present and past `ni` sentences in `VERBS` (`sartu`'s entry) and the
+matching line in `docs/SAMPLE_SENTENCES.md` to "Gorbeiako aterpean" (inessive
+`-an` on `aterpe`, same case marking as before). Taking the correction as
+given rather than second-guessing it — unlike the "Lehenaldiko Burutua"
+naming question, this is concrete vocabulary from someone who evidently
+knows the term, not a case with conflicting internal evidence to weigh.
+
 ## 2026-07-05 — Basque translation of the izan-vs-ukan "why" explanation (needs native-speaker check)
 
 `docs/DECISIONS.md`'s "Explained why izan vs. ukan" entry added an

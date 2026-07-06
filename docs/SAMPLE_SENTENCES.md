@@ -1330,7 +1330,7 @@ Representative examples (present tense, `ni`/`hura`):
   Idiazabal cheese from the dairy.)
 - **itxaron** — *Nik tranbia geltokian itxaroten dut.* (I wait for the tram
   at the stop.)
-- **sartu** — *Ni Gorbeiako babes-etxean sartzen naiz ekaitzetik.* (I take
+- **sartu** — *Ni Gorbeiako aterpean sartzen naiz ekaitzetik.* (I take
   shelter in the Gorbeia refuge from the storm.)
 - **atera** — *Ni Bilboko Casco Viejotik ateratzen naiz goizeko hamarretan.*
   (I leave Bilbao's Old Quarter at ten in the morning.)

@@ -4977,7 +4977,7 @@ export const VERBS = [
     conjugations: {},
     sentences: {
       present: {
-        ni: { text: 'Ni Gorbeiako babes-etxean ___ ekaitzetik.', validFor: [] },
+        ni: { text: 'Ni Gorbeiako aterpean ___ ekaitzetik.', validFor: [] },
         zu: { text: 'Zu Tolosako tabernan ___ pintxoetara?', validFor: [] },
         hura: { text: 'Hura San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
         gu: { text: 'Gu Aste Nagusiko jaitsierara ___.', validFor: [] },
@@ -4985,7 +4985,7 @@ export const VERBS = [
         haiek: { text: 'Haiek Gernikako frontoira ___ partida ikustera.', validFor: [] },
       },
       past: {
-        ni: { text: 'Ni atzo Gorbeiako babes-etxean ___ ekaitzetik.', validFor: [] },
+        ni: { text: 'Ni atzo Gorbeiako aterpean ___ ekaitzetik.', validFor: [] },
         zu: { text: 'Zu herenegun Tolosako tabernan ___ pintxoetara?', validFor: [] },
         hura: { text: 'Hura lehengo egunean San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
         gu: { text: 'Gu iaz Aste Nagusiko jaitsierara ___.', validFor: [] },
