@@ -745,6 +745,76 @@ describe('getUnlockedLessonIds', () => {
       expect(getUnlockedLessonIds(lessons, {}, '', new Set(), bonusLessonIds)).toEqual(new Set(['a']))
     })
   })
+
+  describe('with progress recorded beyond a locked lesson (journey reorganisation)', () => {
+    // A reorganisation can insert several new lessons back-to-back before
+    // content the learner already finished; under the plain linear rule the
+    // second inserted lesson would be permanently blocked (its predecessor is
+    // also new/unattempted, and it has no attempts of its own). Recorded
+    // progress further along the journey unblocks everything before it.
+    const lessons = [{ id: 'a' }, { id: 'b' }, { id: 'c' }, { id: 'd' }, { id: 'e' }]
+
+    it('unblocks a run of inserted lessons when a later lesson has attempts', () => {
+      const progress = { a: { attempts: 1 }, e: { attempts: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress)).toEqual(new Set(['a', 'b', 'c', 'd', 'e']))
+    })
+
+    it('unblocks a lesson stuck behind an unpassed gate when later lessons have attempts', () => {
+      // Gate `b` was added (or attempted below GATE_PASS_STARS) after the
+      // learner had already played `d` — `c` must not stay blocked. (`e`
+      // unlocks too, by the ordinary rule: its predecessor `d` has attempts.)
+      const gateLessonIds = new Set(['b'])
+      const progress = { a: { attempts: 1 }, b: { attempts: 1, bestStars: 1 }, d: { attempts: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', gateLessonIds)).toEqual(new Set(['a', 'b', 'c', 'd', 'e']))
+    })
+
+    it('still enforces the gate soft wall at the frontier', () => {
+      // No attempts beyond the gate — the lesson after it stays locked until
+      // the gate reaches GATE_PASS_STARS, exactly as before.
+      const gateLessonIds = new Set(['b'])
+      const progress = { a: { attempts: 1 }, b: { attempts: 1, bestStars: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', gateLessonIds)).toEqual(new Set(['a', 'b']))
+    })
+
+    it('does not force a bonus track open because of spine progress past it', () => {
+      // `b1`/`b2` are an opt-in bonus run between spine lessons `a` and `e`.
+      // Spine attempts beyond the run unblock spine lessons, but the run
+      // itself stays its own linear opt-in progression: `b1` opens off `a`,
+      // `b2` still waits for `b1`.
+      const lessons = [{ id: 'a' }, { id: 'b1' }, { id: 'b2' }, { id: 'e' }]
+      const bonusLessonIds = new Set(['b1', 'b2'])
+      const progress = { a: { attempts: 1 }, e: { attempts: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', new Set(), bonusLessonIds)).toEqual(new Set(['a', 'b1', 'e']))
+    })
+
+    it('unblocks a bonus lesson when a later bonus lesson in the same run has attempts', () => {
+      // A lesson inserted mid-run is unblocked by attempts further along the
+      // same run — the bonus-track equivalent of the spine rule above.
+      const lessons = [{ id: 'a' }, { id: 'b1' }, { id: 'b2' }, { id: 'b3' }, { id: 'e' }]
+      const bonusLessonIds = new Set(['b1', 'b2', 'b3'])
+      const progress = { a: { attempts: 1 }, b3: { attempts: 1 } }
+
+      const unlocked = getUnlockedLessonIds(lessons, progress, '', new Set(), bonusLessonIds)
+
+      expect(unlocked.has('b2')).toBe(true)
+    })
+
+    it('does not unblock a bonus run from attempts in a different, later bonus run', () => {
+      // `c1` belongs to a separate bonus run further along — it says nothing
+      // about the learner's position within the `b1`/`b2` run.
+      const lessons = [{ id: 'a' }, { id: 'b1' }, { id: 'b2' }, { id: 'd' }, { id: 'c1' }, { id: 'e' }]
+      const bonusLessonIds = new Set(['b1', 'b2', 'c1'])
+      const progress = { a: { attempts: 1 }, d: { attempts: 1 }, c1: { attempts: 1 } }
+
+      const unlocked = getUnlockedLessonIds(lessons, progress, '', new Set(), bonusLessonIds)
+
+      expect(unlocked.has('b2')).toBe(false)
+    })
+  })
 })
 
 describe('isLockedByGateScore', () => {
@@ -771,6 +841,21 @@ describe('isLockedByGateScore', () => {
 
   it('is false once the gate reaches GATE_PASS_STARS', () => {
     const progress = { b: { attempts: 1, bestStars: 2 } }
+
+    expect(isLockedByGateScore(lessons, progress, gateLessonIds, 'c')).toBe(false)
+  })
+
+  it('is false when the lesson itself has attempts (it is playable, not gate-locked)', () => {
+    const progress = { b: { attempts: 1, bestStars: 1 }, c: { attempts: 1 } }
+
+    expect(isLockedByGateScore(lessons, progress, gateLessonIds, 'c')).toBe(false)
+  })
+
+  it('is false when recorded progress lies beyond the lesson (unblocked despite the unpassed gate)', () => {
+    // Mirrors `getUnlockedLessonIds`'s progressed-past rule: `d`'s attempts
+    // unblock `c`, so `c` must not show the "needs 80%" prompt while playable.
+    const lessons = [{ id: 'a' }, { id: 'b' }, { id: 'c' }, { id: 'd' }]
+    const progress = { b: { attempts: 1, bestStars: 1 }, d: { attempts: 1 } }
 
     expect(isLockedByGateScore(lessons, progress, gateLessonIds, 'c')).toBe(false)
   })

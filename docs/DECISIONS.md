@@ -8,6 +8,37 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-06 — Lessons can never be locked behind the learner's own recorded progress
+
+Journey reorganisations can leave stored progress inconsistent with the current
+`LESSONS` order, and the strictly linear unlock rule then produced permanently
+blocked lessons *in the middle* of the journey: insert two or more new lessons
+back-to-back before content the learner already finished and the second one
+can never unlock (its predecessor is also new/unattempted, and the
+"already-attempted lessons stay unlocked" exception doesn't cover it). Same
+for a gate unit added before an already-played region.
+
+**Fix (`getUnlockedLessonIds`, new `getProgressedPastFlags` helper):** a
+lesson also unlocks when recorded attempts exist *beyond* it — the learner
+demonstrably passed that point of the journey under whatever shape it had
+then. Scoped per track: a spine lesson unblocks off any later attempted
+lesson; a bonus lesson only off a later attempted bonus lesson in its own
+contiguous run, so spine progress past an opt-in bonus track still doesn't
+force the track open (it stays its own linear, skippable progression). Gates
+are deliberately bypassed by this rule (historical progress wins over a
+retroactively-inserted gate), but the gate soft wall is untouched at the
+frontier — nothing *after* the furthest attempted lesson unlocks early, and
+in normally-played progress the rule is a no-op (every lesson before the
+frontier already has attempts). `isLockedByGateScore` correspondingly returns
+false for a lesson that isn't actually locked (own attempts, or unblocked by
+this rule), so the "needs 80% to continue" prompt can't appear on a playable
+lesson.
+
+This is deliberately not a full progress-migration strategy (none exists
+yet) — it's the invariant that makes reorganisations safe by default: the
+learner can always keep playing, worst case replaying or catching up on
+inserted material at their own pace.
+
 ## 2026-07-06 — Replaced 101 per-verb `pronouns` maps with one shared declension table + a `personAxis` field
 
 Follow-up to today's earlier pronoun-labels fix, prompted by a user pointing out that
@@ -770,15 +801,4 @@ The tag-only pass (🆕/📗/✅/➕/review-only) said *that* a lesson was new b
 
 Every practice lesson now has a `Forms:` line with the actual words (e.g. `izan-present` → **naiz** (ni), **zara** (zu), **da** (hura)); the ✅/➕ new-material tags on pooled/review lessons show forms too, but suppressed for single-verb practice lessons where the `Forms:` line already said the same thing (avoided doubling every line). Wide pools (e.g. Unit 16's 37-verb object-axis review) still cap at 3 example verbs' forms rather than all of them, to keep the file from ballooning into thousands of near-duplicate lines.
 
-## 2026-07-03 — `CURRICULUM_MAP.md` now tags each lesson with what's actually new
-
-The first cut of `CURRICULUM_MAP.md` listed every lesson's verb/tense/persons but left "is this new material or review?" for the reader to work out by comparing lessons themselves — exactly the question it was meant to answer. Reworked the generator to walk the journey in taught order and diff each lesson's (verb, tense, persons) against everything taught before it, tagging every lesson with one of: 🆕 new grammar pattern (first appearance of a tense/axis for *any* verb), 📗 new verb, ✅ an already-known verb's first exposure to this particular tense, ➕ new persons added to an already-known table, or a plain "review only" note when nothing in the lesson is new.
-
-Considered listing every newly-covered verb inline for wide pools (e.g. Unit 16's 37-verb object-axis review) but that produced 30+ line lessons that buried the signal — collapsed to `verb, verb, verb, +N more (N total)` past 4 names, matching the same truncation convention `lessonDisplay.js`'s `describeLesson` already uses in the UI for large pools. Also suppressed the "taught this tense for the first time" tag for verbs that are already flagged brand-new in the same lesson (a new verb's first tense is redundant to call out twice).
-
-## 2026-07-03 — Split `LEARNING_JOURNEY.md` into rationale (kept) + a generated `CURRICULUM_MAP.md` (new)
-
-`LEARNING_JOURNEY.md` had grown into two different documents wearing one hat: the *why* (pedagogical principles, sequencing trade-offs, data/engine implications — genuinely worth preserving prose) and the *what* (a flat list of every unit's lessons and which verb/tense each one drills — mechanically derivable from `journey.js`/`lessons.js`, and increasingly out of sync with the live numbering as units got renumbered/rebalanced). A learner or contributor asking "what does Unit 27 actually teach, lesson by lesson?" had to wade through renumbering history and design debate to find it.
-
-Added `docs/CURRICULUM_MAP.md`: a per-unit/per-lesson reference (verb, tense, persons drilled, or pool/review composition for multi-verb lessons) plus a "first appearance of each conjugation pattern" table, generated by a script that imports `JOURNEY`/`LESSONS`/`VERBS` directly (script not checked in — one-off, rerun by hand if it drifts) — so unit numbers and lesson contents are guaranteed to match what's actually implemented, rather than hand-transcribed and liable to rot. `LEARNING_JOURNEY.md` keeps the rationale and links to the new doc for the plain content list; `journey.test.js` (every `LESSONS` id referenced exactly once in `JOURNEY` and vice versa) is what keeps `CURRICULUM_MAP.md` regeneratable without drift.
 

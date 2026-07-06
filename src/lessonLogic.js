@@ -443,6 +443,34 @@ export function mergeSyncPayload(local, cloud) {
 // shows a "needs 80% to continue" prompt instead of unlocking.
 export const GATE_PASS_STARS = 2
 
+// Positions the learner's recorded progress has already moved *beyond*:
+// `flags[i]` is true when some lesson after index `i` has at least one
+// attempt — for a spine lesson, any later lesson at all (being anywhere
+// further along the journey implies having passed this point); for a bonus
+// lesson, only a later bonus lesson in the same contiguous bonus run (spine
+// progress past an opt-in track must not force the rest of the track open —
+// the track stays its own linear, skippable progression). In consistent,
+// normally-played progress this adds nothing (every lesson before the
+// furthest attempted one already has attempts of its own); it only matters
+// when a journey reorganisation has left progress inconsistent — see
+// `getUnlockedLessonIds` below.
+function getProgressedPastFlags(lessons, progress, bonusLessonIds) {
+  const flags = new Array(lessons.length).fill(false)
+  let laterAttempted = false
+  let laterBonusRunAttempted = false
+  for (let i = lessons.length - 1; i >= 0; i -= 1) {
+    const lesson = lessons[i]
+    const isBonus = bonusLessonIds.has(lesson.id)
+    flags[i] = isBonus ? laterBonusRunAttempted : laterAttempted
+    if ((progress[lesson.id]?.attempts ?? 0) > 0) {
+      laterAttempted = true
+      if (isBonus) laterBonusRunAttempted = true
+    }
+    if (!isBonus) laterBonusRunAttempted = false
+  }
+  return flags
+}
+
 // A lesson unlocks once the lesson before it has been attempted at least
 // once, or once the lesson itself has — so a lesson the learner already
 // completed never re-locks just because a new lesson (e.g. a unit review)
@@ -450,6 +478,19 @@ export const GATE_PASS_STARS = 2
 // id is in `gateLessonIds` (the final lesson of a `gate: true` unit — see
 // `journey.js`'s `GATE_LESSON_IDS`), it must additionally reach
 // `GATE_PASS_STARS` — merely attempting the gate isn't enough.
+//
+// A lesson is additionally never locked *behind* the learner's own recorded
+// progress (`getProgressedPastFlags` above): if some later lesson has
+// attempts, everything before it unlocks too — gates included, since
+// attempts beyond a gate mean the learner already passed that point of the
+// journey under whatever shape it had at the time. Normally-played progress
+// never triggers this rule; it exists so a journey reorganisation (e.g. two
+// new lessons inserted back-to-back before content the learner already
+// finished, or a gate added mid-history) can't leave a lesson permanently
+// blocked in the middle of the journey — under the plain linear rule such a
+// lesson's predecessor is also new/unattempted, so neither could ever unlock.
+// The gate soft wall still applies at the *frontier* (nothing after the
+// furthest attempted lesson unlocks early).
 //
 // `bonusLessonIds` (optional — the lessons of `bonus: true` units, see
 // `journey.js`'s `BONUS_LESSON_IDS`) are opt-in "Mastery & Depth" content that
@@ -472,9 +513,10 @@ export function getUnlockedLessonIds(lessons, progress, search = window.location
   }
 
   const unlocked = new Set()
+  const progressedPast = getProgressedPastFlags(lessons, progress, bonusLessonIds)
   let prevSpine = null
   let prevBonusOrSpine = null
-  lessons.forEach((lesson) => {
+  lessons.forEach((lesson, index) => {
     const isBonus = bonusLessonIds.has(lesson.id)
     const previous = isBonus ? prevBonusOrSpine : prevSpine
     const previousCleared =
@@ -483,7 +525,7 @@ export function getUnlockedLessonIds(lessons, progress, search = window.location
         : gateLessonIds.has(previous.id)
           ? (progress[previous.id]?.bestStars ?? 0) >= GATE_PASS_STARS
           : (progress[previous.id]?.attempts ?? 0) > 0
-    if (previousCleared || (progress[lesson.id]?.attempts ?? 0) > 0) {
+    if (previousCleared || progressedPast[index] || (progress[lesson.id]?.attempts ?? 0) > 0) {
       unlocked.add(lesson.id)
     }
     prevBonusOrSpine = lesson
@@ -495,12 +537,18 @@ export function getUnlockedLessonIds(lessons, progress, search = window.location
 // Whether `lessonId` is locked specifically because the `gate: true` unit
 // before it was attempted but didn't reach `GATE_PASS_STARS` — as opposed to
 // not having been attempted at all. Drives the "needs 80% to continue" prompt
-// (`LessonNode`/`ProgressTab`) for the soft wall described above.
-export function isLockedByGateScore(lessons, progress, gateLessonIds, lessonId) {
+// (`LessonNode`/`ProgressTab`) for the soft wall described above. False for a
+// lesson that isn't actually locked at all — one with attempts of its own, or
+// one `getUnlockedLessonIds`'s progressed-past rule unblocks — so the prompt
+// never appears on a playable lesson; `bonusLessonIds` is only needed for
+// that check and defaults to empty like it does there.
+export function isLockedByGateScore(lessons, progress, gateLessonIds, lessonId, bonusLessonIds = new Set()) {
   const index = lessons.findIndex((lesson) => lesson.id === lessonId)
   if (index <= 0) return false
   const previous = lessons[index - 1]
   if (!gateLessonIds.has(previous.id)) return false
+  if ((progress[lessonId]?.attempts ?? 0) > 0) return false
+  if (getProgressedPastFlags(lessons, progress, bonusLessonIds)[index]) return false
   const gateProgress = progress[previous.id]
   return (gateProgress?.attempts ?? 0) > 0 && (gateProgress?.bestStars ?? 0) < GATE_PASS_STARS
 }

@@ -118,7 +118,7 @@ function LessonList({ lessons, progress, unlockedIds, hearts, onSelect, onHeartL
             lesson={lesson}
             locked={locked}
             heartLocked={!locked && isLockedOut(hearts, lesson.id, progress)}
-            needsGateScore={isLockedByGateScore(LESSONS, progress, GATE_LESSON_IDS, lesson.id)}
+            needsGateScore={isLockedByGateScore(LESSONS, progress, GATE_LESSON_IDS, lesson.id, BONUS_LESSON_IDS)}
             stars={progress[lesson.id]?.bestStars ?? 0}
             onSelect={onSelect}
             onHeartLocked={onHeartLocked}
@@ -399,7 +399,7 @@ function ProgressTab({ progress }) {
         {LESSONS.map((lesson) => {
           const { heading } = describeLesson(lesson, t, language)
           const entry = progress[lesson.id]
-          const needsGateScore = isLockedByGateScore(LESSONS, progress, GATE_LESSON_IDS, lesson.id)
+          const needsGateScore = isLockedByGateScore(LESSONS, progress, GATE_LESSON_IDS, lesson.id, BONUS_LESSON_IDS)
           return (
             <div key={lesson.id} className="flex items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-4">
               <div className="min-w-0">
