@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { trackEvent } from '../analytics'
 import { getShareUrl, shareContent } from '../shareUtils'
 import { vibrateCorrect, vibrateIncorrect, vibrateResult } from '../hapticsUtils'
-import { VERBS, TENSE_META, PERSON_LABEL_KEYS } from '../data/verbs'
+import { VERBS, TENSE_META, PERSON_LABEL_KEYS, personPronoun } from '../data/verbs'
 import { LESSONS } from '../data/lessons'
 import { READING_ITEMS } from '../data/readingItems'
 import {
@@ -433,7 +433,7 @@ function MatchPairsBoard({ pairs, verb, disabled, onComplete }) {
         {leftTiles.map(({ person }) => (
           <MatchTile
             key={person}
-            label={(verb.pronouns?.[person] ?? person).toLowerCase()}
+            label={(personPronoun(verb, person) ?? person).toLowerCase()}
             status={tileStatus(person, selectedLeft, 'left')}
             disabled={disabled || Boolean(mistake)}
             onSelect={() => handleSelectLeft(person)}
@@ -620,7 +620,7 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
       ) : question.items || question.pairs || question.tokens ? null : (
         <>
           <h2 className="mt-2 text-4xl font-extrabold text-gray-900">
-            {(verb.pronouns?.[question.person] ?? question.person).toLowerCase()}
+            {(personPronoun(verb, question.person) ?? question.person).toLowerCase()}
           </h2>
           <p className="mt-1 text-gray-500">{t(PERSON_LABEL_KEYS[question.person])}</p>
         </>
@@ -687,7 +687,7 @@ function flagQuestionSummary(question, verb) {
   if (question.sentence) return question.sentence
   if (question.items) return question.items.map((item) => item.sentence).join(' / ')
   if (question.source) return question.source
-  return verb.pronouns?.[question.person] ?? question.person
+  return personPronoun(verb, question.person) ?? question.person
 }
 
 // "Report a problem with this question" modal, opened from `FeedbackBar`.

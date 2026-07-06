@@ -1,5 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
-import { PERSON_LABEL_KEYS } from '../data/verbs'
+import { PERSON_LABEL_KEYS, personPronoun } from '../data/verbs'
 import { getComposedTable, resolveObjectAxisTable } from '../lessonLogic'
 
 // The full person-by-person conjugation grid for one verb/tense — shown as a
@@ -31,7 +31,7 @@ export function ConjugationTable({ verb, tense, objectAxis, hidePersons }) {
         .map(([person, form], index) => (
           <div key={person} className={`flex items-center justify-between px-4 py-3 ${index > 0 ? 'border-t border-gray-100' : ''}`}>
             <div>
-              <p className="font-semibold text-gray-800">{(verb.pronouns?.[person] ?? person).toLowerCase()}</p>
+              <p className="font-semibold text-gray-800">{(personPronoun(verb, person) ?? person).toLowerCase()}</p>
               <p className="text-xs text-gray-400">{t(PERSON_LABEL_KEYS[person])}</p>
             </div>
             <p className="text-xl font-extrabold text-gray-900">{form}</p>

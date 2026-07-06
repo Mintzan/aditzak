@@ -71,7 +71,7 @@ import {
   WORD_ORDER_MIN_WORDS,
 } from './lessonLogic'
 import { LESSONS } from './data/lessons'
-import { OBJECT_AXIS_SKELETONS, VERBS } from './data/verbs'
+import { OBJECT_AXIS_SKELETONS, PRONOUN_DECLENSIONS, VERBS } from './data/verbs'
 import { READING_ITEMS } from './data/readingItems'
 
 describe('computeStars', () => {
@@ -868,7 +868,7 @@ describe('generateQuestions', () => {
   const persons = Object.keys(verb.conjugations.present)
 
   // Both `sentences` (for all six persons — enough to also qualify for
-  // `spot-error`) and `pronouns`/`pronounSentences` present, so
+  // `spot-error`) and `pronounSentences` present, so
   // `availableKinds` always has all five special framings —
   // `['sentence', 'type-verb', 'spot-error', 'pronoun', 'type-pronoun']` —
   // and a fixed roll deterministically lands on whichever index it maps to.
@@ -886,7 +886,7 @@ describe('generateQuestions', () => {
         haiek: 'Haiek euskaldunak ___.',
       },
     },
-    pronouns: { ni: 'Nik', hi: 'Hik', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ liburu bat dut.',
@@ -1603,7 +1603,7 @@ describe('generateQuestions', () => {
             haiek: 'Haiek euskaldunak ___.',
           },
         },
-        pronouns: { ni: 'Nik', hi: 'Hik', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+        personAxis: 'nork',
         pronounSentences: {
           present: {
             ni: '___ liburu bat dut.',
@@ -1623,7 +1623,7 @@ describe('generateQuestions', () => {
       generateQuestions(verbWithPronouns, 'present', { extraCandidates }).forEach((question) => {
         if (question.kind === 'pronoun') {
           question.options.forEach((option) => {
-            expect(Object.values(verbWithPronouns.pronouns)).toContain(option)
+            expect(Object.values(PRONOUN_DECLENSIONS.nork)).toContain(option)
           })
         }
       })
@@ -1917,7 +1917,7 @@ describe('generateQuestions', () => {
     })
 
     it('qualifies for spot-error by borrowing a sentenced person from a compatible sibling', () => {
-      // availableKinds = ['sentence', 'type-verb', 'spot-error'] (no pronouns)
+      // availableKinds = ['sentence', 'type-verb', 'spot-error'] (no pronounSentences)
       // -> [0, 0.75) / 3 -> slice 2, [0.5, 0.75), is 'spot-error'.
       vi.spyOn(Math, 'random').mockReturnValue(0.6)
 
@@ -2123,7 +2123,7 @@ describe('generateQuestions', () => {
     const table = verbWithManySentences.conjugations.present
 
     it('picks exactly one of four distinct, fully-filled sentences as the wrong one when the roll favours it', () => {
-      // No `pronouns`, so with all six persons sentenced `availableKinds` is
+      // No `pronounSentences`, so with all six persons sentenced `availableKinds` is
       // `['sentence', 'type-verb', 'spot-error']` — [0, 0.75) splits into
       // three slices of 0.25, and 0.6 lands in the last one: 'spot-error'.
       vi.spyOn(Math, 'random').mockReturnValue(0.6)
@@ -2155,7 +2155,7 @@ describe('generateQuestions', () => {
   describe('with declined pronouns', () => {
     const verbWithPronouns = {
       ...verb,
-      pronouns: { ni: 'Nik', hi: 'Hik', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+      personAxis: 'nork',
       pronounSentences: {
         present: {
           ni: '___ liburu bat dut.',
@@ -2176,7 +2176,7 @@ describe('generateQuestions', () => {
           expect(question).toMatchObject({
             kind: 'pronoun',
             sentence: pronounSentenced[question.person],
-            correct: verbWithPronouns.pronouns[question.person],
+            correct: PRONOUN_DECLENSIONS.nork[question.person],
           })
           expect(question.sentence).toContain('___')
           expect(question.options).toContain(question.correct)
@@ -2193,7 +2193,7 @@ describe('generateQuestions', () => {
         .filter((question) => question.kind === 'pronoun')
         .forEach((question) => {
           question.options.forEach((option) => {
-            expect(Object.values(verbWithPronouns.pronouns)).toContain(option)
+            expect(Object.values(PRONOUN_DECLENSIONS.nork)).toContain(option)
           })
         })
     })
@@ -2482,7 +2482,7 @@ describe('generateQuestions', () => {
         expect(question).toMatchObject({
           kind: 'type-pronoun',
           sentence: pronounSentenced[question.person],
-          correct: verbWithBoth.pronouns[question.person],
+          correct: PRONOUN_DECLENSIONS.nork[question.person],
         })
         expect(question.sentence).toContain('___')
         expect(question).not.toHaveProperty('options')
@@ -2703,7 +2703,6 @@ describe('generateQuestions', () => {
             hura: 'Hura medikua ___.',
           },
         },
-        pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
         pronounSentences: {
           present: {
             ni: '___ irakaslea naiz.',
