@@ -6,6 +6,21 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-06 — Logged 5 more ambitransitive-verb candidates (not yet added)
+
+Following the `babestu`/`babestu-izan` split above, a user confirmed this is
+a general pattern ("hay verbos que admiten las dos formas") and gave 5 more
+candidates: `mugitu` (to move), `esnatu` (to wake up), `ailegatu` (to
+arrive), `piztu` (to light/turn on), `amatatu` (to turn off/extinguish) —
+with more expected in later messages. None are in `VERBS` yet; logged as a
+new table (`docs/VERB_COVERAGE.md` §4b-quinquies) rather than added now,
+per explicit instruction to just track them for whenever the fuller list is
+in. Flagged two open questions there for whoever adds them: `piztu`/
+`amatatu`'s intransitive reading is naturally 3rd-person/inanimate ("sua
+piztu da", not really a `ni`-scenario), and `ailegatu` may be
+intransitive-only (no obvious transitive "arrive something" reading, unlike
+the other four) rather than needing the same nor/nor-nork split.
+
 ## 2026-07-06 — Storm-shelter sentence used the wrong verb (`sartu`), not just the wrong noun; split off `babestu-izan`
 
 Follow-up to the "aterpe" vocabulary fix just below: even with the noun

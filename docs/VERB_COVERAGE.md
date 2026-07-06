@@ -307,6 +307,30 @@ visible object signals the dative the way "egia esan" does) — the exact
 
 All five are carriers (present/past/future) in the new `ditransitive-dative-*` pool family, wired into Unit 27 (present) and Unit 28 (past/future/review) alongside `esan`/`eman`'s individual lessons — not a new pool in §4b-ter's Unit 30, since mixing an overt-object reading into that pool's specifically "no-overt-object" carriers would muddy the #293 covert-dative confusion it's built to drill.
 
+### 4b-quinquies. Ambitransitive verbs (unaccusative/causative alternation) — user-flagged, 2026-07-06
+
+A distinct pattern from every table above: the *same* participle takes
+either auxiliary depending on whether there's an agent acting on something
+else (`ukan`, `nor-nork`) or the subject undergoes the change on its own
+(`izan`, `nor`-only) — Basque's unaccusative/causative alternation. This is
+exactly the shape `babestu`/`babestu-izan` already split into two `VERBS`
+entries rather than cramming both readings into one conjugation table (see
+`docs/LANGUAGE_DECISIONS.md`, 2026-07-06) — that split should be the
+template for each of these once added.
+
+A user gave `mugitu` as the paradigm case: *"beste leku batera mugitu naiz"*
+("I moved [myself] to another place", intransitive) vs. *"aulki bat mugitu
+dut"* ("I moved a chair", transitive), plus four more candidates, with more
+to follow in later messages per their own note:
+
+| Verb | Meaning | Intransitive (nor, izan) | Transitive (nor-nork, ukan) | Notes |
+|---|---|---|---|---|
+| mugitu | to move | mugitu naiz | mugitu dut | 🔲 not yet added — split into `mugitu`/`mugitu-izan` per the `babestu` template |
+| esnatu | to wake up | esnatu naiz | esnatu dut | 🔲 not yet added — same split |
+| piztu | to light / turn on | piztu da (typically 3rd-person/inanimate subject — "sua piztu da") | piztu dut | 🔲 not yet added — confirm the intransitive reading's natural subject before adding sentences (an inanimate "it lit up", not really a `ni`-person scenario) |
+| amatatu | to turn off / extinguish | amatatu da (same inanimate-subject caveat as `piztu`) | amatatu dut | 🔲 not yet added — same caveat as `piztu` |
+| ailegatu | to arrive | ailegatu naiz | *(unclear — no obvious transitive "arrive something" reading)* | 🔲 not yet added — likely intransitive-only, unlike the other four; confirm before assuming it needs a split |
+
 ### 4c. A natural cluster for `dialectVariants`
 Three East/West dialectal pairs turned up while surveying §4a/§4b — exactly
 the shape `dialectVariants: { bizkaiera: { conjugations: {...} } }` in
