@@ -1083,16 +1083,19 @@ function getByNoriComposedTable(verb, tense) {
   if (flatBase) {
     const prefix = verb.byNoriPrefixes?.[tense]
     if (prefix === undefined) return undefined
+    // dativeIzan is now 2D (outer=NORI, inner=NOR); flat tenses want NOR=hura
     const skeleton = OBJECT_AXIS_SKELETONS.dativeIzan[flatBase]
     const table = {}
-    for (const person of Object.keys(skeleton)) table[person] = prefix + skeleton[person]
+    for (const nori of Object.keys(skeleton)) {
+      if (skeleton[nori].hura !== undefined) table[nori] = prefix + skeleton[nori].hura
+    }
     return table
   }
   const byNorBase = tense === 'presentByNor' ? 'present' : tense === 'pastByNor' ? 'past' : undefined
   if (!byNorBase) return undefined
   const prefix = verb.byNoriPrefixes?.[byNorBase]
   if (prefix === undefined) return undefined
-  const skeleton = OBJECT_AXIS_SKELETONS.dativeIzanByNor[byNorBase]
+  const skeleton = OBJECT_AXIS_SKELETONS.dativeIzan[byNorBase]
   const table = {}
   for (const outer of Object.keys(skeleton)) {
     table[outer] = {}

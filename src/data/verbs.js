@@ -215,41 +215,30 @@ export const OBJECT_AXIS_SKELETONS = {
     present: { ni: 'naiz', zu: 'zara', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
     past: { ni: 'nintzen', zu: 'zinen', hura: 'zen', gu: 'ginen', zuek: 'zineten', haiek: 'ziren' },
   },
-  // #448: the NOR-NORI dative-`izan` skeleton behind `gustatu`/`iruditu`/
-  // `ahaztu`/`jarraitu`'s flat `present`/`past`/`future` tables (Units 25/26)
-  // — every cell there turns out to be `<per-verb prefix> + this skeleton's
-  // own cell` (e.g. `gustatu.present.ni === 'gustatzen ' + dativeIzan.present
-  // .ni`), composed at runtime via each verb's `byNoriPrefixes` the same way
-  // `edun` above backs `presentByObject`/`pastByObject`. `future` reuses the
-  // `present` row (`gustatuko zait` has the same auxiliary as `gustatzen
-  // zait`, just the `-ko` participle swapped in via the verb's own
-  // `byNoriPrefixes.future`) — there's no separate `dativeIzan.future` entry.
+  // #448: the unified NOR-NORI dative-`izan` skeleton backing `gustatu`/
+  // `iruditu`/`ahaztu`/`jarraitu`. 2D: outer key = NORI (experiencer), inner
+  // key = NOR (stimulus/subject liked). Reflexive cells (same person key for
+  // both) are omitted. `future` reuses the `present` row — only the
+  // participle prefix (the verb's own `byNoriPrefixes.future`) differs.
+  // Composed at runtime via `getByNoriComposedTable`:
+  //   • flat (`present`/`past`/`future`): extracts the NOR=hura inner column
+  //   • 2D (`presentByNor`/`pastByNor`): returns the full grid as-is
   dativeIzan: {
-    present: { ni: 'zait', zu: 'zaizu', hura: 'zaio', gu: 'zaigu', zuek: 'zaizue', haiek: 'zaie' },
-    past: { ni: 'zitzaidan', zu: 'zitzaizun', hura: 'zitzaion', gu: 'zitzaigun', zuek: 'zitzaizuen', haiek: 'zitzaien' },
-  },
-  // #448: the 2D NOR-NORI mirror of `dativeIzan` above, backing `gustatu`/
-  // `iruditu`/`ahaztu`/`jarraitu`'s `presentByNor`/`pastByNor` (#358, Unit
-  // 27) — same per-verb `byNoriPrefixes.present`/`.past` composes both the
-  // flat table above and this 2D one, since both turn out to share the exact
-  // same prefix (confirmed cell-for-cell against the verbs' previous literal
-  // tables before this refactor).
-  dativeIzanByNor: {
     present: {
-      ni: { zu: 'zatzait', gu: 'gatzaizkit', zuek: 'zatzaizkit' },
-      zu: { ni: 'natzaizu', gu: 'gatzaizkizu', zuek: 'zatzaizkizu' },
-      hura: { ni: 'natzaio', zu: 'zatzaio', gu: 'gatzaizkio', zuek: 'zatzaizkio' },
-      gu: { ni: 'natzaigu', zu: 'zatzaigu', zuek: 'zatzaizkigu' },
-      zuek: { ni: 'natzaizue', zu: 'zatzaizue', gu: 'gatzaizkizue' },
-      haiek: { ni: 'natzaie', zu: 'zatzaie', gu: 'gatzaizkie', zuek: 'zatzaizkie' },
+      ni:    { zu: 'zatzait',    hura: 'zait',   gu: 'gatzaizkit',   zuek: 'zatzaizkit',   haiek: 'zaizkit'   },
+      zu:    { ni: 'natzaizu',   hura: 'zaizu',  gu: 'gatzaizkizu',  zuek: 'zatzaizkizu',  haiek: 'zaizkizu'  },
+      hura:  { ni: 'natzaio',    zu: 'zatzaio',  hura: 'zaio',       gu: 'gatzaizkio',     zuek: 'zatzaizkio',  haiek: 'zaizkio'   },
+      gu:    { ni: 'natzaigu',   zu: 'zatzaigu', hura: 'zaigu',      zuek: 'zatzaizkigu',  haiek: 'zaizkigu'  },
+      zuek:  { ni: 'natzaizue',  zu: 'zatzaizue', hura: 'zaizue',   gu: 'gatzaizkizue',   haiek: 'zaizkizue' },
+      haiek: { ni: 'natzaie',    zu: 'zatzaie',  hura: 'zaie',       gu: 'gatzaizkie',     zuek: 'zatzaizkie' },
     },
     past: {
-      ni: { zu: 'zintzaidan', gu: 'gintzaizkidan', zuek: 'zintzaizkidan' },
-      zu: { ni: 'nintzaizun', gu: 'gintzaizkizun', zuek: 'zintzaizkizun' },
-      hura: { ni: 'nintzaion', zu: 'zintzaion', gu: 'gintzaizkion', zuek: 'zintzaizkion' },
-      gu: { ni: 'nintzaigun', zu: 'zintzaigun', zuek: 'zintzaizkigun' },
-      zuek: { ni: 'nintzaizuen', zu: 'zintzaizuen', gu: 'gintzaizkizuen' },
-      haiek: { ni: 'nintzaien', zu: 'zintzaien', gu: 'gintzaizkien', zuek: 'zintzaizkien' },
+      ni:    { zu: 'zintzaidan',   hura: 'zitzaidan',  gu: 'gintzaizkidan',  zuek: 'zintzaizkidan',  haiek: 'zitzaizkidan'  },
+      zu:    { ni: 'nintzaizun',   hura: 'zitzaizun',  gu: 'gintzaizkizun',  zuek: 'zintzaizkizun',  haiek: 'zitzaizkizun'  },
+      hura:  { ni: 'nintzaion',    zu: 'zintzaion',    hura: 'zitzaion',     gu: 'gintzaizkion',     zuek: 'zintzaizkion',  haiek: 'zitzaizkion'  },
+      gu:    { ni: 'nintzaigun',   zu: 'zintzaigun',   hura: 'zitzaigun',    zuek: 'zintzaizkigun',  haiek: 'zitzaizkigun'  },
+      zuek:  { ni: 'nintzaizuen',  zu: 'zintzaizuen',  hura: 'zitzaizuen',   gu: 'gintzaizkizuen',   haiek: 'zitzaizkizuen' },
+      haiek: { ni: 'nintzaien',    zu: 'zintzaien',    hura: 'zitzaien',     gu: 'gintzaizkien',     zuek: 'zintzaizkien'   },
     },
   },
   // #448: the NOR-NORI-NORK ditransitive ("diot") skeleton behind `esan`/
