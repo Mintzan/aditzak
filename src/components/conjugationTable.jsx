@@ -15,21 +15,28 @@ import { getComposedTable, resolveObjectAxisTable } from '../lessonLogic'
 // 2D `{ [outer]: { [inner]: form } }` grid, not the flat `{ [person]: form }`
 // shape this component renders, so without resolving through it first,
 // `form` below would be a nested object instead of a string.
-export function ConjugationTable({ verb, tense, objectAxis }) {
+//
+// `hidePersons` (optional, e.g. `['hi', 'hi-m', 'hi-f']`) drops the given
+// person keys from the rendered rows — used by `UnitOverviewModal` to keep
+// `hi` (a register choice, not just another person) out of a verb's table
+// until the unit that actually introduces it (`HI_INTRODUCED_UNIT`).
+export function ConjugationTable({ verb, tense, objectAxis, hidePersons }) {
   const { t } = useLanguage()
   const composed = getComposedTable(verb, tense)
   const table = objectAxis ? resolveObjectAxisTable(composed, objectAxis) : composed
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200">
-      {Object.entries(table).map(([person, form], index) => (
-        <div key={person} className={`flex items-center justify-between px-4 py-3 ${index > 0 ? 'border-t border-gray-100' : ''}`}>
-          <div>
-            <p className="font-semibold text-gray-800">{(verb.pronouns?.[person] ?? person).toLowerCase()}</p>
-            <p className="text-xs text-gray-400">{t(PERSON_LABEL_KEYS[person])}</p>
+      {Object.entries(table)
+        .filter(([person]) => !hidePersons?.includes(person))
+        .map(([person, form], index) => (
+          <div key={person} className={`flex items-center justify-between px-4 py-3 ${index > 0 ? 'border-t border-gray-100' : ''}`}>
+            <div>
+              <p className="font-semibold text-gray-800">{(verb.pronouns?.[person] ?? person).toLowerCase()}</p>
+              <p className="text-xs text-gray-400">{t(PERSON_LABEL_KEYS[person])}</p>
+            </div>
+            <p className="text-xl font-extrabold text-gray-900">{form}</p>
           </div>
-          <p className="text-xl font-extrabold text-gray-900">{form}</p>
-        </div>
-      ))}
+        ))}
     </div>
   )
 }
