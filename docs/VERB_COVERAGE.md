@@ -325,7 +325,7 @@ to follow in later messages per their own note:
 
 | Verb | Meaning | Intransitive (nor, izan) | Transitive (nor-nork, ukan) | Notes |
 |---|---|---|---|---|
-| mugitu | to move | mugitu naiz | mugitu dut | 🔲 not yet added — split into `mugitu`/`mugitu-izan` per the `babestu` template |
+| mugitu | to move | mugitu naiz | mugitu dut | ✅ in `VERBS` — split into `mugitu`/`mugitu-izan` per the `babestu` template; see `docs/LANGUAGE_DECISIONS.md`, 2026-07-06 |
 | esnatu | to wake up | esnatu naiz | esnatu dut | 🔲 not yet added — same split |
 | piztu | to light / turn on | piztu da (typically 3rd-person/inanimate subject — "sua piztu da") | piztu dut | 🔲 not yet added — confirm the intransitive reading's natural subject before adding sentences (an inanimate "it lit up", not really a `ni`-person scenario) |
 | amatatu | to turn off / extinguish | amatatu da (same inanimate-subject caveat as `piztu`) | amatatu dut | 🔲 not yet added — same caveat as `piztu` |

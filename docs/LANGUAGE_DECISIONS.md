@@ -6,6 +6,42 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-06 — Added `mugitu`/`mugitu-izan` (ambitransitive pair #2)
+
+Added the first of the five logged ambitransitive candidates (§4b-quinquies)
+on request, following the `babestu`/`babestu-izan` template exactly: `mugitu`
+(transitive, `nor-nork`, "to move X" — "mugitzen dut"/"mugitu nuen") and
+`mugitu-izan` (intransitive, `nor`, "to move [oneself]" — composed against
+the `izan` skeleton, "mugitzen naiz"/"mugitu nintzen"). Full six-person
+`present`/`past` sentences on both (not just `ni`, unlike `babestu-izan`'s
+stub) since this was explicitly asked for "with proper pronouns."
+
+**Two rounds of naturalness review** (`node scripts/validfor-delta-audit.mjs`)
+surfaced genuine overlaps, not just mechanical ones:
+
+- `mugitu`'s first sentence draft ("carry the chair from the kitchen to the
+  living room") read equally naturally with `eraman`/`ekarri` (to carry/
+  bring between locations) — reworded to a small in-place shift framing ("a
+  bit", "out of the way", "to make room"), which cut `ekarri`/`hartu`/`utzi`
+  out but **`eraman` still fit** even a short shift ("daramat" — "I carry it
+  [a bit]"), a genuine overlap rather than a wording accident, so `validFor:
+  ['eraman']` was added rather than chased away with more rewrites.
+- `mugitu-izan`'s first present-tense draft (moving across a room/stage/
+  street) read equally naturally with `ibili` ("to walk/move about") —
+  reworded to shifting position while seated/confined (chair, bed, car,
+  cinema seat), which doesn't extend to `ibili`'s ambulatory sense, so no
+  `validFor` addition was needed there.
+- `mugitu-izan`'s past-tense sentences (relocating to a new city/
+  neighborhood — the user's own illustrative example) read equally
+  naturally with `joan` ("went to X") — this one's genuinely
+  unavoidable (that's just what "moved to X" means), so `validFor: ['joan']`
+  was added. Checked whether `ibili` also fit the same slots: it pairs with
+  a locative ("kalean ibili naiz", "was out and about in the street"), not
+  an allative destination the way "moved/went to X" does, so it was
+  deliberately left out.
+
+Regenerated `scripts/validfor-gap-baseline.json` after this review.
+
 ## 2026-07-06 — Logged 5 more ambitransitive-verb candidates (not yet added)
 
 Following the `babestu`/`babestu-izan` split above, a user confirmed this is

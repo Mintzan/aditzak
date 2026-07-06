@@ -6797,6 +6797,125 @@ export const VERBS = [
     },
     pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
   },
+  // `mugitu`/`mugitu-izan` — the second ambitransitive pair after
+  // `babestu`/`babestu-izan` (`docs/VERB_COVERAGE.md` §4b-quinquies): "beste
+  // leku batera mugitu naiz" ("I moved to another place", intransitive) vs.
+  // "aulki bat mugitu dut" ("I moved a chair", transitive), user-confirmed as
+  // a general pattern. Same split shape as `babestu`/`babestu-izan`: one
+  // `nor-nork` entry (transitive, "to move X") and one `nor`-only entry
+  // (intransitive, "to move [oneself]"), same participle
+  // (`mugitzen`/`mugitu`) on both. Not yet referenced by any lesson, but
+  // given a full six-person `present`/`past` sentence set on both entries
+  // (unlike `babestu-izan`'s `ni`-only stub) since the user asked for this
+  // one "with proper pronouns" specifically.
+  {
+    id: 'mugitu',
+    verb: 'mugitu',
+    meaning: { en: 'to move (something)', es: 'mover (algo)', eu: 'mugitu' },
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    byObjectPrefixes: { present: 'mugitzen ', past: 'mugitu ' },
+    conjugations: {
+      present: {
+        ni: 'mugitzen dut',
+        zu: 'mugitzen duzu',
+        hura: 'mugitzen du',
+        gu: 'mugitzen dugu',
+        zuek: 'mugitzen duzue',
+        haiek: 'mugitzen dute',
+      },
+      past: {
+        ni: 'mugitu nuen',
+        zu: 'mugitu zenuen',
+        hura: 'mugitu zuen',
+        gu: 'mugitu genuen',
+        zuek: 'mugitu zenuten',
+        haiek: 'mugitu zuten',
+      },
+      future: {
+        ni: 'mugituko dut',
+        zu: 'mugituko duzu',
+        hura: 'mugituko du',
+        gu: 'mugituko dugu',
+        zuek: 'mugituko duzue',
+        haiek: 'mugituko dute',
+      },
+    },
+    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    // Framed as a small in-place shift ("a bit", "out of the way", "to make
+    // room") rather than carrying an object from one named place to
+    // another, to at least steer away from `ekarri` (to bring, hither) and
+    // `hartu`/`utzi` (to take/leave) — but `eraman` ("to carry/take
+    // [something] somewhere") still reads naturally even for a short shift
+    // ("daramat" = "I carry it [a bit]"), a genuine overlap the delta audit
+    // confirmed rather than a wording accident, so it's listed in
+    // `validFor` instead of chased away with more rewrites.
+    sentences: {
+      present: {
+        ni: { text: 'Nik aulkia pixka bat ___ argazkia ateratzeko.', validFor: ['eraman'] },
+        zu: { text: 'Zuk mahaia ___ bidea uzteko?', validFor: ['eraman'] },
+        hura: { text: 'Hark liburua ___ mahaiaren gainean lekua egiteko.', validFor: ['eraman'] },
+        gu: { text: 'Guk sofa pixka bat ___ azpia garbitzeko.', validFor: ['eraman'] },
+        zuek: { text: 'Zuek kutxa ___ bidetik kentzeko?', validFor: ['eraman'] },
+        haiek: { text: 'Haiek harria ___ bidea garbitzeko.', validFor: ['eraman'] },
+      },
+      past: {
+        ni: { text: 'Nik atzo aulkia pixka bat ___ argazkia ateratzeko.', validFor: ['eraman'] },
+        zu: { text: 'Zuk herenegun mahaia ___ bidea uzteko?', validFor: ['eraman'] },
+        hura: { text: 'Hark lehengo egunean liburua ___ lekua egiteko.', validFor: ['eraman'] },
+        gu: { text: 'Guk iaz sofa pixka bat ___ azpia garbitzeko.', validFor: ['eraman'] },
+        zuek: { text: 'Zuek duela bi egun kutxa ___ bidetik kentzeko?', validFor: ['eraman'] },
+        haiek: { text: 'Haiek joan den astean harria ___ bidea garbitzeko.', validFor: ['eraman'] },
+      },
+    },
+  },
+  {
+    id: 'mugitu-izan',
+    verb: 'mugitu',
+    meaning: { en: 'to move (oneself)', es: 'moverse', eu: 'mugitu' },
+    type: 'periphrastic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    // Composed against the `izan` skeleton — see its own doc comment near
+    // `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'mugitzen ', past: 'mugitu ', future: 'mugituko ' },
+    conjugations: {},
+    // Present sentences are framed as shifting position while seated/
+    // confined (chair, bed, car, cinema seat) rather than walking about —
+    // the delta audit showed the latter reads just as naturally with
+    // `ibili` ("to walk/move about"), which doesn't extend to shifting in a
+    // fixed spot the way `mugitu` does.
+    sentences: {
+      present: {
+        ni: { text: 'Ni aulkian ___ eroso egoteko.', validFor: [] },
+        zu: { text: 'Zu ohean asko ___ lo egiten duzunean?', validFor: [] },
+        hura: { text: 'Hura bere eserlekuan ___ urduri dagoenean.', validFor: [] },
+        gu: { text: 'Gu autoan ___ bidaia luzeetan.', validFor: [] },
+        zuek: { text: 'Zuek zinema-aulkian ___ eroso ez zaudetenean?', validFor: [] },
+        haiek: { text: 'Haiek beren tokietan ___ kontzertuan zain daudenean.', validFor: [] },
+      },
+      // Relocating with an allative destination ("to city X") reads equally
+      // naturally with `joan` ("went to X") — a genuine overlap the delta
+      // audit surfaced, not a wording accident like the present-tense ones
+      // above, so `joan` is listed rather than reworded away. `ibili` also
+      // showed up as a candidate here but doesn't actually fit — it pairs
+      // with a locative ("kalean ibili naiz", "I was out and about in the
+      // street"), not an allative destination the way "moved/went to X"
+      // does, so it's deliberately left out.
+      past: {
+        ni: { text: 'Ni iaz beste hiri batera ___ lan berri baten bila.', validFor: ['joan'] },
+        zu: { text: 'Zu noiz ___ Bilbotik Donostiara?', validFor: ['joan'] },
+        hura: { text: 'Hura duela hilabete auzo berri batera ___.', validFor: ['joan'] },
+        gu: { text: 'Gu iaz kanpotik hona ___ familia osoarekin.', validFor: ['joan'] },
+        zuek: { text: 'Zuek noiz ___ etxe honetara?', validFor: ['joan'] },
+        haiek: { text: 'Haiek joan den urtean herri txiki batera ___ erretiratzeko.', validFor: ['joan'] },
+      },
+    },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+  },
   {
     id: 'ziurtatu',
     verb: 'ziurtatu',
