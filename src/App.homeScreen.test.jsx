@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
 import { UnitOverviewModal } from './screens/HomeScreen'
+import { HI_INTRODUCED_UNIT } from './lessonLogic'
 import { LanguageProvider } from './i18n/LanguageContext'
 import { JOURNEY } from './journey'
 
@@ -65,6 +66,11 @@ describe('App', () => {
     expect(within(dialog).getByText('zuk')).toBeInTheDocument()
     expect(within(dialog).getByText('hark')).toBeInTheDocument()
     expect(within(dialog).getByText('dut')).toBeInTheDocument()
+    // ukan's present table also carries hi-m/hi-f cells ('duk'/'dun'), but hi
+    // (the intimate register) isn't introduced until Unit 36 — showing them
+    // here would surface a form with no context for what it means yet.
+    expect(within(dialog).queryByText('duk')).not.toBeInTheDocument()
+    expect(within(dialog).queryByText('dun')).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Close' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
@@ -141,7 +147,9 @@ describe('App', () => {
     // handle, rather than relying on spot-checking individual units by hand.
     // Also guards against "No new verbs" creeping back into any unit's focus
     // text — a curriculum-authoring fact, not a concept a learner needs (see
-    // docs/DECISIONS.md).
+    // docs/DECISIONS.md) — and against `hi` (and its toka/noka gendered
+    // cells) leaking into a conjugation table before `HI_INTRODUCED_UNIT`,
+    // the unit that actually introduces it as a register.
     for (const phase of JOURNEY) {
       for (const stage of phase.stages) {
         for (const unit of stage.units) {
@@ -151,8 +159,12 @@ describe('App', () => {
               <UnitOverviewModal unit={unit} onClose={() => {}} />
             </LanguageProvider>,
           )
-          expect(screen.getByRole('dialog'), `Unit ${unit.number} (${unit.title})`).toBeInTheDocument()
+          const dialog = screen.getByRole('dialog')
+          expect(dialog, `Unit ${unit.number} (${unit.title})`).toBeInTheDocument()
           expect(unit.focus, `Unit ${unit.number} (${unit.title})`).not.toMatch(/no new verbs/i)
+          if (unit.number < HI_INTRODUCED_UNIT) {
+            expect(dialog, `Unit ${unit.number} (${unit.title})`).not.toHaveTextContent('you (familiar')
+          }
           unmount()
         }
       }

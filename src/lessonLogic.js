@@ -3,6 +3,22 @@
 // in App.jsx (it warns when a component file also exports plain functions).
 
 import { OBJECT_AXIS_SKELETONS, PRONOUN_DECLENSIONS, personPronoun } from './data/verbs.js'
+import { LESSONS } from './data/lessons.js'
+import { JOURNEY } from './journey.js'
+
+// The lowest-numbered unit whose lessons actually drill `hi` as a person
+// (today, Unit 36 — "hi — Meet 'hi'"; see its `persons: ['hi']` lessons in
+// `data/lessons.js`). `hi` (the intimate "you") is a register choice, not
+// just another grammatical person like `gu`/`zuek`/`haiek` — showing it in a
+// verb's conjugation table before the learner has met it at all (e.g. in
+// Unit 1's `izan` table) would surface a form with no context for what it
+// even means. `UnitOverviewModal` (`HomeScreen.jsx`) uses this to hide
+// `hi`/`hi-m`/`hi-f` from any unit before this one; every unit from here on
+// shows them normally. Computed from the data rather than hardcoded so a
+// future renumber can't leave this silently stale.
+export const HI_INTRODUCED_UNIT = JOURNEY.flatMap((phase) => phase.stages.flatMap((stage) => stage.units))
+  .filter((unit) => unit.lessonIds?.some((id) => LESSONS.find((lesson) => lesson.id === id)?.persons?.includes('hi')))
+  .reduce((min, unit) => Math.min(min, unit.number), Infinity)
 
 export function computeStars(score, total) {
   if (total === 0) return 0
