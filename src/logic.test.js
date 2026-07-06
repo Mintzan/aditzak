@@ -1346,8 +1346,10 @@ describe('generateQuestions', () => {
       expect(resolveObjectAxisTable(gustatuPresentByNor, { vary: 'nor', fixed: 'zu' })).toEqual(gustatuPresentByNor.zu)
       expect(resolveObjectAxisTable(gustatuPresentByNor, { vary: 'nor', fixed: 'zu' })).toEqual({
         ni: 'gustatzen natzaizu',
+        hura: 'gustatzen zaizu',
         gu: 'gustatzen gatzaizkizu',
         zuek: 'gustatzen zatzaizkizu',
+        haiek: 'gustatzen zaizkizu',
       })
     })
 
@@ -1409,17 +1411,17 @@ describe('generateQuestions', () => {
       expect(getComposedTable(jarraitu, 'future')).toBeUndefined()
     })
 
-    it('composes presentByNor/pastByNor against dativeIzanByNor with the same prefix as the flat tables', () => {
+    it('composes presentByNor/pastByNor against dativeIzan with the same prefix as the flat tables', () => {
       const gustatu = VERBS.find((v) => v.id === 'gustatu')
       expect(getComposedTable(gustatu, 'presentByNor')).toEqual({
-        ni: { zu: 'gustatzen zatzait', gu: 'gustatzen gatzaizkit', zuek: 'gustatzen zatzaizkit' },
-        zu: { ni: 'gustatzen natzaizu', gu: 'gustatzen gatzaizkizu', zuek: 'gustatzen zatzaizkizu' },
-        hura: { ni: 'gustatzen natzaio', zu: 'gustatzen zatzaio', gu: 'gustatzen gatzaizkio', zuek: 'gustatzen zatzaizkio' },
-        gu: { ni: 'gustatzen natzaigu', zu: 'gustatzen zatzaigu', zuek: 'gustatzen zatzaizkigu' },
-        zuek: { ni: 'gustatzen natzaizue', zu: 'gustatzen zatzaizue', gu: 'gustatzen gatzaizkizue' },
-        haiek: { ni: 'gustatzen natzaie', zu: 'gustatzen zatzaie', gu: 'gustatzen gatzaizkie', zuek: 'gustatzen zatzaizkie' },
+        ni:    { zu: 'gustatzen zatzait',    hura: 'gustatzen zait',   gu: 'gustatzen gatzaizkit',   zuek: 'gustatzen zatzaizkit',   haiek: 'gustatzen zaizkit'   },
+        zu:    { ni: 'gustatzen natzaizu',   hura: 'gustatzen zaizu',  gu: 'gustatzen gatzaizkizu',  zuek: 'gustatzen zatzaizkizu',  haiek: 'gustatzen zaizkizu'  },
+        hura:  { ni: 'gustatzen natzaio',    zu: 'gustatzen zatzaio',  hura: 'gustatzen zaio',       gu: 'gustatzen gatzaizkio',     zuek: 'gustatzen zatzaizkio', haiek: 'gustatzen zaizkio'  },
+        gu:    { ni: 'gustatzen natzaigu',   zu: 'gustatzen zatzaigu', hura: 'gustatzen zaigu',      zuek: 'gustatzen zatzaizkigu',  haiek: 'gustatzen zaizkigu'  },
+        zuek:  { ni: 'gustatzen natzaizue',  zu: 'gustatzen zatzaizue', hura: 'gustatzen zaizue',   gu: 'gustatzen gatzaizkizue',   haiek: 'gustatzen zaizkizue' },
+        haiek: { ni: 'gustatzen natzaie',    zu: 'gustatzen zatzaie',  hura: 'gustatzen zaie',       gu: 'gustatzen gatzaizkie',     zuek: 'gustatzen zatzaizkie' },
       })
-      expect(getComposedTable(gustatu, 'pastByNor').zu).toEqual({ ni: 'gustatu nintzaizun', gu: 'gustatu gintzaizkizun', zuek: 'gustatu zintzaizkizun' })
+      expect(getComposedTable(gustatu, 'pastByNor').zu).toEqual({ ni: 'gustatu nintzaizun', hura: 'gustatu zitzaizun', gu: 'gustatu gintzaizkizun', zuek: 'gustatu zintzaizkizun', haiek: 'gustatu zitzaizkizun' })
     })
 
     it("composes esan's recipient-fixed present from ditransitivePrefixes + diot (fixedArgument.role 'nori', vary 'nork')", () => {
