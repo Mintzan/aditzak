@@ -376,7 +376,6 @@ function MatchTile({ label, status, disabled, onSelect }) {
 // every pair is eventually matched, mirroring how a missed multiple-choice
 // question still resolves once an answer is accepted.
 function MatchPairsBoard({ pairs, verb, disabled, onComplete }) {
-  const { t } = useLanguage()
   const [leftTiles] = useState(() => shuffle(pairs))
   const [rightTiles] = useState(() => shuffle(pairs))
   const [matched, setMatched] = useState(() => new Set())
@@ -434,7 +433,7 @@ function MatchPairsBoard({ pairs, verb, disabled, onComplete }) {
         {leftTiles.map(({ person }) => (
           <MatchTile
             key={person}
-            label={(verb.pronouns?.[person] ?? t(PERSON_LABEL_KEYS[person])).toLowerCase()}
+            label={(verb.pronouns?.[person] ?? person).toLowerCase()}
             status={tileStatus(person, selectedLeft, 'left')}
             disabled={disabled || Boolean(mistake)}
             onSelect={() => handleSelectLeft(person)}
