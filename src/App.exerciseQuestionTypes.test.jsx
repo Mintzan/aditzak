@@ -220,7 +220,7 @@ describe('App', () => {
 
       // Multi-source pool lessons have no single-verb preview screen —
       // clicking the lesson card lands directly on the first question.
-      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura[\s\S]*7 verbs/i }))
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura[\s\S]*9 verbs/i }))
 
       expect(screen.getByRole('button', { name: 'ni' })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'zu' })).toBeInTheDocument()
@@ -246,7 +246,7 @@ describe('App', () => {
       'bereiztu', 'ezagutu', 'sentitu', 'pentsatu', 'sumatu', 'ulertu',
       'aztertu', 'ukatu', 'batu', 'planteatu',
       'hausnartu', 'argudiatu', 'ondorioztatu', 'gaitzetsi', 'aldarrikatu', 'plazaratu',
-      'sustatu', 'bultzatu', 'bermatu', 'babestu', 'ziurtatu', 'borobildu',
+      'sustatu', 'bultzatu', 'bermatu', 'babestu', 'mugitu', 'ziurtatu', 'borobildu',
       'hitz-egin', 'lan-egin', 'lo-egin', 'ahaleginak-egin',
       'parte-hartu', 'kontuan-hartu', 'arreta-eman',
     ]
@@ -254,9 +254,9 @@ describe('App', () => {
     // sources/subtitle text, differing only in which persons they drill —
     // matching on the singular `ni/zu/hura` persons label too disambiguates
     // the singular lesson's button from its plural sibling. The subtitle
-    // shows a collapsed "N verbs" label rather than joining all 52 names
+    // shows a collapsed "N verbs" label rather than joining all 53 names
     // (#343 — joining every name in a pool this large is unreadable).
-    const poolButtonName = /ni\/zu\/hura[\s\S]*52 verbs/
+    const poolButtonName = /ni\/zu\/hura[\s\S]*53 verbs/
 
     it('drills at most CARRIERS_PER_SESSION sources from a larger pool, keeping the session near TARGET_EXERCISE_COUNT', async () => {
       window.history.pushState({}, '', '/?dev=unlock-all')
