@@ -95,7 +95,7 @@ export const JOURNEY = [
             number: 3,
             title: '"Ni" vs. "Nik" — The Case-Marking Checkpoint',
             focus:
-              'No new verbs — practice telling plain subjects (izan/egon) apart from ergative -k subjects (ukan): izan/egon\'s subject isn\'t acting on anything, so the -k shouldn\'t creep onto them by mistake (✗ "Nik naiz") — the most common beginner slip',
+              'Telling plain subjects (izan/egon) apart from ergative -k subjects (ukan): izan/egon\'s subject isn\'t acting on anything, so the -k shouldn\'t creep onto them by mistake (✗ "Nik naiz") — the most common beginner slip',
             payload: '"Ni ikaslea naiz" vs. "Nik liburua dut."',
             status: 'available',
             lessonIds: [
@@ -159,7 +159,7 @@ export const JOURNEY = [
             number: 7,
             title: 'Expansion: Absolutive Plurals',
             focus:
-              'No new verbs — adds gu/zuek/haiek (we/you-all/they) to izan, egon, ukan, joan, etorri, and ikusi',
+              'Adding gu/zuek/haiek (we/you-all/they) to izan, egon, ukan, joan, etorri, and ikusi',
             payload: '"We are teachers." (Irakasleak gara)',
             status: 'available',
             gate: true,
@@ -191,7 +191,7 @@ export const JOURNEY = [
           {
             number: 10,
             title: 'REFRESH — The Inversion Matrix',
-            focus: 'No new verbs — practice turning Units 1–9\'s sentences negative',
+            focus: 'Turning Units 1–9\'s sentences negative with "ez" — the finite verb flips ahead of the participle once "ez" enters the sentence',
             status: 'available',
             gate: true,
             lessonIds: ['unit-5-review-1', 'unit-5-review-2', 'unit-5-review-3'],
@@ -498,7 +498,7 @@ export const JOURNEY = [
             number: 23,
             title: 'REFRESH — Cumulative Present/Past/Future Mixer',
             focus:
-              'No new verbs — mixes present, past, and future, positive and negative. Score at least 2 stars to move on',
+              'Mixing present, past, and future, positive and negative, so you tell the three tenses apart instead of guessing from context. Score at least 2 stars to move on',
             status: 'available',
             gate: true,
             lessonIds: [
@@ -690,7 +690,7 @@ export const JOURNEY = [
           {
             number: 31,
             title: 'REFRESH — The Case-Ending Mixer',
-            focus: 'No new verbs — practice telling who\'s the subject, object, and recipient apart. A required pass before Phase V',
+            focus: 'Telling who\'s the subject (-k), the object, and the recipient apart by their case ending, across NOR, NOR-NORK, NOR-NORI, and NOR-NORI-NORK verbs. A required pass before Phase V',
             status: 'available',
             gate: true,
             lessonIds: [
@@ -943,7 +943,7 @@ export const JOURNEY = [
             // scope) rather than also recombining conditional/imperative —
             // those moods would need new causative conjugation tables of
             // their own (CONJUGATIONS.md §17.4), out of scope for this gate.
-            focus: 'No new verbs — practice -arazi across present, past, and future',
+            focus: 'The causative -arazi (making someone do something) across present, past, and future, all at once',
             status: 'available',
             gate: true,
             lessonIds: ['unit-44-review-1', 'unit-44-review-2'],
