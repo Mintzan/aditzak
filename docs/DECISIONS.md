@@ -8,6 +8,40 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-06 — Push the izan/ukan aux challenge harder in distractors
+
+Deciding when the auxiliary is izan vs. ukan is the first big pitfall for a
+Basque learner, but the distractor engine had two gaps that silently kept
+the challenge *out* of exactly the questions where it belonged:
+
+1. **`#141`'s Distractor Matrix explicitly exempted "NOR present"** — every
+   present-tense drill of izan/joan/egon/ibili suppressed the case-frame
+   lure, so a beginner's first `izan.present` practice ("Ni irakaslea ___")
+   would never surface `dut` as a distractor, only same-table siblings
+   (zara/da/gara). The exemption was recorded (see the retired code comment)
+   as reserving that matrix row for a "plural/near-homophone borrow" per
+   `#164`, but `#164` was really about NOR-NORI plural-object fodder, not
+   pure NOR verbs — the exemption was over-conservative and, given the
+   beginner-facing tenses involved, actively undercut the learning goal.
+2. **Periphrastic NOR tenses got no aux-choice lure at all.** Even outside
+   the exemption above, the pre-existing `getCaseFrameLure` substitutes
+   another verb's *whole* form (`izango dut` alongside `joango naiz`) —
+   pedagogically fine, but not the classic "same participle, wrong aux"
+   mistake beginners actually make (`joango dut` for `joango naiz`).
+
+**Fix:** removed the gate on `baseFormLures` and added a new
+`getAuxiliarySwapLure` that constructs *own participle + opposite-family
+aux* — `joango dut`/`etorri nuen`/`ikusi nintzen`. Restricted to izan/ukan
+verbs (excludes NOR-NORI/NOR-NORI-NORK, whose aux confusion is a different,
+later concern — the classic izan-vs-ukan choice is what the user asked to
+push). Each individual lure already self-gates, so removing the outer gate
+is safe — verbs/tenses that would previously have been gated out just get
+`undefined` from each contributing lure.
+
+The bare `kind: 'form'` case is unaffected — its `grounded: false` invariant
+still drops every lure, so the aux challenge only surfaces where a sentence
+(or a visible verb name in a review) can anchor it.
+
 ## 2026-07-06 — Lessons can never be locked behind the learner's own recorded progress
 
 Journey reorganisations can leave stored progress inconsistent with the current

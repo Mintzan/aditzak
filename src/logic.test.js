@@ -21,6 +21,7 @@ import {
   generateQuestions,
   generateReadingQuestions,
   getActiveStreak,
+  getAuxiliarySwapLure,
   getCaseFrameLure,
   getCaseFramePronounLure,
   getCrossTenseLure,
@@ -2984,13 +2985,79 @@ describe('generateQuestions', () => {
       expect(question.options).toContain('Nik')
     })
 
-    it('does not add a case-frame lure for NOR present (no `nork`, present tense)', () => {
+    it('never leaks the NOR-present case-frame lure into a bare `form` question (`grounded: false`)', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
 
       const question = generateQuestions(izan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
 
+      // The bare `form` kind has no sentence/verb-name grounding to anchor a
+      // sibling-verb form against, so `formLures` (including the case-frame
+      // one) are dropped even though the underlying lure is now computed for
+      // this tense too — see the `grounded` invariant in `buildTaggedOptions`.
       expect(question.kind).toBe('form')
       expect(question.options).not.toContain('dut')
+    })
+
+    it('offers `dut` as a case-frame distractor for izan.present.ni once grounded by a sentence', () => {
+      // The classic izan/ukan pitfall — the first place a beginner has to
+      // pick between "naiz" and "dut" — now surfaces as a distractor on
+      // izan.present sentence questions (previously silently suppressed by
+      // the pre-existing NOR-present exemption of #141's gate).
+      vi.spyOn(Math, 'random').mockReturnValue(0) // -> 'sentence' (first available kind)
+
+      const question = generateQuestions(izan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('sentence')
+      expect(question.correct).toBe('naiz')
+      expect(question.options).toContain('dut')
+      expect(question.optionRationale.dut).toEqual({ errorType: 'case-frame', whyKey: 'lureRationaleCaseFrame' })
+    })
+  })
+
+  describe('getAuxiliarySwapLure — periphrastic own-participle + wrong-family aux', () => {
+    const izan = VERBS.find((v) => v.id === 'izan')
+    const ukan = VERBS.find((v) => v.id === 'ukan')
+    const joan = VERBS.find((v) => v.id === 'joan')
+    const ikusi = VERBS.find((v) => v.id === 'ikusi')
+
+    it('swaps the aux of a NOR periphrastic form for its NOR-NORK sibling\'s (`joango naiz` -> `joango dut`)', () => {
+      expect(getAuxiliarySwapLure(VERBS, joan, 'future', 'ni')).toBe('joango dut')
+    })
+
+    it('swaps the aux of a NOR-NORK periphrastic form for its NOR sibling\'s (`ikusi nuen` -> `ikusi nintzen`)', () => {
+      expect(getAuxiliarySwapLure(VERBS, ikusi, 'past', 'ni')).toBe('ikusi nintzen')
+    })
+
+    it('swaps the aux of `izan.future` (`izango naiz`) into `izango dut` — the aux-only mistake, distinct from `getCaseFrameLure`\'s full sibling form', () => {
+      // `getCaseFrameLure` on izan.future.ni returns ukan.future.ni =
+      // "izango dut" (same string, coincidentally, since the "izan"
+      // participle is already izan's own citation). Confirms both lures
+      // co-exist and dedupe cleanly downstream via `dedupeBySourceForm`.
+      expect(getAuxiliarySwapLure(VERBS, izan, 'future', 'ni')).toBe('izango dut')
+      expect(getCaseFrameLure(VERBS, izan, 'future', 'ni')).toBe('izango dut')
+    })
+
+    it('returns undefined for a synthetic (single-word) form — no auxiliary to swap', () => {
+      // izan.present.ni = "naiz" (synthetic). The aux-swap doesn't apply
+      // here; the aux challenge on this cell is carried by `getCaseFrameLure`
+      // instead ("dut" alongside "naiz").
+      expect(getAuxiliarySwapLure(VERBS, izan, 'present', 'ni')).toBeUndefined()
+      // ukan.present.ni = "dut" (synthetic).
+      expect(getAuxiliarySwapLure(VERBS, ukan, 'present', 'ni')).toBeUndefined()
+    })
+
+    it('returns undefined without a `verbs` list', () => {
+      expect(getAuxiliarySwapLure(undefined, joan, 'future', 'ni')).toBeUndefined()
+    })
+
+    it('surfaces "joango dut" as a distractor on a joan.future.ni sentence question', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0) // -> 'sentence' (first available kind)
+
+      const question = generateQuestions(joan, 'future', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.correct).toBe('joango naiz')
+      expect(question.options).toContain('joango dut')
+      expect(question.optionRationale['joango dut']).toEqual({ errorType: 'case-frame', whyKey: 'lureRationaleCaseFrame' })
     })
   })
 
