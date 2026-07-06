@@ -914,6 +914,59 @@ export function getDativeOvergenerationLure(verbs, verb, tense, person, objectAx
   return `${participle} ${auxiliary}`
 }
 
+// The classic "wrong auxiliary" mistake — the first big pitfall for beginners:
+// having chosen the right participle, they attach it to the wrong auxiliary
+// family (`etorri dut` for `etorri naiz`; `joango dut` for `joango naiz`;
+// `ikusi nintzen` for `ikusi nuen`). Same "swap only the aux" shape as
+// `getDativeOvergenerationLure`, but keyed off the `getCaseFrameSibling`
+// (izan <-> ukan) — the aux family that gets substituted is the one on the
+// opposite side of the izan/ukan (NOR vs. NOR-NORK) split.
+//
+// Restricted to izan/ukan verbs (verbs whose `agreement` doesn't include
+// `nori`): the classical "izan or ukan?" choice a beginner faces is between
+// those two auxiliary families specifically. NOR-NORI/NOR-NORI-NORK verbs
+// carry a different pair of aux families (`zait`/`diot` and their inflections)
+// whose confusion is a separate, later pedagogical concern — swapping in a
+// `nion`-shape aux onto an `etorri`-shape participle would produce an
+// artefact learners don't naturally reach for, not the aux mistake this lure
+// is meant to trap.
+//
+// Only fires for genuinely periphrastic forms (own form contains a space, so
+// there's an aux to swap) and only when the case-frame sibling's same-person/
+// tense form is also periphrastic (so its trailing aux is the right shape to
+// paste back onto our own participle). Returns `undefined` otherwise —
+// synthetic present-tense forms (`naiz`, `dut`, `noa`, `dator`) have no
+// auxiliary to swap, so this contributes nothing to those questions (their
+// aux-choice challenge is already carried by `getCaseFrameLure`'s wholesale
+// sibling-form distractor, `dut` alongside `naiz`).
+//
+// `objectAxis` (optional) mirrors `getDativeOvergenerationLure`'s handling
+// for a 2D NOR-NORK object-axis table — same resolution before reading
+// `[person]`, so a `presentByObject`-style tense yields a plain string on
+// both sides of the swap.
+export function getAuxiliarySwapLure(verbs, verb, tense, person, objectAxis) {
+  if (verb.agreement?.includes('nori')) return undefined
+  const resolveTable = (v) => {
+    const table = v && getComposedTable(v, tense)
+    if (!table) return undefined
+    return objectAxis ? resolveObjectAxisTable(table, objectAxis) : table
+  }
+  const ownForm = resolveTable(verb)?.[person]
+  if (!ownForm?.includes(' ')) return undefined
+  const siblingForm = resolveTable(getCaseFrameSibling(verbs, verb.agreement))?.[person]
+  if (!siblingForm) return undefined
+  const participle = ownForm.slice(0, ownForm.lastIndexOf(' '))
+  // Sibling's form is either periphrastic (`ukan.future.ni = "izango dut"` —
+  // take the trailing aux word "dut") or a single-word aux by itself
+  // (`izan.past.ni = "nintzen"` — the whole form *is* the aux). Both feed the
+  // same "own participle + sibling aux" reconstruction.
+  const auxiliary = siblingForm.includes(' ')
+    ? siblingForm.slice(siblingForm.lastIndexOf(' ') + 1)
+    : siblingForm
+  if (`${participle} ${auxiliary}` === ownForm) return undefined
+  return `${participle} ${auxiliary}`
+}
+
 // #213 (item 5 of #167): a toka/noka question's opposite-gender sibling
 // tense, same verb/person — `dun` offered alongside the correct `duk`, or
 // vice versa. `HITANOA_GENDER_PAIRS` pairs each hitanoa tense with its
@@ -1610,21 +1663,37 @@ export function generateQuestions(
     // #141's case-frame/cross-tense lures: a NOR-NORK verb's present (Slot 3,
     // "naiz for dut") and any verb's past (Slot 2 "nintzen for nuen", Slot 3
     // "naiz for nintzen") get one or two guaranteed "diagnosable mistake"
-    // distractors on top of the usual same-table ones. NOR present (no
-    // `nork`, present tense) is left alone — its matrix row's Slot 3 is the
-    // post-Unit-7 plural/near-homophone borrow (#164), not a case-frame lure.
-    // #283: `presentPerfect` joins this gate too, for the `getRecencyContrastLure`
-    // past<->presentPerfect contrast Unit 11 teaches.
-    const baseFormLures =
-      tense === 'past' || tense === 'presentPerfect' || verb.agreement?.includes('nork') || verb.agreement?.includes('nori')
-        ? [
-            { form: getCaseFrameLure(verbs, verb, tense, person), errorType: 'case-frame' },
-            { form: getCrossTenseLure(verb, tense, person), errorType: 'tense' },
-            { form: getRecencyContrastLure(verb, tense, person), errorType: 'tense' },
-            { form: getObjectNumberLure(verb, tense, person), errorType: 'object-number' },
-            { form: getDativeOvergenerationLure(verbs, verb, tense, person, objectAxis), errorType: 'dative-overgeneration' },
-          ]
-        : []
+    // distractors on top of the usual same-table ones. #283: `presentPerfect`
+    // joins the same set, for the `getRecencyContrastLure` past<->presentPerfect
+    // contrast Unit 11 teaches.
+    //
+    // The gate used to also carve out "NOR present" (izan/joan/egon/ibili in
+    // present tense) — the case-frame lure was suppressed on the grounds that
+    // that matrix row's Slot 3 was earmarked for the plural/near-homophone
+    // borrow (#164). But those verbs' present-tense drills are exactly where
+    // beginners first meet the izan/ukan choice ("Ni irakaslea ___" → `naiz`,
+    // not `dut`), and every other tense already surfaces the aux challenge —
+    // this one exemption was silently pulling the pedagogical rug out from
+    // under the beginners it most concerned. Lifting the exemption fires the
+    // lure on izan.present ("dut" alongside "naiz"), and — together with the
+    // new `getAuxiliarySwapLure` — on periphrastic NOR tenses too
+    // (`joango naiz` gets both `izango dut` and `joango dut` as distractors,
+    // where before it got neither).
+    //
+    // Every individual lure self-gates (`getCrossTenseLure` returns
+    // `undefined` for tenses other than `past`, `getRecencyContrastLure` only
+    // fires on `past`/`presentPerfect`, `getAuxiliarySwapLure` only on
+    // periphrastic izan/ukan-family forms, etc.), so unconditionally
+    // attempting all six here is safe — verbs/tenses that would previously
+    // have been gated out just get an empty result from each one.
+    const baseFormLures = [
+      { form: getCaseFrameLure(verbs, verb, tense, person), errorType: 'case-frame' },
+      { form: getAuxiliarySwapLure(verbs, verb, tense, person, objectAxis), errorType: 'case-frame' },
+      { form: getCrossTenseLure(verb, tense, person), errorType: 'tense' },
+      { form: getRecencyContrastLure(verb, tense, person), errorType: 'tense' },
+      { form: getObjectNumberLure(verb, tense, person), errorType: 'object-number' },
+      { form: getDativeOvergenerationLure(verbs, verb, tense, person, objectAxis), errorType: 'dative-overgeneration' },
+    ]
     // #230: a sentence whose embedded participle is tagged with its base
     // verb (`ari`'s sentences only, today) gets one further "progressive vs.
     // plain present" lure on top of whichever matrix-row lures already apply.
