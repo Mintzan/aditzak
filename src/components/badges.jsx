@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
-import { AGREEMENT_META, DIALECT_LABELS, PERSON_LABEL_KEYS, TYPE_META } from '../data/verbs'
+import { AGREEMENT_META, DIALECT_LABELS, TYPE_META } from '../data/verbs'
 import { getFixedArgument, getHeartsRegenRemainingMs, MAX_HEARTS } from '../lessonLogic'
 import { HeartIcon } from './icons'
 
@@ -35,7 +35,7 @@ export function FixedArgumentBadge({ fixedArgument }) {
   const { role, person } = fixedArgument
   return (
     <span title={t('fixedArgumentTitle')} className={`rounded-full px-2.5 py-1 text-xs font-semibold whitespace-nowrap ${AGREEMENT_META[role].className}`}>
-      {AGREEMENT_META[role].label}: {t(PERSON_LABEL_KEYS[person])}
+      {AGREEMENT_META[role].label}: {person}
     </span>
   )
 }
