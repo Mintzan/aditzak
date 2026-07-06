@@ -21,6 +21,7 @@ import {
   generateQuestions,
   generateReadingQuestions,
   getActiveStreak,
+  getAuxiliarySwapLure,
   getCaseFrameLure,
   getCaseFramePronounLure,
   getCrossTenseLure,
@@ -745,6 +746,76 @@ describe('getUnlockedLessonIds', () => {
       expect(getUnlockedLessonIds(lessons, {}, '', new Set(), bonusLessonIds)).toEqual(new Set(['a']))
     })
   })
+
+  describe('with progress recorded beyond a locked lesson (journey reorganisation)', () => {
+    // A reorganisation can insert several new lessons back-to-back before
+    // content the learner already finished; under the plain linear rule the
+    // second inserted lesson would be permanently blocked (its predecessor is
+    // also new/unattempted, and it has no attempts of its own). Recorded
+    // progress further along the journey unblocks everything before it.
+    const lessons = [{ id: 'a' }, { id: 'b' }, { id: 'c' }, { id: 'd' }, { id: 'e' }]
+
+    it('unblocks a run of inserted lessons when a later lesson has attempts', () => {
+      const progress = { a: { attempts: 1 }, e: { attempts: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress)).toEqual(new Set(['a', 'b', 'c', 'd', 'e']))
+    })
+
+    it('unblocks a lesson stuck behind an unpassed gate when later lessons have attempts', () => {
+      // Gate `b` was added (or attempted below GATE_PASS_STARS) after the
+      // learner had already played `d` — `c` must not stay blocked. (`e`
+      // unlocks too, by the ordinary rule: its predecessor `d` has attempts.)
+      const gateLessonIds = new Set(['b'])
+      const progress = { a: { attempts: 1 }, b: { attempts: 1, bestStars: 1 }, d: { attempts: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', gateLessonIds)).toEqual(new Set(['a', 'b', 'c', 'd', 'e']))
+    })
+
+    it('still enforces the gate soft wall at the frontier', () => {
+      // No attempts beyond the gate — the lesson after it stays locked until
+      // the gate reaches GATE_PASS_STARS, exactly as before.
+      const gateLessonIds = new Set(['b'])
+      const progress = { a: { attempts: 1 }, b: { attempts: 1, bestStars: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', gateLessonIds)).toEqual(new Set(['a', 'b']))
+    })
+
+    it('does not force a bonus track open because of spine progress past it', () => {
+      // `b1`/`b2` are an opt-in bonus run between spine lessons `a` and `e`.
+      // Spine attempts beyond the run unblock spine lessons, but the run
+      // itself stays its own linear opt-in progression: `b1` opens off `a`,
+      // `b2` still waits for `b1`.
+      const lessons = [{ id: 'a' }, { id: 'b1' }, { id: 'b2' }, { id: 'e' }]
+      const bonusLessonIds = new Set(['b1', 'b2'])
+      const progress = { a: { attempts: 1 }, e: { attempts: 1 } }
+
+      expect(getUnlockedLessonIds(lessons, progress, '', new Set(), bonusLessonIds)).toEqual(new Set(['a', 'b1', 'e']))
+    })
+
+    it('unblocks a bonus lesson when a later bonus lesson in the same run has attempts', () => {
+      // A lesson inserted mid-run is unblocked by attempts further along the
+      // same run — the bonus-track equivalent of the spine rule above.
+      const lessons = [{ id: 'a' }, { id: 'b1' }, { id: 'b2' }, { id: 'b3' }, { id: 'e' }]
+      const bonusLessonIds = new Set(['b1', 'b2', 'b3'])
+      const progress = { a: { attempts: 1 }, b3: { attempts: 1 } }
+
+      const unlocked = getUnlockedLessonIds(lessons, progress, '', new Set(), bonusLessonIds)
+
+      expect(unlocked.has('b2')).toBe(true)
+    })
+
+    it('does not unblock a bonus run from attempts in a different, later bonus run', () => {
+      // `c1` belongs to a separate bonus run further along — it says nothing
+      // about the learner's position within the `b1`/`b2` run.
+      const lessons = [{ id: 'a' }, { id: 'b1' }, { id: 'b2' }, { id: 'd' }, { id: 'c1' }, { id: 'e' }]
+      const bonusLessonIds = new Set(['b1', 'b2', 'c1'])
+      const progress = { a: { attempts: 1 }, d: { attempts: 1 }, c1: { attempts: 1 } }
+
+      const unlocked = getUnlockedLessonIds(lessons, progress, '', new Set(), bonusLessonIds)
+
+      expect(unlocked.has('b2')).toBe(false)
+    })
+  })
 })
 
 describe('isLockedByGateScore', () => {
@@ -771,6 +842,21 @@ describe('isLockedByGateScore', () => {
 
   it('is false once the gate reaches GATE_PASS_STARS', () => {
     const progress = { b: { attempts: 1, bestStars: 2 } }
+
+    expect(isLockedByGateScore(lessons, progress, gateLessonIds, 'c')).toBe(false)
+  })
+
+  it('is false when the lesson itself has attempts (it is playable, not gate-locked)', () => {
+    const progress = { b: { attempts: 1, bestStars: 1 }, c: { attempts: 1 } }
+
+    expect(isLockedByGateScore(lessons, progress, gateLessonIds, 'c')).toBe(false)
+  })
+
+  it('is false when recorded progress lies beyond the lesson (unblocked despite the unpassed gate)', () => {
+    // Mirrors `getUnlockedLessonIds`'s progressed-past rule: `d`'s attempts
+    // unblock `c`, so `c` must not show the "needs 80%" prompt while playable.
+    const lessons = [{ id: 'a' }, { id: 'b' }, { id: 'c' }, { id: 'd' }]
+    const progress = { b: { attempts: 1, bestStars: 1 }, d: { attempts: 1 } }
 
     expect(isLockedByGateScore(lessons, progress, gateLessonIds, 'c')).toBe(false)
   })
@@ -2901,13 +2987,79 @@ describe('generateQuestions', () => {
       expect(question.options).toContain('Nik')
     })
 
-    it('does not add a case-frame lure for NOR present (no `nork`, present tense)', () => {
+    it('never leaks the NOR-present case-frame lure into a bare `form` question (`grounded: false`)', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0.99) // -> 'form' (no special framing)
 
       const question = generateQuestions(izan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
 
+      // The bare `form` kind has no sentence/verb-name grounding to anchor a
+      // sibling-verb form against, so `formLures` (including the case-frame
+      // one) are dropped even though the underlying lure is now computed for
+      // this tense too — see the `grounded` invariant in `buildTaggedOptions`.
       expect(question.kind).toBe('form')
       expect(question.options).not.toContain('dut')
+    })
+
+    it('offers `dut` as a case-frame distractor for izan.present.ni once grounded by a sentence', () => {
+      // The classic izan/ukan pitfall — the first place a beginner has to
+      // pick between "naiz" and "dut" — now surfaces as a distractor on
+      // izan.present sentence questions (previously silently suppressed by
+      // the pre-existing NOR-present exemption of #141's gate).
+      vi.spyOn(Math, 'random').mockReturnValue(0) // -> 'sentence' (first available kind)
+
+      const question = generateQuestions(izan, 'present', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.kind).toBe('sentence')
+      expect(question.correct).toBe('naiz')
+      expect(question.options).toContain('dut')
+      expect(question.optionRationale.dut).toEqual({ errorType: 'case-frame', whyKey: 'lureRationaleCaseFrame' })
+    })
+  })
+
+  describe('getAuxiliarySwapLure — periphrastic own-participle + wrong-family aux', () => {
+    const izan = VERBS.find((v) => v.id === 'izan')
+    const ukan = VERBS.find((v) => v.id === 'ukan')
+    const joan = VERBS.find((v) => v.id === 'joan')
+    const ikusi = VERBS.find((v) => v.id === 'ikusi')
+
+    it('swaps the aux of a NOR periphrastic form for its NOR-NORK sibling\'s (`joango naiz` -> `joango dut`)', () => {
+      expect(getAuxiliarySwapLure(VERBS, joan, 'future', 'ni')).toBe('joango dut')
+    })
+
+    it('swaps the aux of a NOR-NORK periphrastic form for its NOR sibling\'s (`ikusi nuen` -> `ikusi nintzen`)', () => {
+      expect(getAuxiliarySwapLure(VERBS, ikusi, 'past', 'ni')).toBe('ikusi nintzen')
+    })
+
+    it('swaps the aux of `izan.future` (`izango naiz`) into `izango dut` — the aux-only mistake, distinct from `getCaseFrameLure`\'s full sibling form', () => {
+      // `getCaseFrameLure` on izan.future.ni returns ukan.future.ni =
+      // "izango dut" (same string, coincidentally, since the "izan"
+      // participle is already izan's own citation). Confirms both lures
+      // co-exist and dedupe cleanly downstream via `dedupeBySourceForm`.
+      expect(getAuxiliarySwapLure(VERBS, izan, 'future', 'ni')).toBe('izango dut')
+      expect(getCaseFrameLure(VERBS, izan, 'future', 'ni')).toBe('izango dut')
+    })
+
+    it('returns undefined for a synthetic (single-word) form — no auxiliary to swap', () => {
+      // izan.present.ni = "naiz" (synthetic). The aux-swap doesn't apply
+      // here; the aux challenge on this cell is carried by `getCaseFrameLure`
+      // instead ("dut" alongside "naiz").
+      expect(getAuxiliarySwapLure(VERBS, izan, 'present', 'ni')).toBeUndefined()
+      // ukan.present.ni = "dut" (synthetic).
+      expect(getAuxiliarySwapLure(VERBS, ukan, 'present', 'ni')).toBeUndefined()
+    })
+
+    it('returns undefined without a `verbs` list', () => {
+      expect(getAuxiliarySwapLure(undefined, joan, 'future', 'ni')).toBeUndefined()
+    })
+
+    it('surfaces "joango dut" as a distractor on a joan.future.ni sentence question', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0) // -> 'sentence' (first available kind)
+
+      const question = generateQuestions(joan, 'future', { verbs: VERBS }).find((q) => q.person === 'ni')
+
+      expect(question.correct).toBe('joango naiz')
+      expect(question.options).toContain('joango dut')
+      expect(question.optionRationale['joango dut']).toEqual({ errorType: 'case-frame', whyKey: 'lureRationaleCaseFrame' })
     })
   })
 
