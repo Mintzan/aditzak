@@ -1330,8 +1330,8 @@ Representative examples (present tense, `ni`/`hura`):
   Idiazabal cheese from the dairy.)
 - **itxaron** — *Nik tranbia geltokian itxaroten dut.* (I wait for the tram
   at the stop.)
-- **sartu** — *Ni Gorbeiako aterpean sartzen naiz ekaitzetik.* (I take
-  shelter in the Gorbeia refuge from the storm.)
+- **sartu** — *Ni Bilboko Arriaga antzokian sartzen naiz ikuskizuna ikustera.*
+  (I go into Bilbao's Arriaga theater to watch the show.)
 - **atera** — *Ni Bilboko Casco Viejotik ateratzen naiz goizeko hamarretan.*
   (I leave Bilbao's Old Quarter at ten in the morning.)
 - **hasi** — *Ni euskara ikastaroarekin hasten naiz irailean.* (I start the
@@ -1410,6 +1410,10 @@ Representative examples (present tense, `ni`/`hura`):
 - **babestu** — *Nik basoa suteetatik babesten dut.* (I protect the forest
   from fires.) / *Hark herria ekaitzetik babesten du.* (He/she protects the
   town from the storm.)
+- **babestu (intransitive, `babestu-izan`)** — *Ni Gorbeiako aterpean
+  babesten naiz ekaitzetik.* (I take shelter at Gorbeia's mountain hut from
+  the storm.) — distinct from the transitive `babestu` above ("to protect
+  X"); this is "to take shelter" (oneself).
 - **borobildu** — *Nik akordioa azken xehetasunean borobiltzen dut.* (I
   round off the agreement on the last detail.) / *Hark eskaintza azkenean
   borobiltzen du.* (He/she finalizes the offer in the end.)

@@ -4977,7 +4977,16 @@ export const VERBS = [
     conjugations: {},
     sentences: {
       present: {
-        ni: { text: 'Ni Gorbeiako aterpean ___ ekaitzetik.', validFor: [] },
+        // #babestu-split: this slot used to be a "take shelter from the
+        // storm" sentence, first with the wrong word for "mountain hut"
+        // (babes-etxea instead of aterpe), then flagged again as the wrong
+        // *verb* for the scenario — a native speaker would say "babesten
+        // naiz" (to take shelter), not "sartzen naiz" (to enter). Moved that
+        // scenario to the new `babestu-izan` entry below (its own
+        // intransitive sense) and replaced this one with a plain
+        // entering-a-venue sentence, matching the pattern the other persons
+        // here already use.
+        ni: { text: 'Ni Bilboko Arriaga antzokian ___ ikuskizuna ikustera.', validFor: [] },
         zu: { text: 'Zu Tolosako tabernan ___ pintxoetara?', validFor: [] },
         hura: { text: 'Hura San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
         gu: { text: 'Gu Aste Nagusiko jaitsierara ___.', validFor: [] },
@@ -4985,7 +4994,7 @@ export const VERBS = [
         haiek: { text: 'Haiek Gernikako frontoira ___ partida ikustera.', validFor: [] },
       },
       past: {
-        ni: { text: 'Ni atzo Gorbeiako aterpean ___ ekaitzetik.', validFor: [] },
+        ni: { text: 'Ni atzo Bilboko Arriaga antzokian ___ ikuskizuna ikustera.', validFor: [] },
         zu: { text: 'Zu herenegun Tolosako tabernan ___ pintxoetara?', validFor: [] },
         hura: { text: 'Hura lehengo egunean San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
         gu: { text: 'Gu iaz Aste Nagusiko jaitsierara ___.', validFor: [] },
@@ -6754,6 +6763,39 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean espezie mehatxatua ehizatik ___.', validFor: [] },
       },
     },
+  },
+  // `babestu-izan` — the intransitive/reflexive sense ("to take shelter"),
+  // distinct from `babestu` above (transitive, "to protect X" — `nor-nork`,
+  // `dut`-family). Same participle (`babesten`/`babestu`), different
+  // argument structure (`nor`-only, `naiz`-family) — a user flagged that a
+  // "sheltering from a storm" sentence living on `sartu` (#babestu-split
+  // above) used the wrong verb ("sartzen naiz" instead of "babesten naiz"),
+  // and one invariant conjugation table can't cover both senses, so this
+  // gets its own `VERBS` entry, mirroring `ahal-izan`/`ahal-ukan`'s
+  // precedent for the same auxiliary-family split. Not yet referenced by any
+  // lesson — `ni`-only sentences for now, same minimal-footprint approach as
+  // adding data ahead of it being taught.
+  {
+    id: 'babestu-izan',
+    verb: 'babestu',
+    meaning: { en: 'to take shelter / to shelter (oneself)', es: 'guarecerse / refugiarse', eu: 'babestu' },
+    type: 'periphrastic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    // Composed against the `izan` skeleton — see its own doc comment near
+    // `OBJECT_AXIS_SKELETONS`.
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'babesten ', past: 'babestu ', future: 'babestuko ' },
+    conjugations: {},
+    sentences: {
+      present: {
+        ni: { text: 'Ni Gorbeiako aterpean ___ ekaitzetik.', validFor: [] },
+      },
+      past: {
+        ni: { text: 'Ni atzo Gorbeiako aterpean ___ ekaitzetik.', validFor: [] },
+      },
+    },
+    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
   },
   {
     id: 'ziurtatu',

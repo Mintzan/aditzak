@@ -6,6 +6,44 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-06 — Storm-shelter sentence used the wrong verb (`sartu`), not just the wrong noun; split off `babestu-izan`
+
+Follow-up to the "aterpe" vocabulary fix just below: even with the noun
+corrected, a user flagged that the *verb* was still wrong — "Ni Gorbeiako
+aterpean sartzen naiz ekaitzetik" uses `sartu` ("to enter"), but a native
+speaker would say **babesten naiz** ("I take shelter/protect myself"), from
+`babestu`.
+
+**The complication:** the existing `babestu` entry (`VERBS`) is modeled as
+strictly transitive (`agreement: ['nor', 'nork']`, `dut`-family — "Nik basoa
+suteetatik babesten dut", "I protect the forest from fires"). "Babesten
+naiz" needs the intransitive/reflexive sense ("to take shelter") — `nor`-
+only, `naiz`-family — which is a different argument structure the existing
+entry's single conjugation table can't also express.
+
+**Fix, mirroring `ahal-izan`/`ahal-ukan`'s precedent** (same lexical root,
+two `VERBS` entries split by auxiliary family rather than one entry
+carrying two conjugation tables): added `babestu-izan` — `agreement:
+['nor']`, composed against the `izan` skeleton with the same participle
+prefix (`babesten`/`babestu`) the transitive entry already uses, giving
+"babesten naiz"/"babestu nintzen"/"babestuko naiz". Moved the storm-shelter
+sentence there (`ni` present/past only — not yet referenced by any lesson,
+so no need to fill out the other five persons yet).
+
+`sartu` needed a replacement `ni` sentence, since it's actively pooled
+across several units and can't just lose a person. Replaced with a plain
+entering-a-venue sentence ("Ni Bilboko Arriaga antzokian sartzen naiz
+ikuskizuna ikustera" — I go into Bilbao's Arriaga theater to watch the
+show), matching the pattern its other five persons already use (museum,
+cider house, fronton, etc.) rather than inventing a new pattern.
+
+**Regenerated `scripts/validfor-gap-baseline.json`** after reviewing the new
+gap slots via `node scripts/validfor-delta-audit.mjs` for both changed
+sentences — every gap was genuinely non-interchangeable (no sibling verb's
+form actually means "enter [a venue]" or "take shelter"), matching the
+existing pattern where `sartu`'s other persons also carry `validFor: []`
+throughout, so no `validFor` addition was needed.
+
 ## 2026-07-06 — `sartu`'s "mountain hut" sentence: "babes-etxea" → "aterpe" (user correction)
 
 A user flagged that `sartu`'s `ni` example sentences ("Ni Gorbeiako
