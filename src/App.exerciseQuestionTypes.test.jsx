@@ -205,6 +205,28 @@ describe('App', () => {
       expect(screen.getByRole('button', { name: 'hark' })).toBeInTheDocument()
       expect(screen.queryByRole('button', { name: 'ni' })).not.toBeInTheDocument()
     })
+
+    // A verb with no `pronouns` map must fall back to the raw person key —
+    // which for a `nor`-agreement verb *is* the Basque absolutive pronoun
+    // (`ni`/`zu`/`hura`) — never to the translated `PERSON_LABEL_KEYS` text
+    // ("I"/"yo"/…): pronoun tiles stay Basque whatever the interface
+    // language. `nor-fodder-present`'s first carrier (`sartu`, with
+    // `Math.random` pinned so sampling/shuffling are no-ops) is such a verb.
+    it("labels a pronouns-less verb's tiles with the Basque person keys, not translated pronouns", async () => {
+      window.history.pushState({}, '', '/?dev=unlock-all')
+      const user = userEvent.setup()
+      vi.spyOn(Math, 'random').mockReturnValue(0.99)
+      render(<App />)
+
+      // Multi-source pool lessons have no single-verb preview screen —
+      // clicking the lesson card lands directly on the first question.
+      await user.click(screen.getByRole('button', { name: /oraina · ni\/zu\/hura[\s\S]*7 verbs/i }))
+
+      expect(screen.getByRole('button', { name: 'ni' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'zu' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'hura' })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'I' })).not.toBeInTheDocument()
+    })
   })
 
   // #330/#331: `unit-10-present` is a real fixture with far more sources
