@@ -6,6 +6,109 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-06 — Added `mugitu`/`mugitu-izan` (ambitransitive pair #2)
+
+Added the first of the five logged ambitransitive candidates (§4b-quinquies)
+on request, following the `babestu`/`babestu-izan` template exactly: `mugitu`
+(transitive, `nor-nork`, "to move X" — "mugitzen dut"/"mugitu nuen") and
+`mugitu-izan` (intransitive, `nor`, "to move [oneself]" — composed against
+the `izan` skeleton, "mugitzen naiz"/"mugitu nintzen"). Full six-person
+`present`/`past` sentences on both (not just `ni`, unlike `babestu-izan`'s
+stub) since this was explicitly asked for "with proper pronouns."
+
+**Two rounds of naturalness review** (`node scripts/validfor-delta-audit.mjs`)
+surfaced genuine overlaps, not just mechanical ones:
+
+- `mugitu`'s first sentence draft ("carry the chair from the kitchen to the
+  living room") read equally naturally with `eraman`/`ekarri` (to carry/
+  bring between locations) — reworded to a small in-place shift framing ("a
+  bit", "out of the way", "to make room"), which cut `ekarri`/`hartu`/`utzi`
+  out but **`eraman` still fit** even a short shift ("daramat" — "I carry it
+  [a bit]"), a genuine overlap rather than a wording accident, so `validFor:
+  ['eraman']` was added rather than chased away with more rewrites.
+- `mugitu-izan`'s first present-tense draft (moving across a room/stage/
+  street) read equally naturally with `ibili` ("to walk/move about") —
+  reworded to shifting position while seated/confined (chair, bed, car,
+  cinema seat), which doesn't extend to `ibili`'s ambulatory sense, so no
+  `validFor` addition was needed there.
+- `mugitu-izan`'s past-tense sentences (relocating to a new city/
+  neighborhood — the user's own illustrative example) read equally
+  naturally with `joan` ("went to X") — this one's genuinely
+  unavoidable (that's just what "moved to X" means), so `validFor: ['joan']`
+  was added. Checked whether `ibili` also fit the same slots: it pairs with
+  a locative ("kalean ibili naiz", "was out and about in the street"), not
+  an allative destination the way "moved/went to X" does, so it was
+  deliberately left out.
+
+Regenerated `scripts/validfor-gap-baseline.json` after this review.
+
+## 2026-07-06 — Logged 5 more ambitransitive-verb candidates (not yet added)
+
+Following the `babestu`/`babestu-izan` split above, a user confirmed this is
+a general pattern ("hay verbos que admiten las dos formas") and gave 5 more
+candidates: `mugitu` (to move), `esnatu` (to wake up), `ailegatu` (to
+arrive), `piztu` (to light/turn on), `amatatu` (to turn off/extinguish) —
+with more expected in later messages. None are in `VERBS` yet; logged as a
+new table (`docs/VERB_COVERAGE.md` §4b-quinquies) rather than added now,
+per explicit instruction to just track them for whenever the fuller list is
+in. Flagged two open questions there for whoever adds them: `piztu`/
+`amatatu`'s intransitive reading is naturally 3rd-person/inanimate ("sua
+piztu da", not really a `ni`-scenario), and `ailegatu` may be
+intransitive-only (no obvious transitive "arrive something" reading, unlike
+the other four) rather than needing the same nor/nor-nork split.
+
+## 2026-07-06 — Storm-shelter sentence used the wrong verb (`sartu`), not just the wrong noun; split off `babestu-izan`
+
+Follow-up to the "aterpe" vocabulary fix just below: even with the noun
+corrected, a user flagged that the *verb* was still wrong — "Ni Gorbeiako
+aterpean sartzen naiz ekaitzetik" uses `sartu` ("to enter"), but a native
+speaker would say **babesten naiz** ("I take shelter/protect myself"), from
+`babestu`.
+
+**The complication:** the existing `babestu` entry (`VERBS`) is modeled as
+strictly transitive (`agreement: ['nor', 'nork']`, `dut`-family — "Nik basoa
+suteetatik babesten dut", "I protect the forest from fires"). "Babesten
+naiz" needs the intransitive/reflexive sense ("to take shelter") — `nor`-
+only, `naiz`-family — which is a different argument structure the existing
+entry's single conjugation table can't also express.
+
+**Fix, mirroring `ahal-izan`/`ahal-ukan`'s precedent** (same lexical root,
+two `VERBS` entries split by auxiliary family rather than one entry
+carrying two conjugation tables): added `babestu-izan` — `agreement:
+['nor']`, composed against the `izan` skeleton with the same participle
+prefix (`babesten`/`babestu`) the transitive entry already uses, giving
+"babesten naiz"/"babestu nintzen"/"babestuko naiz". Moved the storm-shelter
+sentence there (`ni` present/past only — not yet referenced by any lesson,
+so no need to fill out the other five persons yet).
+
+`sartu` needed a replacement `ni` sentence, since it's actively pooled
+across several units and can't just lose a person. Replaced with a plain
+entering-a-venue sentence ("Ni Bilboko Arriaga antzokian sartzen naiz
+ikuskizuna ikustera" — I go into Bilbao's Arriaga theater to watch the
+show), matching the pattern its other five persons already use (museum,
+cider house, fronton, etc.) rather than inventing a new pattern.
+
+**Regenerated `scripts/validfor-gap-baseline.json`** after reviewing the new
+gap slots via `node scripts/validfor-delta-audit.mjs` for both changed
+sentences — every gap was genuinely non-interchangeable (no sibling verb's
+form actually means "enter [a venue]" or "take shelter"), matching the
+existing pattern where `sartu`'s other persons also carry `validFor: []`
+throughout, so no `validFor` addition was needed.
+
+## 2026-07-06 — `sartu`'s "mountain hut" sentence: "babes-etxea" → "aterpe" (user correction)
+
+A user flagged that `sartu`'s `ni` example sentences ("Ni Gorbeiako
+babes-etxean sartzen naiz ekaitzetik." — "I take shelter at Gorbeia's
+mountain hut from the storm.") used the wrong word for "mountain hut/
+refuge": Basque says **aterpe**, not "babes-etxea" (literally
+"protection-house" — plausible-looking but not the real term). Fixed both
+the present and past `ni` sentences in `VERBS` (`sartu`'s entry) and the
+matching line in `docs/SAMPLE_SENTENCES.md` to "Gorbeiako aterpean" (inessive
+`-an` on `aterpe`, same case marking as before). Taking the correction as
+given rather than second-guessing it — unlike the "Lehenaldiko Burutua"
+naming question, this is concrete vocabulary from someone who evidently
+knows the term, not a case with conflicting internal evidence to weigh.
+
 ## 2026-07-05 — Basque translation of the izan-vs-ukan "why" explanation (needs native-speaker check)
 
 `docs/DECISIONS.md`'s "Explained why izan vs. ukan" entry added an

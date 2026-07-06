@@ -8,6 +8,41 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-06 — Hide `hi` from a unit's conjugation tables until the unit that introduces it
+
+A user asked the unit overview's conjugation tables not to include `hi`
+(and its gendered `hi-m`/`hi-f` cells) before the unit that actually teaches
+it. `hi` isn't taught until Unit 36 ("hi — Meet 'hi'", a bonus unit in Phase
+V's "Intimate Register" stage), but `getComposedTable` includes `hi`/
+`hi-m`/`hi-f` cells directly in many verbs' base `present`/`past` tables
+whenever the data has them (e.g. `ukan.present` carries `'hi-m': 'duk',
+'hi-f': 'dun'`) — so Unit 2's overview was already showing "duk"/"dun" to a
+learner more than 30 units before `hi` (a register choice, not just another
+grammatical person like `gu`/`zuek`/`haiek`) has any context at all.
+
+**Fix:** `ConjugationTable` (`components/conjugationTable.jsx`) takes an
+optional `hidePersons` array and filters those keys out of its rendered
+rows. `UnitOverviewModal` computes `unit.number < HI_INTRODUCED_UNIT` and
+passes `['hi', 'hi-m', 'hi-f']` when true.
+
+**`HI_INTRODUCED_UNIT`** is derived from the data (lowest unit number with a
+lesson whose `persons` includes `'hi'`), not hardcoded to `36` — so a future
+renumber can't leave it silently stale. Lives in `lessonLogic.js` rather
+than `HomeScreen.jsx`: it needs both `JOURNEY` and `LESSONS`, and exporting
+a plain constant (not a component) from a screen file trips this repo's
+`react-refresh/only-export-components` lint rule (the same reason
+`lessonLogic.js` exists separately from `App.jsx` at all, per its own header
+comment).
+
+Scoped to `UnitOverviewModal` only, not `LessonPreviewScreen` (the
+per-lesson preview shown before a lesson's first attempt) — the user's ask
+was specifically about "help," and `LessonPreviewScreen`'s existing behavior
+wasn't part of what was reported.
+
+Added a targeted test (Unit 2's `duk`/`dun` no longer appearing) plus a
+loop-based check across every `available` unit before `HI_INTRODUCED_UNIT`,
+so no other unit's table can leak `hi` either.
+
 ## 2026-07-06 — Person tiles and the fixed-argument badge always show Basque pronouns, never translated ones
 
 User report (screenshot, Spanish UI): `arriskuan jarri`'s match-pairs board labeled its

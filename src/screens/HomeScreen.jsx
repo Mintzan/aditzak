@@ -13,6 +13,7 @@ import {
   getPointsBalance,
   getUnlockedLessonIds,
   HEART_COST_POINTS,
+  HI_INTRODUCED_UNIT,
   isLockedByGateScore,
   isLockedOut,
   MAX_HEARTS,
@@ -214,6 +215,9 @@ export function UnitOverviewModal({ unit, onClose }) {
   const title = journeyText('units', unit.number, 'title', language, unit.title)
   const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
   const payload = unit.payload ? journeyText('units', unit.number, 'payload', language, unit.payload) : null
+  // Every unit before `hi`'s own debut hides it (and its toka/noka gendered
+  // cells) from its tables — see `HI_INTRODUCED_UNIT`'s doc comment.
+  const hidePersons = unit.number < HI_INTRODUCED_UNIT ? ['hi', 'hi-m', 'hi-f'] : []
   // One table per distinct verb/tense this unit's *practice* lessons cover —
   // review lessons (`lesson.sources`, no `lesson.verbId`) are skipped since
   // they only recombine verb/tense pairs a practice lesson already
@@ -271,7 +275,7 @@ export function UnitOverviewModal({ unit, onClose }) {
                   <p className="mb-2 text-sm font-semibold text-gray-700">
                     {verb.verb} <span className="font-normal text-gray-400">— {verbMeaning(verb, language)} · {t(TENSE_META[tense].labelKey)}</span>
                   </p>
-                  <ConjugationTable verb={verb} tense={tense} objectAxis={objectAxis} />
+                  <ConjugationTable verb={verb} tense={tense} objectAxis={objectAxis} hidePersons={hidePersons} />
                 </div>
               ))}
             </div>
