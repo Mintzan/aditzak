@@ -2,7 +2,7 @@
 // tested directly and so react-refresh only has to reason about components
 // in App.jsx (it warns when a component file also exports plain functions).
 
-import { OBJECT_AXIS_SKELETONS } from './data/verbs.js'
+import { OBJECT_AXIS_SKELETONS, PRONOUN_DECLENSIONS, personPronoun } from './data/verbs.js'
 
 export function computeStars(score, total) {
   if (total === 0) return 0
@@ -745,7 +745,8 @@ export function getCaseFrameLure(verbs, verb, tense, person) {
 // #141's "Case-marking checkpoint" Slot 1, the "wrong-case subject"
 // (ergative-drift) trap for `pronoun` questions.
 export function getCaseFramePronounLure(verbs, verb, person) {
-  return getCaseFrameSibling(verbs, verb.agreement)?.pronouns?.[person]
+  const sibling = getCaseFrameSibling(verbs, verb.agreement)
+  return sibling && personPronoun(sibling, person)
 }
 
 // For a past-tense question, the verb's own *present*-tense form for the same
@@ -1350,8 +1351,9 @@ function buildWordOrderQuestion(table, sentence, person) {
 //     `negative`
 // The typed framings reuse exactly the same example-sentence data as their
 // multiple-choice counterparts (`sentence` needs `verb.sentences[tense][person]`;
-// `pronoun`/`type-pronoun` need both `verb.pronouns` and
-// `verb.pronounSentences[tense][person]`; `negative`/`type-negative` need
+// `pronoun`/`type-pronoun` need `verb.pronounSentences[tense][person]` (the
+// pronouns themselves come from the verb's `personAxis` declension, see
+// `PRONOUN_DECLENSIONS` in `data/verbs.js`); `negative`/`type-negative` need
 // `verb.negativeSentences[tense][person]`) — typing only makes sense with that
 // sentence context to anchor what's being asked for, and reusing the data means
 // a verb that already supports one framing automatically supports its typed
@@ -1422,7 +1424,8 @@ function buildWordOrderQuestion(table, sentence, person) {
 // sentence's `validFor` tag (see `docs/SENTENCE_FRAMES.md`) — so an untagged
 // sentence contributes no extra candidates (the safe default), while a
 // `validFor: []` sentence admits all of them. Not used for `pronoun`, whose
-// options come from a different table (`verb.pronouns`) that cross-verb
+// options come from a different table (the verb's `personAxis` pronoun
+// declension, see `PRONOUN_DECLENSIONS` in `data/verbs.js`) that cross-verb
 // conjugated forms wouldn't belong in, nor for `form` (bare "which form is
 // correct?" questions have no sentence to anchor a sibling verb's form as
 // wrong — see `docs/DECISIONS.md`). Defaults to no extra candidates (the
@@ -1525,7 +1528,7 @@ export function generateQuestions(
 
   function buildQuestion(person) {
     const sentence = normalizeSentence(pickVariant(sentences[person]))
-    const pronounSentence = verb.pronouns && normalizeSentence(pronounSentences[person])
+    const pronounSentence = normalizeSentence(pronounSentences[person])
     const negativeSentence = normalizeSentence(pickVariant(negativeSentences[person]))
     const ambiguousTyping = hasAmbiguousTypedForm(verb, tense, person, verbs, objectAxis)
     // `borrowed` (see `getBorrowedDistractors`) is `Array<{ verbId, form }>` —
@@ -1636,11 +1639,12 @@ export function generateQuestions(
       case 'spot-error':
         return { ...source, ...buildSpotErrorQuestion(table, sentences, personsWithSentences, person, borrowedSpotErrorSlots) }
       case 'pronoun': {
-        const { correct, options, optionRationale } = buildOptions(verb.pronouns, persons, person, [], [], pronounLures, true)
+        const pronounTable = PRONOUN_DECLENSIONS[verb.personAxis ?? 'nor']
+        const { correct, options, optionRationale } = buildOptions(pronounTable, persons, person, [], [], pronounLures, true)
         return { ...source, kind: 'pronoun', person, sentence: pronounSentence.text, correct, options, optionRationale }
       }
       case 'type-pronoun':
-        return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence.text, correct: verb.pronouns[person] }
+        return { ...source, kind: 'type-pronoun', person, sentence: pronounSentence.text, correct: personPronoun(verb, person) }
       case 'negative': {
         const extra = filterExtraCandidates(extraCandidates?.[person], negativeSentence.validFor)
         const borrowedForms = filterExtraCandidates(borrowed, negativeSentence.validFor)

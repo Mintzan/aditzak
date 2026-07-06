@@ -309,7 +309,7 @@ describe('App', () => {
     }
 
     // `izan`'s own (Basque) pronouns, matching `MatchPairsBoard`'s
-    // `verb.pronouns`-based tile labels (#201) rather than the generic
+    // `personPronoun`-based tile labels (#201) rather than the generic
     // translated `PERSON_LABEL_KEYS` text.
     const PERSON_LABEL = { ni: 'ni', zu: 'zu', hura: 'hura' }
 

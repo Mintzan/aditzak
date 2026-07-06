@@ -100,14 +100,22 @@
 // in alongside bare-form questions wherever a sentence is available, falling
 // back to bare-form-only for verbs/persons that don't have one yet.
 //
-// `pronouns` + `pronounSentences` are the equivalent pair for a second
-// "complete the sentence" flavour: filling in the correctly-declined personal
-// pronoun (e.g. "Nik" for the ergative subject of `ukan`) rather than the verb
-// form. `pronouns` gives the declined form for each grammatical person — the
-// case depends on which argument that pronoun fills for this verb (absolutive
-// for `izan`'s `nor` subject, ergative for `ukan`'s `nork` subject) — and
-// `pronounSentences` gives a sentence with `___` marking where it goes, with
-// the verb already spelled out.
+// `personAxis` (optional: 'nork' | 'nori', default 'nor') names the case
+// role that this verb's `conjugations[tense]` person keys range over — the
+// one fact needed to display the right pronoun next to a form. The keys
+// themselves are always the same abstract `ni`/`zu`/`hura`/... but what they
+// *mean* depends on how the table is authored: `izan`'s axis is the
+// absolutive subject (`ni naiz`), `ukan`'s the ergative subject (`nik dut`),
+// `gustatu`'s the dative experiencer (`niri gustatzen zait`). Pronoun
+// declension itself is fully regular, so the declined pronouns live once in
+// `PRONOUN_DECLENSIONS` below, looked up via `personPronoun(verb, person)`
+// (formerly a per-verb `pronouns` map, 100+ near-identical copies).
+//
+// `pronounSentences` powers a second "complete the sentence" flavour:
+// filling in the correctly-declined personal pronoun (e.g. "Nik" for the
+// ergative subject of `ukan`) rather than the verb form — a sentence with
+// `___` marking where the pronoun goes, with the verb already spelled out.
+// The pronoun options/answer come from the verb's `personAxis` declension.
 //
 // `negativeSentences` (optional, by tense → person) is the negative-statement
 // counterpart of `sentences`: a sentence with `___` marking the conjugated
@@ -572,7 +580,6 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ irakaslea naiz.',
@@ -741,7 +748,6 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ etxean nago.',
@@ -1188,7 +1194,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ liburu bat dut.',
@@ -1307,7 +1313,7 @@ export const VERBS = [
         haiek: [{ text: 'Turistek Zumaia Flysch-eko itsaslabarrak argazkitan hartu ___.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ kafe bat nahi dut.',
@@ -1415,7 +1421,7 @@ export const VERBS = [
         haiek: [{ text: 'Sukaldariek txuleta erre ___.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   // #410/#411: `ahal` ("ability/possibility") and its negation `ezin`
   // ("can't") — per `docs/VERB_COVERAGE.md` §5, these are *auxiliary-
@@ -1456,7 +1462,6 @@ export const VERBS = [
         haiek: [{ text: 'Haiek bihar etorri ___.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
   },
   {
     id: 'ahal-ukan',
@@ -1481,7 +1486,7 @@ export const VERBS = [
         haiek: [{ text: 'Haiek arazoa konpondu ___.', validFor: ['behar', 'ezin-ukan'] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'ezin-izan',
@@ -1505,7 +1510,6 @@ export const VERBS = [
         haiek: [{ text: 'Haiek bihar joan ___.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
   },
   {
     id: 'ezin-ukan',
@@ -1530,7 +1534,7 @@ export const VERBS = [
         haiek: [{ text: 'Haiek txartela erosi ___.', validFor: ['behar', 'ahal-ukan'] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   // `maite izan` ("to love", lit. "to hold dear") — #348, the same
   // invariant-particle + `ukan` shape as `nahi`/`behar` above (see
@@ -1585,7 +1589,7 @@ export const VERBS = [
     // `[object Object]`-shaped "form"). The "exercises the new axis" bar is
     // met the same way #347 met it for `ukan`: a logic-level smoke test
     // (`src/logic.test.js`) running `generateQuestions` against this entry.
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   // `jakin` ("to know a fact") — fully synthetic, sharing `ukan`'s
   // `-t`/`-zu`/∅ present suffix family (`dakit`/`dakizu`/`daki`), per
@@ -1699,11 +1703,7 @@ export const VERBS = [
         ],
       },
     },
-    // #289: `gu`/`zuek`/`haiek` added — `jakin`'s `past` table conjugates
-    // these persons (NORK, ergative) but `pronouns` previously stopped at
-    // `hura`, so the plain-drill heading fell back to the raw key (`gu`)
-    // instead of the declined form (`Guk`) for `jakin-past`-family lessons.
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ erantzuna dakit.',
@@ -1930,7 +1930,6 @@ export const VERBS = [
         haiek: [{ text: 'Haurrak korrika ___ Olentzero ikustera plazara.', validFor: ['etorri'] }],
       },
     },
-    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ hondartzara noa.',
@@ -2197,7 +2196,6 @@ export const VERBS = [
         haiek: [{ text: 'Gurasoak goizeko lehen orduan ___ baserritik esnearekin.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ etxera nator.',
@@ -2247,8 +2245,9 @@ export const VERBS = [
   // imperfective participle + `izan`. Modeled as its own `VERBS` entry like
   // `nahi`/`jakin`: conjugates *exactly* like `izan`'s present
   // (`naiz`/`zara`/`da`, per `docs/VERB_COVERAGE.md` §5), so `agreement:
-  // ['nor']` and unmarked `pronouns` (no ergative `-k`) — the construction
-  // always takes `izan`, regardless of the lexical verb's own transitivity.
+  // ['nor']` and unmarked pronouns (no ergative `-k`, i.e. the default `nor`
+  // `personAxis`) — the construction always takes `izan`, regardless of the
+  // lexical verb's own transitivity.
   {
     id: 'ari',
     verb: 'ari izan',
@@ -2301,7 +2300,6 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura' },
     // #244: `zu` rides `egiten` (pairing with the unit's own "Zer egiten ari
     // zara?" payload question) rather than the non-participle "lanean", so
     // the three fixed pronoun examples cover three distinct imperfective
@@ -2410,7 +2408,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ sagarra jaten dut.',
@@ -2509,7 +2507,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ ura edaten dut.',
@@ -2610,7 +2608,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ liburu bat erosten dut.',
@@ -2677,7 +2675,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ autobusa hartzen dut.',
@@ -2820,7 +2818,7 @@ export const VERBS = [
         haiek: [{ text: 'Haiek gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ filma ikusten dut.',
@@ -2970,7 +2968,7 @@ export const VERBS = [
         ],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ giltza poltsikoan daukat.',
@@ -3083,7 +3081,7 @@ export const VERBS = [
         haiek: [{ text: 'Sukaldariek txuleta handia ___ txosnatik mahaira.', validFor: ['ukan', 'eduki'] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ nire txakurra daramat mendira.',
@@ -3181,7 +3179,7 @@ export const VERBS = [
         haiek: [{ text: 'Lagunek danbor txiki bat ___ Donostiako Danborradatik, oparitzeko.', validFor: ['ukan', 'eduki', 'hartu'] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     pronounSentences: {
       present: {
         ni: '___ zuri Tolosako babarrun gorri zaku bat dakart.',
@@ -3238,7 +3236,7 @@ export const VERBS = [
         haiek: [{ text: 'Ikasleek liburu zahar hori ___ iaz.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'ibili',
@@ -3370,7 +3368,6 @@ export const VERBS = [
         haiek: [{ text: 'Basurdeak gauez herriko soroetan ___ janari bila.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Ni', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
     pronounSentences: {
       present: {
         ni: '___ kalean nabil.',
@@ -3609,7 +3606,7 @@ export const VERBS = [
     // to `hura`), so the plain-drill heading needs `ukan`'s ergative
     // pronoun forms — previously missing entirely, so the heading fell back
     // to the raw person key for every `esan-past`/`esan-future` question.
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'eman',
@@ -3750,7 +3747,7 @@ export const VERBS = [
     // ergative ones — previously missing entirely, so the heading fell back
     // to the raw person key for every `eman-past`/`eman-future` question.
     // `ni`/`gu` stay absent (reflexive-only, no conjugated forms to label).
-    pronouns: { zu: 'Zuri', hura: 'Hari', zuek: 'Zuei', haiek: 'Haiei' },
+    personAxis: 'nori',
   },
   // #146: the first NOR-NORI (dative-subject / "psych") verbs — `gustatu`,
   // `iruditu`, `ahaztu`. `agreement: ['nor', 'nori']` with `object: 'hura'`
@@ -3956,8 +3953,8 @@ export const VERBS = [
     // NORI is the varying slot for this verb (`agreement: ['nor', 'nori']`,
     // `object: 'hura'` fixes NOR), so the plain-drill heading needs the
     // dative-declined pronoun (`niri`/`hari`/`haiei`/...), not the raw
-    // absolutive person key — same fix as `eman.pronouns` above.
-    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
+    // absolutive person key — same as `eman` above.
+    personAxis: 'nori',
   },
   {
     id: 'iruditu',
@@ -4104,8 +4101,8 @@ export const VERBS = [
         haiek: [{ text: 'Haiei joan den astean ongi ___.', validFor: [] }],
       },
     },
-    // See `gustatu.pronouns` above — same NOR-NORI dative-heading fix.
-    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
+    // See `gustatu` above — same NOR-NORI dative varying slot.
+    personAxis: 'nori',
   },
   {
     id: 'ahaztu',
@@ -4262,8 +4259,8 @@ export const VERBS = [
         zu: [{ text: 'Zuri ___ etxeko giltzak San Fermin jaietan.', validFor: ['gustatu'] }],
       },
     },
-    // See `gustatu.pronouns` above — same NOR-NORI dative-heading fix.
-    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
+    // See `gustatu` above — same NOR-NORI dative varying slot.
+    personAxis: 'nori',
   },
   // #319: high-frequency fodder tier (split from #304/#318). Plain `nor-nork`/
   // `nor` regular verbs feeding the pool lessons #318 designated — no new
@@ -4286,7 +4283,7 @@ export const VERBS = [
     // one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'egiten ', past: 'egin ', future: 'egingo ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         zu: { text: 'Zuk bertso saio bat ___ herriko festetan?', validFor: [] },
@@ -4330,7 +4327,7 @@ export const VERBS = [
     // grant one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'irakurtzen ', past: 'irakurri ', future: 'irakurriko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik Bernardo Atxagaren eleberri bat ___ gauero.', validFor: [] },
@@ -4371,7 +4368,7 @@ export const VERBS = [
     // grant one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'idazten ', past: 'idatzi ', future: 'idatziko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik gutun bat ___ amonarentzat.', validFor: [] },
@@ -4419,7 +4416,7 @@ export const VERBS = [
     // grant one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'ikasten ', past: 'ikasi ', future: 'ikasiko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik euskara ___ helduen ikastaroan.', validFor: [] },
@@ -4458,7 +4455,7 @@ export const VERBS = [
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'entzuten ', past: 'entzun ', future: 'entzungo ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik txalaparta ___ plazan.', validFor: [] },
@@ -4498,7 +4495,7 @@ export const VERBS = [
     // one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'uzten ', past: 'utzi ', future: 'utziko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik bizikleta plaza ondoan ___.', validFor: [] },
@@ -4558,7 +4555,7 @@ export const VERBS = [
         haiek: 'aurkituko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #457: `bilatu` ("search for") is a genuine sibling on all six —
     // searching for and finding the same object are both natural, distinct
     // true claims about the same scene (a shell, a shop, a mushroom, a gift,
@@ -4597,7 +4594,7 @@ export const VERBS = [
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'bilatzen ', past: 'bilatu ', future: 'bilatuko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #457: `aurkitu` ("find") is a genuine sibling on the singular-object
     // slots — see `aurkitu`'s own comment above. `gu`/`zuek` here only exist
     // in the plural-object table (`opor egokiak`), and `aurkitu` has no
@@ -4661,7 +4658,7 @@ export const VERBS = [
         haiek: 'galduko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik txapelketako partida ___.', validFor: [] },
@@ -4717,7 +4714,7 @@ export const VERBS = [
         haiek: 'jasoko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik gutun bat Ameriketatik ___.', validFor: [] },
@@ -4754,7 +4751,7 @@ export const VERBS = [
     // grant one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'saltzen ', past: 'saldu ', future: 'salduko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik etxeko sagardoa azokan ___.', validFor: [] },
@@ -4814,7 +4811,7 @@ export const VERBS = [
         haiek: 'itxarongo dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik tranbia geltokian ___.', validFor: [] },
@@ -4874,7 +4871,7 @@ export const VERBS = [
         haiek: 'itxarongo diote',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     // #334 — saldu's dative reading ("sell *to* someone"), ditransitive with
@@ -4899,7 +4896,7 @@ export const VERBS = [
         haiek: [{ text: 'Arrantzaleek jatetxeari goizeko legatz freskoa ___.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     // #334 — utzi's dative reading ("leave/lend *to* someone"), same
@@ -4915,7 +4912,7 @@ export const VERBS = [
     // (see esan/eman above) — no literal table needed.
     ditransitivePrefixes: { present: 'uzten ', past: 'utzi ', future: 'utziko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     // #334 — adierazi's dative reading ("express/indicate *to* someone").
@@ -4933,7 +4930,7 @@ export const VERBS = [
     // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
     ditransitivePrefixes: { present: 'adierazten ', past: 'adierazi ', future: 'adieraziko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     // #334 — eskatu's dative reading ("ask/request something *of* someone").
@@ -4947,7 +4944,7 @@ export const VERBS = [
     // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
     ditransitivePrefixes: { present: 'eskatzen ', past: 'eskatu ', future: 'eskatuko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     // #334 — galdetu's dative reading ("ask (a question) *of* someone").
@@ -4961,7 +4958,7 @@ export const VERBS = [
     // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
     ditransitivePrefixes: { present: 'galdetzen ', past: 'galdetu ', future: 'galdetuko ' },
     conjugations: {},
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'sartu',
@@ -5128,7 +5125,7 @@ export const VERBS = [
         haiek: 'eskatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #455: `eskatu`'s object-noun frame ("request X at LOCATION") admits the
     // same `ukan`/`eduki`-style "have" reading on every object here ("Nik
     // mahai bat dut jatetxean" = "I have a table at the restaurant"), and
@@ -5195,7 +5192,7 @@ export const VERBS = [
         haiek: 'galdetuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #455: `galdetu`'s objects are pieces of information (the time/address/
     // price/way/exit/schedule), not ownable things — `jakin`'s "know" form
     // and `ikusi`'s "see" form both substitute naturally ("ordua dakit" = "I
@@ -5264,7 +5261,7 @@ export const VERBS = [
         haiek: 'adieraziko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #455: `ukan`/`eduki` ("have an opinion/intention/doubt") fit the
     // `iritzia`/`asmoa`/`zalantza` objects naturally ("nire iritzia dut" = "I
     // have my opinion"), but not `protesta`/`babesa`/`poztasuna` ("protesta
@@ -5326,7 +5323,7 @@ export const VERBS = [
         haiek: 'bukatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #455: `amaitu` is a near-total synonym of `bukatu` ("finish") — its form
     // substitutes naturally into every sentence here on both tenses.
     sentences: {
@@ -5385,7 +5382,7 @@ export const VERBS = [
         haiek: 'amaituko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #455: `bukatu` is a near-total synonym of `amaitu` ("finish") — its form
     // substitutes naturally into every sentence here on both tenses.
     sentences: {
@@ -5444,7 +5441,7 @@ export const VERBS = [
         haiek: 'gaindituko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik azterketa ___ lehen saiakeran.', validFor: [] },
@@ -5501,7 +5498,7 @@ export const VERBS = [
         haiek: 'bereiztuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik plastikoa beira-ontzitik ___.', validFor: [] },
@@ -5557,7 +5554,7 @@ export const VERBS = [
         haiek: 'ezagutuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #456: `aztertu` ("examine/study") is a genuine sibling on all six — a
     // town, old quarter, writer, neighborhood, path, or language are all
     // plausible subjects of academic/professional study, not just
@@ -5625,7 +5622,7 @@ export const VERBS = [
         haiek: 'sentituko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #456: `sumatu` ("sense/perceive") is a genuine sibling on all six —
     // "noticing/perceiving" an emotion or sensation (fear, joy, pain, pride,
     // tiredness, anger) in oneself is a natural alternate to "feeling" it
@@ -5686,7 +5683,7 @@ export const VERBS = [
         haiek: 'pentsatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #456: stays `validFor: []` throughout — `pentsatu`'s complement here is
     // inessive-marked ("oporretan", "etorkizunean", -an = "about/regarding
     // X"), not a bare absolutive direct object like `sumatu`/`ulertu`/
@@ -5750,7 +5747,7 @@ export const VERBS = [
         haiek: 'sumatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #456: `sentitu` ("feel") is a genuine sibling on all six — see
     // `sentitu`'s own comment above for the reasoning (these are the same
     // emotion/sensation objects, just from the opposite "feel" vs "sense"
@@ -5810,7 +5807,7 @@ export const VERBS = [
         haiek: 'ulertuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #456: `aztertu` ("examine/analyze") is a genuine sibling on all six —
     // "understanding" and "examining" a document/text/question are both
     // natural true claims about the same object. `ezagutu` ("know") only
@@ -5877,7 +5874,7 @@ export const VERBS = [
         haiek: 'aztertuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #456: `ulertu`/`ezagutu` are genuine siblings on all six — every
     // object here is a piece of data/document (a medical analysis, a
     // market trend, a patient's history, a soil structure, a report, a
@@ -5941,7 +5938,7 @@ export const VERBS = [
         haiek: 'ukatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik akusazioa ___ auzitegian.', validFor: [] },
@@ -5997,7 +5994,7 @@ export const VERBS = [
         haiek: 'batuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #457: `jaso` ("receive") is a genuine sibling only on `hura` —
     // "collecting" donations and "receiving" them at the same solidarity
     // event are both true, distinct claims. The other objects here (a sum
@@ -6057,7 +6054,7 @@ export const VERBS = [
         haiek: 'planteatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #457: `argudiatu` ("argue a case for") is a genuine sibling only on
     // `gu`/`haiek` — a proposal and a solution are positions one can argue
     // for, same as `argudiatu`'s own viewpoint/proposal/thesis objects. A
@@ -6187,7 +6184,7 @@ export const VERBS = [
         haiek: 'hausnartuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #456: stays `validFor: []` throughout — `hausnartu`'s complement here
     // is `buruz`/`-z`-marked ("zentzuari buruz", "etorkizunaz") or a bare
     // interrogative adverb ("zergatik", "zertaz"), not a bare absolutive
@@ -6248,7 +6245,7 @@ export const VERBS = [
         haiek: 'argudiatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #457: `planteatu` ("pose/raise") is a genuine sibling on `ni`/`hura`/
     // `gu`/`haiek` — presenting one's viewpoint, raising the issue of one's
     // innocence, and presenting a proposal/thesis are all natural alternate
@@ -6312,7 +6309,7 @@ export const VERBS = [
         haiek: 'ondorioztatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #457: stays `validFor: []` throughout, despite the issue's hint
     // grouping it with `argudiatu`/`planteatu` — "concluding/deducing" is an
     // evidentiary-inference claim (drawing a conclusion FROM data/research/
@@ -6376,7 +6373,7 @@ export const VERBS = [
         haiek: 'gaitzetsiko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik indarkeria zalantzarik gabe ___.', validFor: [] },
@@ -6434,7 +6431,7 @@ export const VERBS = [
         haiek: 'aldarrikatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik nire askatasuna ozenki ___.', validFor: [] },
@@ -6492,7 +6489,7 @@ export const VERBS = [
         haiek: 'plazaratuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik txosten berria gaur ___.', validFor: [] },
@@ -6550,7 +6547,7 @@ export const VERBS = [
         haiek: 'sustatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       // #458: `sustatu`/`bultzatu` ("promote/foster" vs "push/drive forward")
       // are near-synonyms here — "kirola/bertako produktua/parte-hartzea/
@@ -6613,7 +6610,7 @@ export const VERBS = [
         haiek: 'bultzatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       // #458: `bultzatu`/`sustatu` overlap on every slot except `ni`, whose
       // "proiektu berria aurrera ___" is idiom-locked to "aurrera bultzatu"
@@ -6674,7 +6671,7 @@ export const VERBS = [
         haiek: 'bermatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       // #458: `bermatu`/`ziurtatu` overlap on every slot except `gu`, whose
       // "bizikidetza auzoan ___" (coexistence in the neighborhood) reads as a
@@ -6735,7 +6732,7 @@ export const VERBS = [
         haiek: 'babestuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik basoa suteetatik ___.', validFor: [] },
@@ -6793,7 +6790,7 @@ export const VERBS = [
         haiek: 'ziurtatuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       // #458: `ziurtatu`/`bermatu` overlap except on `hura`/`gu`, whose
       // "bigarren aldiz"/"hiruzpalau aldiz" (a second/several times) framing
@@ -6853,7 +6850,7 @@ export const VERBS = [
         haiek: 'borobilduko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik akordioa azken xehetasunean ___.', validFor: [] },
@@ -6914,7 +6911,7 @@ export const VERBS = [
         haiek: 'hitz egingo dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik euskaraz ___.', validFor: [] },
@@ -6968,7 +6965,7 @@ export const VERBS = [
         haiek: 'lan egingo dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik etxetik ___.', validFor: [] },
@@ -7022,7 +7019,7 @@ export const VERBS = [
         haiek: 'lo egingo dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik zortzi ordu ___.', validFor: [] },
@@ -7076,7 +7073,7 @@ export const VERBS = [
         haiek: 'ahaleginak egingo dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik azterketan ___.', validFor: [] },
@@ -7130,7 +7127,7 @@ export const VERBS = [
         haiek: 'parte hartuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik lehiaketan ___.', validFor: [] },
@@ -7186,7 +7183,7 @@ export const VERBS = [
         haiek: 'kontuan hartuko dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik zure iritzia ___.', validFor: [] },
@@ -7240,7 +7237,7 @@ export const VERBS = [
         haiek: 'arreta emango dute',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: { text: 'Nik klasean ___.', validFor: [] },
@@ -7410,7 +7407,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: ['deitu', 'mesede-egin', 'kalte-egin'] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'ekin',
@@ -7470,7 +7467,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean lanari ___.', validFor: [] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'erantzun',
@@ -7528,7 +7525,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean galderari ___.', validFor: [] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'deitu',
@@ -7583,7 +7580,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: ['lagundu', 'mesede-egin', 'kalte-egin'] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'eragin',
@@ -7643,7 +7640,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean lagunari barre ___.', validFor: [] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'antzeman',
@@ -7701,7 +7698,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean zerbaiti ___.', validFor: [] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   // Dative `egin` compounds (deferred from #306 — same `egin`-as-light-verb
   // shape, but the noun itself selects a dative NORI rather than a plain
@@ -7759,7 +7756,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean lagunari ___.', validFor: ['lagundu', 'deitu', 'kalte-egin'] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'kalte-egin',
@@ -7814,7 +7811,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean etsaiari ___.', validFor: ['lagundu', 'deitu', 'mesede-egin'] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   {
     id: 'aurre-egin',
@@ -7872,7 +7869,7 @@ export const VERBS = [
         haiek: { text: 'Haiek joan den astean arazoari ___.', validFor: [] },
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   // #384 — `jarraitu`/`jario`, two more NOR-NORI verbs alongside `gustatu`/
   // `iruditu`/`ahaztu`. Sourcing/scope calls (the `jarraitu` nor-nork-vs-
@@ -8001,8 +7998,8 @@ export const VERBS = [
         haiek: [{ text: 'Aitorren txandak haiei ___.', validFor: [] }],
       },
     },
-    // See `gustatu.pronouns` above — same NOR-NORI dative-heading fix.
-    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
+    // See `gustatu` above — same NOR-NORI dative varying slot.
+    personAxis: 'nori',
   },
   // `jario` is native synthetic and defective — almost always used with an
   // inanimate `nor` (water, tears, sweat...), so `nor` is fixed (`object:
@@ -8062,8 +8059,8 @@ export const VERBS = [
         haiek: [{ text: 'Malkoak haiei ___.', validFor: [] }],
       },
     },
-    // See `gustatu.pronouns` above — same NOR-NORI dative-heading fix.
-    pronouns: { ni: 'Niri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
+    // See `gustatu` above — same NOR-NORI dative varying slot.
+    personAxis: 'nori',
   },
   // #485: `irudi` ("to seem / give the impression") — unergative, NORK-only
   // (ergative subject, no absolutive argument at all), per CONJUGATIONS.md
@@ -8109,7 +8106,7 @@ export const VERBS = [
         haiek: [{ text: 'Nekatuta zeuden, ___.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   // #486: `etzan` ("to lie (in) / consist of") — plain `nor` agreement
   // (absolutive subject only, no ergative/dative), per CONJUGATIONS.md §8.
@@ -8121,10 +8118,10 @@ export const VERBS = [
   // exposure-only scope as `jario`/`irudi` above: per #486, do NOT add
   // `etzan-present`/`etzan-past` lessons and do NOT flip Unit 44's `status`
   // from `pending` — that's deferred to a future journey-restructuring
-  // decision, not this issue. Pronouns use the bare-absolutive style
-  // (`Ni`/`Hi`/`Zu`/...), matching other `nor`-only verbs (e.g. `egon`) —
-  // distinct from `irudi`'s ergative-style pronouns just above, since
-  // `etzan` has no `nork` argument.
+  // decision, not this issue. Pronouns use the bare-absolutive style (the
+  // default `nor` `personAxis`), matching other `nor`-only verbs (e.g.
+  // `egon`) — distinct from `irudi`'s ergative `personAxis: 'nork'` just
+  // above, since `etzan` has no `nork` argument.
   {
     id: 'etzan',
     verb: 'etzan',
@@ -8157,7 +8154,6 @@ export const VERBS = [
         haiek: [{ text: 'Akatsak ___ presa gehiegitan.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
   },
   // Unit 45 ("Talking About Weather"): weather idioms, always 3rd-person
   // singular (`hura`) — Basque impersonal-weather constructions have no
@@ -8294,7 +8290,7 @@ export const VERBS = [
         haiek: [{ text: 'Haiek atzo lanean ___.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   // #484: `iraun` — same unergative, NORK-only shape as `ihardun` (#481,
   // CONJUGATIONS.md §8's `di-`/`-en` di-root pattern). Distinct meaning
@@ -8332,7 +8328,7 @@ export const VERBS = [
         haiek: [{ text: 'Kontzertuak bi ordu ___.', validFor: [] }],
       },
     },
-    pronouns: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
   },
   // #370 (Unit 42) — causative `nor` → `nor-nork`: per CONJUGATIONS.md §17.2,
   // the original `nor` subject (the climbers/kids) becomes the new plural
@@ -8377,7 +8373,7 @@ export const VERBS = [
         haiek: 'itzularaziko dituzte',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: [{ text: 'Nik mendizaleak ___.', wordOrderSafe: true, validFor: [] }],
@@ -8443,7 +8439,7 @@ export const VERBS = [
         haiek: 'dantzaraziko dituzte',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     sentences: {
       present: {
         ni: [{ text: 'Nik umeak ___.', wordOrderSafe: true, validFor: [] }],
@@ -8518,7 +8514,7 @@ export const VERBS = [
         haiek: 'janaraziko dizkiete',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #459: `validFor: []` throughout, confirmed — `janarazi`'s NOR is plural
     // ("babarrunak", `-zki-`/`dizkie`-family forms), a number mismatch with
     // `idatzarazi`'s singular NOR ("hori", non-`zki` `die`-family forms) that
@@ -8592,7 +8588,7 @@ export const VERBS = [
         haiek: 'idatzaraziko diete',
       },
     },
-    pronouns: { ni: 'Nik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+    personAxis: 'nork',
     // #459: see janarazi's sentences above — the NOR-number mismatch (singular
     // "hori" here vs. plural "babarrunak" there) blocks cross-substitution.
     sentences: {
@@ -8698,6 +8694,28 @@ for (const verb of VERBS) {
 // looked up via `t()` at render time so labels follow the interface language.
 // `basque`/`basqueLabel`/the NOR/NORI/NORK `label`s themselves are Basque
 // grammar terms, shown as-is regardless of interface language.
+// The three regular pronoun declension paradigms, keyed by the case role a
+// verb's person axis ranges over (see the `personAxis` doc comment near the
+// top of this file): absolutive (`nor`), ergative (`nork`), dative (`nori`).
+// Declining a Basque personal pronoun is fully regular, so these live once
+// here instead of as a copied-per-verb map. Keys deliberately stop at the
+// seven plain persons — `hi-m`/`hi-f` (#167's `hi`-as-NORK gender split) are
+// table keys, not distinct pronouns (both are `hik`), and no display site
+// needs them declined today.
+export const PRONOUN_DECLENSIONS = {
+  nor: { ni: 'Ni', hi: 'Hi', zu: 'Zu', hura: 'Hura', gu: 'Gu', zuek: 'Zuek', haiek: 'Haiek' },
+  nork: { ni: 'Nik', hi: 'Hik', zu: 'Zuk', hura: 'Hark', gu: 'Guk', zuek: 'Zuek', haiek: 'Haiek' },
+  nori: { ni: 'Niri', hi: 'Hiri', zu: 'Zuri', hura: 'Hari', gu: 'Guri', zuek: 'Zuei', haiek: 'Haiei' },
+}
+
+// The pronoun a verb's table implies for a grammatical person: the person
+// key declined into the case of the verb's person axis. `undefined` for a
+// key with no declension (`hi-m`/`hi-f`) — display callers fall back to the
+// raw key (`?? person`), matching the old per-verb-map behaviour.
+export function personPronoun(verb, person) {
+  return PRONOUN_DECLENSIONS[verb.personAxis ?? 'nor'][person]
+}
+
 export const PERSON_LABEL_KEYS = {
   ni: 'personNi',
   hi: 'personHi',

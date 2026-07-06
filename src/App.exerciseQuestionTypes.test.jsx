@@ -188,7 +188,7 @@ describe('App', () => {
     })
 
     // #201: a NORK-agreement verb's match-pairs tiles must show the ergative
-    // pronoun (`nik`/`zuk`/`hark`) `ukan`'s own `pronouns` map declines to,
+    // pronoun (`nik`/`zuk`/`hark`) `ukan`'s `personAxis: 'nork'` declines to,
     // not the bare absolutive `PERSON_LABEL_KEYS` text (`ni`/`zu`/`hura`) —
     // `dut`/`duzu`/`du` only make sense paired with the ergative subject.
     it('labels a NORK-agreement verb\'s tiles with its declined pronouns, not the bare absolutive ones', async () => {
@@ -206,13 +206,13 @@ describe('App', () => {
       expect(screen.queryByRole('button', { name: 'ni' })).not.toBeInTheDocument()
     })
 
-    // A verb with no `pronouns` map must fall back to the raw person key —
-    // which for a `nor`-agreement verb *is* the Basque absolutive pronoun
-    // (`ni`/`zu`/`hura`) — never to the translated `PERSON_LABEL_KEYS` text
-    // ("I"/"yo"/…): pronoun tiles stay Basque whatever the interface
-    // language. `nor-fodder-present`'s first carrier (`sartu`, with
-    // `Math.random` pinned so sampling/shuffling are no-ops) is such a verb.
-    it("labels a pronouns-less verb's tiles with the Basque person keys, not translated pronouns", async () => {
+    // A verb with the default `nor` person axis shows the bare absolutive
+    // Basque pronoun (`ni`/`zu`/`hura`) — never the translated
+    // `PERSON_LABEL_KEYS` text ("I"/"yo"/…): pronoun tiles stay Basque
+    // whatever the interface language. `nor-fodder-present`'s first carrier
+    // (`sartu`, with `Math.random` pinned so sampling/shuffling are no-ops)
+    // is such a verb.
+    it("labels a default-axis verb's tiles with the Basque absolutive pronouns, not translated ones", async () => {
       window.history.pushState({}, '', '/?dev=unlock-all')
       const user = userEvent.setup()
       vi.spyOn(Math, 'random').mockReturnValue(0.99)
