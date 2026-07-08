@@ -460,6 +460,7 @@ function AppShell() {
     <>
       <HomeScreen
         progress={progress}
+        errorStats={errorStats}
         streak={dailyStreak}
         points={points}
         hearts={hearts}

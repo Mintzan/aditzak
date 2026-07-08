@@ -3,12 +3,15 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { trackEvent } from '../analytics'
 import { getShareUrl, shareContent } from '../shareUtils'
 import { LESSONS } from '../data/lessons'
-import { VERBS, TENSE_META } from '../data/verbs'
+import { VERBS, TENSE_META, PERSON_LABEL_KEYS } from '../data/verbs'
 import { BONUS_LESSON_IDS, GATE_LESSON_IDS, JOURNEY } from '../journey'
 import {
+  auxCellKey,
   canBuyHeart,
   canRepairStreak,
+  deriveCellMastery,
   getActiveStreak,
+  getComposedTable,
   getLocalDateString,
   getPointsBalance,
   getUnlockedLessonIds,
@@ -383,7 +386,148 @@ function JourneyTab({ progress, hearts, onSelectLesson, onHeartLocked }) {
   )
 }
 
-function ProgressTab({ progress }) {
+const SKELETON_FAMILY_LABEL = {
+  edun: 'NOR-NORK',
+  dativeIzan: 'NOR-NORI',
+  dativeIzanByNor: 'NOR-NORI',
+  diot: 'NOR-NORI-NORK',
+}
+
+const PERSON_ORDER = ['ni', 'hi', 'hi-m', 'hi-f', 'hura', 'gu', 'zu', 'zuek', 'haiek']
+
+const TENSE_DISPLAY_ORDER = [
+  'present', 'past', 'future', 'presentPerfect', 'habitualPast', 'imperfectivePast',
+  'presentPlural', 'pastPlural', 'futurePlural',
+  'baldintza', 'conditional', 'conditionalPast',
+  'baldintzaPlural', 'conditionalPlural', 'conditionalPastPlural',
+  'potential', 'potentialLehenaldia', 'potentialAlegiazkoa',
+  'potentialPlural', 'potentialLehenaldiaPlural', 'potentialAlegiazkoaPlural',
+  'imperative', 'imperativePlural',
+  'subjunctivePresent', 'subjunctivePast',
+  'presentToka', 'pastToka', 'presentNoka', 'pastNoka',
+]
+
+const TENSE_GRID_LABEL = {
+  present: 'ora', past: 'leh', future: 'ger', presentPerfect: 'bur',
+  habitualPast: 'ohit', imperfectivePast: 'burl',
+  presentPlural: 'ora+', pastPlural: 'leh+', futurePlural: 'ger+',
+  baldintza: 'bald', conditional: 'ond', conditionalPast: 'ond↑',
+  baldintzaPlural: 'bld+', conditionalPlural: 'ond+', conditionalPastPlural: 'ond↑+',
+  potential: 'ahal', potentialLehenaldia: 'ahl↑', potentialAlegiazkoa: 'ahl~',
+  potentialPlural: 'ahal+', potentialLehenaldiaPlural: 'ahl↑+', potentialAlegiazkoaPlural: 'ahl~+',
+  imperative: 'agi', imperativePlural: 'agi+',
+  subjunctivePresent: 'subj', subjunctivePast: 'subj↑',
+  presentToka: 'T·o', pastToka: 'T·l', presentNoka: 'N·o', pastNoka: 'N·l',
+}
+
+const PERIPHRASTIC_SKELETONS = ['edun', 'dativeIzan', 'dativeIzanByNor', 'diot']
+
+function buildMasteryFamilies(mastery, lessons, verbs) {
+  const periphData = {}
+  const individualData = {}
+
+  for (const lesson of lessons) {
+    const sources = lesson.verbId
+      ? [{ verbId: lesson.verbId, tense: lesson.tense }]
+      : lesson.sources ?? []
+
+    for (const { verbId, tense } of sources) {
+      const verb = verbs.find((v) => v.id === verbId)
+      if (!verb) continue
+      const table = getComposedTable(verb, tense)
+      if (!table) continue
+
+      const persons = lesson.persons ?? Object.keys(table)
+      for (const person of persons) {
+        if (typeof table[person] !== 'string') continue
+        const key = auxCellKey(verb, tense, person)
+        const skeletonOrVerbId = key.split(':')[0]
+
+        if (PERIPHRASTIC_SKELETONS.includes(skeletonOrVerbId)) {
+          if (!periphData[skeletonOrVerbId]) periphData[skeletonOrVerbId] = { tenses: new Set(), persons: new Set() }
+          periphData[skeletonOrVerbId].tenses.add(tense)
+          periphData[skeletonOrVerbId].persons.add(person)
+        } else {
+          if (!individualData[verbId]) individualData[verbId] = { verb, tenses: new Set(), persons: new Set() }
+          individualData[verbId].tenses.add(tense)
+          individualData[verbId].persons.add(person)
+        }
+      }
+    }
+  }
+
+  const periphrastic = PERIPHRASTIC_SKELETONS.flatMap((skeletonName) => {
+    const data = periphData[skeletonName]
+    if (!data) return []
+    const tenses = TENSE_DISPLAY_ORDER.filter((t) => data.tenses.has(t))
+    const persons = PERSON_ORDER.filter((p) => data.persons.has(p))
+    const cells = {}
+    for (const tense of tenses) {
+      for (const person of persons) {
+        cells[`${tense}:${person}`] = mastery[`${skeletonName}:${tense}:${person}`] ?? 'untouched'
+      }
+    }
+    return [{ key: skeletonName, label: SKELETON_FAMILY_LABEL[skeletonName], tenses, persons, cells }]
+  })
+
+  const individuals = Object.entries(individualData).map(([verbId, { verb, tenses, persons }]) => {
+    const sortedTenses = TENSE_DISPLAY_ORDER.filter((t) => tenses.has(t))
+    const sortedPersons = PERSON_ORDER.filter((p) => persons.has(p))
+    const cells = {}
+    for (const tense of sortedTenses) {
+      for (const person of sortedPersons) {
+        cells[`${tense}:${person}`] = mastery[`${verbId}:${tense}:${person}`] ?? 'untouched'
+      }
+    }
+    return { key: verbId, label: verb.verb, tenses: sortedTenses, persons: sortedPersons, cells }
+  })
+
+  return { periphrastic, individuals }
+}
+
+function CellDot({ state }) {
+  const color = state === 'owned' ? 'bg-green-500' : state === 'learning' ? 'bg-amber-400' : 'bg-gray-200'
+  return <span className={`block h-2.5 w-2.5 rounded-full ${color}`} />
+}
+
+function MasteryFamilyGrid({ label, tenses, persons, cells }) {
+  const { t } = useLanguage()
+  return (
+    <div className="mb-3">
+      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">{label}</p>
+      <div className="overflow-x-auto">
+        <table className="border-collapse text-xs">
+          <thead>
+            <tr>
+              <th className="w-10 pb-1" />
+              {tenses.map((tense) => (
+                <th key={tense} className="px-1 pb-1 text-center font-normal text-gray-400" style={{ minWidth: '2.5rem' }}>
+                  {TENSE_GRID_LABEL[tense] ?? tense}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {persons.map((person) => (
+              <tr key={person}>
+                <td className="py-0.5 pr-2 text-right text-gray-500">{t(PERSON_LABEL_KEYS[person] ?? person)}</td>
+                {tenses.map((tense) => (
+                  <td key={tense} className="px-1 py-0.5 text-center">
+                    <div className="flex justify-center">
+                      <CellDot state={cells[`${tense}:${person}`] ?? 'untouched'} />
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+function ProgressTab({ progress, errorStats }) {
   const { t, tCount, language } = useLanguage()
   // The header's stars pill only shows the bare current count (narrow
   // screens don't have room for "/max" — see docs/DECISIONS.md) and links
@@ -391,10 +535,56 @@ function ProgressTab({ progress }) {
   // total lives.
   const totalStars = LESSONS.reduce((sum, lesson) => sum + (progress[lesson.id]?.bestStars ?? 0), 0)
   const maxStars = LESSONS.length * 3
+
+  const mastery = useMemo(() => deriveCellMastery(errorStats, progress, LESSONS, VERBS), [errorStats, progress])
+  const { periphrastic, individuals } = useMemo(() => buildMasteryFamilies(mastery, LESSONS, VERBS), [mastery])
+  const ownedCount = Object.values(mastery).filter((v) => v === 'owned').length
+  const masteredTotal = Object.keys(mastery).length
+
+  useEffect(() => {
+    trackEvent('mastery_grid_view', { ownedCells: ownedCount, totalCells: masteredTotal })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const hasFamilies = periphrastic.length > 0 || individuals.length > 0
+
   return (
     <div>
       <h2 className="mb-1 text-lg font-bold text-gray-900">{t('progressTitle')}</h2>
       <p className="mb-4 text-sm text-gray-500">{t('progressStarsSummary', { total: totalStars, max: maxStars })}</p>
+
+      {hasFamilies && (
+        <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-4">
+          <h3 className="mb-2 text-sm font-semibold text-gray-700">{t('masteryGridTitle')}</h3>
+          <div className="mb-3 flex items-center gap-4 text-xs text-gray-500">
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-green-500" />
+              {t('masteryGridOwned')}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-400" />
+              {t('masteryGridLearning')}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-gray-200" />
+              {t('masteryGridUntouched')}
+            </span>
+          </div>
+          {periphrastic.map((family) => (
+            <MasteryFamilyGrid key={family.key} {...family} />
+          ))}
+          {individuals.length > 0 && (
+            <>
+              <p className="mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                {t('masteryGridSynthetics')}
+              </p>
+              {individuals.map((family) => (
+                <MasteryFamilyGrid key={family.key} {...family} />
+              ))}
+            </>
+          )}
+        </div>
+      )}
+
       <div className="flex flex-col gap-3">
         {LESSONS.map((lesson) => {
           const { heading } = describeLesson(lesson, t, language)
@@ -980,6 +1170,7 @@ function BottomNav({ active, onSelect }) {
 
 export function HomeScreen({
   progress,
+  errorStats,
   streak,
   points,
   hearts,
@@ -1070,7 +1261,7 @@ export function HomeScreen({
             onHeartLocked={() => setShowHeartsLocked(true)}
           />
         )}
-        {tab === 'progress' && <ProgressTab progress={progress} />}
+        {tab === 'progress' && <ProgressTab progress={progress} errorStats={errorStats} />}
         {tab === 'profile' && (
           <ProfileTab
             streak={streak}
