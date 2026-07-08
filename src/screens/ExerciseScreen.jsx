@@ -15,10 +15,12 @@ import {
   generateCaseMixerQuestions,
   generateCrossVerbQuestions,
   generateMatchPairsQuestions,
+  generateParticipleChoiceQuestions,
   generateQuestions,
   generateReadingQuestions,
   generateFamilyChoiceQuestions,
   generateSuffixChoiceQuestions,
+  getAspectGridData,
   getComposedTable,
   getCrossVerbCandidates,
   getExplanation,
@@ -180,6 +182,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // `generateSuffixChoiceQuestions`.
   const suffixChoiceQuestions = lesson.suffixChoice ? generateSuffixChoiceQuestions(resolvedSources) : []
   const familyChoiceQuestions = lesson.familyChoice ? generateFamilyChoiceQuestions(VERBS, resolvedSources) : []
+  const participleChoiceQuestions = lesson.participleChoice ? generateParticipleChoiceQuestions(resolvedSources) : []
   const allQuestions = shuffle([
     ...questions,
     ...extraQuestions,
@@ -188,6 +191,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
     ...matchPairsQuestions,
     ...suffixChoiceQuestions,
     ...familyChoiceQuestions,
+    ...participleChoiceQuestions,
   ])
   return {
     queue: allQuestions,
@@ -210,8 +214,41 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
 // `components/conjugationTable.jsx` — `UnitOverviewModal` (`HomeScreen.jsx`)
 // reuses it too.
 
+// 3 × 2 aspect-grid preview for Unit 11 / any lesson whose verb carries
+// `verb.participles` — shows imperfective/perfective/prospective participles
+// paired with present and past auxiliaries on one carrier (the `hura` person),
+// giving the learner the full aspect picture before the first question.
+function AspectGrid({ verb }) {
+  const { t } = useLanguage()
+  const rows = getAspectGridData(verb)
+  if (!rows) return null
+  return (
+    <div className="overflow-x-auto rounded-xl border border-gray-200">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="bg-gray-50 text-xs font-semibold uppercase tracking-wide text-gray-500">
+            <th className="px-3 py-2 text-left">{t('aspectLabel')}</th>
+            <th className="px-3 py-2 text-center">{t('aspectPresentAux')}</th>
+            <th className="px-3 py-2 text-center">{t('aspectPastAux')}</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-100">
+          {rows.map(({ aspect, presentForm, pastForm }) => (
+            <tr key={aspect} className={aspect === 'perfective' ? 'bg-brand-forest/5' : ''}>
+              <td className="px-3 py-2 text-gray-600">{t(`aspect${aspect.charAt(0).toUpperCase() + aspect.slice(1)}`)}</td>
+              <td className="px-3 py-2 text-center font-semibold text-gray-900">{presentForm}</td>
+              <td className="px-3 py-2 text-center text-gray-400">{pastForm}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 function LessonPreviewScreen({ verb, tense, tenseMeta, objectAxis, onStart, onExit }) {
   const { t, language } = useLanguage()
+  const hasAspectGrid = Boolean(verb.participles) && tense === 'presentPerfect'
   return (
     <div className="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-white">
       <div className="flex items-center gap-3 px-4 pt-4">
@@ -236,12 +273,20 @@ function LessonPreviewScreen({ verb, tense, tenseMeta, objectAxis, onStart, onEx
         <div className="mt-2 flex items-center gap-3">
           <MascotAvatar />
           <div>
-            <h2 className="text-2xl font-extrabold text-gray-900">{t('previewTitle')}</h2>
-            <p className="mt-1 text-gray-500">{t('previewSubtitle')}</p>
+            <h2 className="text-2xl font-extrabold text-gray-900">
+              {hasAspectGrid ? t('previewAspectTitle') : t('previewTitle')}
+            </h2>
+            <p className="mt-1 text-gray-500">
+              {hasAspectGrid ? t('previewAspectSubtitle') : t('previewSubtitle')}
+            </p>
           </div>
         </div>
         <div className="mt-6">
-          <ConjugationTable verb={verb} tense={tense} objectAxis={objectAxis} />
+          {hasAspectGrid ? (
+            <AspectGrid verb={verb} />
+          ) : (
+            <ConjugationTable verb={verb} tense={tense} objectAxis={objectAxis} />
+          )}
         </div>
       </div>
 
@@ -602,6 +647,18 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
       </>
     )
   }
+  if (question.kind === 'participle-choice') {
+    return (
+      <>
+        <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">{t(tenseMeta.labelKey)}</p>
+        <h2 className="mt-2 text-4xl font-extrabold text-gray-900">{question.anchor}</h2>
+        <p className="mt-1 text-xl text-gray-500">
+          {'___ '}
+          {question.aux}
+        </p>
+      </>
+    )
+  }
   return (
     <>
       <p className="text-sm font-semibold tracking-wide text-gray-400 uppercase">
@@ -650,6 +707,7 @@ const QUESTION_PROMPT_KEYS = {
   'word-order': 'questionWordOrder',
   'suffix-choice': 'questionSuffixChoice',
   'family-choice': 'questionFamilyChoice',
+  'participle-choice': 'questionParticipleChoice',
 }
 
 // The explanation toggle is its own pill-shaped button above the

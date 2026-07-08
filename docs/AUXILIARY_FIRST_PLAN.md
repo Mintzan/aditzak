@@ -191,10 +191,10 @@ question for a missed cell; headline progress metric shows cells owned.
       `src/screens/ExerciseScreen.jsx` / `translations.js`.
 
 **PR 2 — participle-selection (`kind: 'participle-choice'`).**
-- [ ] Generalize #423's `generateSuffixChoiceQuestions` → fixed aux, pick
+- [x] Generalize #423's `generateSuffixChoiceQuestions` → fixed aux, pick
       `-t(z)en`/`-tu`/`-ko` form from a D4 temporal anchor; ambiguity audit
       test; wire into Unit 11 (the aspect on-ramp) and Gate B.
-- [ ] Unit 11 preview: the 3 × 2 participle × aux-tense grid on one carrier
+- [x] Unit 11 preview: the 3 × 2 participle × aux-tense grid on one carrier
       (REVIEW §3.3's explicit aspect "aha") — a data-driven preview screen
       variant, not new curriculum.
 

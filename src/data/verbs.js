@@ -285,6 +285,9 @@ export const VERBS = [
     type: 'synthetic',
     agreement: ['nor'],
     dialect: 'batua',
+    // #M4PR2: aspect-selection drill — three participle forms used by
+    // `generateParticipleChoiceQuestions` and the Unit 11 aspect-grid preview.
+    participles: { imperfective: 'izaten', perfective: 'izan', prospective: 'izango' },
     conjugations: {
       present: { ni: 'naiz', hi: 'haiz', zu: 'zara', hura: 'da', gu: 'gara', zuek: 'zarete', haiek: 'dira' },
       past: { ni: 'nintzen', hi: 'hintzen', zu: 'zinen', hura: 'zen', gu: 'ginen', zuek: 'zineten', haiek: 'ziren' },
@@ -1730,6 +1733,8 @@ export const VERBS = [
     type: 'synthetic',
     agreement: ['nor'],
     dialect: 'batua',
+    // #M4PR2: aspect-selection drill — three participle forms.
+    participles: { imperfective: 'joaten', perfective: 'joan', prospective: 'joango' },
     conjugations: {
       present: { ni: 'noa', hi: 'hoa', zu: 'zoaz', hura: 'doa', gu: 'goaz', zuek: 'zoazte', haiek: 'doaz' },
       past: {
@@ -1947,6 +1952,8 @@ export const VERBS = [
     type: 'synthetic',
     agreement: ['nor', 'nori'],
     dialect: 'batua',
+    // #M4PR2: aspect-selection drill — three participle forms.
+    participles: { imperfective: 'etortzen', perfective: 'etorri', prospective: 'etorriko' },
     conjugations: {
       present: { ni: 'nator', hi: 'hator', zu: 'zatoz', hura: 'dator', gu: 'gatoz', zuek: 'zatozte', haiek: 'datoz' },
       past: {
@@ -2690,6 +2697,8 @@ export const VERBS = [
     // plural-object counterparts) is composed from this — see
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'ikusten ', past: 'ikusi ', future: 'ikusiko ' },
+    // #M4PR2: aspect-selection drill — three participle forms (matching composedPrefixes).
+    participles: { imperfective: 'ikusten', perfective: 'ikusi', prospective: 'ikusiko' },
     conjugations: {
       // Unit 21 ("I Used To..." — periphrastic imperfective/habitual past) —
       // imperfective participle `ikusten` + `ukan`'s past auxiliary, per

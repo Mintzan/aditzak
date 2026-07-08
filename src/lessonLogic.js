@@ -2144,6 +2144,94 @@ export function generateFamilyChoiceQuestions(verbs, resolvedSources, { count = 
     })
 }
 
+// Up to this many `kind: 'participle-choice'` questions get added to a lesson
+// opted in via `lesson.participleChoice: true` — same "handful" rationale as
+// `SUFFIX_CHOICE_QUESTION_COUNT`.
+export const PARTICIPLE_CHOICE_QUESTION_COUNT = 3
+
+// D4: closed temporal-anchor list — Basque adverbial cue → aspect slot it
+// unambiguously signals. "atzo" (yesterday) marks a completed/perfective event;
+// "egunero" (every day) marks a habitual/imperfective pattern; "bihar"
+// (tomorrow) marks a prospective/future intent.
+const ASPECT_ANCHORS = {
+  perfective: 'atzo',
+  imperfective: 'egunero',
+  prospective: 'bihar',
+}
+
+// A `kind: 'participle-choice'` question presents a temporal anchor word plus
+// a fixed auxiliary form and asks the learner to pick the matching participle
+// from the three aspect forms (`-t(z)en` / bare / `-ko/-go`). Only verbs with
+// a `participles` field (fail-closed opt-in) produce candidates. For each
+// source form that is `participle + aux` (two or more words), the engine
+// looks up which aspect slot the participle belongs to (via `verb.participles`)
+// and maps that to the right anchor word. The three options are always
+// `Object.values(verb.participles)` — distinct by the `participles` audit test.
+export function generateParticipleChoiceQuestions(resolvedSources, { count = PARTICIPLE_CHOICE_QUESTION_COUNT } = {}) {
+  const candidates = []
+  for (const { verb, tense } of resolvedSources) {
+    if (!verb.participles) continue
+    const table = getComposedTable(verb, tense)
+    if (!table) continue
+    for (const [person, form] of Object.entries(table)) {
+      if (typeof form !== 'string') continue
+      const parts = form.trim().split(/\s+/)
+      if (parts.length < 2) continue // skip single-word synthetic forms
+      const participle = parts.slice(0, -1).join(' ')
+      const aux = parts[parts.length - 1]
+      const aspect = Object.entries(verb.participles).find(([, p]) => p === participle)?.[0]
+      if (!aspect || !ASPECT_ANCHORS[aspect]) continue
+      candidates.push({ verb, tense, person, aux, aspect, correct: participle })
+    }
+  }
+  return shuffle(candidates)
+    .slice(0, count)
+    .map(({ verb, tense, person, aux, aspect, correct }) => ({
+      verbId: verb.id,
+      tense,
+      person,
+      kind: 'participle-choice',
+      anchor: ASPECT_ANCHORS[aspect],
+      aux,
+      correct,
+      options: shuffle(Object.values(verb.participles)),
+    }))
+}
+
+// Returns the 3 × 2 aspect-grid data for a verb that carries `verb.participles`
+// — used by the Unit 11 preview screen to show the full imperfective /
+// perfective / prospective × present-aux / past-aux table on one carrier.
+// Each row is `{ aspect, presentForm, pastForm }`, with forms constructed by
+// combining the participle with the hura-person skeleton auxiliary. Returns
+// null for verbs without `participles`.
+export function getAspectGridData(verb) {
+  if (!verb.participles) return null
+  const isNorNork = verb.agreement.includes('nork')
+  const presentAux = isNorNork
+    ? OBJECT_AXIS_SKELETONS.edun.present.hura.hura // 'du'
+    : OBJECT_AXIS_SKELETONS.izan.present.hura // 'da'
+  const pastAux = isNorNork
+    ? OBJECT_AXIS_SKELETONS.edun.past.hura.hura // 'zuen'
+    : OBJECT_AXIS_SKELETONS.izan.past.hura // 'zen'
+  return [
+    {
+      aspect: 'imperfective',
+      presentForm: `${verb.participles.imperfective} ${presentAux}`,
+      pastForm: `${verb.participles.imperfective} ${pastAux}`,
+    },
+    {
+      aspect: 'perfective',
+      presentForm: `${verb.participles.perfective} ${presentAux}`,
+      pastForm: `${verb.participles.perfective} ${pastAux}`,
+    },
+    {
+      aspect: 'prospective',
+      presentForm: `${verb.participles.prospective} ${presentAux}`,
+      pastForm: `${verb.participles.prospective} ${pastAux}`,
+    },
+  ]
+}
+
 // `kind: 'reading'` questions (Unit 36, see `src/data/readingItems.js`) have
 // no `verbId`/`tense`/`person` of their own — each is just a source sentence
 // plus a comprehension prompt and four candidate sentences, one of which
@@ -2387,6 +2475,14 @@ export function getExplanation(verb, question, t) {
   if (question.kind === 'family-choice') {
     const key = verb.agreement.includes('nork') ? 'explanationFamilyChoiceNorNork' : 'explanationFamilyChoiceNor'
     return t(key, { form: question.correct })
+  }
+  if (question.kind === 'participle-choice') {
+    const keyMap = {
+      atzo: 'explanationParticipleAtzo',
+      egunero: 'explanationParticipleEgunero',
+      bihar: 'explanationParticipleBihar',
+    }
+    return t(keyMap[question.anchor] ?? 'explanationParticipleAtzo', { form: question.correct })
   }
   if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
   const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'

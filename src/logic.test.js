@@ -22,6 +22,9 @@ import {
   generateCaseMixerQuestions,
   generateCrossVerbQuestions,
   generateFamilyChoiceQuestions,
+  generateParticipleChoiceQuestions,
+  PARTICIPLE_CHOICE_QUESTION_COUNT,
+  getAspectGridData,
   generateMatchPairsQuestions,
   generateQuestions,
   generateReadingQuestions,
@@ -4810,5 +4813,121 @@ describe('generateFamilyChoiceQuestions — familyChoiceSafe audit', () => {
         }
       }
     }
+  })
+})
+
+describe('generateParticipleChoiceQuestions — participles audit', () => {
+  const etorri = VERBS.find((v) => v.id === 'etorri')
+  const ikusi = VERBS.find((v) => v.id === 'ikusi')
+  const joan = VERBS.find((v) => v.id === 'joan')
+  const izan = VERBS.find((v) => v.id === 'izan')
+
+  it('generates the expected number of questions for unit-11-review sources', () => {
+    const resolvedSources = [
+      { verb: izan, tense: 'presentPerfect' },
+      { verb: etorri, tense: 'presentPerfect' },
+      { verb: ikusi, tense: 'presentPerfect' },
+    ]
+    const questions = generateParticipleChoiceQuestions(resolvedSources)
+    expect(questions).toHaveLength(PARTICIPLE_CHOICE_QUESTION_COUNT)
+  })
+
+  it('generates questions for a Gate B review with present/past/future sources', () => {
+    const resolvedSources = [
+      { verb: joan, tense: 'past' },
+      { verb: joan, tense: 'future' },
+      { verb: ikusi, tense: 'present' },
+      { verb: ikusi, tense: 'past' },
+      { verb: ikusi, tense: 'future' },
+    ]
+    const questions = generateParticipleChoiceQuestions(resolvedSources)
+    expect(questions).toHaveLength(PARTICIPLE_CHOICE_QUESTION_COUNT)
+  })
+
+  it('each question has kind participle-choice, a known anchor, an aux, and exactly 3 options', () => {
+    const resolvedSources = [
+      { verb: etorri, tense: 'presentPerfect' },
+      { verb: ikusi, tense: 'present' },
+      { verb: ikusi, tense: 'past' },
+      { verb: ikusi, tense: 'future' },
+    ]
+    const questions = generateParticipleChoiceQuestions(resolvedSources, { count: 10 })
+    for (const q of questions) {
+      expect(q.kind).toBe('participle-choice')
+      expect(['atzo', 'egunero', 'bihar']).toContain(q.anchor)
+      expect(typeof q.aux).toBe('string')
+      expect(q.aux.length).toBeGreaterThan(0)
+      expect(q.options).toHaveLength(3)
+      expect(q.options).toContain(q.correct)
+    }
+  })
+
+  it('options are always the three distinct participle forms for that verb', () => {
+    const resolvedSources = [
+      { verb: ikusi, tense: 'present' },
+      { verb: ikusi, tense: 'past' },
+      { verb: ikusi, tense: 'future' },
+    ]
+    const questions = generateParticipleChoiceQuestions(resolvedSources, { count: 6 })
+    for (const q of questions) {
+      const verb = VERBS.find((v) => v.id === q.verbId)
+      const expected = new Set(Object.values(verb.participles))
+      expect(new Set(q.options)).toEqual(expected)
+    }
+  })
+
+  it('correct form maps correctly to anchor (atzo=perfective, egunero=imperfective, bihar=prospective)', () => {
+    const resolvedSources = [
+      { verb: ikusi, tense: 'present' },
+      { verb: ikusi, tense: 'past' },
+      { verb: ikusi, tense: 'future' },
+    ]
+    const questions = generateParticipleChoiceQuestions(resolvedSources, { count: 6 })
+    for (const q of questions) {
+      if (q.anchor === 'atzo') expect(q.correct).toBe(ikusi.participles.perfective)
+      if (q.anchor === 'egunero') expect(q.correct).toBe(ikusi.participles.imperfective)
+      if (q.anchor === 'bihar') expect(q.correct).toBe(ikusi.participles.prospective)
+    }
+  })
+
+  it('audit: all verbs with participles have exactly 3 distinct forms', () => {
+    for (const verb of VERBS) {
+      if (!verb.participles) continue
+      const { imperfective, perfective, prospective } = verb.participles
+      expect(
+        imperfective,
+        `${verb.id}.participles.imperfective is missing`,
+      ).toBeTruthy()
+      expect(
+        perfective,
+        `${verb.id}.participles.perfective is missing`,
+      ).toBeTruthy()
+      expect(
+        prospective,
+        `${verb.id}.participles.prospective is missing`,
+      ).toBeTruthy()
+      expect(
+        new Set([imperfective, perfective, prospective]).size,
+        `${verb.id}.participles has duplicate forms`,
+      ).toBe(3)
+    }
+  })
+
+  it('getAspectGridData returns 3 rows with presentForm and pastForm for a verb with participles', () => {
+    const rows = getAspectGridData(ikusi)
+    expect(rows).toHaveLength(3)
+    for (const row of rows) {
+      expect(['imperfective', 'perfective', 'prospective']).toContain(row.aspect)
+      expect(row.presentForm).toContain(' ')
+      expect(row.pastForm).toContain(' ')
+    }
+    const perfRow = rows.find((r) => r.aspect === 'perfective')
+    expect(perfRow.presentForm).toBe('ikusi du')
+    expect(perfRow.pastForm).toBe('ikusi zuen')
+  })
+
+  it('getAspectGridData returns null for verbs without participles', () => {
+    const ukan = VERBS.find((v) => v.id === 'ukan')
+    expect(getAspectGridData(ukan)).toBeNull()
   })
 })
