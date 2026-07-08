@@ -228,11 +228,11 @@ the nonce check sees paradigm-targeted review, not an `aipatu` lesson.
 
 *Goal: REVIEW §3.5 last bullet — finish #331/#469's collapses.*
 
-- [ ] Take the M0 audit table; for each `VIOLATION` row, pool into the
+- [x] Take the M0 audit table; for each `VIOLATION` row, pool into the
       pattern's existing cross-verb lesson (mirroring #469's mechanics:
       retire the id, extend the pool's `sources`). D6: each row is a
       reviewable judgment; introducer-carve-out rows stay.
-- [ ] Sync `journey.js` `lessonIds`, `docs/LEARNING_JOURNEY.md`, regenerate
+- [x] Sync `journey.js` `lessonIds`, `docs/LEARNING_JOURNEY.md`, regenerate
       `docs/CURRICULUM_MAP.md`; `docs/DECISIONS.md` entry naming what was
       cut and what was spared, with reasons.
 

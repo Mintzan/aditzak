@@ -8,6 +8,27 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M6: retire 3 redundant single-verb object-axis lessons (pool into existing reviews)
+
+Three single-verb periphrastic lessons in Unit 48 ("Acting on Me, Us, and You")
+were retired as VIOLATIONs per the M0 lesson-diet audit:
+
+- `ikusi-object-axis-present-gu` — NORK=gu, present — pattern already introduced
+  by `maite-object-axis-present` (which covers the same nor-nork × presentByObject
+  × {hura,zu,zuek,haiek} frame); retired into `object-axis-present-review-gu`.
+- `jan-object-axis-past-gu` — NORK=gu, past — pattern already introduced by
+  `maite-object-axis-past`; retired into `object-axis-past-review-gu`.
+- `ikusi-object-axis-past-haiek` — NORK=haiek, past — pattern already introduced
+  by `maite-object-axis-past-hura`; retired into `object-axis-past-review-haiek`.
+
+In all three cases the pool reviews already listed the verbs (ikusi/jan) in their
+`sources`, so no sources needed extending — only the single-verb lesson objects
+were removed from `lessons.js` and their IDs from `journey.js` `lessonIds`.
+Retired IDs are never reused (Invariant 2 / #151 precedent).
+
+`node scripts/lesson-diet-audit.mjs` now reports 0 VIOLATIONs (was 3).
+All 518 tests green.
+
 ## 2026-07-08 — M1 PR2: retitle spine units whose head is a periphrastic lexical verb
 
 Three spine units in `journey.js`/`journeyTranslations.js`/`LEARNING_JOURNEY.md`/
