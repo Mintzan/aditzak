@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M0 audit scripts shipped (scripts/grounding-audit.mjs, scripts/lesson-diet-audit.mjs)
+
+Both M0 scripts are live and their outputs are committed as Appendix A in
+`docs/AUXILIARY_FIRST_PLAN.md`. Two fixes were needed during authoring:
+
+1. **Modal compound verbIds**: `MODAL_PARTICLES` only had `'ahal'` but the
+   actual verbIds in the data are `'ahal-ukan'`/`'ahal-izan'`/`'ezin-ukan'`/
+   `'ezin-izan'`. Added all four so these are correctly excluded from the
+   pattern-introducer slot (they are constructions, not general-paradigm
+   lessons) and correctly PASS Test 3.
+2. **Causative endsWith check**: `endsWith('-arazi')` missed `itzularazi` and
+   `dantzarazi` (the morph is `arazi` without a hyphen in the verb ID).
+   Changed to `endsWith('arazi')` throughout.
+
+Results: M2 worklist = 270 lesson × verb × tense combos / 831 missing
+person slots. M6 worklist = 3 VIOLATIONs (all object-axis lessons where a
+parallel `maite`/`ukan` lesson already introduced the pattern), 24 REVIEW
+rows (dative-frame repeats; human decides in M6 PR), 157 clean PASSes.
+
 ## 2026-07-08 — Auxiliary-first plan adopted (docs/AUXILIARY_FIRST_PLAN.md)
 
 The review below was turned into an ordered implementation roadmap:
