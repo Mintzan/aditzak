@@ -17,9 +17,11 @@ import {
   deductHeart,
   deriveCellMastery,
   EXTRA_REVIEW_EXERCISES,
+  FAMILY_CHOICE_QUESTION_COUNT,
   exerciseReducer,
   generateCaseMixerQuestions,
   generateCrossVerbQuestions,
+  generateFamilyChoiceQuestions,
   generateMatchPairsQuestions,
   generateQuestions,
   generateReadingQuestions,
@@ -4123,6 +4125,16 @@ describe('getExplanation', () => {
     })
   })
 
+  it('explains family-choice questions using NorNork key for ergative verbs', () => {
+    const question = { kind: 'family-choice', tense: 'present', person: 'ni', correct: 'dut' }
+    expect(getExplanation(verbErgative, question, t)).toBe('explanationFamilyChoiceNorNork:{"form":"dut"}')
+  })
+
+  it('explains family-choice questions using Nor key for absolutive verbs', () => {
+    const question = { kind: 'family-choice', tense: 'present', person: 'ni', correct: 'naiz' }
+    expect(getExplanation(verbAbsolutive, question, t)).toBe('explanationFamilyChoiceNor:{"form":"naiz"}')
+  })
+
   it('explains verb-choice questions with the correct verb and form', () => {
     const question = { kind: 'verb-choice', tense: 'present', person: 'ni', correct: 'naiz' }
 
@@ -4727,5 +4739,76 @@ describe('deriveCellMastery', () => {
     const mastery = deriveCellMastery({}, progress, [review], [verbX, verbY])
     expect(mastery['verb-x:present:hura']).toBe('learning')
     expect(mastery['verb-y:present:hura']).toBe('learning')
+  })
+})
+
+describe('generateFamilyChoiceQuestions — familyChoiceSafe audit', () => {
+  const izan = VERBS.find((v) => v.id === 'izan')
+  const ukan = VERBS.find((v) => v.id === 'ukan')
+
+  it('generates the expected number of questions for an izan+ukan present review', () => {
+    const resolvedSources = [
+      { verb: izan, tense: 'present' },
+      { verb: ukan, tense: 'present' },
+    ]
+    const questions = generateFamilyChoiceQuestions(VERBS, resolvedSources)
+    expect(questions).toHaveLength(FAMILY_CHOICE_QUESTION_COUNT)
+  })
+
+  it('generates the expected number of questions for an izan+ukan past review', () => {
+    const resolvedSources = [
+      { verb: izan, tense: 'past' },
+      { verb: ukan, tense: 'past' },
+    ]
+    const questions = generateFamilyChoiceQuestions(VERBS, resolvedSources)
+    expect(questions).toHaveLength(FAMILY_CHOICE_QUESTION_COUNT)
+  })
+
+  it('each question has kind family-choice, a sentence with blank, and exactly 2 options', () => {
+    const resolvedSources = [
+      { verb: izan, tense: 'present' },
+      { verb: ukan, tense: 'present' },
+    ]
+    const questions = generateFamilyChoiceQuestions(VERBS, resolvedSources)
+    for (const q of questions) {
+      expect(q.kind).toBe('family-choice')
+      expect(q.sentence).toContain('___')
+      expect(q.options).toHaveLength(2)
+      expect(q.options).toContain(q.correct)
+    }
+  })
+
+  it('correct form and lure are always different', () => {
+    const resolvedSources = [
+      { verb: izan, tense: 'present' },
+      { verb: ukan, tense: 'present' },
+      { verb: izan, tense: 'past' },
+      { verb: ukan, tense: 'past' },
+    ]
+    const questions = generateFamilyChoiceQuestions(VERBS, resolvedSources, { count: 20 })
+    for (const q of questions) {
+      const lure = q.options.find((o) => o !== q.correct)
+      expect(lure).toBeDefined()
+      expect(lure).not.toBe(q.correct)
+    }
+  })
+
+  it('all familyChoiceSafe sentences in verbs.js belong to verbs that have a cross-family sibling', () => {
+    for (const verb of VERBS) {
+      for (const [tense, byPerson] of Object.entries(verb.sentences ?? {})) {
+        for (const [person, variants] of Object.entries(byPerson ?? {})) {
+          const variantList = Array.isArray(variants) ? variants : [variants]
+          for (const v of variantList) {
+            if (v?.familyChoiceSafe) {
+              const lure = getCaseFrameLure(VERBS, verb, tense, person)
+              expect(
+                lure,
+                `${verb.id}.sentences.${tense}.${person} is familyChoiceSafe but getCaseFrameLure returned ${lure}`,
+              ).toBeTruthy()
+            }
+          }
+        }
+      }
+    }
   })
 })

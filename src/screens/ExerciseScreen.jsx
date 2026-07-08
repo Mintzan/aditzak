@@ -17,6 +17,7 @@ import {
   generateMatchPairsQuestions,
   generateQuestions,
   generateReadingQuestions,
+  generateFamilyChoiceQuestions,
   generateSuffixChoiceQuestions,
   getComposedTable,
   getCrossVerbCandidates,
@@ -178,6 +179,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // "pick -ko or -go" questions on top of its normal cross-section — see
   // `generateSuffixChoiceQuestions`.
   const suffixChoiceQuestions = lesson.suffixChoice ? generateSuffixChoiceQuestions(resolvedSources) : []
+  const familyChoiceQuestions = lesson.familyChoice ? generateFamilyChoiceQuestions(VERBS, resolvedSources) : []
   const allQuestions = shuffle([
     ...questions,
     ...extraQuestions,
@@ -185,6 +187,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
     ...caseMixerQuestions,
     ...matchPairsQuestions,
     ...suffixChoiceQuestions,
+    ...familyChoiceQuestions,
   ])
   return {
     queue: allQuestions,
@@ -646,6 +649,7 @@ const QUESTION_PROMPT_KEYS = {
   'match-pairs': 'questionMatchPairs',
   'word-order': 'questionWordOrder',
   'suffix-choice': 'questionSuffixChoice',
+  'family-choice': 'questionFamilyChoice',
 }
 
 // The explanation toggle is its own pill-shaped button above the

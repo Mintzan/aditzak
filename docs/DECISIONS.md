@@ -8,6 +8,17 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M4 PR1: family-choice question kind
+
+`generateFamilyChoiceQuestions(verbs, resolvedSources)` in `lessonLogic.js`
+uses `getCaseFrameLure` (already in place) to build two-option "da or du?"
+questions. Only sentences tagged `familyChoiceSafe: true` (fail-closed opt-in)
+produce questions. `presentPlural` sentences of ukan are excluded from the tag
+because `izan` (NOR sibling) has no `presentPlural` table — the audit test
+catches this invariant for any future tags. `unit-5-review-1`, `unit-6-review-1`,
+`unit-31-review` get `familyChoice: true`; Units 11/13/23 deferred to a later
+pass when their sources include tagged sentences.
+
 ## 2026-07-08 — M3 PR2: paradigm mastery grid in Progress tab
 
 `buildMasteryFamilies(mastery, lessons, verbs)` (HomeScreen.jsx) builds the

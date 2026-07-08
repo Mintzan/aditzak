@@ -113,6 +113,7 @@ export const TRANSLATIONS = {
     questionMatchPairs: 'Match each person to its form.',
     questionWordOrder: 'Tap the words back into order.',
     questionSuffixChoice: 'Does its future take -ko or -go?',
+    questionFamilyChoice: 'da or du?',
     personNi: 'I',
     personHi: 'you (familiar)',
     personHiM: 'you (familiar, to a man)',
@@ -284,6 +285,10 @@ export const TRANSLATIONS = {
       "'{verb}' ends in 'n', so its future takes '-go': the rule is purely about the last letter, not the verb's meaning.",
     explanationSuffixChoiceKo:
       "'{verb}' doesn't end in 'n', so its future takes '-ko': the rule is purely about the last letter, not the verb's meaning.",
+    explanationFamilyChoiceNorNork:
+      "The subject is the doer (-k ergative), so the auxiliary is from the du family: {form}.",
+    explanationFamilyChoiceNor:
+      "No ergative doer — this is a predicative sentence, so the auxiliary is from the da family: {form}.",
     lureRationaleCaseFrame:
       "'{form}' marks a different subject case than this question needs (NOR vs NOR-NORK) — it's borrowed from a verb whose subject works the opposite way. The correct form here is '{correct}'.",
     lureRationaleTense:
@@ -382,6 +387,7 @@ export const TRANSLATIONS = {
     questionMatchPairs: 'Empareja cada persona con su forma.',
     questionWordOrder: 'Toca las palabras para ordenarlas.',
     questionSuffixChoice: '¿Su futuro lleva -ko o -go?',
+    questionFamilyChoice: '¿da o du?',
     personNi: 'yo',
     personHi: 'tú (familiar)',
     personHiM: 'tú (familiar, a un hombre)',
@@ -553,6 +559,10 @@ export const TRANSLATIONS = {
       "'{verb}' termina en 'n', así que su futuro lleva '-go': la regla depende solo de la última letra, no del significado del verbo.",
     explanationSuffixChoiceKo:
       "'{verb}' no termina en 'n', así que su futuro lleva '-ko': la regla depende solo de la última letra, no del significado del verbo.",
+    explanationFamilyChoiceNorNork:
+      "El sujeto es el agente (-k ergativo), así que el auxiliar es de la familia du: {form}.",
+    explanationFamilyChoiceNor:
+      "Sin agente ergativo — es una frase predicativa, así que el auxiliar es de la familia da: {form}.",
     lureRationaleCaseFrame:
       "'{form}' marca un sujeto de otro tipo (NOR vs NOR-NORK) — viene de un verbo cuyo sujeto funciona al revés. La forma correcta aquí es '{correct}'.",
     lureRationaleTense:
@@ -651,6 +661,7 @@ export const TRANSLATIONS = {
     questionMatchPairs: 'Lotu pertsona bakoitza bere formarekin.',
     questionWordOrder: 'Sakatu hitzak ordenan jartzeko.',
     questionSuffixChoice: 'Geroaldian -ko ala -go hartzen du?',
+    questionFamilyChoice: 'da ala du?',
     personNi: 'ni',
     personHi: 'hi (hurbila)',
     personHiM: 'hi (gizonezkoari, toka)',
@@ -822,6 +833,10 @@ export const TRANSLATIONS = {
       "'{verb}'-k 'n'-z amaitzen da, eta horregatik geroaldian '-go' hartzen du: araua azken letraren araberakoa da soilik, ez aditzaren esanahiarena.",
     explanationSuffixChoiceKo:
       "'{verb}'-k ez du 'n'-z amaitzen, eta horregatik geroaldian '-ko' hartzen du: araua azken letraren araberakoa da soilik, ez aditzaren esanahiarena.",
+    explanationFamilyChoiceNorNork:
+      "Subjektuak ergatiboa du (-k), eta, beraz, laguntzailea du familiakoa da: {form}.",
+    explanationFamilyChoiceNor:
+      "Ez dago agente ergatiborik — esaldi predikatiboa da, eta, beraz, laguntzailea da familiakoa da: {form}.",
     lureRationaleCaseFrame:
       "'{form}' beste motako subjektu bat markatzen du (NOR vs NOR-NORK) — alderantziz funtzionatzen duen aditz batetik dator. Forma zuzena hemen '{correct}' da.",
     lureRationaleTense:

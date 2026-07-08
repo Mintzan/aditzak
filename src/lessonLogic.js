@@ -2095,6 +2095,55 @@ export function generateSuffixChoiceQuestions(resolvedSources, { count = SUFFIX_
     })
 }
 
+// Up to this many `kind: 'family-choice'` questions get added to a lesson
+// opted in via `lesson.familyChoice: true` — "da or du?" seed pass covering
+// NOR vs NOR-NORK; kept small for the same "handful" rationale as
+// `SUFFIX_CHOICE_QUESTION_COUNT`.
+export const FAMILY_CHOICE_QUESTION_COUNT = 3
+
+// A `kind: 'family-choice'` question presents a sentence with a blank and
+// asks the learner to pick which auxiliary family fills it — NOR ("da") or
+// NOR-NORK ("du") — by selecting between the verb's own form and the
+// cross-family form from `getCaseFrameLure`. Only sentences tagged
+// `familyChoiceSafe: true` (fail-closed opt-in) produce questions, ensuring
+// the frame unambiguously signals the correct family. `verbs` is the full
+// VERBS list, needed to find the cross-family sibling.
+export function generateFamilyChoiceQuestions(verbs, resolvedSources, { count = FAMILY_CHOICE_QUESTION_COUNT } = {}) {
+  const candidates = []
+  for (const { verb, tense } of resolvedSources) {
+    const table = getComposedTable(verb, tense)
+    if (!table) continue
+    const sentencesByPerson = verb.sentences?.[tense]
+    if (!sentencesByPerson) continue
+    for (const [person, form] of Object.entries(table)) {
+      if (typeof form !== 'string') continue
+      const rawVariants = sentencesByPerson[person]
+      if (!rawVariants) continue
+      const lure = getCaseFrameLure(verbs, verb, tense, person)
+      if (!lure || lure === form) continue
+      const safeSentences = (Array.isArray(rawVariants) ? rawVariants : [rawVariants])
+        .map(normalizeSentence)
+        .filter((s) => s?.familyChoiceSafe)
+      if (safeSentences.length === 0) continue
+      candidates.push({ verb, tense, person, form, lure, safeSentences })
+    }
+  }
+  return shuffle(candidates)
+    .slice(0, count)
+    .map(({ verb, tense, person, form, lure, safeSentences }) => {
+      const sentence = safeSentences[Math.floor(Math.random() * safeSentences.length)]
+      return {
+        verbId: verb.id,
+        tense,
+        person,
+        kind: 'family-choice',
+        sentence: sentence.text,
+        correct: form,
+        options: shuffle([form, lure]),
+      }
+    })
+}
+
 // `kind: 'reading'` questions (Unit 36, see `src/data/readingItems.js`) have
 // no `verbId`/`tense`/`person` of their own — each is just a source sentence
 // plus a comprehension prompt and four candidate sentences, one of which
@@ -2334,6 +2383,10 @@ export function getExplanation(verb, question, t) {
   if (question.kind === 'suffix-choice') {
     const key = question.correct === '-go' ? 'explanationSuffixChoiceGo' : 'explanationSuffixChoiceKo'
     return t(key, { verb: question.infinitive })
+  }
+  if (question.kind === 'family-choice') {
+    const key = verb.agreement.includes('nork') ? 'explanationFamilyChoiceNorNork' : 'explanationFamilyChoiceNor'
+    return t(key, { form: question.correct })
   }
   if (question.kind !== 'pronoun' && question.kind !== 'type-pronoun') return null
   const key = verb.agreement.includes('nork') ? 'explanationPronounErgative' : 'explanationPronounAbsolutive'

@@ -232,6 +232,7 @@ export const LESSONS = [
   {
     id: 'unit-6-review-1',
     review: true,
+    familyChoice: true,
     persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'izan', tense: 'present' },
@@ -312,6 +313,7 @@ export const LESSONS = [
     id: 'unit-5-review-1',
     review: true,
     negation: true,
+    familyChoice: true,
     persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'izan', tense: 'present' },
@@ -1915,6 +1917,7 @@ export const LESSONS = [
   {
     id: 'unit-31-review',
     review: true,
+    familyChoice: true,
     caseMixerCount: 6,
     sources: [
       { verbId: 'izan', tense: 'present' },
