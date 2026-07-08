@@ -175,19 +175,19 @@ question for a missed cell; headline progress metric shows cells owned.
 *Goal: REVIEW §3.2–3.3 / R3+R4 — "when" gets first-class question kinds.*
 
 **PR 1 — family-selection (`kind: 'family-choice'`).**
-- [ ] Data: `familyChoiceSafe` tag on qualifying sentences (D3 criteria);
+- [x] Data: `familyChoiceSafe` tag on qualifying sentences (D3 criteria);
       seed pass over existing `sentences` of izan/ukan carriers (the
       "da or du?" line), then dative families.
-- [ ] Engine: `generateFamilyChoiceQuestions` in `src/lessonLogic.js` —
+- [x] Engine: `generateFamilyChoiceQuestions` in `src/lessonLogic.js` —
       blank = auxiliary only, options = same tense/person across families
       (promoting `getAuxiliarySwapLure` from lure to answer dimension);
       lure rationale strings for the error-explanation UI.
-- [ ] Audit: `validfor-audit`-style test proving every tagged sentence
+- [x] Audit: `validfor-audit`-style test proving every tagged sentence
       rejects all offered lures (D3).
-- [ ] Wiring: recurring "da or du?" drill line through spine review
+- [x] Wiring: recurring "da or du?" drill line through spine review
       lessons (a `familyChoice: true` lesson flag, like `suffixChoice`) —
       Units 6, 11, 13, 23 (Gate B), 31 (Gate C) minimum.
-- [ ] UI: render + i18n prompt (`questionFamilyChoice`) in
+- [x] UI: render + i18n prompt (`questionFamilyChoice`) in
       `src/screens/ExerciseScreen.jsx` / `translations.js`.
 
 **PR 2 — participle-selection (`kind: 'participle-choice'`).**
