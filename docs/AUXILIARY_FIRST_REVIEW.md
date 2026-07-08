@@ -280,7 +280,55 @@ perfect/past → dative → ditransitive → moods). What changes is each unit's
   NOR-NORI aux table six times over; `ikusi-present-plural` post-dates the
   pattern's introduction). This is a continuation of #331/#469's collapses.
 
-### 3.6 What deliberately does *not* change
+### 3.6 Worked example — what happens to the `zuek → edan zenituzten` card
+
+The clearest live symptom of R1/R3/R4 combined is the engine's bare
+`kind: 'form'` question (the "¿Qué forma es correcta?" card whose only cue
+is a pronoun). It is the *fallback* kind, generated exactly where a
+verb × tense has no `sentences` data — e.g. `edan`'s `pastPlural` today —
+and it fails the model on every axis at once:
+
+- **Framing:** the header reads "EDAN — BEBER · PASADO (PLURAL)", claiming
+  the learner is practising *edan*. The participle is inert; the entire
+  answer is `edun`'s past plural-object cell for NORK=`zuek`
+  (`zenituzten`) — knowledge that is 100% auxiliary and 0% edan.
+- **Cue:** with no sentence, tense and object-number are not inferable from
+  any Basque input — only from the lesson's own metadata in the header. The
+  learner is reading course labels, not the language. "When" is unpracticed
+  by construction.
+- **Distractors:** ungrounded bare-form questions may only draw from the
+  same table (see `generateQuestions`' `default` branch — `formLures` are
+  deliberately ignored without a sentence to keep options legible), so the
+  options (`genituen`/`zenituzten`/`zituzten`) test *only* the
+  person-suffix mapping. The discriminations that actually matter here —
+  `zenuten` vs `zenituzten` (object number), `zineten` (wrong family) —
+  are structurally excluded.
+
+Under this proposal the card transforms in three steps, one per increment:
+
+1. *(Reframe)* the header leads with the paradigm — "NOR-NORK · iragana ·
+   objektu plurala (`zenituzten`)" — with `edan` demoted to the example
+   slot, and the credit for a right answer accrues to the aux cell
+   `edun:pastPlural:zuek`, whatever the carrier.
+2. *(Data)* the bare fallback is treated as a **sentence-coverage bug on
+   spine lessons**, and the coverage unit becomes the *paradigm cell*, not
+   verb × tense × person: one frame like `Zuek ardo guztiak atzo ___ ___.`
+   grounds tense (*atzo*) and object number (*ardo guztiak*) in the
+   sentence itself, and — because periphrastic forms are composed — the
+   same frame skeleton serves any carrier the pool rotates in (the
+   `validFor` machinery already audits exactly this kind of sharing).
+3. *(New kinds)* grounded by a sentence, the question can finally ask the
+   real discriminations: object-number (`zenuten` lure), family selection
+   (`zineten`), or participle selection (`edaten/edan/edango ___`) —
+   instead of person-mapping inside a pre-announced table.
+
+Bare-form cell drills don't vanish entirely — as fast fluency reps inside a
+lesson's early ramp they have a place — but they should be visually framed
+as *auxiliary* drills (participle greyed out, aux highlighted, "works with
+any verb: edan/ikusi/erosi…") and never be the kind a spine lesson settles
+into because sentence data ran out.
+
+### 3.7 What deliberately does *not* change
 
 - **Concrete verbs stay in the data and in the pools** — as carriers,
   minimal-pair material, frame-selection items, sentence content, and the
@@ -306,7 +354,11 @@ perfect/past → dative → ditransitive → moods). What changes is each unit's
    weak-spot boosting by cell across carriers.
 3. **New question kinds** — family-selection ("da or du?" and the dative
    extensions) and participle-selection; wire a recurring selection drill
-   line through the spine's review lessons.
+   line through the spine's review lessons. Includes retiring the bare
+   `kind: 'form'` fallback on spine lessons per §3.6: audit which
+   verb × tense slices actually degrade to it (no `sentences` data), and
+   close the gap with paradigm-cell-level sentence frames shared across
+   carriers rather than per-verb frames.
 4. **Generalization gates** — held-out carriers at Gates B/C.
 5. **Lesson diet** — the §3.5 pooling audit of residual single-verb
    periphrastic lessons.
