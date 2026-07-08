@@ -940,7 +940,190 @@ export const LESSONS = [
       { verbId: 'jakin', tense: 'pastPlural' },
     ],
   },
-  // Unit 14 ("Physical States & Possessions", Phase II) — `eduki` (nor-nork)
+  // Unit 16 (#350, formerly Unit 15 — ordered here to match `journey.js`'s
+  // Stage 4 sequence: Unit 16 → Unit 17 → Unit 18) — the non-3rd-person
+  // object: `ukan`/`maite`'s `presentByObject`/`pastByObject` tables
+  // (#346/#347/#348) let the *object* (NOR) be ni/zu/zuek/haiek, not just
+  // the default `hura` every earlier unit fixes it to. `objectAxis: { vary:
+  // 'nor', fixed: 'ni' }` is `LESSONS`' first-ever use of that field —
+  // `generateQuestions`/`createExerciseState` have supported it since #346,
+  // but no lesson exercised it until now. `fixed: 'ni'` (rather than some
+  // other NORK) makes the payoff sentence "Maite zaitut" ("I love you") come
+  // out directly: NORK=ni, NOR=zu. `hura` stays in `persons` (its by-object
+  // form, "(maite) dut", is the one every earlier unit already drilled, so
+  // it's free reinforcement here) but `gu` is excluded — `nork: 'ni'` can't
+  // take `gu` as its own object (no first-person-plural-includes-the-speaker
+  // reflexive in this paradigm; see `resolveObjectAxisTable`'s "missing cell"
+  // handling in `lessonLogic.js`). At the time this unit was written, `ikusi`
+  // had no `*ByObject` table and `generateCrossVerbQuestions` didn't support
+  // `objectAxis` pooling at all, so this was four single-verb practice
+  // lessons with no pooled review. #378/#379 gave `ikusi`/`jan`/`edan`/
+  // `erosi`/`hartu` their own `*ByObject` tables and #380 added the pooling
+  // support, so #381 appended `object-axis-present-review`/
+  // `object-axis-past-review` below, spanning all seven verbs.
+  {
+    id: 'ukan-object-axis-present',
+    verbId: 'ukan',
+    tense: 'presentByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'maite-object-axis-present',
+    verbId: 'maite',
+    tense: 'presentByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'ukan-object-axis-past',
+    verbId: 'ukan',
+    tense: 'pastByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  {
+    id: 'maite-object-axis-past',
+    verbId: 'maite',
+    tense: 'pastByObject',
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+  },
+  // #381: now that `ikusi`/`jan`/`edan`/`erosi`/`hartu` have their own
+  // `presentByObject`/`pastByObject` tables (#378/#379) and
+  // `generateCrossVerbQuestions` can pool `objectAxis` sources (#380), Unit
+  // 16 gets a pooled review spanning all seven object-axis verbs —
+  // `review: true` + `sources` lets `generateCrossVerbQuestions` draw
+  // "which verb fits" distractors across the whole set, not just
+  // `ukan`/`maite`. Same `persons`/`objectAxis` as the four practice lessons
+  // above (every source shares one fixed axis, see `docs/DECISIONS.md`).
+  {
+    id: 'object-axis-present-review',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'ukan', tense: 'presentByObject' },
+      { verbId: 'maite', tense: 'presentByObject' },
+      { verbId: 'ikusi', tense: 'presentByObject' },
+      { verbId: 'jan', tense: 'presentByObject' },
+      { verbId: 'edan', tense: 'presentByObject' },
+      { verbId: 'erosi', tense: 'presentByObject' },
+      { verbId: 'hartu', tense: 'presentByObject' },
+      { verbId: 'nahi', tense: 'presentByObject' },
+      { verbId: 'behar', tense: 'presentByObject' },
+      { verbId: 'entzun', tense: 'presentByObject' },
+      { verbId: 'ulertu', tense: 'presentByObject' },
+      { verbId: 'ezagutu', tense: 'presentByObject' },
+      { verbId: 'aurkitu', tense: 'presentByObject' },
+      { verbId: 'bilatu', tense: 'presentByObject' },
+      { verbId: 'babestu', tense: 'presentByObject' },
+      { verbId: 'mugitu', tense: 'presentByObject' },
+      { verbId: 'bultzatu', tense: 'presentByObject' },
+      { verbId: 'sustatu', tense: 'presentByObject' },
+      { verbId: 'bermatu', tense: 'presentByObject' },
+      { verbId: 'ziurtatu', tense: 'presentByObject' },
+      { verbId: 'gaitzetsi', tense: 'presentByObject' },
+      { verbId: 'sentitu', tense: 'presentByObject' },
+      { verbId: 'sumatu', tense: 'presentByObject' },
+      { verbId: 'aztertu', tense: 'presentByObject' },
+      { verbId: 'ukatu', tense: 'presentByObject' },
+      { verbId: 'bukatu', tense: 'presentByObject' },
+      { verbId: 'amaitu', tense: 'presentByObject' },
+      { verbId: 'gainditu', tense: 'presentByObject' },
+      { verbId: 'bereiztu', tense: 'presentByObject' },
+      { verbId: 'jaso', tense: 'presentByObject' },
+      { verbId: 'itxaron', tense: 'presentByObject' },
+      { verbId: 'hausnartu', tense: 'presentByObject' },
+      { verbId: 'pentsatu', tense: 'presentByObject' },
+      { verbId: 'aldarrikatu', tense: 'presentByObject' },
+      { verbId: 'plazaratu', tense: 'presentByObject' },
+      { verbId: 'batu', tense: 'presentByObject' },
+      { verbId: 'adierazi', tense: 'presentByObject' },
+      { verbId: 'kontuan-hartu', tense: 'presentByObject' },
+    ],
+  },
+  {
+    id: 'object-axis-past-review',
+    review: true,
+    persons: ['hura', 'zu', 'zuek', 'haiek'],
+    objectAxis: { vary: 'nor', fixed: 'ni' },
+    sources: [
+      { verbId: 'ukan', tense: 'pastByObject' },
+      { verbId: 'maite', tense: 'pastByObject' },
+      { verbId: 'ikusi', tense: 'pastByObject' },
+      { verbId: 'jan', tense: 'pastByObject' },
+      { verbId: 'edan', tense: 'pastByObject' },
+      { verbId: 'erosi', tense: 'pastByObject' },
+      { verbId: 'hartu', tense: 'pastByObject' },
+      { verbId: 'behar', tense: 'pastByObject' },
+      { verbId: 'entzun', tense: 'pastByObject' },
+      { verbId: 'ulertu', tense: 'pastByObject' },
+      { verbId: 'ezagutu', tense: 'pastByObject' },
+      { verbId: 'aurkitu', tense: 'pastByObject' },
+      { verbId: 'bilatu', tense: 'pastByObject' },
+      { verbId: 'babestu', tense: 'pastByObject' },
+      { verbId: 'mugitu', tense: 'pastByObject' },
+      { verbId: 'bultzatu', tense: 'pastByObject' },
+      { verbId: 'sustatu', tense: 'pastByObject' },
+      { verbId: 'bermatu', tense: 'pastByObject' },
+      { verbId: 'ziurtatu', tense: 'pastByObject' },
+      { verbId: 'gaitzetsi', tense: 'pastByObject' },
+      { verbId: 'sentitu', tense: 'pastByObject' },
+      { verbId: 'sumatu', tense: 'pastByObject' },
+      { verbId: 'aztertu', tense: 'pastByObject' },
+      { verbId: 'ukatu', tense: 'pastByObject' },
+      { verbId: 'bukatu', tense: 'pastByObject' },
+      { verbId: 'amaitu', tense: 'pastByObject' },
+      { verbId: 'gainditu', tense: 'pastByObject' },
+      { verbId: 'bereiztu', tense: 'pastByObject' },
+      { verbId: 'jaso', tense: 'pastByObject' },
+      { verbId: 'itxaron', tense: 'pastByObject' },
+      { verbId: 'hausnartu', tense: 'pastByObject' },
+      { verbId: 'pentsatu', tense: 'pastByObject' },
+      { verbId: 'aldarrikatu', tense: 'pastByObject' },
+      { verbId: 'plazaratu', tense: 'pastByObject' },
+      { verbId: 'batu', tense: 'pastByObject' },
+      { verbId: 'adierazi', tense: 'pastByObject' },
+      { verbId: 'kontuan-hartu', tense: 'pastByObject' },
+    ],
+  },
+  // Unit 17 (#262, formerly Unit 42 in Phase VII — promoted to Stage 4 to
+  // match `journey.js`'s ordering) — `eraman`/`ekarri`, both nor-nork
+  // synthetic verbs in the same already-taught shape as `eduki`/`jakin`
+  // (Units 18/4). No new grammatical relation. Present + past, full 6-person
+  // grid, singular/plural split per the app-wide 3-persons-per-exercise rule.
+  { id: 'eraman-present', verbId: 'eraman', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'eraman-present-plural', verbId: 'eraman', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ekarri-present', verbId: 'ekarri', tense: 'present', persons: PHASE_1_PERSONS },
+  { id: 'ekarri-present-plural', verbId: 'ekarri', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'eraman-past', verbId: 'eraman', tense: 'past', persons: PHASE_1_PERSONS },
+  { id: 'eraman-past-plural', verbId: 'eraman', tense: 'past', persons: PHASE_1_PLURAL_PERSONS },
+  { id: 'ekarri-past', verbId: 'ekarri', tense: 'past', persons: PHASE_1_PERSONS },
+  { id: 'ekarri-past-plural', verbId: 'ekarri', tense: 'past', persons: PHASE_1_PLURAL_PERSONS },
+  {
+    id: 'unit-42-review',
+    review: true,
+    persons: PHASE_1_PERSONS,
+    sources: [
+      { verbId: 'eraman', tense: 'present' },
+      { verbId: 'ekarri', tense: 'present' },
+      { verbId: 'eraman', tense: 'past' },
+      { verbId: 'ekarri', tense: 'past' },
+    ],
+  },
+  {
+    id: 'unit-42-review-plural',
+    review: true,
+    persons: PHASE_1_PLURAL_PERSONS,
+    sources: [
+      { verbId: 'eraman', tense: 'present' },
+      { verbId: 'ekarri', tense: 'present' },
+      { verbId: 'eraman', tense: 'past' },
+      { verbId: 'ekarri', tense: 'past' },
+    ],
+  },
+  // Unit 18 ("Physical States & Possessions", Phase II) — `eduki` (nor-nork)
   // debuts here with a full 6-person grid, same singular/plural split as Unit
   // 12. `ibili` (nor) debuted in Unit 6 (#143); only its `gu`/`zuek`/`haiek`
   // forms (`ibili-present-plural`) arrive here.
@@ -2645,197 +2828,12 @@ export const LESSONS = [
       'reading-nonfinite-modal-z',
     ],
   },
-  // Unit 42 (#262, Phase VII Stage 17 — "Carrying & Bringing") — `eraman`/
-  // `ekarri`, both nor-nork synthetic verbs in the same already-taught shape
-  // as `eduki`/`jakin` (Units 14/4). No new grammatical relation, so — like
-  // Unit 40's `jario`/`etzan`/`irudi` and Unit 41's weather idioms — this
-  // slots into Phase VII rather than the renumbered core sequence (Units
-  // 1-39): "optional flavor content... neither unit unlocks new agreement
-  // coverage that isn't already taught elsewhere" (docs/LEARNING_JOURNEY.md).
-  // Present + past, full 6-person grid, singular/plural split per the
-  // app-wide 3-persons-per-exercise rule.
-  { id: 'eraman-present', verbId: 'eraman', tense: 'present', persons: PHASE_1_PERSONS },
-  { id: 'eraman-present-plural', verbId: 'eraman', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'ekarri-present', verbId: 'ekarri', tense: 'present', persons: PHASE_1_PERSONS },
-  { id: 'ekarri-present-plural', verbId: 'ekarri', tense: 'present', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'eraman-past', verbId: 'eraman', tense: 'past', persons: PHASE_1_PERSONS },
-  { id: 'eraman-past-plural', verbId: 'eraman', tense: 'past', persons: PHASE_1_PLURAL_PERSONS },
-  { id: 'ekarri-past', verbId: 'ekarri', tense: 'past', persons: PHASE_1_PERSONS },
-  { id: 'ekarri-past-plural', verbId: 'ekarri', tense: 'past', persons: PHASE_1_PLURAL_PERSONS },
-  {
-    id: 'unit-42-review',
-    review: true,
-    persons: PHASE_1_PERSONS,
-    sources: [
-      { verbId: 'eraman', tense: 'present' },
-      { verbId: 'ekarri', tense: 'present' },
-      { verbId: 'eraman', tense: 'past' },
-      { verbId: 'ekarri', tense: 'past' },
-    ],
-  },
-  {
-    id: 'unit-42-review-plural',
-    review: true,
-    persons: PHASE_1_PLURAL_PERSONS,
-    sources: [
-      { verbId: 'eraman', tense: 'present' },
-      { verbId: 'ekarri', tense: 'present' },
-      { verbId: 'eraman', tense: 'past' },
-      { verbId: 'ekarri', tense: 'past' },
-    ],
-  },
-  // Unit 15 (#350, new — inserted after Unit 14's NOR-NORK past pool, shifting
-  // every later unit +1) — the non-3rd-person object: `ukan`/`maite`'s
-  // `presentByObject`/`pastByObject` tables (#346/#347/#348) let the *object*
-  // (NOR) be ni/zu/zuek/haiek, not just the default `hura` every earlier unit
-  // fixes it to. `objectAxis: { vary: 'nor', fixed: 'ni' }` is `LESSONS`'
-  // first-ever use of that field — `generateQuestions`/`createExerciseState`
-  // have supported it since #346, but no lesson exercised it until now.
-  // `fixed: 'ni'` (rather than some other NORK) makes the payoff sentence
-  // "Maite zaitut" ("I love you") come out directly: NORK=ni, NOR=zu. `hura`
-  // stays in `persons` (its by-object form, "(maite) dut", is the one every
-  // earlier unit already drilled, so it's free reinforcement here) but `gu`
-  // is excluded — `nork: 'ni'` can't take `gu` as its own object (no
-  // first-person-plural-includes-the-speaker reflexive in this paradigm; see
-  // `resolveObjectAxisTable`'s "missing cell" handling in `lessonLogic.js`).
-  // At the time this unit was written, `ikusi` had no `*ByObject` table and
-  // `generateCrossVerbQuestions` didn't support `objectAxis` pooling at all,
-  // so this was four single-verb practice lessons with no pooled review,
-  // matching the precedent set by Unit 12 (`izan-past-pool`/
-  // `izan-past-pool-plural` alone, no trailing `unit-N-review`). #378/#379
-  // gave `ikusi`/`jan`/`edan`/`erosi`/`hartu` their own `*ByObject` tables and
-  // #380 added the pooling support, so #381 appended
-  // `object-axis-present-review`/`object-axis-past-review` below, spanning
-  // all seven verbs.
-  {
-    id: 'ukan-object-axis-present',
-    verbId: 'ukan',
-    tense: 'presentByObject',
-    persons: ['hura', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'ni' },
-  },
-  {
-    id: 'maite-object-axis-present',
-    verbId: 'maite',
-    tense: 'presentByObject',
-    persons: ['hura', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'ni' },
-  },
-  {
-    id: 'ukan-object-axis-past',
-    verbId: 'ukan',
-    tense: 'pastByObject',
-    persons: ['hura', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'ni' },
-  },
-  {
-    id: 'maite-object-axis-past',
-    verbId: 'maite',
-    tense: 'pastByObject',
-    persons: ['hura', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'ni' },
-  },
-  // #381: now that `ikusi`/`jan`/`edan`/`erosi`/`hartu` have their own
-  // `presentByObject`/`pastByObject` tables (#378/#379) and
-  // `generateCrossVerbQuestions` can pool `objectAxis` sources (#380), Unit
-  // 15 gets a pooled review spanning all seven object-axis verbs —
-  // `review: true` + `sources` lets `generateCrossVerbQuestions` draw
-  // "which verb fits" distractors across the whole set, not just
-  // `ukan`/`maite`. Same `persons`/`objectAxis` as the four practice lessons
-  // above (every source shares one fixed axis, see `docs/DECISIONS.md`).
-  {
-    id: 'object-axis-present-review',
-    review: true,
-    persons: ['hura', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'ni' },
-    sources: [
-      { verbId: 'ukan', tense: 'presentByObject' },
-      { verbId: 'maite', tense: 'presentByObject' },
-      { verbId: 'ikusi', tense: 'presentByObject' },
-      { verbId: 'jan', tense: 'presentByObject' },
-      { verbId: 'edan', tense: 'presentByObject' },
-      { verbId: 'erosi', tense: 'presentByObject' },
-      { verbId: 'hartu', tense: 'presentByObject' },
-      { verbId: 'nahi', tense: 'presentByObject' },
-      { verbId: 'behar', tense: 'presentByObject' },
-      { verbId: 'entzun', tense: 'presentByObject' },
-      { verbId: 'ulertu', tense: 'presentByObject' },
-      { verbId: 'ezagutu', tense: 'presentByObject' },
-      { verbId: 'aurkitu', tense: 'presentByObject' },
-      { verbId: 'bilatu', tense: 'presentByObject' },
-      { verbId: 'babestu', tense: 'presentByObject' },
-      { verbId: 'mugitu', tense: 'presentByObject' },
-      { verbId: 'bultzatu', tense: 'presentByObject' },
-      { verbId: 'sustatu', tense: 'presentByObject' },
-      { verbId: 'bermatu', tense: 'presentByObject' },
-      { verbId: 'ziurtatu', tense: 'presentByObject' },
-      { verbId: 'gaitzetsi', tense: 'presentByObject' },
-      { verbId: 'sentitu', tense: 'presentByObject' },
-      { verbId: 'sumatu', tense: 'presentByObject' },
-      { verbId: 'aztertu', tense: 'presentByObject' },
-      { verbId: 'ukatu', tense: 'presentByObject' },
-      { verbId: 'bukatu', tense: 'presentByObject' },
-      { verbId: 'amaitu', tense: 'presentByObject' },
-      { verbId: 'gainditu', tense: 'presentByObject' },
-      { verbId: 'bereiztu', tense: 'presentByObject' },
-      { verbId: 'jaso', tense: 'presentByObject' },
-      { verbId: 'itxaron', tense: 'presentByObject' },
-      { verbId: 'hausnartu', tense: 'presentByObject' },
-      { verbId: 'pentsatu', tense: 'presentByObject' },
-      { verbId: 'aldarrikatu', tense: 'presentByObject' },
-      { verbId: 'plazaratu', tense: 'presentByObject' },
-      { verbId: 'batu', tense: 'presentByObject' },
-      { verbId: 'adierazi', tense: 'presentByObject' },
-      { verbId: 'kontuan-hartu', tense: 'presentByObject' },
-    ],
-  },
-  {
-    id: 'object-axis-past-review',
-    review: true,
-    persons: ['hura', 'zu', 'zuek', 'haiek'],
-    objectAxis: { vary: 'nor', fixed: 'ni' },
-    sources: [
-      { verbId: 'ukan', tense: 'pastByObject' },
-      { verbId: 'maite', tense: 'pastByObject' },
-      { verbId: 'ikusi', tense: 'pastByObject' },
-      { verbId: 'jan', tense: 'pastByObject' },
-      { verbId: 'edan', tense: 'pastByObject' },
-      { verbId: 'erosi', tense: 'pastByObject' },
-      { verbId: 'hartu', tense: 'pastByObject' },
-      { verbId: 'behar', tense: 'pastByObject' },
-      { verbId: 'entzun', tense: 'pastByObject' },
-      { verbId: 'ulertu', tense: 'pastByObject' },
-      { verbId: 'ezagutu', tense: 'pastByObject' },
-      { verbId: 'aurkitu', tense: 'pastByObject' },
-      { verbId: 'bilatu', tense: 'pastByObject' },
-      { verbId: 'babestu', tense: 'pastByObject' },
-      { verbId: 'mugitu', tense: 'pastByObject' },
-      { verbId: 'bultzatu', tense: 'pastByObject' },
-      { verbId: 'sustatu', tense: 'pastByObject' },
-      { verbId: 'bermatu', tense: 'pastByObject' },
-      { verbId: 'ziurtatu', tense: 'pastByObject' },
-      { verbId: 'gaitzetsi', tense: 'pastByObject' },
-      { verbId: 'sentitu', tense: 'pastByObject' },
-      { verbId: 'sumatu', tense: 'pastByObject' },
-      { verbId: 'aztertu', tense: 'pastByObject' },
-      { verbId: 'ukatu', tense: 'pastByObject' },
-      { verbId: 'bukatu', tense: 'pastByObject' },
-      { verbId: 'amaitu', tense: 'pastByObject' },
-      { verbId: 'gainditu', tense: 'pastByObject' },
-      { verbId: 'bereiztu', tense: 'pastByObject' },
-      { verbId: 'jaso', tense: 'pastByObject' },
-      { verbId: 'itxaron', tense: 'pastByObject' },
-      { verbId: 'hausnartu', tense: 'pastByObject' },
-      { verbId: 'pentsatu', tense: 'pastByObject' },
-      { verbId: 'aldarrikatu', tense: 'pastByObject' },
-      { verbId: 'plazaratu', tense: 'pastByObject' },
-      { verbId: 'batu', tense: 'pastByObject' },
-      { verbId: 'adierazi', tense: 'pastByObject' },
-      { verbId: 'kontuan-hartu', tense: 'pastByObject' },
-    ],
-  },
+  // Unit 16's spine lessons (`ukan-object-axis-present` etc.) were moved
+  // earlier in this file to match `journey.js`'s Stage 4 ordering (Unit 16
+  // → Unit 17 → Unit 18). The Bonus Unit 48 lessons below extend Unit 16
+  // with the reverse-direction (NORK ≠ ni) forms.
 
-  // #416: the block above only ever fixes `nork` at `ni` — every other NORK
+  // #416: Unit 16's spine lessons only ever fix `nork` at `ni` — every other NORK
   // value (`hura`/`gu`/`zu`/`zuek`/`haiek`) sits in `ukan`/`maite`'s
   // `presentByObject`/`pastByObject` tables already but was never wired into
   // a lesson, so forms like `nau`/`gaitu`/`naute` (someone/something acting
