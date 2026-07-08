@@ -8,6 +8,40 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — Auxiliary-first plan adopted (docs/AUXILIARY_FIRST_PLAN.md)
+
+The review below was turned into an ordered implementation roadmap:
+`docs/AUXILIARY_FIRST_PLAN.md` — six milestones (M0 audits → M1 reframe ∥
+M2 sentence coverage ∥ M3 aux-cell mastery → M4 selection question kinds →
+M5 nonce-verb gates; M6 lesson diet anytime after M0). Notable calls locked
+in as plan defaults: cell mastery = ≥3 correct across ≥2 carriers (derived
+only, no STORAGE_KEY bump); nonce-verb gate checks are **non-blocking**
+(they route weak-spot review, never spine unlocks — don't let the hardest
+new item type control progression before it's calibrated); all new data
+capabilities (`familyChoiceSafe`, participle cues, `heldOut`) are
+fail-closed opt-in tags with machine audits, per the `wordOrderSafe`/
+`validFor` precedent; the bare-form invariant test lands only after the M2
+worklist is empty so CI stays green while coverage closes.
+
+## 2026-07-08 — Auxiliary-first review: the learning target is the auxiliary, verbs are carriers
+
+A user-prompted pedagogy review ("the learner must learn the auxiliary —
+when to use it and how; there is no value in learning concrete verbs like
+hartu or utzi") was assessed and written up in
+`docs/AUXILIARY_FIRST_REVIEW.md`. Verdict: correct about the core (the app's
+own data model already composes periphrastic tables from shared auxiliary
+skeletons, and rule #309 already treats regular verbs as pool fodder), but
+concrete verbs stay — as carriers, minimal-pair material, and holders of
+grammar-selecting features (participle class, argument frame, izan/ukan
+selection); synthetic verbs remain irreducibly per-verb. The gap is
+learner-facing: progress/error tracking, lesson titles, and question kinds
+are still keyed verb × tense, and auxiliary *selection* ("da or du?") has no
+first-class question kind. The doc proposes five shippable increments
+(reframe copy → aux-cell mastery aggregation → family/participle-selection
+question kinds → held-out generalization checks at gates → single-verb
+lesson pooling audit). No code changed in this entry — it records the review
+and the agreed direction so future journey work builds toward it.
+
 ## 2026-07-06 — Push the izan/ukan aux challenge harder in distractors
 
 Deciding when the auxiliary is izan vs. ukan is the first big pitfall for a
