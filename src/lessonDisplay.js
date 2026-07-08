@@ -1,12 +1,6 @@
-import { getFixedArgument, getComposedTable } from './lessonLogic'
+import { getFixedArgument, getComposedTable, CONSTRUCTION_VERB_IDS } from './lessonLogic'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
 import { VERBS, TENSE_META, AGREEMENT_META } from './data/verbs'
-
-// M1 PR1: paradigm-first titles for periphrastic lessons.
-// Construction-lesson exceptions keep construction/verb-first titles (#309 Test 3).
-const CONSTRUCTION_VERB_IDS = new Set([
-  'nahi', 'behar', 'ari', 'ahal', 'ahal-ukan', 'ahal-izan', 'ezin-ukan', 'ezin-izan',
-])
 
 function isConstruction(lesson) {
   const { verbId, tense } = lesson

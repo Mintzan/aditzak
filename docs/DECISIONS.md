@@ -8,6 +8,31 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M3 PR1: aux-cell derivation layer in lessonLogic.js
+
+`auxCellKey(verb, tense, person, objectAxis?)` exported from `lessonLogic.js`:
+maps any answered question to its skeleton cell. Synthetic verbs and
+construction verbs (Layer D) use verb-specific keys; all other periphrastic
+verbs use skeleton-name keys (`edun:tense:person`, `dativeIzan...`, `diot...`)
+so different carriers of the same paradigm share a cell.
+
+`deriveCellMastery(errorStats, progress, lessons, verbs)` implements D1's
+owned/learning/untouched states. Owned requires ≥2 distinct verb carriers, ≥3
+distinct `verbId:tense` source pairs across completed lessons, and 0 recorded
+misses. The ≥3 threshold approximates "≥3 correct" since progress is
+lesson-level, not cell-level. Returned as a sparse map; absent = untouched.
+
+`getWeakSpotQuestions` re-keyed by aux cell: misses are aggregated across
+carriers per cell; the carrier with fewest individual misses is selected for
+re-drill (fresh exposure to the pattern). Raw `errorStats` storage keys
+unchanged (Invariant 1).
+
+`CONSTRUCTION_VERB_IDS` moved from `lessonDisplay.js` (where it was private)
+to `lessonLogic.js` (exported) so both modules share a single definition;
+`lessonDisplay.js` now imports it. Avoided circular import since
+`lessonDisplay.js` already imports from `lessonLogic.js`.
+All 533 tests green.
+
 ## 2026-07-08 — M6: retire 3 redundant single-verb object-axis lessons (pool into existing reviews)
 
 Three single-verb periphrastic lessons in Unit 48 ("Acting on Me, Us, and You")

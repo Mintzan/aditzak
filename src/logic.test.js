@@ -3,6 +3,7 @@ import {
   addPoints,
   agreementsCompatible,
   applyHeartRegen,
+  auxCellKey,
   buildFlagDiagnostics,
   buildTaggedOptions,
   buyHeart,
@@ -11,8 +12,10 @@ import {
   computeLessonPoints,
   CASE_MIXER_QUESTION_COUNT,
   computeStars,
+  CONSTRUCTION_VERB_IDS,
   CROSS_VERB_QUESTION_COUNT,
   deductHeart,
+  deriveCellMastery,
   EXTRA_REVIEW_EXERCISES,
   exerciseReducer,
   generateCaseMixerQuestions,
@@ -4451,10 +4454,12 @@ describe('recordErrors', () => {
 describe('getWeakSpotQuestions', () => {
   const verbA = {
     id: 'izan',
+    type: 'synthetic',
     conjugations: { present: { ni: 'naiz', zu: 'zara', hura: 'da' } },
   }
   const verbB = {
     id: 'egon',
+    type: 'synthetic',
     conjugations: { present: { ni: 'nago', zu: 'zaude', hura: 'dago' } },
   }
   const verbs = [verbA, verbB]
@@ -4609,5 +4614,118 @@ describe('generateReadingQuestions (#145)', () => {
       expect(question.gloss.en).toBeTruthy()
       expect(question.prompt.en).toBeTruthy()
     })
+  })
+})
+
+describe('auxCellKey', () => {
+  it('uses verb-specific key for synthetic verbs', () => {
+    const verb = { id: 'izan', type: 'synthetic', conjugations: {} }
+    expect(auxCellKey(verb, 'present', 'hura')).toBe('izan:present:hura')
+  })
+
+  it('uses verb-specific key for construction verbs in CONSTRUCTION_VERB_IDS', () => {
+    const verb = { id: 'nahi', conjugations: {} }
+    expect(auxCellKey(verb, 'present', 'hura')).toBe('nahi:present:hura')
+  })
+
+  it('uses verb-specific key for arazi causative verbs', () => {
+    const verb = { id: 'ekarrarazi', conjugations: {} }
+    expect(auxCellKey(verb, 'present', 'hura')).toBe('ekarrarazi:present:hura')
+  })
+
+  it('maps to edun skeleton for standard periphrastic verbs', () => {
+    const verb = { id: 'ikusi', composedPrefixes: { present: 'ikusten ' }, conjugations: {} }
+    expect(auxCellKey(verb, 'present', 'zu')).toBe('edun:present:zu')
+  })
+
+  it('maps to a custom byObjectSkeleton for verbs that declare one', () => {
+    // Use a non-construction verb with an explicit byObjectSkeleton override
+    const verb = { id: 'jolastu', byObjectSkeleton: 'izan', composedPrefixes: { present: 'jolasten ' }, conjugations: {} }
+    expect(auxCellKey(verb, 'present', 'hura')).toBe('izan:present:hura')
+  })
+
+  it('maps to dativeIzan skeleton for NOR-NORI flat tenses', () => {
+    const verb = { id: 'gustatu', byNoriPrefixes: { present: 'gus ' }, conjugations: {} }
+    expect(auxCellKey(verb, 'present', 'niri')).toBe('dativeIzan:present:niri')
+  })
+
+  it('maps to dativeIzanByNor skeleton for presentByNor/pastByNor', () => {
+    const verb = { id: 'gustatu', byNoriPrefixes: { present: 'gus ' }, conjugations: {} }
+    expect(auxCellKey(verb, 'presentByNor', 'niri')).toBe('dativeIzanByNor:presentByNor:niri')
+    expect(auxCellKey(verb, 'pastByNor', 'niri')).toBe('dativeIzanByNor:pastByNor:niri')
+  })
+
+  it('includes the fixed axis slot in the key when objectAxis is provided', () => {
+    const verb = { id: 'ikusi', composedPrefixes: { present: 'ikusten ' }, conjugations: {} }
+    expect(auxCellKey(verb, 'presentByObject', 'hura', { vary: 'nor', fixed: 'gu' })).toBe('edun:presentByObject:gu:hura')
+  })
+
+  it('CONSTRUCTION_VERB_IDS includes all expected construction verb ids', () => {
+    for (const id of ['nahi', 'behar', 'ari', 'ahal', 'ahal-ukan', 'ahal-izan', 'ezin-ukan', 'ezin-izan']) {
+      expect(CONSTRUCTION_VERB_IDS.has(id)).toBe(true)
+    }
+  })
+})
+
+describe('deriveCellMastery', () => {
+  const synVerb = { id: 'verb-a', type: 'synthetic', conjugations: { present: { ni: 'nago', hura: 'dago' } } }
+  const synLesson = { id: 'la', verbId: 'verb-a', tense: 'present' }
+
+  it('returns empty object when no lessons have been attempted', () => {
+    expect(deriveCellMastery({}, {}, [synLesson], [synVerb])).toEqual({})
+  })
+
+  it('marks touched cells as learning after a lesson is attempted', () => {
+    const progress = { la: { attempts: 1 } }
+    const mastery = deriveCellMastery({}, progress, [synLesson], [synVerb])
+    expect(mastery['verb-a:present:ni']).toBe('learning')
+    expect(mastery['verb-a:present:hura']).toBe('learning')
+  })
+
+  it('does not mark cells from unattempted lessons', () => {
+    const mastery = deriveCellMastery({}, {}, [synLesson], [synVerb])
+    expect(mastery['verb-a:present:ni']).toBeUndefined()
+  })
+
+  it('marks cells as owned when ≥2 carriers, ≥3 sources, and no misses', () => {
+    // Three periphrastic verbs sharing the edun skeleton → same aux cells
+    const periA = { id: 'peri-a', composedPrefixes: { present: 'a ' }, conjugations: {} }
+    const periB = { id: 'peri-b', composedPrefixes: { present: 'b ' }, conjugations: {} }
+    const periC = { id: 'peri-c', composedPrefixes: { present: 'c ' }, conjugations: {} }
+    const lessonA = { id: 'la', verbId: 'peri-a', tense: 'present' }
+    const lessonB = { id: 'lb', verbId: 'peri-b', tense: 'present' }
+    const lessonC = { id: 'lc', verbId: 'peri-c', tense: 'present' }
+    const progress = { la: { attempts: 1 }, lb: { attempts: 1 }, lc: { attempts: 1 } }
+    const mastery = deriveCellMastery({}, progress, [lessonA, lessonB, lessonC], [periA, periB, periC])
+    // All edun:present:* cells: 3 carriers (≥2), 3 source pairs (≥3), 0 misses → owned
+    for (const state of Object.values(mastery)) {
+      expect(state).toBe('owned')
+    }
+    expect(Object.keys(mastery).length).toBeGreaterThan(0)
+  })
+
+  it('keeps a cell at learning when it has a recorded miss, even with enough carriers', () => {
+    const periA = { id: 'peri-a', composedPrefixes: { present: 'a ' }, conjugations: {} }
+    const periB = { id: 'peri-b', composedPrefixes: { present: 'b ' }, conjugations: {} }
+    const periC = { id: 'peri-c', composedPrefixes: { present: 'c ' }, conjugations: {} }
+    const lessonA = { id: 'la', verbId: 'peri-a', tense: 'present' }
+    const lessonB = { id: 'lb', verbId: 'peri-b', tense: 'present' }
+    const lessonC = { id: 'lc', verbId: 'peri-c', tense: 'present' }
+    const progress = { la: { attempts: 1 }, lb: { attempts: 1 }, lc: { attempts: 1 } }
+    const errorStats = {
+      'peri-a:present:ni': { verbId: 'peri-a', tense: 'present', person: 'ni', count: 1, lastMissed: '2026-01-01T00:00:00.000Z' },
+    }
+    const mastery = deriveCellMastery(errorStats, progress, [lessonA, lessonB, lessonC], [periA, periB, periC])
+    expect(mastery['edun:present:ni']).toBe('learning')
+  })
+
+  it('includes cells from review lesson sources when the review is attempted', () => {
+    const verbX = { id: 'verb-x', type: 'synthetic', conjugations: { present: { hura: 'da' } } }
+    const verbY = { id: 'verb-y', type: 'synthetic', conjugations: { present: { hura: 'dago' } } }
+    const review = { id: 'rev', review: true, sources: [{ verbId: 'verb-x', tense: 'present' }, { verbId: 'verb-y', tense: 'present' }] }
+    const progress = { rev: { attempts: 1 } }
+    const mastery = deriveCellMastery({}, progress, [review], [verbX, verbY])
+    expect(mastery['verb-x:present:hura']).toBe('learning')
+    expect(mastery['verb-y:present:hura']).toBe('learning')
   })
 })

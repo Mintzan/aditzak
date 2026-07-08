@@ -6,6 +6,13 @@ import { OBJECT_AXIS_SKELETONS, PRONOUN_DECLENSIONS, personPronoun } from './dat
 import { LESSONS } from './data/lessons.js'
 import { JOURNEY } from './journey.js'
 
+// Verb IDs that behave as constructions (particle + aux) rather than independent
+// periphrastic verbs — shared with lessonDisplay.js (lesson titles) via this
+// export, so the definition lives here to avoid a circular import.
+export const CONSTRUCTION_VERB_IDS = new Set([
+  'nahi', 'behar', 'ari', 'ahal', 'ahal-ukan', 'ahal-izan', 'ezin-ukan', 'ezin-izan',
+])
+
 // The lowest-numbered unit whose lessons actually drill `hi` as a person
 // (today, Unit 36 — "hi — Meet 'hi'"; see its `persons: ['hi']` lessons in
 // `data/lessons.js`). `hi` (the intimate "you") is a register choice, not
@@ -2146,30 +2153,146 @@ export function getMissCount(errorStats, verbId, tense, person) {
   return errorStats[`${verbId}:${tense}:${person}`]?.count ?? 0
 }
 
-// Picks the learner's most-missed verb/tense/person combinations among this
-// review lesson's `sources` (so a review only ever drills forms it actually
-// covers), and generates one fresh question for each — up to `count`. These
-// read as "similar to the failed ones" rather than identical: each is a
-// normal `generateQuestions` roll for that exact person, so the framing/kind
-// and (for sentence-based kinds) the phrasing variant can differ from
-// whichever question was originally missed, while still targeting the same
-// conjugated form. Sorted by miss count (most-missed first), then by
-// recency, so the weakest spots are favoured when there are more of them
-// than slots.
-export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_REVIEW_EXERCISES) {
-  const sourceKeys = new Set(sources.map(({ verbId, tense }) => `${verbId}:${tense}`))
-  const weakSpots = Object.values(errorStats)
-    .filter(({ verbId, tense, person }) => {
-      if (!sourceKeys.has(`${verbId}:${tense}`)) return false
+// Resolves any answered question to its skeleton cell for cross-carrier
+// re-drilling and mastery tracking. Synthetic verbs and construction verbs
+// (Layer D) get verb-specific keys since they aren't interchangeable carriers
+// of a shared paradigm. All other periphrastic verbs map to the skeleton name
+// that drives them — `edun:tense:person` for standard NOR-NORK,
+// `dativeIzan...` for NOR-NORI, `diot...` for ditransitive — so a missed
+// `ikusi:present:zuek` and a fresh `hartu:present:zuek` share the same cell
+// and can be cross-re-drilled. `objectAxis` (for 2D-axis lessons) embeds the
+// fixed-slot value in the key so drills across different fixed frames stay
+// separate.
+export function auxCellKey(verb, tense, person, objectAxis) {
+  if (verb.type === 'synthetic') return `${verb.id}:${tense}:${person}`
+  if (
+    CONSTRUCTION_VERB_IDS.has(verb.id) ||
+    verb.id.endsWith('arazi') ||
+    (tense != null && (tense.includes('Toka') || tense.includes('Noka')))
+  ) {
+    return `${verb.id}:${tense}:${person}`
+  }
+  let skeletonName
+  if (verb.byNoriPrefixes) {
+    skeletonName = tense === 'presentByNor' || tense === 'pastByNor' ? 'dativeIzanByNor' : 'dativeIzan'
+  } else if (verb.ditransitivePrefixes) {
+    skeletonName = 'diot'
+  } else {
+    skeletonName = verb.byObjectSkeleton ?? 'edun'
+  }
+  if (objectAxis) return `${skeletonName}:${tense}:${objectAxis.fixed}:${person}`
+  return `${skeletonName}:${tense}:${person}`
+}
+
+// Derives per-cell mastery states from the learner's progress and error data
+// (D1, docs/AUXILIARY_FIRST_PLAN.md). Returns a sparse map keyed by
+// `auxCellKey`; cells absent from the map are 'untouched'.
+//
+// Owned (≈ mastered): 0 recorded misses, ≥2 distinct verb carriers, and ≥3
+// distinct (verbId:tense) source pairs covering the cell across completed
+// lessons. The ≥3 threshold approximates "≥3 correct attempts" since progress
+// stores lesson-level, not cell-level, hit counts. Learning: the cell appears
+// in at least one completed lesson. Untouched: absent from the result.
+export function deriveCellMastery(errorStats, progress, lessons, verbs) {
+  const cellMisses = {}
+  for (const { verbId, tense, person, count } of Object.values(errorStats)) {
+    const verb = verbs.find((v) => v.id === verbId)
+    if (!verb) continue
+    const key = auxCellKey(verb, tense, person)
+    cellMisses[key] = (cellMisses[key] ?? 0) + count
+  }
+
+  const cellCarriers = {}
+  const cellSourceSets = {}
+  for (const lesson of lessons) {
+    if (!(progress[lesson.id]?.attempts > 0)) continue
+    const sources =
+      lesson.review
+        ? (lesson.sources ?? [])
+        : lesson.verbId
+          ? [{ verbId: lesson.verbId, tense: lesson.tense }]
+          : []
+    for (const { verbId, tense } of sources) {
       const verb = verbs.find((v) => v.id === verbId)
-      return Boolean(verb && getComposedTable(verb, tense)?.[person])
-    })
-    .sort((a, b) => b.count - a.count || new Date(b.lastMissed) - new Date(a.lastMissed))
+      if (!verb) continue
+      const table = getComposedTable(verb, tense)
+      if (!table) continue
+      const persons = lesson.persons ?? Object.keys(table)
+      for (const person of persons) {
+        if (typeof table[person] !== 'string') continue
+        const key = auxCellKey(verb, tense, person)
+        ;(cellCarriers[key] ??= new Set()).add(verbId)
+        ;(cellSourceSets[key] ??= new Set()).add(`${verbId}:${tense}`)
+      }
+    }
+  }
+
+  const mastery = {}
+  for (const [key, carriers] of Object.entries(cellCarriers)) {
+    const sourceCount = cellSourceSets[key]?.size ?? 0
+    const misses = cellMisses[key] ?? 0
+    mastery[key] = misses === 0 && carriers.size >= 2 && sourceCount >= 3 ? 'owned' : 'learning'
+  }
+  return mastery
+}
+
+// Picks the learner's most-missed *skeleton-cell* combinations among this
+// review lesson's `sources` and generates one fresh question per cell — up to
+// `count`. Cells are resolved via `auxCellKey` so a miss on
+// `ikusi:present:zuek` can be re-drilled as `hartu:present:zuek` (same `edun`
+// cell, different carrier) when `hartu` has fewer individual misses — testing
+// the underlying pattern rather than the memory of the specific item. Miss
+// counts are aggregated across all carriers for each cell; within a cell, the
+// carrier with fewest individual misses is preferred for re-drill (fresh
+// exposure). Sorted by total cell miss count (most-missed first), then by
+// recency of the most-recent miss across carriers.
+export function getWeakSpotQuestions(errorStats, sources, verbs, count = EXTRA_REVIEW_EXERCISES) {
+  // Build cellToSources: auxCell → [{verbId, tense, person}] from source verbs
+  const cellToSources = {}
+  for (const { verbId, tense } of sources) {
+    const verb = verbs.find((v) => v.id === verbId)
+    if (!verb) continue
+    const table = getComposedTable(verb, tense)
+    if (!table) continue
+    for (const [person, form] of Object.entries(table)) {
+      if (typeof form !== 'string') continue
+      const key = auxCellKey(verb, tense, person)
+      ;(cellToSources[key] ??= []).push({ verbId, tense, person })
+    }
+  }
+
+  // Aggregate miss counts and recency by aux cell across all carriers
+  const cellMisses = {}
+  const cellLastMissed = {}
+  for (const { verbId, tense, person, count: missCount, lastMissed } of Object.values(errorStats)) {
+    const verb = verbs.find((v) => v.id === verbId)
+    if (!verb) continue
+    const key = auxCellKey(verb, tense, person)
+    if (!cellToSources[key]) continue
+    cellMisses[key] = (cellMisses[key] ?? 0) + missCount
+    if (!cellLastMissed[key] || new Date(lastMissed) > new Date(cellLastMissed[key])) {
+      cellLastMissed[key] = lastMissed
+    }
+  }
+
+  const weakCells = Object.keys(cellMisses)
+    .sort((a, b) => cellMisses[b] - cellMisses[a] || new Date(cellLastMissed[b]) - new Date(cellLastMissed[a]))
     .slice(0, count)
 
-  return weakSpots.map(({ verbId, tense, person }) => {
+  return weakCells.flatMap((cell) => {
+    const candidates = cellToSources[cell]
+    if (!candidates?.length) return []
+    // Prefer the carrier with fewest individual misses (fresh exposure to the pattern)
+    const sorted = [...candidates].sort((a, b) => {
+      const aMisses = errorStats[`${a.verbId}:${a.tense}:${a.person}`]?.count ?? 0
+      const bMisses = errorStats[`${b.verbId}:${b.tense}:${b.person}`]?.count ?? 0
+      return aMisses - bMisses
+    })
+    const { verbId, tense, person } = sorted[0]
     const verb = verbs.find((v) => v.id === verbId)
-    return generateQuestions(verb, tense, { rounds: 1, verbs, sources, review: true }).find((question) => question.person === person)
+    if (!verb) return []
+    const question = generateQuestions(verb, tense, { rounds: 1, verbs, sources, review: true }).find((q) => q.person === person)
+    return question ? [question] : []
   })
 }
 
