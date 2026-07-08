@@ -8,6 +8,17 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M4 PR3: bare-form as aux drill (display-only)
+
+`kind: 'form'` questions for periphrastic verbs (`verb.type !== 'synthetic'`)
+now render their answer options split as greyed-out participle + normal-weight
+aux, so the learner's attention lands on the auxiliary. A small caption
+(`bareFormAuxDrillHint`) reads "works with any verb: edan · ikusi · erosi…"
+directly under the person pronoun. No question-generation logic changed — this
+is purely a visual framing per REVIEW §3.6's "auxiliary drill" requirement.
+Split rendering (`splitComposedForm`) applies in idle state only; once an
+option is selected the status colour (correct/incorrect) takes over uniformly.
+
 ## 2026-07-08 — M4 PR2: participle-choice question kind + aspect grid preview
 
 `verb.participles: { imperfective, perfective, prospective }` added to `joan`,
