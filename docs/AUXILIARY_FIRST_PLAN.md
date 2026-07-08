@@ -79,18 +79,20 @@ paradigm; carriers demote to examples. Pure copy/display; zero data-model
 risk.*
 
 **PR 1 — `describeLesson` leads with the paradigm.**
-- [ ] In `src/lessonDisplay.js`, practice/pool cards title as
+- [x] In `src/lessonDisplay.js`, practice/pool cards title as
       *family · tense (exemplar)* — e.g. "NOR-NORK · iragana · objektu
       plurala (**zenituzten**)" — with the carrier verb + gloss in the
       subtitle slot. Derive family from `agreement` via `AGREEMENT_META`;
       exemplar = the `hura`(or axis-fixed) cell of the resolved table.
-- [ ] Layer D exception: synthetic verbs keep verb-first titles (the verb
+- [x] Layer D exception: synthetic verbs keep verb-first titles (the verb
       *is* the paradigm); construction lessons (`nahi`/`behar`/`ari`/
       `ahal`/hitanoa/`-arazi`) keep construction-first titles.
-- [ ] New label strings in `src/i18n/translations.js` (en/es/eu); extend
-      `AGREEMENT_META`/`TENSE_META` rather than branching inline.
-- [ ] Update `src/App.homeScreen.test.jsx` / `App.exerciseScreen.test.jsx`
-      snapshots/queries.
+- [x] Family label derived from `AGREEMENT_META` at runtime; no new i18n
+      strings needed (NOR/NORI/NORK labels are language-invariant grammatical
+      terms; exemplar is always a Basque form). No `AGREEMENT_META`/`TENSE_META`
+      extension required for this PR.
+- [x] No test updates needed: all affected tests use `izan` (synthetic, unchanged)
+      or match on substrings that remain stable after the change.
 
 **PR 2 — journey titles & docs.**
 - [ ] `src/journey.js`: retitle the spine units whose head is a

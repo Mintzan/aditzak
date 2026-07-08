@@ -1,6 +1,47 @@
-import { getFixedArgument } from './lessonLogic'
+import { getFixedArgument, getComposedTable } from './lessonLogic'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
-import { VERBS, TENSE_META } from './data/verbs'
+import { VERBS, TENSE_META, AGREEMENT_META } from './data/verbs'
+
+// M1 PR1: paradigm-first titles for periphrastic lessons.
+// Construction-lesson exceptions keep construction/verb-first titles (#309 Test 3).
+const CONSTRUCTION_VERB_IDS = new Set([
+  'nahi', 'behar', 'ari', 'ahal', 'ahal-ukan', 'ahal-izan', 'ezin-ukan', 'ezin-izan',
+])
+
+function isConstruction(lesson) {
+  const { verbId, tense } = lesson
+  if (!verbId) return false
+  return (
+    CONSTRUCTION_VERB_IDS.has(verbId) ||
+    verbId.endsWith('arazi') ||
+    (tense != null && (tense.includes('Toka') || tense.includes('Noka')))
+  )
+}
+
+// "NOR-NORK", "NOR-NORI", etc. from verb.agreement array.
+function agreementFamilyLabel(agreement) {
+  return (agreement ?? ['nor']).map((a) => AGREEMENT_META[a].label).join('-')
+}
+
+// The most representative form for a lesson — the hura (3sg) cell of the
+// resolved table, or the appropriate 2D cell for object-axis lessons.
+function lessonExemplar(verb, lesson) {
+  const table = getComposedTable(verb, lesson.tense)
+  if (!table) return null
+  if (lesson.objectAxis) {
+    const { vary, fixed } = lesson.objectAxis
+    if (vary === 'nor') {
+      // 2D table outer=NOR, inner=NORK; fixed role is NORK
+      const cell = table.hura?.[fixed]
+      return typeof cell === 'string' ? cell : null
+    }
+    // 2D table outer=NORI/NOR; fixed outer, NOR=hura inner
+    const row = table[fixed]
+    if (!row) return null
+    return typeof row.hura === 'string' ? row.hura : (Object.values(row).find((v) => typeof v === 'string') ?? null)
+  }
+  return typeof table.hura === 'string' ? table.hura : null
+}
 
 // Looks up a verb's English/Spanish/Basque gloss, falling back to English if
 // the active interface language has no translation for this verb.
@@ -40,19 +81,40 @@ export function describeLesson(lesson, t, language) {
     const verb = VERBS.find((v) => v.id === lesson.verbId)
     const meta = TENSE_META[lesson.tense]
     const label = t(meta.labelKey)
+    // #346: a lesson drilling a verb's 2D object-axis table pins a
+    // different argument than `getFixedArgument(verb)` would derive from
+    // the verb's own (`recipient`/`agent`) metadata — see
+    // `generateQuestions`'s `objectAxis` doc comment in `lessonLogic.js`.
+    const fixedArgument = lesson.objectAxis
+      ? { role: lesson.objectAxis.vary === 'nor' ? 'nork' : 'nor', person: lesson.objectAxis.fixed }
+      : getFixedArgument(verb)
+    // M1 PR1 Layer D: synthetic verbs (verb IS the paradigm) and construction
+    // lessons (nahi/behar/ari/ahal/causative/hitanoa) keep verb/construction-first.
+    if (verb.type === 'synthetic' || isConstruction(lesson)) {
+      return {
+        icon: label[0],
+        title: { main: label, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
+        subtitle: { main: verb.verb, secondary: verbMeaning(verb, language) },
+        heading: persons ? `${verb.verb} · ${label} (${persons})` : `${verb.verb} · ${label}`,
+        recognitionOnly,
+        fixedArgument,
+      }
+    }
+    // Regular periphrastic: paradigm-first — family leads, carrier verb demotes to subtitle.
+    const family = agreementFamilyLabel(verb.agreement)
+    const exemplar = lessonExemplar(verb, lesson)
+    const familyTense = `${family} · ${label}`
+    const secondaryParts = [persons, exemplar].filter(Boolean)
     return {
       icon: label[0],
-      title: { main: label, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
+      title: {
+        main: familyTense,
+        secondary: secondaryParts.length ? secondaryParts.join(' · ') : meta.basque,
+      },
       subtitle: { main: verb.verb, secondary: verbMeaning(verb, language) },
-      heading: persons ? `${verb.verb} · ${label} (${persons})` : `${verb.verb} · ${label}`,
+      heading: persons ? `${familyTense} · ${persons} (${verb.verb})` : `${familyTense} (${verb.verb})`,
       recognitionOnly,
-      // #346: a lesson drilling a verb's 2D object-axis table pins a
-      // different argument than `getFixedArgument(verb)` would derive from
-      // the verb's own (`recipient`/`agent`) metadata — see
-      // `generateQuestions`'s `objectAxis` doc comment in `lessonLogic.js`.
-      fixedArgument: lesson.objectAxis
-        ? { role: lesson.objectAxis.vary === 'nor' ? 'nork' : 'nor', person: lesson.objectAxis.fixed }
-        : getFixedArgument(verb),
+      fixedArgument,
     }
   }
   const verbNames = [...new Set(lesson.sources.map(({ verbId }) => VERBS.find((v) => v.id === verbId).verb))]
@@ -69,11 +131,14 @@ export function describeLesson(lesson, t, language) {
   const verbsLabel = verbNames.length > 3 ? t('verbCount', { count: verbNames.length }) : verbNames.join(' & ')
   if (!lesson.review) {
     const meta = TENSE_META[lesson.sources[0].tense]
+    const poolVerb = VERBS.find((v) => v.id === lesson.sources[0].verbId)
+    const poolFamily = poolVerb ? agreementFamilyLabel(poolVerb.agreement) : null
+    const familyTense = poolFamily ? `${poolFamily} · ${tenseLabel}` : tenseLabel
     return {
       icon: tenseLabel[0],
-      title: { main: tenseLabel, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
+      title: { main: familyTense, secondary: persons ? `${meta.basque} · ${persons}` : meta.basque },
       subtitle: { main: verbsLabel, secondary: t('mixedPractice') },
-      heading: persons ? `${verbsLabel} · ${tenseLabel} (${persons})` : `${verbsLabel} · ${tenseLabel}`,
+      heading: persons ? `${verbsLabel} · ${familyTense} (${persons})` : `${verbsLabel} · ${familyTense}`,
       recognitionOnly,
     }
   }
