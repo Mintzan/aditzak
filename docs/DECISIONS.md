@@ -8,6 +8,27 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M1 PR1: paradigm-first lesson titles (src/lessonDisplay.js)
+
+`describeLesson` now returns paradigm-first titles for regular periphrastic
+lessons. `title.main` becomes `"${family} · ${label}"` (e.g. "NOR-NORK ·
+Present") and `heading` becomes `"${family} · ${label} (${verb.verb})"`. The
+carrier verb + gloss demote to the subtitle slot unchanged.
+
+Layer D exceptions keep verb/construction-first titles:
+- **Synthetic verbs** (`verb.type === 'synthetic'`): the verb IS the paradigm
+  (e.g. `izan`/`ukan`/`eduki`/`jakin`…); no change.
+- **Construction lessons** (nahi/behar/ari/ahal/ahal-ukan/ahal-izan/
+  ezin-ukan/ezin-izan/causative -arazi/hitanoa Toka/Noka tenses): the
+  construction itself is the learning unit, not the aux family.
+
+Pool lessons get the same family prefix on `title.main` (derived from the
+first source verb's agreement). The exemplar (hura cell of the resolved table)
+is appended to `title.secondary` so learners see a concrete form alongside the
+paradigm label.
+
+All 518 tests green; `npm run lint` clean.
+
 ## 2026-07-08 — M0 audit scripts shipped (scripts/grounding-audit.mjs, scripts/lesson-diet-audit.mjs)
 
 Both M0 scripts are live and their outputs are committed as Appendix A in
