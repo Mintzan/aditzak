@@ -157,14 +157,14 @@ auxiliary matrix owned," aggregated across carriers.*
       unchanged (Invariant 1).
 
 **PR 2 — the paradigm mastery grid.**
-- [ ] Progress tab (`src/screens/HomeScreen.jsx`): per-family grids
+- [x] Progress tab (`src/screens/HomeScreen.jsx`): per-family grids
       (NOR / NOR-NORI / NOR-NORK / NOR-NORI-NORK × taught tenses) with
       three-state cells; Layer D synthetics listed as their own grids under
       an "Aditz trinkoak" strand heading (REVIEW §3.5's visible-track
       requirement lands here for free).
-- [ ] Reuse the existing table/preview components and `*_META` styling;
+- [x] Reuse the existing table/preview components and `*_META` styling;
       i18n labels en/es/eu.
-- [ ] PostHog event for grid views (measurement baseline, §4).
+- [x] PostHog event for grid views (measurement baseline, §4).
 
 **Acceptance:** REVIEW §5.1-I2 — grid renders from existing stats on a
 device with history; weak-spot review presents ≥1 different-carrier

@@ -8,6 +8,19 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M3 PR2: paradigm mastery grid in Progress tab
+
+`buildMasteryFamilies(mastery, lessons, verbs)` (HomeScreen.jsx) builds the
+curriculum cell universe by iterating all LESSONS and calling `auxCellKey` for
+each cell, grouping by skeleton name (`edun`/`dativeIzan`/`diot`) for
+periphrastic families and by verbId for everything else (synthetics +
+construction verbs). 2D-tense cells (`*ByObject`, `*ByNor`) are excluded via
+the same `typeof table[person] !== 'string'` guard used in `deriveCellMastery`.
+The "Aditz trinkoak" section header covers synthetics + construction verbs
+(both get verbId-keyed aux cells). `errorStats` threaded from `AppShell` →
+`HomeScreen` → `ProgressTab` as a prop; no new storage. PostHog
+`mastery_grid_view` event fires once on ProgressTab mount.
+
 ## 2026-07-08 — M3 PR1: aux-cell derivation layer in lessonLogic.js
 
 `auxCellKey(verb, tense, person, objectAxis?)` exported from `lessonLogic.js`:
