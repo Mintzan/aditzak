@@ -366,3 +366,86 @@ into because sentence data ran out.
 Increments 1–2 alone resolve the substance of the critique (the learner's
 mental model and the app's mastery model both become auxiliary-first);
 3–4 are where the "when to use it" skill gains a first-class home.
+
+---
+
+## 5. Readiness: which criteria are already sufficient, and which still need defining
+
+Assessment of whether §3–4 are specified tightly enough to implement.
+Verdict per increment, with the missing criterion named, a proposed default
+(fail-closed, in keeping with `wordOrderSafe`/`validFor` precedent), and a
+testable acceptance check.
+
+### 5.1 Sufficient today — implementable as specified
+
+- **I1 Reframe.** Rule: a spine unit/lesson title leads with the paradigm
+  (family · tense/mood · axis) plus one exemplar form; a *verb* may head the
+  title only for Layer D synthetics and the construction units
+  (`nahi`/`behar`/`ari`/`ahal`, hitanoa, `-arazi`). **Acceptance:** no spine
+  title whose head is a periphrastic lexical verb; copy exists in en/es/eu
+  (`journeyTranslations.js`).
+- **I2 Aggregation.** The verb-form → aux-cell mapping is fully determined
+  by the existing composition (`composedPrefixes`/`byObjectPrefixes`/
+  `byNoriPrefixes` → skeleton cell); synthetic verbs aggregate per-verb
+  (each *is* its own paradigm). **One open parameter — cell mastery
+  definition. Proposed default:** a cell is *owned* at ≥3 correct with ≥2
+  distinct carriers and no miss in the last 3 attempts; *learning*
+  otherwise-touched; *untouched* else. Three states, derived only — no
+  `STORAGE_KEY` bump. **Acceptance:** grid renders from existing stats;
+  weak-spot boosting selects by cell and may present a different carrier
+  than the one missed.
+- **I5 Lesson diet.** Criteria already exist (rule #309's four tests + the
+  introducer carve-out). **Acceptance:** audit table in the PR listing every
+  single-verb periphrastic lesson and which test it passes; ids never
+  deleted-and-reused (progress-shape precedent #151).
+
+### 5.2 Not yet sufficient — criteria to fix before building
+
+- **I3a Family-selection kind.** Missing: when is a sentence *safe* for
+  family-selection (every lure must be ungrammatical in that exact
+  sentence, not merely different)? **Proposed criterion:** opt-in per
+  sentence via a `frameSafe`-style tag (fail-closed, like `wordOrderSafe`),
+  grantable only when (i) the frame is betrayed by overt case morphology
+  (`-k` on the agent, `-ri` on the dative) or by an overt object with an
+  intransitive-only candidate, and (ii) no offered lure's family has a
+  valid alternate reading of the same sentence — which excludes
+  aux-alternating verbs (`sartu`/`hasi`/`bukatu`-type izan/ukan pairs) as
+  *auto-generated* items while making them ideal *hand-authored* ones.
+  **Acceptance:** a `validfor-audit`-style test that machine-checks every
+  tagged sentence against the lure set.
+- **I3b Participle-selection kind.** Missing: the context-cue inventory.
+  **Proposed criterion:** the sentence must contain a temporal anchor from
+  a closed adverb list (*atzo/gaur/bihar/egunero/oraintxe/…*), and
+  cue × aux-tense combinations where two participles are both grammatical
+  (e.g. habitual-past readings) are excluded by audit, not by judgment
+  calls at authoring time. **Acceptance:** same machine-check pattern.
+- **I3c Bare-form retirement.** Criteria actually complete once stated as
+  an invariant: **every spine practice lesson must offer at least one
+  sentence-grounded kind for every drilled person** (hitanoa exempt — its
+  bare form is grounded by construction; bonus units exempt initially).
+  **Acceptance:** extend `journey.test.js` with exactly this assertion; the
+  initial failing list *is* the sentence-frame worklist.
+- **I4 Generalization gates.** Missing two decisions. (i) *Held-out set:*
+  needs verbs provably absent from every pool — after #443 widened pools to
+  ~37 carriers this must be checked, not assumed; propose a `heldOut: true`
+  flag that the engine excludes from pools and a test enforcing zero
+  `LESSONS`/pool references. (ii) *Consequence of failing:* **owner's call.**
+  Proposed default: non-blocking — the nonce check never gates spine
+  progression (unlock model untouched), it only routes weak-spot boosts to
+  the paradigm and shows the result; blocking would put the app's hardest,
+  most novel item type in charge of progression before its difficulty is
+  calibrated.
+
+### 5.3 Genuinely open (owner input or data, not more analysis)
+
+1. **Gate consequence** (I4ii above): non-blocking default vs. score-gated
+   like Refresh Gates.
+2. **Mastery threshold aesthetics** (I2): the ≥3/≥2-carrier default is a
+   starting point; tune against real error-stat distributions (PostHog
+   events per question kind exist to measure against), not a priori.
+3. **How far the lesson diet cuts** (I5): the audit will surface judgment
+   rows (pattern-introducer vs. redundant); each cut is reversible and
+   id-stable, so this can be decided row by row in review.
+
+None of these three blocks increments 1–3; the defaults above are safe to
+build with and cheap to revise.
