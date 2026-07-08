@@ -8,6 +8,25 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — Auxiliary-first review: the learning target is the auxiliary, verbs are carriers
+
+A user-prompted pedagogy review ("the learner must learn the auxiliary —
+when to use it and how; there is no value in learning concrete verbs like
+hartu or utzi") was assessed and written up in
+`docs/AUXILIARY_FIRST_REVIEW.md`. Verdict: correct about the core (the app's
+own data model already composes periphrastic tables from shared auxiliary
+skeletons, and rule #309 already treats regular verbs as pool fodder), but
+concrete verbs stay — as carriers, minimal-pair material, and holders of
+grammar-selecting features (participle class, argument frame, izan/ukan
+selection); synthetic verbs remain irreducibly per-verb. The gap is
+learner-facing: progress/error tracking, lesson titles, and question kinds
+are still keyed verb × tense, and auxiliary *selection* ("da or du?") has no
+first-class question kind. The doc proposes five shippable increments
+(reframe copy → aux-cell mastery aggregation → family/participle-selection
+question kinds → held-out generalization checks at gates → single-verb
+lesson pooling audit). No code changed in this entry — it records the review
+and the agreed direction so future journey work builds toward it.
+
 ## 2026-07-06 — Push the izan/ukan aux challenge harder in distractors
 
 Deciding when the auxiliary is izan vs. ukan is the first big pitfall for a
