@@ -8,6 +8,21 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — Auxiliary-first plan adopted (docs/AUXILIARY_FIRST_PLAN.md)
+
+The review below was turned into an ordered implementation roadmap:
+`docs/AUXILIARY_FIRST_PLAN.md` — six milestones (M0 audits → M1 reframe ∥
+M2 sentence coverage ∥ M3 aux-cell mastery → M4 selection question kinds →
+M5 nonce-verb gates; M6 lesson diet anytime after M0). Notable calls locked
+in as plan defaults: cell mastery = ≥3 correct across ≥2 carriers (derived
+only, no STORAGE_KEY bump); nonce-verb gate checks are **non-blocking**
+(they route weak-spot review, never spine unlocks — don't let the hardest
+new item type control progression before it's calibrated); all new data
+capabilities (`familyChoiceSafe`, participle cues, `heldOut`) are
+fail-closed opt-in tags with machine audits, per the `wordOrderSafe`/
+`validFor` precedent; the bare-form invariant test lands only after the M2
+worklist is empty so CI stays green while coverage closes.
+
 ## 2026-07-08 — Auxiliary-first review: the learning target is the auxiliary, verbs are carriers
 
 A user-prompted pedagogy review ("the learner must learn the auxiliary —
