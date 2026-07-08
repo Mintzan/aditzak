@@ -158,7 +158,7 @@ This is generated from live data (`src/journey.js` + `src/data/lessons.js` + `sr
 
 ### Stage 2 — Seeing & Moving
 
-#### Unit 5 — ikusi — First Periphrastic Verb (-tzen dut)
+#### Unit 5 — NOR-NORK Periphrastic — the -tzen dut Pattern (with ikusi)
 
 **What you learn:** ikusi present (ni/zu/hura) — Phase I's first periphrastic verb
 
@@ -350,7 +350,7 @@ This is generated from live data (`src/journey.js` + `src/data/lessons.js` + `sr
     - jan: **jaten ditugu** (gu), **jaten dituzue** (zuek), **jaten dituzte** (haiek)
     - edan: **edaten ditugu** (gu), **edaten dituzue** (zuek), **edaten dituzte** (haiek)
 
-#### Unit 14 — gustatu — "I Like It" (NOR-NORI Present)
+#### Unit 14 — NOR-NORI Present — zait (with gustatu: "I Like It")
 
 **What you learn:** present NOR-NORI (zait/zaizu/zaio/zaigu/zaizue/zaie) — gustatu/iruditu/ahaztu, plus their plural-NOR (zaizkit) number split; a case-frame buffer and a pooled mixer review widening past the three founding verbs to jarraitu/jario
 
@@ -416,7 +416,7 @@ This is generated from live data (`src/journey.js` + `src/data/lessons.js` + `sr
     - jan: **jan genituen** (gu), **jan zenituzten** (zuek), **jan zituzten** (haiek)
     - edan: **edan genituen** (gu), **edan zenituzten** (zuek), **edan zituzten** (haiek)
 
-#### Unit 16 — maite izan — Loving Someone (The Non-3rd-Person Object)
+#### Unit 16 — NOR-NORK — Non-3rd-Person Objects (with maite: "I Love You")
 
 **What you learn:** ukan/maite/ikusi/jan/edan/erosi/hartu's presentByObject/pastByObject tables (#346/#347/#348/#378/#379) — the object (NOR) shifts off the default hura to ni/zu/zuek/haiek, with nork fixed at ni, plus a pooled review (#380/#381) drawing distractors across all seven verbs; #416/#435 then drill the reverse direction (someone/something acting on me/us/you) by fixing nork at hura/gu/zu/zuek/haiek in turn, rotating the practice verb across the full seven-verb set and adding a pooled review per NORK value; #443 widens every pooled review's verb pool to ~37 periphrastic transitive verbs
 

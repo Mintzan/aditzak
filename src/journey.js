@@ -120,7 +120,7 @@ export const JOURNEY = [
         units: [
           {
             number: 5,
-            title: 'ikusi — First Periphrastic Verb (-tzen dut)',
+            title: 'NOR-NORK Periphrastic — the -tzen dut Pattern (with ikusi)',
             focus: 'ikusi (to see), present tense — your first two-word verb: ikusten + dut',
             payload: '"I see the mountain."',
             status: 'available',
@@ -275,7 +275,7 @@ export const JOURNEY = [
           // `docs/LEARNING_JOURNEY_REBALANCE.md`.
           {
             number: 14,
-            title: 'gustatu — "I Like It" (NOR-NORI Present)',
+            title: 'NOR-NORI Present — zait (with gustatu: "I Like It")',
             focus:
               'gustatu, iruditu, and ahaztu in the present (zait/zaizu/zaio...) — say what you like, what seems true to you, and what you forget',
             payload: '"I like this." (Hau gustatzen zait)',
@@ -339,7 +339,7 @@ export const JOURNEY = [
           // `docs/DECISIONS.md`.
           {
             number: 16,
-            title: 'maite izan — Loving Someone',
+            title: 'NOR-NORK — Non-3rd-Person Objects (with maite: "I Love You")',
             focus:
               'ukan, maite, ikusi, and more — say "I love you" instead of always "I love it", by shifting who the object is',
             payload: '"I love you." (Maite zaitut.) / "It surprised me." (Harritu nau.)',

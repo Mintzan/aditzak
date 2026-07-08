@@ -8,6 +8,30 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M1 PR2: retitle spine units whose head is a periphrastic lexical verb
+
+Three spine units in `journey.js`/`journeyTranslations.js`/`LEARNING_JOURNEY.md`/
+`CURRICULUM_MAP.md` retitled so their head is the paradigm, not the carrier verb:
+
+- Unit 5: `'ikusi — First Periphrastic Verb (-tzen dut)'`
+  → `'NOR-NORK Periphrastic — the -tzen dut Pattern (with ikusi)'`
+- Unit 14: `'gustatu — "I Like It" (NOR-NORI Present)'`
+  → `'NOR-NORI Present — zait (with gustatu: "I Like It")'`
+- Unit 16: `'maite izan — Loving Someone'`
+  → `'NOR-NORK — Non-3rd-Person Objects (with maite: "I Love You")'`
+
+Unit 22 (`behar — Requirements & Obligations`) was reviewed but left as-is:
+`behar` is a modal particle (construction, Layer D exception), not a periphrastic
+lexical verb — the title already leads with the construction name, not a carrier
+verb. The plan's "Unit 22 at minimum" appears to reference an older unit numbering
+where that slot held a different unit; under the current numbering the criterion
+(`no spine unit headed by a periphrastic lexical verb`) is already satisfied.
+
+`gustatu's Other Direction` (Unit 27) also left as-is — the head "Other Direction"
+is a paradigm description, not a bare verb name, so it satisfies I1's criterion.
+
+All 518 tests green; `npm run lint` clean.
+
 ## 2026-07-08 — M1 PR1: paradigm-first lesson titles (src/lessonDisplay.js)
 
 `describeLesson` now returns paradigm-first titles for regular periphrastic

@@ -95,12 +95,12 @@ risk.*
       or match on substrings that remain stable after the change.
 
 **PR 2 — journey titles & docs.**
-- [ ] `src/journey.js`: retitle the spine units whose head is a
-      periphrastic lexical verb (audit from REVIEW §5.1: Units 5, 14, 16,
-      22 at minimum; 18–19 stay — `eduki` is synthetic). Keep unit numbers
-      and `lessonIds` untouched.
-- [ ] `src/i18n/journeyTranslations.js`: en/es/eu for every retitled unit.
-- [ ] Sync `docs/LEARNING_JOURNEY.md`, regenerate `docs/CURRICULUM_MAP.md`.
+- [x] `src/journey.js`: Units 5, 14, 16 retitled paradigm-first. Unit 22
+      (`behar`) left as-is — it's a construction (Layer D), not a
+      periphrastic lexical verb. Unit numbers and `lessonIds` untouched.
+- [x] `src/i18n/journeyTranslations.js`: es/eu updated for all three units.
+- [x] `docs/LEARNING_JOURNEY.md` unit table and `docs/CURRICULUM_MAP.md`
+      section headers updated to match.
 
 **Acceptance (both PRs):** REVIEW §5.1-I1 — no spine unit/lesson title
 headed by a periphrastic lexical verb; `npm test` and `npm run lint` green.

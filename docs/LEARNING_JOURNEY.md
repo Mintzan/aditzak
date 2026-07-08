@@ -37,7 +37,7 @@ marks score-gated Refresh Gates.
 | 2 | ukan — The Ergative Leap | 3 |
 | 3 | "Ni" vs. "Nik" — Case-Marking Checkpoint | 3 |
 | 4 | jakin & nahi — Knowing & Wanting | 4 |
-| 5 | ikusi — First Periphrastic (-tzen dut) | 2 |
+| 5 | NOR-NORK Periphrastic — the -tzen dut Pattern (with ikusi) | 2 |
 | 6 | joan/etorri/ibili — The NOR Present | 6 |
 | 7 🛡️ | Expansion: Absolutive Plurals | 3 |
 | 8 | Expansion: Ergative Plurals | 4 |
@@ -47,9 +47,9 @@ marks score-gated Refresh Gates.
 | 11 | The Present Perfect — What Just Happened | 5 |
 | 12 | The "izan" Past Pool — Looking Back I | 2 |
 | 13 | The NOR-NORK Present — dut/duzu/du | 4 |
-| **14** | **gustatu — "I Like It" (NOR-NORI Present)** ⬅ promoted | 6 |
+| **14** | **NOR-NORI Present — zait (with gustatu: "I Like It")** ⬅ promoted | 6 |
 | 15 | The NOR-NORK Past — nuen/zenuen/zuen | 4 |
-| 16 | maite izan — Loving Someone | 6 |
+| 16 | NOR-NORK — Non-3rd-Person Objects (with maite: "I Love You") | 6 |
 | 17 | eraman/ekarri — More NOR-NORK Synthetics | 10 |
 | 18 | eduki — Physical States & Possessions | 5 |
 | 19 | eduki — "I Had It" (Simple Past) | 4 |

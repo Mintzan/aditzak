@@ -242,7 +242,7 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     5: {
-      title: { es: 'ikusi — Primer verbo perifrástico (-tzen dut)', eu: 'ikusi — Lehen aditz perifrastikoa (-tzen dut)' },
+      title: { es: 'NOR-NORK perifrástico — el patrón -tzen dut (con ikusi)', eu: 'NOR-NORK perifrastikoa — -tzen dut eredua (ikusi-rekin)' },
       focus: {
         es: 'ikusi (ver), presente — tu primer verbo de dos palabras: ikusten + dut',
         eu: 'ikusi, oraina — zure lehen bi hitzeko aditza: ikusten + dut',
@@ -353,7 +353,7 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     16: {
-      title: { es: 'maite izan — Querer a alguien', eu: 'maite izan — Norbait maitatzea' },
+      title: { es: 'NOR-NORK — Objeto no 3ª persona (con maite: "te quiero")', eu: 'NOR-NORK — 3. pertsonaz besteko objektuak (maite-rekin: "maite zaitut")' },
       focus: {
         es: 'ukan, maite, ikusi y más — di "te quiero" en vez de siempre "lo quiero", cambiando quién es el objeto',
         eu: 'ukan, maite, ikusi eta gehiago — esan "maite zaitut" beti "maite dut" esan beharrean, objektua aldatuz',
@@ -459,7 +459,7 @@ export const JOURNEY_TRANSLATIONS = {
       },
     },
     14: {
-      title: { es: 'gustatu — "Me gusta" (presente NOR-NORI)', eu: 'gustatu — "Gustatzen zait" (NOR-NORI oraina)' },
+      title: { es: 'Presente NOR-NORI — zait (con gustatu: "me gusta")', eu: 'NOR-NORI oraina — zait (gustatu-rekin: "gustatzen zait")' },
       focus: {
         es: 'gustatu, iruditu y ahaztu en presente (zait/zaizu/zaio...) — di lo que te gusta, lo que te parece y lo que olvidas',
         eu: 'gustatu, iruditu eta ahaztu orainaldian (zait/zaizu/zaio...) — esan zer gustatzen zaizun, zer iruditzen zaizun eta zer ahazten zaizun',
