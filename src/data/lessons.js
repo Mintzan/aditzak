@@ -380,6 +380,7 @@ export const LESSONS = [
   {
     id: 'unit-11-review',
     review: true,
+    participleChoice: true,
     persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'izan', tense: 'presentPerfect' },
@@ -1532,6 +1533,7 @@ export const LESSONS = [
   {
     id: 'unit-20-review-2',
     review: true,
+    participleChoice: true,
     persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'joan', tense: 'present' },
@@ -1558,6 +1560,7 @@ export const LESSONS = [
   {
     id: 'unit-20-review-4',
     review: true,
+    participleChoice: true,
     persons: PHASE_1_PLURAL_PERSONS,
     sources: [
       { verbId: 'joan', tense: 'present' },

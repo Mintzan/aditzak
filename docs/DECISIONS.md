@@ -8,6 +8,22 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M4 PR2: participle-choice question kind + aspect grid preview
+
+`verb.participles: { imperfective, perfective, prospective }` added to `joan`,
+`etorri`, `ikusi`, `izan` as a fail-closed opt-in (only tagged verbs produce
+candidates). `generateParticipleChoiceQuestions(resolvedSources)` scans sources
+for two-word forms (`participle + aux`), looks up which aspect slot the first
+word belongs to, and maps it to a D4 temporal anchor (`atzo`/`egunero`/`bihar`).
+Options are always all 3 `verb.participles` values shuffled. `unit-11-review` and
+Gate B lessons `unit-20-review-2`/`-4` get `participleChoice: true`. For the
+Unit 11 aspect-grid preview: `getAspectGridData(verb)` in `lessonLogic.js` builds
+the 3 × 2 (participle × aux-tense) table using `OBJECT_AXIS_SKELETONS.edun`/
+`.izan` for the hura-person auxiliary; `LessonPreviewScreen` swaps
+`ConjugationTable` for `AspectGrid` when `tense === 'presentPerfect'` and
+`verb.participles` exists. The tense guard keeps the aspect grid off the earlier
+`present`/`past` lessons for the same verbs.
+
 ## 2026-07-08 — M4 PR1: family-choice question kind
 
 `generateFamilyChoiceQuestions(verbs, resolvedSources)` in `lessonLogic.js`

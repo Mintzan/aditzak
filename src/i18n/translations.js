@@ -82,6 +82,8 @@ export const TRANSLATIONS = {
     lessonAbandonConfirm: 'Leave this lesson? Your progress on it will be lost.',
     previewTitle: 'Take a look before you start',
     previewSubtitle: "Here's every form you'll be asked about in this lesson.",
+    previewAspectTitle: 'The aspect picture — all at once',
+    previewAspectSubtitle: 'Three participle forms, two auxiliary tenses. See how they combine.',
     start: 'Start',
     check: 'Check',
     continue: 'Continue',
@@ -114,6 +116,7 @@ export const TRANSLATIONS = {
     questionWordOrder: 'Tap the words back into order.',
     questionSuffixChoice: 'Does its future take -ko or -go?',
     questionFamilyChoice: 'da or du?',
+    questionParticipleChoice: 'Pick the right participle.',
     personNi: 'I',
     personHi: 'you (familiar)',
     personHiM: 'you (familiar, to a man)',
@@ -289,6 +292,18 @@ export const TRANSLATIONS = {
       "The subject is the doer (-k ergative), so the auxiliary is from the du family: {form}.",
     explanationFamilyChoiceNor:
       "No ergative doer — this is a predicative sentence, so the auxiliary is from the da family: {form}.",
+    explanationParticipleAtzo:
+      "'atzo' (yesterday) marks a completed action — the perfective participle is {form}.",
+    explanationParticipleEgunero:
+      "'egunero' (every day) marks a habitual action — the imperfective participle is {form}.",
+    explanationParticipleBihar:
+      "'bihar' (tomorrow) marks a future action — the prospective participle is {form}.",
+    aspectLabel: 'Aspect',
+    aspectImperfective: 'Ongoing (-t(z)en)',
+    aspectPerfective: 'Completed',
+    aspectProspective: 'Future (-ko/-go)',
+    aspectPresentAux: 'Present aux',
+    aspectPastAux: 'Past aux',
     lureRationaleCaseFrame:
       "'{form}' marks a different subject case than this question needs (NOR vs NOR-NORK) — it's borrowed from a verb whose subject works the opposite way. The correct form here is '{correct}'.",
     lureRationaleTense:
@@ -356,6 +371,8 @@ export const TRANSLATIONS = {
     lessonAbandonConfirm: '¿Salir de esta lección? Se perderá tu progreso en ella.',
     previewTitle: 'Échale un vistazo antes de empezar',
     previewSubtitle: 'Aquí tienes todas las formas que se te preguntarán en esta lección.',
+    previewAspectTitle: 'El cuadro del aspecto — de un vistazo',
+    previewAspectSubtitle: 'Tres formas de participio, dos tiempos auxiliares. Ve cómo se combinan.',
     start: 'Empezar',
     check: 'Comprobar',
     continue: 'Continuar',
@@ -388,6 +405,7 @@ export const TRANSLATIONS = {
     questionWordOrder: 'Toca las palabras para ordenarlas.',
     questionSuffixChoice: '¿Su futuro lleva -ko o -go?',
     questionFamilyChoice: '¿da o du?',
+    questionParticipleChoice: 'Elige el participio correcto.',
     personNi: 'yo',
     personHi: 'tú (familiar)',
     personHiM: 'tú (familiar, a un hombre)',
@@ -563,6 +581,18 @@ export const TRANSLATIONS = {
       "El sujeto es el agente (-k ergativo), así que el auxiliar es de la familia du: {form}.",
     explanationFamilyChoiceNor:
       "Sin agente ergativo — es una frase predicativa, así que el auxiliar es de la familia da: {form}.",
+    explanationParticipleAtzo:
+      "'atzo' (ayer) marca una acción completada — el participio perfectivo es {form}.",
+    explanationParticipleEgunero:
+      "'egunero' (todos los días) marca una acción habitual — el participio imperfectivo es {form}.",
+    explanationParticipleBihar:
+      "'bihar' (mañana) marca una acción futura — el participio prospectivo es {form}.",
+    aspectLabel: 'Aspecto',
+    aspectImperfective: 'Habitual (-t(z)en)',
+    aspectPerfective: 'Completado',
+    aspectProspective: 'Futuro (-ko/-go)',
+    aspectPresentAux: 'Aux. presente',
+    aspectPastAux: 'Aux. pasado',
     lureRationaleCaseFrame:
       "'{form}' marca un sujeto de otro tipo (NOR vs NOR-NORK) — viene de un verbo cuyo sujeto funciona al revés. La forma correcta aquí es '{correct}'.",
     lureRationaleTense:
@@ -630,6 +660,8 @@ export const TRANSLATIONS = {
     lessonAbandonConfirm: 'Ikasgai hau utzi nahi duzu? Bertan egindako aurrerapena galduko duzu.',
     previewTitle: 'Begiratu hasi aurretik',
     previewSubtitle: 'Hona hemen ikasgai honetan galdetuko zaizkizun forma guztiak.',
+    previewAspectTitle: 'Aspektuaren argazkia — ikuspegi orokorra',
+    previewAspectSubtitle: 'Hiru partizipio forma, bi laguntzaile-denbora. Ikusi nola konbinatzen diren.',
     start: 'Hasi',
     check: 'Egiaztatu',
     continue: 'Jarraitu',
@@ -662,6 +694,7 @@ export const TRANSLATIONS = {
     questionWordOrder: 'Sakatu hitzak ordenan jartzeko.',
     questionSuffixChoice: 'Geroaldian -ko ala -go hartzen du?',
     questionFamilyChoice: 'da ala du?',
+    questionParticipleChoice: 'Aukeratu partizipio zuzena.',
     personNi: 'ni',
     personHi: 'hi (hurbila)',
     personHiM: 'hi (gizonezkoari, toka)',
@@ -837,6 +870,18 @@ export const TRANSLATIONS = {
       "Subjektuak ergatiboa du (-k), eta, beraz, laguntzailea du familiakoa da: {form}.",
     explanationFamilyChoiceNor:
       "Ez dago agente ergatiborik — esaldi predikatiboa da, eta, beraz, laguntzailea da familiakoa da: {form}.",
+    explanationParticipleAtzo:
+      "'atzo' ekintza burutua adierazten du — partizipio burutua {form} da.",
+    explanationParticipleEgunero:
+      "'egunero' ekintza ohikoa adierazten du — partizipio burutugabea {form} da.",
+    explanationParticipleBihar:
+      "'bihar' etorkizuneko ekintza adierazten du — partizipio prospektiboa {form} da.",
+    aspectLabel: 'Aspektua',
+    aspectImperfective: 'Ohikoa (-t(z)en)',
+    aspectPerfective: 'Burutua',
+    aspectProspective: 'Geroa (-ko/-go)',
+    aspectPresentAux: 'Orain. laguntz.',
+    aspectPastAux: 'Iragan. laguntz.',
     lureRationaleCaseFrame:
       "'{form}' beste motako subjektu bat markatzen du (NOR vs NOR-NORK) — alderantziz funtzionatzen duen aditz batetik dator. Forma zuzena hemen '{correct}' da.",
     lureRationaleTense:
