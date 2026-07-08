@@ -8,6 +8,52 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-08 — M3 PR1: aux-cell derivation layer in lessonLogic.js
+
+`auxCellKey(verb, tense, person, objectAxis?)` exported from `lessonLogic.js`:
+maps any answered question to its skeleton cell. Synthetic verbs and
+construction verbs (Layer D) use verb-specific keys; all other periphrastic
+verbs use skeleton-name keys (`edun:tense:person`, `dativeIzan...`, `diot...`)
+so different carriers of the same paradigm share a cell.
+
+`deriveCellMastery(errorStats, progress, lessons, verbs)` implements D1's
+owned/learning/untouched states. Owned requires ≥2 distinct verb carriers, ≥3
+distinct `verbId:tense` source pairs across completed lessons, and 0 recorded
+misses. The ≥3 threshold approximates "≥3 correct" since progress is
+lesson-level, not cell-level. Returned as a sparse map; absent = untouched.
+
+`getWeakSpotQuestions` re-keyed by aux cell: misses are aggregated across
+carriers per cell; the carrier with fewest individual misses is selected for
+re-drill (fresh exposure to the pattern). Raw `errorStats` storage keys
+unchanged (Invariant 1).
+
+`CONSTRUCTION_VERB_IDS` moved from `lessonDisplay.js` (where it was private)
+to `lessonLogic.js` (exported) so both modules share a single definition;
+`lessonDisplay.js` now imports it. Avoided circular import since
+`lessonDisplay.js` already imports from `lessonLogic.js`.
+All 533 tests green.
+
+## 2026-07-08 — M6: retire 3 redundant single-verb object-axis lessons (pool into existing reviews)
+
+Three single-verb periphrastic lessons in Unit 48 ("Acting on Me, Us, and You")
+were retired as VIOLATIONs per the M0 lesson-diet audit:
+
+- `ikusi-object-axis-present-gu` — NORK=gu, present — pattern already introduced
+  by `maite-object-axis-present` (which covers the same nor-nork × presentByObject
+  × {hura,zu,zuek,haiek} frame); retired into `object-axis-present-review-gu`.
+- `jan-object-axis-past-gu` — NORK=gu, past — pattern already introduced by
+  `maite-object-axis-past`; retired into `object-axis-past-review-gu`.
+- `ikusi-object-axis-past-haiek` — NORK=haiek, past — pattern already introduced
+  by `maite-object-axis-past-hura`; retired into `object-axis-past-review-haiek`.
+
+In all three cases the pool reviews already listed the verbs (ikusi/jan) in their
+`sources`, so no sources needed extending — only the single-verb lesson objects
+were removed from `lessons.js` and their IDs from `journey.js` `lessonIds`.
+Retired IDs are never reused (Invariant 2 / #151 precedent).
+
+`node scripts/lesson-diet-audit.mjs` now reports 0 VIOLATIONs (was 3).
+All 518 tests green.
+
 ## 2026-07-08 — M1 PR2: retitle spine units whose head is a periphrastic lexical verb
 
 Three spine units in `journey.js`/`journeyTranslations.js`/`LEARNING_JOURNEY.md`/

@@ -144,14 +144,14 @@ is green and enforced.
 auxiliary matrix owned," aggregated across carriers.*
 
 **PR 1 — derivation layer (no UI).**
-- [ ] `auxCellKey(verbId, tense, person, objectAxis)` in
+- [x] `auxCellKey(verbId, tense, person, objectAxis)` in
       `src/lessonLogic.js`: resolves any answered question to its skeleton
       cell (composed verbs → `edun`/`dativeIzan[ByNor]` cell; synthetic
       verbs → their own `verbId:tense:person`, Layer D). Pure function over
       existing data — unit-test against the composition tables.
-- [ ] `deriveCellMastery(errorStats, progress)` implementing D1's
+- [x] `deriveCellMastery(errorStats, progress)` implementing D1's
       owned/learning/untouched states.
-- [ ] Re-key `getWeakSpotQuestions` boosting by aux cell: a missed
+- [x] Re-key `getWeakSpotQuestions` boosting by aux cell: a missed
       `ikusi:present:zuek` may be re-drilled as `hartu:present:zuek`
       (tests the rule, not the memory of the item). Raw storage keys
       unchanged (Invariant 1).
@@ -228,11 +228,11 @@ the nonce check sees paradigm-targeted review, not an `aipatu` lesson.
 
 *Goal: REVIEW §3.5 last bullet — finish #331/#469's collapses.*
 
-- [ ] Take the M0 audit table; for each `VIOLATION` row, pool into the
+- [x] Take the M0 audit table; for each `VIOLATION` row, pool into the
       pattern's existing cross-verb lesson (mirroring #469's mechanics:
       retire the id, extend the pool's `sources`). D6: each row is a
       reviewable judgment; introducer-carve-out rows stay.
-- [ ] Sync `journey.js` `lessonIds`, `docs/LEARNING_JOURNEY.md`, regenerate
+- [x] Sync `journey.js` `lessonIds`, `docs/LEARNING_JOURNEY.md`, regenerate
       `docs/CURRICULUM_MAP.md`; `docs/DECISIONS.md` entry naming what was
       cut and what was spared, with reasons.
 
