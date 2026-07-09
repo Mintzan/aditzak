@@ -111,7 +111,7 @@ headed by a periphrastic lexical verb; `npm test` and `npm run lint` green.
 not lesson metadata.*
 
 **PR 1 — cell-frame infrastructure.**
-- [ ] Add `CELL_FRAMES` alongside `OBJECT_AXIS_SKELETONS` in
+- [x] Add `CELL_FRAMES` alongside `OBJECT_AXIS_SKELETONS` in
       `src/data/verbs.js`: sentence-frame skeletons keyed by paradigm cell
       (`family:tense:person`), each with a participle slot and an
       object/adjunct slot that grounds tense and object number in the
@@ -120,11 +120,11 @@ not lesson metadata.*
       `getComposedTable`) instantiates a frame for any carrier that
       composes, merging with (never overriding) the carrier's own
       hand-written `sentences`.
-- [ ] Per-carrier slot vocabulary (which objects fit which verb) rides the
+- [x] Per-carrier slot vocabulary (which objects fit which verb) rides the
       existing `validFor`-style audit: extend
       `src/validfor-audit.test.js` to machine-check instantiated frames the
       same way hand-written sentences are checked.
-- [ ] Flag the frame skeletons for native-speaker review in
+- [x] Flag the frame skeletons for native-speaker review in
       `docs/LANGUAGE_DECISIONS.md` (same protocol as #143's sentences).
 
 **PRs 2…n — close the M0 worklist in batches** (by paradigm, not by verb:

@@ -2,7 +2,7 @@
 // tested directly and so react-refresh only has to reason about components
 // in App.jsx (it warns when a component file also exports plain functions).
 
-import { OBJECT_AXIS_SKELETONS, PRONOUN_DECLENSIONS, personPronoun } from './data/verbs.js'
+import { OBJECT_AXIS_SKELETONS, PRONOUN_DECLENSIONS, personPronoun, CELL_FRAMES } from './data/verbs.js'
 import { LESSONS } from './data/lessons.js'
 import { JOURNEY } from './journey.js'
 
@@ -1192,6 +1192,38 @@ export function getComposedTable(verb, tense) {
   return verb.conjugations[tense]
 }
 
+// Maps a verb's `agreement` array to the family key used in `CELL_FRAMES`.
+function cellFrameFamily(verb) {
+  const a = verb.agreement ?? []
+  if (a.includes('nork') && a.includes('nori')) return 'norNoriNork'
+  if (a.includes('nork')) return 'norNork'
+  if (a.includes('nori')) return 'norNori'
+  return 'nor'
+}
+
+// Returns a copy of `existingSentences` supplemented with frame-generated
+// entries for any person that has no hand-written sentence for this
+// verb+tense. Frames are drawn from `CELL_FRAMES` (keyed by `family:tense`)
+// and instantiated by picking a random entry from `verb.slotVocabulary`.
+// Never overrides hand-written sentences (M2 invariant).
+// `validFor` on frame-generated sentences is `undefined` (conservative —
+// no cross-verb candidates until a human naturalness review; see M2 PRs 2…n).
+export function mergeFrameSentences(verb, tense, existingSentences) {
+  if (!verb.composedPrefixes || !verb.slotVocabulary) return existingSentences
+  const frame = CELL_FRAMES[`${cellFrameFamily(verb)}:${tense}`]
+  if (!frame) return existingSentences
+  const objects = verb.slotVocabulary[frame.objectNumber]
+  if (!objects?.length) return existingSentences
+  const merged = { ...existingSentences }
+  for (const [key, template] of Object.entries(frame)) {
+    if (key === 'objectNumber') continue
+    if (merged[key]) continue
+    const object = objects[Math.floor(Math.random() * objects.length)]
+    merged[key] = { text: template.replace('{objects}', object) }
+  }
+  return merged
+}
+
 // Whether `verb`'s `[tense][person]` form is a "particle + auxiliary"
 // compound (e.g. `nahi`'s `nahi dut`) whose trailing word is *itself* a
 // complete, correct form of some other agreement-compatible verb for the same
@@ -1640,7 +1672,7 @@ export function generateQuestions(
   // instead of the usual flat one — once resolved, `table` is an ordinary
   // flat table and nothing else below needs to know the difference.
   const table = objectAxis ? resolveObjectAxisTable(getComposedTable(verb, tense), objectAxis) : getComposedTable(verb, tense)
-  const sentences = verb.sentences?.[tense] ?? {}
+  const sentences = mergeFrameSentences(verb, tense, verb.sentences?.[tense] ?? {})
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const negativeSentences = verb.negativeSentences?.[tense] ?? {}
   const persons = personsFilter ?? Object.keys(table)

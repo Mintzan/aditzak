@@ -8,6 +8,20 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-09 — M2 PR1: cell-frame infrastructure
+
+Added `CELL_FRAMES` (six `norNork:*` skeletons) to `src/data/verbs.js` alongside
+`OBJECT_AXIS_SKELETONS`, and `mergeFrameSentences` to `src/lessonLogic.js`.
+`generateQuestions` now calls `mergeFrameSentences(verb, tense, …)` instead of
+reading `verb.sentences?.[tense]` directly, so any periphrastic NOR-NORK verb with
+`slotVocabulary` gets frame-generated sentences for cells that lack hand-written ones.
+Frame sentences carry `validFor: undefined` (conservative — no cross-verb distractors
+until reviewed). Initial `slotVocabulary` on jan/edan/erosi/hartu/ikusi; remaining
+spine verbs are the M2 data-PR worklist. Design B (blank = full composed form, same
+as existing sentences) was chosen over Design A (participle shown, blank = aux only)
+to stay compatible with the existing question engine — no new `kind` needed.
+Flagged for native-speaker review in `docs/LANGUAGE_DECISIONS.md`.
+
 ## 2026-07-08 — M4 PR3: bare-form as aux drill (display-only)
 
 `kind: 'form'` questions for periphrastic verbs (`verb.type !== 'synthetic'`)
