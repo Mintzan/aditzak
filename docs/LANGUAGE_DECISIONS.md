@@ -6,6 +6,30 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-09 — M2 PR1: CELL_FRAMES skeletons and initial slotVocabulary (needs native-speaker review)
+
+Added six `norNork:*` frame skeletons (`present`/`past`/`future` × sg/pl-object)
+to `src/data/verbs.js` following the SOV word order observed in existing
+hand-written sentences: subject ergative → time adverb (`atzo`/`bihar`) →
+object absolutive → verb blank. Templates: `"Nik atzo {objects} ___."` etc.
+
+Initial `slotVocabulary` added to five NOR-NORK spine verbs:
+
+| Verb | sg objects | pl objects |
+|---|---|---|
+| jan | sagarra, ogia, tortilla | sagarrak, ogiak, tortillak |
+| edan | ardoa, kafea, ura | ardoak, kafeak, urak |
+| erosi | liburua, arropa, autoa | liburuak, arropak, autoak |
+| hartu | autobusa, taxia, aterkia | autobusak, taxiak, aterkiak |
+| ikusi | filma, argazkia, mendia | filmak, argazkiak, mendiak |
+
+**Pending native-speaker review** — none of the above has been verified by a
+native speaker. Objects were chosen conservatively (already present in those
+verbs' hand-written sentences or semantically natural), but the frame word
+order and object-tense pairing need a fluency check before adding more verbs.
+Frame-generated sentences carry `validFor: undefined` (no cross-verb
+distractors) until reviewed (M2 PRs 2…n close the worklist verb by verb).
+
 ## 2026-07-06 — Added `mugitu`/`mugitu-izan` (ambitransitive pair #2)
 
 Added the first of the five logged ambitransitive candidates (§4b-quinquies)

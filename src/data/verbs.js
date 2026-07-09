@@ -274,6 +274,74 @@ export const OBJECT_AXIS_SKELETONS = {
   },
 }
 
+// Cell-frame skeletons for sentence-grounding missing paradigm cells (M2).
+// Keyed by `'family:tense'` (e.g. `'norNork:past'`, `'norNork:pastPlural'`).
+// `objectNumber`: which `slotVocabulary` key to use — `'sg'` for singular-
+// object tenses (NOR = hura), `'pl'` for `*Plural` (NOR = haiek) tenses.
+// Per-person template strings: `{objects}` is replaced at question-build time
+// with a randomly chosen entry from `verb.slotVocabulary[objectNumber]`.
+// `___` marks the blank and covers the whole composed form (participle + aux)
+// exactly as hand-written sentences do — no new question kind needed.
+// Word order follows the SOV pattern in existing hand-written sentences:
+// subject ergative → time adverb → object absolutive → verb blank.
+// Flagged for native-speaker review: docs/LANGUAGE_DECISIONS.md (M2 PR1).
+export const CELL_FRAMES = {
+  'norNork:present': {
+    objectNumber: 'sg',
+    ni:    'Nik {objects} ___.',
+    hura:  'Hark {objects} ___.',
+    gu:    'Guk {objects} ___.',
+    zu:    'Zuk {objects} ___.',
+    zuek:  'Zuek {objects} ___.',
+    haiek: 'Haiek {objects} ___.',
+  },
+  'norNork:past': {
+    objectNumber: 'sg',
+    ni:    'Nik atzo {objects} ___.',
+    hura:  'Hark atzo {objects} ___.',
+    gu:    'Guk atzo {objects} ___.',
+    zu:    'Zuk atzo {objects} ___.',
+    zuek:  'Zuek atzo {objects} ___.',
+    haiek: 'Haiek atzo {objects} ___.',
+  },
+  'norNork:future': {
+    objectNumber: 'sg',
+    ni:    'Nik bihar {objects} ___.',
+    hura:  'Hark bihar {objects} ___.',
+    gu:    'Guk bihar {objects} ___.',
+    zu:    'Zuk bihar {objects} ___.',
+    zuek:  'Zuek bihar {objects} ___.',
+    haiek: 'Haiek bihar {objects} ___.',
+  },
+  'norNork:presentPlural': {
+    objectNumber: 'pl',
+    ni:    'Nik {objects} ___.',
+    hura:  'Hark {objects} ___.',
+    gu:    'Guk {objects} ___.',
+    zu:    'Zuk {objects} ___.',
+    zuek:  'Zuek {objects} ___.',
+    haiek: 'Haiek {objects} ___.',
+  },
+  'norNork:pastPlural': {
+    objectNumber: 'pl',
+    ni:    'Nik atzo {objects} ___.',
+    hura:  'Hark atzo {objects} ___.',
+    gu:    'Guk atzo {objects} ___.',
+    zu:    'Zuk atzo {objects} ___.',
+    zuek:  'Zuek atzo {objects} ___.',
+    haiek: 'Haiek atzo {objects} ___.',
+  },
+  'norNork:futurePlural': {
+    objectNumber: 'pl',
+    ni:    'Nik bihar {objects} ___.',
+    hura:  'Hark bihar {objects} ___.',
+    gu:    'Guk bihar {objects} ___.',
+    zu:    'Zuk bihar {objects} ___.',
+    zuek:  'Zuek bihar {objects} ___.',
+    haiek: 'Haiek bihar {objects} ___.',
+  },
+}
+
 // Locate a specific verb: grep for `id: 'verbId'` (e.g. `id: 'izan'`) — each
 // verb's whole block starts there.
 
@@ -2334,6 +2402,10 @@ export const VERBS = [
     // plural-object counterparts) is composed from this — see
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'jaten ', past: 'jan ', future: 'jango ' },
+    // M2: frame sentence vocabulary. `sg` = singular NOR (hura-column tenses);
+    // `pl` = plural NOR (haiek-column, `*Plural` tenses). Flagged for native-
+    // speaker review alongside the frame skeletons (docs/LANGUAGE_DECISIONS.md).
+    slotVocabulary: { sg: ['sagarra', 'ogia', 'tortilla'], pl: ['sagarrak', 'ogiak', 'tortillak'] },
     conjugations: {},
     // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every object
     // here is a concrete food/dish, naturally also something one could
@@ -2430,6 +2502,7 @@ export const VERBS = [
     // plural-object counterparts) is composed from this — see
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'edaten ', past: 'edan ', future: 'edango ' },
+    slotVocabulary: { sg: ['ardoa', 'kafea', 'ura'], pl: ['ardoak', 'kafeak', 'urak'] },
     conjugations: {},
     // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every drink
     // here is naturally something one could also *have*/*want*/*hold*/*see*/
@@ -2530,6 +2603,7 @@ export const VERBS = [
     // plural-object counterparts) is composed from this — see
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'erosten ', past: 'erosi ', future: 'erosiko ' },
+    slotVocabulary: { sg: ['liburua', 'arropa', 'autoa'], pl: ['liburuak', 'arropak', 'autoak'] },
     conjugations: {},
     // #124/#155/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Edible/
     // drinkable objects ("ogia", "sagarrak", "fruta") admit `jan` (#114's
@@ -2631,6 +2705,7 @@ export const VERBS = [
     // plural-object counterparts) is composed from this — see
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'hartzen ', past: 'hartu ', future: 'hartuko ' },
+    slotVocabulary: { sg: ['autobusa', 'taxia', 'aterkia'], pl: ['autobusak', 'taxiak', 'aterkiak'] },
     conjugations: {},
     // #143: `hartu` added to the Unit 12 "daily routine" pool to stage the
     // `jaten`(-ten)/`hartzen`(-tzen) minimal pair. Sentence objects
@@ -2697,6 +2772,7 @@ export const VERBS = [
     // plural-object counterparts) is composed from this — see
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'ikusten ', past: 'ikusi ', future: 'ikusiko ' },
+    slotVocabulary: { sg: ['filma', 'argazkia', 'mendia'], pl: ['filmak', 'argazkiak', 'mendiak'] },
     // #M4PR2: aspect-selection drill — three participle forms (matching composedPrefixes).
     participles: { imperfective: 'ikusten', perfective: 'ikusi', prospective: 'ikusiko' },
     conjugations: {
