@@ -5133,6 +5133,32 @@ export const VERBS = [
         haiek: 'itxarongo diote',
       },
     },
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik hari kafeterian ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk hari geltokian ___.',  validFor: [] }],
+        hura: [{ text: 'Hark hari parkean ___.',  validFor: [] }],
+        gu: [{ text: 'Guk hari eskolako atean ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek hari etxean ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek hari kalean ___.',  validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo hari kafeterian ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk atzo hari geltokian ___.',  validFor: [] }],
+        hura: [{ text: 'Hark atzo hari parkean ___.',  validFor: [] }],
+        gu: [{ text: 'Guk atzo hari eskolako atean ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek atzo hari etxean ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek atzo hari kalean ___.',  validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar hari kafeterian ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk bihar hari geltokian ___.',  validFor: [] }],
+        hura: [{ text: 'Hark bihar hari parkean ___.',  validFor: [] }],
+        gu: [{ text: 'Guk bihar hari eskolako atean ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek bihar hari etxean ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek bihar hari kalean ___.',  validFor: [] }],
+      },
+    },
     personAxis: 'nork',
   },
   {
@@ -5154,8 +5180,29 @@ export const VERBS = [
     // #312: cultural-bank past item — fresh hake sold to a restaurant; no
     // sibling `-dative` verb plausibly substitutes into this exact combo.
     sentences: {
+      present: {
+        ni: [{ text: 'Nik kotxea hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk liburua hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark etxea hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk janaria hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek produktua hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek arropa hari ___.',  validFor: [] }],
+      },
       past: {
+        ni: [{ text: 'Nik atzo kotxea hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk atzo liburua hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark lehengo egunean etxea hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk atzo janaria hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek atzo produktua hari ___.',  validFor: [] }],
         haiek: [{ text: 'Arrantzaleek jatetxeari goizeko legatz freskoa ___.', validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar kotxea hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk bihar liburua hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark bihar etxea hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk bihar janaria hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek bihar produktua hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek bihar arropa hari ___.',  validFor: [] }],
       },
     },
     personAxis: 'nork',
@@ -5174,6 +5221,32 @@ export const VERBS = [
     // (see esan/eman above) — no literal table needed.
     ditransitivePrefixes: { present: 'uzten ', past: 'utzi ', future: 'utziko ' },
     conjugations: {},
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik liburua hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk autoa hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark gakoa hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk gela hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek txartela hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek etxea hari ___.',  validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo liburua hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk atzo autoa hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark lehengo egunean gakoa hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk atzo gela hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek atzo txartela hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek atzo etxea hari ___.',  validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar liburua hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk bihar autoa hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark bihar gakoa hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk bihar gela hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek bihar txartela hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek bihar etxea hari ___.',  validFor: [] }],
+      },
+    },
     personAxis: 'nork',
   },
   {
@@ -5192,6 +5265,32 @@ export const VERBS = [
     // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
     ditransitivePrefixes: { present: 'adierazten ', past: 'adierazi ', future: 'adieraziko ' },
     conjugations: {},
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik nire iritzia hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk zure poza hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark bere kezka hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk gure nahia hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek arazoa hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek erantzuna hari ___.',  validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo nire iritzia hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk atzo zure poza hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark lehengo egunean bere kezka hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk atzo gure nahia hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek atzo arazoa hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek atzo erantzuna hari ___.',  validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar nire iritzia hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk bihar zure poza hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark bihar bere kezka hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk bihar gure nahia hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek bihar arazoa hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek bihar erantzuna hari ___.',  validFor: [] }],
+      },
+    },
     personAxis: 'nork',
   },
   {
@@ -5206,6 +5305,32 @@ export const VERBS = [
     // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
     ditransitivePrefixes: { present: 'eskatzen ', past: 'eskatu ', future: 'eskatuko ' },
     conjugations: {},
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik laguntza hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk informazioa hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark azalpena hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk denbora hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek barkamena hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek bidea hari ___.',  validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo laguntza hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk atzo informazioa hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark lehengo egunean azalpena hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk atzo denbora hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek atzo barkamena hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek atzo bidea hari ___.',  validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar laguntza hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk bihar informazioa hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark bihar azalpena hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk bihar denbora hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek bihar barkamena hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek bihar bidea hari ___.',  validFor: [] }],
+      },
+    },
     personAxis: 'nork',
   },
   {
@@ -5220,6 +5345,32 @@ export const VERBS = [
     // #448: present/past/future compose against OBJECT_AXIS_SKELETONS.diot.
     ditransitivePrefixes: { present: 'galdetzen ', past: 'galdetu ', future: 'galdetuko ' },
     conjugations: {},
+    sentences: {
+      present: {
+        ni: [{ text: 'Nik izena hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk helbidea hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark ordua hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk bidea hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek zergatia hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek berria hari ___.',  validFor: [] }],
+      },
+      past: {
+        ni: [{ text: 'Nik atzo izena hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk atzo helbidea hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark lehengo egunean ordua hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk atzo bidea hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek atzo zergatia hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek atzo berria hari ___.',  validFor: [] }],
+      },
+      future: {
+        ni: [{ text: 'Nik bihar izena hari ___.',  validFor: [] }],
+        zu: [{ text: 'Zuk bihar helbidea hari ___.',  validFor: [] }],
+        hura: [{ text: 'Hark bihar ordua hari ___.',  validFor: [] }],
+        gu: [{ text: 'Guk bihar bidea hari ___.',  validFor: [] }],
+        zuek: [{ text: 'Zuek bihar zergatia hari ___.',  validFor: [] }],
+        haiek: [{ text: 'Haiek bihar berria hari ___.',  validFor: [] }],
+      },
+    },
     personAxis: 'nork',
   },
   {
