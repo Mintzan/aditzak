@@ -108,6 +108,20 @@ describe('LESSONS <-> VERBS', () => {
     }
   })
 
+  // M5: held-out verbs must never appear in any lesson's source or verbId pool.
+  it('no held-out verb appears in any lesson source or verbId pool', () => {
+    const heldOutIds = new Set(VERBS.filter((v) => v.heldOut).map((v) => v.id))
+    if (heldOutIds.size === 0) return
+    for (const lesson of LESSONS) {
+      if (lesson.verbId) {
+        expect(heldOutIds.has(lesson.verbId), `lesson "${lesson.id}" references held-out verb "${lesson.verbId}"`).toBe(false)
+      }
+      for (const source of lesson.sources ?? []) {
+        expect(heldOutIds.has(source.verbId), `lesson "${lesson.id}" source references held-out verb "${source.verbId}"`).toBe(false)
+      }
+    }
+  })
+
   // M2 spine-grounding invariant (docs/AUXILIARY_FIRST_PLAN.md §M2, D5).
   // Every spine practice lesson must offer ≥1 sentence-grounded kind per
   // drilled person — i.e. verb.sentences[tense][person] (or a frame-

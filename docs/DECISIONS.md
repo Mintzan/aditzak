@@ -8,6 +8,10 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-09 — M5: nonce-verb generalization gates
+
+Added `heldOut: true` to 4 VERBS entries (`gelditu` NOR, `aipatu`/`kendu` NOR-NORK, `interesatu` NOR-NORI). These verbs carry meaning + prefixes + bare-string sentences only (`conjugations: {}`), never appear in LESSONS sources, and are enforced by a new `journey.test.js` invariant. Gate lessons `unit-20-review-6` and `unit-31-review` now flag `nonce: true`; `generateNonceQuestions` in `lessonLogic.js` picks held-out verbs and injects them (tagged `isNonce: true`, `noTyping: true`) into the shuffled question set. The gate outcome is non-blocking per D2 — held-out questions count toward the score normally, so a learner acing non-nonce items can still pass. `getUnlockedLessonIds` untouched. UI shows an amber "New verb" badge (`nonceVerbHint` i18n key). PostHog `nonce_item_answered` event wired for the transfer metric (§4). Gate B restricts to `nonceAgreements: [['nor'], ['nor', 'nork']]` since NOR-NORI isn't taught until later.
+
 ## 2026-07-09 — M2 PR9 (final): imperative sentences + spine grounding invariant
 
 Added `sentences.imperative` for egon (hi/zu/zuek/hura/haiek), joan (hi/zu/zuek),
