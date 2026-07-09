@@ -8,6 +8,16 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-09 — M2 PR3: hand-written sentences for habitualPast and babestu-izan gaps
+
+Added sentences for `etorri:habitualPast` (6 persons), `ikusi:habitualPast` (6 persons),
+and `babestu-izan:present/past` (5 × 2 new persons each). These slots couldn't be covered
+by CELL_FRAMES (etorri/babestu-izan are NOR, not NOR-NORK; ikusi:habitualPast is periphrastic
+but the frame skeletons don't yet cover `habitualPast` tense). Allative frames in etorri
+get `validFor: ['joan']` per the existing etorri convention; babestu-izan shelter-locative
+frames stay `validFor: []` pending native-speaker review. Baseline regenerated.
+Audit: 597 → 575 missing slots.
+
 ## 2026-07-09 — M2 PR2: slotVocabulary to remaining 8 NOR-NORK composed verbs
 
 Extended `slotVocabulary` to egin, irakurri, idatzi, ikasi, entzun, utzi, bilatu,
