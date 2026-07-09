@@ -199,7 +199,7 @@ question for a missed cell; headline progress metric shows cells owned.
       variant, not new curriculum.
 
 **PR 3 — bare-form as aux drill.**
-- [ ] Remaining legitimate bare-form reps (early ramp) render participle
+- [x] Remaining legitimate bare-form reps (early ramp) render participle
       greyed-out with aux highlighted + "works with any verb:
       edan/ikusi/erosi…" caption (REVIEW §3.6 closing rule). Display-only.
 

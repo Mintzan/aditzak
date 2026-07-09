@@ -319,7 +319,8 @@ const OPTION_STYLES = {
   incorrect: 'border-semantic-error bg-semantic-error-tint text-semantic-error animate-shake',
 }
 
-function AnswerOption({ option, status, disabled, onSelect }) {
+function AnswerOption({ option, composedParts, status, disabled, onSelect }) {
+  const showSplit = composedParts && status === 'idle'
   return (
     <button
       type="button"
@@ -330,7 +331,13 @@ function AnswerOption({ option, status, disabled, onSelect }) {
         disabled ? 'cursor-default' : 'active:scale-[0.98]'
       } ${disabled && status === 'idle' ? 'opacity-50' : ''}`}
     >
-      {option}
+      {showSplit ? (
+        <>
+          <span className="text-gray-400">{composedParts.participle}</span>
+          {' '}
+          <span>{composedParts.aux}</span>
+        </>
+      ) : option}
     </button>
   )
 }
@@ -599,6 +606,13 @@ function SentenceWithBlank({ sentence }) {
   )
 }
 
+// Splits a composed (two-word) periphrastic form like "ikusi dut" into
+// { participle: "ikusi", aux: "dut" }. Returns null for single-word forms.
+function splitComposedForm(form) {
+  const parts = form.trim().split(/\s+/)
+  return parts.length >= 2 ? { participle: parts.slice(0, -1).join(' '), aux: parts[parts.length - 1] } : null
+}
+
 // `generateQuestions` mixes six question styles, but they differ along just a
 // couple of independent axes: how the prompt is framed — a bare person/label
 // pair, a single sentence with a blank (keyed off `question.sentence` rather
@@ -683,6 +697,9 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
             {(personPronoun(verb, question.person) ?? question.person).toLowerCase()}
           </h2>
           <p className="mt-1 text-gray-500">{t(PERSON_LABEL_KEYS[question.person])}</p>
+          {question.kind === 'form' && verb.type !== 'synthetic' && (
+            <p className="mt-2 text-xs text-gray-400">{t('bareFormAuxDrillHint')}</p>
+          )}
         </>
       )}
     </>
@@ -1458,6 +1475,7 @@ export function ExerciseScreen({
                 <AnswerOption
                   key={option}
                   option={option}
+                  composedParts={question.kind === 'form' && verb.type !== 'synthetic' ? splitComposedForm(option) : null}
                   status={getOptionStatus(option, question, state)}
                   disabled={isAnswered}
                   onSelect={() => submitAnswer(option)}
