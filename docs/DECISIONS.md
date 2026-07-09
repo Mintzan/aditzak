@@ -8,6 +8,19 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-09 — Bug fix: object-axis lessons showed ergative pronouns instead of absolutive
+
+`ConjugationTable` and `QuestionPrompt` (bare `kind:'form'` prompt) both used
+`verb.personAxis` to look up the pronoun for a person key. For NOR-NORK verbs
+(`personAxis='nork'`), this is correct for normal lessons — the person key is a
+NORK (ergative) slot. But for `objectAxis: { vary: 'nor' }` lessons, after
+`resolveObjectAxisTable` the table is keyed by NOR (absolutive) persons; using
+`'nork'` gave `'hark'` for `'hura'`, `'zuk'` for `'zu'`, etc.
+
+Fix: derive `pronounAxis` from `objectAxis.vary` when an objectAxis is present,
+falling back to `verb.personAxis ?? 'nor'`. This covers all current cases
+(`vary: 'nor'` always) and the hypothetical `vary: 'nork'` without special-casing.
+
 ## 2026-07-09 — M2 PR9 (final): imperative sentences + spine grounding invariant
 
 Added `sentences.imperative` for egon (hi/zu/zuek/hura/haiek), joan (hi/zu/zuek),
