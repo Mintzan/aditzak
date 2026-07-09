@@ -1167,6 +1167,10 @@ export const VERBS = [
           { text: 'Hik mapa bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], familyChoiceSafe: true },
           { text: 'Hik lan bat ___.', validFor: ['nahi', 'eduki', 'behar'], familyChoiceSafe: true },
         ],
+        zu: [
+          { text: 'Zuk etxe bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], familyChoiceSafe: true },
+          { text: 'Zuk arazo bat ___.', validFor: ['eduki', 'ikusi'], familyChoiceSafe: true },
+        ],
         hura: [
           { text: 'Hark ideia on bat ___.', validFor: ['nahi', 'eduki', 'behar'], familyChoiceSafe: true },
           { text: 'Berak seme bat ___.', validFor: ['nahi', 'eduki'], familyChoiceSafe: true },
@@ -1761,6 +1765,18 @@ export const VERBS = [
           { text: 'Irakasleak lehengo egunean erantzun zuzena ___.', validFor: ['ikusi', 'nahi'] },
           { text: 'Txakurrak duela bi egun etxerako bidea ___.', validFor: ['ikusi'] },
         ],
+        gu: [
+          { text: 'Guk atzo erantzuna ___.', validFor: ['ikusi', 'nahi'] },
+          { text: 'Guk herenegun sekretua ___.', validFor: ['nahi', 'ukan'] },
+        ],
+        zuek: [
+          { text: 'Zuek atzo egia ___.', validFor: ['ikusi', 'nahi'] },
+          { text: 'Zuek lehengo egunean bidea ___.', validFor: ['ikusi'] },
+        ],
+        haiek: [
+          { text: 'Haiek herenegun erantzuna ___.', validFor: ['ikusi', 'nahi'] },
+          { text: 'Haiek duela bi egun sekretua ___.', validFor: ['nahi', 'ukan'] },
+        ],
       },
     },
     personAxis: 'nork',
@@ -1972,6 +1988,35 @@ export const VERBS = [
           { text: 'Haiek herenegun eskolara ___.', validFor: ['etorri'] },
           { text: 'Haiek joan den astean hondartzara ___.', validFor: ['etorri'] },
           { text: 'Mikel eta Ane lehengo egunean dendara ___.', validFor: ['etorri'] },
+        ],
+      },
+      // presentPerfect — allative frames with `gaur`/`gaurkoan` to signal
+      // recent completion (mirrors `etorri.sentences.presentPerfect`).
+      // Same allative convention → `validFor: ['etorri']` throughout.
+      presentPerfect: {
+        ni: [
+          { text: 'Ni gaur hondartzara ___.', validFor: ['etorri'] },
+          { text: 'Ni gaurkoan eskolara ___.', validFor: ['etorri'] },
+        ],
+        zu: [
+          { text: 'Zu gaur liburutegira ___.', validFor: ['etorri'] },
+          { text: 'Zu gaurkoan lanera ___.', validFor: ['etorri'] },
+        ],
+        hura: [
+          { text: 'Hura gaur dendara ___.', validFor: ['etorri'] },
+          { text: 'Mikel gaurkoan parkera ___.', validFor: ['etorri'] },
+        ],
+        gu: [
+          { text: 'Gu gaur eskolara ___.', validFor: ['etorri'] },
+          { text: 'Gu gaurkoan hondartzara ___.', validFor: ['etorri'] },
+        ],
+        zuek: [
+          { text: 'Zuek gaur parkera ___.', validFor: ['etorri'] },
+          { text: 'Zuek gaurkoan dendara ___.', validFor: ['etorri'] },
+        ],
+        haiek: [
+          { text: 'Haiek gaur lanera ___.', validFor: ['etorri'] },
+          { text: 'Mikel eta Ane gaurkoan eskolara ___.', validFor: ['etorri'] },
         ],
       },
       // #313: cultural-bank items for `imperfectivePast` (ongoing/habitual
