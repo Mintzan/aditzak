@@ -4356,6 +4356,7 @@ export const VERBS = [
     // a `presentByObject`/`pastByObject` 2D table, and this shouldn't grant
     // one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'egiten ', past: 'egin ', future: 'egingo ' },
+    slotVocabulary: { sg: ['lana', 'oparia', 'ibilaldia'], pl: ['lanak', 'opariak', 'ibilaldiak'] },
     conjugations: {},
     personAxis: 'nork',
     sentences: {
@@ -4400,6 +4401,7 @@ export const VERBS = [
     // given a `presentByObject`/`pastByObject` 2D table, and this shouldn't
     // grant one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'irakurtzen ', past: 'irakurri ', future: 'irakurriko ' },
+    slotVocabulary: { sg: ['liburua', 'egunkaria', 'ipuina'], pl: ['liburuak', 'egunkariak', 'ipuinak'] },
     conjugations: {},
     personAxis: 'nork',
     sentences: {
@@ -4441,6 +4443,7 @@ export const VERBS = [
     // given a `presentByObject`/`pastByObject` 2D table, and this shouldn't
     // grant one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'idazten ', past: 'idatzi ', future: 'idatziko ' },
+    slotVocabulary: { sg: ['gutuna', 'mezua', 'artikulua'], pl: ['gutunak', 'mezuak', 'artikuluak'] },
     conjugations: {},
     personAxis: 'nork',
     sentences: {
@@ -4489,6 +4492,7 @@ export const VERBS = [
     // given a `presentByObject`/`pastByObject` 2D table, and this shouldn't
     // grant one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'ikasten ', past: 'ikasi ', future: 'ikasiko ' },
+    slotVocabulary: { sg: ['gaia', 'abestia', 'hitza'], pl: ['gaiak', 'abestiak', 'hitzak'] },
     conjugations: {},
     personAxis: 'nork',
     sentences: {
@@ -4528,6 +4532,7 @@ export const VERBS = [
     // plural-object counterparts) is composed from this — see
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'entzuten ', past: 'entzun ', future: 'entzungo ' },
+    slotVocabulary: { sg: ['musika', 'albistea', 'abestia'], pl: ['kantuak', 'albisteak', 'abestiak'] },
     conjugations: {},
     personAxis: 'nork',
     sentences: {
@@ -4568,6 +4573,7 @@ export const VERBS = [
     // a `presentByObject`/`pastByObject` 2D table, and this shouldn't grant
     // one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'uzten ', past: 'utzi ', future: 'utziko ' },
+    slotVocabulary: { sg: ['bizikleta', 'txalupa', 'autoa'], pl: ['bizikletak', 'txalupak', 'autoak'] },
     conjugations: {},
     personAxis: 'nork',
     sentences: {
@@ -4667,6 +4673,7 @@ export const VERBS = [
     // plural-object counterparts) is composed from this — see
     // `composedPrefixes`' own doc comment near `OBJECT_AXIS_SKELETONS`.
     composedPrefixes: { present: 'bilatzen ', past: 'bilatu ', future: 'bilatuko ' },
+    slotVocabulary: { sg: ['giltza', 'etxea', 'liburua'], pl: ['giltzak', 'etxeak', 'liburuak'] },
     conjugations: {},
     personAxis: 'nork',
     // #457: `aurkitu` ("find") is a genuine sibling on the singular-object
@@ -4824,6 +4831,7 @@ export const VERBS = [
     // given a `presentByObject`/`pastByObject` 2D table, and this shouldn't
     // grant one as a side effect (see that field's own doc comment).
     composedPrefixes: { present: 'saltzen ', past: 'saldu ', future: 'salduko ' },
+    slotVocabulary: { sg: ['kotxea', 'etxea', 'liburua'], pl: ['kotxeak', 'etxeak', 'liburuak'] },
     conjugations: {},
     personAxis: 'nork',
     sentences: {

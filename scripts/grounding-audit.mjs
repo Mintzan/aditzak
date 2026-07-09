@@ -17,7 +17,7 @@
 
 import { VERBS } from '../src/data/verbs.js'
 import { LESSONS } from '../src/data/lessons.js'
-import { getComposedTable } from '../src/lessonLogic.js'
+import { getComposedTable, mergeFrameSentences } from '../src/lessonLogic.js'
 
 const verbById = new Map(VERBS.map((v) => [v.id, v]))
 
@@ -47,8 +47,11 @@ for (const lesson of LESSONS) {
     // Drilled persons: lesson.persons if restricted, otherwise all table keys.
     const drilled = lesson.persons ?? Object.keys(table)
 
-    // A person is grounded if verb.sentences[tense][person] exists.
-    const senByPerson = verb.sentences?.[tense] ?? {}
+    // A person is grounded if generateQuestions would find a sentence for it —
+    // i.e. if mergeFrameSentences (which supplements hand-written entries with
+    // CELL_FRAMES when slotVocabulary is present) produces an entry. This
+    // reflects the actual question-kind availability in the running app.
+    const senByPerson = mergeFrameSentences(verb, tense, verb.sentences?.[tense] ?? {})
     const missing = drilled.filter((p) => !senByPerson[p])
 
     if (missing.length > 0) {
@@ -68,8 +71,8 @@ for (const lesson of LESSONS) {
 console.log('## M2 Grounding Audit — Spine Lessons Missing Sentence Data\n')
 console.log(
   '_Every row below is a (lesson × verb × tense) slot where at least one drilled_\n' +
-    '_person has no `sentences[tense][person]` entry, so that slot would degrade to_\n' +
-    '_bare `kind: \'form\'`. Close these gaps (per-paradigm, in batches) for M2._\n',
+    '_person has no sentence available (hand-written or frame-generated), so that_\n' +
+    '_slot would degrade to bare `kind: \'form\'`. Close these gaps for M2._\n',
 )
 console.log('| Lesson ID | Verb | Tense | Missing persons |')
 console.log('| --- | --- | --- | --- |')
