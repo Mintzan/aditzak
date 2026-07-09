@@ -6,6 +6,17 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-09 — M2 PR3: hand-written sentences for habitualPast and babestu-izan
+
+Added six sentences each for `etorri:habitualPast` (allative destination + habitual adverb,
+e.g. "Ni egunero eskolara ___.", `validFor: ['joan']` per existing etorri convention) and
+`ikusi:habitualPast` (habitual adverb + singular object, `validFor: []` — ukan/nahi could
+fit some but the habitualPast lesson contains only ikusi so distractors won't trigger).
+Added five sentences each for `babestu-izan:present` and `babestu-izan:past` (locative
+shelter + ablative storm source, e.g. "Zu mendiko aterpetxe batean ___ euritik?",
+`validFor: []` pending native-speaker review of whether egon/sartu are genuinely valid
+alternatives in the shelter-taking context). All pending native-speaker review.
+
 ## 2026-07-09 — M2 PR2: slotVocabulary extended to remaining NOR-NORK composed verbs
 
 Extended `slotVocabulary` to the eight remaining periphrastic NOR-NORK spine verbs

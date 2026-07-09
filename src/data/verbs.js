@@ -2240,6 +2240,20 @@ export const VERBS = [
           { text: 'Mikel eta Ane gaurkoan liburutegira ___.', validFor: ['joan'] },
         ],
       },
+      // Unit 21 — periphrastic habitual past ("I used to come"). Allative
+      // frames ("to [place]") with habitual adverbs (egunero/askotan/maiz/
+      // udetan/igande guztietan). No cross-verb siblings listed: joan's
+      // habitualPast would also fit allative frames, but joan has no
+      // habitualPast lesson, so distractors won't trigger; validFor: []
+      // conservative until a native-speaker review is done.
+      habitualPast: {
+        ni: { text: 'Ni egunero eskolara ___.', validFor: ['joan'] },
+        zu: { text: 'Zu egunero gure etxera ___?', validFor: ['joan'] },
+        hura: { text: 'Hura askotan parkera ___.', validFor: ['joan'] },
+        gu: { text: 'Gu igande guztietan amonaren etxera ___.', validFor: ['joan'] },
+        zuek: { text: 'Zuek maiz mendira ___?', validFor: ['joan'] },
+        haiek: { text: 'Haiek udetan herri honetara ___.', validFor: ['joan'] },
+      },
       // #313: cultural-bank items for `imperfectivePast` (`etorri`'s native
       // synthetic "I was coming", distinct from `habitualPast`'s periphrastic
       // form above) — `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs bank's
@@ -2890,6 +2904,19 @@ export const VERBS = [
         gu: [{ text: 'Guk gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
         zuek: [{ text: 'Zuek gaur hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] }],
         haiek: [{ text: 'Haiek gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
+      },
+      // Unit 21 — periphrastic habitual past ("I used to see"). Habitual
+      // adverbs (egunero/askotan/maiz/normalean) + singular-object nouns
+      // mirroring the existing present/past vocabulary. validFor: []
+      // conservative — ukan/nahi could complete some frames but habitualPast
+      // lessons contain only ikusi, so distractors won't trigger.
+      habitualPast: {
+        ni: { text: 'Nik egunero Mikel ___.', validFor: [] },
+        zu: { text: 'Zuk askotan filma ___?', validFor: [] },
+        hura: { text: 'Hark maiz itsasoa ___.', validFor: [] },
+        gu: { text: 'Guk egunero filma ___.', validFor: [] },
+        zuek: { text: 'Zuek askotan hori ___?', validFor: [] },
+        haiek: { text: 'Haiek normalean filma ___.', validFor: [] },
       },
     },
     personAxis: 'nork',
@@ -6869,9 +6896,19 @@ export const VERBS = [
     sentences: {
       present: {
         ni: { text: 'Ni Gorbeiako aterpean ___ ekaitzetik.', validFor: [] },
+        zu: { text: 'Zu mendiko aterpetxe batean ___ euritik?', validFor: [] },
+        hura: { text: 'Hura hormetaren atzean ___ euritik.', validFor: [] },
+        gu: { text: 'Gu zuhaitz baten azpian ___ euriari.', validFor: [] },
+        zuek: { text: 'Zuek tontorrean zergatik ___ elurretik?', validFor: [] },
+        haiek: { text: 'Haiek elurtetik ___ ermita zaharrean.', validFor: [] },
       },
       past: {
         ni: { text: 'Ni atzo Gorbeiako aterpean ___ ekaitzetik.', validFor: [] },
+        zu: { text: 'Zu herenegun mendiko aterpetxe batean ___ euritik?', validFor: [] },
+        hura: { text: 'Hura lehengo egunean hormetaren atzean ___ euritik.', validFor: [] },
+        gu: { text: 'Gu atzo zuhaitz baten azpian ___ euriari.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun tontorrean ___ elurretik?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean elurtetik ___ ermita zaharrean.', validFor: [] },
       },
     },
   },
