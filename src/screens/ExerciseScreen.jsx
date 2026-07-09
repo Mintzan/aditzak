@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { trackEvent } from '../analytics'
 import { getShareUrl, shareContent } from '../shareUtils'
 import { vibrateCorrect, vibrateIncorrect, vibrateResult } from '../hapticsUtils'
-import { VERBS, TENSE_META, PERSON_LABEL_KEYS, personPronoun } from '../data/verbs'
+import { VERBS, TENSE_META, PERSON_LABEL_KEYS, personPronoun, PRONOUN_DECLENSIONS } from '../data/verbs'
 import { LESSONS } from '../data/lessons'
 import { READING_ITEMS } from '../data/readingItems'
 import {
@@ -640,7 +640,7 @@ function splitComposedForm(form) {
 // tell which verb is under test — a deliberately-hard lure becomes
 // indistinguishable from a broken question. So `form` always shows the verb,
 // review or not.
-function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
+function QuestionPrompt({ verb, tenseMeta, question, showVerb = true, pronounAxis }) {
   const { t, language } = useLanguage()
   if (question.kind === 'reading') {
     const gloss = question.gloss[language] ?? question.gloss.en
@@ -694,7 +694,7 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true }) {
       ) : question.items || question.pairs || question.tokens ? null : (
         <>
           <h2 className="mt-2 text-4xl font-extrabold text-gray-900">
-            {(personPronoun(verb, question.person) ?? question.person).toLowerCase()}
+            {(PRONOUN_DECLENSIONS[pronounAxis]?.[question.person] ?? question.person).toLowerCase()}
           </h2>
           <p className="mt-1 text-gray-500">{t(PERSON_LABEL_KEYS[question.person])}</p>
           {question.kind === 'form' && verb.type !== 'synthetic' && (
@@ -1449,6 +1449,7 @@ export function ExerciseScreen({
             tenseMeta={tenseMeta}
             question={question}
             showVerb={!lesson.review || !question.options || question.kind === 'form'}
+            pronounAxis={lesson.objectAxis?.vary ?? verb?.personAxis ?? 'nor'}
           />
 
           <p className="mt-8 mb-3 text-base font-semibold text-gray-700">{t(QUESTION_PROMPT_KEYS[question.kind])}</p>
