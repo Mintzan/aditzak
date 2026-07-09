@@ -1142,7 +1142,14 @@ export const VERBS = [
       },
       // #312: cultural-bank `presentPlural` item — "ardi latxak" (Latxa
       // sheep) is a plural object, drives `dituzte` rather than `du`/`dute`.
+      // M2 PR5: added ni/zu/hura/gu/zuek to close grounding-audit gaps.
+      // futurePlural aliases from this block via the end-of-file loop.
       presentPlural: {
+        ni: [{ text: 'Nik liburuak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        zu: [{ text: 'Zuk txartelak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        hura: [{ text: 'Hark mapak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        gu: [{ text: 'Guk maletak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        zuek: [{ text: 'Zuek opariak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
         haiek: [{ text: 'Baserritarrek ardi latxak ___ mendian.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
       },
       // #259: past, adapted from `docs/SAMPLE_SENTENCES.md`'s `ukan` past
@@ -1196,6 +1203,14 @@ export const VERBS = [
           { text: 'Haiek anaia bat ___.', validFor: ['nahi', 'eduki'], familyChoiceSafe: true },
           { text: 'Haiek hegazkin bat ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'], familyChoiceSafe: true },
         ],
+      },
+      pastPlural: {
+        ni: [{ text: 'Nik liburuak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        zu: [{ text: 'Zuk txartelak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        hura: [{ text: 'Hark mapak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        gu: [{ text: 'Guk maletak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        zuek: [{ text: 'Zuek opariak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
+        haiek: [{ text: 'Haiek autoak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
       },
       // #413: potential/baldintza/conditional sentence frames, deferred by
       // #148 as form-only. `validFor: []` here is verified (not assumed): no
@@ -1373,7 +1388,11 @@ export const VERBS = [
       // (`itsaslabarrak`/`aditz guztiak`), correctly driving `dituzte`/
       // `ditugu` rather than the singular table's `du`/`dugu`.
       presentPlural: {
+        ni: [{ text: 'Nik txartelak erosi ___.', validFor: [] }],
+        zu: [{ text: 'Zuk liburuak irakurri ___?', validFor: [] }],
+        hura: [{ text: 'Hark opariak hartu ___.', validFor: [] }],
         gu: [{ text: 'Guk gure aplikazioan euskal aditz guztiak sartu ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek argazkiak atera ___?', validFor: [] }],
         haiek: [{ text: 'Turistek Zumaia Flysch-eko itsaslabarrak argazkitan hartu ___.', validFor: [] }],
       },
     },
@@ -1777,6 +1796,22 @@ export const VERBS = [
           { text: 'Haiek herenegun erantzuna ___.', validFor: ['ikusi', 'nahi'] },
           { text: 'Haiek duela bi egun sekretua ___.', validFor: ['nahi', 'ukan'] },
         ],
+      },
+      presentPlural: {
+        ni: [{ text: 'Nik erantzun guztiak ___.', validFor: ['ikusi', 'nahi'] }],
+        zu: [{ text: 'Zuk herriaren sekretuak ___.', validFor: ['nahi', 'ukan'] }],
+        hura: [{ text: 'Hark mendiko bideak ___.', validFor: ['ikusi'] }],
+        gu: [{ text: 'Guk erantzunak ___.', validFor: ['ikusi', 'nahi'] }],
+        zuek: [{ text: 'Zuek sekretuak ___.', validFor: ['nahi', 'ukan'] }],
+        haiek: [{ text: 'Haiek bideak ___.', validFor: ['ikusi'] }],
+      },
+      pastPlural: {
+        ni: [{ text: 'Nik atzo erantzunak ___.', validFor: ['ikusi', 'nahi'] }],
+        zu: [{ text: 'Zuk herenegun sekretuak ___.', validFor: ['nahi', 'ukan'] }],
+        hura: [{ text: 'Hark lehengo egunean bideak ___.', validFor: ['ikusi'] }],
+        gu: [{ text: 'Guk atzo erantzunak ___.', validFor: ['ikusi', 'nahi'] }],
+        zuek: [{ text: 'Zuek herenegun sekretuak ___.', validFor: ['nahi', 'ukan'] }],
+        haiek: [{ text: 'Haiek duela bi egun bideak ___.', validFor: ['ikusi'] }],
       },
     },
     personAxis: 'nork',
@@ -3113,6 +3148,22 @@ export const VERBS = [
           { text: 'Gurasoek herenegun dirua eskuan ___.', validFor: ['ukan', 'ikusi'] },
         ],
       },
+      presentPlural: {
+        ni: [{ text: 'Nik giltzak poltsan ___.', validFor: ['ukan', 'ikusi'] }],
+        zu: [{ text: 'Zuk liburuak eskolan ___.', validFor: ['ukan', 'ikusi'] }],
+        hura: [{ text: 'Hark txartelak poltsikoan ___.', validFor: ['ukan', 'ikusi'] }],
+        gu: [{ text: 'Guk mapak motxilan ___.', validFor: ['ukan', 'ikusi'] }],
+        zuek: [{ text: 'Zuek telefonoak eskuan ___.', validFor: ['ukan', 'ikusi'] }],
+        haiek: [{ text: 'Haiek liburuak mahai gainean ___.', validFor: ['ukan', 'ikusi'] }],
+      },
+      pastPlural: {
+        ni: [{ text: 'Nik atzo giltzak poltsan ___.', validFor: ['ukan', 'ikusi'] }],
+        zu: [{ text: 'Zuk herenegun liburuak eskolan ___.', validFor: ['ukan', 'ikusi'] }],
+        hura: [{ text: 'Hark lehengo egunean txartelak poltsikoan ___.', validFor: ['ukan', 'ikusi'] }],
+        gu: [{ text: 'Guk atzo mapak motxilan ___.', validFor: ['ukan', 'ikusi'] }],
+        zuek: [{ text: 'Zuek herenegun telefonoak eskuan ___.', validFor: ['ukan', 'ikusi'] }],
+        haiek: [{ text: 'Haiek atzo liburuak mahai gainean ___.', validFor: ['ukan', 'ikusi'] }],
+      },
     },
     personAxis: 'nork',
     pronounSentences: {
@@ -3226,6 +3277,22 @@ export const VERBS = [
         zuek: [{ text: 'Zuek dantzaria autoan ___ herriko jaietara.', validFor: ['ukan', 'eduki', 'hartu'] }],
         haiek: [{ text: 'Sukaldariek txuleta handia ___ txosnatik mahaira.', validFor: ['ukan', 'eduki'] }],
       },
+      presentPlural: {
+        ni: [{ text: 'Nik liburuak eskolara ___.', validFor: ['ukan', 'eduki'] }],
+        zu: [{ text: 'Zuk maletak hotelera ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        hura: [{ text: 'Hark barazkiak azokara ___.', validFor: ['ukan', 'eduki'] }],
+        gu: [{ text: 'Guk tresnak lanetara ___.', validFor: ['ukan', 'eduki'] }],
+        zuek: [{ text: 'Zuek opariak bilerara ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        haiek: [{ text: 'Haiek argazkiak etxera ___.', validFor: ['ukan', 'eduki'] }],
+      },
+      pastPlural: {
+        ni: [{ text: 'Nik liburuak eskolara ___.', validFor: ['ukan', 'eduki'] }],
+        zu: [{ text: 'Zuk maletak hotelera ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        hura: [{ text: 'Hark barazkiak azokara ___.', validFor: ['ukan', 'eduki'] }],
+        gu: [{ text: 'Guk tresnak lanetara ___.', validFor: ['ukan', 'eduki'] }],
+        zuek: [{ text: 'Zuek opariak bilerara ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        haiek: [{ text: 'Haiek argazkiak etxera ___.', validFor: ['ukan', 'eduki'] }],
+      },
     },
     personAxis: 'nork',
     pronounSentences: {
@@ -3323,6 +3390,22 @@ export const VERBS = [
         gu: [{ text: 'Guk baserriko ur berria ___ mendiko iturritik.', validFor: ['ukan', 'eduki'] }],
         zuek: [{ text: 'Zuek opari polit bat ___ Baionako denda txikitik.', validFor: ['ukan', 'eduki', 'hartu'] }],
         haiek: [{ text: 'Lagunek danbor txiki bat ___ Donostiako Danborradatik, oparitzeko.', validFor: ['ukan', 'eduki', 'hartu'] }],
+      },
+      presentPlural: {
+        ni: [{ text: 'Nik opariak etxera ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        zu: [{ text: 'Zuk liburuak ikastarora ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        hura: [{ text: 'Hark barazkiak dendatik ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        gu: [{ text: 'Guk janaria etxera ___.', validFor: ['ukan', 'eduki'] }],
+        zuek: [{ text: 'Zuek opariak bilerara ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        haiek: [{ text: 'Haiek liburuak ikastarora ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+      },
+      pastPlural: {
+        ni: [{ text: 'Nik opariak etxera ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        zu: [{ text: 'Zuk liburuak ikastarora ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        hura: [{ text: 'Hark barazkiak dendatik ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        gu: [{ text: 'Guk janaria etxera ___.', validFor: ['ukan', 'eduki'] }],
+        zuek: [{ text: 'Zuek opariak bilerara ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
+        haiek: [{ text: 'Haiek liburuak ikastarora ___.', validFor: ['ukan', 'eduki', 'hartu'] }],
       },
     },
     personAxis: 'nork',
