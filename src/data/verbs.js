@@ -849,6 +849,15 @@ export const VERBS = [
           { text: 'Arrantzaleak itsasontzian ___ ekaitza hasi zenean.', validFor: [] },
         ],
       },
+      // Locative "Lasai ___!" frames (stay-calm idiom). validFor: [] — no
+      // sibling verb has a matching locative imperative table.
+      imperative: {
+        hi: [{ text: 'Lasai ___, lagun!', validFor: [] }],
+        zu: [{ text: 'Lasai ___, mesedez!', validFor: [] }],
+        zuek: [{ text: 'Lasai ___, mesedez!', validFor: [] }],
+        hura: [{ text: 'Lasai ___ Jon!', validFor: [] }],
+        haiek: [{ text: 'Lasai ___ denak!', validFor: [] }],
+      },
     },
     pronounSentences: {
       present: {
@@ -2124,6 +2133,14 @@ export const VERBS = [
           { text: 'Mikel eta Ane gaurkoan eskolara ___.', validFor: ['etorri'] },
         ],
       },
+      // Allative imperative "Etxera ___!" — directed away from speaker.
+      // validFor: [] — "Etxera hoa!" (go home) vs "Etxera hator!" (come
+      // home) differ in direction, so the cue disambiguates.
+      imperative: {
+        hi: [{ text: 'Etxera ___, azkar!', validFor: [] }],
+        zu: [{ text: 'Etxera ___, mesedez!', validFor: [] }],
+        zuek: [{ text: 'Etxera ___, mesedez!', validFor: [] }],
+      },
       // #313: cultural-bank items for `imperfectivePast` (ongoing/habitual
       // "I was going..."), distinct from `past`'s simple "I went" above —
       // `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs bank's "Past" examples
@@ -2403,6 +2420,14 @@ export const VERBS = [
         gu: { text: 'Gu igande guztietan amonaren etxera ___.', validFor: ['joan'] },
         zuek: { text: 'Zuek maiz mendira ___?', validFor: ['joan'] },
         haiek: { text: 'Haiek udetan herri honetara ___.', validFor: ['joan'] },
+      },
+      // Allative imperative "Hona ___!" — directed toward speaker.
+      // validFor: [] — direction cue ("hona" = hither) makes etorri the only
+      // natural completion; joan's "hona hoa" would be pragmatically odd.
+      imperative: {
+        hi: [{ text: 'Hona ___, azkar!', validFor: [] }],
+        zu: [{ text: 'Hona ___, mesedez!', validFor: [] }],
+        zuek: [{ text: 'Hona ___, mesedez!', validFor: [] }],
       },
       // #313: cultural-bank items for `imperfectivePast` (`etorri`'s native
       // synthetic "I was coming", distinct from `habitualPast`'s periphrastic
