@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { JOURNEY } from './journey'
+import { JOURNEY, BONUS_LESSON_IDS } from './journey'
 import { LESSONS } from './data/lessons'
 import { VERBS } from './data/verbs'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
-import { getComposedTable, resolveObjectAxisTable } from './lessonLogic'
+import { getComposedTable, mergeFrameSentences, resolveObjectAxisTable } from './lessonLogic'
 
 // Cross-checks the three files that make up "the learning journey"
 // (`journey.js`'s `JOURNEY`, `data/lessons.js`'s `LESSONS`, `data/verbs.js`'s
@@ -104,6 +104,53 @@ describe('LESSONS <-> VERBS', () => {
             `lesson "${lesson.id}" restricts to person "${person}", missing from ${source.verbId}.conjugations.${source.tense}`,
           ).toBe(true)
         }
+      }
+    }
+  })
+
+  // M2 spine-grounding invariant (docs/AUXILIARY_FIRST_PLAN.md §M2, D5).
+  // Every spine practice lesson must offer ≥1 sentence-grounded kind per
+  // drilled person — i.e. verb.sentences[tense][person] (or a frame-
+  // generated entry from mergeFrameSentences) must exist, so the exercise
+  // engine never has to degrade to bare kind:'form'.
+  //
+  // Exemptions (per D5 and known structural limitations):
+  //   - Review lessons (lesson.review): not practice lessons.
+  //   - Bonus units (BONUS_LESSON_IDS): hitanoa/bonus tracks are D5-exempt.
+  //   - ByObject tenses (/ByObject$/): presentByObject/pastByObject tables
+  //     are 2D ({ [nork]: { [nor]: form } }) — adding sentences[tense][person]
+  //     for the varying axis would corrupt the validFor gap audit (see maite's
+  //     verbs.js entry comment). Needs a separate structural fix before the
+  //     invariant can apply to these spine lessons (ukan/maite object-axis-*).
+  //   - hi-m/hi-f persons: hitanoa gender split — by convention this codebase
+  //     never keys sentences on these persons (see ukan.sentences.imperative).
+  it('every spine practice lesson has a sentence for every drilled person (M2 grounding invariant)', () => {
+    // Persons that are hitanoa gender-split keys, exempt by convention.
+    const HITANOA_PERSONS = new Set(['hi-m', 'hi-f'])
+
+    for (const lesson of LESSONS) {
+      if (lesson.review) continue
+      if (BONUS_LESSON_IDS.has(lesson.id)) continue
+      if (!lesson.verbId) continue
+
+      // ByObject tenses need structural work before grounding can be enforced.
+      if (/ByObject$/.test(lesson.tense)) continue
+
+      const verb = verbsById.get(lesson.verbId)
+      if (!verb) continue
+
+      const table = getComposedTable(verb, lesson.tense)
+      if (!table || Object.keys(table).length === 0) continue
+
+      const drilled = lesson.persons ?? Object.keys(table)
+      const senByPerson = mergeFrameSentences(verb, lesson.tense, verb.sentences?.[lesson.tense] ?? {})
+
+      for (const person of drilled) {
+        if (HITANOA_PERSONS.has(person)) continue
+        expect(
+          senByPerson[person],
+          `${lesson.id}: ${lesson.verbId}.sentences.${lesson.tense}.${person} missing — spine lesson would degrade to bare kind:'form'`,
+        ).toBeDefined()
       }
     }
   })
