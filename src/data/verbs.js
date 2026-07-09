@@ -620,6 +620,33 @@ export const VERBS = [
         zuek: [{ text: 'Zuek irakasleak ___.', validFor: [] }],
         haiek: [{ text: 'Haiek ikasleak ___.', validFor: [] }],
       },
+      conditionalPast: {
+        ni: [{ text: 'Ni irakaslea ___.', validFor: [] }],
+        hi: [{ text: 'Hi ikaslea ___.', validFor: [] }],
+        zu: [{ text: 'Zu gidaria ___.', validFor: [] }],
+        hura: [{ text: 'Hura medikua ___.', validFor: [] }],
+        gu: [{ text: 'Gu lagunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek irakasleak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek ikasleak ___.', validFor: [] }],
+      },
+      potentialAlegiazkoa: {
+        ni: [{ text: 'Ni irakaslea ___.', validFor: [] }],
+        hi: [{ text: 'Hi ikaslea ___.', validFor: [] }],
+        zu: [{ text: 'Zu gidaria ___.', validFor: [] }],
+        hura: [{ text: 'Hura medikua ___.', validFor: [] }],
+        gu: [{ text: 'Gu lagunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek irakasleak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek ikasleak ___.', validFor: [] }],
+      },
+      potentialLehenaldia: {
+        ni: [{ text: 'Ni irakaslea ___.', validFor: [] }],
+        hi: [{ text: 'Hi ikaslea ___.', validFor: [] }],
+        zu: [{ text: 'Zu gidaria ___.', validFor: [] }],
+        hura: [{ text: 'Hura medikua ___.', validFor: [] }],
+        gu: [{ text: 'Gu lagunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek irakasleak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek ikasleak ___.', validFor: [] }],
+      },
       // #413: imperative, second/third-person-only per `izan`'s own table
       // (no ni/gu cells). `validFor` left **absent** (not `[]`) on these —
       // unlike potential/baldintza/conditional above, `egon`/`joan`/`etorri`
@@ -649,6 +676,10 @@ export const VERBS = [
           { text: 'Nahi dut haiek ikasleak ___.', validFor: [] },
           { text: 'Nahi dut Mikel eta Ane lagunak ___.', validFor: [] },
         ],
+      },
+      subjunctivePast: {
+        hura: [{ text: 'Nahi nuen hura medikua ___.', validFor: [] }],
+        haiek: [{ text: 'Nahi nuen haiek ikasleak ___.', validFor: [] }],
       },
     },
     pronounSentences: {
@@ -1252,6 +1283,30 @@ export const VERBS = [
         zuek: [{ text: 'Zuek mapa bat ___.', validFor: [] }],
         haiek: [{ text: 'Haiek pasaporte bat ___.', validFor: [] }],
       },
+      conditionalPast: {
+        ni: [{ text: 'Nik liburu bat ___.', validFor: [] }],
+        zu: [{ text: 'Zuk auto bat ___.', validFor: [] }],
+        hura: [{ text: 'Hark etxe bat ___.', validFor: [] }],
+        gu: [{ text: 'Guk txartel bat ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek mapa bat ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek pasaporte bat ___.', validFor: [] }],
+      },
+      potentialAlegiazkoa: {
+        ni: [{ text: 'Nik liburu bat ___.', validFor: [] }],
+        zu: [{ text: 'Zuk auto bat ___.', validFor: [] }],
+        hura: [{ text: 'Hark etxe bat ___.', validFor: [] }],
+        gu: [{ text: 'Guk txartel bat ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek mapa bat ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek pasaporte bat ___.', validFor: [] }],
+      },
+      potentialLehenaldia: {
+        ni: [{ text: 'Nik liburu bat ___.', validFor: [] }],
+        zu: [{ text: 'Zuk auto bat ___.', validFor: [] }],
+        hura: [{ text: 'Hark etxe bat ___.', validFor: [] }],
+        gu: [{ text: 'Guk txartel bat ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek mapa bat ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek pasaporte bat ___.', validFor: [] }],
+      },
       // #413: imperative, "Pazientzia ___!" idiom (NOR-NORK Agintera,
       // singular-object column — see `conjugations.imperative` above).
       // `hi-m`/`hi-f` skipped per this codebase's convention of excluding
@@ -1282,6 +1337,10 @@ export const VERBS = [
           { text: 'Nahi dut haiek liburua irakur ___.', validFor: [] },
           { text: 'Nahi dut ikasleek testua idatz ___.', validFor: [] },
         ],
+      },
+      subjunctivePast: {
+        hura: [{ text: 'Nahi nuen hark liburua irakur ___.', validFor: [] }],
+        haiek: [{ text: 'Nahi nuen haiek liburua irakur ___.', validFor: [] }],
       },
     },
     personAxis: 'nork',
