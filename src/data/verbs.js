@@ -577,6 +577,17 @@ export const VERBS = [
           { text: 'Txakurrak eta katuak duela bi egun handiak ___.', validFor: [], familyChoiceSafe: true },
         ],
       },
+      // `gaur`-marked predicate-nominal frames for the presentPerfect ("today I
+      // have been / turned out to be…"); same validFor: [] as present/past above
+      // since no NOR sibling has a presentPerfect table to cross-list.
+      presentPerfect: {
+        ni: [{ text: 'Ni gaur gidaria ___.', validFor: [] }],
+        zu: [{ text: 'Zu gaur irakaslea ___?', validFor: [] }],
+        hura: [{ text: 'Hura gaur buruzagia ___.', validFor: [] }],
+        gu: [{ text: 'Gu gaur lagunak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek gaur txapeldunak ___?', validFor: [] }],
+        haiek: [{ text: 'Haiek gaur ikasleak ___.', validFor: [] }],
+      },
       // #413: potential/baldintza/conditional, same predicate-nominal frames
       // as present/past above. `validFor: []` throughout is the *verified*
       // tag here, not a placeholder — none of izan's `nor`-cluster siblings
@@ -3830,6 +3841,14 @@ export const VERBS = [
         zuek: [{ text: 'Zuek gezurrak ___.', validFor: [] }],
         haiek: [{ text: 'Haiek gezurrak ___.', validFor: [] }],
       },
+      pastPlural: {
+        ni: [{ text: 'Nik gezurrak ___.', validFor: [] }],
+        zu: [{ text: 'Zuk gezurrak ___.', validFor: [] }],
+        hura: [{ text: 'Hark gezurrak ___.', validFor: [] }],
+        gu: [{ text: 'Guk gezurrak ___.', validFor: [] }],
+        zuek: [{ text: 'Zuek gezurrak ___.', validFor: [] }],
+        haiek: [{ text: 'Haiek gezurrak ___.', validFor: [] }],
+      },
     },
     // #289: `esan`'s varying `person` axis is NORK (ergative; NORI is fixed
     // to `hura`), so the plain-drill heading needs `ukan`'s ergative
@@ -3965,6 +3984,12 @@ export const VERBS = [
       },
       // Plural object ("liburuak", the books).
       presentPlural: {
+        zu: [{ text: 'Nik liburuak zuri ___.', validFor: [] }],
+        hura: [{ text: 'Nik liburuak hari ___.', validFor: [] }],
+        zuek: [{ text: 'Nik liburuak zuei ___.', validFor: [] }],
+        haiek: [{ text: 'Nik liburuak haiei ___.', validFor: [] }],
+      },
+      pastPlural: {
         zu: [{ text: 'Nik liburuak zuri ___.', validFor: [] }],
         hura: [{ text: 'Nik liburuak hari ___.', validFor: [] }],
         zuek: [{ text: 'Nik liburuak zuei ___.', validFor: [] }],
