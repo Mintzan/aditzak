@@ -6,6 +6,28 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-09 — M2 PR2: slotVocabulary extended to remaining NOR-NORK composed verbs
+
+Extended `slotVocabulary` to the eight remaining periphrastic NOR-NORK spine verbs
+that have `composedPrefixes`. For verbs with existing hand-written sentences, frames
+only fill the gaps (`mergeFrameSentences` never overrides). Objects were chosen to fit
+the verb's semantic domain, using common nouns at A1/A2 level.
+
+| Verb | sg objects | pl objects |
+|---|---|---|
+| egin | lana, oparia, ibilaldia | lanak, opariak, ibilaldiak |
+| irakurri | liburua, egunkaria, ipuina | liburuak, egunkariak, ipuinak |
+| idatzi | gutuna, mezua, artikulua | gutunak, mezuak, artikuluak |
+| ikasi | gaia, abestia, hitza | gaiak, abestiak, hitzak |
+| entzun | musika, albistea, abestia | kantuak, albisteak, abestiak |
+| utzi | bizikleta, txalupa, autoa | bizikletak, txalupak, autoak |
+| bilatu | giltza, etxea, liburua | giltzak, etxeak, liburuak |
+| saldu | kotxea, etxea, liburua | kotxeak, etxeak, liburuak |
+
+**Pending native-speaker review** as above. Remaining spine-lesson gaps after this PR
+are for synthetic NOR-NORK verbs (eraman, ekarri, jakin, eduki), ukan/maite, and
+post-M2 tenses — all deferred to later M2 data PRs.
+
 ## 2026-07-09 — M2 PR1: CELL_FRAMES skeletons and initial slotVocabulary (needs native-speaker review)
 
 Added six `norNork:*` frame skeletons (`present`/`past`/`future` × sg/pl-object)

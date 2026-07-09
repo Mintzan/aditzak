@@ -8,6 +8,14 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-09 — M2 PR2: slotVocabulary to remaining 8 NOR-NORK composed verbs
+
+Extended `slotVocabulary` to egin, irakurri, idatzi, ikasi, entzun, utzi, bilatu,
+and saldu. Also updated `scripts/grounding-audit.mjs` to call `mergeFrameSentences`
+instead of reading raw `verb.sentences`, so it counts frame-generated coverage.
+Post-PR2 audit: 167 rows / 597 slots remain — all deferred (synthetic NOR-NORK,
+ukan/maite, hitanoa, conditionals, etc.).
+
 ## 2026-07-09 — M2 PR1: cell-frame infrastructure
 
 Added `CELL_FRAMES` (six `norNork:*` skeletons) to `src/data/verbs.js` alongside
