@@ -8,6 +8,22 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-09 — M2 PR9 (final): imperative sentences + spine grounding invariant
+
+Added `sentences.imperative` for egon (hi/zu/zuek/hura/haiek), joan (hi/zu/zuek),
+and etorri (hi/zu/zuek). Sentence frames: egon uses "Lasai ___!" locative stay-calm
+idiom; joan uses "Etxera ___!" allative ("Go home!"); etorri uses "Hona ___!"
+allative ("Come here!"). All `validFor: []` — direction-of-travel disambiguates.
+
+The M2 spine-grounding invariant is now enforced in `src/journey.test.js`: every
+spine practice lesson must have a sentence for every drilled person. Exempt: review
+lessons, bonus units, *ByObject tenses (2D-table structural limitation — would corrupt
+the validFor gap audit, see maite's verbs.js comment), hi-m/hi-f persons (hitanoa
+gender split, convention not to key sentences on these). All 552 tests pass.
+
+Remaining ungrounded slots: ByObject spine lessons (ukan/maite object-axis-present/past)
+need a separate structural fix before the invariant can apply to them.
+
 ## 2026-07-09 — M2 PR3: hand-written sentences for habitualPast and babestu-izan gaps
 
 Added sentences for `etorri:habitualPast` (6 persons), `ikusi:habitualPast` (6 persons),
