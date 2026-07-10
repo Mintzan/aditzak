@@ -3,7 +3,13 @@ import { JOURNEY, BONUS_LESSON_IDS } from './journey'
 import { LESSONS } from './data/lessons'
 import { VERBS } from './data/verbs'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
-import { getComposedTable, mergeFrameSentences, resolveByObjectSentences, resolveObjectAxisTable } from './lessonLogic'
+import {
+  generateFamilyChoiceQuestions,
+  getComposedTable,
+  mergeFrameSentences,
+  resolveByObjectSentences,
+  resolveObjectAxisTable,
+} from './lessonLogic'
 
 // Cross-checks the three files that make up "the learning journey"
 // (`journey.js`'s `JOURNEY`, `data/lessons.js`'s `LESSONS`, `data/verbs.js`'s
@@ -167,6 +173,24 @@ describe('LESSONS <-> VERBS', () => {
           `${lesson.id}: ${lesson.verbId}.sentences.${lesson.tense}.${person} missing — spine lesson would degrade to bare kind:'form'`,
         ).toBeDefined()
       }
+    }
+  })
+
+  // A `familyChoice: true` flag must never be decorative: the generator only
+  // yields questions when a lesson's sources carry `familyChoiceSafe`-tagged
+  // sentences whose verb has a resolvable cross-family lure, and a flag whose
+  // sources have none would silently produce zero questions — the lesson
+  // would claim a drill it never runs. `count: 50` swamps the generator's
+  // per-lesson cap so the assertion is about candidate existence, not
+  // sampling.
+  it('every familyChoice lesson yields at least one family-choice question', () => {
+    for (const lesson of LESSONS) {
+      if (!lesson.familyChoice) continue
+      const resolvedSources = (lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]).map(
+        ({ verbId, tense }) => ({ verb: verbsById.get(verbId), tense }),
+      )
+      const questions = generateFamilyChoiceQuestions(VERBS, resolvedSources, { count: 50 })
+      expect(questions.length, `lesson "${lesson.id}" has familyChoice: true but generates no questions`).toBeGreaterThan(0)
     }
   })
 

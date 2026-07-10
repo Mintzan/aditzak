@@ -2158,8 +2158,15 @@ export const FAMILY_CHOICE_QUESTION_COUNT = 3
 
 // A `kind: 'family-choice'` question presents a sentence with a blank and
 // asks the learner to pick which auxiliary family fills it — NOR ("da") or
-// NOR-NORK ("du") — by selecting between the verb's own form and the
-// cross-family form from `getCaseFrameLure`. Only sentences tagged
+// NOR-NORK ("du") — by selecting between the verb's own form and a
+// cross-family lure. The lure prefers `getAuxiliarySwapLure` (own participle
+// + wrong-family aux — `ikusi naiz` alongside `ikusi dut`), so a periphrastic
+// question isolates the *auxiliary* decision instead of letting the
+// participle betray the answer; synthetic/single-word forms fall back to
+// `getCaseFrameLure`'s wholesale sibling form (`dut` alongside `naiz`), which
+// is also what every already-tagged izan/ukan sentence produced before the
+// aux-swap preference existed (for those, the two lures coincide or the swap
+// self-gates on the missing space). Only sentences tagged
 // `familyChoiceSafe: true` (fail-closed opt-in) produce questions, ensuring
 // the frame unambiguously signals the correct family. `verbs` is the full
 // VERBS list, needed to find the cross-family sibling.
@@ -2174,7 +2181,7 @@ export function generateFamilyChoiceQuestions(verbs, resolvedSources, { count = 
       if (typeof form !== 'string') continue
       const rawVariants = sentencesByPerson[person]
       if (!rawVariants) continue
-      const lure = getCaseFrameLure(verbs, verb, tense, person)
+      const lure = getAuxiliarySwapLure(verbs, verb, tense, person) ?? getCaseFrameLure(verbs, verb, tense, person)
       if (!lure || lure === form) continue
       const safeSentences = (Array.isArray(rawVariants) ? rawVariants : [rawVariants])
         .map(normalizeSentence)

@@ -164,6 +164,13 @@ export const LESSONS = [
   {
     id: 'unit-3-review',
     review: true,
+    // Unit 6's "da or du?" stop on the family-choice drill line (plan M4
+    // PR1's wiring list): the motion verbs' bare-absolutive-subject +
+    // allative frames reject the ukan-family lure outright. Candidates come
+    // from joan/ibili only — etorri's incidental `nori` agreement (#477)
+    // would mis-pair it against the ditransitive family, so its sentences
+    // stay untagged (see the comment above etorri's `sentences`).
+    familyChoice: true,
     persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'joan', tense: 'present' },
@@ -381,6 +388,11 @@ export const LESSONS = [
     id: 'unit-11-review',
     review: true,
     participleChoice: true,
+    // Unit 11's family-choice stop: only `ikusi:presentPerfect` contributes
+    // candidates (izan/etorri's case-frame sibling `ukan` has no
+    // presentPerfect table, so their lures self-gate) — and its aux-swap
+    // lure ("ikusi naiz") is exactly the recency-unit aux confusion.
+    familyChoice: true,
     persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'izan', tense: 'presentPerfect' },
@@ -468,6 +480,10 @@ export const LESSONS = [
   // sampled alongside production carriers.
   {
     id: 'unit-10-present',
+    // Unit 13's family-choice stop: the pool's ergative-subject + object
+    // frames reject the aux-swap lure ("jaten naiz" for "jaten dut") —
+    // tagged on jan/hartu, the pool's -ten/-tzen minimal-pair verbs.
+    familyChoice: true,
     persons: PHASE_1_PERSONS,
     sources: [
       { verbId: 'jan', tense: 'present' },
@@ -1587,6 +1603,10 @@ export const LESSONS = [
   {
     id: 'unit-20-review-6',
     review: true,
+    // Gate B's family-choice stop (plan M4 PR1's wiring list) — izan:past /
+    // ukan:future carry seed-pass familyChoiceSafe tags, and joan:present's
+    // tags landed with Unit 6's stop.
+    familyChoice: true,
     persons: PHASE_1_PERSONS,
     // M5: nonce check — NOR/NOR-NORK only, matching Gate B's taught scope.
     nonce: true,

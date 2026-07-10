@@ -186,7 +186,14 @@ question for a missed cell; headline progress metric shows cells owned.
       rejects all offered lures (D3).
 - [x] Wiring: recurring "da or du?" drill line through spine review
       lessons (a `familyChoice: true` lesson flag, like `suffixChoice`) —
-      Units 6, 11, 13, 23 (Gate B), 31 (Gate C) minimum.
+      Units 6, 11, 13, 23 (Gate B), 31 (Gate C) minimum. _The original M4
+      PR1 seed pass wired 3 stops (Units 7, 10/Gate A, 31/Gate C);
+      2026-07-10 completed the planned list — Unit 6 (`unit-3-review`,
+      joan/ibili tags), Unit 11 (`unit-11-review`, ikusi:presentPerfect
+      aux-swap), Unit 13 (`unit-10-present`, jan/hartu tags), Gate B
+      (`unit-20-review-6`) — 7 stops total, with the generator now
+      preferring the aux-swap lure and a journey.test invariant that a
+      `familyChoice` flag is never decorative. See `docs/DECISIONS.md`._
 - [x] UI: render + i18n prompt (`questionFamilyChoice`) in
       `src/screens/ExerciseScreen.jsx` / `translations.js`.
 

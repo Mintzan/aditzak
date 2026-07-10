@@ -8,6 +8,37 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-10 — Family-choice drill line widened to the plan's five stops; lure prefers aux-swap
+
+The M4 PR1 seed pass left the "da or du?" line at 3 stops; the plan
+(AUXILIARY_FIRST_PLAN.md §M4) asked for Units 6, 11, 13, Gate B, Gate C
+minimum. Now wired at 7: the 3 originals (Units 7, 10/Gate A, 31/Gate C)
+plus `unit-3-review` (Unit 6), `unit-11-review` (Unit 11), `unit-10-present`
+(Unit 13), and `unit-20-review-6` (Gate B). Three calls worth recording:
+
+1. **The generator's lure now prefers `getAuxiliarySwapLure`** (own
+   participle + wrong-family aux — `ikusi naiz` alongside `ikusi dut`),
+   falling back to `getCaseFrameLure`'s wholesale sibling form for
+   synthetic/single-word forms. For every previously-tagged izan/ukan
+   sentence the two coincide or the swap self-gates, so existing stops are
+   byte-identical; for periphrastic tenses the swap keeps the participle
+   from betraying the answer — the whole point of the question kind.
+2. **`etorri` is deliberately untagged.** Its `agreement` carries the
+   incidental `nori` (#477), so its case-frame sibling resolves to the
+   ditransitive family (`esaten diozu`) — still ungrammatical in the frames
+   (safe), but off the izan/ukan fault line the drill teaches. Unit 6's
+   stop rides joan/ibili; etorri stays in the lesson's sources and simply
+   contributes no family-choice candidates.
+3. **A `familyChoice` flag can no longer be decorative**: a new
+   `journey.test.js` invariant fails any flagged lesson whose sources yield
+   zero candidates, so a future source reshuffle can't silently kill a stop.
+
+18 sentences tagged `familyChoiceSafe` (joan/ibili present, ikusi
+presentPerfect, jan/hartu present — all overt-case-morphology frames per
+D3; minus etorri's 3, net 15 active). Unit 11's stop is single-verb by
+necessity: izan/etorri's presentPerfect lures self-gate because `ukan` has
+no presentPerfect table.
+
 ## 2026-07-10 — `byObjectSentences`: Unit 16's ByObject lessons grounded, invariant un-exempted
 
 The last spine gap in the M2 grounding invariant is closed. The blocker

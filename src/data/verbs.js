@@ -2081,20 +2081,20 @@ export const VERBS = [
     sentences: {
       present: {
         ni: [
-          { text: 'Ni hondartzara ___.', validFor: ['etorri'] },
+          { text: 'Ni hondartzara ___.', validFor: ['etorri'], familyChoiceSafe: true },
           { text: 'Ni eskolara ___.', validFor: ['etorri'] },
           { text: 'Ni lanera ___.', validFor: ['etorri'] },
           { text: 'Ni dendara ___.', validFor: ['etorri'] },
         ],
         zu: [
-          { text: 'Zu eskolara ___.', validFor: ['etorri'] },
+          { text: 'Zu eskolara ___.', validFor: ['etorri'], familyChoiceSafe: true },
           { text: 'Zu hondartzara ___.', validFor: ['etorri'] },
           { text: 'Zu lanera ___.', validFor: ['etorri'] },
           { text: 'Zu liburutegira ___.', validFor: ['etorri'] },
           { text: 'Zu gaur goizean Gernikako azokara ___ barazki freskoen bila.', validFor: ['etorri'] },
         ],
         hura: [
-          { text: 'Hura lanera ___.', validFor: ['etorri'] },
+          { text: 'Hura lanera ___.', validFor: ['etorri'], familyChoiceSafe: true },
           { text: 'Hura eskolara ___.', validFor: ['etorri'] },
           { text: 'Hura hondartzara ___.', validFor: ['etorri'] },
           { text: 'Mikel dendara ___.', validFor: ['etorri'] },
@@ -2327,6 +2327,11 @@ export const VERBS = [
       presentByNori: { ni: 'datorkit', zu: 'datorkizu', gu: 'datorkigu' },
       pastByNori: { ni: 'zetorkidan', hura: 'zetorkion' },
     },
+    // Deliberately NOT familyChoiceSafe-tagged (unlike joan/ibili): etorri's
+    // `agreement` carries the incidental `nori` (#477), so its case-frame
+    // sibling resolves to the ditransitive family (`esaten diozu`) — a lure
+    // that's still wrong in these frames but off the izan/ukan fault line
+    // the family-choice drill teaches. Unit 6's stop rides joan/ibili.
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
     // `validFor: ['joan']` — joan's same-person form ("Ni etxera noa" = "I'm
     // going home") is an equally natural, opposite-direction completion of
@@ -2668,16 +2673,16 @@ export const VERBS = [
     sentences: {
       present: {
         ni: [
-          { text: 'Nik sagarra ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Nik sagarra ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'], familyChoiceSafe: true },
           { text: 'Nik ogia ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Nik tortilla ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         zu: [
-          { text: 'Zuk fruta ___?', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Zuk fruta ___?', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'], familyChoiceSafe: true },
           { text: 'Zuk arroza ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
         ],
         hura: [
-          { text: 'Hark taloa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
+          { text: 'Hark taloa ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'], familyChoiceSafe: true },
           { text: 'Mikelek pizza ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Anek entsalada ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
           { text: 'Umeak gaztaina ___.', wordOrderSafe: true, validFor: ['ukan', 'nahi', 'eduki', 'ikusi', 'erosi', 'behar'] },
@@ -2967,16 +2972,16 @@ export const VERBS = [
     sentences: {
       present: {
         ni: [
-          { text: 'Nik autobusa ___.', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Nik autobusa ___.', wordOrderSafe: true, validFor: ['behar'], familyChoiceSafe: true },
           { text: 'Nik aterkia ___.', wordOrderSafe: true, validFor: ['behar'] },
           { text: 'Nik erabaki bat ___.', validFor: ['behar'] },
         ],
         zu: [
-          { text: 'Zuk taxia ___?', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Zuk taxia ___?', wordOrderSafe: true, validFor: ['behar'], familyChoiceSafe: true },
           { text: 'Zuk telefonoa ___.', wordOrderSafe: true, validFor: ['behar'] },
         ],
         hura: [
-          { text: 'Hark trena ___.', wordOrderSafe: true, validFor: ['behar'] },
+          { text: 'Hark trena ___.', wordOrderSafe: true, validFor: ['behar'], familyChoiceSafe: true },
           { text: 'Mikelek katua ___.', wordOrderSafe: true, validFor: ['behar'] },
           { text: 'Anek txanda ___.', wordOrderSafe: true, validFor: ['behar'] },
           { text: 'Gidariak autobusa ___.', wordOrderSafe: true, validFor: ['behar'] },
@@ -3133,9 +3138,9 @@ export const VERBS = [
       // `past` above (same nouns/`validFor`, present perfect aux instead of
       // simple past).
       presentPerfect: {
-        ni: [{ text: 'Nik gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
-        zu: [{ text: 'Zuk gaur hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] }],
-        hura: [{ text: 'Anek gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
+        ni: [{ text: 'Nik gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'], familyChoiceSafe: true }],
+        zu: [{ text: 'Zuk gaur hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'], familyChoiceSafe: true }],
+        hura: [{ text: 'Anek gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'], familyChoiceSafe: true }],
         gu: [{ text: 'Guk gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
         zuek: [{ text: 'Zuek gaur hori ___?', validFor: ['ukan', 'eduki', 'jakin', 'nahi', 'erosi'] }],
         haiek: [{ text: 'Haiek gaur filma ___.', validFor: ['ukan', 'eduki', 'nahi', 'erosi', 'behar'] }],
@@ -3671,16 +3676,16 @@ export const VERBS = [
     sentences: {
       present: {
         ni: [
-          { text: 'Ni kalean ___.', validFor: ['egon'] },
+          { text: 'Ni kalean ___.', validFor: ['egon'], familyChoiceSafe: true },
           { text: 'Ni oinez ___.', validFor: [] },
           { text: 'Ni parkean ___.', validFor: [] },
         ],
         zu: [
           { text: 'Zu non ___?', validFor: [] },
-          { text: 'Zu lanean ___.', validFor: ['egon'] },
+          { text: 'Zu lanean ___.', validFor: ['egon'], familyChoiceSafe: true },
         ],
         hura: [
-          { text: 'Hura kalean ___.', validFor: ['egon'] },
+          { text: 'Hura kalean ___.', validFor: ['egon'], familyChoiceSafe: true },
           { text: 'Mikel parkean ___.', validFor: [] },
           { text: 'Ane oinez ___.', validFor: [] },
           { text: 'Txakurra etxean ___.', validFor: [] },

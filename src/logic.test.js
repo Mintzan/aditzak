@@ -4861,6 +4861,57 @@ describe('generateFamilyChoiceQuestions — familyChoiceSafe audit', () => {
     }
   })
 
+  // Family-choice widening (plan M4 PR1's wiring list, completed 2026-07-10):
+  // the lure prefers the aux-swap ("own participle + wrong-family aux") and
+  // falls back to the wholesale case-frame sibling form for synthetic/
+  // single-word forms.
+  it('offers ukan-family lures against the NOR motion pool (Unit 6 stop)', () => {
+    // etorri stays in the sources (mirroring unit-3-review) but contributes
+    // no candidates: its sentences are deliberately untagged, since its
+    // incidental `nori` agreement (#477) would resolve the lure to the
+    // ditransitive family instead of the izan/ukan fault line.
+    const sources = ['joan', 'etorri', 'ibili'].map((id) => ({
+      verb: VERBS.find((v) => v.id === id),
+      tense: 'present',
+    }))
+    const questions = generateFamilyChoiceQuestions(VERBS, sources, { count: 20 })
+    expect(questions.length).toBeGreaterThan(0)
+    expect(questions.map((q) => q.verbId)).not.toContain('etorri')
+    for (const q of questions) {
+      const lure = q.options.find((o) => o !== q.correct)
+      // Motion presents are synthetic (single word), so the aux-swap
+      // self-gates and the lure is ukan's same-person form.
+      expect(lure).toBe(ukan.conjugations.present[q.person])
+    }
+  })
+
+  it("aux-swaps the presentPerfect lure to 'ikusi + izan-aux' (Unit 11 stop)", () => {
+    const ikusi = VERBS.find((v) => v.id === 'ikusi')
+    const questions = generateFamilyChoiceQuestions(VERBS, [{ verb: ikusi, tense: 'presentPerfect' }], { count: 20 })
+    expect(questions.length).toBeGreaterThan(0)
+    for (const q of questions) {
+      const lure = q.options.find((o) => o !== q.correct)
+      // Own participle + izan's same-person aux ("ikusi naiz"), not izan's
+      // wholesale "izan naiz" — the participle must not betray the answer.
+      expect(lure).toBe(`ikusi ${izan.conjugations.present[q.person]}`)
+      expect(q.correct).toBe(ikusi.conjugations.presentPerfect[q.person])
+    }
+  })
+
+  it("aux-swaps the NOR-NORK present lure to 'participle + naiz-family' (Unit 13 stop)", () => {
+    const sources = ['jan', 'hartu'].map((id) => ({
+      verb: VERBS.find((v) => v.id === id),
+      tense: 'present',
+    }))
+    const questions = generateFamilyChoiceQuestions(VERBS, sources, { count: 20 })
+    expect(questions.length).toBeGreaterThan(0)
+    for (const q of questions) {
+      const lure = q.options.find((o) => o !== q.correct)
+      const participle = q.correct.slice(0, q.correct.lastIndexOf(' '))
+      expect(lure).toBe(`${participle} ${izan.conjugations.present[q.person]}`)
+    }
+  })
+
   it('all familyChoiceSafe sentences in verbs.js belong to verbs that have a cross-family sibling', () => {
     for (const verb of VERBS) {
       for (const [tense, byPerson] of Object.entries(verb.sentences ?? {})) {
