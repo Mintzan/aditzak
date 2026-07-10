@@ -8,6 +8,21 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-10 — Unit 22 (behar): added NOR-contrast review and documented the head rule
+
+Added `unit-22-nor-contrast-review` (review lesson) to the end of Unit 22's `lessonIds`.
+It pools `behar.present` + `behar.future` (NOR-NORK, `dut/duzu/du`) against `joan.present`
++ `etorri.present` + `egon.present` (NOR, `naiz/zara/da`). Because the sources have
+incompatible `agreement` values, `generateCaseMixerQuestions` fires automatically,
+forcing the learner to choose `behar dut` vs `noa/nator/nago` for the same
+infinitive-clause context — the exact mistake ("joan behar naiz") this unit exists to
+prevent. The previous `unit-19-review` (behar + ukan only) stays in place as a
+within-family consolidation pass before this cross-family contrast comes in as the
+unit's closer.
+
+The linguistic rationale is documented in `docs/LANGUAGE_DECISIONS.md`
+("Unit 22 (behar): why 'joan behar dut' not 'joan behar naiz'").
+
 ## 2026-07-09 — M5: nonce-verb generalization gates
 
 Added `heldOut: true` to 4 VERBS entries (`gelditu` NOR, `aipatu`/`kendu` NOR-NORK, `interesatu` NOR-NORI). These verbs carry meaning + prefixes + bare-string sentences only (`conjugations: {}`), never appear in LESSONS sources, and are enforced by a new `journey.test.js` invariant. Gate lessons `unit-20-review-6` and `unit-31-review` now flag `nonce: true`; `generateNonceQuestions` in `lessonLogic.js` picks held-out verbs and injects them (tagged `isNonce: true`, `noTyping: true`) into the shuffled question set. The gate outcome is non-blocking per D2 — held-out questions count toward the score normally, so a learner acing non-nonce items can still pass. `getUnlockedLessonIds` untouched. UI shows an amber "New verb" badge (`nonceVerbHint` i18n key). PostHog `nonce_item_answered` event wired for the transfer metric (§4). Gate B restricts to `nonceAgreements: [['nor'], ['nor', 'nork']]` since NOR-NORI isn't taught until later.

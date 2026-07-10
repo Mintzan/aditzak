@@ -483,10 +483,11 @@ export const JOURNEY = [
           {
             number: 22,
             title: 'behar — Requirements & Obligations',
-            focus: 'behar (to need/have to) with ukan, present and future',
+            focus:
+              'behar (to need/have to) with ukan, present and future — the construction\'s head picks the auxiliary: "joan behar dut" (have to go) uses dut, not naiz, even though "joan" alone uses naiz',
             payload: '"I have to go." (Joan behar dut)',
             status: 'available',
-            lessonIds: ['behar-present', 'behar-future', 'unit-19-review'],
+            lessonIds: ['behar-present', 'behar-future', 'unit-19-review', 'unit-22-nor-contrast-review'],
           },
         ],
       },

@@ -6,6 +6,33 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-10 — Unit 22 (behar): why "joan behar dut" not "joan behar naiz"
+
+The construction's **head** picks the auxiliary, not the infinitive complement inside it.
+`behar` (and `nahi`) are NOR-NORK modal particles that always govern `ukan`'s
+`dut/duzu/du…` endings, regardless of whether the lexical verb they attach to would
+use `naiz` (NOR) or `dut` (NOR-NORK) on its own:
+
+| Standalone | With behar | Why |
+|---|---|---|
+| joan naiz — I go / I've gone | joan behar dut — I have to go | `joan` is NOR, but `behar` is the head → ukan |
+| etorri naiz — I came / I've come | etorri behar dut — I have to come | same rule |
+| noa / nator / nabil | behar dut / behar duzu / behar du | the NOR form belongs to the base verb, the ukan form to behar |
+
+**Why ukan?** The modal construction treats the person with the obligation as the ergative
+agent (NORK) and the obligation itself — the infinitive clause — as an abstract absolutive
+object (NOR). The English "I have to go" is a useful parallel: "have" takes a possessor
+(the NORK agent), not a state predicate. In Basque, that "having" maps onto ukan's
+`dut/duzu/du…` endings.
+
+This parallels Unit 4's `nahi` ("want"): "joan nahi dut" (I want to go) not "joan nahi naiz".
+Both `behar` and `nahi` are **ukan-fixed** — the lexical verb's own agreement frame is
+irrelevant to the auxiliary choice. Contrast `ahal`/`ezin` (Units 32–34), which are
+**auxiliary-transparent**: "etorri ahal naiz" (I can come — NOR base verb keeps naiz)
+vs "esan ahal dut" (I can say it — NOR-NORK base verb keeps dut). Unit 22's exercises
+include a dedicated contrast review (`unit-22-nor-contrast-review`) mixing `behar`
+with NOR verbs to drill this rule directly.
+
 ## 2026-07-09 — M2 PR3: hand-written sentences for habitualPast and babestu-izan
 
 Added six sentences each for `etorri:habitualPast` (allative destination + habitual adverb,
