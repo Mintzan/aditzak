@@ -210,16 +210,16 @@ question for a missed cell; headline progress metric shows cells owned.
 
 *Goal: REVIEW §3.4 / R5 — prove transfer with never-taught carriers.*
 
-- [ ] `heldOut: true` on 4–6 cheap `VERBS` entries (meaning + prefixes + a
+- [x] `heldOut: true` on 4–6 cheap `VERBS` entries (meaning + prefixes + a
       few frames only); **new test**: a held-out verb appears in zero
       `LESSONS` sources/pools (cannot be assumed post-#443).
-- [ ] Engine: pool builders skip held-out verbs; gate lessons at Gates B
+- [x] Engine: pool builders skip held-out verbs; gate lessons at Gates B
       (recognition) and C (production) draw them, presenting the verb's
       gloss + frame ("here is a verb you've never seen").
-- [ ] D2: non-blocking — results route weak-spot boosts to the paradigm
+- [x] D2: non-blocking — results route weak-spot boosts to the paradigm
       (M3's cell keying makes this free) and surface on the results screen;
       `getUnlockedLessonIds` untouched.
-- [ ] PostHog event distinguishing nonce items (the transfer metric, §4).
+- [x] PostHog event distinguishing nonce items (the transfer metric, §4).
 
 **Acceptance:** REVIEW §5.2-I4 — enforcement test green; a learner failing
 the nonce check sees paradigm-targeted review, not an `aipatu` lesson.

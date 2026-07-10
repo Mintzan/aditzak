@@ -1588,6 +1588,9 @@ export const LESSONS = [
     id: 'unit-20-review-6',
     review: true,
     persons: PHASE_1_PERSONS,
+    // M5: nonce check — NOR/NOR-NORK only, matching Gate B's taught scope.
+    nonce: true,
+    nonceAgreements: [['nor'], ['nor', 'nork']],
     sources: [
       { verbId: 'izan', tense: 'past' },
       { verbId: 'ukan', tense: 'future' },
@@ -2105,6 +2108,8 @@ export const LESSONS = [
     review: true,
     familyChoice: true,
     caseMixerCount: 6,
+    // M5: nonce check across all taught agreement shapes — Gate C's full scope.
+    nonce: true,
     sources: [
       { verbId: 'izan', tense: 'present' },
       { verbId: 'izan', tense: 'past' },

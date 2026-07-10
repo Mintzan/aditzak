@@ -2230,6 +2230,50 @@ export function generateParticipleChoiceQuestions(resolvedSources, { count = PAR
     }))
 }
 
+// M5 — nonce-verb generalization check. Picks `count` questions from verbs
+// marked `heldOut: true` (never taught in any LESSON), presenting each with
+// its gloss as context ("Here is a verb you've never seen"). Questions are
+// recognition-only (noTyping: true) so a learner who has never produced these
+// forms can still engage. Results are non-blocking (D2): the gate lesson's
+// `bestStars` threshold is unchanged; weak-spot routing from these misses goes
+// to the paradigm via the normal auxCellKey keying (M3 makes this free).
+// Pool builders (distractor candidates) use only taught verbs so held-out
+// forms never leak as wrong options in regular questions before the nonce
+// check fires.
+export const NONCE_QUESTION_COUNT = 2
+
+export function generateNonceQuestions(verbs, { count = NONCE_QUESTION_COUNT, nonceAgreements } = {}) {
+  const heldOut = verbs.filter((v) => {
+    if (!v.heldOut) return false
+    if (!nonceAgreements) return true
+    return nonceAgreements.some((a) => a.length === (v.agreement ?? []).length && a.every((role, i) => role === v.agreement[i]))
+  })
+  if (heldOut.length === 0) return []
+  // Only taught verbs as the distractor pool — held-out forms must not appear
+  // as wrong options in regular questions before the nonce check fires.
+  const taughtVerbs = verbs.filter((v) => !v.heldOut)
+  const questions = []
+  for (const verb of shuffle([...heldOut])) {
+    if (questions.length >= count) break
+    const tense = verb.sentences?.present ? 'present' : Object.keys(verb.sentences ?? {})[0]
+    if (!tense) continue
+    const table = getComposedTable(verb, tense)
+    if (!table || Object.keys(table).length === 0) continue
+    const availablePersons = Object.keys(table).filter((p) => table[p] && verb.sentences?.[tense]?.[p])
+    if (availablePersons.length === 0) continue
+    const person = shuffle([...availablePersons])[0]
+    const generated = generateQuestions(verb, tense, {
+      noTyping: true,
+      rounds: 1,
+      persons: [person],
+      verbs: taughtVerbs,
+    })
+    if (generated.length === 0) continue
+    questions.push({ ...generated[0], isNonce: true })
+  }
+  return questions
+}
+
 // Returns the 3 × 2 aspect-grid data for a verb that carries `verb.participles`
 // — used by the Unit 11 preview screen to show the full imperfective /
 // perfective / prospective × present-aux / past-aux table on one carrier.

@@ -19,6 +19,7 @@ import {
   generateQuestions,
   generateReadingQuestions,
   generateFamilyChoiceQuestions,
+  generateNonceQuestions,
   generateSuffixChoiceQuestions,
   getAspectGridData,
   getComposedTable,
@@ -105,6 +106,11 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   }
   const sources = lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]
   const noTyping = !lesson.review && attempts < NO_TYPING_ATTEMPTS
+  // Held-out verbs (heldOut: true) must never appear as distractors in regular
+  // questions — the nonce check's whole point is that these verbs are unseen.
+  // Filter them out of every distractor/candidate pool here at the session
+  // level rather than threading a flag through every sub-function.
+  const taughtVerbs = VERBS.filter((v) => !v.heldOut)
   // Sample this play's carriers from the full pool (see `CARRIERS_PER_SESSION`);
   // pools at or under the cap are left untouched, so single-source/small-pool
   // lessons behave exactly as before. Distractor/cross-verb/weak-spot logic
@@ -125,14 +131,14 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
     // for the same person (see `getCrossVerbCandidates`) — occasionally
     // offering a "right shape, wrong verb" option alongside the usual
     // same-table distractors.
-    const extraCandidates = lesson.review ? getCrossVerbCandidates(verb, tense, sources, VERBS, extraSources) : undefined
+    const extraCandidates = lesson.review ? getCrossVerbCandidates(verb, tense, sources, taughtVerbs, extraSources) : undefined
     return generateQuestions(verb, tense, {
       noTyping,
       rounds,
       includeNegation: Boolean(lesson.negation),
       persons: lesson.persons,
       extraCandidates,
-      verbs: VERBS,
+      verbs: taughtVerbs,
       sources,
       mode: lesson.mode,
       review: Boolean(lesson.review),
@@ -144,7 +150,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // gotten wrong on the first try (see `getWeakSpotQuestions`) — extra
   // reinforcement for exactly the forms that need it, on top of the review's
   // normal cross-section.
-  const extraQuestions = lesson.review ? getWeakSpotQuestions(errorStats, sources, VERBS) : []
+  const extraQuestions = lesson.review ? getWeakSpotQuestions(errorStats, sources, taughtVerbs) : []
   // Review lessons also get up to `CROSS_VERB_QUESTION_COUNT` dedicated
   // "which verb fits this sentence" questions (see
   // `generateCrossVerbQuestions`) — the deliberate, single-focus counterpart
@@ -152,7 +158,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   const resolvedSources = sources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
   const extraSiblingSources = extraSources.map(({ verbId, tense }) => ({ verb: VERBS.find((v) => v.id === verbId), tense }))
   const crossVerbQuestions = lesson.review
-    ? generateCrossVerbQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources, verbs: VERBS, objectAxis: lesson.objectAxis })
+    ? generateCrossVerbQuestions(resolvedSources, { persons: lesson.persons, extraSiblingSources, verbs: taughtVerbs, objectAxis: lesson.objectAxis })
     : []
   // Reviews whose sources mix `nor` and `nor-nork` verbs also get up to
   // `CASE_MIXER_QUESTION_COUNT` "which form matches this sentence's subject"
@@ -165,7 +171,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
     ? generateCaseMixerQuestions(resolvedSources, {
         persons: lesson.persons,
         extraSiblingSources,
-        verbs: VERBS,
+        verbs: taughtVerbs,
         ...(lesson.caseMixerCount ? { count: lesson.caseMixerCount } : {}),
       })
     : []
@@ -181,8 +187,15 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
   // "pick -ko or -go" questions on top of its normal cross-section — see
   // `generateSuffixChoiceQuestions`.
   const suffixChoiceQuestions = lesson.suffixChoice ? generateSuffixChoiceQuestions(resolvedSources) : []
-  const familyChoiceQuestions = lesson.familyChoice ? generateFamilyChoiceQuestions(VERBS, resolvedSources) : []
+  const familyChoiceQuestions = lesson.familyChoice ? generateFamilyChoiceQuestions(taughtVerbs, resolvedSources) : []
   const participleChoiceQuestions = lesson.participleChoice ? generateParticipleChoiceQuestions(resolvedSources) : []
+  // M5: nonce-verb questions for gate lessons (`lesson.nonce: true`). Draws from
+  // held-out verbs, shows the verb's gloss as context (see `QuestionPrompt`).
+  // Non-blocking per D2: gate's `bestStars` threshold is unchanged; a learner
+  // who aces the non-nonce questions can still pass even if they miss these.
+  const nonceQuestions = lesson.nonce
+    ? generateNonceQuestions(VERBS, { nonceAgreements: lesson.nonceAgreements })
+    : []
   const allQuestions = shuffle([
     ...questions,
     ...extraQuestions,
@@ -192,6 +205,7 @@ function createExerciseState(lesson, attempts, errorStats = {}) {
     ...suffixChoiceQuestions,
     ...familyChoiceQuestions,
     ...participleChoiceQuestions,
+    ...nonceQuestions,
   ])
   return {
     queue: allQuestions,
@@ -684,6 +698,11 @@ function QuestionPrompt({ verb, tenseMeta, question, showVerb = true, pronounAxi
           t(tenseMeta.labelKey)
         )}
       </p>
+      {question.isNonce && (
+        <span className="mt-1 inline-block rounded bg-amber-100 px-1.5 py-0.5 text-xs font-bold uppercase tracking-wide text-amber-700">
+          {t('nonceVerbHint')}
+        </span>
+      )}
       {question.fixedArgument && (
         <div className="mt-2">
           <FixedArgumentBadge fixedArgument={question.fixedArgument} />
@@ -1386,6 +1405,9 @@ export function ExerciseScreen({
     setShowExplanation(false)
     setAnswerSeq((n) => n + 1)
     dispatch({ type: 'answer', option: value })
+    if (question.isNonce) {
+      trackEvent('nonce_item_answered', { verbId: question.verbId, person: question.person, correct: isCorrect, lessonId: lesson.id })
+    }
   }
 
   function handleSubmitTyped() {
@@ -1448,7 +1470,7 @@ export function ExerciseScreen({
             verb={verb}
             tenseMeta={tenseMeta}
             question={question}
-            showVerb={!lesson.review || !question.options || question.kind === 'form'}
+            showVerb={!lesson.review || !question.options || question.kind === 'form' || Boolean(question.isNonce)}
             pronounAxis={lesson.objectAxis?.vary ?? verb?.personAxis ?? 'nor'}
           />
 

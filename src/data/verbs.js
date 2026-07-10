@@ -9284,6 +9284,133 @@ export const VERBS = [
       },
     },
   },
+  // M5 held-out verbs — never referenced by any LESSONS entry; used only for
+  // nonce-verb generalization checks at Gates B/C (see docs/AUXILIARY_FIRST_PLAN.md
+  // §M5). `heldOut: true` is machine-audited by src/journey.test.js (every held-out
+  // verb must appear in zero LESSONS sources). Sentences are bare strings (validFor:
+  // undefined = unvetted) so the validFor gap audit skips them and the baseline stays
+  // stable; cross-verb distractors are excluded by `filterExtraCandidates`'s safe
+  // default, which is appropriate for never-taught carriers.
+  {
+    id: 'gelditu',
+    verb: 'gelditu',
+    meaning: { en: 'to stop / to stay', es: 'parar / quedarse', eu: 'gelditu' },
+    heldOut: true,
+    type: 'periphrastic',
+    agreement: ['nor'],
+    dialect: 'batua',
+    byObjectSkeleton: 'izan',
+    composedPrefixes: { present: 'gelditzen ', past: 'gelditu ', future: 'geldituko ' },
+    conjugations: {},
+    sentences: {
+      present: {
+        ni: 'Ni geltokian ___ trena zain.',
+        zu: 'Zu hemen ___ gauera arte?',
+        hura: 'Hura elurrarekin etxean ___.',
+        gu: 'Gu plazan ___ pixka bat.',
+        zuek: 'Zuek hemen ___ ala joaten zarete?',
+        haiek: 'Haiek bidegurutzean ___.',
+      },
+      past: {
+        ni: 'Ni atzo geltokian ___ trena zain.',
+        zu: 'Zu herenegun hemen ___ gauera arte?',
+        hura: 'Hura lehengo egunean elurrarekin etxean ___.',
+        gu: 'Gu iaz plazan ___ pixka bat.',
+        zuek: 'Zuek duela bi egun hemen ___?',
+        haiek: 'Haiek joan den astean bidegurutzean ___.',
+      },
+    },
+  },
+  {
+    id: 'aipatu',
+    verb: 'aipatu',
+    meaning: { en: 'to mention', es: 'mencionar', eu: 'aipatu' },
+    heldOut: true,
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    composedPrefixes: { present: 'aipatzen ', past: 'aipatu ', future: 'aipatuko ' },
+    conjugations: {},
+    sentences: {
+      present: {
+        ni: 'Nik askotan zure izena ___.',
+        zu: 'Zuk askotan arazo hori ___?',
+        hura: 'Hark bilkuran proiektua ___.',
+        gu: 'Guk txostenean arazo hori ___.',
+        zuek: 'Zuek horri buruz ezer ___?',
+        haiek: 'Haiek prentsa-oharrean berria ___.',
+      },
+      past: {
+        ni: 'Nik atzo bilkuran zure izena ___.',
+        zu: 'Zuk herenegun arazo hori bileran ___?',
+        hura: 'Hark atzo adierazpenean berri bat ___.',
+        gu: 'Guk iaz txostenean arazo hori ___.',
+        zuek: 'Zuek herenegun hori bileran ___?',
+        haiek: 'Haiek atzo prentsa-oharrean berria ___.',
+      },
+    },
+  },
+  {
+    id: 'kendu',
+    verb: 'kendu',
+    meaning: { en: 'to remove / to take away', es: 'quitar / eliminar', eu: 'kendu' },
+    heldOut: true,
+    type: 'periphrastic',
+    agreement: ['nor', 'nork'],
+    object: 'hura',
+    dialect: 'batua',
+    composedPrefixes: { present: 'kentzen ', past: 'kendu ', future: 'kenduko ' },
+    conjugations: {},
+    sentences: {
+      present: {
+        ni: 'Nik argazkia hormatik ___.',
+        zu: 'Zuk txapela burutik ___?',
+        hura: 'Hark arazoa zerrendatik ___.',
+        gu: 'Guk belar txarrak lorategitik ___.',
+        zuek: 'Zuek altzariak gelatik ___?',
+        haiek: 'Haiek zaildura arropatatik ___.',
+      },
+      past: {
+        ni: 'Nik atzo argazkia hormatik ___.',
+        zu: 'Zuk herenegun txapela burutik ___?',
+        hura: 'Hark lehengo egunean arazoa zerrendatik ___.',
+        gu: 'Guk iaz belar txarrak lorategitik ___.',
+        zuek: 'Zuek duela bi egun altzariak gelatik ___?',
+        haiek: 'Haiek joan den astean zaildura arropatatik ___.',
+      },
+    },
+  },
+  {
+    id: 'interesatu',
+    verb: 'interesatu',
+    meaning: { en: 'to interest', es: 'interesar', eu: 'interesatu' },
+    heldOut: true,
+    type: 'periphrastic',
+    agreement: ['nor', 'nori'],
+    object: 'hura',
+    dialect: 'batua',
+    byNoriPrefixes: { present: 'interesatzen ', past: 'interesatu ', future: 'interesatuko ' },
+    conjugations: {},
+    sentences: {
+      present: {
+        ni: 'Niri historia ___.',
+        zu: 'Zuri musika ___?',
+        hura: 'Hari zientzia ___.',
+        gu: 'Guri kultura ___.',
+        zuek: 'Zuei kirola ___?',
+        haiek: 'Haiei politika ___.',
+      },
+      past: {
+        ni: 'Niri atzo kontzertu hura ___.',
+        zu: 'Zuri herenegun nobela berri hori ___?',
+        hura: 'Hari duela astebete erakusketa ___.',
+        gu: 'Guri iaz proiektua ___.',
+        zuek: 'Zuei herenegun ikuskizuna ___?',
+        haiek: 'Haiei atzo berri hori ___.',
+      },
+    },
+  },
 ]
 
 // #448: a verb's `future`/`past` can now come from `getComposedTable`'s
