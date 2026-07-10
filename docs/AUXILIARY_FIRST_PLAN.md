@@ -131,7 +131,7 @@ not lesson metadata.*
 one PR ≈ one aux table's missing cells across all its spine lessons).
 
 **Final PR — enforce the invariant.**
-- [ ] Extend `src/journey.test.js`: every spine practice lesson offers ≥1
+- [x] Extend `src/journey.test.js`: every spine practice lesson offers ≥1
       sentence-grounded kind per drilled person (D5 exemptions). Lands only
       once the worklist is empty, then *stays* as the regression guard.
 
