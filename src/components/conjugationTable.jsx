@@ -1,5 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
-import { PERSON_LABEL_KEYS, personPronoun } from '../data/verbs'
+import { PERSON_LABEL_KEYS, PRONOUN_DECLENSIONS } from '../data/verbs'
 import { getComposedTable, resolveObjectAxisTable } from '../lessonLogic'
 
 // The full person-by-person conjugation grid for one verb/tense — shown as a
@@ -24,6 +24,11 @@ export function ConjugationTable({ verb, tense, objectAxis, hidePersons }) {
   const { t } = useLanguage()
   const composed = getComposedTable(verb, tense)
   const table = objectAxis ? resolveObjectAxisTable(composed, objectAxis) : composed
+  // When objectAxis is active, `person` keys range over the *varying* axis
+  // (`objectAxis.vary`), not the verb's usual personAxis. Without this,
+  // a NOR-NORK verb's object-axis table (vary='nor', keys=NOR persons) would
+  // show 'hark' (ergative) for `hura` because verb.personAxis='nork'.
+  const pronounAxis = objectAxis?.vary ?? verb.personAxis ?? 'nor'
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200">
       {Object.entries(table)
@@ -31,7 +36,7 @@ export function ConjugationTable({ verb, tense, objectAxis, hidePersons }) {
         .map(([person, form], index) => (
           <div key={person} className={`flex items-center justify-between px-4 py-3 ${index > 0 ? 'border-t border-gray-100' : ''}`}>
             <div>
-              <p className="font-semibold text-gray-800">{(personPronoun(verb, person) ?? person).toLowerCase()}</p>
+              <p className="font-semibold text-gray-800">{(PRONOUN_DECLENSIONS[pronounAxis]?.[person] ?? person).toLowerCase()}</p>
               <p className="text-xs text-gray-400">{t(PERSON_LABEL_KEYS[person])}</p>
             </div>
             <p className="text-xl font-extrabold text-gray-900">{form}</p>

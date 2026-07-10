@@ -12,6 +12,19 @@ instead.
 
 Added `heldOut: true` to 4 VERBS entries (`gelditu` NOR, `aipatu`/`kendu` NOR-NORK, `interesatu` NOR-NORI). These verbs carry meaning + prefixes + bare-string sentences only (`conjugations: {}`), never appear in LESSONS sources, and are enforced by a new `journey.test.js` invariant. Gate lessons `unit-20-review-6` and `unit-31-review` now flag `nonce: true`; `generateNonceQuestions` in `lessonLogic.js` picks held-out verbs and injects them (tagged `isNonce: true`, `noTyping: true`) into the shuffled question set. The gate outcome is non-blocking per D2 — held-out questions count toward the score normally, so a learner acing non-nonce items can still pass. `getUnlockedLessonIds` untouched. UI shows an amber "New verb" badge (`nonceVerbHint` i18n key). PostHog `nonce_item_answered` event wired for the transfer metric (§4). Gate B restricts to `nonceAgreements: [['nor'], ['nor', 'nork']]` since NOR-NORI isn't taught until later.
 
+## 2026-07-09 — Bug fix: object-axis lessons showed ergative pronouns instead of absolutive
+
+`ConjugationTable` and `QuestionPrompt` (bare `kind:'form'` prompt) both used
+`verb.personAxis` to look up the pronoun for a person key. For NOR-NORK verbs
+(`personAxis='nork'`), this is correct for normal lessons — the person key is a
+NORK (ergative) slot. But for `objectAxis: { vary: 'nor' }` lessons, after
+`resolveObjectAxisTable` the table is keyed by NOR (absolutive) persons; using
+`'nork'` gave `'hark'` for `'hura'`, `'zuk'` for `'zu'`, etc.
+
+Fix: derive `pronounAxis` from `objectAxis.vary` when an objectAxis is present,
+falling back to `verb.personAxis ?? 'nor'`. This covers all current cases
+(`vary: 'nor'` always) and the hypothetical `vary: 'nork'` without special-casing.
+
 ## 2026-07-09 — M2 PR9 (final): imperative sentences + spine grounding invariant
 
 Added `sentences.imperative` for egon (hi/zu/zuek/hura/haiek), joan (hi/zu/zuek),
