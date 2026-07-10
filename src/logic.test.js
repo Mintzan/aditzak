@@ -73,6 +73,7 @@ import {
   recordErrors,
   recordResult,
   repairStreak,
+  resolveByObjectSentences,
   resolveObjectAxisTable,
   shuffle,
   STREAK_REPAIR_COST,
@@ -1113,6 +1114,12 @@ describe('generateQuestions', () => {
     // fixture above) end to end through `generateQuestions`, confirming the
     // "zaitut-type forms" payoff the issue is named for actually surfaces.
     it("generates real zaitut-type questions from ukan's presentByObject/pastByObject (#347)", () => {
+      // `Math.random` pinned to 0 keeps `rollQuestionKind` on the first
+      // available kind (`sentence` since the byObjectSentences grounding —
+      // whose `correct` is still the resolved table's form) instead of
+      // occasionally rolling `spot-error`, whose `correct` is a filled
+      // sentence and would break the arrayContaining assertions below.
+      vi.spyOn(Math, 'random').mockReturnValue(0)
       const ukan = VERBS.find((v) => v.id === 'ukan')
 
       const presentQuestions = generateQuestions(ukan, 'presentByObject', { objectAxis: { vary: 'nor', fixed: 'ni' } })
@@ -1156,8 +1163,9 @@ describe('generateQuestions', () => {
 
     // #348: `generateQuestions` resolves the same way for `maite` as it does
     // for `ukan` (#347's test above) — forcing `Math.random` to `0` pins
-    // `rollQuestionKind` to the bare `'form'` kind, so `correct` is always
-    // the resolved table's value rather than a rendered sentence.
+    // `rollQuestionKind` to the first available kind (`sentence` since the
+    // byObjectSentences grounding; bare `'form'` before it), so `correct` is
+    // always the resolved table's value rather than a rendered sentence.
     it("generates real maite-zaitut-type questions from maite's presentByObject/pastByObject (#348)", () => {
       vi.spyOn(Math, 'random').mockReturnValue(0)
       const maite = VERBS.find((v) => v.id === 'maite')
@@ -1179,6 +1187,63 @@ describe('generateQuestions', () => {
         expect(question.fixedArgument).toEqual({ role: 'nork', person: 'ni' })
         expect(question.options).toContain(question.correct)
       })
+    })
+
+    // ByObject grounding (the structural fix that un-exempts Unit 16's spine
+    // lessons from the M2 invariant): sentences for 2D object-axis tenses
+    // live in `verb.byObjectSentences` (outside `verb.sentences`, so the
+    // flat-table validFor gap audit never reads them) and resolve through
+    // the same vary/fixed logic as the conjugation table.
+    it('resolveByObjectSentences resolves ukan/maite frames to the drilled persons', () => {
+      const ukan = VERBS.find((v) => v.id === 'ukan')
+      const maite = VERBS.find((v) => v.id === 'maite')
+      const axis = { vary: 'nor', fixed: 'ni' }
+      for (const [verb, tense] of [
+        [ukan, 'presentByObject'],
+        [ukan, 'pastByObject'],
+        [maite, 'presentByObject'],
+        [maite, 'pastByObject'],
+      ]) {
+        const sentences = resolveByObjectSentences(verb, tense, axis)
+        for (const person of ['hura', 'zu', 'zuek', 'haiek']) {
+          expect(sentences[person], `${verb.id}.byObjectSentences.${tense} missing ${person}`).toBeDefined()
+        }
+      }
+      // A verb without the field resolves to an empty map, not a crash.
+      const ikusi = VERBS.find((v) => v.id === 'ikusi')
+      expect(resolveByObjectSentences(ikusi, 'presentByObject', axis)).toEqual({})
+    })
+
+    it("Unit 16's spine lessons offer the grounded sentence kind and only string options", () => {
+      // `Math.random` pinned to 0 makes `rollQuestionKind` deterministic:
+      // the first *available* kind wins. Before the byObjectSentences
+      // grounding that was the bare-form fallback (empty availableKinds);
+      // now it must be `sentence` — the invariant is that a grounded kind is
+      // available, not that every roll lands on one (`rollQuestionKind`
+      // keeps a deliberate bare-form share, rendered as an aux drill).
+      vi.spyOn(Math, 'random').mockReturnValue(0)
+      const axis = { vary: 'nor', fixed: 'ni' }
+      const persons = ['hura', 'zu', 'zuek', 'haiek']
+      for (const [verbId, tense] of [
+        ['ukan', 'presentByObject'],
+        ['maite', 'presentByObject'],
+        ['ukan', 'pastByObject'],
+        ['maite', 'pastByObject'],
+      ]) {
+        const verb = VERBS.find((v) => v.id === verbId)
+        const questions = generateQuestions(verb, tense, { objectAxis: axis, persons, verbs: VERBS })
+        expect(questions).toHaveLength(persons.length)
+        for (const question of questions) {
+          expect(question.kind, `${verbId}:${tense}:${question.person} degraded to bare form`).toBe('sentence')
+          expect(question.sentence).toContain('___')
+          // The borrowed-distractor guard: a sibling's 2D table row (an
+          // object) must never leak into the options pool.
+          for (const option of question.options) {
+            expect(typeof option).toBe('string')
+          }
+          expect(question.options).toContain(question.correct)
+        }
+      }
     })
 
     // #378: same `'ikusten '`/`'ikusi '`-prefix-of-ukan convention as

@@ -8,6 +8,35 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-10 — `byObjectSentences`: Unit 16's ByObject lessons grounded, invariant un-exempted
+
+The last spine gap in the M2 grounding invariant is closed. The blocker
+(maite's old entry comment): the validFor gap audit and other flat-table
+readers walk `verb.sentences` assuming `tense → person → variant`, so 2D
+object-axis sentences couldn't live there. **Fix: a separate per-verb field,
+`byObjectSentences`** — same outer-NORK/inner-NOR shape as `presentByObject`
+itself, resolved per lesson by the new `resolveByObjectSentences`
+(`lessonLogic.js`, a thin wrapper over `resolveObjectAxisTable`, which never
+inspects leaves so it resolves sentence variants as readily as form
+strings). `generateQuestions` reads it on the `objectAxis` path; the flat
+readers never see it, by construction rather than by exemption.
+
+Ripple fixes shipped with it: (1) `getBorrowedDistractors` now drops
+non-string "forms" — for a 2D tense, a sibling's composed table indexed by
+person yields a whole NORK *row* (a truthy object) that previously only
+stayed out of the options pool because ungrounded bare-form questions
+discard borrowed candidates entirely; with grounded sentences on 2D tenses
+that safety-by-accident is gone, so the guard is now explicit. (2) The
+`journey.test.js` invariant drops its `/ByObject$/` exemption — Unit 16's
+four spine lessons are held to the same rule as every flat tense. (3)
+`scripts/grounding-audit.mjs` resolves `byObjectSentences` and applies the
+invariant's hi-m/hi-f exemption, so audit and test agree: **zero
+non-bonus rows remain** (69 rows left, all D5-exempt bonus). The #347/#348
+smoke tests pin `Math.random` since the first available kind is now
+`sentence`, not the bare-form fallback. Sentence wording judgments (the
+`gogoan ukan` frames) are in `docs/LANGUAGE_DECISIONS.md`, flagged for
+native review.
+
 ## 2026-07-09 — M5: nonce-verb generalization gates
 
 Added `heldOut: true` to 4 VERBS entries (`gelditu` NOR, `aipatu`/`kendu` NOR-NORK, `interesatu` NOR-NORI). These verbs carry meaning + prefixes + bare-string sentences only (`conjugations: {}`), never appear in LESSONS sources, and are enforced by a new `journey.test.js` invariant. Gate lessons `unit-20-review-6` and `unit-31-review` now flag `nonce: true`; `generateNonceQuestions` in `lessonLogic.js` picks held-out verbs and injects them (tagged `isNonce: true`, `noTyping: true`) into the shuffled question set. The gate outcome is non-blocking per D2 — held-out questions count toward the score normally, so a learner acing non-nonce items can still pass. `getUnlockedLessonIds` untouched. UI shows an amber "New verb" badge (`nonceVerbHint` i18n key). PostHog `nonce_item_answered` event wired for the transfer metric (§4). Gate B restricts to `nonceAgreements: [['nor'], ['nor', 'nork']]` since NOR-NORI isn't taught until later.

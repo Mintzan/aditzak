@@ -895,6 +895,40 @@ export const VERBS = [
     // skeleton, so `getComposedTable` just hands back `OBJECT_AXIS_SKELETONS
     // .edun` unprefixed for `presentByObject`/`pastByObject`.
     byObjectPrefixes: { present: '', past: '' },
+    // Sentence grounding for the 2D object-axis tenses (Unit 16's spine
+    // lessons) — a *separate field* from `sentences`, deliberately: the
+    // flat-table readers (`validforGapAudit.mjs`, `getBorrowedSpotErrorSlots`)
+    // walk `verb.sentences` assuming `tense → person → variant`, and a 2D
+    // `tense → nork → nor → variant` shape under `sentences` would corrupt
+    // them (the constraint maite's entry comment documents). Shape mirrors
+    // the `presentByObject` table itself (outer NORK, inner NOR), resolved
+    // per lesson by `resolveByObjectSentences` (`lessonLogic.js`) through the
+    // same `vary`/`fixed` logic as the conjugation table.
+    // Bare `ukan`'s animate-object cells (`zaitut` — "I have you") have no
+    // natural standalone frame, so these ride the high-frequency idiom
+    // `gogoan ukan` ("to have in mind / remember": "Gogoan zaitut"), with
+    // overt pronouns so the varying object person is recoverable, and
+    // `orduan` anchoring the past. Untagged (no `validFor`) — fail-closed,
+    // no cross-verb distractors until a native-speaker review; flagged in
+    // docs/LANGUAGE_DECISIONS.md.
+    byObjectSentences: {
+      presentByObject: {
+        ni: {
+          hura: [{ text: 'Nik hura gogoan ___.' }],
+          zu: [{ text: 'Nik zu gogoan ___.' }],
+          zuek: [{ text: 'Nik zuek gogoan ___.' }],
+          haiek: [{ text: 'Nik haiek gogoan ___.' }],
+        },
+      },
+      pastByObject: {
+        ni: {
+          hura: [{ text: 'Nik orduan hura gogoan ___.' }],
+          zu: [{ text: 'Nik orduan zu gogoan ___.' }],
+          zuek: [{ text: 'Nik orduan zuek gogoan ___.' }],
+          haiek: [{ text: 'Nik orduan haiek gogoan ___.' }],
+        },
+      },
+    },
     conjugations: {
       // #167: `hi-m`/`hi-f` add `hi`-as-`NORK`'s own present-tense gender
       // split (`duk`/`dun`, "you (m./f.) have it") — distinct from this
@@ -1738,19 +1772,45 @@ export const VERBS = [
         haiek: 'maite zuten',
       },
     },
-    // Form-only, same as `ukan.presentByObject`/`pastByObject` (#347) — no
-    // `sentences` for *any* tense here, including the plain `present`/
-    // `past`. Two independent reasons stack: (1) a `maite`-fits citation
-    // frame ("Nik X maite dut") is exactly the awkward-object problem
-    // `ukan` itself already opted out of describing for the same reason;
-    // (2) `validforGapAudit.mjs`'s `collectTaggedVariants`/`computeGapSlots`
-    // reads `verb.conjugations[tense]?.[person]` assuming a flat table —
-    // `presentByObject`/`pastByObject` are 2D (`{ [nork]: { [nor]: form } }`),
-    // so any `sentences[tense][person]` keyed by the varying axis collides
-    // with that flat-lookup assumption and corrupts the gap audit (a
-    // `[object Object]`-shaped "form"). The "exercises the new axis" bar is
-    // met the same way #347 met it for `ukan`: a logic-level smoke test
-    // (`src/logic.test.js`) running `generateQuestions` against this entry.
+    // No flat `sentences` for the plain `present`/`past`: a `maite`-fits
+    // citation frame ("Nik X maite dut") is exactly the awkward-object
+    // problem `ukan` itself already opted out of describing for the same
+    // reason. The 2D object-axis tenses *are* sentence-grounded now, via
+    // `byObjectSentences` below — a separate field from `sentences` because
+    // the flat-table readers (`validforGapAudit.mjs`'s
+    // `collectTaggedVariants`/`computeGapSlots`) read
+    // `verb.conjugations[tense]?.[person]` assuming a flat table, and a
+    // `sentences[tense][person]` keyed by the varying axis would collide
+    // with that assumption and corrupt the gap audit (a
+    // `[object Object]`-shaped "form"). See `ukan`'s `byObjectSentences`
+    // doc comment for the field's full contract.
+    // `maite izan` is the natural habitat of the animate-object cells
+    // ("Maite zaitut" — the unit's payoff sentence), so the frames are the
+    // plain overt-pronoun ones, with `garai hartan` ("in those days")
+    // anchoring the past — a punctual `atzo` reads oddly against stative
+    // loving. Untagged (no `validFor`) — fail-closed, no cross-verb
+    // distractors until a native-speaker review; typed-answer ambiguity
+    // against `ukan`'s bare `zaitut` (trailing word of `maite zaitut`) is
+    // already suppressed by `hasAmbiguousTypedForm`. Flagged in
+    // docs/LANGUAGE_DECISIONS.md.
+    byObjectSentences: {
+      presentByObject: {
+        ni: {
+          hura: [{ text: 'Nik hura ___.' }],
+          zu: [{ text: 'Nik zu ___.' }],
+          zuek: [{ text: 'Nik zuek ___.' }],
+          haiek: [{ text: 'Nik haiek ___.' }],
+        },
+      },
+      pastByObject: {
+        ni: {
+          hura: [{ text: 'Garai hartan nik hura ___.' }],
+          zu: [{ text: 'Garai hartan nik zu ___.' }],
+          zuek: [{ text: 'Garai hartan nik zuek ___.' }],
+          haiek: [{ text: 'Garai hartan nik haiek ___.' }],
+        },
+      },
+    },
     personAxis: 'nork',
   },
   // `jakin` ("to know a fact") — fully synthetic, sharing `ukan`'s
