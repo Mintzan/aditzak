@@ -186,7 +186,14 @@ question for a missed cell; headline progress metric shows cells owned.
       rejects all offered lures (D3).
 - [x] Wiring: recurring "da or du?" drill line through spine review
       lessons (a `familyChoice: true` lesson flag, like `suffixChoice`) —
-      Units 6, 11, 13, 23 (Gate B), 31 (Gate C) minimum.
+      Units 6, 11, 13, 23 (Gate B), 31 (Gate C) minimum. _The original M4
+      PR1 seed pass wired 3 stops (Units 7, 10/Gate A, 31/Gate C);
+      2026-07-10 completed the planned list — Unit 6 (`unit-3-review`,
+      joan/ibili tags), Unit 11 (`unit-11-review`, ikusi:presentPerfect
+      aux-swap), Unit 13 (`unit-10-present`, jan/hartu tags), Gate B
+      (`unit-20-review-6`) — 7 stops total, with the generator now
+      preferring the aux-swap lure and a journey.test invariant that a
+      `familyChoice` flag is never decorative. See `docs/DECISIONS.md`._
 - [x] UI: render + i18n prompt (`questionFamilyChoice`) in
       `src/screens/ExerciseScreen.jsx` / `translations.js`.
 
@@ -296,200 +303,16 @@ change; do not hand-edit._
 
 ### A1 — M2 Grounding Audit
 
+_Regenerated 2026-07-10 after the Unit 16 ByObject grounding fix (`byObjectSentences`). Every remaining row below belongs to a bonus (D5-exempt) unit — the spine is fully grounded and enforced by `src/journey.test.js`._
+
 ## M2 Grounding Audit — Spine Lessons Missing Sentence Data
 
 _Every row below is a (lesson × verb × tense) slot where at least one drilled_
-_person has no `sentences[tense][person]` entry, so that slot would degrade to_
-_bare `kind: 'form'`. Close these gaps (per-paradigm, in batches) for M2._
+_person has no sentence available (hand-written or frame-generated), so that_
+_slot would degrade to bare `kind: 'form'`. Close these gaps for M2._
 
 | Lesson ID | Verb | Tense | Missing persons |
 | --- | --- | --- | --- |
-| nor-fodder-present | babestu-izan | present | zu, hura |
-| nor-fodder-present-plural | babestu-izan | present | gu, zuek, haiek |
-| izan-present-perfect-pool | izan | presentPerfect | ni, zu, hura |
-| izan-present-perfect-pool | joan | presentPerfect | ni, zu, hura |
-| izan-present-perfect-pool-plural | izan | presentPerfect | gu, zuek, haiek |
-| izan-present-perfect-pool-plural | joan | presentPerfect | gu, zuek, haiek |
-| izan-past-pool | babestu-izan | past | zu, hura |
-| izan-past-pool-plural | babestu-izan | past | gu, zuek, haiek |
-| unit-10-present | egin | present | ni |
-| unit-10-present | idatzi | present | zu |
-| unit-10-present | ikasi | present | hura |
-| unit-10-present | utzi | present | zu, hura |
-| unit-10-present-plural | irakurri | present | gu |
-| unit-10-present-plural | idatzi | present | haiek |
-| unit-10-present-plural | ikasi | present | haiek |
-| unit-10-present-plural | entzun | present | gu |
-| unit-10-present-plural | utzi | present | gu, zuek |
-| unit-10-present-plural | bilatu | present | gu |
-| unit-10-present-plural | saldu | present | gu, zuek |
-| nor-nork-present-plural-pool | ukan | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | jan | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | edan | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | erosi | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | hartu | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | ikusi | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | eduki | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | egin | presentPlural | zu, hura |
-| nor-nork-present-plural-pool | irakurri | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | idatzi | presentPlural | ni, hura |
-| nor-nork-present-plural-pool | ikasi | presentPlural | ni, zu |
-| nor-nork-present-plural-pool | entzun | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | utzi | presentPlural | ni |
-| nor-nork-present-plural-pool | bilatu | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | saldu | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | eraman | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | ekarri | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool | jakin | presentPlural | ni, zu, hura |
-| nor-nork-present-plural-pool-plural | ukan | presentPlural | gu, zuek |
-| nor-nork-present-plural-pool-plural | jan | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | edan | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | erosi | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | hartu | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | ikusi | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | eduki | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | egin | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | irakurri | presentPlural | zuek, haiek |
-| nor-nork-present-plural-pool-plural | idatzi | presentPlural | gu, zuek |
-| nor-nork-present-plural-pool-plural | ikasi | presentPlural | gu, zuek |
-| nor-nork-present-plural-pool-plural | entzun | presentPlural | zuek, haiek |
-| nor-nork-present-plural-pool-plural | utzi | presentPlural | haiek |
-| nor-nork-present-plural-pool-plural | bilatu | presentPlural | zuek, haiek |
-| nor-nork-present-plural-pool-plural | saldu | presentPlural | haiek |
-| nor-nork-present-plural-pool-plural | eraman | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | ekarri | presentPlural | gu, zuek, haiek |
-| nor-nork-present-plural-pool-plural | jakin | presentPlural | gu, zuek, haiek |
-| ukan-past-pool | ukan | past | zu |
-| ukan-past-pool | egin | past | ni |
-| ukan-past-pool | idatzi | past | zu |
-| ukan-past-pool | ikasi | past | hura |
-| ukan-past-pool | utzi | past | zu, hura |
-| ukan-past-pool-plural | jakin | past | gu, zuek, haiek |
-| ukan-past-pool-plural | irakurri | past | gu |
-| ukan-past-pool-plural | idatzi | past | haiek |
-| ukan-past-pool-plural | ikasi | past | haiek |
-| ukan-past-pool-plural | entzun | past | gu |
-| ukan-past-pool-plural | utzi | past | gu, zuek |
-| ukan-past-pool-plural | bilatu | past | gu |
-| ukan-past-pool-plural | saldu | past | gu, zuek |
-| nor-nork-past-plural-pool | ukan | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | jan | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | edan | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | erosi | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | hartu | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | ikusi | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | eduki | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | egin | pastPlural | zu, hura |
-| nor-nork-past-plural-pool | irakurri | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | idatzi | pastPlural | ni, hura |
-| nor-nork-past-plural-pool | ikasi | pastPlural | ni, zu |
-| nor-nork-past-plural-pool | entzun | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | utzi | pastPlural | ni |
-| nor-nork-past-plural-pool | bilatu | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | saldu | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | eraman | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | ekarri | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool | jakin | pastPlural | ni, zu, hura |
-| nor-nork-past-plural-pool-plural | ukan | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | jan | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | edan | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | erosi | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | hartu | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | ikusi | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | eduki | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | egin | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | irakurri | pastPlural | zuek, haiek |
-| nor-nork-past-plural-pool-plural | idatzi | pastPlural | gu, zuek |
-| nor-nork-past-plural-pool-plural | ikasi | pastPlural | gu, zuek |
-| nor-nork-past-plural-pool-plural | entzun | pastPlural | zuek, haiek |
-| nor-nork-past-plural-pool-plural | utzi | pastPlural | haiek |
-| nor-nork-past-plural-pool-plural | bilatu | pastPlural | zuek, haiek |
-| nor-nork-past-plural-pool-plural | saldu | pastPlural | haiek |
-| nor-nork-past-plural-pool-plural | eraman | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | ekarri | pastPlural | gu, zuek, haiek |
-| nor-nork-past-plural-pool-plural | jakin | pastPlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool | ukan | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | jan | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | edan | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | erosi | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | hartu | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | ikusi | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | eduki | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | nahi | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | egin | futurePlural | zu, hura |
-| nor-nork-future-plural-pool | irakurri | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | idatzi | futurePlural | ni, hura |
-| nor-nork-future-plural-pool | ikasi | futurePlural | ni, zu |
-| nor-nork-future-plural-pool | entzun | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | utzi | futurePlural | ni |
-| nor-nork-future-plural-pool | bilatu | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | saldu | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | eraman | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool | ekarri | futurePlural | ni, zu, hura |
-| nor-nork-future-plural-pool-plural | ukan | futurePlural | gu, zuek |
-| nor-nork-future-plural-pool-plural | jan | futurePlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool-plural | edan | futurePlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool-plural | erosi | futurePlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool-plural | hartu | futurePlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool-plural | ikusi | futurePlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool-plural | eduki | futurePlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool-plural | nahi | futurePlural | zuek |
-| nor-nork-future-plural-pool-plural | egin | futurePlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool-plural | irakurri | futurePlural | zuek, haiek |
-| nor-nork-future-plural-pool-plural | idatzi | futurePlural | gu, zuek |
-| nor-nork-future-plural-pool-plural | ikasi | futurePlural | gu, zuek |
-| nor-nork-future-plural-pool-plural | entzun | futurePlural | zuek, haiek |
-| nor-nork-future-plural-pool-plural | utzi | futurePlural | haiek |
-| nor-nork-future-plural-pool-plural | bilatu | futurePlural | zuek, haiek |
-| nor-nork-future-plural-pool-plural | saldu | futurePlural | haiek |
-| nor-nork-future-plural-pool-plural | eraman | futurePlural | gu, zuek, haiek |
-| nor-nork-future-plural-pool-plural | ekarri | futurePlural | gu, zuek, haiek |
-| etorri-habitual-past | etorri | habitualPast | ni, zu, hura |
-| etorri-habitual-past-plural | etorri | habitualPast | gu, zuek, haiek |
-| ikusi-habitual-past | ikusi | habitualPast | ni, zu, hura |
-| ikusi-habitual-past-plural | ikusi | habitualPast | gu, zuek, haiek |
-| esan-past-plural | esan | pastPlural | ni, zu, hura, gu, zuek, haiek |
-| eman-past-plural | eman | pastPlural | zu, hura, zuek, haiek |
-| ditransitive-dative-present | saldu-dative | present | ni, zu, hura |
-| ditransitive-dative-present | utzi-dative | present | ni, zu, hura |
-| ditransitive-dative-present | adierazi-dative | present | ni, zu, hura |
-| ditransitive-dative-present | eskatu-dative | present | ni, zu, hura |
-| ditransitive-dative-present | galdetu-dative | present | ni, zu, hura |
-| ditransitive-dative-present-plural | saldu-dative | present | gu, zuek, haiek |
-| ditransitive-dative-present-plural | utzi-dative | present | gu, zuek, haiek |
-| ditransitive-dative-present-plural | adierazi-dative | present | gu, zuek, haiek |
-| ditransitive-dative-present-plural | eskatu-dative | present | gu, zuek, haiek |
-| ditransitive-dative-present-plural | galdetu-dative | present | gu, zuek, haiek |
-| ditransitive-dative-past | saldu-dative | past | ni, zu, hura |
-| ditransitive-dative-past | utzi-dative | past | ni, zu, hura |
-| ditransitive-dative-past | adierazi-dative | past | ni, zu, hura |
-| ditransitive-dative-past | eskatu-dative | past | ni, zu, hura |
-| ditransitive-dative-past | galdetu-dative | past | ni, zu, hura |
-| ditransitive-dative-past-plural | saldu-dative | past | gu, zuek |
-| ditransitive-dative-past-plural | utzi-dative | past | gu, zuek, haiek |
-| ditransitive-dative-past-plural | adierazi-dative | past | gu, zuek, haiek |
-| ditransitive-dative-past-plural | eskatu-dative | past | gu, zuek, haiek |
-| ditransitive-dative-past-plural | galdetu-dative | past | gu, zuek, haiek |
-| ditransitive-dative-future | saldu-dative | future | ni, zu, hura |
-| ditransitive-dative-future | utzi-dative | future | ni, zu, hura |
-| ditransitive-dative-future | adierazi-dative | future | ni, zu, hura |
-| ditransitive-dative-future | eskatu-dative | future | ni, zu, hura |
-| ditransitive-dative-future | galdetu-dative | future | ni, zu, hura |
-| ditransitive-dative-future-plural | saldu-dative | future | gu, zuek, haiek |
-| ditransitive-dative-future-plural | utzi-dative | future | gu, zuek, haiek |
-| ditransitive-dative-future-plural | adierazi-dative | future | gu, zuek, haiek |
-| ditransitive-dative-future-plural | eskatu-dative | future | gu, zuek, haiek |
-| ditransitive-dative-future-plural | galdetu-dative | future | gu, zuek, haiek |
-| dative-verb-present | itxaron-dative | present | ni, zu, hura |
-| dative-verb-present-plural | itxaron-dative | present | gu, zuek, haiek |
-| dative-verb-past | itxaron-dative | past | ni, zu, hura |
-| dative-verb-past-plural | itxaron-dative | past | gu, zuek, haiek |
-| dative-verb-future | itxaron-dative | future | ni, zu, hura |
-| dative-verb-future-plural | itxaron-dative | future | gu, zuek, haiek |
-| izan-potential-alegiazkoa | izan | potentialAlegiazkoa | ni, hi, zu, hura, gu, zuek, haiek |
-| ukan-potential-alegiazkoa | ukan | potentialAlegiazkoa | ni, zu, hura, gu, zuek, haiek |
-| izan-potential-lehenaldia | izan | potentialLehenaldia | ni, hi, zu, hura, gu, zuek, haiek |
-| ukan-potential-lehenaldia | ukan | potentialLehenaldia | ni, zu, hura, gu, zuek, haiek |
 | ukan-potential-object-axis-present | ukan | potentialByObject | hura, zu, zuek, haiek |
 | ukan-potential-object-axis-alegiazkoa | ukan | potentialAlegiazkoaByObject | hura, zu, zuek, haiek |
 | ukan-potential-object-axis-lehenaldia | ukan | potentialLehenaldiaByObject | hura, zu, zuek, haiek |
@@ -508,8 +331,6 @@ _bare `kind: 'form'`. Close these gaps (per-paradigm, in batches) for M2._
 | ukan-potential-object-axis-present-haiek | ukan | potentialByObject | ni, hura, gu, zu, zuek, haiek |
 | ukan-potential-object-axis-alegiazkoa-haiek | ukan | potentialAlegiazkoaByObject | ni, hura, gu, zu, zuek, haiek |
 | ukan-potential-object-axis-lehenaldia-haiek | ukan | potentialLehenaldiaByObject | ni, hura, gu, zu, zuek, haiek |
-| izan-conditional-past | izan | conditionalPast | ni, hi, zu, hura, gu, zuek, haiek |
-| ukan-conditional-past | ukan | conditionalPast | ni, zu, hura, gu, zuek, haiek |
 | ukan-baldintza-object-axis | ukan | baldintzaByObject | hura, zu, zuek, haiek |
 | ukan-conditional-object-axis | ukan | conditionalByObject | hura, zu, zuek, haiek |
 | ukan-conditional-past-object-axis | ukan | conditionalPastByObject | hura, zu, zuek, haiek |
@@ -528,13 +349,9 @@ _bare `kind: 'form'`. Close these gaps (per-paradigm, in batches) for M2._
 | ukan-baldintza-object-axis-haiek | ukan | baldintzaByObject | ni, hura, gu, zu, zuek, haiek |
 | ukan-conditional-object-axis-haiek | ukan | conditionalByObject | ni, hura, gu, zu, zuek, haiek |
 | ukan-conditional-past-object-axis-haiek | ukan | conditionalPastByObject | ni, hura, gu, zu, zuek, haiek |
-| ukan-imperative | ukan | imperative | hi-m, hi-f |
 | gustatu-imperative-axis | gustatu | imperativeByNor | hura, zuek, haiek |
 | iruditu-imperative-axis | iruditu | imperativeByNor | hura, zuek, haiek |
 | ahaztu-imperative-axis | ahaztu | imperativeByNor | hura, zuek, haiek |
-| egon-imperative | egon | imperative | hi, zu, zuek, hura, haiek |
-| etorri-imperative | etorri | imperative | hi, zu, zuek |
-| joan-imperative | joan | imperative | hi, zu, zuek |
 | izan-present-toka | izan | presentToka | hura, haiek |
 | ukan-present-toka | ukan | presentToka | hura, haiek |
 | izan-past-toka | izan | pastToka | hura, haiek |
@@ -543,20 +360,13 @@ _bare `kind: 'form'`. Close these gaps (per-paradigm, in batches) for M2._
 | ukan-present-noka | ukan | presentNoka | hura, haiek |
 | izan-past-noka | izan | pastNoka | hura, haiek |
 | ukan-past-noka | ukan | pastNoka | hura, haiek |
-| ukan-object-axis-present | ukan | presentByObject | hura, zu, zuek, haiek |
-| maite-object-axis-present | maite | presentByObject | hura, zu, zuek, haiek |
-| ukan-object-axis-past | ukan | pastByObject | hura, zu, zuek, haiek |
-| maite-object-axis-past | maite | pastByObject | hura, zu, zuek, haiek |
 | ukan-object-axis-present-hura | ukan | presentByObject | ni, hura, gu, zu, zuek, haiek |
 | maite-object-axis-past-hura | maite | pastByObject | ni, hura, gu, zu, zuek, haiek |
-| ikusi-object-axis-present-gu | ikusi | presentByObject | hura, zu, zuek, haiek |
-| jan-object-axis-past-gu | jan | pastByObject | hura, zu, zuek, haiek |
 | edan-object-axis-present-zu | edan | presentByObject | ni, hura, gu, haiek |
 | erosi-object-axis-past-zu | erosi | pastByObject | ni, hura, gu, haiek |
 | hartu-object-axis-present-zuek | hartu | presentByObject | ni, hura, gu, haiek |
 | ukan-object-axis-past-zuek | ukan | pastByObject | ni, hura, gu, haiek |
 | maite-object-axis-present-haiek | maite | presentByObject | ni, hura, gu, zu, zuek, haiek |
-| ikusi-object-axis-past-haiek | ikusi | pastByObject | ni, hura, gu, zu, zuek, haiek |
 | gustatu-imperative-axis-ni | gustatu | imperativeByNor | hura, zu, zuek, haiek |
 | iruditu-imperative-axis-ni | iruditu | imperativeByNor | hura, zu, zuek, haiek |
 | ahaztu-imperative-axis-ni | ahaztu | imperativeByNor | hura, zu, zuek, haiek |
@@ -572,11 +382,9 @@ _bare `kind: 'form'`. Close these gaps (per-paradigm, in batches) for M2._
 | gustatu-imperative-axis-haiek | gustatu | imperativeByNor | hura, zu, zuek, haiek |
 | iruditu-imperative-axis-haiek | iruditu | imperativeByNor | hura, zu, zuek, haiek |
 | ahaztu-imperative-axis-haiek | ahaztu | imperativeByNor | hura, zu, zuek, haiek |
-| izan-subjunctive-past | izan | subjunctivePast | hura, haiek |
-| ukan-subjunctive-past | ukan | subjunctivePast | hura, haiek |
 
-**Rows (lesson × verb × tense combos):** 270  
-**Total missing (person × verb × tense) slots:** 831
+**Rows (lesson × verb × tense combos):** 69  
+**Total missing (person × verb × tense) slots:** 284
 
 ### A2 — M6 Lesson Diet Audit
 

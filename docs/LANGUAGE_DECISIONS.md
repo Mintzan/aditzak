@@ -6,6 +6,33 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-10 — Unit 16 object-axis sentences: `gogoan ukan` frames + stative past anchors
+
+⚠️ **Needs native-speaker review** (same protocol as the M2 PR1 cell frames).
+The new `byObjectSentences` on `ukan`/`maite` (see `docs/DECISIONS.md` for
+the structural side) made three linguistic calls:
+
+1. **Bare `ukan`'s animate-object cells ride `gogoan ukan`** ("to have in
+   mind / remember": "Gogoan zaitut"). A bare "Nik zu ___ → zaitut" frame is
+   not idiomatic Basque — plain `ukan` with an animate object needs a
+   predicative habitat, and `gogoan ukan` is the highest-frequency one that
+   conjugates across all four drilled NOR cells ("gogoan dut/zaitut/
+   zaituztet/ditut"). Known residual: a learner typing `zauzkat` (the
+   equally-idiomatic `gogoan eduki`) would be marked wrong; accepted because
+   `eduki` has no by-object table in the app and Unit 16's population knows
+   only the `zaitut` family at that point.
+2. **Overt pronouns throughout** ("Nik zu gogoan ___") — emphatic but
+   grammatical; without them the varying object person is unrecoverable
+   from the sentence, which would defeat the grounding. Same compromise
+   every existing `pronounSentences` frame already makes.
+3. **Past anchors differ by verb**: `orduan` for `ukan`'s past frames
+   (punctual-ish "back then"), but `garai hartan` ("in those days") for
+   `maite izan` — a punctual `atzo` reads oddly against stative loving, and
+   the cross-tense lure machinery needs *some* overt past cue in the
+   sentence.
+
+Both verbs' entries are untagged (`validFor` absent = fail-closed): no
+cross-verb distractors until this review happens.
 ## 2026-07-10 — Unit 22 (behar): why "joan behar dut" not "joan behar naiz"
 
 The construction's **head** picks the auxiliary, not the infinitive complement inside it.

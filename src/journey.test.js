@@ -3,7 +3,13 @@ import { JOURNEY, BONUS_LESSON_IDS } from './journey'
 import { LESSONS } from './data/lessons'
 import { VERBS } from './data/verbs'
 import { JOURNEY_TRANSLATIONS } from './i18n/journeyTranslations'
-import { getComposedTable, mergeFrameSentences, resolveObjectAxisTable } from './lessonLogic'
+import {
+  generateFamilyChoiceQuestions,
+  getComposedTable,
+  mergeFrameSentences,
+  resolveByObjectSentences,
+  resolveObjectAxisTable,
+} from './lessonLogic'
 
 // Cross-checks the three files that make up "the learning journey"
 // (`journey.js`'s `JOURNEY`, `data/lessons.js`'s `LESSONS`, `data/verbs.js`'s
@@ -131,13 +137,15 @@ describe('LESSONS <-> VERBS', () => {
   // Exemptions (per D5 and known structural limitations):
   //   - Review lessons (lesson.review): not practice lessons.
   //   - Bonus units (BONUS_LESSON_IDS): hitanoa/bonus tracks are D5-exempt.
-  //   - ByObject tenses (/ByObject$/): presentByObject/pastByObject tables
-  //     are 2D ({ [nork]: { [nor]: form } }) — adding sentences[tense][person]
-  //     for the varying axis would corrupt the validFor gap audit (see maite's
-  //     verbs.js entry comment). Needs a separate structural fix before the
-  //     invariant can apply to these spine lessons (ukan/maite object-axis-*).
   //   - hi-m/hi-f persons: hitanoa gender split — by convention this codebase
   //     never keys sentences on these persons (see ukan.sentences.imperative).
+  //
+  // ByObject tenses are no longer exempt: a 2D object-axis lesson resolves
+  // its sentences from `verb.byObjectSentences` via `resolveByObjectSentences`
+  // (the structural fix maite's verbs.js comment used to defer to — the data
+  // lives outside `verb.sentences`, so the flat-table validFor gap audit
+  // never sees it), and Unit 16's spine lessons are held to the same
+  // invariant as every flat tense.
   it('every spine practice lesson has a sentence for every drilled person (M2 grounding invariant)', () => {
     // Persons that are hitanoa gender-split keys, exempt by convention.
     const HITANOA_PERSONS = new Set(['hi-m', 'hi-f'])
@@ -147,9 +155,6 @@ describe('LESSONS <-> VERBS', () => {
       if (BONUS_LESSON_IDS.has(lesson.id)) continue
       if (!lesson.verbId) continue
 
-      // ByObject tenses need structural work before grounding can be enforced.
-      if (/ByObject$/.test(lesson.tense)) continue
-
       const verb = verbsById.get(lesson.verbId)
       if (!verb) continue
 
@@ -157,7 +162,9 @@ describe('LESSONS <-> VERBS', () => {
       if (!table || Object.keys(table).length === 0) continue
 
       const drilled = lesson.persons ?? Object.keys(table)
-      const senByPerson = mergeFrameSentences(verb, lesson.tense, verb.sentences?.[lesson.tense] ?? {})
+      const senByPerson = lesson.objectAxis
+        ? resolveByObjectSentences(verb, lesson.tense, lesson.objectAxis)
+        : mergeFrameSentences(verb, lesson.tense, verb.sentences?.[lesson.tense] ?? {})
 
       for (const person of drilled) {
         if (HITANOA_PERSONS.has(person)) continue
@@ -166,6 +173,24 @@ describe('LESSONS <-> VERBS', () => {
           `${lesson.id}: ${lesson.verbId}.sentences.${lesson.tense}.${person} missing — spine lesson would degrade to bare kind:'form'`,
         ).toBeDefined()
       }
+    }
+  })
+
+  // A `familyChoice: true` flag must never be decorative: the generator only
+  // yields questions when a lesson's sources carry `familyChoiceSafe`-tagged
+  // sentences whose verb has a resolvable cross-family lure, and a flag whose
+  // sources have none would silently produce zero questions — the lesson
+  // would claim a drill it never runs. `count: 50` swamps the generator's
+  // per-lesson cap so the assertion is about candidate existence, not
+  // sampling.
+  it('every familyChoice lesson yields at least one family-choice question', () => {
+    for (const lesson of LESSONS) {
+      if (!lesson.familyChoice) continue
+      const resolvedSources = (lesson.sources ?? [{ verbId: lesson.verbId, tense: lesson.tense }]).map(
+        ({ verbId, tense }) => ({ verb: verbsById.get(verbId), tense }),
+      )
+      const questions = generateFamilyChoiceQuestions(VERBS, resolvedSources, { count: 50 })
+      expect(questions.length, `lesson "${lesson.id}" has familyChoice: true but generates no questions`).toBeGreaterThan(0)
     }
   })
 

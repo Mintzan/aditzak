@@ -17,7 +17,7 @@
 
 import { VERBS } from '../src/data/verbs.js'
 import { LESSONS } from '../src/data/lessons.js'
-import { getComposedTable, mergeFrameSentences } from '../src/lessonLogic.js'
+import { getComposedTable, mergeFrameSentences, resolveByObjectSentences } from '../src/lessonLogic.js'
 
 const verbById = new Map(VERBS.map((v) => [v.id, v]))
 
@@ -45,13 +45,19 @@ for (const lesson of LESSONS) {
     if (!table || Object.keys(table).length === 0) continue
 
     // Drilled persons: lesson.persons if restricted, otherwise all table keys.
-    const drilled = lesson.persons ?? Object.keys(table)
+    // hi-m/hi-f are excluded to match the journey.test invariant's exemption —
+    // the hitanoa gender-split keys never carry sentences by convention.
+    const drilled = (lesson.persons ?? Object.keys(table)).filter((p) => p !== 'hi-m' && p !== 'hi-f')
 
     // A person is grounded if generateQuestions would find a sentence for it —
     // i.e. if mergeFrameSentences (which supplements hand-written entries with
-    // CELL_FRAMES when slotVocabulary is present) produces an entry. This
-    // reflects the actual question-kind availability in the running app.
-    const senByPerson = mergeFrameSentences(verb, tense, verb.sentences?.[tense] ?? {})
+    // CELL_FRAMES when slotVocabulary is present) produces an entry, or, for
+    // a 2D object-axis lesson, if `byObjectSentences` resolves one (same
+    // resolution generateQuestions itself uses). This reflects the actual
+    // question-kind availability in the running app.
+    const senByPerson = lesson.objectAxis
+      ? resolveByObjectSentences(verb, tense, lesson.objectAxis)
+      : mergeFrameSentences(verb, tense, verb.sentences?.[tense] ?? {})
     const missing = drilled.filter((p) => !senByPerson[p])
 
     if (missing.length > 0) {

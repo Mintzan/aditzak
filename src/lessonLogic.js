@@ -1052,6 +1052,20 @@ export function resolveObjectAxisTable(table2D, { vary, fixed }) {
   return table
 }
 
+// Sentence counterpart of `resolveObjectAxisTable` for a 2D object-axis
+// lesson: resolves `verb.byObjectSentences[tense]` (outer NORK, inner NOR —
+// the same shape as `presentByObject` itself, with sentence variants as
+// leaves; see `ukan`'s entry in `data/verbs.js` for the field's contract)
+// down to the flat `{ [person]: variants }` map `generateQuestions` reads.
+// The data lives outside `verb.sentences` on purpose: every flat-table
+// sentence reader (`validforGapAudit.mjs`, `getBorrowedSpotErrorSlots`, the
+// M2 frame merge) walks `sentences` assuming `tense → person → variant`, and
+// keying a 2D shape there would corrupt them — the structural blocker that
+// kept Unit 16's spine lessons on bare `kind: 'form'` questions.
+export function resolveByObjectSentences(verb, tense, objectAxis) {
+  return resolveObjectAxisTable(verb.byObjectSentences?.[tense] ?? {}, objectAxis)
+}
+
 // #442: the personal (non-3rd-person) `nor` values a composed NOR-NORK
 // by-object table can vary over — every key the `edun` skeleton uses for its
 // varying object slot except the two 3rd-person ones (`hura`/`haiek`, which
@@ -1322,7 +1336,11 @@ function getBorrowedDistractors(verbs, agreement, tense, person, excludeVerbId) 
   return verbs
     .filter((sibling) => sibling.id !== excludeVerbId && agreementsCompatible(sibling.agreement, agreement))
     .map((sibling) => ({ verbId: sibling.id, form: getComposedTable(sibling, tense)?.[person] }))
-    .filter((candidate) => candidate.form)
+    // `typeof` guard: for a 2D tense (`presentByObject`), a sibling's
+    // composed table is `{ [nork]: { [nor]: form } }`, so `[person]` grabs a
+    // whole NORK *row* (an object, truthy) rather than a form string — it
+    // must never survive into the options pool.
+    .filter((candidate) => typeof candidate.form === 'string')
 }
 
 // Last-resort slot top-up for `buildSpotErrorQuestion` (see #139): when the
@@ -1672,7 +1690,12 @@ export function generateQuestions(
   // instead of the usual flat one — once resolved, `table` is an ordinary
   // flat table and nothing else below needs to know the difference.
   const table = objectAxis ? resolveObjectAxisTable(getComposedTable(verb, tense), objectAxis) : getComposedTable(verb, tense)
-  const sentences = mergeFrameSentences(verb, tense, verb.sentences?.[tense] ?? {})
+  // An `objectAxis` lesson's sentences come from the 2D `byObjectSentences`
+  // field (resolved to flat, same as `table` above); everything else reads
+  // the flat `sentences[tense]`, frame-supplemented (M2).
+  const sentences = objectAxis
+    ? resolveByObjectSentences(verb, tense, objectAxis)
+    : mergeFrameSentences(verb, tense, verb.sentences?.[tense] ?? {})
   const pronounSentences = verb.pronounSentences?.[tense] ?? {}
   const negativeSentences = verb.negativeSentences?.[tense] ?? {}
   const persons = personsFilter ?? Object.keys(table)
@@ -2135,8 +2158,15 @@ export const FAMILY_CHOICE_QUESTION_COUNT = 3
 
 // A `kind: 'family-choice'` question presents a sentence with a blank and
 // asks the learner to pick which auxiliary family fills it — NOR ("da") or
-// NOR-NORK ("du") — by selecting between the verb's own form and the
-// cross-family form from `getCaseFrameLure`. Only sentences tagged
+// NOR-NORK ("du") — by selecting between the verb's own form and a
+// cross-family lure. The lure prefers `getAuxiliarySwapLure` (own participle
+// + wrong-family aux — `ikusi naiz` alongside `ikusi dut`), so a periphrastic
+// question isolates the *auxiliary* decision instead of letting the
+// participle betray the answer; synthetic/single-word forms fall back to
+// `getCaseFrameLure`'s wholesale sibling form (`dut` alongside `naiz`), which
+// is also what every already-tagged izan/ukan sentence produced before the
+// aux-swap preference existed (for those, the two lures coincide or the swap
+// self-gates on the missing space). Only sentences tagged
 // `familyChoiceSafe: true` (fail-closed opt-in) produce questions, ensuring
 // the frame unambiguously signals the correct family. `verbs` is the full
 // VERBS list, needed to find the cross-family sibling.
@@ -2151,7 +2181,7 @@ export function generateFamilyChoiceQuestions(verbs, resolvedSources, { count = 
       if (typeof form !== 'string') continue
       const rawVariants = sentencesByPerson[person]
       if (!rawVariants) continue
-      const lure = getCaseFrameLure(verbs, verb, tense, person)
+      const lure = getAuxiliarySwapLure(verbs, verb, tense, person) ?? getCaseFrameLure(verbs, verb, tense, person)
       if (!lure || lure === form) continue
       const safeSentences = (Array.isArray(rawVariants) ? rawVariants : [rawVariants])
         .map(normalizeSentence)
