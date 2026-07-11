@@ -420,7 +420,10 @@ export const JOURNEY_TRANSLATIONS = {
     },
     22: {
       title: { es: 'behar — Necesidades y obligaciones', eu: 'behar — Beharrak eta betebeharrak' },
-      focus: { es: 'behar (necesitar/tener que) con ukan, presente y futuro', eu: 'behar, ukan-ekin, oraina eta geroa' },
+      focus: {
+        es: 'behar (necesitar/tener que) con ukan, presente y futuro — la cabeza de la construcción elige el auxiliar: "joan behar dut" usa dut, no naiz, aunque "joan" solo usa naiz',
+        eu: 'behar, ukan-ekin, oraina eta geroa — eraikuntzaren buruak laguntzailea hautatzen du: "joan behar dut" dut erabiltzen du, ez naiz, "joan" bakarrak naiz erabiltzen duen arren',
+      },
       payload: {
         es: '"Tengo que ir." (Joan behar dut)',
         eu: '"Joan behar dut" (Tengo que ir)',

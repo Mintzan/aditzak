@@ -67,6 +67,20 @@ smoke tests pin `Math.random` since the first available kind is now
 `sentence`, not the bare-form fallback. Sentence wording judgments (the
 `gogoan ukan` frames) are in `docs/LANGUAGE_DECISIONS.md`, flagged for
 native review.
+## 2026-07-10 — Unit 22 (behar): added NOR-contrast review and documented the head rule
+
+Added `unit-22-nor-contrast-review` (review lesson) to the end of Unit 22's `lessonIds`.
+It pools `behar.present` + `behar.future` (NOR-NORK, `dut/duzu/du`) against `joan.present`
++ `etorri.present` + `egon.present` (NOR, `naiz/zara/da`). Because the sources have
+incompatible `agreement` values, `generateCaseMixerQuestions` fires automatically,
+forcing the learner to choose `behar dut` vs `noa/nator/nago` for the same
+infinitive-clause context — the exact mistake ("joan behar naiz") this unit exists to
+prevent. The previous `unit-19-review` (behar + ukan only) stays in place as a
+within-family consolidation pass before this cross-family contrast comes in as the
+unit's closer.
+
+The linguistic rationale is documented in `docs/LANGUAGE_DECISIONS.md`
+("Unit 22 (behar): why 'joan behar dut' not 'joan behar naiz'").
 
 ## 2026-07-09 — M5: nonce-verb generalization gates
 

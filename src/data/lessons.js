@@ -1523,6 +1523,25 @@ export const LESSONS = [
       { verbId: 'ukan', tense: 'future' },
     ],
   },
+  // The construction's head picks the auxiliary — `joan behar dut` (not
+  // `joan behar naiz`), even though `joan` alone uses `naiz`. This review
+  // pools `behar` (NOR-NORK, `dut`) against NOR verbs (`joan`/`etorri`/
+  // `egon`, `naiz`) so `generateCaseMixerQuestions` fires, forcing the
+  // learner to choose the right auxiliary in each context. Sits after
+  // `unit-19-review` (the within-family behar+ukan consolidation) as the
+  // unit's closing cross-family contrast pass. See `docs/DECISIONS.md` and
+  // `docs/LANGUAGE_DECISIONS.md` (2026-07-10) for the full rationale.
+  {
+    id: 'unit-22-nor-contrast-review',
+    review: true,
+    sources: [
+      { verbId: 'behar', tense: 'present' },
+      { verbId: 'behar', tense: 'future' },
+      { verbId: 'joan', tense: 'present' },
+      { verbId: 'etorri', tense: 'present' },
+      { verbId: 'egon', tense: 'present' },
+    ],
+  },
   // Unit 20 ("REFRESH — Cumulative Present/Past/Future Mixer", Refresh Gate
   // B) — zero new verbs. Mixes synthetic (`izan`) + periphrastic (`ukan`/
   // `joan`/`ikusi`) sources across present/past/future (the full tense range
