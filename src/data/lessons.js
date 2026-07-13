@@ -41,8 +41,28 @@ export const PHASE_1_PLURAL_PERSONS = ['gu', 'zuek', 'haiek']
 // 'izan-present'`) — each lesson is a single-line entry.
 
 export const LESSONS = [
-  { id: 'izan-present', verbId: 'izan', tense: 'present', persons: PHASE_1_PERSONS },
-  { id: 'egon-present', verbId: 'egon', tense: 'present', persons: PHASE_1_PERSONS },
+  {
+    id: 'izan-present',
+    verbId: 'izan',
+    tense: 'present',
+    persons: PHASE_1_PERSONS,
+    note: {
+      en: 'Basque has two verbs for "to be". izan covers identity and description — who you are, what something is (a student, Basque, tired). The forms naiz, zara, da are the most frequent in the whole language.',
+      es: 'El euskera tiene dos verbos para "ser/estar". izan expresa identidad y descripción — quién eres, qué es algo (estudiante, vasco, cansado). Las formas naiz, zara, da son las más frecuentes de todo el idioma.',
+      eu: 'Euskarak bi "izate" aditz ditu. izan identitaterako eta deskripziorako erabiltzen da — nor zaren, zer den zerbait (ikaslea, euskalduna, nekatuta). naiz, zara, da formak dira hizkuntzako ohikoenak.',
+    },
+  },
+  {
+    id: 'egon-present',
+    verbId: 'egon',
+    tense: 'present',
+    persons: PHASE_1_PERSONS,
+    note: {
+      en: 'egon is the other "to be" — for location and temporary states: where you are, how you feel right now (at home, in Bilbao, sitting). Its forms (nago, zaude, dago) look different from izan\'s, but they follow their own consistent pattern.',
+      es: 'egon es el otro "ser/estar" — para ubicación y estados temporales: dónde estás, cómo te encuentras ahora (en casa, en Bilbao, sentado). Sus formas (nago, zaude, dago) son distintas a las de izan, pero siguen su propio patrón coherente.',
+      eu: 'egon da besteko "izate" aditza — kokapenerako eta aldi baterako egoeretarako: non zauden, nola sentitzen zaren orain (etxean, Bilbon, eserita). Bere formak (nago, zaude, dago) ez dira izan-enak bezalakoak, baina bere eredu koherente propioa dute.',
+    },
+  },
   {
     id: 'unit-1-review',
     review: true,
