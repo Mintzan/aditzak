@@ -48,7 +48,7 @@ delivery ships, add a `docs/DECISIONS.md` entry per the usual convention.
   multi-source context.
 - No `journey.js`/`LESSONS` reordering.
 - Periodic flash drills / ergative-suffix-drift detection (Tier 4 in
-  `docs/EXERCISE_ENGINE.md`) — separate, unrelated work, not covered here.
+  `docs/technical/EXERCISE_ENGINE.md`) — separate, unrelated work, not covered here.
 
 ## Suggested ordering
 
@@ -213,14 +213,14 @@ mechanism reusing Delivery 2's machinery.
    deliberately disabled/inverted for these questions.~~ Done:
    `generateCaseMixerQuestions`, `kind: 'case-mixer'` — see
    `docs/DECISIONS.md` (2026-06-13, Delivery 3).
-3. ~~**3.3** — Flesh out Unit 22's spec in `docs/LEARNING_JOURNEY.md`... then
+3. ~~**3.3** — Flesh out Unit 22's spec in `docs/academic/LEARNING_JOURNEY.md`... then
    add a real review lesson to `data/lessons.js` and flip Unit 22's
    `status`/`lessonIds` in `journey.js`.~~ **Deferred** — Unit 22 stays
    `pending`; its full NOR/NORI/NORK scope needs Units 20-21's dative verbs,
    which don't exist yet. `case-mixer` instead ships as a general
    review-lesson mechanism (active wherever sources already mix
    `nor`/`nor-nork`). See `docs/DECISIONS.md` (2026-06-13, Delivery 3).
-4. ~~**3.4** — Update `docs/EXERCISE_ENGINE.md`'s "Score-gating Refresh Gates"
+4. ~~**3.4** — Update `docs/technical/EXERCISE_ENGINE.md`'s "Score-gating Refresh Gates"
    and "Refresh Gate C" notes to reference this as the resolved approach...~~
    Done (Refresh Gate C note updated to reference Delivery 3 and the
    deferral above).
@@ -278,7 +278,7 @@ ceiling noted during planning, without weakening Delivery 1/2's "this review
 This is a backlog, not a spec frozen in time — as each delivery's open
 decisions get resolved, update this doc in place (or strike through
 resolved items and link to the `docs/DECISIONS.md` entry, the way
-`docs/EXERCISE_ENGINE.md` does for its own resolved items). Deliveries don't
+`docs/technical/EXERCISE_ENGINE.md` does for its own resolved items). Deliveries don't
 need to ship in a single pass each — e.g. Delivery 1 could ship for
 `unit-1-review` alone first (task 1.6) before 1.7's wider rollout.
 

@@ -1,7 +1,7 @@
 // Cloudflare Worker: receives feedback submissions from the Aditzak app and
 // forwards them to FEEDBACK_TO_EMAIL via the Resend API. No storage — each
 // submission is just relayed as an email. See
-// docs/CLOUDFLARE_FEEDBACK_WORKER.md for setup.
+// docs/technical/CLOUDFLARE_FEEDBACK_WORKER.md for setup.
 
 const MAX_MESSAGE_LENGTH = 2000
 const MAX_EMAIL_LENGTH = 320

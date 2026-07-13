@@ -128,7 +128,7 @@ describe('LESSONS <-> VERBS', () => {
     }
   })
 
-  // M2 spine-grounding invariant (docs/AUXILIARY_FIRST_PLAN.md §M2, D5).
+  // M2 spine-grounding invariant (docs/academic/AUXILIARY_FIRST_PLAN.md §M2, D5).
   // Every spine practice lesson must offer ≥1 sentence-grounded kind per
   // drilled person — i.e. verb.sentences[tense][person] (or a frame-
   // generated entry from mergeFrameSentences) must exist, so the exercise

@@ -1429,7 +1429,7 @@ nintzen`, etc. — and needs no separate table.
 | haiek | dakite / dakizkite | zekiten / zekizkiten |
 
 `hik`'s past (`hekien`) and the `zuk`/`zuek` rows (`zenekien`/`zenekiten`) were
-sourced per #245 — see `docs/LANGUAGE_DECISIONS.md` for the derivation.
+sourced per #245 — see `docs/academic/LANGUAGE_DECISIONS.md` for the derivation.
 `hik`'s present stays `—`: `jakin` rides `ukan`'s suffix family, and `ukan`
 itself has no plain `hik`-as-`NORK` present cell either (only the §10
 hitanoa-register `dakik`/`dakin` split, already tabulated in `VERBS`).

@@ -7,7 +7,7 @@
 > As a result the live unit numbers diverge from this spec's "N-n" from Unit 11
 > on: **live Unit 11 = present perfect (new); live Unit N = this spec's N-n − 1
 > for every N ≥ 12.** This spec keeps its original numbering; see
-> `docs/LEARNING_JOURNEY.md` and `docs/DECISIONS.md` for the live layout.
+> `docs/academic/LEARNING_JOURNEY.md` and `docs/DECISIONS.md` for the live layout.
 
 > **Status: proposed curriculum spec — not yet implemented in code.** This is a
 > self-contained reference for the intended acquisition order, written to be
@@ -16,9 +16,9 @@
 > motivated this spec, and the mapping from the shipped journey to this one,
 > live in `docs/archive/LEARNING_JOURNEY_EVALUATION.md`.
 >
-> Linguistic forms are grounded in `docs/CONJUGATIONS.md`,
-> `docs/VERB_COVERAGE.md` (VC), and `docs/LANGUAGE_DECISIONS.md` (LD). Engine
-> touch-points reference `docs/EXERCISE_ENGINE.md`.
+> Linguistic forms are grounded in `docs/academic/CONJUGATIONS.md`,
+> `docs/academic/VERB_COVERAGE.md` (VC), and `docs/academic/LANGUAGE_DECISIONS.md` (LD). Engine
+> touch-points reference `docs/technical/EXERCISE_ENGINE.md`.
 
 The journey is **39 units** across six phases. Units are ordered by
 communicative goal, not grammatical category, and prioritize usefulness over

@@ -29,7 +29,7 @@ resolve before implementation, not silently pick a side on:
    `getUnlockedLessonIds` (`lessonLogic.js:341-`) is a strictly-linear
    unlock ("previous lesson attempted") plus a soft gate-score wall
    (`GATE_PASS_STARS`) plus opt-in bonus content — see
-   `docs/LEARNING_JOURNEY_PROPOSED.md` design principle 4. The spec's
+   `docs/academic/LEARNING_JOURNEY_PROPOSED.md` design principle 4. The spec's
    lockout rule ("if `currentHearts === 0`, block anything not in
    `completedUnits`") is an orthogonal *third* axis that would need to compose
    with both existing ones. That composition isn't specified and shouldn't be

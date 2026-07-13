@@ -12,7 +12,7 @@
 //   - `options`/`answer`: four candidate Basque sentences, one of which
 //     (`answer`) correctly answers `prompt` about `source`.
 //
-// Content is grounded in `docs/CONJUGATIONS.md` §15 ("Passive & impersonal
+// Content is grounded in `docs/academic/CONJUGATIONS.md` §15 ("Passive & impersonal
 // voice — the 'nor-shift'"): items 1-8 take a `nor-nork` sentence and ask for
 // its agentless `nor`-shifted counterpart (anticausative for change-of-state
 // verbs like `ireki`/`hautsi`/`itzali`/`piztu`/`itxi`, impersonal/passive for
@@ -25,7 +25,7 @@
 // `-teagatik`/`-teko`/`-tean`, the `-tako` attributive vs. `-a`+`izan`
 // resultative-predicate contrast, and the `-z` modal adverbial) rather than
 // inventing new sentences, since non-finite forms carry a higher risk of
-// subtle errors without native-speaker review (see `docs/LANGUAGE_DECISIONS.md`).
+// subtle errors without native-speaker review (see `docs/academic/LANGUAGE_DECISIONS.md`).
 export const READING_ITEMS = [
   {
     id: 'reading-nor-shift-ireki',

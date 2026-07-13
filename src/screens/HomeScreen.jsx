@@ -48,7 +48,7 @@ import {
 // `heartLocked` is a *depletion-only* restriction layered on top of `locked`
 // (the existing progression/gate lock) — it only ever applies to a lesson
 // `locked` already says is otherwise available, per
-// `docs/HEART_ECONOMY_ANALYSIS.md`'s "Resolved" point 1. A `locked` lesson
+// `docs/technical/HEART_ECONOMY_ANALYSIS.md`'s "Resolved" point 1. A `locked` lesson
 // keeps its existing (disabled, unclickable) treatment regardless of hearts;
 // only a heart-locked-but-otherwise-unlocked lesson stays clickable so tapping
 // it can surface `onHeartLocked`'s nudge instead of silently doing nothing.
@@ -735,7 +735,7 @@ function FeedbackModal({ onClose }) {
 }
 
 // Sign-in bottom sheet, wired to sync-worker's magic-link endpoints (see
-// docs/CLOUDFLARE_SYNC_WORKER.md). Submitting the email step calls
+// docs/technical/CLOUDFLARE_SYNC_WORKER.md). Submitting the email step calls
 // `POST /auth/request-link`; the actual session is created out-of-band when
 // the learner clicks the emailed link (handled by `AppShell` on load), so
 // this modal's job ends at "check your email".

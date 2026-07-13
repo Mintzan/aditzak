@@ -1,5 +1,5 @@
 // Shared icon set replacing the app's emoji touchpoints — see
-// docs/VISUAL_IDENTITY.md §11 for the full system rules and the
+// docs/technical/VISUAL_IDENTITY.md §11 for the full system rules and the
 // emoji→icon→color→component mapping this file implements. 24×24 grid,
 // 2px stroke (2.5px for Check/Cross), rounded caps/joins, stroke="currentColor"
 // so color comes from whatever className/style is passed in, not the icon itself.

@@ -173,7 +173,7 @@ a general pattern ("hay verbos que admiten las dos formas") and gave 5 more
 candidates: `mugitu` (to move), `esnatu` (to wake up), `ailegatu` (to
 arrive), `piztu` (to light/turn on), `amatatu` (to turn off/extinguish) —
 with more expected in later messages. None are in `VERBS` yet; logged as a
-new table (`docs/VERB_COVERAGE.md` §4b-quinquies) rather than added now,
+new table (`docs/academic/VERB_COVERAGE.md` §4b-quinquies) rather than added now,
 per explicit instruction to just track them for whenever the fuller list is
 in. Flagged two open questions there for whoever adds them: `piztu`/
 `amatatu`'s intransitive reading is naturally 3rd-person/inanimate ("sua
@@ -227,7 +227,7 @@ mountain hut from the storm.") used the wrong word for "mountain hut/
 refuge": Basque says **aterpe**, not "babes-etxea" (literally
 "protection-house" — plausible-looking but not the real term). Fixed both
 the present and past `ni` sentences in `VERBS` (`sartu`'s entry) and the
-matching line in `docs/SAMPLE_SENTENCES.md` to "Gorbeiako aterpean" (inessive
+matching line in `docs/academic/SAMPLE_SENTENCES.md` to "Gorbeiako aterpean" (inessive
 `-an` on `aterpe`, same case marking as before). Taking the correction as
 given rather than second-guessing it — unlike the "Lehenaldiko Burutua"
 naming question, this is concrete vocabulary from someone who evidently
@@ -368,11 +368,11 @@ already-verified `hura`-present forms rather than any new conjugated form:
 progressive construction with a weather noun as notional subject), `Hotz da.`
 / `Bero da.` (izan's `da`, the same predicate-adjective frame every other
 `izan` sentence already uses), `Eguzkia dago.` (egon's `dago`, matching
-`docs/LEARNING_JOURNEY.md`'s own canonical example), `Haizea dabil.` (ibili's
+`docs/academic/LEARNING_JOURNEY.md`'s own canonical example), `Haizea dabil.` (ibili's
 `dabil`, "the wind is moving/blowing").
 
 The first three (`Euria ari du.` / `Hotz da.` / `Eguzkia dago.`) come directly
-from `docs/LEARNING_JOURNEY.md`'s own pre-existing unit description, so
+from `docs/academic/LEARNING_JOURNEY.md`'s own pre-existing unit description, so
 they're treated as already-vetted. `Elurra ari du.` (direct parallel to
 `Euria ari du.`) and `Haizea dabil.` are standard, high-confidence textbook
 Basque. Deliberately **not** added: a "hodeitsu dago" ("it's cloudy") idiom —
@@ -531,7 +531,7 @@ verb is the focus, and most constituents can move to claim that slot. So a
 sentence like "Zuek herriko danborrada entzuten duzue goizean" has several
 grammatical orders ("...danborrada goizean entzuten duzue" just refocuses onto
 *goizean*) — grading one as the only right answer is wrong. (Mechanism for the
-opt-in gate is in `docs/DECISIONS.md`/`docs/EXERCISE_ENGINE.md`; this entry is
+opt-in gate is in `docs/DECISIONS.md`/`docs/technical/EXERCISE_ENGINE.md`; this entry is
 the *language* criterion for the tag.)
 
 A sentence variant earns `wordOrderSafe: true` only when its taught/neutral
@@ -590,7 +590,7 @@ two-word verb block, same four-word shape.
 Deliberately still untagged: five-plus-word affirmatives (trailing adjunct),
 synthetic-verb sentences with two complements, and any `nori` verb. Those
 remain a later, fluent-reviewed pass — each is a naturalness judgment like the
-`validFor` bar in `docs/SENTENCE_FRAMES.md`.
+`validFor` bar in `docs/technical/SENTENCE_FRAMES.md`.
 
 ## 2026-06-24 — Open question: `hartu`/`erosi`'s `animateObject` call (#442) needs native-speaker confirmation
 
@@ -629,7 +629,7 @@ teknikak), `entzun` (kantuak), `utzi` (giltzak, abarketak, otarrak, poltsak),
 
 ## 2026-06-24 — #370: causative (`-arazi`) grammar documented, no new auxiliary needed
 
-Researched and added `docs/CONJUGATIONS.md` §17 ("Causative (Arazlea)") to
+Researched and added `docs/academic/CONJUGATIONS.md` §17 ("Causative (Arazlea)") to
 unblock #370 (Units 37-39), whose "Done when" required citing the causative's
 argument-structure conditioning before any `VERBS` data gets written.
 Cross-checked across multiple grammar sources (Euskaltzaindia's own grammar
@@ -674,7 +674,7 @@ verb entries with a `derivedFrom` pointer) and concrete Units 37-39
 ## 2026-06-22 — #384: jarraitu/jario sourcing and scope calls
 
 Added two more NOR-NORI verbs alongside `gustatu`/`iruditu`/`ahaztu`, per
-`docs/VERB_COVERAGE.md:169` (`jario`) and `:205-210` (`jarraitu`):
+`docs/academic/VERB_COVERAGE.md:169` (`jario`) and `:205-210` (`jarraitu`):
 
 - **`jarraitu`'s nor-nork-vs-nor-nori ambiguity** — `jarraitu` patterns as
   NOR-NORK ("jarraitzen dio" = "continues it") *and* NOR-NORI ("jarraitzen
@@ -686,7 +686,7 @@ Added two more NOR-NORI verbs alongside `gustatu`/`iruditu`/`ahaztu`, per
   `validFor` is left empty (`[]`) rather than guessed, same conservative
   default already used elsewhere for newly-authored sentences pending
   native-speaker review (#316).
-- **`jario`'s table transcription** — `docs/CONJUGATIONS.md:1392-1400`'s
+- **`jario`'s table transcription** — `docs/academic/CONJUGATIONS.md:1392-1400`'s
   grid is the source of truth, used directly over `VERB_COVERAGE.md:61`'s
   own abbreviated prose (which writes the niri-form example as `dariot`,
   one letter off from the grid's literal `dari(zki)t` → `darit`). Where the
@@ -718,14 +718,14 @@ form, the way it does for Ahalera/Baldintza/Ondorioa/Subjuntiboa (#352/#353)?
 
 **Conclusion: no — not as a separate synthetic form.** Reasoning:
 
-- `docs/CONJUGATIONS.md` §16.2's `NOR-NORK` imperative table (`ezazu`/`itzazu`,
+- `docs/academic/CONJUGATIONS.md` §16.2's `NOR-NORK` imperative table (`ezazu`/`itzazu`,
   `bedi`/`bitza`, `dezagun`/`ditzagun`) is derived mechanically from the
   `NOR-NORK` subjunctive root (§3) by dropping the leading `d-` —
   `dezazu` → `ezazu`. That `d-` only exists on the cells where `NOR` is
   3rd-person (`hura`/`haiek`, the `deza-`/`ditza-` stems); the cells where
   `NOR` is 1st/2nd person use the object-prefix forms instead (`nazazun`,
   `gaitzazun`, `zaitzazun`, …, per §3's full subjunctive grid,
-  `docs/CONJUGATIONS.md:370-378`) — there's no leading `d-` for the
+  `docs/academic/CONJUGATIONS.md:370-378`) — there's no leading `d-` for the
   imperative-formation rule to strip, so the mechanical derivation that
   produces every other person's imperative cell simply doesn't apply here.
 - This isn't just a documentation gap — §16.3's PCC re-verification confirms
@@ -777,7 +777,7 @@ follows from this — the synthetic drill is still the right thing to teach
 first (it's the form `VERB_COVERAGE.md` §4a commits to, and it's what makes
 these two count as "irregular synthetic morphology" rather than regular
 pool verbs per #329/#333's particularity audit) — but a future
-`docs/LEARNING_JOURNEY.md` gloss or in-app note could mention the
+`docs/academic/LEARNING_JOURNEY.md` gloss or in-app note could mention the
 periphrastic alternative as a "you'll also hear..." aside, the way
 `dativeOvergeneration` (#293) already flags real-usage variance on these
 same two verbs from the other direction (covert dative, not auxiliary
@@ -877,7 +877,7 @@ overlap among these nine siblings or any existing `nor-nork`/`nor` verb.
 
 **Decision:** added `hausnartu`, `argudiatu`, `ondorioztatu`, `gaitzetsi`, `aldarrikatu`, `plazaratu`, `sustatu`, `bultzatu`, `bermatu`, `babestu`, `ziurtatu`, `borobildu` (all `nor-nork`) to `VERBS`, completing #304's split. Morphology follows the same `-tzen`/`-ten`/`-ko` rules established in #319/#320: imperfective participle = stem + `-tzen` for the common case (`hausnartzen`, `argudiatzen`, `ondorioztatzen`, `aldarrikatzen`, `plazaratzen`, `sustatzen`, `bultzatzen`, `bermatzen`, `ziurtatzen`), or `-ten` for stems ending in the established coronal-obstruent set (`gaitzetsi`→`gaitzesten`, `babestu`→`babesten`, both `s`-final stems, same pattern as `idatzi`→`idazten`/`bereiztu`→`bereizten`). `borobildu`→`borobiltzen` follows `bildu`→`biltzen`'s `l`-final `-du`-allomorph pattern rather than a literal `borobildu`+`tzen` concatenation. Future = perfective participle + `-ko` throughout (all 12 end in a vowel, so no `-go` cases).
 
-**Sentence variety is deliberately minimal** — one frame per person per tense, rather than the richer pronoun/negative variant sets given to higher-frequency verbs — since #321 scoped this tier as recognition-only (`mode: 'recognition'`, no typed-production framings), so extra sentence variants would never surface in an exercise that uses them. `sentences.present` entries are wrapped as `{ text, validFor: [] }` per `docs/SENTENCE_FRAMES.md`'s requirement that every `nork`-agreement verb's present-tense sentences be explicit objects; `validFor: []` makes no unverified cross-verb claims rather than guessing distractor eligibility for a tier that won't get typed exercises anyway.
+**Sentence variety is deliberately minimal** — one frame per person per tense, rather than the richer pronoun/negative variant sets given to higher-frequency verbs — since #321 scoped this tier as recognition-only (`mode: 'recognition'`, no typed-production framings), so extra sentence variants would never surface in an exercise that uses them. `sentences.present` entries are wrapped as `{ text, validFor: [] }` per `docs/technical/SENTENCE_FRAMES.md`'s requirement that every `nork`-agreement verb's present-tense sentences be explicit objects; `validFor: []` makes no unverified cross-verb claims rather than guessing distractor eligibility for a tier that won't get typed exercises anyway.
 
 ## 2026-06-20 — #320: mid/low fodder tier + #304's unassigned verbs — 18 regular verbs, same rules as #319
 
@@ -906,7 +906,7 @@ overlap among these nine siblings or any existing `nor-nork`/`nor` verb.
 **Decision:** #284 deferred `jakin`'s plural-object forms because it's its
 own synthetic stem, not covered by either the `ukan` (`dit-` swap) or
 `eduki` (`-z-` infix) pattern those other verbs use. Rather than guess
-blindly, found that `docs/CONJUGATIONS.md` already has direct internal
+blindly, found that `docs/academic/CONJUGATIONS.md` already has direct internal
 evidence for this exact stem: its NOR-NORI subjunctive grid tabulates
 `jakin`'s own `daki-`/`zeki-` root taking a `-zki-` infix right before the
 person suffix (`dakidan`→`dakizkidan`, `zekidan`→`zekizkidan`, etc.).
@@ -934,7 +934,7 @@ doesn't remove the need for a speaker check.
 
 **Decision:** added a `presentPerfect` conjugation table to `izan`, `joan`,
 `etorri` (the `izan`-auxiliary branch) and `ikusi` (the `ukan`-auxiliary
-branch) — `docs/CONJUGATIONS.md` §11's formula (perfective participle +
+branch) — `docs/academic/CONJUGATIONS.md` §11's formula (perfective participle +
 *present* auxiliary) applied to each verb's own already-tabulated participle
 and present aux, the same swap `past`'s table already does with the past
 aux (`etorri naiz`/`joan naiz`/`ikusi dut`, all directly attested in §11's
@@ -973,7 +973,7 @@ ditugu`/`erosi genituen`/…). Reuses the same `<tense>Plural` naming as #162/
 the absolutive `NOR` argument going from singular to plural.
 
 For the periphrastic verbs riding `ukan` (`jan`/`edan`/`erosi`/`hartu`/
-`ikusi`/`nahi`), forms are the participle + `docs/CONJUGATIONS.md` §3's
+`ikusi`/`nahi`), forms are the participle + `docs/academic/CONJUGATIONS.md` §3's
 `NOR` = `haiek` column (`ditut`/`dituk`/`ditun`/`ditu`/`ditugu`/`dituzu`/
 `dituzue`/`dituzte` present; `nituen`/`hituen`/`zituen`/`genituen`/
 `zenituen`/`zenituzten`/`zituzten` past); future is each verb's `-ko`/`-go`
@@ -1171,7 +1171,7 @@ risk of subtle errors.
 
 **Decision:** Added `izan`/`ukan` toka/noka (`hura`/`haiek` only) and `ukan`/
 `jakin`'s `hi`-as-NORK present gender split, all sourced from
-`docs/CONJUGATIONS.md` §10's synthetic-verb allocutive table (`ukan`'s own
+`docs/academic/CONJUGATIONS.md` §10's synthetic-verb allocutive table (`ukan`'s own
 `hi`-as-NORK row is also used for `jakin`'s, per #144's prior decision that
 §7's blank `hik` row for `jakin` is filled by §10's data).
 
@@ -1200,7 +1200,7 @@ tables to `esan` (`recipient: 'hura'`, NORK still the varying `person`) and
 `eman` (`agent: 'ni'`, NORI still the varying `person`), reusing the same
 tense-key names as #164's NOR-NORI plural tables since both describe the
 same thing — the absolutive `NOR` argument going from singular to plural.
-Forms are taken directly from `docs/CONJUGATIONS.md` §5's `NOR`=haiek
+Forms are taken directly from `docs/academic/CONJUGATIONS.md` §5's `NOR`=haiek
 present/past grids: for `esan`, the `hari` row across the `NORK` columns
 (`dizkiot`/`dizkiozu`/`dizkio`/`dizkiogu`/`dizkiozue`/`dizkiote` present;
 `nizkion`/`zenizkion`/`zizkion`/`genizkion`/`zenizkioten`/`zizkioten` past);
@@ -1219,14 +1219,14 @@ were derived from the grid rather than independently verified by a speaker.
 tables to `gustatu`/`iruditu`/`ahaztu` — the same NORI-suffix family as their
 existing singular-`NOR` tables, but `-zki-`-infixed because the fixed `NOR`
 argument moves from `hura` ("it") to `haiek` ("they"), per
-`docs/CONJUGATIONS.md` §4's `haiek`/`NOR` column. Reused each verb's existing
+`docs/academic/CONJUGATIONS.md` §4's `haiek`/`NOR` column. Reused each verb's existing
 participle choice (`gustatu`/`iruditu`'s `-tzen` habitual, `ahaztu`'s bare
 resultative participle) — only the dative auxiliary changes shape between the
 singular and plural tables. Added a `presentPlural` `sentences` table too,
 swapping each verb's singular-object cue ("hau"/"ongi"/"liburua") for a
 genuine plural-or-pluralizable noun phrase ("hauek"/"gauza hauek
 ongi"/"giltzak") — `ahaztu`'s "Niri giltzak ___." directly mirrors the
-`docs/LEARNING_JOURNEY_PROPOSED.md`/#164 worked example ("Giltzak ahaztu
+`docs/academic/LEARNING_JOURNEY_PROPOSED.md`/#164 worked example ("Giltzak ahaztu
 zaizkit" = "I forgot the keys").
 
 **Flag for native-speaker review:** same standing flag as #146's singular
@@ -1251,7 +1251,7 @@ dative experiencer, per CONJUGATIONS.md §4's `hari`/NOR=`hura` column:
   `gustatzen zait`/`zaizu`/`zaio`/`zaigu`/`zaizue`/`zaie` and
   `iruditzen zait`/.... `ahaztu` instead uses the **bare participle**
   (`ahaztu zait`/`zaizu`/...) — a resultative/perfect-like "it is in a state
-  of being forgotten to me" reading, per `docs/LEARNING_JOURNEY_PROPOSED.md`'s
+  of being forgotten to me" reading, per `docs/academic/LEARNING_JOURNEY_PROPOSED.md`'s
   dedicated `ahaztu` table and its Unit 23 example ("Liburua ahaztu zait").
   `ahazten zait` ("I tend to forget it", habitual) was *not* used.
 - Past: bare participle + past dative aux for all three —
@@ -1296,7 +1296,7 @@ axis-fixed metadata:
   distractor-floor fix anticipates.
 
 **Present tense is periphrastic** (`esaten`/`ematen` + the `di-` ditransitive
-auxiliary), matching `docs/LEARNING_JOURNEY_PROPOSED.md`'s Unit 25 examples
+auxiliary), matching `docs/academic/LEARNING_JOURNEY_PROPOSED.md`'s Unit 25 examples
 ("ematen diot", "esaten diozu") rather than CONJUGATIONS.md §8's bare `diot`
 (which §8 frames as `esan`'s own synthetic present but is ambiguous with the
 shared `eman`/other-ditransitive auxiliary out of context). Past/future drop
@@ -1418,7 +1418,7 @@ future pass alongside `jakin`'s gap.
 
 ## 2026-06-12 — Future-tense (`Geroa`) forms for Units 1-8's 12 verbs, `izan` as suppletive future participle for `ukan`/`eduki`, `ari` excluded
 
-**Decision:** Per `docs/CONJUGATIONS.md` §11, every verb's future is its
+**Decision:** Per `docs/academic/CONJUGATIONS.md` §11, every verb's future is its
 `-ko`/`-go` prospective participle + the present tense of its agreement-
 appropriate auxiliary (`izan` for `nor` verbs, `ukan` for `nor-nork` verbs) —
 the same auxiliary table each verb already uses for its periphrastic present,
@@ -1449,7 +1449,7 @@ journey doesn't ask for.
 **Decision:** Added `jan`/`edan`/`erosi` as new `###` subsections appended to
 §7 (after `entzun`), same placement precedent as `ikusi`/`entzun` themselves
 ("avoid renumbering §8-§13"). All three are regular periphrastic NOR-NORK
-verbs (`docs/VERB_COVERAGE.md` §4b's "`-i`"/"`-n`" verb groups): imperfective
+verbs (`docs/academic/VERB_COVERAGE.md` §4b's "`-i`"/"`-n`" verb groups): imperfective
 participle (`jaten`/`edaten`/`erosten`) + `ukan`'s present auxiliary for
 "Present (oraina)", perfective participle (`jan`/`edan`/`erosi`) + `ukan`'s
 past auxiliary for "Past (lehena)" — the exact same table shape as `ikusi`/

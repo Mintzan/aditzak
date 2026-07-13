@@ -101,7 +101,7 @@ Non-secret config lives in `[vars]`:
 
 ### Set the Resend API key as a secret
 
-Same pattern as the feedback worker (`docs/CLOUDFLARE_FEEDBACK_WORKER.md`):
+Same pattern as the feedback worker (`docs/technical/CLOUDFLARE_FEEDBACK_WORKER.md`):
 
 ```sh
 cd sync-worker
@@ -147,7 +147,7 @@ Secrets and variables → Actions → Secrets**):
 - `CLOUDFLARE_ACCOUNT_ID`
 
 If these are already set up for `worker/` (see
-`docs/CLOUDFLARE_FEEDBACK_WORKER.md`), the same token/account work here too —
+`docs/technical/CLOUDFLARE_FEEDBACK_WORKER.md`), the same token/account work here too —
 just make sure the API token's permissions also cover **Account → D1 →
 Edit** (the "Edit Cloudflare Workers" template doesn't include D1 by
 default; use a custom token with both **Workers Scripts: Edit** and **D1:

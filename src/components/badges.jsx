@@ -86,7 +86,7 @@ export function Stars({ count }) {
 // re-renders this component — it never touches `hearts` itself (that stays
 // exactly the lazily-recomputed value `App.jsx` passed in), so this is
 // purely cosmetic and doesn't fight the "no background regen timer" design
-// (see `docs/HEART_ECONOMY_ANALYSIS.md`).
+// (see `docs/technical/HEART_ECONOMY_ANALYSIS.md`).
 //
 // `onClick`, when given, renders the pill as a button (e.g. the header usage
 // links through to the Profile tab's full hearts card) instead of a static

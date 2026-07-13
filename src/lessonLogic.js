@@ -228,7 +228,7 @@ export function repairStreak(streak, points, today, deviceId) {
 
 // =============================================================================
 // Hearts (lives): deducted on a wrong answer, regenerated passively over
-// time, purchasable with points. See `docs/HEART_ECONOMY_ANALYSIS.md` for the
+// time, purchasable with points. See `docs/technical/HEART_ECONOMY_ANALYSIS.md` for the
 // full design rationale (edge cases, why there's no server-side anti-cheat).
 // =============================================================================
 
@@ -417,7 +417,7 @@ export function mergePoints(local, cloud) {
 // stale partial one. This can't fully prevent a multi-device double-spend
 // (deplete hearts on one device, then play on a second device that hasn't
 // synced the depletion yet) — an accepted limitation, see
-// `docs/HEART_ECONOMY_ANALYSIS.md`, not a bug to fix here.
+// `docs/technical/HEART_ECONOMY_ANALYSIS.md`, not a bug to fix here.
 export function mergeHearts(local, cloud) {
   const hasLocal = local && Object.keys(local).length > 0
   const hasCloud = cloud && Object.keys(cloud).length > 0
@@ -444,7 +444,7 @@ export function mergeSyncPayload(local, cloud) {
 
 // Score threshold (≥80%, per `computeStars`) a `gate: true` unit's final
 // lesson must reach before the lesson after it unlocks (see
-// `getUnlockedLessonIds`/`isLockedByGateScore`) — `docs/LEARNING_JOURNEY_PROPOSED.md`,
+// `getUnlockedLessonIds`/`isLockedByGateScore`) — `docs/academic/LEARNING_JOURNEY_PROPOSED.md`,
 // design principle 4. Below this the gate is a "soft wall": it stays
 // replayable and nothing already-unlocked re-locks, but the next lesson
 // shows a "needs 80% to continue" prompt instead of unlocking.
@@ -765,7 +765,7 @@ function buildOptions(table, persons, person, extraCandidates = [], borrowPool =
 // esan, eman, ...). Mixing across these boundaries would produce a
 // structurally broken sentence rather than a "wrong verb, right shape"
 // distractor — that's deliberately out of scope here (see Delivery 3 in
-// `docs/EXERCISE_VARIETY_PLAN.md`). No current verb has `nori`, so the added
+// `docs/technical/EXERCISE_VARIETY_PLAN.md`). No current verb has `nori`, so the added
 // check is a no-op until #147 adds the first ditransitive verb.
 export function agreementsCompatible(a, b) {
   return a.includes('nork') === b.includes('nork') && a.includes('nori') === b.includes('nori')
@@ -1174,7 +1174,7 @@ export function getComposedTable(verb, tense) {
   // reusing that field here would silently rewrite their base conjugations
   // (or manufacture a plural axis, plus the cross-verb `validFor` slots
   // that come with it) without the check/review that requires
-  // (`docs/DISTRACTOR_STRATEGY.md` §4.2 for the `validFor` half). `future`/
+  // (`docs/technical/DISTRACTOR_STRATEGY.md` §4.2 for the `validFor` half). `future`/
   // `futurePlural` have no future row of their own in the skeleton (same
   // reasoning as `getByNoriComposedTable`'s future handling below) — only
   // the participle differs, so both reuse the `present` column under the
@@ -1284,7 +1284,7 @@ function hasAmbiguousTypedForm(verb, tense, person, verbs, objectAxis) {
 // `{ [person]: Array<{ verbId, form }> }`, passed through to
 // `generateQuestions`'s `extraCandidates`; `filterExtraCandidates` then narrows
 // each person's list down to the forms a given sentence's `validFor` tag (see
-// `docs/SENTENCE_FRAMES.md`) allows, before handing the survivors to
+// `docs/technical/SENTENCE_FRAMES.md`) allows, before handing the survivors to
 // `buildOptions`. Only persons present in `verb.conjugations[tense]` get an
 // entry, and only if at least one compatible sibling has a form for that
 // person.
@@ -1393,7 +1393,7 @@ export function pickVariant(value) {
 
 // A sentence-bearing entry (`sentences`/`pronounSentences`/`negativeSentences`
 // `[tense][person]`, after `pickVariant`) is either a bare string — untagged,
-// pre-`validFor` migration (see `docs/SENTENCE_FRAMES.md`) — or a
+// pre-`validFor` migration (see `docs/technical/SENTENCE_FRAMES.md`) — or a
 // `{ text, validFor }` object. Normalizes either shape to `{ text, validFor }`
 // so callers can read `.text` uniformly; a bare string normalizes to
 // `validFor: undefined` (the "not yet vetted" state — see
@@ -1409,7 +1409,7 @@ export function normalizeSentence(value) {
 // `getCrossVerbCandidates`/`collectCrossSourceCandidates`'s sibling pool, or
 // `undefined` if there are none) down to the forms allowed to appear as
 // distractors alongside a sentence with the given `validFor` tag — see
-// `docs/SENTENCE_FRAMES.md`:
+// `docs/technical/SENTENCE_FRAMES.md`:
 //   - `validFor` absent (untagged, not yet vetted) — the safe default: exclude
 //     every sibling, returning `[]`.
 //   - `validFor: []` (explicitly empty, vetted) — exclude nothing: every
@@ -1468,7 +1468,7 @@ function buildSpotErrorQuestion(table, sentences, personsWithSentences, person, 
 }
 
 // Minimum word count (post-fill, post-split) for a sentence to be eligible
-// for `kind: 'word-order'` — see `docs/EXERCISE_ENGINE.md`'s "Word-order
+// for `kind: 'word-order'` — see `docs/technical/EXERCISE_ENGINE.md`'s "Word-order
 // question contract (#185)". Below this, a shuffled cloud has too few
 // permutations (a 3-word sentence has only 6) to test real word-order
 // knowledge rather than trial-and-error.
@@ -1598,7 +1598,7 @@ function buildWordOrderQuestion(table, sentence, person) {
 // `verb.conjugations[tense]` and have a sentence that can make a sibling
 // verb's same-person form read as genuinely wrong. Each kind narrows its
 // person's candidates via `filterExtraCandidates` against that *specific*
-// sentence's `validFor` tag (see `docs/SENTENCE_FRAMES.md`) — so an untagged
+// sentence's `validFor` tag (see `docs/technical/SENTENCE_FRAMES.md`) — so an untagged
 // sentence contributes no extra candidates (the safe default), while a
 // `validFor: []` sentence admits all of them. Not used for `pronoun`, whose
 // options come from a different table (the verb's `personAxis` pronoun
@@ -1619,7 +1619,7 @@ function buildWordOrderQuestion(table, sentence, person) {
 // options/no `spot-error`, same as before #139.
 //
 // `mode: 'recognition'` (#140, optional — `LESSONS` entries for advanced
-// [R]-scoped units per `docs/LEARNING_JOURNEY_PROPOSED.md`, e.g. the dative
+// [R]-scoped units per `docs/academic/LEARNING_JOURNEY_PROPOSED.md`, e.g. the dative
 // conditional or ditransitive imperative/subjunctive) permanently drops the
 // typed/production framings (`type-verb`/`type-pronoun`/`type-negative`) —
 // like `noTyping`, but for the lesson's entire lifetime rather than just a
@@ -1661,7 +1661,7 @@ function buildWordOrderQuestion(table, sentence, person) {
 // #141's case-frame/cross-tense lures (`getCaseFrameLure`/
 // `getCaseFramePronounLure`/`getCrossTenseLure`) add up to two further
 // guaranteed distractors, on top of the same-table ones above, for the rows
-// of `docs/LEARNING_JOURNEY_PROPOSED.md`'s Distractor Engine Matrix
+// of `docs/academic/LEARNING_JOURNEY_PROPOSED.md`'s Distractor Engine Matrix
 // implementable with existing `izan`/`ukan` data: a NOR-NORK verb's present
 // (`naiz` alongside `dut`), any verb's past (`nuen` alongside `nintzen`, and
 // the verb's own present form alongside its past one), and `pronoun`
@@ -1790,7 +1790,7 @@ export function generateQuestions(
     // mark a learner's grammatical-but-differently-focused order wrong. Only
     // sentences whose taught/neutral order has no reasonable competing
     // arrangement a learner would produce carry the tag — see
-    // `docs/EXERCISE_ENGINE.md`'s "Word-order safety (`wordOrderSafe`)".
+    // `docs/technical/EXERCISE_ENGINE.md`'s "Word-order safety (`wordOrderSafe`)".
     const meetsWordOrderThreshold = (candidate) => {
       if (!candidate || !candidate.wordOrderSafe) return false
       const wordCount = candidate.text.replace('___', table[person]).split(' ').length
@@ -1889,7 +1889,7 @@ export function generateQuestions(
 // for every (source, person) with both a `sentences[tense][person]` and a
 // `conjugations[tense][person]`, collects the other sources' same-person
 // forms that `agreementMatches` accepts as siblings *and* that the anchor
-// sentence's `validFor` tag (see `docs/SENTENCE_FRAMES.md`, via
+// sentence's `validFor` tag (see `docs/technical/SENTENCE_FRAMES.md`, via
 // `filterExtraCandidates`) doesn't exclude — an untagged sentence excludes all
 // of them (the safe default), while `validFor: []` excludes none — and keeps
 // the combination only if that yields at least 2 distinct option values (the
@@ -2387,7 +2387,7 @@ export function recordErrors(errorStats, misses) {
 
 // Same `verbId:tense:person` key `recordErrors` builds — a plain lookup, 0
 // for a form with no recorded misses. Used by `ExerciseScreen.jsx`'s
-// in-lesson "error-prone pattern" mascot callout (docs/VISUAL_IDENTITY.md's
+// in-lesson "error-prone pattern" mascot callout (docs/technical/VISUAL_IDENTITY.md's
 // §1C "adopted trigger": flag a genuinely error-prone pattern, not a
 // missed-practice nag) — reuses this same persisted-across-sessions data
 // rather than a new static "commonly confused" annotation on `verbs.js`,
@@ -2428,7 +2428,7 @@ export function auxCellKey(verb, tense, person, objectAxis) {
 }
 
 // Derives per-cell mastery states from the learner's progress and error data
-// (D1, docs/AUXILIARY_FIRST_PLAN.md). Returns a sparse map keyed by
+// (D1, docs/academic/AUXILIARY_FIRST_PLAN.md). Returns a sparse map keyed by
 // `auxCellKey`; cells absent from the map are 'untouched'.
 //
 // Owned (≈ mastered): 0 recorded misses, ≥2 distinct verb carriers, and ≥3

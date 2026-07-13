@@ -1,10 +1,10 @@
 # Aditzak — Learning Journey (acquisition order)
 
-**Status: current/authoritative.** Mirrors what's actually implemented in `journey.js`/`LESSONS`. For the still-pending redesign, see `LEARNING_JOURNEY_PROPOSED.md` (spec) and `archive/LEARNING_JOURNEY_EVALUATION.md` (why).
+**Status: current/authoritative.** Mirrors what's actually implemented in `journey.js`/`LESSONS`. For the still-pending redesign, see `LEARNING_JOURNEY_PROPOSED.md` (spec) and `docs/archive/LEARNING_JOURNEY_EVALUATION.md` (why).
 
-> **Looking for a plain list of units/lessons — what each one teaches and which conjugations it introduces — rather than the design rationale?** See `docs/CURRICULUM_MAP.md`. That document is generated straight from `journey.js`/`lessons.js`, so it always matches what's actually implemented; this document is kept as the *why* — the pedagogical reasoning, sequencing trade-offs, and data/engine implications behind each unit — split out on 2026-07-03 (see `docs/DECISIONS.md`) once both concerns got too tangled to read as one file.
+> **Looking for a plain list of units/lessons — what each one teaches and which conjugations it introduces — rather than the design rationale?** See `docs/academic/CURRICULUM_MAP.md`. That document is generated straight from `journey.js`/`lessons.js`, so it always matches what's actually implemented; this document is kept as the *why* — the pedagogical reasoning, sequencing trade-offs, and data/engine implications behind each unit — split out on 2026-07-03 (see `docs/DECISIONS.md`) once both concerns got too tangled to read as one file.
 
-> **Rebalanced 2026-06-27 (`archive/LEARNING_JOURNEY_REBALANCE.md`).** The
+> **Rebalanced 2026-06-27 (`docs/archive/LEARNING_JOURNEY_REBALANCE.md`).** The
 > **"Current implemented structure" table immediately below is the authoritative
 > map** — it is generated from `journey.js`'s live numbering, `bonus`/`gate`
 > flags, and lesson counts. The detailed per-phase prose tables further down
@@ -102,7 +102,7 @@ marks score-gated Refresh Gates.
 > were then collapsed into one unit on 2026-06-23, #423 — shifting every
 > unit from the old Unit 22 onward back down by one, to 21 onward — see
 > `docs/DECISIONS.md`). Unit numbers 1–10
-> still match `docs/LEARNING_JOURNEY_PROPOSED.md`'s "N-n" scheme; **from Unit
+> still match `docs/academic/LEARNING_JOURNEY_PROPOSED.md`'s "N-n" scheme; **from Unit
 > 12 through 14 the live number is that spec's N-n + 1** (the
 > present-perfect offset); **Unit 15 has no PROPOSED-spec equivalent** (it's
 > wholly new, added by #350); **from Unit 16 through 21 it's N-n + 3** (the
@@ -136,7 +136,7 @@ marks score-gated Refresh Gates.
    the start, and `hi` is **deferred** to Phase V's Stage 12 (Units 38–41),
    which teaches it *together with* the allocutive register (hitanoa), staged
    across four units rather than crammed into one — see
-   `archive/LEARNING_JOURNEY_EVALUATION.md` finding F1. The "core" person grid for
+   `docs/archive/LEARNING_JOURNEY_EVALUATION.md` finding F1. The "core" person grid for
    Phases I–IV is `ni/zu/hura/gu/zuek/haiek`.
 3. **Functional grouping over grammatical grouping.** A learner doesn't care
    that `ikusi` is periphrastic and `eduki` is synthetic — both just say
@@ -156,7 +156,7 @@ marks score-gated Refresh Gates.
    **absolutive** plural (`gara`/`goaz` — marked on the stem: `izan`, `egon`,
    `joan`, `etorri`), Unit 8 the **ergative** plural (`dugu`/`dute` — a suffix
    on the fixed `du-` stem: `ukan`, `ikusi`). Splitting them prevents
-   `†dugara`-type blending (`archive/LEARNING_JOURNEY_EVALUATION.md` finding F4).
+   `†dugara`-type blending (`docs/archive/LEARNING_JOURNEY_EVALUATION.md` finding F4).
    **Current status**: both units are implemented — Unit 7 keeps its
    original `unit-6-review-1` `izan`+`ukan` pairing (a small absolutive/
    ergative mix left as-is, see `docs/DECISIONS.md`), while `ikusi`'s plural
@@ -178,7 +178,7 @@ marks score-gated Refresh Gates.
    isolation, before the unit's own review caps it off. Flagged units (see
    `LEARNING_JOURNEY_PROPOSED.md` for the per-lesson breakdown of each):
    - **Units 2–4** — the ergative leap, given a three-unit on-ramp instead of
-     one crowded unit (`archive/LEARNING_JOURNEY_EVALUATION.md` findings F6/F7): Unit 2
+     one crowded unit (`docs/archive/LEARNING_JOURNEY_EVALUATION.md` findings F6/F7): Unit 2
      introduces `ukan` (first `nor-nork`/ergative subject) **alone**, with
      extra practice isolating the `ni` → `nik` shift; Unit 3 is a dedicated,
      zero-new-verb "Ni vs. Nik" case-marking checkpoint drilling bare
@@ -266,13 +266,13 @@ slices, and `-arazi` are spelled out in full in
   **Resolved**: simple/completed past for `joan`/`etorri`/`ibili`
   (`joan nintzen`, `etorri nintzen`, `ibili nintzen`) was implemented in Units 12 and 18 ("Looking Back I/II") via the periphrastic Lehenaldi Mugatua
   pattern (§11: perfective participle + `izan`'s past auxiliary, §1) — see
-  `docs/LANGUAGE_DECISIONS.md`. Unit 24 ("Motion in Progress (Past)") has now
+  `docs/academic/LANGUAGE_DECISIONS.md`. Unit 24 ("Motion in Progress (Past)") has now
   implemented §6's distinct imperfective forms (`nindoan`/`zetorren`/
   `nenbilen`).
 - **Restricting a lesson to `ni`/`zu`/`hura`** isn't something the current
   `generateQuestions`/`conjugations` shape distinguishes by default.
   **Resolved** via a `persons` filter on lessons, applied retroactively where
-  needed — see `docs/EXERCISE_ENGINE.md`'s "Phase I's 3-person horizon" and
+  needed — see `docs/technical/EXERCISE_ENGINE.md`'s "Phase I's 3-person horizon" and
   `docs/DECISIONS.md`'s 2026-06-12 entries. The app-wide rule is: never drill
   more than 3 grammatical persons in a single exercise.
 - **Negation (`ez`) drills (Unit 10)** needed a sentence pattern this app
@@ -294,7 +294,7 @@ slices, and `-arazi` are spelled out in full in
   `negative`/`type-negative` (the roll pool becomes `[negative,
   type-negative, word-order]` once eligible), since auxiliary-fronting is
   exactly the word-order change this kind is best at drilling. See
-  `docs/EXERCISE_ENGINE.md`'s "Word-order question contract" and
+  `docs/technical/EXERCISE_ENGINE.md`'s "Word-order question contract" and
   `docs/DECISIONS.md`.
 - **Score-gating (Units 23, 33, 45)** needs `getUnlockedLessonIds` to check
   `bestStars >= 2` on the gate's review lesson before unlocking the next unit,
@@ -307,17 +307,17 @@ slices, and `-arazi` are spelled out in full in
   `ukan` auxiliary), so its `conjugations`/`sentences`/`pronounSentences`
   tables follow the Tier 1 pattern in `EXERCISE_ENGINE.md`. The only new work
   is content: picking representative verbs and writing their causativized
-  forms — `docs/SAMPLE_SENTENCES.md`'s causative bank is the starting
+  forms — `docs/academic/SAMPLE_SENTENCES.md`'s causative bank is the starting
   material. The `-arazi`/`-erazi` conditioning rule is specified in
   `LEARNING_JOURNEY_PROPOSED.md`.
 - **`jakin`'s past tense (`CONJUGATIONS.md` §7) had gaps** (`hik`/`zuk`/`zuek`
   were `—`), which is why `jakin` had been left out of Unit 14 ("Looking Back
   I — The 'ukan' Past Pool") despite riding `ukan`'s suffix family there too.
   #245 sourced the missing rows (`hekien`/`zenekien`/`zenekiten`) and added
-  `jakin` to Unit 14's past pool — see `docs/LANGUAGE_DECISIONS.md`.
+  `jakin` to Unit 14's past pool — see `docs/academic/LANGUAGE_DECISIONS.md`.
 - **Unit 9's `ari` examples cover three imperfective participles** (`jaten`,
   `egiten`, `irakurtzen`/`ikasten`) rather than resting on `jaten` alone — see
-  `docs/LANGUAGE_DECISIONS.md` (#244). `jaten` (`jan`'s participle, Unit 14's
+  `docs/academic/LANGUAGE_DECISIONS.md` (#244). `jaten` (`jan`'s participle, Unit 14's
   verb) remains the anchor example, since Unit 14 teaches `jan`'s full table
   anyway, so introducing its participle here costs nothing extra later and
   gives Unit 14 a head start.
@@ -334,7 +334,7 @@ arrive at Units 7–8). Pronoun stage: **A (explicit)**.
 | Unit | Focus | Payload | Persons | Ref | Data status |
 |---|---|---|---|---|---|
 | 1 | **izan & egon** — Who and Where, present | "I am a student." / "Where are you?" / "He is at home." | ni/zu/hura: `naiz`/`zara`/`da`, `nago`/`zaude`/`dago` | §1 (izan), §6 (egon) | ✅ implemented |
-| 2 | **ukan — The Ergative Leap** — present (object fixed `hura`), taught alone | "I have a car." (`Nik auto bat dut.`) / "Do you have coffee?" (`Kafea duzu?`) / "He has a house." (`Hark etxe bat du.`) | ni/zu/hura: `dut`/`duzu`/`du` | §3 (ukan) | ✅ implemented — extra practice isolating the absolutive→ergative `ni`→`nik` shift (`archive/LEARNING_JOURNEY_EVALUATION.md` finding F6) |
+| 2 | **ukan — The Ergative Leap** — present (object fixed `hura`), taught alone | "I have a car." (`Nik auto bat dut.`) / "Do you have coffee?" (`Kafea duzu?`) / "He has a house." (`Hark etxe bat du.`) | ni/zu/hura: `dut`/`duzu`/`du` | §3 (ukan) | ✅ implemented — extra practice isolating the absolutive→ergative `ni`→`nik` shift (`docs/archive/LEARNING_JOURNEY_EVALUATION.md` finding F6) |
 | 3 | **"Ni" vs. "Nik" — The Case-Marking Checkpoint** — zero new verbs | `Ni ikaslea naiz` vs. `Nik liburua dut.` / `Zu etxean zaude` vs. `Zuk kafea duzu.` | ni/zu/hura: contrasts bare (`izan`/`egon`) vs. ergative (`ukan`) subjects | §1/§3/§6 | ✅ implemented — drills ergative `-k` drift, the most common beginner error, at its source (finding F7); the "spot the drift" framing reuses today's case-mixer/verb-choice primitives, see `docs/DECISIONS.md` |
 | 4 | **jakin & nahi** — Knowing & Wanting, `jakin` (synthetic, same ergative suffixes as `ukan`) | "I don't know." (`Ez dakit.`) / "Do you want to come?" (`Etorri nahi duzu?`) | ni/zu/hura: `dakit`/`dakizu`/`daki`, `nahi dut`/`nahi duzu`/`nahi du` | §7 (jakin), VERB_COVERAGE §5 (`nahi`) | ✅ implemented |
 
@@ -378,7 +378,7 @@ participle onto the *past* auxiliary (`etorri naiz` → `etorri nintzen`,
 `ikusi dut` → `ikusi nuen`), which lets them foreground the **recency
 contrast** — `gaur etorri da` ("came today / has come", present perfect) vs.
 `atzo etorri zen` ("came yesterday", simple past) — that the `atzo`-only
-past-frame data fix had to sidestep (see `docs/LANGUAGE_DECISIONS.md`'s
+past-frame data fix had to sidestep (see `docs/academic/LANGUAGE_DECISIONS.md`'s
 present-perfect scope note). This follows the journey's standing principle of
 **not introducing two novelties at once** (cf. the ergative leap's 3-unit
 on-ramp, the Expansion split into Units 7–8). It is deliberately *not* a late
@@ -414,9 +414,9 @@ after 10+ units of present-only drilling.
 Unit 13's verb pool here — it already has full present-tense
 `sentences`/`pronounSentences`, so it costs nothing extra to include. `hartu`
 (new in this unit, #143) stages the first `-tzen`/`-ten` minimal pair against
-`jan`'s `jaten` — see `docs/LANGUAGE_DECISIONS.md` for its sourcing. Unit 14
+`jan`'s `jaten` — see `docs/academic/LANGUAGE_DECISIONS.md` for its sourcing. Unit 14
 follows Unit 13 immediately so every pooled verb's present (Unit 13) is taught
-before its past (this unit) — closing `archive/LEARNING_JOURNEY_EVALUATION.md` finding
+before its past (this unit) — closing `docs/archive/LEARNING_JOURNEY_EVALUATION.md` finding
 F8. Unit 15 (`maite izan`) follows immediately after — same `ukan` NOR-NORK
 paradigm just taught, recombined along its other axis (the object rather than
 the subject), landing on "Maite zaitut" as its payoff; see `docs/DECISIONS.md`
@@ -492,7 +492,7 @@ Pronoun stage: **D (full null-anaphora; dative/ergative droppable)**.
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|
 | 25 | **The NOR-NORI Present — zait/zaizu/zaio** — 3rd-person subjects (`zaigu`/`zaizue`/`zaie` too) | "I like it." / "It seems good to me." / "I forgot (it slipped my mind)." | §4 (gustatu, iruditu, ahaztu) | available (#146, #164, #385) — singular-NOR present (#146) plus plural-NOR (`-zki-`) production drills, a number-split review, a case-frame buffer review (#164), and a pooled mixer review widening the pattern to `jarraitu`/`jario` (#385) |
-| 26 | **NOR-NORI Past & Future — Dative Across Time** — recombining Unit 25's grid with the periphrastic past and `-ko`/`-go` future | "I liked it yesterday." (`Atzo gustatu zitzaidan`) / "I'll forget the keys." (`Giltzak ahaztuko zaizkit`) | §4; §11 | available (closes `archive/LEARNING_JOURNEY_EVALUATION.md` finding F2) — plus a pooled mixer review widening the three founding verbs to `jarraitu`/`jario`, mirroring Unit 25's present pool (#385) |
+| 26 | **NOR-NORI Past & Future — Dative Across Time** — recombining Unit 25's grid with the periphrastic past and `-ko`/`-go` future | "I liked it yesterday." (`Atzo gustatu zitzaidan`) / "I'll forget the keys." (`Giltzak ahaztuko zaizkit`) | §4; §11 | available (closes `docs/archive/LEARNING_JOURNEY_EVALUATION.md` finding F2) — plus a pooled mixer review widening the three founding verbs to `jarraitu`/`jario`, mirroring Unit 25's present pool (#385) |
 | 27 | **The NOR-NORI Object Axis — natzaizu/gatzaizu** — `presentByNor`/`pastByNor` (#358): NOR shifts off the default `hura`/`haiek` to `ni`/`gu`/`zuek`, with NORI fixed at `zu` — direct contrast with Units 25-26's stimulus-is-3rd-person forms; #419 then drills the rest of the table by fixing NORI at `ni`/`hura`/`gu`/`zuek`/`haiek` in turn | "Do you like me?" (`Gustatzen natzaizu?`) / "I like him." (`Gustatzen natzaio.`) | §4 | available (#358, #359, #419) — #441 widened the pool to `jarraitu` and added a pooled cross-verb review per NORI value; #469 then collapsed the 36 now-redundant single-verb lessons, leaving just the 12 pooled reviews (one per tense per NORI value), mirroring Units 32/33's earlier collapses (#445, #446) |
 
 #### Stage 9: Communication & Giving (NOR-NORI-NORK)
@@ -531,13 +531,13 @@ Two different moods with different difficulty profiles get their own units —
 the imperative is concrete, high-utility, and second-person, taught first; the
 subjunctive barely exists as a standalone form outside subordinate clauses, so
 Unit 35 teaches it as a *syntactic construction*, recognition-first (see
-`archive/LEARNING_JOURNEY_EVALUATION.md` finding F3).
+`docs/archive/LEARNING_JOURNEY_EVALUATION.md` finding F3).
 
 #### Stage 12: The Intimate Register (`hi` + Hitanoa)
 
 `hi` enters here for the first time. Four units stage three independent
 novelties — new person, addressee-agreement, gender — one at a time (see
-`archive/LEARNING_JOURNEY_EVALUATION.md` finding F1).
+`docs/archive/LEARNING_JOURNEY_EVALUATION.md` finding F1).
 
 | Unit | Focus | Payload | Ref | Data status |
 |---|---|---|---|---|

@@ -1,5 +1,5 @@
 // Cloudflare Worker: magic-link auth + cross-device progress sync backend
-// for the Aditzak app, backed by D1. See docs/CLOUDFLARE_SYNC_WORKER.md for
+// for the Aditzak app, backed by D1. See docs/technical/CLOUDFLARE_SYNC_WORKER.md for
 // setup.
 
 import { corsHeaders, jsonResponse } from './cors.js'

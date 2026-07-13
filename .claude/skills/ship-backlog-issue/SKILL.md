@@ -23,7 +23,7 @@ You're working through this repo's GitHub issue backlog end to end: pick → imp
 
 - Read `CLAUDE.md` and `docs/DECISIONS.md` first — this repo expects settled architectural decisions to be respected, not relitigated.
 - Make the smallest correct change that resolves the issue. Follow the project's existing patterns (e.g. `JOURNEY`/`LESSONS`/`VERBS` conventions for journey changes — see CLAUDE.md's "Working on the learning journey" section).
-- If the change is a notable/non-obvious decision, add a dated entry to `docs/DECISIONS.md` (or `docs/LANGUAGE_DECISIONS.md` for conjugation-data calls), per the project's own logging convention.
+- If the change is a notable/non-obvious decision, add a dated entry to `docs/DECISIONS.md` (or `docs/academic/LANGUAGE_DECISIONS.md` for conjugation-data calls), per the project's own logging convention.
 
 ## 4. Run the same checks CI runs — before pushing
 

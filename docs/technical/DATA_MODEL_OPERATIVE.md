@@ -8,7 +8,7 @@ optional cloud-sync snapshot of that state.
 
 The **academic** half — the hand-written curriculum data (`VERBS`, `LESSONS`,
 `JOURNEY`, `READING_ITEMS`) — is documented separately in
-`docs/DATA_MODEL_ACADEMIC.md`.
+`docs/academic/DATA_MODEL_ACADEMIC.md`.
 
 This is a map, not a spec — the authoritative shape documentation lives as
 comments next to the code (`src/storage.js`, `src/lessonLogic.js`,
@@ -80,7 +80,7 @@ the loader — and provide a migration if the data is worth keeping (see
 | `aditzak:streak:v1` | `{ currentStreak, longestStreak, lastActiveDate }` — `lastActiveDate` is a local-timezone `'YYYY-MM-DD'` string (`getLocalDateString`). Same-day repeat is a no-op; next-day extends; a bigger gap restarts at 1. Streak repair backdates `lastActiveDate` to yesterday. | `recordDailyStreak`, `repairStreak` |
 | `aditzak:points:v2` | A **PN-Counter**: `{ earned: { [deviceId]: n }, spent: { [deviceId]: n } }`. Each device only increments its own entries, which is what makes cross-device merging lossless and order-independent. Balance = Σ earned − Σ spent (`getPointsBalance`). Migrates a legacy `v1` `{ balance }` into this device's `earned`. | `addPoints`, `repairStreak`, `buyHeart` |
 | `aditzak:errors:v1` | `{ ['verbId:tense:person']: { verbId, tense, person, count, lastMissed } }` — first-attempt misses, accumulated per form. Feeds weak-spot review questions (`getWeakSpotQuestions`) and the in-lesson "error-prone pattern" callout. | `recordErrors` |
-| `aditzak:hearts:v1` | `{ currentHearts, lastHeartChangeTimestamp }` — the empty object means "full hearts, nothing pending" (`MAX_HEARTS = 5`); regen is computed lazily from the timestamp (`applyHeartRegen`, 4 h/heart), hearts are deducted on wrong answers and purchasable with points. See `docs/HEART_ECONOMY_ANALYSIS.md`. | `deductHeart`, `applyHeartRegen`, `buyHeart` |
+| `aditzak:hearts:v1` | `{ currentHearts, lastHeartChangeTimestamp }` — the empty object means "full hearts, nothing pending" (`MAX_HEARTS = 5`); regen is computed lazily from the timestamp (`applyHeartRegen`, 4 h/heart), hearts are deducted on wrong answers and purchasable with points. See `docs/technical/HEART_ECONOMY_ANALYSIS.md`. | `deductHeart`, `applyHeartRegen`, `buyHeart` |
 | `aditzak:deviceId:v1` | A random UUID generated once per device — the namespace for this device's PN-Counter entries. | `getDeviceId` |
 | `aditzak:session:v1` | `{ token, email, expiresAt }` — the signed-in sync session (bearer token from `/auth/verify`). Unlike the maps, missing/invalid/expired reads as `null`, never `{}`. Expiry is computed locally from `SESSION_TTL_MS` (60 days, mirroring the worker). | `accountSessionStorage` |
 
@@ -89,8 +89,8 @@ the loader — and provide a migration if the data is worth keeping (see
 ## 3. Cloud sync (`src/api.js` + merge functions in `src/lessonLogic.js`)
 
 Signed-in learners sync the five state maps to a Cloudflare Worker
-(`docs/CLOUDFLARE_SYNC_WORKER.md`; the feedback endpoint in the same file is a
-separate, stateless worker — `docs/CLOUDFLARE_FEEDBACK_WORKER.md`).
+(`docs/technical/CLOUDFLARE_SYNC_WORKER.md`; the feedback endpoint in the same file is a
+separate, stateless worker — `docs/technical/CLOUDFLARE_FEEDBACK_WORKER.md`).
 
 - **Snapshot shape** (`buildSyncPayload`): `{ progress, dailyStreak, points,
   errorStats, hearts }` — exactly the local shapes, stored opaquely by the
@@ -118,7 +118,7 @@ separate, stateless worker — `docs/CLOUDFLARE_FEEDBACK_WORKER.md`).
 - **A device only ever writes its own PN-Counter entries** — the invariant
   that keeps points merging lossless.
 
-Related reading: `docs/DATA_MODEL_ACADEMIC.md` (the academic half of the data
-model), `docs/EXERCISE_ENGINE.md`, `docs/DISTRACTOR_STRATEGY.md`,
-`docs/HEART_ECONOMY_ANALYSIS.md`, `docs/CLOUDFLARE_SYNC_WORKER.md`,
-`docs/CLOUDFLARE_FEEDBACK_WORKER.md`.
+Related reading: `docs/academic/DATA_MODEL_ACADEMIC.md` (the academic half of the data
+model), `docs/technical/EXERCISE_ENGINE.md`, `docs/technical/DISTRACTOR_STRATEGY.md`,
+`docs/technical/HEART_ECONOMY_ANALYSIS.md`, `docs/technical/CLOUDFLARE_SYNC_WORKER.md`,
+`docs/technical/CLOUDFLARE_FEEDBACK_WORKER.md`.

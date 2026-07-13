@@ -3,7 +3,7 @@
 // lesson at a time, `{ id, verbId, tense }`.
 //
 // Unlike the previous (verb × tense)-derived list, this is now hand-written
-// to follow `docs/LEARNING_JOURNEY.md`'s unit sequence — units don't map
+// to follow `docs/academic/LEARNING_JOURNEY.md`'s unit sequence — units don't map
 // cleanly onto "every tense of every verb" (e.g. a unit can introduce two
 // verbs at once, or reuse an earlier verb's table under a different gloss),
 // so `journey.js`'s `JOURNEY` is the source of truth for *order and grouping*
@@ -22,7 +22,7 @@
 // `LessonPreviewScreen`) before the next unit unlocks. The journey's Refresh
 // Gate units (8, 18, 25, 37) are a bigger, cross-unit version of the same
 // shape once implemented.
-// Phase I's "Survival Present" horizon (`docs/LEARNING_JOURNEY.md`) restricts
+// Phase I's "Survival Present" horizon (`docs/academic/LEARNING_JOURNEY.md`) restricts
 // every verb's first lessons to `ni`/`zu`/`hura` — `gu`/`zuek`/`haiek` arrive
 // together in Unit 7 ("Expansion"), positioned right after Unit 6 since every
 // verb it expands (`izan`/`egon`/`ukan`/`joan`/`etorri`/`ikusi`) is introduced
@@ -301,7 +301,7 @@ export const LESSONS = [
   // six Units 1, 2, 4, and 6 verbs whose present-tense form is a single word
   // that stays intact under negation (`ikusi`, Unit 5's periphrastic verb, has
   // no `negativeSentences` — same as every other periphrastic verb, see
-  // `docs/LANGUAGE_DECISIONS.md`). `negation: true` tells
+  // `docs/academic/LANGUAGE_DECISIONS.md`). `negation: true` tells
   // `createExerciseState` to pass `includeNegation` through to
   // `generateQuestions` for every source. `persons: PHASE_1_PERSONS` keeps
   // this Refresh Gate on Phase I's 3-person horizon (matching the lessons it
@@ -311,7 +311,7 @@ export const LESSONS = [
   // for `gu`/`zuek`/`haiek`. Split into three reviews of two sources each — a
   // single six-source review landed at ~33 questions (see `docs/DECISIONS.md`,
   // 2026-06-12 "Implemented Unit 6"), well past `TARGET_EXERCISE_COUNT`; each
-  // of these three lands at exactly 12. Per `docs/LEARNING_JOURNEY.md`, a
+  // of these three lands at exactly 12. Per `docs/academic/LEARNING_JOURNEY.md`, a
   // Refresh Gate's whole point is a cumulative cross-unit mixer, so sources
   // are deliberately paired *across* their originating units (Unit 1:
   // izan/egon, Units 2/4: ukan/jakin, Unit 6: joan/etorri) rather than keeping
@@ -358,7 +358,7 @@ export const LESSONS = [
   // see #281). `unit-11-review` folds both branches together; the
   // `gaur ... da` vs. `atzo ... zen` recency contrast itself waits for
   // Unit 12's past forms to exist (#283 tracks dedicated recency-contrast
-  // distractors) — see `docs/LANGUAGE_DECISIONS.md`.
+  // distractors) — see `docs/academic/LANGUAGE_DECISIONS.md`.
   {
     id: 'izan-present-perfect-pool',
     persons: PHASE_1_PERSONS,
@@ -770,7 +770,7 @@ export const LESSONS = [
   // was sourced — its present already rides `ukan`'s suffix family (Unit 4),
   // and its past (`nekien`/`zekien`/...) follows the same `-ekien`/`-ekiten`
   // stem alternation on top of `ukan`'s prefix pattern. See
-  // `docs/LANGUAGE_DECISIONS.md` for sourcing.
+  // `docs/academic/LANGUAGE_DECISIONS.md` for sourcing.
   // #331 — collapsed from the former `ukan-past-pool-{2,3,4,5,6}` +
   // `-recognition-{1,2}` chain (#318/#319/#320/#321) into this single
   // canonical pool (mirrors `unit-10-present`'s collapse). Academic-tier
@@ -1220,8 +1220,8 @@ export const LESSONS = [
     ],
   },
   // Stage 6 — "Talking About the Future (Geroa)", Phase II — zero new verbs,
-  // "only the participle-formation rule is new" (`docs/LEARNING_JOURNEY.md`):
-  // every verb from Units 1-15 except `ari` (see `docs/LANGUAGE_DECISIONS.md`)
+  // "only the participle-formation rule is new" (`docs/academic/LEARNING_JOURNEY.md`):
+  // every verb from Units 1-15 except `ari` (see `docs/academic/LANGUAGE_DECISIONS.md`)
   // can take a `future` form built by reusing its existing present-tense
   // auxiliary table under a `-ko`/`-go` participle.
   //
@@ -1530,7 +1530,7 @@ export const LESSONS = [
   // learner to choose the right auxiliary in each context. Sits after
   // `unit-19-review` (the within-family behar+ukan consolidation) as the
   // unit's closing cross-family contrast pass. See `docs/DECISIONS.md` and
-  // `docs/LANGUAGE_DECISIONS.md` (2026-07-10) for the full rationale.
+  // `docs/academic/LANGUAGE_DECISIONS.md` (2026-07-10) for the full rationale.
   {
     id: 'unit-22-nor-contrast-review',
     review: true,
@@ -1785,7 +1785,7 @@ export const LESSONS = [
   // express/ask/ask *to/of* someone"). Genuinely ditransitive (overt
   // accusative object + dative recipient), the esan/eman shape rather than
   // Unit 30's covert-dative shape, so it gets its own pool family here
-  // rather than joining dative-verb-* — see docs/LANGUAGE_DECISIONS.md.
+  // rather than joining dative-verb-* — see docs/academic/LANGUAGE_DECISIONS.md.
   { id: 'ditransitive-dative-present', persons: PHASE_1_PERSONS, sources: [
     { verbId: 'saldu-dative', tense: 'present' },
     { verbId: 'utzi-dative', tense: 'present' },
@@ -2115,7 +2115,7 @@ export const LESSONS = [
   },
   // Bridges Units 26 (NOR-NORI past/future) and 28 (NOR-NORI-NORK present) by
   // pooling the dative-taking verb families' past/future forms together —
-  // the "dative past/future recombination drill" `docs/LEARNING_JOURNEY.md`
+  // the "dative past/future recombination drill" `docs/academic/LEARNING_JOURNEY.md`
   // calls for alongside the case-ending mixer above. No `persons` filter:
   // `eman`'s NORI axis (`agent: 'ni'`) only has 4 non-reflexive persons
   // (zu/hura/zuek/haiek), so each source keeps its own natural person set
@@ -2685,7 +2685,7 @@ export const LESSONS = [
   // allocutive (toka/noka) gender split here (see docs/DECISIONS.md for the
   // `hi`/`hi-m`/`hi-f` data-shape convention). `ibili`'s `hi` form was
   // omitted from the original #144 core scope and only added later (#180) —
-  // see docs/LANGUAGE_DECISIONS.md for why `ibili hintzen` isn't a gap.
+  // see docs/academic/LANGUAGE_DECISIONS.md for why `ibili hintzen` isn't a gap.
   // `persons: ['hi']` pools each tense across all five verbs, so every `hi`
   // question borrows its distractors from the other four verbs' `hi` forms
   // (#139's borrowing, capped at 3 distractors by `buildOptions`).
@@ -2777,11 +2777,11 @@ export const LESSONS = [
   // leaning on "the whole lesson is toka" context. `unit-39-when-not-to-use`
   // pools those hitanoa forms alongside izan/ukan's already-shipped Ahalera
   // (`potential`) forms — the formal `-ke-` mood that never takes toka/noka
-  // marking (`docs/LANGUAGE_DECISIONS.md`, 2026-06-11: "independently banned
+  // marking (`docs/academic/LANGUAGE_DECISIONS.md`, 2026-06-11: "independently banned
   // in subordinate clauses and clashes register-wise with the formal -ke-
   // forms") — so the contrast itself teaches "leave hitanoa out here" by
   // juxtaposition. No new question kind or distractor mechanic needed (per
-  // `docs/EXERCISE_ENGINE.md`, #213's dedicated wrong-gender/neutral-form
+  // `docs/technical/EXERCISE_ENGINE.md`, #213's dedicated wrong-gender/neutral-form
   // lure stays open, tracked separately, not blocking this).
   {
     id: 'unit-39-recombined-present',

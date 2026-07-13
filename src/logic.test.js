@@ -1791,7 +1791,7 @@ describe('generateQuestions', () => {
     })
   })
 
-  describe('extraCandidates filtering by a sentence\'s validFor (docs/SENTENCE_FRAMES.md)', () => {
+  describe('extraCandidates filtering by a sentence\'s validFor (docs/technical/SENTENCE_FRAMES.md)', () => {
     // `Math.random` mocked to 0: with `availableKinds = ['sentence', 'type-verb']`
     // (or `['negative', 'type-negative']` for the includeNegation cases), the
     // first roll always lands on `sentence`/`negative` — see `rollQuestionKind`.
@@ -3904,7 +3904,7 @@ describe('generateMatchPairsQuestions', () => {
 })
 
 // Coverage for collectCrossSourceCandidates' validFor filtering
-// (docs/SENTENCE_FRAMES.md), shared by generateCrossVerbQuestions and
+// (docs/technical/SENTENCE_FRAMES.md), shared by generateCrossVerbQuestions and
 // generateCaseMixerQuestions: a source's example sentence's `validFor` tag
 // governs which compatible siblings' forms may appear as "wrong verb"
 // options for that sentence.
@@ -4092,7 +4092,7 @@ describe.each([
 
 // #124/#315: every cultural-bank-epic (#310) `nor-nork` verb's
 // `sentences`/`negativeSentences` variant, in any tense, has an explicit
-// `validFor` decision (docs/SENTENCE_FRAMES.md) — even `validFor: []` counts
+// `validFor` decision (docs/technical/SENTENCE_FRAMES.md) — even `validFor: []` counts
 // as "decided"; a bare string or an object with no `validFor` key is the
 // pre-#124 "not yet vetted" state and fails this test. Originally scoped to
 // just `sentences.present` across every `nor-nork` verb (#124); widened to
@@ -4110,7 +4110,7 @@ describe.each([
 // `nor`/intransitive-only and `gustatu`/`iruditu`/`ahaztu` are `nor-nori`, so
 // they're covered by a future, separately-scoped pass once #312/#313 land
 // their data, per the comment above).
-describe('validFor coverage for the nor-nork cluster (docs/SENTENCE_FRAMES.md, #124/#315)', () => {
+describe('validFor coverage for the nor-nork cluster (docs/technical/SENTENCE_FRAMES.md, #124/#315)', () => {
   const CULTURAL_BANK_NOR_NORK_VERBS = ['ukan', 'jakin', 'eraman', 'ekarri', 'jan', 'edan', 'erosi', 'hartu', 'ikusi', 'eduki', 'esan', 'eman', 'behar']
   const norNorkVerbs = VERBS.filter((verb) => CULTURAL_BANK_NOR_NORK_VERBS.includes(verb.id))
 

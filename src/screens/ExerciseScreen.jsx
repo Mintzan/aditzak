@@ -553,7 +553,7 @@ function WordChip({ text, status, disabled, onSelect }) {
 // every other kind, building an answer here is multi-step, so it doesn't
 // submit on the first tap — `onSubmit` only fires from an explicit Check
 // tap, enabled once the cloud is empty. Retries reshuffle: per
-// `docs/EXERCISE_ENGINE.md`'s word-order contract, the parent keys this
+// `docs/technical/EXERCISE_ENGINE.md`'s word-order contract, the parent keys this
 // component by `question.attempt` (the same `MatchPairsBoard` precedent,
 // #191), so a retry remounts it — re-running the `shuffle` below — instead
 // of reusing the failed layout. `punctuation` (#214 — the sentence's
@@ -1396,7 +1396,7 @@ export function ExerciseScreen({
     // Every incorrect submission costs a heart, including retries of the same
     // question — unlike `misses`/scoring (which only count a question's
     // first attempt), the heart economy's trigger is "an incorrect answer is
-    // submitted," full stop (see `docs/HEART_ECONOMY_ANALYSIS.md`).
+    // submitted," full stop (see `docs/technical/HEART_ECONOMY_ANALYSIS.md`).
     if (!isCorrect) onWrongAnswer()
     const milestone = isCorrect ? getStreakEncouragement(state.streak + 1) : null
     const showEncouragement = milestone !== null && canShowStreakNudge && rollStreakNudgeChance()
