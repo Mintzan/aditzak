@@ -128,7 +128,7 @@ sentence-based question kinds:
   marking the blank and `validFor` lists *sibling verb ids whose same-person
   form would also correctly complete that exact sentence* — the tag that
   governs whether a cross-verb distractor may appear against this sentence
-  (schema: `docs/technical/SENTENCE_FRAMES.md`; strategy: `docs/technical/DISTRACTOR_STRATEGY.md`).
+  (schema: `docs/academic/SENTENCE_FRAMES.md`; strategy: `docs/academic/DISTRACTOR_STRATEGY.md`).
   `wordOrderSafe: true` opts a sentence into the word-order question kind
   (fail-closed — see `docs/technical/EXERCISE_ENGINE.md`); `baseVerb` tags `ari`
   sentences with the embedded participle's verb for the progressive-vs-plain
@@ -284,5 +284,5 @@ Referenced from lessons by `itemIds`; turned into questions by
 
 Related reading: `docs/technical/DATA_MODEL_OPERATIVE.md` (the operative half of the
 data model), `docs/academic/CONJUGATIONS.md` (the grammar the tables encode),
-`docs/technical/SENTENCE_FRAMES.md` (`validFor` schema), `docs/technical/DISTRACTOR_STRATEGY.md`,
+`docs/academic/SENTENCE_FRAMES.md` (`validFor` schema), `docs/academic/DISTRACTOR_STRATEGY.md`,
 `docs/technical/EXERCISE_ENGINE.md`, `docs/academic/LEARNING_JOURNEY.md`.

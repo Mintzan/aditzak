@@ -590,7 +590,7 @@ two-word verb block, same four-word shape.
 Deliberately still untagged: five-plus-word affirmatives (trailing adjunct),
 synthetic-verb sentences with two complements, and any `nori` verb. Those
 remain a later, fluent-reviewed pass — each is a naturalness judgment like the
-`validFor` bar in `docs/technical/SENTENCE_FRAMES.md`.
+`validFor` bar in `docs/academic/SENTENCE_FRAMES.md`.
 
 ## 2026-06-24 — Open question: `hartu`/`erosi`'s `animateObject` call (#442) needs native-speaker confirmation
 
@@ -877,7 +877,7 @@ overlap among these nine siblings or any existing `nor-nork`/`nor` verb.
 
 **Decision:** added `hausnartu`, `argudiatu`, `ondorioztatu`, `gaitzetsi`, `aldarrikatu`, `plazaratu`, `sustatu`, `bultzatu`, `bermatu`, `babestu`, `ziurtatu`, `borobildu` (all `nor-nork`) to `VERBS`, completing #304's split. Morphology follows the same `-tzen`/`-ten`/`-ko` rules established in #319/#320: imperfective participle = stem + `-tzen` for the common case (`hausnartzen`, `argudiatzen`, `ondorioztatzen`, `aldarrikatzen`, `plazaratzen`, `sustatzen`, `bultzatzen`, `bermatzen`, `ziurtatzen`), or `-ten` for stems ending in the established coronal-obstruent set (`gaitzetsi`→`gaitzesten`, `babestu`→`babesten`, both `s`-final stems, same pattern as `idatzi`→`idazten`/`bereiztu`→`bereizten`). `borobildu`→`borobiltzen` follows `bildu`→`biltzen`'s `l`-final `-du`-allomorph pattern rather than a literal `borobildu`+`tzen` concatenation. Future = perfective participle + `-ko` throughout (all 12 end in a vowel, so no `-go` cases).
 
-**Sentence variety is deliberately minimal** — one frame per person per tense, rather than the richer pronoun/negative variant sets given to higher-frequency verbs — since #321 scoped this tier as recognition-only (`mode: 'recognition'`, no typed-production framings), so extra sentence variants would never surface in an exercise that uses them. `sentences.present` entries are wrapped as `{ text, validFor: [] }` per `docs/technical/SENTENCE_FRAMES.md`'s requirement that every `nork`-agreement verb's present-tense sentences be explicit objects; `validFor: []` makes no unverified cross-verb claims rather than guessing distractor eligibility for a tier that won't get typed exercises anyway.
+**Sentence variety is deliberately minimal** — one frame per person per tense, rather than the richer pronoun/negative variant sets given to higher-frequency verbs — since #321 scoped this tier as recognition-only (`mode: 'recognition'`, no typed-production framings), so extra sentence variants would never surface in an exercise that uses them. `sentences.present` entries are wrapped as `{ text, validFor: [] }` per `docs/academic/SENTENCE_FRAMES.md`'s requirement that every `nork`-agreement verb's present-tense sentences be explicit objects; `validFor: []` makes no unverified cross-verb claims rather than guessing distractor eligibility for a tier that won't get typed exercises anyway.
 
 ## 2026-06-20 — #320: mid/low fodder tier + #304's unassigned verbs — 18 regular verbs, same rules as #319
 

@@ -172,7 +172,7 @@
 // field here would silently rewrite their base conjugations or manufacture
 // a plural axis for them — for the plural axis specifically, that also
 // means new cross-verb `validFor` gap slots, exactly the kind of surface
-// `docs/technical/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness
+// `docs/academic/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness
 // review, not an incidental refactor. `future`/`futurePlural` reuse the
 // `present` column — only the participle differs between `present`/
 // `future`, not the auxiliary, same as `getByNoriComposedTable`'s future
@@ -739,7 +739,7 @@ export const VERBS = [
     // Every variant here is a locative `-an`/`-en` frame ("Ni etxean ___." =
     // "I am at home") — izan doesn't take a bare locative this way, and
     // joan/etorri need an allative (`-ra`/`-tik`), not a locative, so every
-    // variant gets `validFor: []` (#124, see docs/technical/SENTENCE_FRAMES.md worked
+    // variant gets `validFor: []` (#124, see docs/academic/SENTENCE_FRAMES.md worked
     // example 1) — except the `kalean`/`lanean` ones (#454): "kalean ibili"
     // ("to be out and about") and "lanean ibili" ("to be busy/working") are
     // both standard Basque idioms where `ibili`'s same-person form completes
@@ -1170,7 +1170,7 @@ export const VERBS = [
         haiek: 'zezaketen',
       },
     },
-    // #124/#155/#224: `validFor` per docs/technical/SENTENCE_FRAMES.md. Concrete/
+    // #124/#155/#224: `validFor` per docs/academic/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by their own (agentive, human) subject
     // (book, car, pencil, ticket, passport, map, house) admit `nahi`/`eduki`/
     // `ikusi`/`erosi`/`behar` per the worked "book" example — #155 closed the
@@ -1432,7 +1432,7 @@ export const VERBS = [
     // suffix patterns", which is exactly what makes this composable.
     composedPrefixes: { present: 'nahi ', future: 'nahiko ' },
     conjugations: {},
-    // #124/#155/#224: `validFor` per docs/technical/SENTENCE_FRAMES.md. Concrete/
+    // #124/#155/#224: `validFor` per docs/academic/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by an agentive human subject (coffee,
     // water, book, gift, apple) admit `ukan`/`eduki`/`ikusi`/`erosi`/`behar`
     // — same "book" cluster as `ukan`'s worked example; #155 added `erosi`
@@ -1871,7 +1871,7 @@ export const VERBS = [
       },
       pastPlural: { ni: 'nekizkien', hi: 'hekizkien', zu: 'zenekizkien', hura: 'zekizkien', gu: 'genekizkien', zuek: 'zenekizkiten', haiek: 'zekizkiten' },
     },
-    // #124: `validFor` per docs/technical/SENTENCE_FRAMES.md. `jakin`'s candidates are
+    // #124: `validFor` per docs/academic/SENTENCE_FRAMES.md. `jakin`'s candidates are
     // `ikusi`/`nahi`/`ukan` (`eduki` is #114's confirmed-wrong pair for
     // `jakin`, so never listed). "Erantzuna"/"egia"/"erantzun zuzena" (answer,
     // truth — things that can be seen written down, or wanted) admit
@@ -2075,7 +2075,7 @@ export const VERBS = [
     // "I go to the beach"). `etorri`'s same-person form ("Ni hondartzara
     // nator" = "I'm coming to the beach") is an equally natural, differently-
     // meant completion of the same allative — confirmed Tier-2 finding
-    // (docs/technical/SENTENCE_FRAMES.md worked example 2) — so every variant gets
+    // (docs/academic/SENTENCE_FRAMES.md worked example 2) — so every variant gets
     // `validFor: ['etorri']`. izan/egon don't take an allative this way, so
     // they're never listed.
     sentences: {
@@ -2335,7 +2335,7 @@ export const VERBS = [
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
     // `validFor: ['joan']` — joan's same-person form ("Ni etxera noa" = "I'm
     // going home") is an equally natural, opposite-direction completion of
-    // the same allative (docs/technical/SENTENCE_FRAMES.md worked example 2;
+    // the same allative (docs/academic/SENTENCE_FRAMES.md worked example 2;
     // "Ane etxera ___." is the confirmed Tier-2 spot-check). #125: the
     // formerly-bare-temporal variants ("Hura orain ___.", etc.) had no
     // destination, location, or predicate at all — da/dago/doa/dator were
@@ -2661,7 +2661,7 @@ export const VERBS = [
     // speaker review alongside the frame skeletons (docs/academic/LANGUAGE_DECISIONS.md).
     slotVocabulary: { sg: ['sagarra', 'ogia', 'tortilla'], pl: ['sagarrak', 'ogiak', 'tortillak'] },
     conjugations: {},
-    // #124/#224/#240: `validFor` per docs/technical/SENTENCE_FRAMES.md. Every object
+    // #124/#224/#240: `validFor` per docs/academic/SENTENCE_FRAMES.md. Every object
     // here is a concrete food/dish, naturally also something one could
     // *have*/*want*/*hold*/*see*/*buy*/*need* — `ukan`/`nahi`/`eduki`/
     // `ikusi`/`erosi`/`behar`'s same-person forms are all natural
@@ -2758,7 +2758,7 @@ export const VERBS = [
     composedPrefixes: { present: 'edaten ', past: 'edan ', future: 'edango ' },
     slotVocabulary: { sg: ['ardoa', 'kafea', 'ura'], pl: ['ardoak', 'kafeak', 'urak'] },
     conjugations: {},
-    // #124/#224/#240: `validFor` per docs/technical/SENTENCE_FRAMES.md. Every drink
+    // #124/#224/#240: `validFor` per docs/academic/SENTENCE_FRAMES.md. Every drink
     // here is naturally something one could also *have*/*want*/*hold*/*see*/
     // *buy*/*need* — `ukan`/`nahi`/`eduki`/`ikusi`/`erosi`/`behar`'s
     // same-person forms are all natural alternatives (#240's food-drink
@@ -2859,7 +2859,7 @@ export const VERBS = [
     composedPrefixes: { present: 'erosten ', past: 'erosi ', future: 'erosiko ' },
     slotVocabulary: { sg: ['liburua', 'arropa', 'autoa'], pl: ['liburuak', 'arropak', 'autoak'] },
     conjugations: {},
-    // #124/#155/#224/#240: `validFor` per docs/technical/SENTENCE_FRAMES.md. Edible/
+    // #124/#155/#224/#240: `validFor` per docs/academic/SENTENCE_FRAMES.md. Edible/
     // drinkable objects ("ogia", "sagarrak", "fruta") admit `jan` (#114's
     // confirmed pair) plus `ukan`/`nahi`/`eduki`/`ikusi`/`behar` (#240's
     // food-drink symmetry fix — you can also have/want/hold/see/need the food
@@ -3057,7 +3057,7 @@ export const VERBS = [
         haiek: 'ikusi dute',
       },
     },
-    // #124/#155/#224: `validFor` per docs/technical/SENTENCE_FRAMES.md. `ikusi`'s
+    // #124/#155/#224: `validFor` per docs/academic/SENTENCE_FRAMES.md. `ikusi`'s
     // candidates are `ukan`/`eduki`/`jakin`/`nahi`/`erosi` (the four
     // confirmed #114 pairs, plus `erosi` per #155's purchasable-object
     // re-audit). "Filma" (a film — ownable, wantable, buyable, not "known"
@@ -3241,7 +3241,7 @@ export const VERBS = [
         haiek: 'edukiko dituzte',
       },
     },
-    // #124: `validFor` per docs/technical/SENTENCE_FRAMES.md. `eduki`'s candidates are
+    // #124: `validFor` per docs/academic/SENTENCE_FRAMES.md. `eduki`'s candidates are
     // `ukan`/`ikusi` (#114's confirmed pairs; `jakin` is a confirmed-wrong
     // pair, never listed). Every sentence here is "[object] in my
     // pocket/hand" — `ukan`'s same-person form is a near-synonym for
@@ -8118,7 +8118,7 @@ export const VERBS = [
     // sentence text supplies an explicit person-denoting dative noun
     // (lagunari/etsaiari), and "help/call/do a favor for/harm" all read
     // naturally with either a friend or an enemy as the target, so every
-    // slot cross-tags with the other three. See `docs/technical/DISTRACTOR_STRATEGY.md`
+    // slot cross-tags with the other three. See `docs/academic/DISTRACTOR_STRATEGY.md`
     // §6 for the dative-matching method note.
     sentences: {
       present: {

@@ -119,6 +119,6 @@ separate, stateless worker — `docs/technical/CLOUDFLARE_FEEDBACK_WORKER.md`).
   that keeps points merging lossless.
 
 Related reading: `docs/academic/DATA_MODEL_ACADEMIC.md` (the academic half of the data
-model), `docs/technical/EXERCISE_ENGINE.md`, `docs/technical/DISTRACTOR_STRATEGY.md`,
+model), `docs/technical/EXERCISE_ENGINE.md`, `docs/academic/DISTRACTOR_STRATEGY.md`,
 `docs/technical/HEART_ECONOMY_ANALYSIS.md`, `docs/technical/CLOUDFLARE_SYNC_WORKER.md`,
 `docs/technical/CLOUDFLARE_FEEDBACK_WORKER.md`.

@@ -646,7 +646,7 @@ doesn't, on either count:
   that tense's `sentences[person]` entry — exactly how every other tense
   already encodes whatever real-world context its examples describe; no
   tense has ever needed a separate "context type" tag. `validFor` keeps
-  policing cross-verb safety per `docs/technical/SENTENCE_FRAMES.md`, unchanged.
+  policing cross-verb safety per `docs/academic/SENTENCE_FRAMES.md`, unchanged.
 - **Question shape/rendering: unchanged.** A subjunctive `sentence`-kind
   question is mechanically indistinguishable from any other tense's
   `sentence` question — `QuestionPrompt` keys off `question.sentence`
@@ -674,13 +674,13 @@ implementation (see `docs/DECISIONS.md`'s 2026-06-24 `#370` entry):
   `kind: 'form'`/`'sentence'` machinery unchanged; the standalone-entry shape
   won because it required zero new code paths.
 - **Distractors: the existing `grounded` invariant already covers it**
-  (`docs/technical/DISTRACTOR_STRATEGY.md` §4.3) — a subjunctive sentence question has
+  (`docs/academic/DISTRACTOR_STRATEGY.md` §4.3) — a subjunctive sentence question has
   a grounding sentence, so siblings drawn into `options` go through the
   normal `validFor` check like any other sentence-kind tense. Per #369's
   scope, the NOR/NOR-NORK 3rd-person in-construction forms get full
   production while the dative/ditransitive families stay recognition-only
   (`recognitionOnly: true`, #330) — their much smaller `validFor`-review
-  surface (`docs/technical/DISTRACTOR_STRATEGY.md` §3) is a curriculum-scoping choice,
+  surface (`docs/academic/DISTRACTOR_STRATEGY.md` §3) is a curriculum-scoping choice,
   not an engine one.
 
 So the premise that hitanoa and subjunctive need a *shared* new mechanic
@@ -731,7 +731,7 @@ concrete touch points so they're not lost:
     the learner's wrong pick is a tagged lure. The rolling *cross-question*
     error-pattern history and remedial-mini-lesson injection described above
     are still open — #229 was deliberately scoped to per-question feedback
-    only (see `docs/technical/DISTRACTOR_STRATEGY.md` §4.4).
+    only (see `docs/academic/DISTRACTOR_STRATEGY.md` §4.4).
 
 ## Suggested build order
 

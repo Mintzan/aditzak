@@ -6,7 +6,7 @@ avoided. Written to give future sessions the *full picture* in one place, so
 the same questions don't get re-opened one bug report at a time. Supersedes
 `docs/AMBIGUOUS_DISTRACTORS_AUDIT.md` (deleted in #126) as the standing
 methodology reference; the per-sentence `validFor` *schema* still lives in
-`docs/technical/SENTENCE_FRAMES.md` and is unchanged by this doc.
+`docs/academic/SENTENCE_FRAMES.md` and is unchanged by this doc.
 
 This doc records a **direction and the evidence for it**. The direction has
 now been implemented end-to-end — Epics #220 (Family A), #221 (Family B), and
@@ -31,7 +31,7 @@ Future work should name which family it's in.
   content top-ups #124, #155, #204, and **#218.1** (`behar` missing from a
   `validFor` list).
 - Architecture: replaced pair-level `CROSS_CANDIDATE_EXCLUSIONS` with
-  per-sentence `validFor` tags (see `docs/technical/SENTENCE_FRAMES.md`). This was a
+  per-sentence `validFor` tags (see `docs/academic/SENTENCE_FRAMES.md`). This was a
   decisive improvement and is **the part of the system that is working** — do
   not rebuild it.
 - Recurring failure mode: `validFor` is hand-curated and **point-in-time**.

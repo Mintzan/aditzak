@@ -1174,7 +1174,7 @@ export function getComposedTable(verb, tense) {
   // reusing that field here would silently rewrite their base conjugations
   // (or manufacture a plural axis, plus the cross-verb `validFor` slots
   // that come with it) without the check/review that requires
-  // (`docs/technical/DISTRACTOR_STRATEGY.md` §4.2 for the `validFor` half). `future`/
+  // (`docs/academic/DISTRACTOR_STRATEGY.md` §4.2 for the `validFor` half). `future`/
   // `futurePlural` have no future row of their own in the skeleton (same
   // reasoning as `getByNoriComposedTable`'s future handling below) — only
   // the participle differs, so both reuse the `present` column under the
@@ -1284,7 +1284,7 @@ function hasAmbiguousTypedForm(verb, tense, person, verbs, objectAxis) {
 // `{ [person]: Array<{ verbId, form }> }`, passed through to
 // `generateQuestions`'s `extraCandidates`; `filterExtraCandidates` then narrows
 // each person's list down to the forms a given sentence's `validFor` tag (see
-// `docs/technical/SENTENCE_FRAMES.md`) allows, before handing the survivors to
+// `docs/academic/SENTENCE_FRAMES.md`) allows, before handing the survivors to
 // `buildOptions`. Only persons present in `verb.conjugations[tense]` get an
 // entry, and only if at least one compatible sibling has a form for that
 // person.
@@ -1393,7 +1393,7 @@ export function pickVariant(value) {
 
 // A sentence-bearing entry (`sentences`/`pronounSentences`/`negativeSentences`
 // `[tense][person]`, after `pickVariant`) is either a bare string — untagged,
-// pre-`validFor` migration (see `docs/technical/SENTENCE_FRAMES.md`) — or a
+// pre-`validFor` migration (see `docs/academic/SENTENCE_FRAMES.md`) — or a
 // `{ text, validFor }` object. Normalizes either shape to `{ text, validFor }`
 // so callers can read `.text` uniformly; a bare string normalizes to
 // `validFor: undefined` (the "not yet vetted" state — see
@@ -1409,7 +1409,7 @@ export function normalizeSentence(value) {
 // `getCrossVerbCandidates`/`collectCrossSourceCandidates`'s sibling pool, or
 // `undefined` if there are none) down to the forms allowed to appear as
 // distractors alongside a sentence with the given `validFor` tag — see
-// `docs/technical/SENTENCE_FRAMES.md`:
+// `docs/academic/SENTENCE_FRAMES.md`:
 //   - `validFor` absent (untagged, not yet vetted) — the safe default: exclude
 //     every sibling, returning `[]`.
 //   - `validFor: []` (explicitly empty, vetted) — exclude nothing: every
@@ -1598,7 +1598,7 @@ function buildWordOrderQuestion(table, sentence, person) {
 // `verb.conjugations[tense]` and have a sentence that can make a sibling
 // verb's same-person form read as genuinely wrong. Each kind narrows its
 // person's candidates via `filterExtraCandidates` against that *specific*
-// sentence's `validFor` tag (see `docs/technical/SENTENCE_FRAMES.md`) — so an untagged
+// sentence's `validFor` tag (see `docs/academic/SENTENCE_FRAMES.md`) — so an untagged
 // sentence contributes no extra candidates (the safe default), while a
 // `validFor: []` sentence admits all of them. Not used for `pronoun`, whose
 // options come from a different table (the verb's `personAxis` pronoun
@@ -1889,7 +1889,7 @@ export function generateQuestions(
 // for every (source, person) with both a `sentences[tense][person]` and a
 // `conjugations[tense][person]`, collects the other sources' same-person
 // forms that `agreementMatches` accepts as siblings *and* that the anchor
-// sentence's `validFor` tag (see `docs/technical/SENTENCE_FRAMES.md`, via
+// sentence's `validFor` tag (see `docs/academic/SENTENCE_FRAMES.md`, via
 // `filterExtraCandidates`) doesn't exclude — an untagged sentence excludes all
 // of them (the safe default), while `validFor: []` excludes none — and keeps
 // the combination only if that yields at least 2 distinct option values (the

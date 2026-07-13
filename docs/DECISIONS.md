@@ -12,8 +12,8 @@ instead.
 
 `docs/` now has three subfolders — all `docs/FILENAME.md` references in active docs, `CLAUDE.md`, and source-code comments updated in the same pass; `docs/DECISIONS_ARCHIVE.md` left as-is (historical record):
 
-- **`docs/academic/`** — Basque language reference, curriculum/pedagogy, learning journey design: `AUXILIARY_FIRST_PLAN`, `AUXILIARY_FIRST_REVIEW`, `CONJUGATIONS`, `CURRICULUM_MAP`, `DATA_MODEL_ACADEMIC`, `LANGUAGE_DECISIONS`, `LEARNING_JOURNEY`, `LEARNING_JOURNEY_PROPOSED`, `SAMPLE_SENTENCES`, `VERB_COVERAGE`.
-- **`docs/technical/`** — App implementation, infrastructure, design system: `CLOUDFLARE_FEEDBACK_WORKER`, `CLOUDFLARE_SYNC_WORKER`, `DATA_MODEL_OPERATIVE`, `DISTRACTOR_STRATEGY`, `EXERCISE_ENGINE`, `EXERCISE_VARIETY_PLAN`, `HEART_ECONOMY_ANALYSIS`, `OBJECT_FRAME_TAGGING`, `POSTHOG_ANALYTICS`, `SENTENCE_FRAMES`, `VISUAL_IDENTITY`.
+- **`docs/academic/`** — Basque language reference, curriculum/pedagogy, learning journey design: `AUXILIARY_FIRST_PLAN`, `AUXILIARY_FIRST_REVIEW`, `CONJUGATIONS`, `CURRICULUM_MAP`, `DATA_MODEL_ACADEMIC`, `DISTRACTOR_STRATEGY`, `LANGUAGE_DECISIONS`, `LEARNING_JOURNEY`, `LEARNING_JOURNEY_PROPOSED`, `SAMPLE_SENTENCES`, `SENTENCE_FRAMES`, `VERB_COVERAGE`.
+- **`docs/technical/`** — App implementation, infrastructure, design system: `CLOUDFLARE_FEEDBACK_WORKER`, `CLOUDFLARE_SYNC_WORKER`, `DATA_MODEL_OPERATIVE`, `EXERCISE_ENGINE`, `EXERCISE_VARIETY_PLAN`, `HEART_ECONOMY_ANALYSIS`, `OBJECT_FRAME_TAGGING`, `POSTHOG_ANALYTICS`, `VISUAL_IDENTITY`.
 - **`docs/`** root — cross-cutting project logs only: `DECISIONS.md`, `DECISIONS_ARCHIVE.md`.
 - **`docs/archive/`** — superseded plans (unchanged from the previous commit).
 
@@ -1164,7 +1164,7 @@ verbs #443 gave a `byObjectPrefixes` for the present/past 2D axis never had
 a plural-object table at all; a first pass reused that field and silently
 manufactured `presentPlural` for all of them too, which also manufactures
 new cross-verb `validFor` gap slots — exactly the surface
-`docs/technical/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness review,
+`docs/academic/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness review,
 not an incidental refactor (caught by `validfor-audit.test.js`'s baseline
 diff, not by inspection). Used a new, separate `pluralPrefixes: { present,
 past, future }` field instead, added only to the 14 verbs that actually had
