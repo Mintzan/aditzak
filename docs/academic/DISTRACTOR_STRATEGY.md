@@ -6,7 +6,7 @@ avoided. Written to give future sessions the *full picture* in one place, so
 the same questions don't get re-opened one bug report at a time. Supersedes
 `docs/AMBIGUOUS_DISTRACTORS_AUDIT.md` (deleted in #126) as the standing
 methodology reference; the per-sentence `validFor` *schema* still lives in
-`docs/SENTENCE_FRAMES.md` and is unchanged by this doc.
+`docs/academic/SENTENCE_FRAMES.md` and is unchanged by this doc.
 
 This doc records a **direction and the evidence for it**. The direction has
 now been implemented end-to-end — Epics #220 (Family A), #221 (Family B), and
@@ -31,7 +31,7 @@ Future work should name which family it's in.
   content top-ups #124, #155, #204, and **#218.1** (`behar` missing from a
   `validFor` list).
 - Architecture: replaced pair-level `CROSS_CANDIDATE_EXCLUSIONS` with
-  per-sentence `validFor` tags (see `docs/SENTENCE_FRAMES.md`). This was a
+  per-sentence `validFor` tags (see `docs/academic/SENTENCE_FRAMES.md`). This was a
   decisive improvement and is **the part of the system that is working** — do
   not rebuild it.
 - Recurring failure mode: `validFor` is hand-curated and **point-in-time**.
@@ -82,7 +82,7 @@ sentence (or no visible verb name) to make it read as wrong.*
 *The deliberate-trap side: case-frame, cross-tense, object-number lures.*
 
 - Issues: #141, #165, #177, and **#218.3** is a genuine *gap* here (not a bug).
-- Sound design, honestly scoped (`docs/EXERCISE_ENGINE.md`'s Distractor Engine
+- Sound design, honestly scoped (`docs/technical/EXERCISE_ENGINE.md`'s Distractor Engine
   Matrix; #177 documents what was deliberately *not* built).
 - Two open weaknesses, both visible in #218:
   - **Legibility (#218.2):** a fair-but-hard lure is indistinguishable from a
@@ -196,7 +196,7 @@ pre-empts the next variant of the same leak.
   render neither verb name nor sentence; at minimum always show the verb name.
   Add post-answer "why this was wrong" feedback for lures ("`naiz` marks *I*,
   but the subject here is plural"). The error-categorization metadata for this
-  is already sketched as Tier-4 in `docs/EXERCISE_ENGINE.md`.
+  is already sketched as Tier-4 in `docs/technical/EXERCISE_ENGINE.md`.
 - **Coverage (#218.3):** allow **hand-authored targeted lures** for specific
   confusable pairs where the most valuable distractor is excluded by
   `agreementsCompatible` (e.g. `ari izan`'s progressive vs. the base verb's
@@ -210,7 +210,7 @@ pre-empts the next variant of the same leak.
 The four forks from §4, with their outcomes:
 
 1. **Frame-derived tagging for the core cluster (4.1)** — resolved by the [A3]
-   spike (`docs/OBJECT_FRAME_TAGGING.md` / `scripts/frame-classes.json`):
+   spike (`docs/technical/OBJECT_FRAME_TAGGING.md` / `scripts/frame-classes.json`):
    adopted **with changes** as a second-pass *audit* tool ([A4]/#239,
    `--classes` mode below), not as automatic `validFor` derivation — some
    sentences need human judgment a fixed object class can't express. The spike
@@ -241,7 +241,7 @@ The four forks from §4, with their outcomes:
   three are `jan`<->`edan` cross-suggestions (e.g. "Nik sagarra ___" ("I eat
   an apple") suggesting `edan` ("drink") as a valid substitute) — these are a
   known false positive of the `food-drink` class (it doesn't distinguish
-  solid food from drink within the class; see `docs/OBJECT_FRAME_TAGGING.md`)
+  solid food from drink within the class; see `docs/technical/OBJECT_FRAME_TAGGING.md`)
   and should **not** be applied. `#240` can be closed as already resolved.
   The same #439 pass found and fixed one genuine small gap nearby: `ukan`'s
   "Nik/Guk bilera bat ___." ("I/we [have] a meeting") was missing `nahi`
@@ -249,7 +249,7 @@ The four forks from §4, with their outcomes:
   `abstract-ownable`-class block already carrying it — a plain oversight, not
   a class-model judgment call. The remaining `--classes` worklist (2 items:
   `ikusi`'s "Txakurrak katua ___." -> `ukan`) is left untouched, per
-  `docs/OBJECT_FRAME_TAGGING.md`'s own note that this exact sentence is a
+  `docs/technical/OBJECT_FRAME_TAGGING.md`'s own note that this exact sentence is a
   documented fine-grained judgment call, not a bug.
 - **#439's 15/104 verb backfill**: investigated 2026-06-25 — the "core"
   cluster (`izan, egon, ukan, nahi, jakin, joan, etorri, jan, edan, erosi,
@@ -484,6 +484,6 @@ is most under-tagged.
 agreement-based output above with object-class candidate fixes — `validFor`
 additions the agreement-only audit can't see, because it has no model of
 object semantics (e.g. "an apple" and "a meeting" are different classes; see
-`docs/OBJECT_FRAME_TAGGING.md`). It's read-only and never edits `verbs.js`;
+`docs/technical/OBJECT_FRAME_TAGGING.md`). It's read-only and never edits `verbs.js`;
 treat its output as a worklist for human review, the same as [A1]'s gap
 slots.

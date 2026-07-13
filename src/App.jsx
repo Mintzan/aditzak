@@ -168,7 +168,7 @@ function AppShell() {
     heartsStorage.save(hearts)
   }, [hearts])
 
-  // No background regen timer by design (see `docs/HEART_ECONOMY_ANALYSIS.md`)
+  // No background regen timer by design (see `docs/technical/HEART_ECONOMY_ANALYSIS.md`)
   // — instead, recompute the lazy catch-up formula whenever the tab regains
   // focus, so a session left open across a regen boundary catches up without
   // needing a reload.

@@ -33,8 +33,8 @@
 // rather than (or in addition to) the subject axis the plain `object: 'hura'`
 // tables above are restricted to. `ukan`'s `presentByObject` is the first:
 // same cells as `present`'s `hura` column plus the five other `nor` columns
-// from `docs/CONJUGATIONS.md` §3's "NOR = 1st/2nd person" grid. `hi` is
-// omitted (per #345's scope note) and so is every cell `docs/CONJUGATIONS.md`
+// from `docs/academic/CONJUGATIONS.md` §3's "NOR = 1st/2nd person" grid. `hi` is
+// omitted (per #345's scope note) and so is every cell `docs/academic/CONJUGATIONS.md`
 // marks `*(refl.)*` — not just the literal `nork === nor` diagonal, but the
 // whole same-person-category block (1st: `ni`/`gu`; 2nd: `zu`/`zuek`) the
 // grid itself marks reflexive, e.g. `nik` -> `gu` and `guk` -> `ni` are both
@@ -61,7 +61,7 @@
 // `borobildu`) and object-axis metaphors (`saldu`, `galdu`) — listed here
 // even though none of them have a composed axis table yet (that's #443's
 // widening), so the flag is already correct once they get one. Binary, no
-// "marginal" state — see `docs/LANGUAGE_DECISIONS.md` for the open
+// "marginal" state — see `docs/academic/LANGUAGE_DECISIONS.md` for the open
 // `hartu`/`erosi` borderline call this deliberately leaves unset pending
 // native-speaker confirmation, and for why `jan`/`edan` (also named in #442
 // as exceptions) aren't marked yet: both already have a composed table
@@ -130,13 +130,13 @@
 // opts in via `includeNegation` (see `generateQuestions`) — Unit 6's
 // `unit-5-review-1`/`-2`/`-3` are the only lessons that currently do.
 //
-// Per `docs/LEARNING_JOURNEY.md`'s Phase I ("Survival Present"), every verb's
+// Per `docs/academic/LEARNING_JOURNEY.md`'s Phase I ("Survival Present"), every verb's
 // first lesson is restricted to `ni`/`zu`/`hura` — `gu`/`zuek`/`haiek` (and,
 // much later, `hi`) are added together in Unit 7 ("Expansion"). `izan`/`egon`/
 // `ukan`/`joan`/`etorri`'s `present` tables already contain all 6 persons (Unit
 // 7 grew them in place — see `docs/DECISIONS.md`); their pre-Unit-7 lessons
 // (`LESSONS` in `src/data/lessons.js`) use a `persons` filter to stay on the 3-person
-// horizon instead (`docs/EXERCISE_ENGINE.md`, "Phase I's 3-person horizon",
+// horizon instead (`docs/technical/EXERCISE_ENGINE.md`, "Phase I's 3-person horizon",
 // option (b)). Verbs whose first lesson is still pending (`nahi`/`jakin`/`ari`)
 // simply have 3-person tables (option (a)) since there's nothing to expand yet.
 // =============================================================================
@@ -172,7 +172,7 @@
 // field here would silently rewrite their base conjugations or manufacture
 // a plural axis for them — for the plural axis specifically, that also
 // means new cross-verb `validFor` gap slots, exactly the kind of surface
-// `docs/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness
+// `docs/academic/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness
 // review, not an incidental refactor. `future`/`futurePlural` reuse the
 // `present` column — only the participle differs between `present`/
 // `future`, not the auxiliary, same as `getByNoriComposedTable`'s future
@@ -284,7 +284,7 @@ export const OBJECT_AXIS_SKELETONS = {
 // exactly as hand-written sentences do — no new question kind needed.
 // Word order follows the SOV pattern in existing hand-written sentences:
 // subject ergative → time adverb → object absolutive → verb blank.
-// Flagged for native-speaker review: docs/LANGUAGE_DECISIONS.md (M2 PR1).
+// Flagged for native-speaker review: docs/academic/LANGUAGE_DECISIONS.md (M2 PR1).
 export const CELL_FRAMES = {
   'norNork:present': {
     objectNumber: 'sg',
@@ -369,7 +369,7 @@ export const VERBS = [
       },
       // #148 core scope — Ahalera (potential, "can be"), Baldintza (if-clause,
       // "if I were"), and Ondorioa present (apodosis, "would be"), all
-      // directly tabulated in `docs/CONJUGATIONS.md` §2. Form-only (no
+      // directly tabulated in `docs/academic/CONJUGATIONS.md` §2. Form-only (no
       // `sentences`/`pronounSentences`) — see `docs/DECISIONS.md`.
       potential: { ni: 'naiteke', hi: 'haiteke', zu: 'zaitezke', hura: 'daiteke', gu: 'gaitezke', zuek: 'zaitezkete', haiek: 'daitezke' },
       baldintza: { ni: 'banintz', hi: 'bahintz', zu: 'bazina', hura: 'balitz', gu: 'bagina', zuek: 'bazinete', haiek: 'balira' },
@@ -391,7 +391,7 @@ export const VERBS = [
       // given, so this stays a 2-person table like the doc itself. Past
       // inserts `-a-`/`-na-` before the final `-n` (`zen` -> `zuan`/`zunan`,
       // `ziren` -> `zituan`/`zitunan`). Native-speaker-confirmed 2026-07-05,
-      // all four forms as-is (see docs/LANGUAGE_DECISIONS.md).
+      // all four forms as-is (see docs/academic/LANGUAGE_DECISIONS.md).
       presentToka: { hura: 'duk', haiek: 'dituk' },
       presentNoka: { hura: 'dun', haiek: 'ditun' },
       pastToka: { hura: 'zuan', haiek: 'zituan' },
@@ -694,7 +694,7 @@ export const VERBS = [
     },
     negativeSentences: {
       present: {
-        // `wordOrderSafe` (see `docs/EXERCISE_ENGINE.md`): the negative copula
+        // `wordOrderSafe` (see `docs/technical/EXERCISE_ENGINE.md`): the negative copula
         // pattern `[Subject] ez [aux] [predicate]` has a pinned `ez`+auxiliary
         // sequence and no reasonable competing learner order, so it's safe to
         // grade as a single-answer reorder drill.
@@ -739,7 +739,7 @@ export const VERBS = [
     // Every variant here is a locative `-an`/`-en` frame ("Ni etxean ___." =
     // "I am at home") — izan doesn't take a bare locative this way, and
     // joan/etorri need an allative (`-ra`/`-tik`), not a locative, so every
-    // variant gets `validFor: []` (#124, see docs/SENTENCE_FRAMES.md worked
+    // variant gets `validFor: []` (#124, see docs/academic/SENTENCE_FRAMES.md worked
     // example 1) — except the `kalean`/`lanean` ones (#454): "kalean ibili"
     // ("to be out and about") and "lanean ibili" ("to be busy/working") are
     // both standard Basque idioms where `ibili`'s same-person form completes
@@ -879,10 +879,10 @@ export const VERBS = [
     },
   },
   // Unit 2 ("Having, Wanting, and Knowing") — `ukan` present (with `zu` per
-  // `docs/CONJUGATIONS.md` §3; `gu`/`zuek`/`haiek` added by Unit 7
+  // `docs/academic/CONJUGATIONS.md` §3; `gu`/`zuek`/`haiek` added by Unit 7
   // "Expansion"). Its `past` table (Unit 8, "Looking Back I") is also `zu`-based
-  // and full 6-person, per `docs/CONJUGATIONS.md` §3 — see
-  // `docs/LANGUAGE_DECISIONS.md`.
+  // and full 6-person, per `docs/academic/CONJUGATIONS.md` §3 — see
+  // `docs/academic/LANGUAGE_DECISIONS.md`.
   {
     id: 'ukan',
     verb: 'ukan',
@@ -910,7 +910,7 @@ export const VERBS = [
     // overt pronouns so the varying object person is recoverable, and
     // `orduan` anchoring the past. Untagged (no `validFor`) — fail-closed,
     // no cross-verb distractors until a native-speaker review; flagged in
-    // docs/LANGUAGE_DECISIONS.md.
+    // docs/academic/LANGUAGE_DECISIONS.md.
     byObjectSentences: {
       presentByObject: {
         ni: {
@@ -948,7 +948,7 @@ export const VERBS = [
       },
       // #148 core scope — Ahalera (potential, "can have"), Baldintza, and
       // Ondorioa present, `NOR` fixed at `hura` (object), `NORK` varying —
-      // directly tabulated in `docs/CONJUGATIONS.md` §3 ("Ahalera,
+      // directly tabulated in `docs/academic/CONJUGATIONS.md` §3 ("Ahalera,
       // Orainaldia" and "Baldintza/Ondorioa, present", `NOR` = `hura`
       // column). Form-only, no `hi` row (matching `ukan`'s existing tables).
       potential: { ni: 'dezaket', zu: 'dezakezu', hura: 'dezake', gu: 'dezakegu', zuek: 'dezakezue', haiek: 'dezakete' },
@@ -959,7 +959,7 @@ export const VERBS = [
       // adding `-k`/`-n` (`dik`/`din`, `ditek`/`diten`) specifically to stay
       // distinct from `hi`-as-`NORK`'s own `duk`/`dun` above — same
       // `-a-`/`-na-` past insertion as `izan`'s. Native-speaker-confirmed
-      // 2026-07-05 (see docs/LANGUAGE_DECISIONS.md) — `haiek`'s toka past
+      // 2026-07-05 (see docs/academic/LANGUAGE_DECISIONS.md) — `haiek`'s toka past
       // corrected to `zitekan` (a missing `k`; `zitean` was wrong).
       presentToka: { hura: 'dik', haiek: 'ditek' },
       presentNoka: { hura: 'din', haiek: 'diten' },
@@ -970,7 +970,7 @@ export const VERBS = [
       // pattern already used for `esan`/`eman`/`gustatu`'s `<tense>Plural`
       // tables (#162/#164). `hi`'s past stays unsplit (`hituen`), mirroring
       // the singular `past.hi: 'huen'` above. Flagged in
-      // docs/LANGUAGE_DECISIONS.md for native-speaker confirmation.
+      // docs/academic/LANGUAGE_DECISIONS.md for native-speaker confirmation.
       presentPlural: { ni: 'ditut', zu: 'dituzu', hura: 'ditu', gu: 'ditugu', zuek: 'dituzue', haiek: 'dituzte', 'hi-m': 'dituk', 'hi-f': 'ditun' },
       pastPlural: { ni: 'nituen', zu: 'zenituen', hura: 'zituen', gu: 'genituen', zuek: 'zenituzten', haiek: 'zituzten', hi: 'hituen' },
       futurePlural: {
@@ -1012,7 +1012,7 @@ export const VERBS = [
       },
       // #352: Ahalera's NOR-NORK object axis, three sub-tenses — same shape/
       // sourcing convention as `presentByObject`/`pastByObject` above, this
-      // time from `docs/CONJUGATIONS.md`:316-358. The broader reflexive
+      // time from `docs/academic/CONJUGATIONS.md`:316-358. The broader reflexive
       // exclusion described there (any same-person-category pair, not just
       // the literal diagonal — `guk`->`ni`/`nik`->`gu` and `zuk`<->`zuek` are
       // also gaps) is the same rule `presentByObject`/`pastByObject` already
@@ -1050,7 +1050,7 @@ export const VERBS = [
         haiek: { ni: 'nintzaketen', hura: 'zezaketen', gu: 'gintzaketen', zu: 'zintzaketen', zuek: 'zintzaketeten', haiek: 'zitzaketen' },
       },
       // #353: Baldintza/Ondorioa's NOR-NORK object axis, same shape/sourcing
-      // convention as the blocks above, from `docs/CONJUGATIONS.md`:236-282.
+      // convention as the blocks above, from `docs/academic/CONJUGATIONS.md`:236-282.
       // The `-zke-` merger noted there (object plural, or `haiek`-subject on
       // a `zint-`/`gint-` stem) is transcribed verbatim rather than derived.
       // Baldintza (protasis, "if I had you/etc.") — `hura` column matches
@@ -1170,7 +1170,7 @@ export const VERBS = [
         haiek: 'zezaketen',
       },
     },
-    // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
+    // #124/#155/#224: `validFor` per docs/academic/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by their own (agentive, human) subject
     // (book, car, pencil, ticket, passport, map, house) admit `nahi`/`eduki`/
     // `ikusi`/`erosi`/`behar` per the worked "book" example — #155 closed the
@@ -1237,7 +1237,7 @@ export const VERBS = [
         zuek: [{ text: 'Zuek opariak ___.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
         haiek: [{ text: 'Baserritarrek ardi latxak ___ mendian.', validFor: ['nahi', 'eduki', 'ikusi', 'erosi', 'behar'] }],
       },
-      // #259: past, adapted from `docs/SAMPLE_SENTENCES.md`'s `ukan` past
+      // #259: past, adapted from `docs/academic/SAMPLE_SENTENCES.md`'s `ukan` past
       // table (Eskola/Familia eta etxea/Bidaiak/Eguneroko bizitza columns).
       // validFor judged per the same `nahi`/`eduki`/`ikusi`/`erosi`/`behar`
       // standard as present: concrete ownable/visible/buyable/needable
@@ -1407,7 +1407,7 @@ export const VERBS = [
     },
   },
   // `nahi` ("want") — an invariant particle + radical/infinitive + `ukan`,
-  // not a lexical verb of its own (see `docs/VERB_COVERAGE.md` §5). Modeled
+  // not a lexical verb of its own (see `docs/academic/VERB_COVERAGE.md` §5). Modeled
   // as its own `VERBS` entry — `type: 'periphrastic'` is the closest existing
   // badge for "auxiliary carries the conjugation alongside an invariant
   // element", even though `nahi` isn't a participle in the strict sense.
@@ -1432,7 +1432,7 @@ export const VERBS = [
     // suffix patterns", which is exactly what makes this composable.
     composedPrefixes: { present: 'nahi ', future: 'nahiko ' },
     conjugations: {},
-    // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. Concrete/
+    // #124/#155/#224: `validFor` per docs/academic/SENTENCE_FRAMES.md. Concrete/
     // ownable/visible objects bought by an agentive human subject (coffee,
     // water, book, gift, apple) admit `ukan`/`eduki`/`ikusi`/`erosi`/`behar`
     // — same "book" cluster as `ukan`'s worked example; #155 added `erosi`
@@ -1468,7 +1468,7 @@ export const VERBS = [
         ],
         // #266: `gu`/`zuek`/`haiek` added — object-noun variants tagged the
         // same as `ni`/`zu`/`hura`'s, plus one infinitive-complement variant
-        // per person adapted from `docs/SAMPLE_SENTENCES.md`'s modal-verb
+        // per person adapted from `docs/academic/SAMPLE_SENTENCES.md`'s modal-verb
         // bank (`validFor: []`, same reasoning as `'Zuk etorri ___?'` above —
         // an infinitive complement has no `nor-nork` object-noun sibling that
         // fits).
@@ -1566,7 +1566,7 @@ export const VERBS = [
     // #267: unlike `nahi`/`jakin`, `behar`'s complement is an infinitive
     // ("Joan behar dut" = "I have to go"), not an object noun — so each
     // sentence here blanks only the trailing `ukan` auxiliary after an
-    // infinitive-complement clause (adapted from `docs/SAMPLE_SENTENCES.md`'s
+    // infinitive-complement clause (adapted from `docs/academic/SAMPLE_SENTENCES.md`'s
     // modal-verb bank, paraphrased to a singular complement object where the
     // bank's original used a plural one, since `behar` only has a
     // singular-object table — see `docs/DECISIONS.md`). `lessonLogic.js`'s
@@ -1620,7 +1620,7 @@ export const VERBS = [
     personAxis: 'nork',
   },
   // #410/#411: `ahal` ("ability/possibility") and its negation `ezin`
-  // ("can't") — per `docs/VERB_COVERAGE.md` §5, these are *auxiliary-
+  // ("can't") — per `docs/academic/VERB_COVERAGE.md` §5, these are *auxiliary-
   // transparent*: unlike `nahi`/`behar` (always `ukan`) or `ari` (always
   // `izan`), each one falls through to whichever auxiliary the lexical verb
   // underneath would pick on its own — `izan` for an intransitive carrier
@@ -1792,7 +1792,7 @@ export const VERBS = [
     // distractors until a native-speaker review; typed-answer ambiguity
     // against `ukan`'s bare `zaitut` (trailing word of `maite zaitut`) is
     // already suppressed by `hasAmbiguousTypedForm`. Flagged in
-    // docs/LANGUAGE_DECISIONS.md.
+    // docs/academic/LANGUAGE_DECISIONS.md.
     byObjectSentences: {
       presentByObject: {
         ni: {
@@ -1815,7 +1815,7 @@ export const VERBS = [
   },
   // `jakin` ("to know a fact") — fully synthetic, sharing `ukan`'s
   // `-t`/`-zu`/∅ present suffix family (`dakit`/`dakizu`/`daki`), per
-  // `docs/CONJUGATIONS.md` §7.
+  // `docs/academic/CONJUGATIONS.md` §7.
   {
     id: 'jakin',
     verb: 'jakin',
@@ -1830,7 +1830,7 @@ export const VERBS = [
       // in CONJUGATIONS.md §7's own grid (blank `hik` row there), but given
       // in §10's synthetic-verb allocutive table per #144's DECISIONS.md.
       // #478: `gu`/`zuek`/`haiek` were already documented in
-      // `docs/CONJUGATIONS.md` §7's grid (`dakigu`/`dakizue`/`dakite`,
+      // `docs/academic/CONJUGATIONS.md` §7's grid (`dakigu`/`dakizue`/`dakite`,
       // #245-sourced) but never ported into this table — porting them now
       // so `presentPlural` below can mirror `present`'s full person set
       // instead of the pre-#287 gap CONJUGATIONS.md noted.
@@ -1842,7 +1842,7 @@ export const VERBS = [
       // `ukan`'s `-uen`/`-uten` swapped for `jakin`'s `-ekien`/`-ekiten`.
       // `hik` stays unsplit (`hekien`), matching `ukan`'s own "past stays
       // unsplit" precedent (#167) rather than the present's gender split.
-      // See docs/LANGUAGE_DECISIONS.md for the full derivation; flagged for
+      // See docs/academic/LANGUAGE_DECISIONS.md for the full derivation; flagged for
       // native-speaker confirmation per that entry.
       past: { ni: 'nekien', hi: 'hekien', zu: 'zenekien', hura: 'zekien', gu: 'genekien', zuek: 'zenekiten', haiek: 'zekiten' },
       future: { ni: 'jakingo dut', zu: 'jakingo duzu', hura: 'jakingo du' },
@@ -1858,7 +1858,7 @@ export const VERBS = [
       // applied to the now-complete `present` person set.
       // No `futurePlural`: `future` itself only has 3 persons, same omission
       // precedent as `nahi`'s missing `pastPlural`. Same native-speaker-check
-      // caveat as #284 — see docs/LANGUAGE_DECISIONS.md.
+      // caveat as #284 — see docs/academic/LANGUAGE_DECISIONS.md.
       presentPlural: {
         ni: 'dakizkit',
         zu: 'dakizkizu',
@@ -1871,7 +1871,7 @@ export const VERBS = [
       },
       pastPlural: { ni: 'nekizkien', hi: 'hekizkien', zu: 'zenekizkien', hura: 'zekizkien', gu: 'genekizkien', zuek: 'zenekizkiten', haiek: 'zekizkiten' },
     },
-    // #124: `validFor` per docs/SENTENCE_FRAMES.md. `jakin`'s candidates are
+    // #124: `validFor` per docs/academic/SENTENCE_FRAMES.md. `jakin`'s candidates are
     // `ikusi`/`nahi`/`ukan` (`eduki` is #114's confirmed-wrong pair for
     // `jakin`, so never listed). "Erantzuna"/"egia"/"erantzun zuzena" (answer,
     // truth — things that can be seen written down, or wanted) admit
@@ -1982,7 +1982,7 @@ export const VERBS = [
     },
   },
   // Unit 4 ("Moving Around") — `joan` present (`noa`/`zoaz`/`doa`/`goaz`/
-  // `zoazte`/`doaz`), per `docs/CONJUGATIONS.md` §6 (already has a `zu` row).
+  // `zoazte`/`doaz`), per `docs/academic/CONJUGATIONS.md` §6 (already has a `zu` row).
   // `gu`/`zuek`/`haiek` were added by Unit 7 ("Expansion").
   {
     id: 'joan',
@@ -2015,8 +2015,8 @@ export const VERBS = [
       // Unit 22 ("Motion in Progress (Past)") — `joan`'s own *imperfective*
       // past (ongoing/habitual "I was going"), distinct from `past` above
       // (the periphrastic *simple* past "I went", taught in Unit 11). Per
-      // `docs/CONJUGATIONS.md` §6. #313: now has `sentences` (cultural-bank
-      // items below) — see `docs/LANGUAGE_DECISIONS.md`.
+      // `docs/academic/CONJUGATIONS.md` §6. #313: now has `sentences` (cultural-bank
+      // items below) — see `docs/academic/LANGUAGE_DECISIONS.md`.
       imperfectivePast: {
         ni: 'nindoan',
         hi: 'hindoan',
@@ -2063,7 +2063,7 @@ export const VERBS = [
       // hura→niri cell alone produced several different mutually
       // inconsistent guesses before being abandoned. Needs native-speaker
       // confirmation before any past dative form is added — see
-      // docs/LANGUAGE_DECISIONS.md.
+      // docs/academic/LANGUAGE_DECISIONS.md.
       presentByNor: {
         hura: { ni: 'doakit', zu: 'doakizu', gu: 'doakigu' },
         haiek: { ni: 'doazkit', zu: 'doazkizu' },
@@ -2075,7 +2075,7 @@ export const VERBS = [
     // "I go to the beach"). `etorri`'s same-person form ("Ni hondartzara
     // nator" = "I'm coming to the beach") is an equally natural, differently-
     // meant completion of the same allative — confirmed Tier-2 finding
-    // (docs/SENTENCE_FRAMES.md worked example 2) — so every variant gets
+    // (docs/academic/SENTENCE_FRAMES.md worked example 2) — so every variant gets
     // `validFor: ['etorri']`. izan/egon don't take an allative this way, so
     // they're never listed.
     sentences: {
@@ -2203,7 +2203,7 @@ export const VERBS = [
       },
       // #313: cultural-bank items for `imperfectivePast` (ongoing/habitual
       // "I was going..."), distinct from `past`'s simple "I went" above —
-      // `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs bank's "Past" examples
+      // `docs/academic/SAMPLE_SENTENCES.md`'s synthetic-verbs bank's "Past" examples
       // for `joan` actually use this table's forms (`gindoazen`/`zindoazen`/
       // etc.), not `past`'s (`joan zen`), which #312 missed. Allative/
       // ablative-directional ones keep `joan`'s usual `validFor: ['etorri']`
@@ -2239,7 +2239,7 @@ export const VERBS = [
     },
   },
   // `etorri` present, same Unit 4 ("Moving Around") trim — `nator`/`zatoz`/
-  // `dator`, per `docs/CONJUGATIONS.md` §6.
+  // `dator`, per `docs/academic/CONJUGATIONS.md` §6.
   {
     id: 'etorri',
     verb: 'etorri',
@@ -2270,7 +2270,7 @@ export const VERBS = [
       },
       // Unit 21 ("I Used To..." — the general periphrastic imperfective/
       // habitual past) — imperfective participle `etortzen` + `izan`'s past
-      // auxiliary (`docs/CONJUGATIONS.md` §11's "Ondorio Orokorra" formula:
+      // auxiliary (`docs/academic/CONJUGATIONS.md` §11's "Ondorio Orokorra" formula:
       // stem + `-t(z)en` + past aux). Distinct from `imperfectivePast` below
       // (Unit 22), `etorri`'s own *native synthetic* imperfective ("I was
       // coming") — Basque has both a periphrastic and a synthetic way to say
@@ -2286,7 +2286,7 @@ export const VERBS = [
         haiek: 'etortzen ziren',
       },
       // Unit 22 ("Motion in Progress (Past)") — `etorri`'s own *imperfective*
-      // past (ongoing/habitual "I was coming"), per `docs/CONJUGATIONS.md`
+      // past (ongoing/habitual "I was coming"), per `docs/academic/CONJUGATIONS.md`
       // §6.
       imperfectivePast: {
         ni: 'nentorren',
@@ -2314,13 +2314,13 @@ export const VERBS = [
       // above. No `hura`/`haiek`/`ni`/`gu` cells, same reasoning as `joan`'s
       // imperative above (Radical/Bare-Stem `etor bedi` is out of scope).
       imperative: { hi: 'hator', zu: 'zatoz', zuek: 'zatozte' },
-      // #477: NOR-NORI dative axis (`docs/CONJUGATIONS.md` §6) — irregular
+      // #477: NOR-NORI dative axis (`docs/academic/CONJUGATIONS.md` §6) — irregular
       // synthetic forms, not decomposable into a prefix+skeleton like the
       // periphrastic dative verbs (gustatu etc.), so written literally.
       // `ni`/`zu`/`gu` confirmed attested (`datorkit`: song "Argia datorkit";
       // `datorkizu`/`datorkigu`: native usage, e.g. "Zer datorkizu burura?",
       // "Uda datorkigu") — `hi`/`hura`/`zuek`/`haiek` remain unconfirmed, see
-      // docs/LANGUAGE_DECISIONS.md. Past: only `ni`/`hura` confirmed so far,
+      // docs/academic/LANGUAGE_DECISIONS.md. Past: only `ni`/`hura` confirmed so far,
       // via the "burura/gogora etorri" idiom (#499) — `zu`/`gu` past forms
       // not yet sourced. No plural-NORI or other-mood forms are attested —
       // do not extrapolate them.
@@ -2335,7 +2335,7 @@ export const VERBS = [
     // Allative `-ra` variants ("Ni etxera ___." = "I'm coming home") get
     // `validFor: ['joan']` — joan's same-person form ("Ni etxera noa" = "I'm
     // going home") is an equally natural, opposite-direction completion of
-    // the same allative (docs/SENTENCE_FRAMES.md worked example 2;
+    // the same allative (docs/academic/SENTENCE_FRAMES.md worked example 2;
     // "Ane etxera ___." is the confirmed Tier-2 spot-check). #125: the
     // formerly-bare-temporal variants ("Hura orain ___.", etc.) had no
     // destination, location, or predicate at all — da/dago/doa/dator were
@@ -2393,13 +2393,13 @@ export const VERBS = [
       // but those adverbs contradict the *completed, non-recent* reading
       // `etorri zen` (Lehenaldi Mugatua, "she came [that time]") carries; a
       // native speaker would say `gaur etorri da` (present-perfect-style,
-      // not yet in the curriculum — see `docs/LANGUAGE_DECISIONS.md`) for a
+      // not yet in the curriculum — see `docs/academic/LANGUAGE_DECISIONS.md`) for a
       // same-day arrival, not `gaur etorri zen`. So `past` isn't aliased from
       // `present` (unlike every other reused-past verb — see the alias loop
       // below) — same frames/destinations, but `orain`/`gaur`/`bihar` swapped
       // for a varied past-time adverb (`atzo`/`herenegun`/`lehengo egunean`/
       // `iaz`/`duela bi egun`), which `zen` narrates naturally, matching
-      // `docs/LEARNING_JOURNEY.md` Unit 11's own example ("Atzo etorri zen").
+      // `docs/academic/LEARNING_JOURNEY.md` Unit 11's own example ("Atzo etorri zen").
       past: {
         ni: [
           { text: 'Ni atzo etxera ___.', validFor: ['joan'] },
@@ -2496,7 +2496,7 @@ export const VERBS = [
       },
       // #313: cultural-bank items for `imperfectivePast` (`etorri`'s native
       // synthetic "I was coming", distinct from `habitualPast`'s periphrastic
-      // form above) — `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs bank's
+      // form above) — `docs/academic/SAMPLE_SENTENCES.md`'s synthetic-verbs bank's
       // "Past" examples for `etorri` use this table's forms (`zetorren`/
       // `zentozten`/etc.), which #312 missed (it only covered `present`/
       // `past`). Ablative-source-only sentences ("...museotik...",
@@ -2562,7 +2562,7 @@ export const VERBS = [
   // Unit 5 ("The Immediate Continuous") — `ari` ("in the process of") +
   // imperfective participle + `izan`. Modeled as its own `VERBS` entry like
   // `nahi`/`jakin`: conjugates *exactly* like `izan`'s present
-  // (`naiz`/`zara`/`da`, per `docs/VERB_COVERAGE.md` §5), so `agreement:
+  // (`naiz`/`zara`/`da`, per `docs/academic/VERB_COVERAGE.md` §5), so `agreement:
   // ['nor']` and unmarked pronouns (no ergative `-k`, i.e. the default `nor`
   // `personAxis`) — the construction always takes `izan`, regardless of the
   // lexical verb's own transitivity.
@@ -2632,12 +2632,12 @@ export const VERBS = [
     },
   },
   // Unit 10 ("Daily Routine (Transitive)") — first Phase II verbs, so per the
-  // Person-Expansion Rule (`docs/LEARNING_JOURNEY.md`) these start at the full
+  // Person-Expansion Rule (`docs/academic/LEARNING_JOURNEY.md`) these start at the full
   // 6-person grid from their first lesson, no separate expansion pass needed.
   // `jan`/`edan`/`erosi`/`ikusi` are all periphrastic `nor-nork` verbs (object
   // fixed to `hura`, like `ukan`/`nahi`/`jakin`): imperfective participle
   // (`jaten`/`edaten`/`erosten`/`ikusten`) + `ukan`'s present auxiliary
-  // (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), per `docs/CONJUGATIONS.md` §7's
+  // (`dut`/`duzu`/`du`/`dugu`/`duzue`/`dute`), per `docs/academic/CONJUGATIONS.md` §7's
   // "Present (oraina)" columns. `ikusi` (defined a few entries below) shares
   // this shape but was pulled forward into Unit 3 as Phase I's first
   // periphrastic verb. No `negativeSentences` on any of these — same as
@@ -2658,10 +2658,10 @@ export const VERBS = [
     composedPrefixes: { present: 'jaten ', past: 'jan ', future: 'jango ' },
     // M2: frame sentence vocabulary. `sg` = singular NOR (hura-column tenses);
     // `pl` = plural NOR (haiek-column, `*Plural` tenses). Flagged for native-
-    // speaker review alongside the frame skeletons (docs/LANGUAGE_DECISIONS.md).
+    // speaker review alongside the frame skeletons (docs/academic/LANGUAGE_DECISIONS.md).
     slotVocabulary: { sg: ['sagarra', 'ogia', 'tortilla'], pl: ['sagarrak', 'ogiak', 'tortillak'] },
     conjugations: {},
-    // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every object
+    // #124/#224/#240: `validFor` per docs/academic/SENTENCE_FRAMES.md. Every object
     // here is a concrete food/dish, naturally also something one could
     // *have*/*want*/*hold*/*see*/*buy*/*need* — `ukan`/`nahi`/`eduki`/
     // `ikusi`/`erosi`/`behar`'s same-person forms are all natural
@@ -2758,7 +2758,7 @@ export const VERBS = [
     composedPrefixes: { present: 'edaten ', past: 'edan ', future: 'edango ' },
     slotVocabulary: { sg: ['ardoa', 'kafea', 'ura'], pl: ['ardoak', 'kafeak', 'urak'] },
     conjugations: {},
-    // #124/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Every drink
+    // #124/#224/#240: `validFor` per docs/academic/SENTENCE_FRAMES.md. Every drink
     // here is naturally something one could also *have*/*want*/*hold*/*see*/
     // *buy*/*need* — `ukan`/`nahi`/`eduki`/`ikusi`/`erosi`/`behar`'s
     // same-person forms are all natural alternatives (#240's food-drink
@@ -2859,7 +2859,7 @@ export const VERBS = [
     composedPrefixes: { present: 'erosten ', past: 'erosi ', future: 'erosiko ' },
     slotVocabulary: { sg: ['liburua', 'arropa', 'autoa'], pl: ['liburuak', 'arropak', 'autoak'] },
     conjugations: {},
-    // #124/#155/#224/#240: `validFor` per docs/SENTENCE_FRAMES.md. Edible/
+    // #124/#155/#224/#240: `validFor` per docs/academic/SENTENCE_FRAMES.md. Edible/
     // drinkable objects ("ogia", "sagarrak", "fruta") admit `jan` (#114's
     // confirmed pair) plus `ukan`/`nahi`/`eduki`/`ikusi`/`behar` (#240's
     // food-drink symmetry fix — you can also have/want/hold/see/need the food
@@ -2965,7 +2965,7 @@ export const VERBS = [
     // `jaten`(-ten)/`hartzen`(-tzen) minimal pair. Sentence objects
     // (autobusa/trena/taxia/aterkia/katua/erabakia/txanda) are chosen so that
     // none of the pool's other verbs (jan/edan/erosi/ikusi) would also fit.
-    // Flagged in docs/LANGUAGE_DECISIONS.md for a native-speaker check of
+    // Flagged in docs/academic/LANGUAGE_DECISIONS.md for a native-speaker check of
     // these forms/sentences. #224 added `behar` ("need X") to every entry —
     // these are all agentive human subjects wanting/needing the object, so
     // "X behar dut" fits each frame.
@@ -3032,7 +3032,7 @@ export const VERBS = [
     conjugations: {
       // Unit 21 ("I Used To..." — periphrastic imperfective/habitual past) —
       // imperfective participle `ikusten` + `ukan`'s past auxiliary, per
-      // `docs/CONJUGATIONS.md` §11's "Ondorio Orokorra" formula. Pairs with
+      // `docs/academic/CONJUGATIONS.md` §11's "Ondorio Orokorra" formula. Pairs with
       // `etorri`'s `habitualPast` as the unit's NOR/NOR-NORK auxiliary-pattern
       // pair, same pairing precedent as `izan`/`ukan` elsewhere. Form-only
       // (no `sentences`).
@@ -3057,7 +3057,7 @@ export const VERBS = [
         haiek: 'ikusi dute',
       },
     },
-    // #124/#155/#224: `validFor` per docs/SENTENCE_FRAMES.md. `ikusi`'s
+    // #124/#155/#224: `validFor` per docs/academic/SENTENCE_FRAMES.md. `ikusi`'s
     // candidates are `ukan`/`eduki`/`jakin`/`nahi`/`erosi` (the four
     // confirmed #114 pairs, plus `erosi` per #155's purchasable-object
     // re-audit). "Filma" (a film — ownable, wantable, buyable, not "known"
@@ -3184,7 +3184,7 @@ export const VERBS = [
   // hold physically") is a synthetic nor-nork verb riding the same
   // `-t`/`-zu`/∅/`-gu`/`-zue`/`-te` suffix family as `ukan`
   // (`daukat`/`daukazu`/`dauka`/`daukagu`/`daukazue`/`daukate`, object fixed
-  // `hura`), per `docs/CONJUGATIONS.md` §7 — full 6-person grid from its
+  // `hura`), per `docs/academic/CONJUGATIONS.md` §7 — full 6-person grid from its
   // first lesson per the Person-Expansion Rule. `ibili` ("to walk around /
   // be doing") is a synthetic nor verb (`nabil`/`zabiltza`/`dabil`/
   // `gabiltza`/`zabiltzate`/`dabiltza`), same shape as `joan`/`etorri`. Both
@@ -3241,7 +3241,7 @@ export const VERBS = [
         haiek: 'edukiko dituzte',
       },
     },
-    // #124: `validFor` per docs/SENTENCE_FRAMES.md. `eduki`'s candidates are
+    // #124: `validFor` per docs/academic/SENTENCE_FRAMES.md. `eduki`'s candidates are
     // `ukan`/`ikusi` (#114's confirmed pairs; `jakin` is a confirmed-wrong
     // pair, never listed). Every sentence here is "[object] in my
     // pocket/hand" — `ukan`'s same-person form is a near-synonym for
@@ -3357,7 +3357,7 @@ export const VERBS = [
     object: 'hura',
     dialect: 'batua',
     dativeOvergeneration: true,
-    // #260: present/past sourced from docs/CONJUGATIONS.md §7 (`eraman` —
+    // #260: present/past sourced from docs/academic/CONJUGATIONS.md §7 (`eraman` —
     // singular-object alternant). `hi` omitted — CONJUGATIONS.md's table has
     // no `hik` row for `eraman`, unlike `jakin`'s sourced hitanoa split
     // (#144/#245). `future` derived the same way as `eduki`/`jakin`'s
@@ -3404,7 +3404,7 @@ export const VERBS = [
         haiek: 'eramango dituzte',
       },
     },
-    // #261: adapted from docs/SAMPLE_SENTENCES.md's `ERAMAN` bank
+    // #261: adapted from docs/academic/SAMPLE_SENTENCES.md's `ERAMAN` bank
     // (Bidaiak/Eguneroko bizitza columns — fishermen carrying tuna to port,
     // hikers' cheese/bread for the mountain, a dog taken to see sheep,
     // dancers driven to a festival). The source's plural-object forms
@@ -3475,7 +3475,7 @@ export const VERBS = [
     object: 'hura',
     dialect: 'batua',
     dativeOvergeneration: true,
-    // #260: present/past sourced from docs/CONJUGATIONS.md §7 (`ekarri` —
+    // #260: present/past sourced from docs/academic/CONJUGATIONS.md §7 (`ekarri` —
     // singular-object alternant, same convention as `eraman` above). `hi`
     // omitted for the same reason (no `hik` row sourced in CONJUGATIONS.md).
     // `future` derived the same way as `eduki`'s (`-i`-final root + `-ko` +
@@ -3522,7 +3522,7 @@ export const VERBS = [
         haiek: 'ekarriko dituzte',
       },
     },
-    // #261: adapted from docs/SAMPLE_SENTENCES.md's `EKARRI` bank
+    // #261: adapted from docs/academic/SAMPLE_SENTENCES.md's `EKARRI` bank
     // (Bidaiak/Familia eta etxea columns — a drum brought as a gift, Txakoli
     // bottles, Basque pastries from the bakery, a sack of Tolosa beans,
     // mountain-spring water). Singularized the same way as `eraman` above to
@@ -3583,7 +3583,7 @@ export const VERBS = [
   {
     // #483: `erabili` ("to use") — plain nor-nork synthetic in the
     // already-taught `eduki`/`jakin` shape, no new grammatical relation.
-    // present/past sourced from docs/CONJUGATIONS.md §7. `hi` omitted, same
+    // present/past sourced from docs/academic/CONJUGATIONS.md §7. `hi` omitted, same
     // reason as `ekarri`/`eraman`/`eduki` (no `hik` row sourced there).
     id: 'erabili',
     verb: 'erabili',
@@ -3654,9 +3654,9 @@ export const VERBS = [
         haiek: 'ibiliko dira',
       },
       // Unit 22 ("Motion in Progress (Past)") — `ibili`'s own *imperfective*
-      // past, per `docs/CONJUGATIONS.md` §6. No `hi` row — §6 marks it `—`
+      // past, per `docs/academic/CONJUGATIONS.md` §6. No `hi` row — §6 marks it `—`
       // (unattested/not in regular use), same gap noted for `ibili hintzen`
-      // in #180 (see `docs/LANGUAGE_DECISIONS.md`).
+      // in #180 (see `docs/academic/LANGUAGE_DECISIONS.md`).
       imperfectivePast: {
         ni: 'nenbilen',
         zu: 'zenbiltzan',
@@ -3739,7 +3739,7 @@ export const VERBS = [
       },
       // #313: cultural-bank items for `imperfectivePast` (ongoing/habitual
       // "I was walking/busy doing X..."), distinct from `past`'s simple
-      // "I walked" above — `docs/SAMPLE_SENTENCES.md`'s synthetic-verbs
+      // "I walked" above — `docs/academic/SAMPLE_SENTENCES.md`'s synthetic-verbs
       // bank's "Past" examples for `ibili` use this table's forms
       // (`zenbiltzaten`/`nenbilen`/`zebiltzan`/`zenbiltzan`), which #312
       // missed. #454: `joan`/`etorri` are this table's only agreement
@@ -3783,7 +3783,7 @@ export const VERBS = [
   // periphrastic (`esaten`/`ematen` + the `di-` ditransitive auxiliary,
   // mirroring `jan`/`edan`'s `[participle] + ukan` shape); past and future
   // drop the `-ten` infinitive for the bare participle (`esan nion`, `esango
-  // diot`), per `docs/LEARNING_JOURNEY_PROPOSED.md` Unit 25/26's examples.
+  // diot`), per `docs/academic/LEARNING_JOURNEY_PROPOSED.md` Unit 25/26's examples.
   // `hi`/`hiri` cells are omitted throughout (hitanoa, not yet modeled — see
   // #144), matching every other verb's 6-person table.
   {
@@ -3801,7 +3801,7 @@ export const VERBS = [
     // — `recipient` above fixes NORI, so NORK is the varying axis. `nion`/
     // `zion`/`genion`/`zenion` per CONJUGATIONS.md §5's `hari`/past row; §8's
     // `esan`-specific table gives `nioen`/`zioen`/`genioen`/`zenioen` instead
-    // for the same cells — flagged in docs/LANGUAGE_DECISIONS.md for
+    // for the same cells — flagged in docs/academic/LANGUAGE_DECISIONS.md for
     // native-speaker confirmation; `nion` was chosen as it matches both §5's
     // general grid and the LEARNING_JOURNEY_PROPOSED.md N-26 example ("Esan
     // nion"). `future` reuses `diot.present`'s row (no separate `diot.future`
@@ -3850,7 +3850,7 @@ export const VERBS = [
         'hi-f': 'iezaion',
       },
       // #366: ditransitive Baldintza/Ondorioa/Ahalera, per
-      // `docs/CONJUGATIONS.md:751-1081`. `recipient: 'hura'` above already
+      // `docs/academic/CONJUGATIONS.md:751-1081`. `recipient: 'hura'` above already
       // fixes NORI = hari, so each table below is that grid's `hari` row,
       // keyed by the varying NORK (`person`) — same shape as `present`/
       // `past`/`future`, just a different mood/tense. `hi` stays excluded
@@ -4064,7 +4064,7 @@ export const VERBS = [
         haiek: 'iezaiezu',
       },
       // #366: ditransitive Baldintza/Ondorioa/Ahalera, per
-      // `docs/CONJUGATIONS.md:751-1081`. `agent: 'ni'` above already fixes
+      // `docs/academic/CONJUGATIONS.md:751-1081`. `agent: 'ni'` above already fixes
       // NORK = nik, so each table below is that grid's `nik` column, keyed
       // by the varying NORI (`person`) — same shape as `present`/`past`/
       // `future`, just a different mood/tense. `ni`/`gu` stay reflexive-only
@@ -4160,11 +4160,11 @@ export const VERBS = [
   // `gustatu`/`iruditu` use the `-tzen` habitual present (`gustatzen zait`,
   // "I like it"); `ahaztu`'s present is the bare participle + present dative
   // aux (`ahaztu zait`, "I forgot it") — a resultative/perfect-like reading,
-  // per `docs/LEARNING_JOURNEY_PROPOSED.md`'s dedicated `ahaztu` table and
+  // per `docs/academic/LEARNING_JOURNEY_PROPOSED.md`'s dedicated `ahaztu` table and
   // Unit 23 examples. Past keeps the bare participle + past dative aux
   // (`zitzaidan` etc.) for all three; future is `[participle]+ko` + present
   // dative aux (`gustatuko zait`). `hi`/`hiri` cells omitted (hitanoa, see
-  // #144). Forms flagged in `docs/LANGUAGE_DECISIONS.md` for native-speaker
+  // #144). Forms flagged in `docs/academic/LANGUAGE_DECISIONS.md` for native-speaker
   // confirmation.
   {
     id: 'gustatu',
@@ -4181,7 +4181,7 @@ export const VERBS = [
     byNoriPrefixes: { present: 'gustatzen ', past: 'gustatu ', future: 'gustatuko ' },
     conjugations: {
       // #164: plural-`NOR` ("they please me") — same `NORI`-suffix family,
-      // `-zki-`-infixed per `docs/CONJUGATIONS.md` §4's `haiek`/`NOR` column.
+      // `-zki-`-infixed per `docs/academic/CONJUGATIONS.md` §4's `haiek`/`NOR` column.
       // `person` here still ranges over `NORI`; the fixed `NOR` argument
       // moves from `hura` to `haiek` for this whole table.
       presentPlural: {
@@ -4197,7 +4197,7 @@ export const VERBS = [
         gu: 'gustatuko zaizkigu', zuek: 'gustatuko zaizkizue', haiek: 'gustatuko zaizkie',
       },
       // #361: Baldintza's NOR-NORI object axis, transcribed from
-      // `docs/CONJUGATIONS.md:468-483` — the future `-ko` participle
+      // `docs/academic/CONJUGATIONS.md:468-483` — the future `-ko` participle
       // (matching `future`'s own `irudituko zait`-style prefix above) over
       // the dative `tzai`-stem Baldintza forms. Only the literal diagonal
       // (`niri`-`ni`, `guri`-`gu`, `zuri`-`zu`, `zuei`-`zuek`) is reflexive —
@@ -4213,7 +4213,7 @@ export const VERBS = [
         haiek: { ni: 'gustatuko banintzaie', zu: 'gustatuko bazintzaie', gu: 'gustatuko bagintzaizkie', zuek: 'gustatuko bazintzaizkie' },
       },
       // #361: Ondorioa-present's NOR-NORI object axis, transcribed from
-      // `docs/CONJUGATIONS.md:494-510`. Same literal-diagonal-only
+      // `docs/academic/CONJUGATIONS.md:494-510`. Same literal-diagonal-only
       // reflexive exclusion as `baldintzaByNor` above.
       conditionalByNor: {
         ni: { zu: 'gustatuko zintzaidake', gu: 'gustatuko gintzaizkidake', zuek: 'gustatuko zintzaizkidake' },
@@ -4224,7 +4224,7 @@ export const VERBS = [
         haiek: { ni: 'gustatuko nintzaieke', zu: 'gustatuko zintzaieke', gu: 'gustatuko gintzaizkieke', zuek: 'gustatuko zintzaizkieke' },
       },
       // #361: Ondorioa-past's NOR-NORI object axis, transcribed from
-      // `docs/CONJUGATIONS.md:512-528`. Same literal-diagonal-only
+      // `docs/academic/CONJUGATIONS.md:512-528`. Same literal-diagonal-only
       // reflexive exclusion as `baldintzaByNor`/`conditionalByNor` above.
       conditionalPastByNor: {
         ni: { zu: 'gustatuko zintzaidakeen', gu: 'gustatuko gintzaizkidakeen', zuek: 'gustatuko zintzaizkidakeen' },
@@ -4235,7 +4235,7 @@ export const VERBS = [
         haiek: { ni: 'gustatuko nintzaiekeen', zu: 'gustatuko zintzaiekeen', gu: 'gustatuko gintzaizkiekeen', zuek: 'gustatuko zintzaizkiekeen' },
       },
       // #362: Potentziala-present's NOR-NORI object axis, transcribed from
-      // `docs/CONJUGATIONS.md:537-545`. Bare participle (matching `past`'s
+      // `docs/academic/CONJUGATIONS.md:537-545`. Bare participle (matching `past`'s
       // own prefix), not the `-ko` future participle Baldintza/Ondorioa use
       // above — Ahalera takes the bare participle in Basque. Same
       // literal-diagonal-only reflexive exclusion and `{ni,zu,gu,zuek}`-only
@@ -4249,7 +4249,7 @@ export const VERBS = [
         haiek: { ni: 'gustatu nakieke', zu: 'gustatu zakieke', gu: 'gustatu gakizkieke', zuek: 'gustatu zakizkieke' },
       },
       // #362: Potentziala-hypothetical's NOR-NORI object axis, transcribed
-      // from `docs/CONJUGATIONS.md:570-578`.
+      // from `docs/academic/CONJUGATIONS.md:570-578`.
       potentialAlegiazkoaByNor: {
         ni: { zu: 'gustatu zenkidake', gu: 'gustatu genkizkidake', zuek: 'gustatu zenkizkidake' },
         zu: { ni: 'gustatu nenkizuke', gu: 'gustatu genkizkizuke', zuek: 'gustatu zenkizkizuke' },
@@ -4259,7 +4259,7 @@ export const VERBS = [
         haiek: { ni: 'gustatu nenkieke', zu: 'gustatu zenkieke', gu: 'gustatu genkizkieke', zuek: 'gustatu zenkizkieke' },
       },
       // #362: Potentziala-past's NOR-NORI object axis, transcribed from
-      // `docs/CONJUGATIONS.md:554-562`.
+      // `docs/academic/CONJUGATIONS.md:554-562`.
       potentialLehenaldiaByNor: {
         ni: { zu: 'gustatu zenkidakeen', gu: 'gustatu genkizkidakeen', zuek: 'gustatu zenkizkidakeen' },
         zu: { ni: 'gustatu nenkizukeen', gu: 'gustatu genkizkizukeen', zuek: 'gustatu zenkizkizukeen' },
@@ -4268,7 +4268,7 @@ export const VERBS = [
         zuek: { ni: 'gustatu nenkizueketen', zu: 'gustatu zenkizueketen', gu: 'gustatu genkizkizueketen' },
         haiek: { ni: 'gustatu nenkiekeen', zu: 'gustatu zenkiekeen', gu: 'gustatu genkizkiekeen', zuek: 'gustatu zenkizkiekeen' },
       },
-      // #364: Inperatiboa's NOR-NORI object axis (`docs/CONJUGATIONS.md:613-631`)
+      // #364: Inperatiboa's NOR-NORI object axis (`docs/academic/CONJUGATIONS.md:613-631`)
       // — unlike `*ByNor`'s other moods, there's no existing flat `imperative`
       // table for these verbs to be redundant with, so `hura`/`haiek` ARE
       // included as NOR values here (the grid's only structurally blocked NOR
@@ -4518,7 +4518,7 @@ export const VERBS = [
     // Present is the bare participle + present dative aux (`ahaztu zait`),
     // *not* the `-tzen` habitual (`ahazten zait`, "I tend to forget it") —
     // the resultative reading ("it is [in a state of being] forgotten to
-    // me") is what `docs/LEARNING_JOURNEY_PROPOSED.md`'s dedicated `ahaztu`
+    // me") is what `docs/academic/LEARNING_JOURNEY_PROPOSED.md`'s dedicated `ahaztu`
     // table and Unit 23 example ("Liburua ahaztu zait") both use.
     // #448: `present` and `past` share the identical bare-participle prefix
     // string (unlike `gustatu`/`iruditu`, whose `present` uses the `-tzen`
@@ -4669,7 +4669,7 @@ export const VERBS = [
   // `nor` regular verbs feeding the pool lessons #318 designated — no new
   // grammar, so no dedicated single-verb lesson per the pattern-first rule
   // (#309). Sourcing (participle shape, `-tzen`/`-ten` choice, `-ko`/`-go`
-  // future) logged in `docs/LANGUAGE_DECISIONS.md`.
+  // future) logged in `docs/academic/LANGUAGE_DECISIONS.md`.
   {
     id: 'egin',
     verb: 'egin',
@@ -5244,7 +5244,7 @@ export const VERBS = [
   },
   {
     // #334 — itxaron's dative reading ("wait *for* someone", recipient as
-    // NORI, no overt accusative object) per docs/LANGUAGE_DECISIONS.md's
+    // NORI, no overt accusative object) per docs/academic/LANGUAGE_DECISIONS.md's
     // #334 entry. Same recipient:'hura'/diot-family shape as the Unit 30
     // covert-dative family (lagundu/ekin/...), since itxaron-dative also has
     // no overt object to hint NORI — wired in as that pool's 10th carrier
@@ -5661,7 +5661,7 @@ export const VERBS = [
     },
   },
   // #320 (fodder, mid/low tier + #304's unassigned verbs, per #318's reserved
-  // pool plan — see docs/DECISIONS.md and docs/LANGUAGE_DECISIONS.md).
+  // pool plan — see docs/DECISIONS.md and docs/academic/LANGUAGE_DECISIONS.md).
   {
     id: 'eskatu',
     verb: 'eskatu',
@@ -6716,7 +6716,7 @@ export const VERBS = [
   // plan; docs/DECISIONS.md). All 12 are regular nor-nork verbs; sentences
   // are deliberately minimal (one frame per person) since this tier is
   // recognition-only exposure, not typed-production drilling — see
-  // docs/LANGUAGE_DECISIONS.md.
+  // docs/academic/LANGUAGE_DECISIONS.md.
   {
     id: 'hausnartu',
     verb: 'hausnartu',
@@ -7366,7 +7366,7 @@ export const VERBS = [
     },
   },
   // `mugitu`/`mugitu-izan` — the second ambitransitive pair after
-  // `babestu`/`babestu-izan` (`docs/VERB_COVERAGE.md` §4b-quinquies): "beste
+  // `babestu`/`babestu-izan` (`docs/academic/VERB_COVERAGE.md` §4b-quinquies): "beste
   // leku batera mugitu naiz" ("I moved to another place", intransitive) vs.
   // "aulki bat mugitu dut" ("I moved a chair", transitive), user-confirmed as
   // a general pattern. Same split shape as `babestu`/`babestu-izan`: one
@@ -8118,7 +8118,7 @@ export const VERBS = [
     // sentence text supplies an explicit person-denoting dative noun
     // (lagunari/etsaiari), and "help/call/do a favor for/harm" all read
     // naturally with either a friend or an enemy as the target, so every
-    // slot cross-tags with the other three. See `docs/DISTRACTOR_STRATEGY.md`
+    // slot cross-tags with the other three. See `docs/academic/DISTRACTOR_STRATEGY.md`
     // §6 for the dative-matching method note.
     sentences: {
       present: {
@@ -8605,7 +8605,7 @@ export const VERBS = [
   // #384 — `jarraitu`/`jario`, two more NOR-NORI verbs alongside `gustatu`/
   // `iruditu`/`ahaztu`. Sourcing/scope calls (the `jarraitu` nor-nork-vs-
   // nor-nori ambiguity resolution, `jario`'s table transcription, both
-  // verbs' `hi`/`hiri` omission) are logged in `docs/LANGUAGE_DECISIONS.md`.
+  // verbs' `hi`/`hiri` omission) are logged in `docs/academic/LANGUAGE_DECISIONS.md`.
   // `jarraitu` is periphrastic — rides `izan`'s NOR-NORI auxiliary exactly
   // like `gustatu`/`iruditu` (`-tzen` habitual present, bare participle +
   // past dative aux) — but `jarraitu` *also* has an everyday NOR-NORK
@@ -8735,7 +8735,7 @@ export const VERBS = [
   // `jario` is native synthetic and defective — almost always used with an
   // inanimate `nor` (water, tears, sweat...), so `nor` is fixed (`object:
   // 'hura'`, mirroring `ukan.object`) and `person` ranges over `nori`
-  // instead, transcribed directly from `docs/CONJUGATIONS.md:1392-1400`
+  // instead, transcribed directly from `docs/academic/CONJUGATIONS.md:1392-1400`
   // (the `(zki)` plural-`nor` marker dropped, since that axis is out of
   // scope per the issue). `recognitionOnly: true` per its "oso erabilpen
   // mugatua" (very limited everyday use) framing in `VERB_COVERAGE.md:169`
@@ -8888,7 +8888,7 @@ export const VERBS = [
   },
   // Unit 45 ("Talking About Weather"): weather idioms, always 3rd-person
   // singular (`hura`) — Basque impersonal-weather constructions have no
-  // learnable person paradigm of their own, so per `docs/LEARNING_JOURNEY.md`
+  // learnable person paradigm of their own, so per `docs/academic/LEARNING_JOURNEY.md`
   // this reuses the exact `hura`-present forms `izan`/`egon`/`ibili`/`ukan`
   // already teach (`da`/`dago`/`dabil`/`du`), rather than inventing a new
   // conjugation table. Each idiom gets its own small entry (mirroring the
@@ -8899,7 +8899,7 @@ export const VERBS = [
   // weather ones there would mostly get *diluted out* by `pickVariant`'s
   // random pick rather than reliably surfacing in a lesson meant to be about
   // weather. See `docs/DECISIONS.md` (2026-07-05) and
-  // `docs/LANGUAGE_DECISIONS.md` (phrasing flagged for native-speaker
+  // `docs/academic/LANGUAGE_DECISIONS.md` (phrasing flagged for native-speaker
   // confirmation, same as other idiom clusters).
   {
     id: 'eguraldia-ari',
@@ -9350,7 +9350,7 @@ export const VERBS = [
     },
   },
   // M5 held-out verbs — never referenced by any LESSONS entry; used only for
-  // nonce-verb generalization checks at Gates B/C (see docs/AUXILIARY_FIRST_PLAN.md
+  // nonce-verb generalization checks at Gates B/C (see docs/academic/AUXILIARY_FIRST_PLAN.md
   // §M5). `heldOut: true` is machine-audited by src/journey.test.js (every held-out
   // verb must appear in zero LESSONS sources). Sentences are bare strings (validFor:
   // undefined = unvetted) so the validFor gap audit skips them and the baseline stays
@@ -9490,7 +9490,7 @@ function verbHasComposedTense(verb, tense) {
 }
 
 // Stage 6 (Units 14-15, "Talking About the Future") gave every verb above (except
-// `ari`, see `docs/LANGUAGE_DECISIONS.md`) a `conjugations.future` table. The blank
+// `ari`, see `docs/academic/LANGUAGE_DECISIONS.md`) a `conjugations.future` table. The blank
 // in a `sentences`/`pronounSentences` template doesn't depend on tense — "Ni
 // irakaslea ___." fills equally well with `naiz` (present) or `izango naiz`
 // (future) — so rather than duplicate every present-tense sentence array

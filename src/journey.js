@@ -1,8 +1,8 @@
 // =============================================================================
 // The learning journey — Aditzak's curriculum roadmap
 //
-// Mirrors `docs/LEARNING_JOURNEY.md`'s phases → stages → units, which in turn
-// follows the 39-unit layout specified in `docs/LEARNING_JOURNEY_PROPOSED.md`
+// Mirrors `docs/academic/LEARNING_JOURNEY.md`'s phases → stages → units, which in turn
+// follows the 39-unit layout specified in `docs/academic/LEARNING_JOURNEY_PROPOSED.md`
 // (unit numbers below are that spec's "N-n"; see
 // `docs/LEARNING_JOURNEY_EVALUATION.md` for the O-n → N-n mapping that drove
 // this renumber — issue #149/#137/#151). Each unit is either:
@@ -41,7 +41,7 @@
 // (present → past → future) arrives well before Phase III rather than all at
 // once — see `docs/DECISIONS.md` for the redesign rationale.
 //
-// Keep this in sync with `docs/LEARNING_JOURNEY.md` — when a unit moves from
+// Keep this in sync with `docs/academic/LEARNING_JOURNEY.md` — when a unit moves from
 // pending to available, flip its `status` and add its `lessonIds` here.
 //
 // Lesson ids in `LESSONS` were kept stable across the #137 renumber (see
@@ -316,7 +316,7 @@ export const JOURNEY = [
           // payoff: the first sentence in the whole journey where the
           // *object*, not just the subject, isn't `hura`. See
           // `docs/DECISIONS.md` for the placement decision and
-          // `docs/EXERCISE_ENGINE.md` for the unit's original `ukan`/`maite`-
+          // `docs/technical/EXERCISE_ENGINE.md` for the unit's original `ukan`/`maite`-
           // only scope. #378/#379 then gave `ikusi`/`jan`/`edan`/`erosi`/
           // `hartu` their own `presentByObject`/`pastByObject` tables and
           // #380 taught `generateCrossVerbQuestions` to pool `objectAxis`

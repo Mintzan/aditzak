@@ -1,12 +1,12 @@
 # Auxiliary-First Plan — Implementation Roadmap
 
 **Status: adopted plan (2026-07-08).** The concrete, ordered work plan that
-implements `docs/AUXILIARY_FIRST_REVIEW.md` (read that first — §3 is the
+implements `docs/academic/AUXILIARY_FIRST_REVIEW.md` (read that first — §3 is the
 model, §5 the acceptance criteria this plan builds against). This document
 answers "what do we build, in what order, in which files, and how do we know
 each step is done." When a milestone lands, tick it here and log any
 non-obvious deviation in `docs/DECISIONS.md` (language-data judgments in
-`docs/LANGUAGE_DECISIONS.md`).
+`docs/academic/LANGUAGE_DECISIONS.md`).
 
 ---
 
@@ -41,8 +41,8 @@ cheap to revise later — none is load-bearing for the architecture.
 6. **UI copy goes through the `*_META` tables and i18n** (en/es/eu) — no
    hardcoded linguistic labels; journey copy via
    `src/i18n/journeyTranslations.js`.
-7. **Docs stay in sync** — `docs/LEARNING_JOURNEY.md` for rationale changes,
-   regenerate `docs/CURRICULUM_MAP.md` when `journey.js`/`lessons.js`
+7. **Docs stay in sync** — `docs/academic/LEARNING_JOURNEY.md` for rationale changes,
+   regenerate `docs/academic/CURRICULUM_MAP.md` when `journey.js`/`lessons.js`
    change, decision entries per CLAUDE.md.
 
 ---
@@ -99,7 +99,7 @@ risk.*
       (`behar`) left as-is — it's a construction (Layer D), not a
       periphrastic lexical verb. Unit numbers and `lessonIds` untouched.
 - [x] `src/i18n/journeyTranslations.js`: es/eu updated for all three units.
-- [x] `docs/LEARNING_JOURNEY.md` unit table and `docs/CURRICULUM_MAP.md`
+- [x] `docs/academic/LEARNING_JOURNEY.md` unit table and `docs/academic/CURRICULUM_MAP.md`
       section headers updated to match.
 
 **Acceptance (both PRs):** REVIEW §5.1-I1 — no spine unit/lesson title
@@ -125,7 +125,7 @@ not lesson metadata.*
       `src/validfor-audit.test.js` to machine-check instantiated frames the
       same way hand-written sentences are checked.
 - [x] Flag the frame skeletons for native-speaker review in
-      `docs/LANGUAGE_DECISIONS.md` (same protocol as #143's sentences).
+      `docs/academic/LANGUAGE_DECISIONS.md` (same protocol as #143's sentences).
 
 **PRs 2…n — close the M0 worklist in batches** (by paradigm, not by verb:
 one PR ≈ one aux table's missing cells across all its spine lessons).
@@ -239,8 +239,8 @@ the nonce check sees paradigm-targeted review, not an `aipatu` lesson.
       pattern's existing cross-verb lesson (mirroring #469's mechanics:
       retire the id, extend the pool's `sources`). D6: each row is a
       reviewable judgment; introducer-carve-out rows stay.
-- [x] Sync `journey.js` `lessonIds`, `docs/LEARNING_JOURNEY.md`, regenerate
-      `docs/CURRICULUM_MAP.md`; `docs/DECISIONS.md` entry naming what was
+- [x] Sync `journey.js` `lessonIds`, `docs/academic/LEARNING_JOURNEY.md`, regenerate
+      `docs/academic/CURRICULUM_MAP.md`; `docs/DECISIONS.md` entry naming what was
       cut and what was spared, with reasons.
 
 **Acceptance:** audit reports zero unjustified single-verb periphrastic
@@ -267,7 +267,7 @@ review) and should start early even though it ships in batches.
 ## 4. Measurement
 
 Baseline before M4 lands, using existing PostHog wiring
-(`docs/POSTHOG_ANALYTICS.md`): error rate per question kind and per aux
+(`docs/technical/POSTHOG_ANALYTICS.md`): error rate per question kind and per aux
 cell (M3 keying). Success criteria to revisit ~4 weeks after M4/M5:
 
 - family-selection error rate declines across a learner's exposure

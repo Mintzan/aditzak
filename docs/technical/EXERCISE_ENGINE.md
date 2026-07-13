@@ -259,7 +259,7 @@ that means:
   separate adjunct (time/place) — those are precisely the
   multiple-valid-order cases the focus rule produces (the danborrada bug).
 
-Two curation passes have run (see `docs/LANGUAGE_DECISIONS.md` for per-verb
+Two curation passes have run (see `docs/academic/LANGUAGE_DECISIONS.md` for per-verb
 rationale and the exact invariants):
 
 1. **Negatives** — single-complement negated sentences ("exactly one
@@ -444,7 +444,7 @@ already have a composed table wired into shipped Unit 15 lessons that drill
 personal-`nor` cells for them, so flipping the flag now would silently orphan
 those lessons rather than just filter a still-unused one — left to #443's
 Unit 15 rework (`hartu`/`erosi`'s call also needs native-speaker confirmation,
-tracked in `docs/LANGUAGE_DECISIONS.md`).
+tracked in `docs/academic/LANGUAGE_DECISIONS.md`).
 
 **Update (#441)**: Unit 27's NOR-NORI `byNor` axis (`gustatu`/`iruditu`/
 `ahaztu`'s `presentByNor`/`pastByNor`, #358/#419) had the same "no pooled
@@ -476,7 +476,7 @@ nonsensical for the verb's modeled sense, and a `sources` entry in every one
 of Unit 15's 12 pooled reviews. No engine changes — #380's `objectAxis`
 pooling already drops a thing-only verb's personal-`nor` cells from a
 review's candidate pool, exactly the case this was built for. `jan`/`edan`/
-`erosi`/`hartu`'s long-open `animateObject` question (`docs/LANGUAGE_DECISIONS.md`,
+`erosi`/`hartu`'s long-open `animateObject` question (`docs/academic/LANGUAGE_DECISIONS.md`,
 2026-06-24) is still unresolved — see `docs/DECISIONS.md`'s #443 entry for why.
 
 **Update (#445)**: the Baldintza/Ondorioa twin of #441/#444 — Unit 33's
@@ -611,7 +611,7 @@ distractor-matrix row remained open/unaddressed at that point.
 
 **Update (2026-07-05, later same day): #213 resolved.** Native-speaker
 confirmation of the toka/noka data landed first (see
-`docs/LANGUAGE_DECISIONS.md`), unblocking the distractor-matrix row itself.
+`docs/academic/LANGUAGE_DECISIONS.md`), unblocking the distractor-matrix row itself.
 `getWrongGenderLure`/`getNeutralFormLure` (`lessonLogic.js`) add the two
 lure slots #213 asked for — same verb/person, guaranteed-wrong by
 construction (wrong register, or no register at all), so unlike every other
@@ -646,7 +646,7 @@ doesn't, on either count:
   that tense's `sentences[person]` entry — exactly how every other tense
   already encodes whatever real-world context its examples describe; no
   tense has ever needed a separate "context type" tag. `validFor` keeps
-  policing cross-verb safety per `docs/SENTENCE_FRAMES.md`, unchanged.
+  policing cross-verb safety per `docs/academic/SENTENCE_FRAMES.md`, unchanged.
 - **Question shape/rendering: unchanged.** A subjunctive `sentence`-kind
   question is mechanically indistinguishable from any other tense's
   `sentence` question — `QuestionPrompt` keys off `question.sentence`
@@ -656,7 +656,7 @@ doesn't, on either count:
 #370 flagged the causative (`-arazi`) as "the most structurally distinct
 chunk… likely to need its own data-shape thinking (a causative wraps an
 *existing* verb's conjugation rather than being a standalone paradigm)."
-`docs/CONJUGATIONS.md` §17 (added researching #370) resolved the *engine*
+`docs/academic/CONJUGATIONS.md` §17 (added researching #370) resolved the *engine*
 side of that worry; the `VERBS` data-shape question was resolved during
 implementation (see `docs/DECISIONS.md`'s 2026-06-24 `#370` entry):
 
@@ -674,13 +674,13 @@ implementation (see `docs/DECISIONS.md`'s 2026-06-24 `#370` entry):
   `kind: 'form'`/`'sentence'` machinery unchanged; the standalone-entry shape
   won because it required zero new code paths.
 - **Distractors: the existing `grounded` invariant already covers it**
-  (`docs/DISTRACTOR_STRATEGY.md` §4.3) — a subjunctive sentence question has
+  (`docs/academic/DISTRACTOR_STRATEGY.md` §4.3) — a subjunctive sentence question has
   a grounding sentence, so siblings drawn into `options` go through the
   normal `validFor` check like any other sentence-kind tense. Per #369's
   scope, the NOR/NOR-NORK 3rd-person in-construction forms get full
   production while the dative/ditransitive families stay recognition-only
   (`recognitionOnly: true`, #330) — their much smaller `validFor`-review
-  surface (`docs/DISTRACTOR_STRATEGY.md` §3) is a curriculum-scoping choice,
+  surface (`docs/academic/DISTRACTOR_STRATEGY.md` §3) is a curriculum-scoping choice,
   not an engine one.
 
 So the premise that hitanoa and subjunctive need a *shared* new mechanic
@@ -731,7 +731,7 @@ concrete touch points so they're not lost:
     the learner's wrong pick is a tagged lure. The rolling *cross-question*
     error-pattern history and remedial-mini-lesson injection described above
     are still open — #229 was deliberately scoped to per-question feedback
-    only (see `docs/DISTRACTOR_STRATEGY.md` §4.4).
+    only (see `docs/academic/DISTRACTOR_STRATEGY.md` §4.4).
 
 ## Suggested build order
 

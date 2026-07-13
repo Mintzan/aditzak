@@ -8,7 +8,7 @@ curriculum *is* the source code.
 
 The **operative** half — runtime question objects, persisted learner state
 (progress, streak, points, errors, hearts), and cloud sync — is documented
-separately in `docs/DATA_MODEL_OPERATIVE.md`.
+separately in `docs/technical/DATA_MODEL_OPERATIVE.md`.
 
 This is a map, not a spec — the authoritative shape documentation lives as
 comments at the top of each data file (especially `src/data/verbs.js`,
@@ -128,9 +128,9 @@ sentence-based question kinds:
   marking the blank and `validFor` lists *sibling verb ids whose same-person
   form would also correctly complete that exact sentence* — the tag that
   governs whether a cross-verb distractor may appear against this sentence
-  (schema: `docs/SENTENCE_FRAMES.md`; strategy: `docs/DISTRACTOR_STRATEGY.md`).
+  (schema: `docs/academic/SENTENCE_FRAMES.md`; strategy: `docs/academic/DISTRACTOR_STRATEGY.md`).
   `wordOrderSafe: true` opts a sentence into the word-order question kind
-  (fail-closed — see `docs/EXERCISE_ENGINE.md`); `baseVerb` tags `ari`
+  (fail-closed — see `docs/technical/EXERCISE_ENGINE.md`); `baseVerb` tags `ari`
   sentences with the embedded participle's verb for the progressive-vs-plain
   lure.
 - `pronounSentences` — the blank is the declined *pronoun* instead of the verb
@@ -202,14 +202,14 @@ Review lessons additionally pull **weak-spot questions**: up to
 `EXTRA_REVIEW_EXERCISES` extra questions targeting the learner's most-missed
 `verbId:tense:person` combinations among that review's own `sources` (see
 `getWeakSpotQuestions` and the error-stats store in
-`docs/DATA_MODEL_OPERATIVE.md` §2).
+`docs/technical/DATA_MODEL_OPERATIVE.md` §2).
 
 ---
 
 ## 3. Curriculum roadmap — `JOURNEY` (`src/journey.js`)
 
 The presentation/grouping layer over `LESSONS`, mirroring
-`docs/LEARNING_JOURNEY.md`: an array of **phases**, each with `id`, `title`,
+`docs/academic/LEARNING_JOURNEY.md`: an array of **phases**, each with `id`, `title`,
 `subtitle`, and `stages`; each stage has `id`, `title`, and `units`; each unit
 is:
 
@@ -275,14 +275,14 @@ Referenced from lessons by `itemIds`; turned into questions by
 - **UI never hardcodes linguistic labels** — it goes through the `*_META`
   lookup tables (§1) and the i18n layer.
 - **Curriculum changes never touch UI code** — the `VERBS`/`LESSONS`/`JOURNEY`
-  trio plus `docs/LEARNING_JOURNEY.md` and `src/i18n/journeyTranslations.js`
+  trio plus `docs/academic/LEARNING_JOURNEY.md` and `src/i18n/journeyTranslations.js`
   are the whole edit surface (see CLAUDE.md, "Working on the learning
   journey").
 - **2D/composed conjugation shapes never leak** — `getComposedTable` /
   `resolveObjectAxisTable` flatten them before options, lures, or sentences
   see them.
 
-Related reading: `docs/DATA_MODEL_OPERATIVE.md` (the operative half of the
-data model), `docs/CONJUGATIONS.md` (the grammar the tables encode),
-`docs/SENTENCE_FRAMES.md` (`validFor` schema), `docs/DISTRACTOR_STRATEGY.md`,
-`docs/EXERCISE_ENGINE.md`, `docs/LEARNING_JOURNEY.md`.
+Related reading: `docs/technical/DATA_MODEL_OPERATIVE.md` (the operative half of the
+data model), `docs/academic/CONJUGATIONS.md` (the grammar the tables encode),
+`docs/academic/SENTENCE_FRAMES.md` (`validFor` schema), `docs/academic/DISTRACTOR_STRATEGY.md`,
+`docs/technical/EXERCISE_ENGINE.md`, `docs/academic/LEARNING_JOURNEY.md`.

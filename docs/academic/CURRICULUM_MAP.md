@@ -2,7 +2,7 @@
 
 **Status: reference.** This document exists so it's possible to see, at a glance, everything the app currently teaches (or plans to teach) — every unit, every lesson inside it, which verb/tense combination it drills, **the actual conjugated Basque forms it produces**, and exactly what's new versus what's review — without having to read `journey.js`/`lessons.js`/`verbs.js` directly.
 
-It is a companion to `docs/LEARNING_JOURNEY.md`, which is the *design-rationale* document (why units are ordered/scoped the way they are). This document only answers "what is unit N, and what conjugated forms does lesson X actually teach?"
+It is a companion to `docs/academic/LEARNING_JOURNEY.md`, which is the *design-rationale* document (why units are ordered/scoped the way they are). This document only answers "what is unit N, and what conjugated forms does lesson X actually teach?"
 
 **How to read a lesson entry:**
 - The bullet line names the lesson: verb + tense + persons drilled (practice), or the verb/tense mix it pools (pooled practice / review).

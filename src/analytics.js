@@ -2,7 +2,7 @@ import posthog from 'posthog-js'
 
 // PostHog project API key for this app's site.
 // Not secret: project API keys are meant to be embedded in client-side code
-// (write-only, used only to send events). See docs/POSTHOG_ANALYTICS.md for
+// (write-only, used only to send events). See docs/technical/POSTHOG_ANALYTICS.md for
 // where it came from and how to override it (e.g. for forks pointing at a
 // different PostHog project).
 const DEFAULT_POSTHOG_KEY = 'phc_qBmWmnpSzrrJ24AJuWWo7ZGVoGtrsZeVyuSeEKabB5A7'

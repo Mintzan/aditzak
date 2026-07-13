@@ -5,8 +5,28 @@ reasoning behind them — so future sessions don't relitigate settled questions
 without knowing why they were settled. Newest entries at the top.
 
 Decisions about the Basque conjugation research behind
-`CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
+`CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/academic/LANGUAGE_DECISIONS.md`
 instead.
+
+## 2026-07-13 — docs/ split into academic/ and technical/ subfolders
+
+`docs/` now has three subfolders — all `docs/FILENAME.md` references in active docs, `CLAUDE.md`, and source-code comments updated in the same pass; `docs/DECISIONS_ARCHIVE.md` left as-is (historical record):
+
+- **`docs/academic/`** — Basque language reference, curriculum/pedagogy, learning journey design: `AUXILIARY_FIRST_PLAN`, `AUXILIARY_FIRST_REVIEW`, `CONJUGATIONS`, `CURRICULUM_MAP`, `DATA_MODEL_ACADEMIC`, `DISTRACTOR_STRATEGY`, `LANGUAGE_DECISIONS`, `LEARNING_JOURNEY`, `LEARNING_JOURNEY_PROPOSED`, `SAMPLE_SENTENCES`, `SENTENCE_FRAMES`, `VERB_COVERAGE`.
+- **`docs/technical/`** — App implementation, infrastructure, design system: `CLOUDFLARE_FEEDBACK_WORKER`, `CLOUDFLARE_SYNC_WORKER`, `DATA_MODEL_OPERATIVE`, `EXERCISE_ENGINE`, `EXERCISE_VARIETY_PLAN`, `HEART_ECONOMY_ANALYSIS`, `OBJECT_FRAME_TAGGING`, `POSTHOG_ANALYTICS`, `VISUAL_IDENTITY`.
+- **`docs/`** root — cross-cutting project logs only: `DECISIONS.md`, `DECISIONS_ARCHIVE.md`.
+- **`docs/archive/`** — superseded plans (unchanged from the previous commit).
+
+## 2026-07-13 — docs/ reorganized; two historical plans archived; outdated content fixed
+
+Moved two fully-superseded docs into `docs/archive/` to keep the active docs folder uncluttered:
+
+- **`LEARNING_JOURNEY_EVALUATION.md`** — was already marked "Status: historical"; it records the evaluation findings (F1–F7) that motivated the proposed journey redesign. Still readable at `docs/archive/LEARNING_JOURNEY_EVALUATION.md`; references inside `LEARNING_JOURNEY.md` updated to the new path.
+- **`LEARNING_JOURNEY_REBALANCE.md`** — was marked "Status: implemented (2026-06-27)"; its three increments (deflation, gustatu promotion, short mandatory spine) all landed. The live LEARNING_JOURNEY.md header still describes what the rebalance changed.
+
+Content fixes in the same pass:
+- **`SAMPLE_SENTENCES.md`**: two file paths corrected from `src/App.jsx` to `src/data/verbs.js` — verb data moved there in the App.jsx refactor (2026-06-27 entry in this log) and the doc was never updated.
+- **`HEART_ECONOMY_ANALYSIS.md`**: status header updated from "nothing implemented" to "partially implemented" — the hearts mechanic (`heartsStorage`, `deductHeart`/`applyHeartRegen`/`buyHeart`) was shipped after the doc was written.
 
 ## 2026-07-10 — Family-choice drill line widened to the plan's five stops; lure prefers aux-swap
 
@@ -65,7 +85,7 @@ invariant's hi-m/hi-f exemption, so audit and test agree: **zero
 non-bonus rows remain** (69 rows left, all D5-exempt bonus). The #347/#348
 smoke tests pin `Math.random` since the first available kind is now
 `sentence`, not the bare-form fallback. Sentence wording judgments (the
-`gogoan ukan` frames) are in `docs/LANGUAGE_DECISIONS.md`, flagged for
+`gogoan ukan` frames) are in `docs/academic/LANGUAGE_DECISIONS.md`, flagged for
 native review.
 ## 2026-07-10 — Unit 22 (behar): added NOR-contrast review and documented the head rule
 
@@ -79,7 +99,7 @@ prevent. The previous `unit-19-review` (behar + ukan only) stays in place as a
 within-family consolidation pass before this cross-family contrast comes in as the
 unit's closer.
 
-The linguistic rationale is documented in `docs/LANGUAGE_DECISIONS.md`
+The linguistic rationale is documented in `docs/academic/LANGUAGE_DECISIONS.md`
 ("Unit 22 (behar): why 'joan behar dut' not 'joan behar naiz'").
 
 ## 2026-07-09 — M5: nonce-verb generalization gates
@@ -145,7 +165,7 @@ until reviewed). Initial `slotVocabulary` on jan/edan/erosi/hartu/ikusi; remaini
 spine verbs are the M2 data-PR worklist. Design B (blank = full composed form, same
 as existing sentences) was chosen over Design A (participle shown, blank = aux only)
 to stay compatible with the existing question engine — no new `kind` needed.
-Flagged for native-speaker review in `docs/LANGUAGE_DECISIONS.md`.
+Flagged for native-speaker review in `docs/academic/LANGUAGE_DECISIONS.md`.
 
 ## 2026-07-08 — M4 PR3: bare-form as aux drill (display-only)
 
@@ -292,7 +312,7 @@ All 518 tests green; `npm run lint` clean.
 ## 2026-07-08 — M0 audit scripts shipped (scripts/grounding-audit.mjs, scripts/lesson-diet-audit.mjs)
 
 Both M0 scripts are live and their outputs are committed as Appendix A in
-`docs/AUXILIARY_FIRST_PLAN.md`. Two fixes were needed during authoring:
+`docs/academic/AUXILIARY_FIRST_PLAN.md`. Two fixes were needed during authoring:
 
 1. **Modal compound verbIds**: `MODAL_PARTICLES` only had `'ahal'` but the
    actual verbIds in the data are `'ahal-ukan'`/`'ahal-izan'`/`'ezin-ukan'`/
@@ -308,10 +328,10 @@ person slots. M6 worklist = 3 VIOLATIONs (all object-axis lessons where a
 parallel `maite`/`ukan` lesson already introduced the pattern), 24 REVIEW
 rows (dative-frame repeats; human decides in M6 PR), 157 clean PASSes.
 
-## 2026-07-08 — Auxiliary-first plan adopted (docs/AUXILIARY_FIRST_PLAN.md)
+## 2026-07-08 — Auxiliary-first plan adopted (docs/academic/AUXILIARY_FIRST_PLAN.md)
 
 The review below was turned into an ordered implementation roadmap:
-`docs/AUXILIARY_FIRST_PLAN.md` — six milestones (M0 audits → M1 reframe ∥
+`docs/academic/AUXILIARY_FIRST_PLAN.md` — six milestones (M0 audits → M1 reframe ∥
 M2 sentence coverage ∥ M3 aux-cell mastery → M4 selection question kinds →
 M5 nonce-verb gates; M6 lesson diet anytime after M0). Notable calls locked
 in as plan defaults: cell mastery = ≥3 correct across ≥2 carriers (derived
@@ -328,7 +348,7 @@ worklist is empty so CI stays green while coverage closes.
 A user-prompted pedagogy review ("the learner must learn the auxiliary —
 when to use it and how; there is no value in learning concrete verbs like
 hartu or utzi") was assessed and written up in
-`docs/AUXILIARY_FIRST_REVIEW.md`. Verdict: correct about the core (the app's
+`docs/academic/AUXILIARY_FIRST_REVIEW.md`. Verdict: correct about the core (the app's
 own data model already composes periphrastic tables from shared auxiliary
 skeletons, and rule #309 already treats regular verbs as pool fodder), but
 concrete verbs stay — as carriers, minimal-pair material, and holders of
@@ -663,7 +683,7 @@ existing `lureRationale*` naming/phrasing convention.
 ## 2026-07-05 — Unit 45 ("Talking About Weather") shipped — last pending unit; curriculum is now 51/51 available
 
 Weather idioms are always 3rd-person-singular (`hura`) and, per
-`docs/LEARNING_JOURNEY.md`'s own framing, reuse `izan`/`egon`/`ibili`/`ukan`'s
+`docs/academic/LEARNING_JOURNEY.md`'s own framing, reuse `izan`/`egon`/`ibili`/`ukan`'s
 existing `hura`-present forms (`da`/`dago`/`dabil`/`du`) rather than
 introducing any new conjugated form. The open design question was *how* to
 reuse them.
@@ -715,7 +735,7 @@ Regenerated `scripts/validfor-gap-baseline.json` after reviewing the new gap
 slots via `node scripts/validfor-delta-audit.mjs --verb <id>` for all four new
 entries — every listed gap was an unrelated, genuinely-non-interchangeable
 sentence (e.g. `du` correctly *not* validated against "Hark opari bat ___."),
-so nothing needed a `validFor` addition. See `docs/LANGUAGE_DECISIONS.md` for
+so nothing needed a `validFor` addition. See `docs/academic/LANGUAGE_DECISIONS.md` for
 the weather-phrasing-specific native-speaker-confirmation flag.
 
 Fixed two tests that hardcoded Unit 45 as "the" example pending unit
@@ -728,7 +748,7 @@ permanently incomplete.
 
 ## 2026-07-05 — Unit 39 ("Hitanoa Recombined") shipped, content-only
 
-`docs/EXERCISE_ENGINE.md` had already resolved this unit's data shape (toka/
+`docs/technical/EXERCISE_ENGINE.md` had already resolved this unit's data shape (toka/
 noka are just two more directly-selectable tense values, same as every other
 tense) and flagged only two open questions, neither blocking: #213 (a
 dedicated wrong-gender/neutral-form distractor row) and a "learner-facing
@@ -745,14 +765,14 @@ new to build.
 
 **"When not to use it" via juxtaposition, not a new mechanic.** Basque
 suppresses toka/noka in subordinate clauses and formal `-ke-` moods
-(`docs/LANGUAGE_DECISIONS.md`, 2026-06-17) — a negative rule with no positive
+(`docs/academic/LANGUAGE_DECISIONS.md`, 2026-06-17) — a negative rule with no positive
 form to produce, and no existing engine hook for "this construction forbids
 register X." Rather than build one, `unit-39-when-not-to-use` pools the
 hitanoa forms alongside `izan`/`ukan`'s already-shipped Ahalera (`potential`)
 forms in one review: the learner meets both "Present (toka)"-badged and
 "Ahalera"-badged questions back to back, and the *absence* of a toka/noka
 variant on the Ahalera forms is what teaches the rule. `#213`'s stronger
-wrong-gender lure work stays out of scope, same as `docs/EXERCISE_ENGINE.md`
+wrong-gender lure work stays out of scope, same as `docs/technical/EXERCISE_ENGINE.md`
 already flagged.
 
 **4 lessons, zero new verbs/tenses**: `unit-39-recombined-present`/`-past`
@@ -763,7 +783,7 @@ this is a bonus unit, not a Refresh Gate).
 
 ## 2026-07-05 — Unit 31 (Refresh Gate C, "The Case-Ending Mixer") shipped, no new question kind
 
-`docs/EXERCISE_ENGINE.md` had speculated this gate would need a `spot-error`-
+`docs/technical/EXERCISE_ENGINE.md` had speculated this gate would need a `spot-error`-
 style "candidate full sentences, pick the right one" mechanism (mirroring the
 negation drill), and deliberately left it `pending` until Units 20-21's
 dative verbs existed. Both turned out unnecessary once those verbs (Units
@@ -794,7 +814,7 @@ and future — the "dative past/future recombination" half of the spec — and a
 final cumulative `unit-31-review` (the score-gate checkpoint, adding
 `lagundu` from Unit 30 for variety). All sentence data for these four core
 verbs already carried vetted `validFor` tags from earlier curation passes, so
-no `docs/LANGUAGE_DECISIONS.md` follow-up was needed.
+no `docs/academic/LANGUAGE_DECISIONS.md` follow-up was needed.
 
 ## 2026-07-04 — Unit overview page, as a modal rather than a new screen/route
 
@@ -936,12 +956,12 @@ practice" half of (e.g. Unit 48 said "the deep-practice half of Unit 15";
 the actual match, confirmed by identical `payload` text, is Unit 16 — likely
 never updated after a renumber). Corrected to the current numbers.
 
-Updated `docs/LEARNING_JOURNEY.md`'s authoritative unit table to match the
+Updated `docs/academic/LEARNING_JOURNEY.md`'s authoritative unit table to match the
 six retitled units. Left the file's own pre-rebalance-numbering prose
 sections (explicitly marked in the file's preamble as historical-rationale,
 not synced to current numbering) and `docs/LEARNING_JOURNEY_REBALANCE.md`
 untouched, per the same "don't rewrite point-in-time records" reasoning as
-the entry below. `docs/CURRICULUM_MAP.md` remains stale pending regeneration
+the entry below. `docs/academic/CURRICULUM_MAP.md` remains stale pending regeneration
 (see its own entry and the two entries below).
 
 ## 2026-07-03 — Unit 14 pools gustatu/iruditu/ahaztu into shared lessons instead of one lesson per verb
@@ -969,7 +989,7 @@ no changes — pooled non-review practice lessons (`lesson.sources` without
 `lesson.review`) were already a supported, tested shape. Unit 14 drops from
 12 lessons to 6; spine total 197 → 191. `journey.js`'s focus text and its
 `journeyTranslations.js` es/eu counterpart reworded from "per verb" to
-"pooled across gustatu/iruditu/ahaztu" to match. `docs/CURRICULUM_MAP.md`
+"pooled across gustatu/iruditu/ahaztu" to match. `docs/academic/CURRICULUM_MAP.md`
 remains stale pending a regeneration (see its own entry and the match-pairs
 entry below).
 
@@ -980,7 +1000,7 @@ Follow-up to the match-pairs cap above: `gustatu-present`/`iruditu-present`/
 to each verb was the full 6-person NORI table (`zait`/`zaizu`/`zaio`/
 `zaigu`/`zaizue`/`zaie`) — both in `generateQuestions`'s one-question-per-
 person queue and (before the cap above) as a 12-tile match-pairs board. That
-contradicts `docs/LEARNING_JOURNEY.md`'s stated principle ("every verb's
+contradicts `docs/academic/LEARNING_JOURNEY.md`'s stated principle ("every verb's
 first lesson is restricted to `ni`/`zu`/`hura`") and the original
 `LEARNING_JOURNEY_REBALANCE.md` plan (line 144: this unit was meant to
 introduce only `zait`/`zaizu`/`zaio`), which the implementation never
@@ -1001,7 +1021,7 @@ by the time a learner reaches them both stages are already taught, so
 mixing all 6 persons there is correct. Updated `journey.js`'s focus text,
 `journeyTranslations.js`'s es/eu Unit 14 focus, and `LEARNING_JOURNEY.md`'s
 lesson-count column (9 → 12) and spine total (194 → 197 lessons) to match.
-`docs/CURRICULUM_MAP.md` is generated by an unchecked-in script (see its own
+`docs/academic/CURRICULUM_MAP.md` is generated by an unchecked-in script (see its own
 entry below) and is now stale until someone reruns it — a known, accepted
 gap per that entry, not new to this change.
 
@@ -1144,7 +1164,7 @@ verbs #443 gave a `byObjectPrefixes` for the present/past 2D axis never had
 a plural-object table at all; a first pass reused that field and silently
 manufactured `presentPlural` for all of them too, which also manufactures
 new cross-verb `validFor` gap slots — exactly the surface
-`docs/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness review,
+`docs/academic/DISTRACTOR_STRATEGY.md` §4.2 says needs a human naturalness review,
 not an incidental refactor (caught by `validfor-audit.test.js`'s baseline
 diff, not by inspection). Used a new, separate `pluralPrefixes: { present,
 past, future }` field instead, added only to the 14 verbs that actually had

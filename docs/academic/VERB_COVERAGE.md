@@ -292,7 +292,7 @@ visible object signals the dative the way "egia esan" does) — the exact
 | aurre egin | to face/confront (something) | Aurre egiten diot | Aurre egin nion | ✅ in `VERBS` (#307) — dative `egin` compound, deferred from #306 |
 | itxaron-dative | to wait for (someone) | Itxaroten diot | Itxaron nion | ✅ in `VERBS` (#334) — `itxaron`'s dative reading, same covert-dative shape as the rest of this table (no overt object); carrier in this pool's present/past/future |
 
-`itxaron` joins this table's shape exactly (no overt object the way "lagunari laguntzen diot" has none either), so its dative reading (`itxaron-dative`) was added as this pool's 10th carrier rather than a new pool. `saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`'s dative readings are genuinely ditransitive instead (overt accusative object + dative recipient — the `esan`/`eman` shape, not this table's covert-dative shape), so they got their own pool family (`ditransitive-dative-*`) wired into Units 27-28 alongside `esan`/`eman` — see §4b-quater and `docs/LANGUAGE_DECISIONS.md`'s #334 entry.
+`itxaron` joins this table's shape exactly (no overt object the way "lagunari laguntzen diot" has none either), so its dative reading (`itxaron-dative`) was added as this pool's 10th carrier rather than a new pool. `saldu`/`utzi`/`adierazi`/`eskatu`/`galdetu`'s dative readings are genuinely ditransitive instead (overt accusative object + dative recipient — the `esan`/`eman` shape, not this table's covert-dative shape), so they got their own pool family (`ditransitive-dative-*`) wired into Units 27-28 alongside `esan`/`eman` — see §4b-quater and `docs/academic/LANGUAGE_DECISIONS.md`'s #334 entry.
 
 ### 4b-quater. Optionally-dative ditransitive fodder (#334)
 `saldu`, `utzi`, `adierazi`, `eskatu`, `galdetu` each carry two readings: a plain `nor-nork` reading already in `VERBS` (#319, table above) and a ditransitive `nor-nori-nork` reading ("saldu diot" — "I sold it to him") with an overt accusative object plus a dative recipient, the `esan`/`eman` shape (§4a/§4b) rather than §4b-ter's covert-dative shape. Sourced as separate `<verb>-dative` `VERBS` entries (`recipient: 'hura'`, `person` varies over NORK) since no existing convention lets one verb id carry two simultaneous agreement-frame readings:
@@ -315,7 +315,7 @@ else (`ukan`, `nor-nork`) or the subject undergoes the change on its own
 (`izan`, `nor`-only) — Basque's unaccusative/causative alternation. This is
 exactly the shape `babestu`/`babestu-izan` already split into two `VERBS`
 entries rather than cramming both readings into one conjugation table (see
-`docs/LANGUAGE_DECISIONS.md`, 2026-07-06) — that split should be the
+`docs/academic/LANGUAGE_DECISIONS.md`, 2026-07-06) — that split should be the
 template for each of these once added.
 
 A user gave `mugitu` as the paradigm case: *"beste leku batera mugitu naiz"*
@@ -325,7 +325,7 @@ to follow in later messages per their own note:
 
 | Verb | Meaning | Intransitive (nor, izan) | Transitive (nor-nork, ukan) | Notes |
 |---|---|---|---|---|
-| mugitu | to move | mugitu naiz | mugitu dut | ✅ in `VERBS` — split into `mugitu`/`mugitu-izan` per the `babestu` template; see `docs/LANGUAGE_DECISIONS.md`, 2026-07-06 |
+| mugitu | to move | mugitu naiz | mugitu dut | ✅ in `VERBS` — split into `mugitu`/`mugitu-izan` per the `babestu` template; see `docs/academic/LANGUAGE_DECISIONS.md`, 2026-07-06 |
 | esnatu | to wake up | esnatu naiz | esnatu dut | 🔲 not yet added — same split |
 | piztu | to light / turn on | piztu da (typically 3rd-person/inanimate subject — "sua piztu da") | piztu dut | 🔲 not yet added — confirm the intransitive reading's natural subject before adding sentences (an inanimate "it lit up", not really a `ni`-person scenario) |
 | amatatu | to turn off / extinguish | amatatu da (same inanimate-subject caveat as `piztu`) | amatatu dut | 🔲 not yet added — same caveat as `piztu` |
@@ -451,7 +451,7 @@ needs a grammar-reference pass before writing `VERBS` entries) attaches to a
 verb's radical and adds a **causer** argument: "X does Y" → "Z makes/lets X
 do Y." This *increases the verb's valency by one slot*, which shifts its
 agreement pattern (§2) one of two ways — both attested in
-`docs/SAMPLE_SENTENCES.md`'s causative bank:
+`docs/academic/SAMPLE_SENTENCES.md`'s causative bank:
 
 - **`nor` → `nor-nork`**: the original `nor` subject becomes the new `nor`
   (now an object), and the causer fills a new `nork` slot. "Mendizaleak
@@ -480,7 +480,7 @@ auxiliary pattern as `present`/`past` elsewhere in this doc, and Tier 1 of
 auxiliary just inflects normally, so "make X do Y" (present), "made" (past),
 "will make" (future, Units 14-15), "would make" (conditional, Unit 24), and "make
 him do it!" (imperative, Unit 25) are all the *same* causativized verb with a
-different auxiliary form. `docs/SAMPLE_SENTENCES.md`'s causative bank has
+different auxiliary form. `docs/academic/SAMPLE_SENTENCES.md`'s causative bank has
 worked examples of all of these — `LEARNING_JOURNEY.md`'s Phase VI (Units
 28-30) recombines `-arazi` with those tenses/moods explicitly rather than
 introducing them as "new" again.

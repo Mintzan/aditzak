@@ -6,7 +6,7 @@ import baseline from '../scripts/validfor-gap-baseline.json'
 
 // CI guard for the validFor delta audit (Epic #220, issue [A1]). The
 // per-verb gap-slot counts are a checked-in baseline — see
-// docs/DISTRACTOR_STRATEGY.md §4.2. This test fails whenever the gap surface
+// docs/academic/DISTRACTOR_STRATEGY.md §4.2. This test fails whenever the gap surface
 // changes (a verb/tense added, a sentence's validFor edited, ...), forcing a
 // human naturalness review instead of letting a gap ship silently.
 describe('validFor gap surface', () => {

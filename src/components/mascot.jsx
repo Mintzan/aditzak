@@ -1,4 +1,4 @@
-// Latxa mascot placements — docs/VISUAL_IDENTITY.md's "Mascot placement
+// Latxa mascot placements — docs/technical/VISUAL_IDENTITY.md's "Mascot placement
 // plan" (round 6). `latxa-face-*.svg` are face-only crops of the full
 // 400×400 expression illustrations (`latxa-logo.svg`/`latxa-expression-
 // gora.svg`/`latxa-expression-nekatuta.svg`/`latxa-expression-haserre.svg`):

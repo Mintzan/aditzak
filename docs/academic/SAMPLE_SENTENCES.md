@@ -1,7 +1,7 @@
 # Sample sentences — a categorised bank
 
 A staging ground for `VERBS`'s `sentences` (and, later, `pronounSentences`)
-tables in `src/App.jsx`. Today each `verb.sentences[tense][person]` is a
+tables in `src/data/verbs.js`. Today each `verb.sentences[tense][person]` is a
 single string, reused verbatim every time that person comes up — including
 across the repeated `rounds` a lesson now does to reach
 `TARGET_EXERCISE_COUNT` (see `docs/DECISIONS.md`, 2026-06-11). This doc
@@ -10,14 +10,14 @@ collects several sentence variants per person, grouped into everyday-life
 each `sentences[tense][person]` cell into an array and picking one variant
 per question — without inventing new vocabulary on the fly or risking
 grammatically-broken combinations (Basque's case marking makes random
-template mixing risky, see `docs/CONJUGATIONS.md`).
+template mixing risky, see `docs/academic/CONJUGATIONS.md`).
 
 Each sentence keeps the existing `___` blank marking where the conjugated
 verb form goes (`verb.conjugations[tense][person]` fills it in), exactly like
 today's single-variant `sentences` tables.
 
 The **Aplikazioa (oraingoa)** column in each table below is the current
-`verb.sentences[tense][person]` value from `src/App.jsx` — included for
+`verb.sentences[tense][person]` value from `src/data/verbs.js` — included for
 direct comparison with the new category variants, and itself a candidate to
 fold into whichever category column it best fits (or to keep as a bonus
 extra variant).
@@ -88,8 +88,8 @@ forms)
 ## Cultural sentence bank — by argument structure (future units)
 
 The sentences below were drafted to give the eventual `joan`/`etorri`/`ibili`/
-`eman`/`esan`/`prestatu`/etc. lessons (per `docs/EXERCISE_ENGINE.md`'s Tier
-1/3 verbs and `docs/LEARNING_JOURNEY.md`'s later units) a strong dose of real
+`eman`/`esan`/`prestatu`/etc. lessons (per `docs/technical/EXERCISE_ENGINE.md`'s Tier
+1/3 verbs and `docs/academic/LEARNING_JOURNEY.md`'s later units) a strong dose of real
 Basque culture, geography, food, and tradition — grouped by **argument
 structure** (NOR / NOR-NORK / NOR-NORI / NOR-NORI-NORK) and **tense**, rather
 than by the School/Family/Travel/Daily-life themes above.
@@ -206,7 +206,7 @@ gaurko bazkarirako.'` (blanking the auxiliary `du`, per `CLAUDE.md`'s
 
 A second pass over the same four argument structures, this time covering the
 **aspect/mood** territory beyond plain present/past — future, conditional,
-potential, imperative, and past continuous — per `docs/EXERCISE_ENGINE.md`'s
+potential, imperative, and past continuous — per `docs/technical/EXERCISE_ENGINE.md`'s
 Tier 1 (Geroa, Units 14–15), Tier 3 (imperative, Unit 25), and Tier 1
 (Ahalera/Baldintza/Ondorioa, Units 23–24) entries. Same culture/geography/
 folklore approach as above; same "full sentence, adapt later" status.
@@ -306,7 +306,7 @@ the tense/mood key it would live under in `conjugations`):
 | *...kontatuko nizueke.* | nor-nori-nork | Conditional (Baldintza) | `conditional` |
 | *Ekar itzazu...* | nor-nork | Imperative (Agintera) | `imperative` |
 
-These map onto new tense *keys* (Tier 1 in `docs/EXERCISE_ENGINE.md`), not new
+These map onto new tense *keys* (Tier 1 in `docs/technical/EXERCISE_ENGINE.md`), not new
 shapes — once a verb's `conjugations.potential`/`conditional`/`imperative`
 table exists, its `sentences`/`pronounSentences` entries follow exactly the
 same `___`-blanked pattern as `present`/`past` above.
@@ -546,9 +546,9 @@ action itself is transitive or intransitive.*
 
 The **causative suffix `-arazi`** (sometimes `-erazi`) attaches to a verb's
 radical and changes the meaning from *doing* an action to *making, causing,
-or forcing someone else* to do it — see `docs/VERB_COVERAGE.md` §6 for the
+or forcing someone else* to do it — see `docs/academic/VERB_COVERAGE.md` §6 for the
 grammar (the `nor`→`nor-nork` and `nor-nork`→`nor-nori-nork` argument shifts)
-and `docs/LEARNING_JOURNEY.md`'s Phase VI (Units 28-30) for where these land
+and `docs/academic/LEARNING_JOURNEY.md`'s Phase VI (Units 28-30) for where these land
 in the curriculum. Same "full sentence, adapt later" status as the banks
 above — the drilled form is the auxiliary at the end, exactly like any other
 periphrastic verb.
@@ -599,7 +599,7 @@ periphrastic verb.
   - *Translation:* Grandmother's recipe made an excellent aroma arise from
     the tuna stew.
   - *Base verb:* *Jario* (to ooze/emanate, a `nor-nori` verb) → *Jorazi* (to
-    make emanate) — a candidate example for `docs/VERB_COVERAGE.md` §6's open
+    make emanate) — a candidate example for `docs/academic/VERB_COVERAGE.md` §6's open
     question about causativizing `nor-nori` verbs.
 
 ### 2. Transforming transitive verbs (`nor-nork` → `nor-nori-nork`)
@@ -801,7 +801,7 @@ the common synthetic set alongside `izan` (already in `VERBS`). Because the
 root itself changes per person/tense rather than just an ending, these don't
 fit `VERBS`'s `conjugations[tense][person]` shape any differently than
 `izan` already does — same Tier 1 data-only addition per
-`docs/EXERCISE_ENGINE.md` — but a future "Trinkoak" focus mode that drills
+`docs/technical/EXERCISE_ENGINE.md` — but a future "Trinkoak" focus mode that drills
 *only* these eight verbs' root changes side-by-side could be a worthwhile
 Tier 3/4 idea once enough of them are in `VERBS` (not yet classified or
 scheduled — flagged here for later).
@@ -1386,7 +1386,7 @@ Representative examples (present tense, `ni`/`hura`):
 Same quality bar as the high/mid/low tiers above, but deliberately *not* the
 same breadth: #314's own text only asks for "≥1 sentence each... one good
 sentence is enough for exposure" on this tier, and `mode: 'recognition'`
-(per `docs/LANGUAGE_DECISIONS.md`'s #321 entry) means a recognition-only
+(per `docs/academic/LANGUAGE_DECISIONS.md`'s #321 entry) means a recognition-only
 lesson never surfaces a second variant anyway — so the single existing
 present/past frame per person was upgraded in place, not expanded into
 arrays. An earlier pass (PR #403) had mistakenly called this tier "out of
@@ -1473,7 +1473,7 @@ per the loops at the bottom of `src/data/verbs.js` count as covered).
 **Explicitly out of scope per the epic body, not re-evaluated per-sentence:**
 `ahal` (whole 11-sentence set deferred to its own pending unit) and the
 causative (`-arazi`/`-erazi`) bank (blocked on Phase VI units +
-`docs/VERB_COVERAGE.md` §6).
+`docs/academic/VERB_COVERAGE.md` §6).
 
 ## Next steps (not yet done)
 
@@ -1489,7 +1489,7 @@ causative (`-arazi`/`-erazi`) bank (blocked on Phase VI units +
 3. `pronounSentences` (verb filled in, pronoun blanked) can reuse the same
    sentences with the blank repositioned — a follow-up pass once the
    `sentences` variants above are settled.
-4. As new verbs/tenses are added (per `docs/EXERCISE_ENGINE.md`'s Tier 1
+4. As new verbs/tenses are added (per `docs/technical/EXERCISE_ENGINE.md`'s Tier 1
    list), extend this doc with the same four categories before writing their
    `VERBS` entries.
 5. The cultural sentence banks above pair argument structures (and, for the
@@ -1513,7 +1513,7 @@ causative (`-arazi`/`-erazi`) bank (blocked on Phase VI units +
    epic body (pending the `ahal` unit) — not re-evaluated per-sentence; they
    would double as early `potential`-tense examples once that unit lands.
 7. The causative bank pairs with the new Phase VI (Units 28-30,
-   `LEARNING_JOURNEY.md`) — `docs/VERB_COVERAGE.md` §6 still needs the
+   `LEARNING_JOURNEY.md`) — `docs/academic/VERB_COVERAGE.md` §6 still needs the
    `-arazi`/`-erazi` conditioning rule sourced before any of these become
    `VERBS` entries.
 8. ~~The `ari izan` continuous-aspect bank isn't yet placed in
