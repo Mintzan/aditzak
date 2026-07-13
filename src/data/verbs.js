@@ -5545,10 +5545,16 @@ export const VERBS = [
         // intransitive sense) and replaced this one with a plain
         // entering-a-venue sentence, matching the pattern the other persons
         // here already use.
+        // #aste-nagusia-jaitsiera: the `gu` slot used to read "Gu Aste
+        // Nagusiko jaitsierara ___." — but the jaitsiera is an open-air
+        // street procession; you don't *enter* it (sartu), you go to it
+        // (joan). Replaced with a cinema in Vitoria-Gasteiz, which is
+        // unambiguously an enclosed venue and fills the geographic gap in
+        // the table (Bilbao/Tolosa/Donostia/Gernika are already covered).
         ni: { text: 'Ni Bilboko Arriaga antzokian ___ ikuskizuna ikustera.', validFor: [] },
         zu: { text: 'Zu Tolosako tabernan ___ pintxoetara?', validFor: [] },
         hura: { text: 'Hura San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
-        gu: { text: 'Gu Aste Nagusiko jaitsierara ___.', validFor: [] },
+        gu: { text: 'Gu Gasteizko zinemara ___ film berria ikustera.', validFor: [] },
         zuek: { text: 'Zuek sagardotegira ___ talo jatera?', validFor: [] },
         haiek: { text: 'Haiek Gernikako frontoira ___ partida ikustera.', validFor: [] },
       },
@@ -5556,7 +5562,7 @@ export const VERBS = [
         ni: { text: 'Ni atzo Bilboko Arriaga antzokian ___ ikuskizuna ikustera.', validFor: [] },
         zu: { text: 'Zu herenegun Tolosako tabernan ___ pintxoetara?', validFor: [] },
         hura: { text: 'Hura lehengo egunean San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
-        gu: { text: 'Gu iaz Aste Nagusiko jaitsierara ___.', validFor: [] },
+        gu: { text: 'Gu iaz Gasteizko zinemara ___ film berria ikustera.', validFor: [] },
         zuek: { text: 'Zuek duela bi egun sagardotegira ___ talo jatera?', validFor: [] },
         haiek: { text: 'Haiek joan den astean Gernikako frontoira ___ partida ikustera.', validFor: [] },
       },

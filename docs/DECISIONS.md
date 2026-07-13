@@ -8,6 +8,10 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/academic/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-13 — sartu `gu` sentence: jaitsiera → Gasteizko zinema
+
+"Gu Aste Nagusiko jaitsierara sartzen gara" was semantically wrong: the jaitsiera is an open-air street procession — you *go to* it (joan), not *enter* it (sartu). Aste Nagusia is an entirely outdoor festival, so no enclosed sub-venue there works as a fix. Replaced with "Gu Gasteizko zinemara ___ film berria ikustera." — a cinema is unambiguously enclosed, fits the sartu pattern, and Vitoria-Gasteiz fills the one geographic gap in the table (Bilbao/Tolosa/Donostia/Gernika already covered). Past slot updated to match.
+
 ## 2026-07-13 — docs/ split into academic/ and technical/ subfolders
 
 `docs/` now has three subfolders — all `docs/FILENAME.md` references in active docs, `CLAUDE.md`, and source-code comments updated in the same pass; `docs/DECISIONS_ARCHIVE.md` left as-is (historical record):
