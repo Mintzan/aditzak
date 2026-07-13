@@ -1470,7 +1470,7 @@ export function ExerciseScreen({
             verb={verb}
             tenseMeta={tenseMeta}
             question={question}
-            showVerb={!lesson.review || !question.options || question.kind === 'form' || Boolean(question.isNonce)}
+            showVerb={(!lesson.review || !question.options || question.kind === 'form' || Boolean(question.isNonce)) && question.kind !== 'spot-error'}
             pronounAxis={lesson.objectAxis?.vary ?? verb?.personAxis ?? 'nor'}
           />
 
