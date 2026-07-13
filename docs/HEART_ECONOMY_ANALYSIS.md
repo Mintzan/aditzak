@@ -1,12 +1,6 @@
 # Heart (Lives) & Point Economy — spec analysis and implementation plan
 
-**Status: analysis/proposal only — nothing in this document is implemented.** A
-"Player State, Economy, and Heart System" spec was submitted for review. This
-doc is the requested response: edge-case analysis, an architecture
-recommendation grounded in what this repo actually is, and a step-by-step plan
-for the passive-regeneration function. No hearts mechanic exists in the
-codebase today (`git grep -i heart` in `src/` returns nothing) — see "Open
-questions" at the end before anyone starts building this.
+**Status: partially implemented.** A "Player State, Economy, and Heart System" spec was submitted for review. This doc is the requested response: edge-case analysis, architecture recommendation, and step-by-step implementation plan. The hearts mechanic described here **is now implemented** — `heartsStorage` (`src/storage.js`), `deductHeart`/`applyHeartRegen`/`buyHeart` (`src/lessonLogic.js`). The "Open questions" at the end were not formally resolved; check the decisions logs for what was settled in practice.
 
 ## How the incoming spec maps onto this codebase
 

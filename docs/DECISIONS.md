@@ -8,6 +8,17 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-13 — docs/ reorganized; two historical plans archived; outdated content fixed
+
+Moved two fully-superseded docs into `docs/archive/` to keep the active docs folder uncluttered:
+
+- **`LEARNING_JOURNEY_EVALUATION.md`** — was already marked "Status: historical"; it records the evaluation findings (F1–F7) that motivated the proposed journey redesign. Still readable at `docs/archive/LEARNING_JOURNEY_EVALUATION.md`; references inside `LEARNING_JOURNEY.md` updated to the new path.
+- **`LEARNING_JOURNEY_REBALANCE.md`** — was marked "Status: implemented (2026-06-27)"; its three increments (deflation, gustatu promotion, short mandatory spine) all landed. The live LEARNING_JOURNEY.md header still describes what the rebalance changed.
+
+Content fixes in the same pass:
+- **`SAMPLE_SENTENCES.md`**: two file paths corrected from `src/App.jsx` to `src/data/verbs.js` — verb data moved there in the App.jsx refactor (2026-06-27 entry in this log) and the doc was never updated.
+- **`HEART_ECONOMY_ANALYSIS.md`**: status header updated from "nothing implemented" to "partially implemented" — the hearts mechanic (`heartsStorage`, `deductHeart`/`applyHeartRegen`/`buyHeart`) was shipped after the doc was written.
+
 ## 2026-07-10 — Family-choice drill line widened to the plan's five stops; lure prefers aux-swap
 
 The M4 PR1 seed pass left the "da or du?" line at 3 stops; the plan

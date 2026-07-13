@@ -14,7 +14,7 @@
 > evaluated against in future. It does not describe the currently-shipped
 > journey (`journey.js`/`LESSONS`, Units 1–17 live); the evaluation that
 > motivated this spec, and the mapping from the shipped journey to this one,
-> live in `docs/LEARNING_JOURNEY_EVALUATION.md`.
+> live in `docs/archive/LEARNING_JOURNEY_EVALUATION.md`.
 >
 > Linguistic forms are grounded in `docs/CONJUGATIONS.md`,
 > `docs/VERB_COVERAGE.md` (VC), and `docs/LANGUAGE_DECISIONS.md` (LD). Engine

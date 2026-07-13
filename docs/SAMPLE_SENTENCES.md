@@ -1,7 +1,7 @@
 # Sample sentences — a categorised bank
 
 A staging ground for `VERBS`'s `sentences` (and, later, `pronounSentences`)
-tables in `src/App.jsx`. Today each `verb.sentences[tense][person]` is a
+tables in `src/data/verbs.js`. Today each `verb.sentences[tense][person]` is a
 single string, reused verbatim every time that person comes up — including
 across the repeated `rounds` a lesson now does to reach
 `TARGET_EXERCISE_COUNT` (see `docs/DECISIONS.md`, 2026-06-11). This doc
@@ -17,7 +17,7 @@ verb form goes (`verb.conjugations[tense][person]` fills it in), exactly like
 today's single-variant `sentences` tables.
 
 The **Aplikazioa (oraingoa)** column in each table below is the current
-`verb.sentences[tense][person]` value from `src/App.jsx` — included for
+`verb.sentences[tense][person]` value from `src/data/verbs.js` — included for
 direct comparison with the new category variants, and itself a candidate to
 fold into whichever category column it best fits (or to keep as a bonus
 extra variant).
