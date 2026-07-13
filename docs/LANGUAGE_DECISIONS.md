@@ -6,9 +6,22 @@ conjugation content being taught, as distinct from the app/code decisions
 (including the interface-language/i18n feature) in `docs/DECISIONS.md`.
 Newest entries at the top.
 
+## 2026-07-11 — Unit 16 object-axis sentences: native-speaker review PASSED
+
+The entry below's ⚠️ flag is cleared: the project's native speaker reviewed
+all 16 `byObjectSentences` frames on `ukan`/`maite` (the `gogoan ukan`
+present/past set with `orduan`, and the `maite` set with `garai hartan`) and
+confirmed they are **all correct and common use** — including the overt
+pronouns and the word order. The entries stay untagged (`validFor` absent)
+for now: naturalness is vetted, but the cross-verb also-fits analysis
+(e.g. "Nik zu ___" also completed by `ikusten zaitut`) is a separate pass
+that should only happen if these frames ever feed cross-verb distractor
+pools.
+
 ## 2026-07-10 — Unit 16 object-axis sentences: `gogoan ukan` frames + stative past anchors
 
-⚠️ **Needs native-speaker review** (same protocol as the M2 PR1 cell frames).
+⚠️ ~~**Needs native-speaker review**~~ *(cleared 2026-07-11 — see the entry
+above)*. Same protocol as the M2 PR1 cell frames.
 The new `byObjectSentences` on `ukan`/`maite` (see `docs/DECISIONS.md` for
 the structural side) made three linguistic calls:
 
