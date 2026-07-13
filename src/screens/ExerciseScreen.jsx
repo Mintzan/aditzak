@@ -260,9 +260,10 @@ function AspectGrid({ verb }) {
   )
 }
 
-function LessonPreviewScreen({ verb, tense, tenseMeta, objectAxis, onStart, onExit }) {
+function LessonPreviewScreen({ verb, tense, tenseMeta, objectAxis, note, onStart, onExit }) {
   const { t, language } = useLanguage()
   const hasAspectGrid = Boolean(verb.participles) && tense === 'presentPerfect'
+  const noteText = note?.[language] ?? note?.en
   return (
     <div className="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-white">
       <div className="flex items-center gap-3 px-4 pt-4">
@@ -295,6 +296,11 @@ function LessonPreviewScreen({ verb, tense, tenseMeta, objectAxis, onStart, onEx
             </p>
           </div>
         </div>
+        {noteText && (
+          <p className="mt-4 rounded-xl bg-brand-forest-tint px-4 py-3 text-sm text-brand-forest">
+            {noteText}
+          </p>
+        )}
         <div className="mt-6">
           {hasAspectGrid ? (
             <AspectGrid verb={verb} />
@@ -1340,6 +1346,7 @@ export function ExerciseScreen({
         tense={lesson.tense}
         tenseMeta={TENSE_META[lesson.tense]}
         objectAxis={lesson.objectAxis}
+        note={lesson.note}
         onStart={() => setShowPreview(false)}
         onExit={onExit}
       />
