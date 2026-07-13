@@ -5545,20 +5545,31 @@ export const VERBS = [
         // intransitive sense) and replaced this one with a plain
         // entering-a-venue sentence, matching the pattern the other persons
         // here already use.
-        ni: { text: 'Ni Bilboko Arriaga antzokian ___ ikuskizuna ikustera.', validFor: [] },
-        zu: { text: 'Zu Tolosako tabernan ___ pintxoetara?', validFor: [] },
-        hura: { text: 'Hura San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
-        gu: { text: 'Gu Aste Nagusiko jaitsierara ___.', validFor: [] },
-        zuek: { text: 'Zuek sagardotegira ___ talo jatera?', validFor: [] },
-        haiek: { text: 'Haiek Gernikako frontoira ___ partida ikustera.', validFor: [] },
+        // #aste-nagusia-jaitsiera: the `gu` slot used to read "Gu Aste
+        // Nagusiko jaitsierara ___." — but the jaitsiera is an open-air
+        // street procession; you don't *enter* it (sartu), you go to it
+        // (joan). Replaced with a cinema in Vitoria-Gasteiz, which is
+        // unambiguously an enclosed venue and fills the geographic gap in
+        // the table (Bilbao/Tolosa/Donostia/Gernika are already covered).
+        // #sartu-word-order: two earlier fixes also applied here —
+        // (1) inessive (-an) → allative (-ra) on destination, since sartu
+        // is a motion verb and allative is the standard case for its goal;
+        // (2) purpose infinitives moved before the verb blank to restore
+        // SOV order (Basque is verb-final; purpose clause before the verb).
+        ni: { text: 'Ni Bilboko Arriaga antzokira ikuskizuna ikustera ___.', validFor: [] },
+        zu: { text: 'Zu Tolosako tabernara ___?', validFor: [] },
+        hura: { text: 'Hura San Telmo museora erakusketa ikustera ___.', validFor: [] },
+        gu: { text: 'Gu Gasteizko zinemara film berria ikustera ___.', validFor: [] },
+        zuek: { text: 'Zuek sagardotegira talo jatera ___?', validFor: [] },
+        haiek: { text: 'Haiek Gernikako frontoira partida ikustera ___.', validFor: [] },
       },
       past: {
-        ni: { text: 'Ni atzo Bilboko Arriaga antzokian ___ ikuskizuna ikustera.', validFor: [] },
-        zu: { text: 'Zu herenegun Tolosako tabernan ___ pintxoetara?', validFor: [] },
-        hura: { text: 'Hura lehengo egunean San Telmo museoan ___ erakusketa ikustera.', validFor: [] },
-        gu: { text: 'Gu iaz Aste Nagusiko jaitsierara ___.', validFor: [] },
-        zuek: { text: 'Zuek duela bi egun sagardotegira ___ talo jatera?', validFor: [] },
-        haiek: { text: 'Haiek joan den astean Gernikako frontoira ___ partida ikustera.', validFor: [] },
+        ni: { text: 'Ni atzo Bilboko Arriaga antzokira ikuskizuna ikustera ___.', validFor: [] },
+        zu: { text: 'Zu herenegun Tolosako tabernara ___?', validFor: [] },
+        hura: { text: 'Hura lehengo egunean San Telmo museora erakusketa ikustera ___.', validFor: [] },
+        gu: { text: 'Gu iaz Gasteizko zinemara film berria ikustera ___.', validFor: [] },
+        zuek: { text: 'Zuek duela bi egun sagardotegira talo jatera ___?', validFor: [] },
+        haiek: { text: 'Haiek joan den astean Gernikako frontoira partida ikustera ___.', validFor: [] },
       },
     },
   },

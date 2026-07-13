@@ -8,6 +8,17 @@ Decisions about the Basque conjugation research behind
 `CONJUGATIONS.md`/`VERB_COVERAGE.md` live in `docs/academic/LANGUAGE_DECISIONS.md`
 instead.
 
+## 2026-07-13 — sartu sentences: allative case + SOV word order corrected
+
+Two errors fixed across all present and past slots:
+
+1. **Inessive → allative on destination**: *sartu* is a motion verb; its goal takes allative (-ra/-era), not inessive (-an/-ean). Fixed: *antzokian → antzokira*, *tabernan → tabernara*, *museoan → museora*. The three slots already using allative (*zinemara*, *sagardotegira*, *frontoira*) were correct.
+2. **Purpose clause before the verb**: Basque is verb-final (SOV). Purpose infinitives (*ikuskizuna ikustera*, *film berria ikustera*, etc.) were placed after the verb blank; moved them before so the verb sits at the end of each sentence.
+
+## 2026-07-13 — sartu `gu` sentence: jaitsiera → Gasteizko zinema
+
+"Gu Aste Nagusiko jaitsierara sartzen gara" was semantically wrong: the jaitsiera is an open-air street procession — you *go to* it (joan), not *enter* it (sartu). Aste Nagusia is an entirely outdoor festival, so no enclosed sub-venue there works as a fix. Replaced with "Gu Gasteizko zinemara ___ film berria ikustera." — a cinema is unambiguously enclosed, fits the sartu pattern, and Vitoria-Gasteiz fills the one geographic gap in the table (Bilbao/Tolosa/Donostia/Gernika already covered). Past slot updated to match.
+
 ## 2026-07-13 — docs/ split into academic/ and technical/ subfolders
 
 `docs/` now has three subfolders — all `docs/FILENAME.md` references in active docs, `CLAUDE.md`, and source-code comments updated in the same pass; `docs/DECISIONS_ARCHIVE.md` left as-is (historical record):
