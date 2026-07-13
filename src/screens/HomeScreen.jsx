@@ -218,6 +218,7 @@ export function UnitOverviewModal({ unit, onClose }) {
   const title = journeyText('units', unit.number, 'title', language, unit.title)
   const focus = journeyText('units', unit.number, 'focus', language, unit.focus)
   const payload = unit.payload ? journeyText('units', unit.number, 'payload', language, unit.payload) : null
+  const tip = unit.tip ? journeyText('units', unit.number, 'tip', language, unit.tip) : null
   // Every unit before `hi`'s own debut hides it (and its toka/noka gendered
   // cells) from its tables — see `HI_INTRODUCED_UNIT`'s doc comment.
   const hidePersons = unit.number < HI_INTRODUCED_UNIT ? ['hi', 'hi-m', 'hi-f'] : []
@@ -271,6 +272,11 @@ export function UnitOverviewModal({ unit, onClose }) {
           )}
           <p className="mt-3 text-sm text-gray-600 break-words">{focus}</p>
           {payload && <p className="mt-2 text-sm text-gray-400 italic break-words">{payload}</p>}
+          {tip && (
+            <p className="mt-3 rounded-xl bg-brand-forest-tint px-3 py-2.5 text-sm text-brand-forest break-words">
+              {tip}
+            </p>
+          )}
           {conjugationEntries.length > 0 && (
             <div className="mt-5 flex flex-col gap-4">
               {conjugationEntries.map(({ key, verb, tense, objectAxis }) => (

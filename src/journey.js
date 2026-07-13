@@ -66,6 +66,7 @@ export const JOURNEY = [
             title: 'izan & egon — Who and Where',
             focus: 'izan (to be) and egon (to be, to stay), present tense — say who and where you are',
             payload: '"I am a student."',
+            tip: 'Basque has two words for "to be": naiz (who you are) and nago (where you are). Start with three forms each — I/you/he-she — and you\'ll quickly be able to introduce yourself and describe your surroundings.',
             status: 'available',
             lessonIds: ['izan-present', 'egon-present', 'unit-1-review'],
           },
@@ -83,6 +84,7 @@ export const JOURNEY = [
             focus:
               'ukan (to have), present tense — your first ergative (-k) subject, for ni/zu/hura. izan/egon\'s subject just is or stays somewhere; ukan\'s subject acts on something else (what you have) — that\'s what earns it the -k',
             payload: '"I have a car." (Nik auto bat dut.)',
+            tip: 'When you "have" something in Basque, the subject gets a special -k marker: nik instead of ni. This small change signals that the subject is doing something to an object — it appears on every transitive verb you\'ll ever learn.',
             status: 'available',
             lessonIds: ['ukan-present', 'ukan-ni-nik-shift-review', 'unit-2-review'],
           },
@@ -97,6 +99,7 @@ export const JOURNEY = [
             focus:
               'Telling plain subjects (izan/egon) apart from ergative -k subjects (ukan): izan/egon\'s subject isn\'t acting on anything, so the -k shouldn\'t creep onto them by mistake (✗ "Nik naiz") — the most common beginner slip',
             payload: '"Ni ikaslea naiz" vs. "Nik liburua dut."',
+            tip: 'No new verbs here — just focused practice to stop the most common beginner mistake: writing Nik naiz (wrong) instead of Ni naiz (right). The -k only belongs on subjects that are acting on an object. Think of it as a two-question check: "Am I doing something to something else?" If no, use ni.',
             status: 'available',
             lessonIds: [
               'case-marking-sort-review',
@@ -109,6 +112,7 @@ export const JOURNEY = [
             title: 'jakin & nahi — Knowing & Wanting',
             focus: 'jakin (to know) and nahi (to want) — jakin takes the same ergative endings as ukan',
             payload: '"I don\'t know." (Ez dakit.)',
+            tip: 'Jakin (to know) uses the same -k subject as ukan, because it also acts on something — what you know. Nahi (want) is even simpler: it just borrows ukan\'s endings. Four units in and you can already say "I don\'t know" and "I want to go".',
             status: 'available',
             lessonIds: ['jakin-present', 'nahi-present', 'jakin-suffix-family-review', 'knowing-wanting-review'],
           },
@@ -123,6 +127,7 @@ export const JOURNEY = [
             title: 'NOR-NORK Periphrastic — the -tzen dut Pattern (with ikusi)',
             focus: 'ikusi (to see), present tense — your first two-word verb: ikusten + dut',
             payload: '"I see the mountain."',
+            tip: 'This is your first periphrastic verb — a two-part construction where the action word (ikusten) stays fixed while the helper verb (dut/duzu/du) tracks who\'s doing it. Most Basque verbs work this way; the handful that pack everything into one word, like naiz or dago, are actually the exceptions.',
             status: 'available',
             lessonIds: ['ikusi-present', 'ikusi-present-review'],
           },
@@ -131,6 +136,7 @@ export const JOURNEY = [
             title: 'joan/etorri/ibili — The NOR Present',
             focus: 'joan (to go), etorri (to come), and ibili (to walk/move), present tense',
             payload: "\"I'm going to the beach.\"",
+            tip: 'Joan (go), etorri (come), and ibili (walk/wander) each have completely distinct conjugation sets — they don\'t share a pattern. The good news: these are among the most-used verbs in everyday Basque, so you\'ll see them so often they\'ll start to feel natural quickly.',
             status: 'available',
             lessonIds: [
               'joan-present',
@@ -161,6 +167,7 @@ export const JOURNEY = [
             focus:
               'Adding gu/zuek/haiek (we/you-all/they) to izan, egon, ukan, joan, etorri, and ikusi',
             payload: '"We are teachers." (Irakasleak gara)',
+            tip: 'Until now you\'ve only practiced I/you/he-she. This unit adds gu/zuek/haiek (we/you-all/they) to the intransitive verbs. For these verbs the plural changes the stem itself — da → dira, dago → daude — so the whole form shifts, not just an ending.',
             status: 'available',
             gate: true,
             lessonIds: ['unit-6-review-1', 'unit-6-review-2', 'unit-6-review-3'],
@@ -171,6 +178,7 @@ export const JOURNEY = [
             focus:
               'ukan and ikusi — adds gu/zuek/haiek to the ergative pattern; notice the plural moves from the verb stem to a suffix',
             payload: '"We have a car." (Auto bat dugu)',
+            tip: 'For ukan and ikusi, the plural works differently from Unit 7: the stem stays the same and a suffix is added — du → dugu/duzue/dute. This "fixed stem + plural suffix" pattern is the ergative plural, and it\'s more predictable than Unit 7\'s root-changing type.',
             status: 'available',
             lessonIds: ['ukan-present-plural', 'ikusi-present-plural', 'ikusi-present-plural-review', 'unit-8-ergative-review'],
           },
@@ -179,6 +187,7 @@ export const JOURNEY = [
             title: 'ari + izan — The Immediate Continuous',
             focus: "ari + izan — say what's happening right now, like English \"-ing\"",
             payload: '"What are you doing?" (Zer egiten ari zara?)',
+            tip: 'To say what you\'re doing right now, Basque uses ari + izan: action participle + ari + the present of naiz. "I am eating" = Jaten ari naiz. You already know all the pieces; this unit just shows how to combine them.',
             status: 'available',
             lessonIds: ['ari-present', 'unit-4-review'],
           },
@@ -192,6 +201,7 @@ export const JOURNEY = [
             number: 10,
             title: 'REFRESH — The Inversion Matrix',
             focus: 'Turning Units 1–9\'s sentences negative with "ez" — the finite verb flips ahead of the participle once "ez" enters the sentence',
+            tip: 'Adding ez ("not") to a Basque sentence moves the conjugated verb right after it: "She came" (Etorri da) → "She didn\'t come" (Ez da etorri). No new vocabulary — just practice until the flip feels automatic.',
             status: 'available',
             gate: true,
             lessonIds: ['unit-5-review-1', 'unit-5-review-2', 'unit-5-review-3'],
@@ -229,6 +239,7 @@ export const JOURNEY = [
             focus:
               'The present perfect (etorri naiz, ikusi dut) — say what just happened, and contrast gaur ("today") with atzo ("yesterday")',
             payload: '"I have come / I came today." (Gaur etorri naiz)',
+            tip: 'The Basque present perfect uses a past participle but keeps the present helper — etorri naiz, ikusi dut. Use it for recent events, especially things that happened today. You\'ll soon swap that present helper for a past one — that\'s the simple past.',
             status: 'available',
             lessonIds: [
               'izan-present-perfect-pool',
@@ -243,6 +254,7 @@ export const JOURNEY = [
             title: 'The "izan" Past Pool — Looking Back I',
             focus: 'The izan past (nintzen/zinen/zen...) — shared by izan, joan, etorri, and ibili',
             payload: '"I was young."',
+            tip: 'Joan, etorri, ibili, and izan itself all share the same simple past helper: nintzen/zinen/zen/ginen/zineten/ziren. "I went" = Joan nintzen; "she came" = Etorri zen. One helper set works for all four verbs.',
             status: 'available',
             lessonIds: ['izan-past-pool', 'izan-past-pool-plural'],
           },
@@ -258,6 +270,7 @@ export const JOURNEY = [
             focus:
               'The ukan present (dut/duzu/du...) across jan, edan, erosi, ikusi, and hartu — plus dut vs. ditut when the object is plural',
             payload: '"I ate."',
+            tip: 'You already know dut from ukan. This unit spreads those same helpers across a family of everyday action verbs: jan (eat), edan (drink), erosi (buy), ikusi (see), hartu (take). The action word varies; the helpers stay the same. You\'ll also meet ditut — the plural version for when you\'re dealing with multiple objects.',
             status: 'available',
             lessonIds: [
               'unit-10-present',
@@ -279,6 +292,7 @@ export const JOURNEY = [
             focus:
               'gustatu, iruditu, and ahaztu in the present (zait/zaizu/zaio...) — say what you like, what seems true to you, and what you forget',
             payload: '"I like this." (Hau gustatzen zait)',
+            tip: 'A new angle: instead of you doing something, something happens to you. "I like it" in Basque is literally "it pleases to-me" — gustatzen zait. The -t in zait is "me"; zaio means "to him/her." This dative-subject pattern also covers "I think" (iruditzen zait) and "I forgot" (ahaztu zait).',
             status: 'available',
             lessonIds: [
               'unit-14-present',
@@ -295,6 +309,7 @@ export const JOURNEY = [
             focus:
               'The ukan past (nuen/zenuen/zuen...) across ukan, jan, edan, erosi, ikusi, and jakin — plus zenuen vs. zenituen when the object is plural',
             payload: '"I had a car."',
+            tip: 'Swap the ukan present helpers for the past helpers: nuen (I), zenuen (you), zuen (he/she). The same verbs from Unit 13 now slot into this past template — jan nuen ("I ate"), ikusi zuen ("she saw it"). One past helper family works for all of them.',
             status: 'available',
             lessonIds: [
               'ukan-past-pool',
@@ -343,6 +358,7 @@ export const JOURNEY = [
             focus:
               'ukan, maite, ikusi, and more — say "I love you" instead of always "I love it", by shifting who the object is',
             payload: '"I love you." (Maite zaitut.) / "It surprised me." (Harritu nau.)',
+            tip: 'So far the object has always been "it" (hura). Now the object can be "you" — Maite zaitut (I love you). The verb ending now encodes both who\'s doing it and who it\'s happening to. This is where Basque\'s agreement system really starts to shine.',
             // #rebalance: the "reverse direction" object-axis blocks (someone/
             // something acting on me/us/you — NORK fixed at hura/gu/zu/zuek/
             // haiek) moved out of this spine unit into the opt-in Bonus unit
@@ -375,6 +391,7 @@ export const JOURNEY = [
             title: 'eraman/ekarri — More NOR-NORK Synthetics',
             focus: 'eraman (to carry/take) and ekarri (to bring), present and past — same pattern as eduki and jakin',
             payload: 'Nik nire txakurra daramat mendira.',
+            tip: 'Eraman (carry/take) and ekarri (bring) are synthetic NOR-NORK verbs — their conjugated forms pack subject and object into one word, like ukan. Their present forms (daramat, dakar) look unusual at first but follow their own internal pattern, so a few exposures will make them click.',
             status: 'available',
             lessonIds: [
               'eraman-present',
@@ -400,6 +417,7 @@ export const JOURNEY = [
             title: 'eduki — Physical States & Possessions',
             focus: 'eduki (to have/hold), all six persons — plus gu/zuek/haiek for ibili',
             payload: '"I have the keys in my pocket."',
+            tip: 'Eduki expresses physical possession or holding — different from ukan\'s more general "have." Its forms are entirely its own: daukat (I have it), dauka (he/she has it) — not dut or du. This unit also completes ibili\'s plural rows that were saved for later.',
             status: 'available',
             lessonIds: [
               'eduki-present',
@@ -414,6 +432,7 @@ export const JOURNEY = [
             title: 'eduki — "I Had It" (Simple Past)',
             focus: 'eduki in the simple past (neukan, zeneukan, zeukan...) — its own conjugation pattern',
             payload: '"I had the keys."',
+            tip: 'Eduki\'s simple past (neukan, zeneukan, zeukan...) is its own unique paradigm — not shared with ukan\'s past (nuen) or izan\'s past (nintzen). Think of it as a family portrait: eduki gets its own photo, not a copy of someone else\'s.',
             status: 'available',
             lessonIds: ['eduki-past', 'eduki-past-review', 'eduki-past-plural', 'eduki-past-plural-review'],
           },
@@ -422,6 +441,7 @@ export const JOURNEY = [
             title: 'egon — "I Was There" (Simple Past)',
             focus: 'egon in the simple past (nengoen, zeunden, zegoen...) — plus ados egon ("to agree"), which follows the same pattern',
             payload: '"I was at home."',
+            tip: 'Egon\'s simple past (nengoen, zeunden, zegoen...) is its own independent paradigm — not shared with ukan\'s past or eduki\'s. You\'ll also learn ados egon ("to agree"), which places the adjective ados in front of any egon form: "I agreed" = Ados nengoen.',
             status: 'available',
             lessonIds: [
               'ados-egon-present',
@@ -466,6 +486,7 @@ export const JOURNEY = [
             focus:
               'The future with -ko/-go — izan and ukan lead the way (ukan\'s izango is the one exception to learn by heart), then the same rule across every verb you know',
             payload: '"I will be a teacher" (irakasle izango naiz)',
+            tip: 'The Basque future is one of the most regular things in the language: add -ko (after a consonant) or -go (after a vowel) to the participle, then keep the present helper. The only form to memorize specially: ukan\'s future is izango dut (not "ukango"). After this unit, you can put almost any verb into the future.',
             status: 'available',
             lessonIds: [
               'izan-future',
@@ -486,6 +507,7 @@ export const JOURNEY = [
             focus:
               'behar (to need/have to) with ukan, present and future — the construction\'s head picks the auxiliary: "joan behar dut" (have to go) uses dut, not naiz, even though "joan" alone uses naiz',
             payload: '"I have to go." (Joan behar dut)',
+            tip: 'Behar ("need/must") always picks ukan\'s helpers, no matter which verb it goes with. "I must go" = Joan behar dut (not naiz, even though joan alone uses naiz). Think of behar as the boss of the sentence — it picks the helper, not joan. The same rule applies to nahi from Unit 4.',
             status: 'available',
             lessonIds: ['behar-present', 'behar-future', 'unit-19-review', 'unit-22-nor-contrast-review'],
           },
@@ -500,6 +522,7 @@ export const JOURNEY = [
             title: 'REFRESH — Cumulative Present/Past/Future Mixer',
             focus:
               'Mixing present, past, and future, positive and negative, so you tell the three tenses apart instead of guessing from context. Score at least 2 stars to move on',
+            tip: 'Score at least 2 stars to unlock Phase III. This gate mixes all three tenses plus negatives. If a particular tense feels shaky, replay the relevant unit before retrying. Look for time-word clues: gaur (today) → present perfect, atzo (yesterday) → simple past, bihar (tomorrow) → future.',
             status: 'available',
             gate: true,
             lessonIds: [
@@ -530,6 +553,7 @@ export const JOURNEY = [
             focus:
               'The habitual past (etortzen nintzen, "I used to come") — different from the simple past you already know',
             payload: '"I used to come here every day."',
+            tip: 'The habitual past expresses repeated or ongoing past action: "I used to eat", "she was coming." Form: action participle in -tzen/-ten + past helpers (nintzen etc.). Compare: Joan nintzen = "I went once" (simple past); Joaten nintzen = "I used to go / I was going" (habitual past).',
             status: 'available',
             lessonIds: [
               'etorri-habitual-past',
@@ -544,6 +568,7 @@ export const JOURNEY = [
             title: 'joan/etorri/ibili — Motion in Progress (Past)',
             focus: "joan, etorri, and ibili's own past-in-progress forms (nindoan, zetorren...)",
             payload: '"I was on my way (when...)."',
+            tip: 'Joan, etorri, and ibili have special "was going/coming/walking" forms distinct from the habitual past pattern: nindoan, nentorren, nenbilen. Use these for motion that was in progress and got interrupted — "I was on my way when you called."',
             status: 'available',
             lessonIds: ['motion-imperfective-past-pool', 'motion-imperfective-past-pool-plural'],
           },
@@ -571,6 +596,7 @@ export const JOURNEY = [
             focus:
               'gustatu, iruditu, and ahaztu in the past and future — the same "liking" pattern from Unit 14, now across time',
             payload: '"I liked it yesterday." (Atzo gustatu zitzaidan)',
+            tip: 'Take the NOR-NORI forms from Unit 14 (zait, zaizu, zaio) and put them in the past and future. Past: zitzaidan ("it pleased me"). Future: gustatuko zait ("it will please me"). The same dative-subject logic from Unit 14 now spans all three tenses.',
             status: 'available',
             lessonIds: [
               'gustatu-past',
@@ -612,6 +638,7 @@ export const JOURNEY = [
             focus:
               '"I appeal to you" (natzaizu), "we appeal to you" (gatzaizu) — gustatu, iruditu, ahaztu, and jarraitu when the liked thing, not just the person, changes',
             payload: '"Do you like me?" (Gustatzen natzaizu?) / "I like him." (Gustatzen natzaio.)',
+            tip: 'Unit 14 fixed the "thing experienced" at hura (it). Now the thing can be ni or gu: Gustatzen natzaizu means "I please you" — literally "I am pleasing to you." The NOR (what\'s experienced) shifts; NORI (the experiencer) stays anchored.',
             status: 'available',
             lessonIds: [
               'nor-axis-present-review-zu',
@@ -639,6 +666,7 @@ export const JOURNEY = [
             title: 'The NOR-NORI-NORK Present — diot/diozu/dio',
             focus: 'esan (to say/tell) and eman (to give) in the present (diot/diozu/dio...) — your first verbs that track three people at once: who, to whom, and by whom',
             payload: '"I give it to him." (Ematen diot)',
+            tip: 'For the first time, a verb tracks three arguments at once: esan (say) and eman (give). Diot = "I [do it] to him": d- for the object, -io- for "to him", -t for "I." This is the most complex single step in the whole journey — extra practice is built into this unit to help it land.',
             status: 'available',
             lessonIds: [
               'esan-present', 'eman-present',
@@ -653,6 +681,7 @@ export const JOURNEY = [
             title: 'NOR-NORI-NORK Past & Future — Telling & Giving Across Time',
             focus: 'esan and eman in the past and future — the same three-way pattern from Unit 28, now across time',
             payload: '"I told him." (Esan nion)',
+            tip: 'Take esan and eman\'s three-argument forms from Unit 28 and shift them into the past and future. Past: nion ("I said/gave to him"). Future: esango dizut ("I will tell you"). The three-argument structure stays the same — only the tense changes.',
             status: 'available',
             lessonIds: [
               'esan-past', 'esan-future', 'eman-past', 'eman-future',
@@ -674,6 +703,7 @@ export const JOURNEY = [
             focus:
               'lagundu (to help), erantzun (to answer), deitu (to call), and more — verbs that quietly take a "to whom" even without an obvious object',
             payload: '"I help him." (Laguntzen diot)',
+            tip: 'Some verbs secretly take "to whom" even when there\'s no visible direct object — laguntzen diot ("I help him") uses diot (not dut!). These covert-dative verbs — lagundu, erantzun, deitu and others — all use the NOR-NORI-NORK paradigm from Unit 28.',
             status: 'available',
             lessonIds: [
               'dative-verb-present', 'dative-verb-present-plural',
@@ -692,6 +722,7 @@ export const JOURNEY = [
             number: 31,
             title: 'REFRESH — The Case-Ending Mixer',
             focus: 'Telling who\'s the subject (-k), the object, and the recipient apart by their case ending, across NOR, NOR-NORK, NOR-NORI, and NOR-NORI-NORK verbs. A required pass before Phase V',
+            tip: 'Score at least 2 stars to proceed. This gate drills the NOR/NORK/NORI case distinctions — swapping who does what to whom. If you mix up -k and -i endings, replay Units 14 and 28 before retrying.',
             status: 'available',
             gate: true,
             lessonIds: [
@@ -720,6 +751,7 @@ export const JOURNEY = [
             title: 'Ahalera — Permissions & Capability',
             focus: 'dezaket/naiteke ("I can") alongside ahal izan and ezin ("to be able to" / "can\'t") — say what you can and can\'t do',
             payload: '"I can come." / "I can\'t come."',
+            tip: 'Dezaket means "I can" (potential mood — ahalera). For intransitive verbs you use naiteke (I can come, I can be). There\'s also a periphrastic pair: ahal izan (can) and ezin (can\'t). This unit covers the core forms across the present, hypothetical, and past sub-tenses.',
             // #rebalance: the NOR-NORK object-axis, NOR-NORI dative-axis, and
             // ditransitive permutations of the potential mood moved out of this
             // spine unit into the opt-in Bonus unit "Potential — The Axes in
@@ -742,6 +774,7 @@ export const JOURNEY = [
             title: 'Baldintza & Ondorioa — Conditionals',
             focus: '"If..." (ba-) and "would..." (-ke) — build conditional sentences like "If I had money, I would buy that"',
             payload: '"If I had money, I would buy that" (Dirua banu, hori erosiko nuke)',
+            tip: 'Basque conditionals work in two parts: a ba- prefix on the verb ("if I had") and a -ke suffix on the helper ("I would buy"). "If I had money, I would buy it" = Dirua banu, hori erosiko nuke. Both parts build on helpers and verbs you already know.',
             // #rebalance: the NOR-NORK object-axis, NOR-NORI dative-axis, and
             // ditransitive permutations of the conditional moved out of this
             // spine unit into the opt-in Bonus unit "Conditionals — The Axes in
@@ -780,6 +813,7 @@ export const JOURNEY = [
             title: 'Agintera — Commands',
             focus: 'The imperative — give commands with izan, ukan, egon, etorri, and joan',
             payload: 'Hadi hona!',
+            tip: 'The Basque imperative (agintera) has different forms for each address level: zu (neutral), zuek (plural), and hi (intimate) — plus a jussive for third person ("let him come"). The forms look different from the indicative, but the most useful ones appear constantly in everyday Basque.',
             // #rebalance: the gustatu/iruditu/ahaztu NOR-NORI dative-axis
             // imperative permutations moved out of this spine unit into the
             // opt-in Bonus unit "Commands — The Axes in Depth"
@@ -824,6 +858,7 @@ export const JOURNEY = [
             title: 'Purpose & Wishing (Subjuntiboa)',
             focus: 'The subjunctive — say what you want someone else to do, as in "I want him to come"',
             payload: 'Nahi dut etor dadin. · Esan dio etor dadila. · ...ikus dezan.',
+            tip: 'The Basque subjunctive mostly lives inside subordinate clauses: "I want him to come" = Nahi dut etor dadin. This unit teaches it as a construction — you\'ll understand it when you hear it and learn to produce it in context, not as isolated verb tables.',
             status: 'available',
             lessonIds: [
               'izan-subjunctive-present', 'ukan-subjunctive-present', 'unit-36-review',
@@ -843,6 +878,7 @@ export const JOURNEY = [
             title: 'hi — Meet "hi"',
             focus: 'Meet hi, the intimate "you" — and how it splits by the speaker\'s gender when it\'s the subject of ukan-type verbs',
             payload: 'Hi ikaslea haiz.',
+            tip: 'Hi is the intimate "you" — used only with close friends and family who\'ve agreed to this register. As a subject, hi takes its own verb forms: haiz for izan, hago for egon, hoa for joan. Unlike zu, hi signals relationship closeness, not just second-person address.',
             status: 'available',
             lessonIds: ['unit-32-hi-present', 'unit-32-hi-past', 'unit-32-hi-nork-present'],
           },
@@ -852,6 +888,7 @@ export const JOURNEY = [
             title: 'Toka (Masculine Allocutive)',
             focus: 'Toka — the masculine way of subtly flagging hi as your listener, even in sentences about someone else',
             payload: 'Lanean dik.',
+            tip: 'Toka is the masculine allocutive register: even when talking about a third person, you modify the verb to signal that your listener is hi (a male close friend). "He\'s working" → Lanean dik (instead of da). This is a grammatical way of marking intimacy with your listener.',
             status: 'available',
             lessonIds: ['izan-present-toka', 'ukan-present-toka', 'izan-past-toka', 'ukan-past-toka', 'unit-33-review'],
           },
@@ -861,6 +898,7 @@ export const JOURNEY = [
             title: 'Noka (Feminine Allocutive)',
             focus: 'Noka — the feminine counterpart to toka: swap the -k endings you just learned for -n',
             payload: 'Lanean din.',
+            tip: 'Noka is the feminine equivalent of toka: swap the masculine -k endings for -n. "He\'s working [I\'m speaking to you, female friend]" = Lanean din. Once you know toka, noka is a one-letter transformation — not a new paradigm to memorize.',
             status: 'available',
             lessonIds: ['izan-present-noka', 'ukan-present-noka', 'izan-past-noka', 'ukan-past-noka', 'unit-34-review'],
           },
@@ -869,6 +907,7 @@ export const JOURNEY = [
             bonus: true,
             title: 'Hitanoa Recombined',
             focus: 'Put toka and noka together — choose the right one for your listener, and learn when to leave hitanoa out',
+            tip: 'Mix toka and noka and learn when not to use hitanoa: subordinate clauses, formal modal forms (-ke), and anyone who hasn\'t agreed to the intimate register all revert to standard zu forms. Choosing correctly signals fluency and social awareness.',
             status: 'available',
             lessonIds: [
               'unit-39-recombined-present', 'unit-39-recombined-past',
@@ -887,6 +926,7 @@ export const JOURNEY = [
             title: 'The Passive nor-shift — Reading Real Text',
             focus: 'Read real sentences and spot the passive shift: ireki dut ("I opened it") → ireki da ("it opened")',
             payload: 'Nik atea ireki dut. → Atea ireki da.',
+            tip: 'When the agent disappears from a sentence, the transitive verb becomes intransitive: "I opened it" (ireki dut) → "It opened / it was opened" (ireki da). This unit focuses on recognition — real written Basque uses this constantly, and being able to spot it unlocks much more of what you read.',
             status: 'available',
             lessonIds: ['unit-36-reading', 'unit-36-reading-nonfinite'],
           },
@@ -902,6 +942,7 @@ export const JOURNEY = [
             title: 'Making Someone Do It',
             focus: 'The causative -arazi — say you made or had someone do something, e.g. itzularazi ("to make [someone] return")',
             payload: 'Ekaitzak mendizaleak itzularazi zituen. · Musikak umeak dantzarazi ditu.',
+            tip: '-Arazi added to an intransitive verb makes it causative: "The storm made the climbers turn back" = itzularazi zituen. The original NOR verb gets a new agent (NORK), so the causativized form now needs ukan\'s helpers instead of izan\'s.',
             status: 'available',
             lessonIds: [
               'itzularazi-present',
@@ -919,6 +960,7 @@ export const JOURNEY = [
             title: 'Making Someone Do Something to Someone',
             focus: '-arazi on verbs that already have an object — say you had someone do something to someone else, e.g. janarazi ("to make [someone] eat [something]")',
             payload: 'Amonak umeei babarrunak janarazi zizkien. · Irakasleak ikasleei hori idatzarazi die.',
+            tip: '-Arazi on a transitive verb adds another level: agent (grandma), causee (kids), and object (beans) are all in the sentence. The NOR-NORI-NORK system from Unit 28 applies. Complex, but the suffix is the same -arazi from Unit 41 — you\'re just extending a pattern you already know.',
             status: 'available',
             lessonIds: [
               'janarazi-present',
@@ -945,6 +987,7 @@ export const JOURNEY = [
             // those moods would need new causative conjugation tables of
             // their own (CONJUGATIONS.md §17.4), out of scope for this gate.
             focus: 'The causative -arazi (making someone do something) across present, past, and future, all at once',
+            tip: 'Recombines -arazi forms from Units 41–42 across present, past, and future. If causative + tense combinations still feel shaky, replay those units\' lessons before retrying this gate.',
             status: 'available',
             gate: true,
             lessonIds: ['unit-44-review-1', 'unit-44-review-2'],
@@ -965,6 +1008,7 @@ export const JOURNEY = [
             // flags this as a false-friend pairing — distinct verb).
             focus: 'jario ("to flow/drip"), etzan ("to lie/consist of"), and irudi ("to appear/seem") — rare, old-fashioned verb forms you\'ll mostly just recognize',
             payload: 'Malkoak dario. · Zertan datza ariketa? · Nekatuta zaude, dirudizu.',
+            tip: 'Jario (flow/drip), etzan (lie/consist), and irudi (seem) are rare synthetic verbs you\'ll mostly encounter in reading, not conversation. The goal here is recognition — being able to parse dario or dirudizu when you see them in text.',
             status: 'available',
             lessonIds: [
               'jario-present', 'jario-past',
@@ -985,6 +1029,7 @@ export const JOURNEY = [
             title: 'Talking About Weather',
             focus: 'Weather idioms — euria ari du ("it\'s raining"), hotz da ("it\'s cold"), and more, always in the 3rd person',
             payload: 'Euria ari du. · Hotz da. · Eguzkia dago.',
+            tip: 'Basque weather expressions are almost always third-person fixed: euria ari du (it\'s raining), hotz da (it\'s cold). This unit covers the most common idioms using ari, izan, and egon with fixed hura forms — no new endings, just handy vocabulary chunks.',
             status: 'available',
             lessonIds: ['unit-45-weather', 'unit-45-review'],
           },
@@ -1005,6 +1050,7 @@ export const JOURNEY = [
             title: 'Unergative Curiosities',
             focus: 'ihardun ("to be at/busy with") and iraun ("to last") — verbs with an ergative subject but no object at all',
             payload: 'Lanean dihardut. · Filmak bi ordu dirau.',
+            tip: 'Ihardun ("to be busy with") and iraun ("to last") are unergative: they take an ergative subject (-k) but have no object. "I\'m busy working" = Lanean dihardut (Nik, not Ni, even though there\'s nothing being done to anything). A rare but useful corner of Basque grammar.',
             status: 'available',
             lessonIds: ['ihardun-present', 'ihardun-past', 'iraun-present', 'iraun-past', 'unit-46-review'],
           },
@@ -1025,6 +1071,7 @@ export const JOURNEY = [
             title: 'erabili — Using Things',
             focus: 'erabili (to use), present and past — same pattern as eduki and jakin',
             payload: 'Nik ordenagailua darabilt egunero.',
+            tip: 'Erabili (to use) is a synthetic NOR-NORK verb that conjugates like eduki and jakin — the person is packed into one word. Present: darabilt (I use it). A high-frequency everyday verb that\'s good to have in your active vocabulary.',
             status: 'available',
             lessonIds: ['erabili-present', 'erabili-past', 'unit-47-review'],
           },
@@ -1040,6 +1087,7 @@ export const JOURNEY = [
             focus:
               'Flip the direction — "it surprised me" (harritu nau), "they saw us" (ikusi gaituzte). Deep practice for Unit 16\'s pattern, across dozens of verbs',
             payload: '"It surprised me." (Harritu nau.) / "They saw us." (Ikusi gaituzte.)',
+            tip: 'Advanced practice of Unit 16\'s object axis: instead of "I (subject) love you (object)", flip to "you (subject) see me (object)" — ikusi nau, harritu nau. Dozens of everyday transitive verbs across all tenses are pooled here for deep practice.',
             status: 'available',
             bonus: true,
             lessonIds: [
@@ -1074,6 +1122,7 @@ export const JOURNEY = [
             focus:
               'More "can" sentences — "it could surprise me", "I could like him". Deep practice for Unit 32 (Ahalera)',
             payload: '"It could surprise me." / "I could like him."',
+            tip: 'Every object-axis and tense combination for the potential mood (ahalera) from Unit 32, in depth. "It could surprise me" = harri nintzake. Work through at your own pace — this is optional depth work, not required for the main spine.',
             status: 'available',
             bonus: true,
             lessonIds: [
@@ -1101,6 +1150,7 @@ export const JOURNEY = [
             focus:
               'More "if/would" sentences — "if you loved me...", "I would like him". Deep practice for Unit 33 (Baldintza)',
             payload: '"If you loved me…" / "I would like him."',
+            tip: 'Every object-axis and tense combination for the conditional (baldintza/ondorioa) from Unit 33, in depth. "If you loved me…" = maite baninduzu. Same structure as Unit 33, extended to every argument combination.',
             status: 'available',
             bonus: true,
             lessonIds: [
@@ -1128,6 +1178,7 @@ export const JOURNEY = [
             focus:
               'More commands — "let it appeal to me!" (bekit) and its family, across every "to whom". Deep practice for Unit 34 (Agintera)',
             payload: '"Let it appeal to me!" (bekit)',
+            tip: 'Every argument combination for the imperative (agintera) from Unit 34, in depth — including jussives like bekit ("let it please me!"). Optional mastery work for those who want to command in every possible direction.',
             status: 'available',
             bonus: true,
             lessonIds: [

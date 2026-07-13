@@ -199,6 +199,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Soy estudiante."',
         eu: '"Ikaslea naiz" (Soy estudiante)',
       },
+      tip: {
+        es: 'El euskera tiene dos palabras para "ser/estar": naiz (quién eres) y nago (dónde estás). Empieza con tres formas de cada una — yo/tú/él-ella — y pronto podrás presentarte y describir tu entorno.',
+      },
     },
     2: {
       title: { es: 'ukan — El salto ergativo', eu: 'ukan — Jauzi ergatiboa' },
@@ -213,6 +216,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Tengo un coche." (Nik auto bat dut)',
         eu: '"Nik auto bat dut" (Tengo un coche)',
+      },
+      tip: {
+        es: 'Cuando "tienes" algo en euskera, el sujeto lleva una marca especial -k: nik en vez de ni. Este pequeño cambio señala que el sujeto está actuando sobre un objeto — aparece en todos los verbos transitivos que aprenderás.',
       },
     },
     3: {
@@ -229,6 +235,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Ni ikaslea naiz" (Yo soy estudiante) frente a "Nik liburua dut" (Yo tengo el libro)',
         eu: '"Ni ikaslea naiz" vs. "Nik liburua dut"',
       },
+      tip: {
+        es: 'Sin verbos nuevos — solo práctica específica para eliminar el error más común: escribir Nik naiz (incorrecto) en vez de Ni naiz (correcto). El -k solo va en sujetos que actúan sobre un objeto. Pregúntate: "¿Estoy haciendo algo sobre algo?" Si no, usa ni.',
+      },
     },
     4: {
       title: { es: 'jakin y nahi — Saber y querer', eu: 'Jakin eta nahi' },
@@ -239,6 +248,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"No lo sé." (Ez dakit)',
         eu: '"Ez dakit" (No lo sé)',
+      },
+      tip: {
+        es: 'Jakin (saber) usa el mismo sujeto con -k que ukan, porque también actúa sobre algo — lo que sabes. Nahi (querer) es aún más sencillo: simplemente toma las terminaciones de ukan. Con cuatro unidades ya puedes decir "no lo sé" y "quiero ir".',
       },
     },
     5: {
@@ -251,6 +263,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Veo la montaña."',
         eu: '"Mendia ikusten dut" (Veo la montaña)',
       },
+      tip: {
+        es: 'Este es tu primer verbo perifrástico — una construcción de dos partes donde la palabra de acción (ikusten) permanece fija mientras el auxiliar (dut/duzu/du) indica quién lo hace. La mayoría de los verbos vascos funcionan así; los pocos que lo empaquetan todo en una sola palabra, como naiz o dago, son en realidad las excepciones.',
+      },
     },
     6: {
       title: { es: 'joan/etorri/ibili — El presente NOR', eu: 'joan/etorri/ibili — NOR oraina' },
@@ -261,6 +276,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Voy a la playa."',
         eu: '"Hondartzara noa" (Voy a la playa)',
+      },
+      tip: {
+        es: 'Joan (ir), etorri (venir) e ibili (caminar/moverse) tienen cada uno sus propios paradigmas de conjugación completamente distintos — no comparten un patrón. La buena noticia: son algunos de los verbos más usados en el euskera cotidiano, así que los verás tan a menudo que acabarán sintiéndose naturales.',
       },
     },
     7: {
@@ -273,6 +291,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Somos profesores." (Irakasleak gara)',
         eu: '"Irakasleak gara" (Somos profesores)',
       },
+      tip: {
+        es: 'Hasta ahora solo has practicado yo/tú/él-ella. Esta unidad añade gu/zuek/haiek (nosotros/vosotros/ellos) a los verbos intransitivos. En estos verbos el plural cambia la propia raíz — da → dira, dago → daude — así que toda la forma cambia, no solo una terminación.',
+      },
     },
     8: {
       title: { es: 'Ampliación: plurales ergativos', eu: 'Zabalpena: plural ergatiboa' },
@@ -283,6 +304,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Tenemos un coche." (Auto bat dugu)',
         eu: '"Auto bat dugu" (Tenemos un coche)',
+      },
+      tip: {
+        es: 'Para ukan e ikusi, el plural funciona de manera distinta a la unidad 7: la raíz permanece igual y se añade un sufijo — du → dugu/duzue/dute. Este patrón de "raíz fija + sufijo plural" es el plural ergativo, y es más predecible que el tipo de cambio de raíz de la unidad 7.',
       },
     },
     9: {
@@ -295,6 +319,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"¿Qué estás haciendo?" (Zer egiten ari zara?)',
         eu: '"Zer egiten ari zara?" (¿Qué estás haciendo?)',
       },
+      tip: {
+        es: 'Para decir lo que estás haciendo ahora mismo, el euskera usa ari + izan: participio de acción + ari + el presente de naiz. "Estoy comiendo" = Jaten ari naiz. Ya conoces todas las piezas; esta unidad solo muestra cómo combinarlas.',
+      },
     },
     10: {
       title: { es: 'REPASO — La matriz de inversión', eu: 'BERRIKUSPENA — Aldrebeskeriaren matrizea' },
@@ -303,6 +330,9 @@ export const JOURNEY_TRANSLATIONS = {
         // #native-check: extended past a prefix-strip with a new clause —
         // see docs/DECISIONS.md.
         eu: '1–9 unitateetako esaldiak "ez"-ekin ezezko bihurtzen praktikatu',
+      },
+      tip: {
+        es: 'Añadir ez ("no") a una frase vasca mueve el verbo conjugado justo después: "Ella vino" (Etorri da) → "Ella no vino" (Ez da etorri). Sin vocabulario nuevo — solo practica hasta que el cambio te resulte automático.',
       },
     },
     11: {
@@ -318,6 +348,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"He venido / he venido hoy." (Gaur etorri naiz)',
         eu: '"Gaur etorri naiz" (He venido hoy)',
       },
+      tip: {
+        es: 'El pretérito perfecto vasco usa un participio pasado pero mantiene el auxiliar presente — etorri naiz, ikusi dut. Úsalo para eventos recientes, especialmente los que ocurrieron hoy. Pronto cambiarás ese auxiliar presente por uno pasado — ese será el pasado simple.',
+      },
     },
     12: {
       title: { es: 'izan — Mirando atrás I', eu: 'izan — Atzera begira I' },
@@ -328,6 +361,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Yo era joven."',
         eu: '"Gaztea nintzen" (Yo era joven)',
+      },
+      tip: {
+        es: 'Joan, etorri, ibili e izan comparten el mismo auxiliar de pasado simple: nintzen/zinen/zen/ginen/zineten/ziren. "Fui" = Joan nintzen; "ella vino" = Etorri zen. Un conjunto de auxiliares sirve para los cuatro verbos.',
       },
     },
     13: {
@@ -340,6 +376,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Comí."',
         eu: '"Jan dut" (Comí)',
       },
+      tip: {
+        es: 'Ya conoces dut de ukan. Esta unidad extiende esos mismos auxiliares a una familia de verbos cotidianos: jan (comer), edan (beber), erosi (comprar), ikusi (ver), hartu (tomar). La palabra de acción varía; los auxiliares permanecen iguales. También aprenderás ditut — la versión plural para cuando tratas con varios objetos.',
+      },
     },
     15: {
       title: { es: 'El pasado NOR-NORK — nuen/zenuen/zuen', eu: 'NOR-NORK iragana — nuen/zenuen/zuen' },
@@ -350,6 +389,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Tenía un coche."',
         eu: '"Autoa nuen" (Tenía un coche)',
+      },
+      tip: {
+        es: 'Cambia los auxiliares presentes de ukan por los auxiliares pasados: nuen (yo), zenuen (tú), zuen (él/ella). Los mismos verbos de la unidad 13 ahora encajan en esta plantilla de pasado — jan nuen ("comí"), ikusi zuen ("ella lo vio"). Una familia de auxiliares pasados sirve para todos.',
       },
     },
     16: {
@@ -362,6 +404,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Te quiero." (Maite zaitut) / "Me sorprendió." (Harritu nau)',
         eu: '"Maite zaitut" (Te quiero) / "Harritu nau" (Me sorprendió)',
       },
+      tip: {
+        es: 'Hasta ahora el objeto siempre ha sido "ello" (hura). Ahora el objeto puede ser "tú" — Maite zaitut (te quiero). La terminación verbal ahora codifica tanto quién lo hace como a quién le pasa. Aquí es donde el sistema de concordancia del euskera realmente empieza a brillar.',
+      },
     },
     17: {
       title: { es: 'eraman/ekarri — Más sintéticos NOR-NORK', eu: 'eraman/ekarri — NOR-NORK trinko gehiago' },
@@ -372,6 +417,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Llevo mi perro al monte."',
         eu: 'Nik nire txakurra daramat mendira.',
+      },
+      tip: {
+        es: 'Eraman (llevar) y ekarri (traer) son verbos sintéticos NOR-NORK — sus formas conjugadas empaquetan sujeto y objeto en una sola palabra, como ukan. Sus formas de presente (daramat, dakar) parecen inusuales al principio, pero siguen su propio patrón interno, así que unas pocas exposiciones harán que encajen.',
       },
     },
     18: {
@@ -384,6 +432,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Tengo las llaves en el bolsillo."',
         eu: '"Giltzak poltsikoan ditut" (Tengo las llaves en el bolsillo)',
       },
+      tip: {
+        es: 'Eduki expresa posesión física o sostener algo — diferente del "tener" más general de ukan. Sus formas son completamente propias: daukat (lo tengo), dauka (él/ella lo tiene) — no dut ni du. Esta unidad también completa las filas plurales de ibili que se habían guardado para más adelante.',
+      },
     },
     19: {
       title: { es: 'eduki — "Lo tenía" (pasado simple)', eu: 'eduki — "Banuen" (iragan soila)' },
@@ -394,6 +445,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Tenía la llave."',
         eu: '"Giltza eskuan neukan" (Tenía la llave en la mano)',
+      },
+      tip: {
+        es: 'El pasado simple de eduki (neukan, zeneukan, zeukan...) es su propio paradigma único — no compartido con el pasado de ukan (nuen) ni el de izan (nintzen). Piénsalo como un retrato familiar: eduki tiene su propia foto, no una copia de la de otra persona.',
       },
     },
     20: {
@@ -406,6 +460,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Estaba en casa."',
         eu: '"Etxean nengoen" (Estaba en casa)',
       },
+      tip: {
+        es: 'El pasado simple de egon (nengoen, zeunden, zegoen...) es su propio paradigma independiente — no compartido con el pasado de ukan ni el de eduki. También aprenderás ados egon ("estar de acuerdo"), que coloca el adjetivo ados delante de cualquier forma de egon: "Estuve de acuerdo" = Ados nengoen.',
+      },
     },
     21: {
       title: { es: 'izan/ukan — La regla del futuro, en todos los aditzak', eu: 'izan/ukan — Geroaldiaren araua, aditz guztietan' },
@@ -416,6 +473,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Seré profesor" (irakasle izango naiz)',
         eu: '"Irakasle izango naiz" (Seré profesor)',
+      },
+      tip: {
+        es: 'El futuro vasco es una de las cosas más regulares del idioma: añade -ko (tras consonante) o -go (tras vocal) al participio y mantén el auxiliar presente. La única forma que hay que memorizar especialmente: el futuro de ukan es izango dut (no "ukango"). Después de esta unidad, puedes poner casi cualquier verbo en futuro.',
       },
     },
     22: {
@@ -428,6 +488,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Tengo que ir." (Joan behar dut)',
         eu: '"Joan behar dut" (Tengo que ir)',
       },
+      tip: {
+        es: 'Behar ("necesitar/deber") siempre elige los auxiliares de ukan, sin importar con qué verbo va. "Tengo que ir" = Joan behar dut (no naiz, aunque joan solo usa naiz). Piensa en behar como el jefe de la frase — él elige el auxiliar, no joan. La misma regla se aplica a nahi de la unidad 4.',
+      },
     },
     23: {
       title: {
@@ -437,6 +500,9 @@ export const JOURNEY_TRANSLATIONS = {
       focus: {
         es: 'Mezcla presente, pasado y futuro, afirmativo y negativo, para distinguir los tres tiempos en vez de adivinarlos por el contexto. Consigue al menos 2 estrellas para continuar',
         eu: 'Oraina, iragana eta geroa nahasten ditu, baiezkoak eta ezezkoak. Gutxienez 2 izar behar dituzu jarraitzeko',
+      },
+      tip: {
+        es: 'Consigue al menos 2 estrellas para desbloquear la Fase III. Esta puerta mezcla los tres tiempos más las negaciones. Si algún tiempo se siente inseguro, repasa la unidad correspondiente antes de volver a intentarlo. Busca pistas temporales: gaur (hoy) → pretérito perfecto, atzo (ayer) → pasado simple, bihar (mañana) → futuro.',
       },
     },
     24: {
@@ -449,6 +515,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Solía venir aquí todos los días."',
         eu: '"Egunero hona etortzen nintzen" (Solía venir aquí todos los días)',
       },
+      tip: {
+        es: 'El pasado habitual expresa una acción pasada repetida o continua: "solía comer", "ella estaba viniendo." Forma: participio de acción en -tzen/-ten + auxiliares de pasado (nintzen etc.). Compara: Joan nintzen = "fui una vez" (pasado simple); Joaten nintzen = "solía ir / iba" (pasado habitual).',
+      },
     },
     25: {
       title: { es: 'joan/etorri/ibili — Movimiento en curso (pasado)', eu: 'joan/etorri/ibili — Mugimendua iraganean' },
@@ -459,6 +528,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Estaba de camino (cuando...)."',
         eu: '"Bidean nindoan (...zenean)" (Estaba de camino, cuando...)',
+      },
+      tip: {
+        es: 'Joan, etorri e ibili tienen formas especiales de "estaba yendo/viniendo/caminando" distintas del patrón de pasado habitual: nindoan, nentorren, nenbilen. Úsalas para movimientos que estaban en curso y se interrumpieron — "estaba de camino cuando llamaste."',
       },
     },
     14: {
@@ -471,6 +543,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Me gusta esto." (Hau gustatzen zait)',
         eu: '"Hau gustatzen zait" (Me gusta esto)',
       },
+      tip: {
+        es: 'Un nuevo enfoque: en lugar de que tú hagas algo, algo te pasa a ti. "Me gusta" en euskera es literalmente "a mí me place" — gustatzen zait. El -t en zait es "a mí"; zaio significa "a él/ella." Este patrón de sujeto dativo también cubre "me parece" (iruditzen zait) y "se me olvidó" (ahaztu zait).',
+      },
     },
     26: {
       title: { es: 'NOR-NORI pasado y futuro — El dativo a través del tiempo', eu: 'NOR-NORI iragana eta geroa — Datiboa denboran zehar' },
@@ -481,6 +556,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Me gustó ayer." (Atzo gustatu zitzaidan)',
         eu: '"Atzo gustatu zitzaidan" (Me gustó ayer)',
+      },
+      tip: {
+        es: 'Toma las formas NOR-NORI de la unidad 14 (zait, zaizu, zaio) y ponlas en pasado y futuro. Pasado: zitzaidan ("me agradó"). Futuro: gustatuko zait ("me gustará"). La misma lógica de sujeto dativo de la unidad 14 abarca ahora los tres tiempos.',
       },
     },
     27: {
@@ -493,6 +571,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"¿Te gusto?" (Gustatzen natzaizu?) / "Me gusta él." (Gustatzen natzaio.)',
         eu: '"Gustatzen natzaizu?" (¿Te gusto?) / "Gustatzen natzaio" (Me gusta él)',
       },
+      tip: {
+        es: 'La unidad 14 fijaba la "cosa experimentada" en hura (ello). Ahora esa cosa puede ser ni o gu: Gustatzen natzaizu significa "te agrado" — literalmente "soy agradable para ti." El NOR (lo que se experimenta) cambia; el NORI (el que experimenta) permanece anclado.',
+      },
     },
     28: {
       title: { es: 'El presente NOR-NORI-NORK — diot/diozu/dio', eu: 'NOR-NORI-NORK oraina — diot/diozu/dio' },
@@ -503,6 +584,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Se lo doy (a él)." (Ematen diot)',
         eu: '"Ematen diot" (Se lo doy a él)',
+      },
+      tip: {
+        es: 'Por primera vez, un verbo sigue tres argumentos a la vez: esan (decir) y eman (dar). Diot = "yo [lo hago] a él": d- para el objeto, -io- para "a él", -t para "yo." Este es el paso individual más complejo de todo el recorrido — esta unidad incluye práctica adicional para ayudar a que todo encaje.',
       },
     },
     29: {
@@ -515,6 +599,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Se lo dije." (Esan nion)',
         eu: '"Esan nion" (Se lo dije)',
       },
+      tip: {
+        es: 'Toma las formas de tres argumentos de esan y eman de la unidad 28 y cámbialas a pasado y futuro. Pasado: nion ("yo le dije/di"). Futuro: esango dizut ("te lo diré"). La estructura de tres argumentos permanece igual — solo cambia el tiempo.',
+      },
     },
     30: {
       title: { es: 'NOR-NORI-NORK con dativo encubierto — Verbos agentivos', eu: 'Datibo ezkutuko NOR-NORI-NORK — Aditz agentiboak' },
@@ -526,12 +613,18 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Le ayudo." (Laguntzen diot)',
         eu: 'Laguntzen diot.',
       },
+      tip: {
+        es: 'Algunos verbos llevan secretamente un "a quién" aunque no tengan objeto directo visible — laguntzen diot ("le ayudo") usa diot (¡no dut!). Estos verbos de dativo encubierto — lagundu, erantzun, deitu y otros — todos usan el paradigma NOR-NORI-NORK de la unidad 28.',
+      },
     },
     31: {
       title: { es: 'REPASO — La mezcladora de declinación', eu: 'BERRIKUSPENA — Kasu-marken nahasketa' },
       focus: {
         es: 'Distingue quién es el sujeto (-k), el objeto y el destinatario por su marca de caso, en verbos NOR, NOR-NORK, NOR-NORI y NOR-NORI-NORK. Aprobación obligatoria antes de la Fase V',
         eu: 'Subjektua, objektua eta hartzailea kasu-marken arabera bereizten praktikatu. V. fasearen aurretik nahitaez gainditu beharrekoa',
+      },
+      tip: {
+        es: 'Consigue al menos 2 estrellas para continuar. Esta puerta practica las distinciones de caso NOR/NORK/NORI — cambiando quién hace qué a quién. Si confundes las terminaciones -k y -i, repasa las unidades 14 y 28 antes de volver a intentarlo.',
       },
     },
     32: {
@@ -544,6 +637,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Puedo venir." · "Podría (haber)..."',
         eu: '"Etor naiteke" (Puedo venir) · "...ahal izan(go) nuen" (Podría haber...)',
       },
+      tip: {
+        es: 'Dezaket significa "puedo" (modo potencial — ahalera). Para los verbos intransitivos usas naiteke (puedo venir, puedo ser). También hay un par perifrástico: ahal izan (poder) y ezin (no poder). Esta unidad cubre las formas centrales en los subtiempos presente, hipotético y pasado.',
+      },
     },
     33: {
       title: { es: 'Baldintza eta Ondorioa — Condicionales', eu: 'Baldintza eta Ondorioa — Baldintzazkoak' },
@@ -554,6 +650,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Si tuviera dinero, compraría eso" (Dirua banu, hori erosiko nuke)',
         eu: '"Dirua banu, hori erosiko nuke" (Si tuviera dinero, compraría eso)',
+      },
+      tip: {
+        es: 'Los condicionales vascos funcionan en dos partes: un prefijo ba- en el verbo ("si tuviera") y un sufijo -ke en el auxiliar ("compraría"). "Si tuviera dinero, lo compraría" = Dirua banu, hori erosiko nuke. Ambas partes se construyen sobre auxiliares y verbos que ya conoces.',
       },
     },
     34: {
@@ -566,6 +665,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"¡Ven aquí!" (Hadi hona!)',
         eu: 'Hadi hona!',
       },
+      tip: {
+        es: 'El imperativo vasco (agintera) tiene formas diferentes para cada nivel de tratamiento: zu (neutro), zuek (plural) y hi (íntimo) — más un yusivo para tercera persona ("que venga"). Las formas parecen distintas del indicativo, pero las más útiles aparecen constantemente en el euskera cotidiano.',
+      },
     },
     35: {
       title: { es: 'Finalidad y deseo (Subjuntiboa)', eu: 'Helburua eta nahia (Subjuntiboa)' },
@@ -576,6 +678,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Quiero que venga." (Nahi dut etor dadin) · "Le dijo que viniera." (Esan dio etor dadila) · "...para que lo vea." (...ikus dezan)',
         eu: 'Nahi dut etor dadin. · Esan dio etor dadila. · ...ikus dezan.',
+      },
+      tip: {
+        es: 'El subjuntivo vasco vive principalmente en las cláusulas subordinadas: "Quiero que venga" = Nahi dut etor dadin. Esta unidad lo enseña como una construcción — lo entenderás cuando lo oigas y aprenderás a producirlo en contexto, no como tablas verbales aisladas.',
       },
     },
     36: {
@@ -588,6 +693,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Tú eres estudiante." (Hi ikaslea haiz)',
         eu: 'Hi ikaslea haiz.',
       },
+      tip: {
+        es: 'Hi es el "tú" íntimo — usado solo con amigos cercanos y familiares que han acordado este registro. Como sujeto, hi lleva sus propias formas verbales: haiz para izan, hago para egon, hoa para joan. A diferencia de zu, hi señala cercanía en la relación, no simplemente el tratamiento en segunda persona.',
+      },
     },
     37: {
       title: { es: 'Toka (alocutivo masculino)', eu: 'Toka (gizonezko alokutiboa)' },
@@ -598,6 +706,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Está trabajando." (Lanean dik)',
         eu: 'Lanean dik.',
+      },
+      tip: {
+        es: 'Toka es el registro alocutivo masculino: incluso cuando hablas de una tercera persona, modificas el verbo para señalar que tu oyente es hi (un amigo íntimo masculino). "Está trabajando" → Lanean dik (en lugar de da). Es una forma gramatical de marcar intimidad con tu oyente.',
       },
     },
     38: {
@@ -610,12 +721,18 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Está trabajando." (Lanean din)',
         eu: 'Lanean din.',
       },
+      tip: {
+        es: 'Noka es el equivalente femenino de toka: cambia las terminaciones masculinas -k por -n. "Está trabajando [hablo contigo, amiga]" = Lanean din. Una vez que conoces toka, noka es una transformación de una sola letra — no un nuevo paradigma para memorizar.',
+      },
     },
     39: {
       title: { es: 'Hitanoa recombinada', eu: 'Hitanoa berrelkartuta' },
       focus: {
         es: 'Combina toka y noka — elige el adecuado según quién te escucha, y aprende cuándo no usar hitanoa',
         eu: 'Elkartu toka eta noka — aukeratu zuzena entzulearen arabera, eta ikasi noiz ez erabili hitanoa',
+      },
+      tip: {
+        es: 'Mezcla toka y noka y aprende cuándo no usar hitanoa: las cláusulas subordinadas, las formas modales formales (-ke) y cualquier persona que no haya acordado el registro íntimo vuelven a las formas estándar de zu. Elegir correctamente señala fluidez y conciencia social.',
       },
     },
     40: {
@@ -631,6 +748,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: 'Nik atea ireki dut. → Atea ireki da.',
         eu: 'Nik atea ireki dut. → Atea ireki da.',
       },
+      tip: {
+        es: 'Cuando el agente desaparece de una frase, el verbo transitivo se vuelve intransitivo: "Yo lo abrí" (ireki dut) → "Se abrió / fue abierto" (ireki da). Esta unidad se centra en el reconocimiento — el euskera escrito real usa esto constantemente, y poder detectarlo desbloquea mucho más de lo que lees.',
+      },
     },
     41: {
       title: { es: 'Hacer que alguien lo haga', eu: 'Norbaiti zerbait eginarazi' },
@@ -641,6 +761,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"La tormenta hizo que los montañeros volvieran." (Ekaitzak mendizaleak itzularazi zituen) · "La música hace bailar a los niños." (Musikak umeak dantzarazi ditu)',
         eu: 'Ekaitzak mendizaleak itzularazi zituen. · Musikak umeak dantzarazi ditu.',
+      },
+      tip: {
+        es: '-Arazi añadido a un verbo intransitivo lo hace causativo: "La tormenta hizo que los montañeros volvieran" = itzularazi zituen. El verbo NOR original recibe un nuevo agente (NORK), así que la forma causativizada ahora necesita los auxiliares de ukan en lugar de los de izan.',
       },
     },
     42: {
@@ -653,6 +776,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"La abuela hizo que los niños comieran las alubias." (Amonak umeei babarrunak janarazi zizkien) · "La profesora les hizo escribirlo." (Irakasleak ikasleei hori idatzarazi die)',
         eu: 'Amonak umeei babarrunak janarazi zizkien. · Irakasleak ikasleei hori idatzarazi die.',
       },
+      tip: {
+        es: '-Arazi en un verbo transitivo añade otro nivel: agente (abuela), causatario (niños) y objeto (alubias) están todos en la frase. Se aplica el sistema NOR-NORI-NORK de la unidad 28. Complejo, pero el sufijo es el mismo -arazi de la unidad 41 — solo estás extendiendo un patrón que ya conoces.',
+      },
     },
     43: {
       title: {
@@ -662,6 +788,9 @@ export const JOURNEY_TRANSLATIONS = {
       focus: {
         es: 'El causativo -arazi (hacer que alguien haga algo) en presente, pasado y futuro, todo junto',
         eu: '-arazi orainean, iraganean eta geroan praktikatu, batera',
+      },
+      tip: {
+        es: 'Recombina las formas de -arazi de las unidades 41–42 en presente, pasado y futuro. Si las combinaciones de causativo + tiempo todavía se sienten inseguras, repasa las lecciones de esas unidades antes de volver a intentar esta puerta.',
       },
     },
     44: {
@@ -674,6 +803,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Le caen lágrimas." · "¿En qué consiste el ejercicio?" · "Pareces cansado."',
         eu: '"Malkoak dario." · "Zertan datza ariketa?" · "Nekatuta zaude, dirudizu."',
       },
+      tip: {
+        es: 'Jario (fluir/gotear), etzan (yacer/consistir) e irudi (parecer) son verbos sintéticos raros que encontrarás principalmente en la lectura, no en la conversación. El objetivo aquí es el reconocimiento — poder interpretar dario o dirudizu cuando los veas en un texto.',
+      },
     },
     45: {
       title: { es: 'Hablando del tiempo', eu: 'Eguraldiari buruz hizketan' },
@@ -684,6 +816,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Está lloviendo." · "Hace frío." · "Hace sol."',
         eu: '"Euria ari du." · "Hotz da." · "Eguzkia dago."',
+      },
+      tip: {
+        es: 'Las expresiones meteorológicas vascas son casi siempre de tercera persona fija: euria ari du (está lloviendo), hotz da (hace frío). Esta unidad cubre los modismos más comunes con ari, izan y egon en forma fija de hura — sin terminaciones nuevas, solo fragmentos de vocabulario muy útiles.',
       },
     },
     46: {
@@ -696,6 +831,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Estoy ocupado trabajando." · "La película dura dos horas."',
         eu: '"Lanean dihardut." · "Filmak bi ordu dirau."',
       },
+      tip: {
+        es: 'Ihardun ("estar ocupado con") e iraun ("durar") son inErgativos: llevan sujeto ergativo (-k) pero no tienen objeto. "Estoy ocupado trabajando" = Lanean dihardut (Nik, no Ni, aunque no hay nada sobre lo que se actúe). Un rincón raro pero útil de la gramática vasca.',
+      },
     },
     47: {
       title: { es: 'erabili — Usar cosas', eu: 'erabili — Gauzak erabiltzen' },
@@ -706,6 +844,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Uso el ordenador todos los días."',
         eu: '"Nik ordenagailua darabilt egunero."',
+      },
+      tip: {
+        es: 'Erabili (usar) es un verbo sintético NOR-NORK que se conjuga como eduki y jakin — la persona se empaqueta en una sola palabra. Presente: darabilt (lo uso). Un verbo cotidiano de alta frecuencia que vale la pena tener en el vocabulario activo.',
       },
     },
     48: {
@@ -721,6 +862,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Me sorprendió." (Harritu nau) · "Nos vieron." (Ikusi gaituzte)',
         eu: '"Harritu nau." · "Ikusi gaituzte."',
       },
+      tip: {
+        es: 'Práctica avanzada del eje de objeto de la unidad 16: en lugar de "yo (sujeto) te quiero (objeto)", invierte a "tú (sujeto) me ves (objeto)" — ikusi nau, harritu nau. Docenas de verbos transitivos cotidianos en todos los tiempos están agrupados aquí para una práctica profunda.',
+      },
     },
     49: {
       title: {
@@ -734,6 +878,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"Podría sorprenderme." · "Podría gustarme él."',
         eu: '"Harri nintzake." · "Gustatu nintzaioke."',
+      },
+      tip: {
+        es: 'Todas las combinaciones de eje de objeto y tiempo para el modo potencial (ahalera) de la unidad 32, en profundidad. "Podría sorprenderme" = harri nintzake. Trabaja a tu propio ritmo — esto es profundización opcional, no es obligatorio para el recorrido principal.',
       },
     },
     50: {
@@ -749,6 +896,9 @@ export const JOURNEY_TRANSLATIONS = {
         es: '"Si me quisieras…" · "Me gustaría él."',
         eu: '"Maite baninduzu…" · "Gustatuko litzaidake."',
       },
+      tip: {
+        es: 'Todas las combinaciones de eje de objeto y tiempo para el condicional (baldintza/ondorioa) de la unidad 33, en profundidad. "Si me quisieras…" = maite baninduzu. La misma estructura de la unidad 33, extendida a cada combinación de argumentos.',
+      },
     },
     51: {
       title: {
@@ -762,6 +912,9 @@ export const JOURNEY_TRANSLATIONS = {
       payload: {
         es: '"¡Que me guste!" (bekit)',
         eu: '"Bekit!"',
+      },
+      tip: {
+        es: 'Todas las combinaciones de argumentos para el imperativo (agintera) de la unidad 34, en profundidad — incluidos yusivos como bekit ("¡que me guste!"). Trabajo opcional de maestría para quienes quieran dar órdenes en todas las direcciones posibles.',
       },
     },
   },
