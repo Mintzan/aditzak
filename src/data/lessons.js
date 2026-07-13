@@ -56,7 +56,17 @@ export const LESSONS = [
   // to hura), ni/zu/hura. The single steepest jump in the journey (the
   // absolutive-to-ergative subject shift, `ni naiz` → `nik dut`) — given its
   // own unit and extra practice per docs/LEARNING_JOURNEY_EVALUATION.md F6.
-  { id: 'ukan-present', verbId: 'ukan', tense: 'present', persons: PHASE_1_PERSONS },
+  {
+    id: 'ukan-present',
+    verbId: 'ukan',
+    tense: 'present',
+    persons: PHASE_1_PERSONS,
+    note: {
+      en: 'Your first ergative verb — the subject takes -k: nik, zuk, hark. The -k marks that the subject acts on something (what it has). Compare: ni naiz (just existing) vs. nik dut (acting on something).',
+      es: 'Tu primer verbo ergativo — el sujeto lleva -k: nik, zuk, hark. El -k marca que el sujeto actúa sobre algo (lo que tiene). Compara: ni naiz (solo existir) vs. nik dut (actuar sobre algo).',
+      eu: 'Zure lehen aditz ergatiboa — subjektuak -k hartzen du: nik, zuk, hark. -k adierazten du subjektuak zerbait baduela (edukitzen duena). Konparatu: ni naiz (existitu besterik ez) eta nik dut (zerbaiten gainean jardun).',
+    },
+  },
   // N-2·L2 — "the ni→nik shift": izan vs ukan present, side by side.
   {
     id: 'ukan-ni-nik-shift-review',
@@ -115,7 +125,17 @@ export const LESSONS = [
   },
   // === N-4 ("Knowing & Wanting") — jakin (synthetic, same ergative suffixes
   // as ukan) + nahi.
-  { id: 'jakin-present', verbId: 'jakin', tense: 'present', persons: PHASE_1_PERSONS },
+  {
+    id: 'jakin-present',
+    verbId: 'jakin',
+    tense: 'present',
+    persons: PHASE_1_PERSONS,
+    note: {
+      en: 'jakin is ergative like ukan — its subject takes -k (nik, zuk, hark). The forms start with the same d- as ukan (dakit, dakizu, daki), so you already know this suffix family.',
+      es: 'jakin es ergativo como ukan — su sujeto lleva -k (nik, zuk, hark). Las formas empiezan con la misma d- que ukan (dakit, dakizu, daki), así que ya conoces esta familia de sufijos.',
+      eu: 'jakin ukan bezala ergatiboa da — subjektuak -k hartzen du (nik, zuk, hark). Formek ukan bezalako d- aurrizkia dute (dakit, dakizu, daki), beraz atzizkiaren familia hau ezaguna duzu.',
+    },
+  },
   { id: 'nahi-present', verbId: 'nahi', tense: 'present', persons: PHASE_1_PERSONS },
   // N-4 extra practice — jakin vs ukan (same suffix family).
   {
@@ -145,7 +165,17 @@ export const LESSONS = [
   // `conjugations.present` table (from Unit 13's verb data) restricted to
   // `PHASE_1_PERSONS` here — its `gu`/`zuek`/`haiek` forms arrive in Unit 7
   // ("Expansion") alongside `izan`/`egon`/`ukan`/`joan`/`etorri`'s.
-  { id: 'ikusi-present', verbId: 'ikusi', tense: 'present', persons: PHASE_1_PERSONS },
+  {
+    id: 'ikusi-present',
+    verbId: 'ikusi',
+    tense: 'present',
+    persons: PHASE_1_PERSONS,
+    note: {
+      en: 'Your first two-part verb: a fixed participle + a changing auxiliary. ikusten never changes — only dut/duzu/du changes to show who sees. This two-part pattern is the basis for most Basque verbs.',
+      es: 'Tu primer verbo en dos partes: un participio fijo + un auxiliar cambiante. ikusten nunca cambia — solo dut/duzu/du cambia para indicar quién ve. Este patrón de dos partes es la base de la mayoría de los verbos vascos.',
+      eu: 'Zure lehen bi zatiko aditza: partizipio finkoa + laguntzaile aldakorra. ikusten ez da aldatzen — dut/duzu/du bakarrik aldatzen da nork ikusten duen adierazteko. Eredu hau da euskarazko aditz gehienen oinarria.',
+    },
+  },
   {
     id: 'ikusi-present-review',
     review: true,
@@ -290,7 +320,16 @@ export const LESSONS = [
   },
   // Unit 9 ("The Immediate Continuous") — `ari`, riding `izan`'s present
   // table.
-  { id: 'ari-present', verbId: 'ari', tense: 'present' },
+  {
+    id: 'ari-present',
+    verbId: 'ari',
+    tense: 'present',
+    note: {
+      en: 'ari + the "to be" verb (naiz/zara/da) says what\'s happening right now. The action\'s participle goes first (egiten, joaten…), then ari, then the "to be" form. Think: "I am in the middle of doing it."',
+      es: 'ari + el verbo "ser/estar" (naiz/zara/da) dice lo que ocurre justo ahora. El participio de la acción va primero (egiten, joaten…), luego ari, y después la forma del verbo ser. Piensa: "Estoy en medio de hacerlo."',
+      eu: 'ari + "izate" aditza (naiz/zara/da) oraintxe gertatzen ari dena adierazten du. Ekintza-partizipioa lehenengo doa (egiten, joaten…), gero ari, eta ondoren "izate"-forma. Pentsatu: "Egiten ari naiz."',
+    },
+  },
   {
     id: 'unit-4-review',
     review: true,
